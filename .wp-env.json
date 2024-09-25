@@ -1,0 +1,24 @@
+{
+  "core": null,
+  "phpVersion": "8.3",
+  "plugins": [
+    "./packages/wp-plugin/plugin-a/"
+  ],
+  "themes": [
+    "https://downloads.wordpress.org/theme/twentytwentyfour.zip"
+  ],
+  "config": {
+    "SCRIPT_DEBUG": true,
+    "WP_DEBUG": true,
+    "WP_DEBUG_DISPLAY": false,
+    "WP_DEBUG_LOG": true,
+    "SAVEQUERIES": true,
+    "FS_METHOD": "direct",
+    "ALTERNATE_WP_CRON": true,
+    "WP_DEVELOPMENT_MODE": "all"
+  },
+  "lifecycleScripts": {
+    "afterStart": "$(command -v bash) ./.wp-env-afterStart.sh",
+    "afterDestroy": "rm -rf $WP_ENV_HOME"
+  }
+}
