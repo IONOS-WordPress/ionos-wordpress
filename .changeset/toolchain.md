@@ -6,3 +6,4 @@
 
   - editor (vscode)
   - git
+  - pnpm configuration files

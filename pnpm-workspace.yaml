@@ -1,0 +1,15 @@
+# see https://pnpm.io/pnpm-workspace_yaml
+packages:
+  - '.'
+  - 'packages/npm/*'
+  - 'packages/docker/*'
+  - 'packages/docs/*'
+  - 'packages/wp-plugin/*'
+  - 'packages/wp-theme/*'
+  - 'packages/generic/*'
+
+# catalogs can be used to maintain dependencies for a group of packages at a single place
+# see https://pnpm.io/catalogs
+catalogs:
+  wp-plugin-devDependencies:
+    "@wordpress/scripts" : ^30.0.2
