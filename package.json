@@ -1,0 +1,59 @@
+{
+  "name": "ionos-wordpress",
+  "version": "0.0.1",
+  "scripts": {
+    "build" : "pnpm --recursive --if-present build",
+    "watch" : "pnpm run --recursive --parallel --if-present watch",
+    "start" : "pnpm build && pnpm exec wp-env start --debug --xdebug",
+    "stop" : "pnpm exec wp-env stop",
+    "destroy" : "echo 'y' | pnpm exec wp-env destroy --debug",
+    "wp-env": "pnpm exec wp-env",
+    "clean": "git clean $npm_package_config_git_clean_opts -e '!/wp-env-home' -e '!/*.code-workspace' -e '!/.vscode/**' -e '!**/node_modules' -e '!**/node_modules/**' -e '!/.pnpm-store'",
+    "distclean": "git clean $npm_package_config_git_clean_opts -e '!/*.code-workspace'"
+  },
+  "config": {
+    "git-clean-opts": "-Xfd --interactive"
+  },
+  "keywords": [
+    "pnpm",
+    "php",
+    "monorepo",
+    "composer",
+    "ionos",
+    "hosting"
+  ],
+  "author": {
+    "email": "lars.gersmann@ionos.com",
+    "name": "lars gersmann"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:IONOS-WordPress/ionos-wordpress.git"
+  },
+  "homepage": "https://ionos-wordpress.github.io/ionos-wordpress/",
+  "license": "MIT",
+  "devDependencies": {
+    "@changesets/cli": "2.27.8",
+    "@commitlint/cli": "19.5.0",
+    "@commitlint/config-conventional": "19.5.0",
+    "@prettier/plugin-php": "^0.22.2",
+    "eslint": "9.11.1",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.30.0",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint-plugin-react": "7.36.1",
+    "eslint-plugin-react-hooks": "4.6.2",
+    "eslint-plugin-simple-import-sort": "12.1.1",
+    "git-cz": "4.9.0",
+    "nano-staged": "0.8.0",
+    "prettier": "3.3.3",
+    "stylelint": "^16.9.0",
+    "stylelint-config-prettier": "^9.0.5",
+    "stylelint-config-recommended-scss": "^14.1.0",
+    "stylelint-scss": "^6.7.0",
+    "@wordpress/env": "^10.8.0",
+    "@devcontainers/cli": "^0.71.0"
+  },
+  "dependencies": {
+  }
+}
