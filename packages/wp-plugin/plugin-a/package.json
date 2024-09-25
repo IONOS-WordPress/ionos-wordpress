@@ -1,0 +1,10 @@
+{
+  "name": "@ionos-wordpress/essentials",
+  "scripts": {
+    "build": "wp-scripts build",
+    "watch": "wp-scripts start"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "catalog:wp-plugin-devDependencies"
+  }
+}
