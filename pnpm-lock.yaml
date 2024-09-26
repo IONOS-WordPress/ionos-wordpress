@@ -75,7 +75,7 @@ importers:
         specifier: ^6.7.0
         version: 6.7.0(stylelint@16.9.0(typescript@5.6.2))
 
-  packages/wp-plugin/plugin-a:
+  packages/wp-plugin/essentials:
     devDependencies:
       '@wordpress/scripts':
         specifier: catalog:wp-plugin-devDependencies
@@ -12825,7 +12825,7 @@ snapshots:
 
   randombytes@2.1.0:
     dependencies:
-      safe-buffer: 5.1.2
+      safe-buffer: 5.2.1
 
   range-parser@1.2.1: {}
 
@@ -14053,7 +14053,7 @@ snapshots:
   websocket-driver@0.7.4:
     dependencies:
       http-parser-js: 0.5.8
-      safe-buffer: 5.1.2
+      safe-buffer: 5.2.1
       websocket-extensions: 0.1.4
 
   websocket-extensions@0.1.4: {}

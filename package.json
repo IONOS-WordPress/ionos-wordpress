@@ -2,15 +2,15 @@
   "name": "ionos-wordpress",
   "version": "0.0.1",
   "scripts": {
-    "build" : "./scripts/build.sh",
-    "watch" : "./scripts/watch.sh",
-    "start" : "./scripts/start.sh",
-    "stop" : "./scripts/stop.sh",
-    "destroy" : "./scripts/destroy.sh",
+    "build": "./scripts/build.sh",
+    "watch": "./scripts/watch.sh",
+    "start": "./scripts/start.sh",
+    "stop": "./scripts/stop.sh",
+    "destroy": "./scripts/destroy.sh",
     "wp-env": "./scripts/wp-env.sh",
     "clean": "./scripts/clean.sh",
     "distclean": "./scripts/distclean.sh",
-    "changeset": "./scripts/changeset.sh",
+    "changeset": "./scripts/changeset.sh"
   },
   "keywords": [
     "pnpm",
@@ -34,7 +34,9 @@
     "@changesets/cli": "2.27.8",
     "@commitlint/cli": "19.5.0",
     "@commitlint/config-conventional": "19.5.0",
+    "@devcontainers/cli": "^0.71.0",
     "@prettier/plugin-php": "^0.22.2",
+    "@wordpress/env": "^10.8.0",
     "eslint": "9.11.1",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.30.0",
@@ -48,10 +50,6 @@
     "stylelint": "^16.9.0",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-recommended-scss": "^14.1.0",
-    "stylelint-scss": "^6.7.0",
-    "@wordpress/env": "^10.8.0",
-    "@devcontainers/cli": "^0.71.0"
-  },
-  "dependencies": {
+    "stylelint-scss": "^6.7.0"
   }
 }
