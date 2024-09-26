@@ -19,5 +19,3 @@ else
   # otherwise delegate all arguments to wp-env
   pnpm exec wp-env ${@:---help}
 fi
-
-env | grep MY_
