@@ -9,7 +9,8 @@
     "destroy" : "./scripts/destroy.sh",
     "wp-env": "./scripts/wp-env.sh",
     "clean": "./scripts/clean.sh",
-    "distclean": "./scripts/distclean.sh"
+    "distclean": "./scripts/distclean.sh",
+    "changeset": "./scripts/changeset.sh",
   },
   "keywords": [
     "pnpm",
