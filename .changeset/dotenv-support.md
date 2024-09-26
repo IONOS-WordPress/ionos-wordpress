@@ -2,7 +2,7 @@
 "ionos-wordpress": patch
 ---
 
-- added configurable environment support
+added configurable environment support
 
   - the `./.env` file is injected into every `./scripts/*.sh` command
 

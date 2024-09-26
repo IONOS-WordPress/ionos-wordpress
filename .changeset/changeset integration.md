@@ -2,7 +2,7 @@
 "ionos-wordpress": patch
 ---
 
-- changeset integration
+changeset integration
 
   - detailed workflow (local first) :
 

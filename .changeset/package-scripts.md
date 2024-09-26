@@ -2,7 +2,7 @@
 "ionos-wordpress": patch
 ---
 
-- refactored package scripts to separate shell scripts
+refactored package scripts to separate shell scripts
 
   - all `./scripts/*.sh` scripts are _commands_ that can be run from the root of the project.
 
