@@ -2,17 +2,14 @@
   "name": "ionos-wordpress",
   "version": "0.0.1",
   "scripts": {
-    "build" : "pnpm --recursive --if-present build",
-    "watch" : "pnpm run --recursive --parallel --if-present watch",
-    "start" : "pnpm build && pnpm exec wp-env start --debug --xdebug",
-    "stop" : "pnpm exec wp-env stop",
-    "destroy" : "echo 'y' | pnpm exec wp-env destroy --debug",
-    "wp-env": "pnpm exec wp-env",
-    "clean": "git clean $npm_package_config_git_clean_opts -e '!/wp-env-home' -e '!/*.code-workspace' -e '!/.vscode/**' -e '!**/node_modules' -e '!**/node_modules/**' -e '!/.pnpm-store'",
-    "distclean": "git clean $npm_package_config_git_clean_opts -e '!/*.code-workspace'"
-  },
-  "config": {
-    "git-clean-opts": "-Xfd --interactive"
+    "build" : "./scripts/build.sh",
+    "watch" : "./scripts/watch.sh",
+    "start" : "./scripts/start.sh",
+    "stop" : "./scripts/stop.sh",
+    "destroy" : "./scripts/destroy.sh",
+    "wp-env": "./scripts/wp-env.sh",
+    "clean": "./scripts/clean.sh",
+    "distclean": "./scripts/distclean.sh"
   },
   "keywords": [
     "pnpm",

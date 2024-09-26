@@ -3,5 +3,8 @@ node_modules
 /wp-env-home
 /packages/*/*/node_modules
 /packages/*/*/build
-.vscode/launch.json
-.vscode/settings.json
+/packages/*/*/dist
+/.vscode/settings.json
+/.vscode/launch.json
+.secrets
+.env.local
