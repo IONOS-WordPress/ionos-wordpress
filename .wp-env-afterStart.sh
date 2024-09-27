@@ -8,28 +8,6 @@ set -eo pipefail
 
 WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
 
-# # build gutenberg for development (for debugging purposes - i.e. including source maps etc.)
-# pushd "${WPENV_INSTALLPATH}/gutenberg"
-# # compute path to our configured nodejs provided by pnpm environment
-# NODE_PATH="$(dirname $(which node))/.."
-# # calling the original npm delivered with the configured nodejs version is a bit quirky but works :-)
-# $NODE_PATH/bin/node "$NODE_PATH/lib/node_modules/npm/bin/npm-cli.js" ci
-# $NODE_PATH/bin/node "$NODE_PATH/lib/node_modules/npm/bin/npm-cli.js" run build
-# popd
-
-# # build gutenberg for development (for debugging purposes - i.e. including source maps etc.)
-# pushd "${WPENV_INSTALLPATH}/gutenberg"
-# # compute path to our configured nodejs provided by pnpm environment
-# NODE_PATH="$(dirname $(which node))/.."
-# # calling the original npm delivered with the configured nodejs version is a bit quirky but works :-)
-# $NODE_PATH/bin/node "$NODE_PATH/lib/node_modules/npm/bin/npm-cli.js" ci
-# $NODE_PATH/bin/node "$NODE_PATH/lib/node_modules/npm/bin/npm-cli.js" run build:packages
-# # build gutenberg in development mode
-# ./node_modules/.bin/wp-scripts start --no-watch
-# # build static gutenberg storybook
-# $NODE_PATH/bin/node "$NODE_PATH/lib/node_modules/npm/bin/npm-cli.js" run storybook:build
-# popd
-
 # remove dolly demo plugin
 rm -f $WPENV_INSTALLPATH/{tests-WordPress,WordPress}/wp-content/plugins/hello.php
 
@@ -41,9 +19,6 @@ for prefix in '' 'tests-' ; do
   pnpm exec wp-env run ${prefix}cli wp --quiet rewrite flush
   # The wp rewrite structure command updates the permalink structure. --hard also updates the .htaccess file
   pnpm exec wp-env run ${prefix}cli wp --quiet rewrite structure '/%postname%' --hard
-
-  # activate our theme
-  # pnpm exec wp-env run ${prefix}cli wp --quiet theme activate extended-global-styles
 
   # Updates an option value for example the value of Simple page is id = 2
   pnpm exec wp-env run ${prefix}cli wp option update page_on_front 2
