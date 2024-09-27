@@ -5,7 +5,7 @@
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
- * Version:           1.0.0
+ * Version:           0.0.1
  * Author:            lars gersmann <lars.gersmann@ionos.com>
  * License:           @TODO: add license
  * License URI:       @TODO: add license url
