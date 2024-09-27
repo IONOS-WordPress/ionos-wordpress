@@ -129,7 +129,11 @@ Software detailed here will be automatically provided in the project specfic [De
 
 @TODO: Git Flow vs trunk based development
 
-### Release workflow
+#### Changeset
+
+- Create a release
+
+- Create a feature
 
 ### Git
 
