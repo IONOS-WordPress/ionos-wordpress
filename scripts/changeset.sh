@@ -19,15 +19,29 @@ fi
 # otherwise delegate all arguments to wp-env
 pnpm exec changeset $@
 
-# if versioning occured
+# if versioning occured process to update the new version numbers in other files
 if [[ "$1" == 'version' ]]; then
-  # loop over all plugin.php files in ./packages/wp-plugin/*/
-  for plugin_php in $(find ./packages/wp-plugin -maxdepth 2 -type f -name "package.json"); do
-    # @TODO: update data from package.json in plugin.php, readme.txt using a function from bootstrap.sh
-    echo "$plugin_php"
-  done
+  if [[ -d ./packages/wp-plugin ]]; then
+    # loop over all plugin.php files in ./packages/wp-plugin/*/
+    for PLUGIN_PHP in $(find ./packages/wp-plugin -maxdepth 2 -type f -name 'plugin.php'); do
+      VERSION=$(jq -r '.version' "$(dirname $PLUGIN_PHP)/package.json")
+      # update version in plugin.php
+      sed -i --regexp-extended "s/^ \* Version:(\s*).*/ \* Version:\1$VERSION/" "$PLUGIN_PHP"
+    done
+  fi
+
+  if [[ -d ./packages/wp-theme ]]; then
+    # loop over all style.css files in ./packages/wp-theme/*/
+    for STYLE_CSS in $(find ./packages/wp-theme -maxdepth 2 -type f -name 'style.css'); do
+      VERSION=$(jq -r '.version' "$(dirname $STYLE_CSS)/package.json")
+      # update version in style.css
+      sed -i --regexp-extended "s/^(\s*)Version:(\s*).*/\1Version:\2$VERSION/" "$STYLE_CSS"
+    done
+  fi
 fi
 
+# we need to keep the lockfile in sync with the updated package.json files
+pnpm install
 
 
 
