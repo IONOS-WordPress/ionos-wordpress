@@ -1,6 +1,7 @@
 {
   "name": "ionos-wordpress",
   "version": "0.0.1",
+  "description": "Mono repository containing all WordPress plugins and themes developed for IONOS hosting",
   "scripts": {
     "build": "./scripts/build.sh",
     "watch": "./scripts/watch.sh",
@@ -10,7 +11,8 @@
     "wp-env": "./scripts/wp-env.sh",
     "clean": "./scripts/clean.sh",
     "distclean": "./scripts/distclean.sh",
-    "changeset": "./scripts/changeset.sh"
+    "changeset": "./scripts/changeset.sh",
+    "update-dependencies": "./scripts/update-dependencies.sh"
   },
   "keywords": [
     "pnpm",
