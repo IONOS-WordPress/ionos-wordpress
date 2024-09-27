@@ -36,7 +36,7 @@ The repository contains all the code, configuration and tools needed to maintain
 
 The repository provides
 
-- automatic @wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/) provisioning and configuration for WordPress autocompletion and PHP debugging
+- automatic [@wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/) provisioning and configuration for WordPress autocompletion and PHP debugging
 
 - `vscode` configuration and settings so that all required plugins and settings are automatically installed and configured
 
@@ -72,9 +72,9 @@ The repository provides
 
   Not all of the package categories are required to be present in the repository. You can remove or create category directories as needed (i.e. if the first docker sub project is required, create `packages/docker` and place the docker sub project inside).
 
-  > [!IMPORTANT]
-  > Why are the sub projects sorted into category directories ?
-  > Different types of artifacts have different requirements and require a different build/release workflow. By sorting the sub projects into category directories we can provide a unified build/release workflow for all sub projects of the same category automatically.
+> [!IMPORTANT]
+> Why are the sub projects sorted into category directories ?
+> Different types of artifacts have different requirements and require a different build/release workflow. By sorting the sub projects into category directories we can provide a unified build/release workflow for all sub projects of the same category automatically.
 
 ## Requirements
 
@@ -90,7 +90,7 @@ The repository provides
 
 All other tools are located in a [DevContainer](https://containers.dev/) providing a unified development experience across all platforms.
 
-> [!IMPORTANT]
+> [!TIP]
 > The [DevContainer](https://containers.dev/) is automatically started when you open the repository in vscode. Our [DevContainer](https://containers.dev/) provides tools like `pnpm`, `bash` and all other native tools required for maintaing the software artifacts located in this repository.
 
 ## Toolchain
