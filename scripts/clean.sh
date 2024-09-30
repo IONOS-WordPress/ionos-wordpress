@@ -13,6 +13,8 @@ git clean $GIT_CLEAN_OPTS \
   -e '!/wp-env-home' \
   -e '!/*.code-workspace' \
   -e '!/.vscode/**' \
+  -e '!/*.secrets' \
+  -e '!/*.env.local' \
   -e '!**/node_modules' \
   -e '!**/node_modules/**' \
   -e '!/.pnpm-store' \

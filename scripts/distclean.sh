@@ -13,5 +13,7 @@ source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
 git clean $GIT_CLEAN_OPTS \
   -e '!/*.code-workspace' \
+  -e '!/*.secrets' \
+  -e '!/*.env.local' \
   -e '!/.wp-env.override.json'
 
