@@ -19,8 +19,7 @@ changeset integration
   # all changeset files will be merged into the referenced monorepo packages and will be removed from the changeset directory
   pnpm changeset version
 
-  # update pnpm lock file
-  pnpm install (to update lock file)
+  # review changes made by changeset
 
   # commit updated files
   git add .

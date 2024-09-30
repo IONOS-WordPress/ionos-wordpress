@@ -8,3 +8,5 @@ node_modules
 /.vscode/launch.json
 .secrets
 .env.local
+/.wp-env.json
+/.wp-env.override.json

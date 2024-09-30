@@ -15,7 +15,9 @@ git clean $GIT_CLEAN_OPTS \
   -e '!/.vscode/**' \
   -e '!**/node_modules' \
   -e '!**/node_modules/**' \
-  -e '!/.pnpm-store'
+  -e '!/.pnpm-store' \
+  -e '!/.wp-env.json' \
+  -e '!/.wp-env.override.json' \
 
 
 

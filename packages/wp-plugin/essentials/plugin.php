@@ -12,7 +12,7 @@
  * Text Domain:       ionos-wordpress/essentials
  */
 
-namespace devcontainer_boilerplate\plugin_a;
+namespace ionos_wordpress\essentials;
 
 defined( 'ABSPATH' ) || exit;
 
