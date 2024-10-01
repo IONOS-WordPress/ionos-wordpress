@@ -1,5 +1,3 @@
-# About
-
 This monorepo contains all the code for the ionos-wordpress project.
 
 It enables developers to maintain all of our IONOS WordPress hosting related plugin at a single place.
@@ -127,7 +125,9 @@ Software detailed here will be automatically provided in the project specfic [De
 
 All commands are declared in the `scripts` section of the root `package.json` file.
 
-Each command is a script that can be executed by running `pnpm run <command>`.
+Each command is a script that can be executed by running `pnpm run <command>` or shorter using `pnpm <command>`.
+
+To get a list of commands you can run `pnpm run`.
 
 The commands are organized as shell scripts located in `./scripts/` directory.
 
