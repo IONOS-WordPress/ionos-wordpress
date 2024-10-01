@@ -237,6 +237,9 @@ The project supports various ways of configuring project settings.
 
   `.env.local` will sourced by bash which means you can even declare and export bash functions here.
 
+  > [!CAUTION]
+  > environment variables are **NOT** reflected by the docker containers created by the [@wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/) environment. You need to provide the secrets and environment to the [@wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/) environment using a `.wp-env.overriode.json` file.
+
 #### wp-env
 
 - `.wp-env.json` : will be **generated on every start** of the [@wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/) environment.
