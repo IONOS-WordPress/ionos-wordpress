@@ -115,6 +115,8 @@ Software detailed here will be automatically provided in the project specfic [De
 
 - checkout the repository
 
+  - switch to branch `develop` if you want to work on the latest development version : `git switch develop`
+
 - open the repository in `vscode`
 
 `vscode` will now install the extensions and automatically start the [DevContainer](https://containers.dev/) providing the whole toolchain.
