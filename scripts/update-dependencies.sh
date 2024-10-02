@@ -11,7 +11,14 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-pnpm --recursive update --interactive $@
+# interactive doesnt work yet with pnpm : https://github.com/pnpm/pnpm/issues/8566
+#
+# > The pnpm update command does not yet support catalogs.
+# > To update dependencies defined in pnpm-workspace.yaml, newer version ranges will need to be chosen manually until a future version of pnpm handles this.
+#
+# pnpm --recursive update --interactive $@
+
+pnpm --recursive update $@
 
 # if versioning occurred
 if [[ $(git status --porcelain | grep "package.json") ]]; then

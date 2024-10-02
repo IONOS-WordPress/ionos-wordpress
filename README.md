@@ -201,9 +201,13 @@ The command scripts in `./scripts/` contain even some advanced example usages.
   > [!TIP]
   > You can add more files to be automatically preserved by adding them to the `GIT_CLEAN_OPTS` variable in the `.env` or `.env.local` file.
 
-- `pnpm update-dependencies` : will allow you to interactively update all dependencies of the monorepo.
+- `pnpm update-dependencies` : will allow you to update the dependencies of the monorepo.
 
   The command will show you all dependencies that can be updated and let you decide which to update.
+
+  Example usage :
+    `pnpm update-dependencies` updates all dependencies, adhering to ranges specified in package.json,
+    `pnpm update-dependencies --latest` updates all dependencies to their latest versions
 
 ### Configuration
 
