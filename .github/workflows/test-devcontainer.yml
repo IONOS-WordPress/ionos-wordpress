@@ -1,0 +1,30 @@
+name: 'test devcontainer image'
+on:
+  # can only be triggered manually
+  workflow_dispatch:
+    inputs:
+      additionalTestCmd:
+        description: 'A shell expression to run after the default test commands'
+        required: true
+        default: 'echo "WP_ENV_HOME=${WP_ENV_HOME} !"'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout (GitHub)
+        uses: actions/checkout@v4
+
+      - name: use devcontainer image
+        uses: devcontainers/ci@v0.3
+        with:
+          # name of the image to use
+          imageName: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+          # enable caching (will build the image only if related files where changed)
+          cacheFrom: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+          runCmd: |
+            pnpm install
+            pnpm build
+            ${{ github.event.inputs.additionalTestCmd }}
+

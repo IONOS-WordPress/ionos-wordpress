@@ -1,0 +1,105 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-in-docker
+{
+	"name": "ionos-wordpress-devcontainer",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "build": {
+      // Path is relative to the devcontainer.json file.
+      "dockerfile": "Dockerfile"
+  },
+	// "image": "mcr.microsoft.com/devcontainers/base:${templateOption:imageVariant}",
+
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"moby": false,
+			"installDockerBuildx": true,
+			"version": "latest",
+			"dockerDashComposeVersion": "latest"
+		},
+    "ghcr.io/devcontainers/features/php:1": {
+      "installComposer": true,
+      "version": "8.3"
+    },
+      "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest"
+    },
+    // Optional - For tools that require SSH
+		"ghcr.io/devcontainers/features/sshd:1": { },
+
+    "./features/pnpm": {
+      "version": "9.9.0"
+    }
+	},
+
+  // We are using appPort since forwardPorts not yet supported directly
+	// by the CLI. See https://github.com/devcontainers/cli/issues/22
+	// A pre-processor can easily parse devcontainer.json and inject
+	// these values as appropriate. We're omitting that for simplicity.
+	"appPort": [
+		// Expose SSH port for tools that need it (e.g. JetBrains)
+		"127.0.0.1:2222:2222"
+	],
+
+  "runArgs": [
+    "--env-file", "${localWorkspaceFolder}/.devcontainer/devcontainer.env"
+  ],
+
+  // enable persisted bash completion
+  // https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
+  "mounts": [
+    "source=projectname-bashhistory,target=/commandhistory,type=volume"
+  ],
+
+  "forwardPorts": [
+    // forward php xdebug port
+    9003,
+    // forward wp-env ports
+    8888,
+    8889,
+    // forward ssh port
+    2222
+  ],
+
+	// "postCreateCommand": "./.devcontainer/postCreateCommand.sh > .devcontainer/postCreateCommand.log  && code - r wordpress/wp-content/plugins/wp-codespace/wp-codespace.php",
+  // "postStartCommand": "service apache2 start",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "stylelint.vscode-stylelint",
+        "yogensia.searchwpdocs",
+        "johnbillion.vscode-wordpress-hooks",
+        "bmewburn.vscode-intelephense-client",
+        "rexshi.phpdoc-comment-vscode-plugin",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "johnbillion.vscode-wordpress-hooks",
+        "pucelle.vscode-css-navigation",
+        "xdebug.php-debug"
+      ],
+      // Set *default* container specific settings.json values on container create.
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "files.eol": "\n"
+      }
+    }
+  },
+
+  "portsAttributes": {
+		"9003": {
+			"label": "PHP xdebug port"
+		},
+		"8888": {
+			"label": "wp-env developer instance"
+		},
+		"8889": {
+			"label": "wp-env test instance"
+		}
+	},
+
+	// Connect as user vscode More info: https://aka.ms/dev-containers-non-root.
+  // we are using the default non-root user "vscode" to avoid permission issues
+	"remoteUser": "vscode"
+}
