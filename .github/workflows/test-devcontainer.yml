@@ -21,8 +21,10 @@ jobs:
         with:
           # name of the image to use
           imageName: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+
           # enable caching (will build the image only if related files where changed)
           cacheFrom: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+
           runCmd: |
             pnpm install
             pnpm build

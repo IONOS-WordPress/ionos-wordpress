@@ -19,7 +19,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout (GitHub)
         uses: actions/checkout@v4
 
@@ -40,8 +39,10 @@ jobs:
 
           # name of the pushed image
           imageName: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+
           # enable caching (will build the image only if related files where changed)
           cacheFrom: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+
           # make some tests to test the devcontainer image is working
           runCmd: |
             # test if pnpm is properly installed
