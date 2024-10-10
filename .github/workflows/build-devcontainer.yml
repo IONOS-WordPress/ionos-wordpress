@@ -3,13 +3,13 @@ name: 'build devcontainer image'
 on:
   # rebuild any PRs and main branch changes
   pull_request:
-    files:
+    paths:
     - '.github/*'
   push:
     branches:
       - main
       - develop
-    files:
+    paths:
       - '.github/*'
 
 permissions:
