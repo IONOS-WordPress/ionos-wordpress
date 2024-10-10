@@ -3,12 +3,14 @@ name: 'build devcontainer image'
 on:
   # rebuild any PRs and main branch changes
   pull_request:
+    # only rebuild devcontainer image if files in ./github/** are changed
     paths:
     - '.github/**'
   push:
     branches:
       - main
       - develop
+    # only rebuild devcontainer image if files in ./github/** are changed
     paths:
       - '.github/**'
 
