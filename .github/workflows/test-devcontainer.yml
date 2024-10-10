@@ -9,6 +9,9 @@ on:
         default: 'echo "WP_ENV_HOME=${WP_ENV_HOME} !"'
 
 jobs:
+  build-devcontainer-image-if-outdated:
+    uses: ./.github/workflows/build-devcontainer.yml
+
   test:
     runs-on: ubuntu-latest
     steps:

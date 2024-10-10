@@ -10,8 +10,8 @@ runs:
     - name: build image name
       shell: bash
       run: |
-        # construct IMAGE_NAME from repo owner/name and branch
+        # construct image_name from repo owner/name and branch
         # example value : "ghcr.io/IONOS-Wordpress/ionos-wordpress-develop-devcontainer"
-        IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY}-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}-devcontainer"
-        # convert imagename to lowercase and provide it as step variable "image_name"
-        echo "::set-output name=image_name::${IMAGE_NAME@L}"
+        image_name="ghcr.io/${GITHUB_REPOSITORY}-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}-devcontainer"
+        # convert image_name to lowercase and provide it as step variable "image_name"
+        echo "image_name=${image_name@L}" >> $GITHUB_OUTPUT

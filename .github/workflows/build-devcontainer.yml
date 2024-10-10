@@ -13,6 +13,14 @@ on:
     # only rebuild devcontainer image if files in ./github/** are changed
     paths:
       - '.github/**'
+  # make this workflow reusable from other workflows
+  workflow_call:
+    branches:
+      - main
+      - develop
+    # only rebuild devcontainer image if files in ./github/** are changed
+    paths:
+      - '.github/**'
 
 permissions:
   # write-all is too much, but we need to write to packages
