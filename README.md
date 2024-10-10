@@ -345,7 +345,7 @@ Using `changeset` to create a release
 
 ### Git
 
-@TODO: Git Flow vs Git-Flow vs Trunk based development.
+@TODO: Git Flow vs Git-Flow vs Trunk based development. we need a decision here.
 
 #### Workflows
 
