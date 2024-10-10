@@ -37,7 +37,9 @@ jobs:
         with:
           # push image only if the branch is main and the event is push
           push: filter
-          refFilterForPush: refs/heads/main refs/heads/develop
+          refFilterForPush: |
+            refs/heads/main
+            refs/heads/develop
           # "push" is already the default
           # eventFilterForPush: push
 
