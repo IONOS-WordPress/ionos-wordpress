@@ -37,11 +37,12 @@ jobs:
           refFilterForPush: refs/heads/main
           eventFilterForPush: push
 
-          # name of the pushed image
-          imageName: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+          # name of the pushed image ("ghcr.io/wordpress-ionos/wordpres-ionos-devcontainer")
+          # we use variables here to make it more dynamic and reusable in forks
+          imageName: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}-devcontainer
 
           # enable caching (will build the image only if related files where changed)
-          cacheFrom: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+          # cacheFrom: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
 
           # make some tests to test the devcontainer image is working
           runCmd: |
