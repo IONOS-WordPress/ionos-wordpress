@@ -19,15 +19,12 @@ jobs:
       - name: Checkout (GitHub)
         uses: actions/checkout@v4
 
-      - uses: "./.github/shared/devcontainer-image-name"
-        id: devcontainer_image_name
+      # - uses: "./.github/shared/devcontainer-image-name"
+      #   id: devcontainer_image_name
 
       - name: use devcontainer image
         uses: devcontainers/ci@v0.3
         with:
-          # commented out to explicitly USE the devcontainer image built by the build-devcontainer.yml workflow
-          # imageName: ${{ steps.devcontainer_image_name.outputs.image_name  }}
-
           # use the devcontainer_image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
           cacheFrom: ${{ steps.devcontainer_image_name.outputs.image_name  }}
 
