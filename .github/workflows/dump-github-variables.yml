@@ -7,6 +7,9 @@ jobs:
   dump:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout (GitHub)
+        uses: actions/checkout@v4
+
       - uses: "./.github/shared/devcontainer-image-name"
         id: devcontainer_image_name
 
