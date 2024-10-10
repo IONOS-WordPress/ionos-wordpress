@@ -51,7 +51,9 @@ jobs:
             refs/heads/main
             refs/heads/develop
           # "push" is already the default
-          # eventFilterForPush: push
+          eventFilterForPush:
+            push
+            workflow_dispatch
 
           # use the devcontainer_image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
           imageName: ${{ steps.devcontainer_image_name.outputs.image_name  }}
