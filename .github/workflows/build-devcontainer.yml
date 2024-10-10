@@ -35,6 +35,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: "./.github/shared/devcontainer-image-name"
+        id: devcontainer_image_name
 
       - name: Pre-build image and run make ci-build in dev container
         uses: devcontainers/ci@v0.3
@@ -47,8 +48,8 @@ jobs:
           # "push" is already the default
           # eventFilterForPush: push
 
-          # use the IMAGE_NAME environment variable produced by ./.github/shared/devcontainer-image-name.yaml
-          imageName: ${{ env.IMAGE_NAME }}
+          # use the devcontainer_image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
+          imageName: ${{ steps.devcontainer_image_name.outputs.image_name  }}
 
           # make some tests to test the devcontainer image is working
           runCmd: |

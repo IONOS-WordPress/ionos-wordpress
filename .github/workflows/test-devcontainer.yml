@@ -17,15 +17,16 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: "./.github/shared/devcontainer-image-name"
+        id: devcontainer_image_name
 
       - name: use devcontainer image
         uses: devcontainers/ci@v0.3
         with:
           # commented out to explicitly USE the devcontainer image built by the build-devcontainer.yml workflow
-          # imageName: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+          # imageName: ${{ steps.devcontainer_image_name.outputs.image_name  }}
 
-          # enable caching (will build the image only if related files where changed)
-          cacheFrom: ${{ env.IMAGE_NAME }}
+          # use the devcontainer_image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
+          cacheFrom: ${{ steps.devcontainer_image_name.outputs.image_name  }}
 
           runCmd: |
             pnpm install

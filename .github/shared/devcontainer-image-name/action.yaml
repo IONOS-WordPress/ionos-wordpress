@@ -13,5 +13,5 @@ runs:
         # construct IMAGE_NAME from repo owner/name and branch
         # example value : "ghcr.io/IONOS-Wordpress/ionos-wordpress-develop-devcontainer"
         IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY}-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}-devcontainer"
-        # convert imagename to lowercase and store as environment variable
-        echo "IMAGE_NAME=${IMAGE_NAME@L}" >> "${GITHUB_ENV}"
+        # convert imagename to lowercase and provide it as step variable "image_name"
+        echo "::set-output name=image_name::${IMAGE_NAME@L}"
