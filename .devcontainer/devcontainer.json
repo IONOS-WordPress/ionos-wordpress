@@ -28,6 +28,9 @@
 
     "./features/pnpm": {
       "version": "9.9.0"
+    },
+
+    "./features/welcome-message": {
     }
 	},
 

@@ -12,24 +12,37 @@ jobs:
   # build-devcontainer-image-if-outdated:
   #   uses: ./.github/workflows/build-devcontainer.yml
 
-  test:
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+
+  #     - name: Checkout (GitHub)
+  #       uses: actions/checkout@v4
+
+  #     - uses: "./.github/shared/devcontainer-image-name"
+  #       id: devcontainer_image_name
+
+  #     - name: use devcontainer image
+  #       uses: devcontainers/ci@v0.3
+  #       with:
+  #         # use the devcontainer_image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
+  #         cacheFrom: ${{ steps.devcontainer_image_name.outputs.image_name  }}
+
+  #         runCmd: |
+  #           pnpm install
+  #           pnpm build
+  #           ${{ github.event.inputs.additionalTestCmd }}
+
+  container-test-job:
     runs-on: ubuntu-latest
+    container: ghcr.io/ionos-wordpress/ionos-wordpress-develop-devcontainer:latest
+
     steps:
-
-      - name: Checkout (GitHub)
-        uses: actions/checkout@v4
-
       - uses: "./.github/shared/devcontainer-image-name"
         id: devcontainer_image_name
 
-      - name: use devcontainer image
-        uses: devcontainers/ci@v0.3
-        with:
-          # use the devcontainer_image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
-          cacheFrom: ${{ steps.devcontainer_image_name.outputs.image_name  }}
-
-          runCmd: |
+      - name: Check for dockerenv file
+        run: |
             pnpm install
             pnpm build
             ${{ github.event.inputs.additionalTestCmd }}
-

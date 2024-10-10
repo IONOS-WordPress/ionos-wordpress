@@ -24,22 +24,22 @@ RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhisto
     && chown -R $USERNAME /commandhistory \
     && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
 
-# create message to show at first vscode run
-# COPY .devcontainer/welcome.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt
-COPY <<EOF /usr/local/etc/vscode-dev-containers/first-run-notice.txt
-# Setup
+# # create message to show at first vscode run
+# # COPY .devcontainer/welcome.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt
+# COPY <<EOF /usr/local/etc/vscode-dev-containers/first-run-notice.txt
+# # Setup
 
-At first time you need to install the dependencies using the "pnpm install --frozen-lockfile" command.
+# At first time you need to install the dependencies using the "pnpm install --frozen-lockfile" command.
 
-# Development
+# # Development
 
-Run "pnpm start" to start the WordPress development environment.
+# Run "pnpm start" to start the WordPress development environment.
 
-Execute "jq '.scripts' package.json" to see available scripts.
+# Execute "jq '.scripts' package.json" to see available scripts.
 
-Have fun !
+# Have fun !
 
-EOF
+# EOF
 
 USER $USERNAME
 
