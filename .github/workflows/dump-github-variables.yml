@@ -7,7 +7,7 @@ jobs:
   dump:
     runs-on: ubuntu-latest
     steps:
-      - uses: ".github/shared/devcontainer-image-name"
+      - uses: "./.github/shared/devcontainer-image-name"
         id: devcontainer_image_name
 
       - name: Dump GitHub context
