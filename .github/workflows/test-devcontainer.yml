@@ -16,6 +16,8 @@ jobs:
       - name: Checkout (GitHub)
         uses: actions/checkout@v4
 
+      - uses: "./.github/shared/devcontainer-image-name"
+
       - name: use devcontainer image
         uses: devcontainers/ci@v0.3
         with:
@@ -23,7 +25,7 @@ jobs:
           # imageName: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
 
           # enable caching (will build the image only if related files where changed)
-          cacheFrom: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+          cacheFrom: ${{ env.IMAGE_NAME }}
 
           runCmd: |
             pnpm install
