@@ -38,8 +38,8 @@ jobs:
     container: ghcr.io/ionos-wordpress/ionos-wordpress-develop-devcontainer:latest
 
     steps:
-      - uses: "./.github/shared/devcontainer-image-name"
-        id: devcontainer_image_name
+      # - uses: "./.github/shared/devcontainer-image-name"
+      #   id: devcontainer_image_name
 
       - name: Check for dockerenv file
         run: |
