@@ -14,4 +14,6 @@ runs:
         # example value : "ghcr.io/IONOS-Wordpress/ionos-wordpress-develop-devcontainer"
         image_name="ghcr.io/${GITHUB_REPOSITORY}-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}-devcontainer"
         # convert image_name to lowercase and provide it as step variable "image_name"
-        echo "image_name=${image_name@L}" >> $GITHUB_OUTPUT
+        echo "image_name=${image_name@L}"
+        echo "image_name=${image_name@L}" >> "$GITHUB_OUTPUT"
+
