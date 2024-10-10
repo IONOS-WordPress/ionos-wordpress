@@ -4,13 +4,13 @@ on:
   # rebuild any PRs and main branch changes
   pull_request:
     paths:
-    - '.github/*'
+    - '.github/**'
   push:
     branches:
       - main
       - develop
     paths:
-      - '.github/*'
+      - '.github/**'
 
 permissions:
   # write-all is too much, but we need to write to packages
