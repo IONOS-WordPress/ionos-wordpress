@@ -39,7 +39,10 @@ jobs:
 
           # name of the pushed image ("ghcr.io/wordpress-ionos/wordpress-ionos-devcontainer")
           # we use variables here to make it more dynamic and reusable in forks
-          imageName: ghcr.io/${{ lowercase(github.repository) }}-devcontainer
+          # devnote :
+          # workflow variable github.repository can be accessed as shell variable GITHUB_REPOSITORY.
+          # the to lowercase conversion can be done using bash inline substitution by appending @L to the variable name
+          imageName: "ghcr.io/${GITHUB_REPOSITORY@L}-devcontainer"
 
           # enable caching (will build the image only if related files where changed)
           # cacheFrom: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
