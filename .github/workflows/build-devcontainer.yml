@@ -29,20 +29,22 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # devnote : workflow variable github.repository can be accessed as shell variable GITHUB_REPOSITORY.
-      # the to lowercase conversion can be done using bash inline substitution by appending @L to the variable name
-      # example : "IONOS-WordPress/ionos-wordpress" will be converted to "ionos-wordpress/ionos-wordpress" and stored in environment variable IMAGE_NAME
-      - name: lowercase github.repository
+      - name: build image name
         run: |
-          echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY@L}-devcontainer" >> ${GITHUB_ENV}
+          # construct IMAGE_NAME from repo owner/name and branch
+          # example value : "ghcr.io/IONOS-Wordpress/ionos-wordpress-develop-devcontainer"
+          IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY}-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}-devcontainer"
+          # convert imagename to lowercase and store as environment variable
+          echo "${IMAGE_NAME@L}" >> ${GITHUB_ENV}
 
       - name: Pre-build image and run make ci-build in dev container
         uses: devcontainers/ci@v0.3
         with:
           # push image only if the branch is main and the event is push
           push: filter
-          refFilterForPush: refs/heads/main
-          eventFilterForPush: push
+          refFilterForPush: refs/heads/main refs/heads/develop
+          # "push" is already the default
+          # eventFilterForPush: push
 
           # name of the pushed image (example : "ghcr.io/wordpress-ionos/wordpress-ionos-devcontainer")
           imageName: ${{ env.IMAGE_NAME }}
