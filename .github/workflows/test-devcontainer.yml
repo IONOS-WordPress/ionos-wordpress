@@ -22,6 +22,10 @@ jobs:
       - uses: "./.github/shared/devcontainer-image-name"
         id: devcontainer_image_name
 
+      - shell: bash
+        run: |
+          echo "devcontainer image name: ${{ steps.devcontainer_image_name.outputs.image_name  }}"
+
       - name: use devcontainer image
         uses: devcontainers/ci@v0.3
         with:
