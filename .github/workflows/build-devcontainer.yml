@@ -51,8 +51,7 @@ jobs:
           refFilterForPush: |
             refs/heads/main
             refs/heads/develop
-          # "push" is already the default
-          eventFilterForPush:
+          eventFilterForPush: |
             push
             workflow_dispatch
 
