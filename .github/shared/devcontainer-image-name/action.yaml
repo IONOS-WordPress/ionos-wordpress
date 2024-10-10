@@ -8,6 +8,7 @@ runs:
   using: "composite"
   steps:
     - name: build image name
+      shell: bash
       run: |
         # construct IMAGE_NAME from repo owner/name and branch
         # example value : "ghcr.io/IONOS-Wordpress/ionos-wordpress-develop-devcontainer"
