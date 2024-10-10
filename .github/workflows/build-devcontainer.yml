@@ -1,4 +1,5 @@
 name: 'build devcontainer image'
+
 on:
   # rebuild any PRs and main branch changes
   pull_request:
@@ -29,13 +30,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: build image name
-        run: |
-          # construct IMAGE_NAME from repo owner/name and branch
-          # example value : "ghcr.io/IONOS-Wordpress/ionos-wordpress-develop-devcontainer"
-          IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY}-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}-devcontainer"
-          # convert imagename to lowercase and store as environment variable
-          echo "IMAGE_NAME=${IMAGE_NAME@L}" >> "${GITHUB_ENV}"
+      - uses: "./.github/shared/devcontainer-image-name.yaml"
 
       - name: Pre-build image and run make ci-build in dev container
         uses: devcontainers/ci@v0.3
@@ -46,7 +41,7 @@ jobs:
           # "push" is already the default
           # eventFilterForPush: push
 
-          # name of the pushed image (example : "ghcr.io/wordpress-ionos/wordpress-ionos-devcontainer")
+          # use the IMAGE_NAME environment variable produced by ./.github/shared/devcontainer-image-name.yaml
           imageName: ${{ env.IMAGE_NAME }}
 
           # make some tests to test the devcontainer image is working

@@ -1,0 +1,16 @@
+name: "devcontainer image name"
+description: |
+  set up environment variable IMAGE_NAME containing the computed dev container image.
+  the dev container image name is constructed from the repository owner/name and the branch name all lowercased.
+  example : ghcr.io/IONOS-Wordpress/ionos-wordpress-develop-devcontainer for develop branch
+
+runs:
+  using: "composite"
+  steps:
+    - name: build image name
+      run: |
+        # construct IMAGE_NAME from repo owner/name and branch
+        # example value : "ghcr.io/IONOS-Wordpress/ionos-wordpress-develop-devcontainer"
+        IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY}-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}-devcontainer"
+        # convert imagename to lowercase and store as environment variable
+        echo "IMAGE_NAME=${IMAGE_NAME@L}" >> "${GITHUB_ENV}"
