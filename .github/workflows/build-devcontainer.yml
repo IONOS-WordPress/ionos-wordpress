@@ -35,7 +35,7 @@ jobs:
           # example value : "ghcr.io/IONOS-Wordpress/ionos-wordpress-develop-devcontainer"
           IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY}-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}-devcontainer"
           # convert imagename to lowercase and store as environment variable
-          echo "${IMAGE_NAME@L}" >> $GITHUB_ENV
+          echo "IMAGE_NAME=${IMAGE_NAME@L}" >> "${GITHUB_ENV}"
 
       - name: Pre-build image and run make ci-build in dev container
         uses: devcontainers/ci@v0.3
