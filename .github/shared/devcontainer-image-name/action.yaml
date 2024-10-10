@@ -17,3 +17,9 @@ runs:
         echo "image_name=${image_name@L}"
         echo "image_name=${image_name@L}" >> "$GITHUB_OUTPUT"
 
+    - name: Dump steps context
+      shell: bash
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$STEPS_CONTEXT"
+
