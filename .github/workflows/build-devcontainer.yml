@@ -27,6 +27,7 @@ permissions:
 
 jobs:
   build:
+    name: 'build and publish devcontainer image'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (GitHub)
