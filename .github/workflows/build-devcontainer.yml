@@ -29,6 +29,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # devnote : workflow variable github.repository can be accessed as shell variable GITHUB_REPOSITORY.
+      # the to lowercase conversion can be done using bash inline substitution by appending @L to the variable name
+      # example : "IONOS-WordPress/ionos-wordpress" will be converted to "ionos-wordpress/ionos-wordpress" and stored in environment variable IMAGE_NAME
+      - name: lowercase github.repository
+        run: |
+          echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY@L}-devcontainer" >> ${GITHUB_ENV}
+
       - name: Pre-build image and run make ci-build in dev container
         uses: devcontainers/ci@v0.3
         with:
@@ -37,15 +44,8 @@ jobs:
           refFilterForPush: refs/heads/main
           eventFilterForPush: push
 
-          # name of the pushed image ("ghcr.io/wordpress-ionos/wordpress-ionos-devcontainer")
-          # we use variables here to make it more dynamic and reusable in forks
-          # devnote :
-          # workflow variable github.repository can be accessed as shell variable GITHUB_REPOSITORY.
-          # the to lowercase conversion can be done using bash inline substitution by appending @L to the variable name
-          imageName: "ghcr.io/${GITHUB_REPOSITORY@L}-devcontainer"
-
-          # enable caching (will build the image only if related files where changed)
-          # cacheFrom: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+          # name of the pushed image (example : "ghcr.io/wordpress-ionos/wordpress-ionos-devcontainer")
+          imageName: ${{ env.IMAGE_NAME }}
 
           # make some tests to test the devcontainer image is working
           runCmd: |
