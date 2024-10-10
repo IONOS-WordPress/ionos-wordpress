@@ -9,8 +9,8 @@ on:
         default: 'echo "WP_ENV_HOME=${WP_ENV_HOME} !"'
 
 jobs:
-  build-devcontainer-image-if-outdated:
-    uses: ./.github/workflows/build-devcontainer.yml
+  # build-devcontainer-image-if-outdated:
+  #   uses: ./.github/workflows/build-devcontainer.yml
 
   test:
     runs-on: ubuntu-latest
@@ -19,8 +19,8 @@ jobs:
       - name: Checkout (GitHub)
         uses: actions/checkout@v4
 
-      # - uses: "./.github/shared/devcontainer-image-name"
-      #   id: devcontainer_image_name
+      - uses: "./.github/shared/devcontainer-image-name"
+        id: devcontainer_image_name
 
       - name: use devcontainer image
         uses: devcontainers/ci@v0.3
