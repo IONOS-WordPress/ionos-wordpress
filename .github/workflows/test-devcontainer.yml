@@ -19,8 +19,8 @@ jobs:
       - name: use devcontainer image
         uses: devcontainers/ci@v0.3
         with:
-          # name of the image to use
-          imageName: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
+          # commented out to explicitly USE the devcontainer image built by the build-devcontainer.yml workflow
+          # imageName: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
 
           # enable caching (will build the image only if related files where changed)
           cacheFrom: ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer
