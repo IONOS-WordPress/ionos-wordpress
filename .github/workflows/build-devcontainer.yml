@@ -30,7 +30,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: "./.github/shared/devcontainer-image-name.yaml"
+      - uses: "./.github/shared/devcontainer-image-name"
 
       - name: Pre-build image and run make ci-build in dev container
         uses: devcontainers/ci@v0.3
