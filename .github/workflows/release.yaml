@@ -41,7 +41,11 @@ jobs:
             pnpm build
 
       - name: print output
-        run: echo "stdout was=${{ steps.build_project.outputs.runCmdOutput }}"
+        run: |
+          cat <<EOF
+            stdout was=
+            ${{ steps.list_builded_directories.outputs.runCmdOutput }}"
+          EOF
 
       - uses: "./.github/shared/actions/devcontainer-shell-run"
         id: list_builded_directories
@@ -50,4 +54,8 @@ jobs:
             find -type d -name "build"
 
       - name: print build directories
-        run: echo "stdout was=${{ steps.list_builded_directories.outputs.runCmdOutput }}"
+        run: |
+          cat <<EOF
+            stdout was=
+            ${{ steps.list_builded_directories.outputs.runCmdOutput }}
+          EOF
