@@ -1,9 +1,6 @@
 name: Build DevContainer Image
 on:
   workflow_call:
-    paths:
-      - '.github/**'
-      - '.devcontainer/**'
 
     # secrets:
     #   GITHUB_TOKEN:
