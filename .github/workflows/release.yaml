@@ -27,12 +27,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: display output name
-        run: echo "image_name=${{ steps.build_dev_container_image.outputs.image_name }}"
-
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
+        run: echo "image_name=${{ jobs.build_dev_container_image.outputs.image_name }}"
 
   build-dev-container-image:
     uses: ./.github/workflows/build-devcontainer-image.yaml
