@@ -1,4 +1,4 @@
-name: 'test devcontainer image'
+name: 'manual test devcontainer image'
 on:
   # can only be triggered manually
   workflow_dispatch:

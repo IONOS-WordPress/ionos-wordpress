@@ -1,21 +1,13 @@
-name: 'build devcontainer image'
+name: 'release'
 
 on:
   # rebuild any PRs and main branch changes
   pull_request:
-    # only rebuild devcontainer image if files in ./github/** are changed
-    paths:
-    - '.github/**'
+
   push:
     branches:
       - main
       - develop
-    # only rebuild devcontainer image if files in ./github/** are changed
-    paths:
-      - '.github/**'
-  # make this workflow reusable from other workflows
-  workflow_call:
-
 
 permissions:
   # write-all is too much, but we need to write to packages
@@ -26,8 +18,7 @@ permissions:
   id-token: write
 
 jobs:
-  build:
-    name: 'build and publish devcontainer image'
+  devcontainer-image:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (GitHub)
@@ -53,10 +44,25 @@ jobs:
             refs/heads/develop
           eventFilterForPush: |
             push
-            workflow_dispatch
 
           # use the devcontainer_image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
           imageName: ${{ steps.devcontainer_image_name.outputs.image_name  }}
+
+  build:
+    runs-on: ubuntu-latest
+    needs: devcontainer-image
+    steps:
+      - name: Checkout (GitHub)
+        uses: actions/checkout@v4
+
+      - uses: "./.github/shared/devcontainer-image-name"
+        id: devcontainer_image_name
+
+      - name: use devcontainer image
+        uses: devcontainers/ci@v0.3
+        with:
+          # use the devcontainer_image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
+          cacheFrom: ${{ steps.devcontainer_image_name.outputs.image_name  }}
 
           # make some tests to test the devcontainer image is working
           runCmd: |
@@ -64,4 +70,3 @@ jobs:
             command -v pnpm
             # test if devcontainer environment is properly set
             env | grep WP_ENV_HOME
-
