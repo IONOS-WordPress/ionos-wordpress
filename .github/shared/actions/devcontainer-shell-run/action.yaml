@@ -20,6 +20,7 @@ runs:
     - uses: devcontainers/ci@v0.3
       id: devcontainer_shell_run
       with:
+        push: never
         cacheFrom: ${{ steps.image_name.outputs.image_name }}
         runCmd: ${{ inputs.runCmd }}
 
