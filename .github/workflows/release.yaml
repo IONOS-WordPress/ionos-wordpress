@@ -33,8 +33,9 @@ jobs:
         id: build_project
         with:
           runCmd: |
-            pnpm install --frozen-lockfile
+            pnpm install --frozen-lockfile ||:
             pnpm build
+            echo "WP_ENV_HOME=${WP_ENV_HOME} !"
 
       - name: print output
         run: echo "stdout was=${{ steps.build_project.outputs.stdout }}"

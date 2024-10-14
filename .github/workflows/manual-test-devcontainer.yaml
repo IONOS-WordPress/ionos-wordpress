@@ -27,7 +27,7 @@ jobs:
         with:
           push: never
           # use the devcontainer_image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
-          cacheFrom: ${{ steps.devcontainer_image_name.outputs.image_name  }}
+          cacheFrom: ${{ steps.devcontainer_image_name.outputs.image_name }}
 
           runCmd: |
             pnpm install
