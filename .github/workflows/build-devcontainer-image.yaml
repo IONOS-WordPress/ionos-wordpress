@@ -23,7 +23,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      image-name: ${{ steps.devcontainer_image_name.outputs.image_name }}
+      image-name: ${{ steps.image_name.outputs.image_name }}
+      baldrian: "schmeckt nicht"
     steps:
       - name: Checkout (GitHub)
         uses: actions/checkout@v4
