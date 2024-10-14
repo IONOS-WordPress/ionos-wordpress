@@ -29,11 +29,6 @@ jobs:
       - name: display output name
         run: echo "image_name=${{ needs.build_devcontainer_image.outputs.image_name }}"
 
-      - name: Dump GitHub Needs context
-        env:
-          NEEDS_CONTEXT: ${{ toJson(needs) }}
-        run: echo "$NEEDS_CONTEXT"
-
   build-devcontainer-image:
     uses: ./.github/workflows/build-devcontainer-image.yaml
 
