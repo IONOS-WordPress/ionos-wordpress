@@ -23,15 +23,11 @@
       "ghcr.io/devcontainers/features/git:1": {
       "version": "latest"
     },
-    // Optional - For tools that require SSH
-		"ghcr.io/devcontainers/features/sshd:1": { },
+    "ghcr.io/devcontainers/features/github-cli:1": {
 
-    "./features/pnpm": {
-      "version": "9.9.0"
     },
-
-    "./features/welcome-message": {
-    }
+    // Optional - For tools that require SSH
+		"ghcr.io/devcontainers/features/sshd:1": { }
 	},
 
   // We are using appPort since forwardPorts not yet supported directly
