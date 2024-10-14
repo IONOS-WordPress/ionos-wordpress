@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: build dev container image
-        uses: ./.github/workflows/build-devcontainer.yml
+        uses: ./.github/workflows/build-dev-container
         id: build_devcontainer_image
 
       - name: display output name
