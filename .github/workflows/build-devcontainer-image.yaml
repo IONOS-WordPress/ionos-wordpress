@@ -10,6 +10,8 @@ on:
     outputs:
       image_name:
         value: ${{ jobs.build.outputs.image_name }}
+      all:
+        value: ${{ toJson(jobs) }}
 
 permissions:
   # write-all is too much, but we need to write to packages
