@@ -9,7 +9,9 @@ on:
     # map the workflow outputs to job outputs
     outputs:
       image_name:
-        value: ${{ jobs.build_devcontainer_image.image_name }}
+        value: ${{ jobs.build.image_name }}
+      all:
+        value: ${{ toJson(jobs) }}
 
 permissions:
   # write-all is too much, but we need to write to packages
@@ -18,7 +20,7 @@ permissions:
   packages: write
 
 jobs:
-  build-devcontainer-image:
+  build:
     runs-on: ubuntu-latest
     outputs:
       image-name: ${{ steps.devcontainer_image_name.outputs.image_name }}
@@ -34,7 +36,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: "./.github/shared/actions/devcontainer-image-name"
-        id: devcontainer_image_name
+        id: image_name
 
       - name: Build dev container and push to GitHub Container Registry
         uses: devcontainers/ci@v0.3
@@ -46,6 +48,6 @@ jobs:
             refs/heads/develop
           eventFilterForPush: |
             push
-          imageName: ${{ steps.devcontainer_image_name.outputs.image_name }}
+          imageName: ${{ steps.image_name.outputs.image_name }}
 
 
