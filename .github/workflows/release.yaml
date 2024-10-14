@@ -36,9 +36,9 @@ jobs:
         id: build_project
         with:
           runCmd: |
-            echo "vorher"
-            echo "WP_ENV_HOME=${WP_ENV_HOME} !"
-            echo "nachher"
+            echo "vorher";
+            echo "WP_ENV_HOME=${WP_ENV_HOME} !";
+            echo "nachher";
 
       - name: print output
         run: echo "stdout was=${{ steps.build_project.outputs.stdout }}"

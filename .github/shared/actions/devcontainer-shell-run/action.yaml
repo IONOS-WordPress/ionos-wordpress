@@ -28,6 +28,6 @@ runs:
       uses: devcontainers/ci@v0.3
       with:
         push: never
-        cacheFrom: ${{ steps.image_name.outputs.image_name }}
+        imageName: ${{ steps.image_name.outputs.image_name }}
         runCmd: |
           echo "stdout=$(${{ inputs.runCmd }})" >> "$GITHUB_OUTPUT"
