@@ -34,5 +34,5 @@ jobs:
         run: echo "image_name=${{ steps.build_devcontainer_image.outputs.image_name }}"
 
   build-dev-container-image:
-    uses: .github/workflows/build-dev-container-image.yaml@develop
+    uses: ./.github/workflows/build-dev-container-image.yaml
 
