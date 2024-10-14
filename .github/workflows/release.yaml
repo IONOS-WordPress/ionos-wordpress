@@ -34,6 +34,6 @@ jobs:
           GITHUB_NEEDS: ${{ toJson(needs) }}
         run: echo "$GITHUB_NEEDS"
 
-  build-devcontainer-image:
+  build_devcontainer_image:
     uses: ./.github/workflows/build-devcontainer-image.yaml
 
