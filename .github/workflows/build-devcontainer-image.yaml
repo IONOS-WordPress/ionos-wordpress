@@ -46,6 +46,6 @@ jobs:
             refs/heads/develop
           eventFilterForPush: |
             push
-          imageName: ${{ steps.devcontainer_image_name.outputs.image_name  }}
+          imageName: ${{ steps.devcontainer_image_name.outputs.image_name }}
 
 
