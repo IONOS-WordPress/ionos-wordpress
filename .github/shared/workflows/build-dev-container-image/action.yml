@@ -9,10 +9,10 @@ on:
       image_name:
         value: ${{ jobs.build_devcontainer_image.image_name }}
 
-permissions:
-  # write-all is too much, but we need to write to packages
-  # see https://github.com/orgs/community/discussions/57724 for more info
-  contents: read
+  permissions:
+    # write-all is too much, but we need to write to packages
+    # see https://github.com/orgs/community/discussions/57724 for more info
+    contents: read
 
 jobs:
   build-devcontainer-image:
