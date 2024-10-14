@@ -44,7 +44,7 @@ jobs:
         run: |
           cat <<EOF
             stdout was=
-            ${{ steps.list_builded_directories.outputs.runCmdOutput }}"
+            ${{ steps.build_project.outputs.runCmdOutput }}"
           EOF
 
       - uses: "./.github/shared/actions/devcontainer-shell-run"
