@@ -1,5 +1,5 @@
 # this workflow is just for debugging/development purposes and not needed for the actual workflow
-name: manula dump github variables
+name: manual dump github variables
 on:
   workflow_dispatch:
 
@@ -10,7 +10,7 @@ jobs:
       - name: Checkout (GitHub)
         uses: actions/checkout@v4
 
-      - uses: "./.github/shared/devcontainer-image-name"
+      - uses: "./.github/shared/actions/devcontainer-image-name"
         id: devcontainer_image_name
 
       - name: Dump GitHub context
