@@ -23,16 +23,21 @@ jobs:
     needs:
       - build_devcontainer_image
     steps:
-      - name: Checkout (GitHub)
+      - name: checkout branch from git
         uses: actions/checkout@v4
 
       - name: display output name
         run: echo "image_name=${{ needs.build_devcontainer_image.outputs.image_name }}"
 
-      - name: Dump GitHub context
-        env:
-          GITHUB_NEEDS: ${{ toJson(needs) }}
-        run: echo "$GITHUB_NEEDS"
+      - uses: "./.github/shared/actions/devcontainer-shell-run"
+        id: build_project
+        with:
+          run: |
+            pnpm install --frozen-lockfile
+            pnpm build
+
+      - name: print output
+        run: echo "stdout was=${{ steps.build_project.outputs.stdout }}"
 
   build_devcontainer_image:
     uses: ./.github/workflows/build-devcontainer-image.yaml

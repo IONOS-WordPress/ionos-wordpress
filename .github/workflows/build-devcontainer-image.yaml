@@ -23,7 +23,7 @@ jobs:
     outputs:
       image_name: ${{ steps.image_name.outputs.image_name }}
     steps:
-      - name: Checkout (GitHub)
+      - name: checkout branch from git
         uses: actions/checkout@v4
 
       - name: Login to GitHub Container Registry

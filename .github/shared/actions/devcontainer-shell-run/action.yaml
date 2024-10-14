@@ -1,0 +1,33 @@
+name: "devcontainer shell run"
+description: |
+  set up computed dev container image and run a command within the dev container.
+inputs:
+  run:  # id of input
+    description: 'the command(s) to execute using the image'
+    required: true
+    default: 'echo "WP_ENV_HOME=${WP_ENV_HOME} !"'
+
+outputs:
+  stdout:
+    description: "the output of the command"
+    value: ${{ steps.devcontainer_shell_run.outputs.stdout }}
+#   stderr:
+#     description: "the error output of the command"
+#     value: ${{ steps.devcontainer_shell_run.outputs.stderr }}
+#   exit_code:
+#     description: "the exit code of the command"
+#     value: ${{ steps.devcontainer_shell_run.outputs.exit_code }}
+
+runs:
+  using: "composite"
+  steps:
+    - uses: "./.github/shared/actions/devcontainer-image-name"
+      id: image_name
+
+    - name: use dev container to execute command
+      uses: devcontainers/ci@v0.3
+      with:
+        push: never
+        cacheFrom:: ${{ steps.image_name.outputs.image_name }}
+      run: |
+        echo "stdout=$(${{ inputs.run }})" >> "$GITHUB_OUTPUT"

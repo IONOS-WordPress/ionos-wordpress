@@ -11,13 +11,12 @@ description: |
 outputs:
   image_name:
     description: "the computed image name"
-    value: ${{ steps.compute-image-name.outputs.image_name }}
+    value: ${{ steps.compute_image_name.outputs.image_name }}
 
 runs:
   using: "composite"
   steps:
-    - name: compute devcontainer image name
-      id: compute-image-name
+    - id: compute_image_name
       shell: bash
       run: |
         # construct image_name from repo owner/name and branch

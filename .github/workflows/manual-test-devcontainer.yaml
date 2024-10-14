@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Checkout (GitHub)
+      - name: checkout branch from git
         uses: actions/checkout@v4
 
       - uses: "./.github/shared/devcontainer-image-name"
