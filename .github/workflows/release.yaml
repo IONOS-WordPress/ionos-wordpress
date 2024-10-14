@@ -32,7 +32,7 @@ jobs:
       - uses: "./.github/shared/actions/devcontainer-shell-run"
         id: build_project
         with:
-          run: |
+          runCmd: |
             pnpm install --frozen-lockfile
             pnpm build
 

@@ -2,7 +2,7 @@ name: "devcontainer shell run"
 description: |
   set up computed dev container image and run a command within the dev container.
 inputs:
-  run:  # id of input
+  runCmd:  # id of input
     description: 'the command(s) to execute using the image'
     required: true
     default: 'echo "WP_ENV_HOME=${WP_ENV_HOME} !"'
@@ -28,6 +28,6 @@ runs:
       uses: devcontainers/ci@v0.3
       with:
         push: never
-        cacheFrom:: ${{ steps.image_name.outputs.image_name }}
-      run: |
-        echo "stdout=$(${{ inputs.run }})" >> "$GITHUB_OUTPUT"
+        cacheFrom: ${{ steps.image_name.outputs.image_name }}
+        runCmd: |
+          echo "stdout=$(${{ inputs.runCmd }})" >> "$GITHUB_OUTPUT"
