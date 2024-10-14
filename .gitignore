@@ -10,3 +10,4 @@ node_modules
 .env.local
 /.wp-env.json
 /.wp-env.override.json
+/bin/act
