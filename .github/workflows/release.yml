@@ -34,7 +34,7 @@ jobs:
       - uses: "./.github/shared/devcontainer-image-name"
         id: devcontainer_image_name
 
-      - name: Pre-build image and run make ci-build in dev container
+      - name: Build dev container and push to GitHub Container Registry
         uses: devcontainers/ci@v0.3
         with:
           # push image only if the branch is main and the event is push
@@ -61,6 +61,7 @@ jobs:
       - name: use devcontainer image
         uses: devcontainers/ci@v0.3
         with:
+          push: never
           # use the devcontainer_image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
           cacheFrom: ${{ steps.devcontainer_image_name.outputs.image_name  }}
 
