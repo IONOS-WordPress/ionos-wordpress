@@ -36,7 +36,8 @@ jobs:
         id: build_project
         with:
           runCmd: |
-            pnpm install --frozen-lockfile
+            # pnpm store seems to be installed in the image in some cases
+            echo 'y' | pnpm install --frozen-lockfile
             echo "WP_ENV_HOME=${WP_ENV_HOME} !"
             pnpm build
 

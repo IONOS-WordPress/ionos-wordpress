@@ -1,0 +1,90 @@
+# Local workflow development
+
+Local GitHub workflow development frees you from commit and push cycles to test your workflows.
+
+Local GitHub workflow development can be done using https://github.com/nektos/act.
+
+## Setup
+
+- Create a `./.secrets` file containing a [GitHub personal access token (classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) : `GITHUB_TOKEN=your_token`.
+
+  _See https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-with-a-personal-access-token-classic for reasons why the classic token type is required_
+
+  _Ensure **not committing** the `./.secrets` file to GIT._
+
+- Act can be used on both Linux host machine and inside the dev container:
+
+  - in local Linux host machine
+
+    (Option 1) Install act using the following command:
+
+    ```bash
+    curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
+    # see https://nektosact.com/installation/index.html#bash-script
+    ```
+
+    (Option 2)  If your Linux is in the docker group you can use the following command:
+
+    ```bash
+    curl https://raw.githubusercontent.com/nektos/act/master/install.sh | bash
+    ```
+
+    start act using the following command:
+
+    ```bash
+    ./bin/act
+    ```
+
+    In case of any error connecting to docker, you can start the docker service using the following command:
+
+    ```bash
+    systemctl start docker
+    ```
+    Repeat the act command after starting the docker service to ensure everything is working fine.
+
+    Now you can use act to run the workflows locally. For example to trigger the `build` workflow:
+
+    ```bash
+    # a bit hacky : we need to supply the GITHUB_TOKEN using the environment
+    # since current act version (0.2.68) does'nt take .secrets file into account (it's probably a bug)
+    ./bin/act --env-file ./.secrets
+    ```
+
+  - inside the dev container (preferred way)
+
+    - authenticate to GitHub using the GitHub CLI:
+
+    ```bash
+    (source ./.secrets && echo $GITHUB_TOKEN) | gh auth login --with-token
+    ```
+    - install act as gh extension
+
+    ```bash
+    # gh ist the GitHub CLi already preinstalled in the dev container
+    # see https://nektosact.com/installation/gh.html
+    gh extension install https://github.com/nektos/gh-act
+    ```
+
+    - start act the first time using the following command:
+
+    ```bash
+    gh act --env-file ./.secrets
+    ```
+
+    At first time act will download the act container image.
+
+    _Choose the medium image type if act asks you to choose._
+
+    - Now you can use act to run the workflows locally. For example to trigger the `build` workflow:
+
+    ```bash
+    # a bit hacky : we need to supply the GITHUB_TOKEN using the environment
+    # since current act version (0.2.68) does'nt take .secrets file into account (it's probably a bug)
+    gh act --env-file ./.secrets
+    ```
+
+# Links
+
+- see https://nektosact.com/usage/index.html for detailed commandline actions
+
+

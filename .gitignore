@@ -6,8 +6,9 @@ node_modules
 /packages/*/*/dist
 /.vscode/settings.json
 /.vscode/launch.json
-.secrets
+/.secrets
 .env.local
+/bin/act
 /.wp-env.json
 /.wp-env.override.json
 /bin/act
