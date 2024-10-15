@@ -26,6 +26,9 @@ jobs:
       - name: checkout branch from git
         uses: actions/checkout@v4
 
+      - name: Echo GitHub Repository Owner
+        run: echo "github.repository_owner=${{ github.repository_owner }}"
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -44,6 +47,7 @@ jobs:
             refs/heads/main
             refs/heads/develop
           eventFilterForPush: push
+          context: ./.devcontainer
           imageName: ${{ steps.image_name.outputs.image_name }}
 
 
