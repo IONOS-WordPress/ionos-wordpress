@@ -22,6 +22,5 @@ runs:
       with:
         push: never
         cacheFrom: ${{ steps.image_name.outputs.image_name }}
-        context: ./.devcontainer
         runCmd: ${{ inputs.runCmd }}
 

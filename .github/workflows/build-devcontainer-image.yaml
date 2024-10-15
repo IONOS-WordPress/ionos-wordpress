@@ -47,7 +47,6 @@ jobs:
             refs/heads/main
             refs/heads/develop
           eventFilterForPush: push
-          context: ./.devcontainer
           imageName: ${{ steps.image_name.outputs.image_name }}
 
 
