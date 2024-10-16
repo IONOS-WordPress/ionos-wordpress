@@ -4,6 +4,9 @@ node_modules
 /packages/*/*/node_modules
 /packages/*/*/build
 /packages/*/*/dist
+/packages/*/*/languages/*.json
+/packages/*/*/languages/*.mo
+/packages/*/*/languages/*.php
 /.vscode/settings.json
 /.vscode/launch.json
 /.secrets

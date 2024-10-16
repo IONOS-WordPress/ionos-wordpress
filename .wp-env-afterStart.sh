@@ -91,6 +91,7 @@ cat << EOF > '.vscode/settings.json'
     "**/build/**" : true,
     "**/build-module/**" : true
   },
+  "intelephense.environment.phpVersion": "8.3",
   "intelephense.environment.includePaths": [
     "${WPENV_INSTALLPATH}/WordPress"
   ],

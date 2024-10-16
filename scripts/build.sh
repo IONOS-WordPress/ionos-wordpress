@@ -33,121 +33,148 @@ $(tar -ztf $path/dist/*.tgz | sort)
 EOF
 }
 
+# invoke dockerized wp-cli with current directory mounted at /var/www/html
+# the used docker image is the docker image wordpress:cli is independant from wp-env free us from starting up wp-env when building.
+# image to will be downloaded on demand.
+#
+# @param $1 path to workspace package directory
+#
+function ionos.wordpress.build_workspace_package_wp_plugin.wp_cli() {
+  docker run \
+    $DOCKER_FLAGS \
+    --user $DOCKER_USER \
+    -v $(pwd):/var/www/html \
+    wordpress:cli-php8.3 \
+    wp \
+    $@
+}
+
 # build a monorepo workspace package of type wp-plugin
 #
 # @param $1 path to workspace package directory
 #
 function ionos.wordpress.build_workspace_package_wp_plugin() {
-  echo "ionos.wordpress.build_workspace_package_wp_plugin : generic build no yet implemented"
-  # return -1
+  # (example : wp-plugin/essentials)
+  local path="$(pwd)/packages/$1"
 
-# > rm -rf $(@D)/{dist,build,build-info}
-# > $(PNPM) -r --filter "$$(jq -r '.name | values' $$PACKAGE_JSON)" --if-present run pre-build
-# > if jq --exit-status '.scripts | has("build")' $$PACKAGE_JSON >/dev/null; then
-# >   $(PNPM) -r --filter "$$(jq -r '.name | values' $$PACKAGE_JSON)" run build
-# > elif [[ -d $(@D)/src ]]; then
-# >   if [[ -f "$(@D)/cm4all-wp-bundle.json" ]]; then
-# >     mkdir -p $(@D)/build/
-# >
-# >     # transpile src/{*.mjs} files
-# >     MJS_FILES="$$(find $(@D)/src -maxdepth 1 -type f -name '*.mjs')"
-# >     [[ "$$MJS_FILES" != '' ]] && $(MAKE) $$(echo "$$MJS_FILES" | sed -e 's/src/build/g' -e 's/.mjs/.js/g')
-# >     [[ -f $(@D)/src/block.json ]] && cp $(@D)/src/block.json $(@D)/build/block.json
-# >   else
-# >     # using wp-scrips as default
-# >     echo "transpile using wp-scripts from root package"
-# >     $(PNPM) -r --filter "$$(jq -r '.name | values' $$PACKAGE_JSON)" exec wp-scripts build $$(find $(@D)/src -maxdepth 1 -type f -name '*.js' -printf "./src/%f ")
-# >   fi
-# > else
-# >   kambrium.log_skipped "js/css transpilation skipped - no ./src directory nor 'build' script found in $(@D)"
-# > fi
-# >
-# > # compile pot -> po -> mo files
-# > if [[ -d $(@D)/languages ]]; then
-# >   $(MAKE) \
-#       packages/wp-plugin/$*/languages/$*.pot \
-#       $(patsubst %.po,%.mo,$(wildcard packages/wp-plugin/$*/languages/*.po))
-# > else
-# >   kambrium.log_skipped "i18n transpilation skipped - no ./languages directory found"
-# > fi
-# >
-# > $(PNPM) -r --filter "$$(jq -r '.name | values' $$PACKAGE_JSON)" --if-present run post-build
-# >
-# > # update plugin.php metadata
-# > $(MAKE) $(@D)/plugin.php
-# >
-# > # copy plugin code to dist/[plugin-name]
-# > mkdir -p $(@D)/dist/$*
-# > rsync -rupE \
-#     --exclude=node_modules/ \
-#     --exclude=package.json \
-#     --exclude=dist/ \
-#     --exclude=build/ \
-#     --exclude=tests/ \
-#     --exclude=src/ \
-#     --exclude=composer.* \
-#     --exclude=vendor/ \
-#     --exclude=readme.txt \
-#     --exclude=.env \
-#     --exclude=vendor \
-#     --exclude=.secrets \
-#     --exclude=*.kambrium-template \
-#     --exclude=cm4all-wp-bundle.json \
-#     --exclude=rector-config-*.php \
-#     $(@D)/ $(@D)/dist/$*
-# > # copy transpiled js/css to target folder
-# > rsync -rupE $(@D)/build $(@D)/dist/$*/
-# >
-# # > [[ -d '$(@D)/build' ]] || (echo "don't unable to archive build directory(='$(@D)/build') : directory does not exist" >&2 && false)
-# # > find $(@D)/dist/$* -executable -name "*.kambrium-template" | xargs -L1 -I{} make $$(basename "{}")
-# # > find $(@D)/dist/$* -name "*.kambrium-template" -exec rm -v -- {} +
-# > # generate/update readme.txt
-# > kambrium.wp_plugin_dist_readme_txt "$*"
-# # > [[ -d '$(@D)/build' ]] || (echo "don't unable to archive build directory(='$(@D)/build') : directory does not exist" >&2 && false)
-# # > find $(@D)/build -name "*.kambrium-template" -exec rm -v -- {} \;
-# # > # redirecting into the target zip archive frees us from removing an existing archive first
-# > PHP_VERSION=$${PHP_VERSION:-$$(jq -r -e '.config.php_version | values' $$PACKAGE_JSON || jq -r '.config.php_version | values' package.json)}
-# > # make a soft link containing package and php version targeting the default plugin dist folder
-# > (cd $(@D)/dist && ln -s $* $*-$${PACKAGE_VERSION}-php$${PHP_VERSION})
-# > (
-# > # we wrap the loop in a subshell call because of the nullglob shell behaviour change
-# > # nullglob is needed because we want to skip the loop if no rector-config-php*.php files are found
-# > shopt -s nullglob
-# > # process plugin using rector
-# > for RECTOR_CONFIG in $(@D)/*-*-php*.php; do
-# >   RECTOR_CONFIG=$$(basename "$$RECTOR_CONFIG" '.php')
-# >   TARGET_PHP_VERSION="$${RECTOR_CONFIG#*rector-config-php}"
-# >   TARGET_DIR="dist/$*-$${PACKAGE_VERSION}-php$${TARGET_PHP_VERSION}"
-# >   rsync -a '$(@D)/dist/$*/' "$(@D)/$$TARGET_DIR"
-# >   # call dockerized rector
-# >   docker run $(DOCKER_FLAGS) \
-#       --pull=always \
-#       -it \
-#       --rm \
-#       --user "$$(id -u $(USER)):$$(id -g $(USER))" \
-#       -v $$(pwd)/$(@D):/project \
-#       pnpmkambrium/rector-php \
-#       --clear-cache \
-#       --config "$${RECTOR_CONFIG}.php" \
-#       --no-progress-bar \
-#       process \
-#       $$TARGET_DIR
-# >   # update version information in readme.txt and plugin.php down/up-graded plugin variant
-# >   sed -i "s/^ \* Requires PHP:\([[:space:]]*\).*/ \* Requires PHP:\1$${TARGET_PHP_VERSION}/" "$(@D)/$$TARGET_DIR/plugin.php"
-# >   sed -i "s/^Requires PHP:\([[:space:]]*\).*/Requires PHP:\1$${TARGET_PHP_VERSION}/" "$(@D)/$$TARGET_DIR/readme.txt"
-# > done
-# > )
-# > # create zip file for each dist/[plugin]-[version]-[php-version] directory
-# > for DIR in $(@D)/dist/*-*-php*/; do (cd $$DIR && zip -9 -r -q - . >../$$(basename $$DIR).zip); done
-# # > (cd $(@D)/dist/$* && zip -9 -r -q - ./$*/* >../$*-$${PACKAGE_VERSION-php}$${PHP_VERSION}.zip)
-# > cat << EOF | tee $@
-# > $$(cd $(@D)/dist && ls -1shS *.zip)
-# >
-# > $$(echo -n "---")
-# >
-# > $$(for ZIP_ARCHIVE in $(@D)/dist/*.zip; do (cd $$(dirname $$ZIP_ARCHIVE) && unzip -l $$(basename $$ZIP_ARCHIVE) && echo ""); done)
-# > EOF
+  rm -rf $path/{dist,build,build-info}
 
+  PACKAGE_JSON="$path/package.json"
+  PACKAGE_NAME=$(jq -r '.name' $PACKAGE_JSON)
+
+  pnpm --filter "$PACKAGE_NAME" --if-present run prebuild
+
+  # build localisation if languages folder exists
+  if [[ -d $path/languages ]]; then
+    # create plugin.pod file if not exists
+    test -f $path/languages/plugin.pot || touch $path/languages/plugin.pot
+
+    (
+      # ionos.wordpress.build_workspace_package_wp_plugin.wp_cli assumes
+      # that we stay in the the plugin directory
+      cd $path
+
+      # create / update pod file
+      ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-pot \
+      --ignore-domain \
+      --exclude=tests/,vendor/,package.json,node_modules/,build/ \
+      ./ ./languages/*.pot
+
+      # update po files
+      ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n update-po ./languages/*.pot
+
+      if compgen -G "./languages/*.po" > /dev/null; then
+        # compile mo files
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-mo languages/*.po
+
+        # compile json files
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-json languages/*.po --no-purge --pretty-print
+
+        # compile php files
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-php languages/*.po
+      else
+        ionos.wordpress.log_warn "no po files found : consider creating one using '\$(cd $path/languages && msginit -i [pot_file] -l [locale] --no-translator'
+        "
+      fi
+    )
+  else
+    ionos.wordpress.log_warn "processing i18n skipped : no ./languages directory found"
+  fi
+
+  # transpile js/css scripts
+  if [[ -d $path/src ]]; then
+    pnpm --filter "$PACKAGE_NAME" exec wp-scripts build
+  else
+    ionos.wordpress.log_warn "transpiling js/css skipped : no ./src directory found"
+  fi
+
+  # update plugin version in plugin.php
+  PACKAGE_VERSION=$(jq -r '.version' $PACKAGE_JSON)
+  sed -i "s/^ \* Version:\([[:space:]]*\).*/ \* Version:\1$PACKAGE_VERSION/" $path/plugin.php
+
+  pnpm --filter "$PACKAGE_NAME" --if-present run postbuild
+
+  plugin_name="$(basename $path)-$PACKAGE_VERSION"
+
+  # copy plugin code to dist/[plugin-name]
+  mkdir -p $path/dist/$plugin_name
+  rsync -rupE --verbose \
+    --exclude=node_modules/ \
+    --exclude=package.json \
+    --exclude=dist/ \
+    --exclude=build/ \
+    --exclude=languages/*.po \
+    --exclude=languages/*.pot \
+    --exclude=tests/ \
+    --exclude=src/ \
+    --exclude=composer.* \
+    --exclude=vendor/ \
+    --exclude=.env \
+    --exclude=vendor \
+    --exclude=.secrets \
+    $path/ \
+    $path/dist/$plugin_name
+
+  # copy transpiled js/css to target folder
+  rsync -rupE $path/build $path/dist/$plugin_name/
+
+  (
+    # we wrap the loop in a subshell call because of the nullglob shell behaviour change
+    # nullglob is needed because we want to skip the loop if no rector-config-php*.php files are found
+    shopt -s nullglob
+
+    # process plugin using rector
+    for RECTOR_CONFIG in ./rector-config-php*.php; do
+      RECTOR_CONFIG=$(basename "$RECTOR_CONFIG" '.php')
+      TARGET_PHP_VERSION="${RECTOR_CONFIG#*rector-config-php}"
+      TARGET_DIR="dist/${plugin_name}-php${TARGET_PHP_VERSION}"
+      rsync -a $path/dist/${plugin_name}/ $path/$TARGET_DIR
+      # call dockerized rector
+      docker run $DOCKER_FLAGS \
+        --rm \
+        --user "$DOCKER_USER" \
+        -v $path/$TARGET_DIR:/project/dist \
+        -v $(pwd)/${RECTOR_CONFIG}.php:/project/${RECTOR_CONFIG}.php \
+        pnpmkambrium/rector-php \
+        --clear-cache \
+        --config "${RECTOR_CONFIG}.php" \
+        --no-progress-bar \
+        process \
+        dist
+      # update version information in readme.txt and plugin.php down/up-graded plugin variant
+      sed -i "s/^ \* Requires PHP:\([[:space:]]*\).*/ \* Requires PHP:\1${TARGET_PHP_VERSION}/" "$path/$TARGET_DIR/plugin.php"
+      test ! -f $path/$TARGET_DIR/readme.txt || sed -i "s/^Requires PHP:\([[:space:]]*\).*/Requires PHP:\1${TARGET_PHP_VERSION}/" "$path/$TARGET_DIR/readme.txt"
+    done
+  )
+  # create zip file for each dist/[plugin]-[version]-[php-version] directory
+  for DIR in $path/dist/*-*-php*/; do (cd $DIR && zip -9 -r -q - . >../$(basename $DIR).zip); done
+  cat << EOF | tee build-info
+  $(cd $path/dist && ls -1shS *.zip)
+
+  $(echo -n "---")
+
+  $(for ZIP_ARCHIVE in $path/dist/*.zip; do (cd $(dirname $ZIP_ARCHIVE) && unzip -l $(basename $ZIP_ARCHIVE) && echo ""); done)
+EOF
 }
 
 # build a monorepo workspace package
@@ -164,7 +191,8 @@ function ionos.wordpress.build_workspace_package() {
   # (example : [curent-dir]/packages/wp-plugin/essentials)
   local package_path="$(pwd)/packages/$path"
 
-  echo "############### Building package $package_path"
+  ionos.wordpress.log_header "building workspace package ./packages/$path"
+  echo
 
   # (example : [curent-dir]/packages/wp-plugin/essentials/package.json)
   package_json="$package_path/package.json"
@@ -205,6 +233,7 @@ WORKSPACE_PACKAGES=$(pnpm -r --sort exec realpath --relative-to=$(pwd)/packages 
 # call build function for each workspace package
 while read -r path; do
   ionos.wordpress.build_workspace_package $path
+  echo
 done <<< "$WORKSPACE_PACKAGES"
 
 

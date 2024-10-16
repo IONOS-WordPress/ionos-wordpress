@@ -28,6 +28,35 @@ function ionos.wordpress.load_env() {
 }
 export -f ionos.wordpress.load_env
 
+#
+# logs a warning message
+#
+# @param $1 the warning message
+#
+function ionos.wordpress.log_warn() {
+  # see https://unix.stackexchange.com/a/269085/564826
+  echo "$(tput setaf 3)$1$(tput sgr0)"
+}
+export -f ionos.wordpress.log_warn
+
+#
+# logs a header message
+#
+# @param $1 the warning message
+#
+function ionos.wordpress.log_header() {
+  # see https://unix.stackexchange.com/a/269085/564826
+  echo "$(tput bold)$1$(tput sgr0)"
+}
+export -f ionos.wordpress.log_warn
+
+
 export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)
+
+# docker flags to use if docker containers will be invoked
+export DOCKER_FLAGS='-q'
+
+# if docker container should be started with same uid:guid mapping as in host system apply this setting to docker run
+export DOCKER_USER="$(id -u $USER):$(id -g $USER)"
 
 ionos.wordpress.load_env "$GIT_ROOT_PATH"

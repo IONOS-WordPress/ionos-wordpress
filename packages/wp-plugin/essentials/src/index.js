@@ -1,1 +1,3 @@
-console.log("hello world");
+import { __ } from "@wordpress/i18n";
+
+console.log(__("hello world"));
