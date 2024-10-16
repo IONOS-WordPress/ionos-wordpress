@@ -42,12 +42,12 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
     ```
     Repeat the act command after starting the docker service to ensure everything is working fine.
 
-    Now you can use act to run the workflows locally. For example to trigger the `build` workflow:
+    Now you can use act to run the workflows locally. For example to trigger the `release` workflow:
 
     ```bash
-    # a bit hacky : we need to supply the GITHUB_TOKEN using the environment
-    # since current act version (0.2.68) does'nt take .secrets file into account (it's probably a bug)
-    ./bin/act --env-file ./.secrets
+    ./bin/act
+    # or more explicit
+    ./bin/act push
     ```
 
   - inside the dev container (preferred way)
@@ -68,7 +68,7 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
     - start act the first time using the following command:
 
     ```bash
-    gh act --env-file ./.secrets
+    gh act
     ```
 
     At first time act will download the act container image.
@@ -78,9 +78,9 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
     - Now you can use act to run the workflows locally. For example to trigger the `build` workflow:
 
     ```bash
-    # a bit hacky : we need to supply the GITHUB_TOKEN using the environment
-    # since current act version (0.2.68) does'nt take .secrets file into account (it's probably a bug)
-    gh act --env-file ./.secrets
+    gh act
+    # or more explicit
+    gh act push
     ```
 
 # Links
