@@ -1,0 +1,15 @@
+{
+  "name": "@ionos-wordpress/test-plugin",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "build": "wp-scripts build",
+    "watch": "wp-scripts start"
+  },
+  "dependencies": {
+    "@ionos-wordpress/test-lib": "workspace:*"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "catalog:wp-plugin-devDependencies"
+  }
+}

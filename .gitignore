@@ -12,3 +12,4 @@ node_modules
 /.wp-env.json
 /.wp-env.override.json
 /bin/act
+build-info
