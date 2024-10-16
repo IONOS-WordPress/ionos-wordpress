@@ -31,10 +31,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          # current act (https://github.com/nektos/act) version (0.2.68) does'nt load secrets from ./.secrets
-          # nor does it work to load secrets using the commandline
-          # thats why we pass the GITHUB_TOKEN using env in local development
-          password: ${{ secrets.GITHUB_TOKEN || env.GITHUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: ./.github/shared/actions/devcontainer-image-name
         id: image_name
