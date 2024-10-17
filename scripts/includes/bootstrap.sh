@@ -35,7 +35,7 @@ export -f ionos.wordpress.load_env
 #
 function ionos.wordpress.log_warn() {
   # see https://unix.stackexchange.com/a/269085/564826
-  echo "$(tput setaf 3)$1$(tput sgr0)"
+  echo -e "\e[33m$1\e[0m"
 }
 export -f ionos.wordpress.log_warn
 
@@ -46,7 +46,7 @@ export -f ionos.wordpress.log_warn
 #
 function ionos.wordpress.log_header() {
   # see https://unix.stackexchange.com/a/269085/564826
-  echo "$(tput bold)$1$(tput sgr0)"
+  echo -e "\e[1m$1\e[0m"
 }
 export -f ionos.wordpress.log_warn
 
