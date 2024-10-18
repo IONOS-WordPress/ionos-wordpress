@@ -1,3 +1,3 @@
-export function testLib() {
+export function helloLib() {
   console.log("hello from test lib");
 }
