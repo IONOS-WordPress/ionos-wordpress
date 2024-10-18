@@ -1,3 +1,3 @@
-export function helloLib() {
-  console.log("hello from test lib");
+export function hello() {
+  console.log("hello from packages/npm/test-lib/src/index.js");
 }

@@ -1,10 +1,13 @@
 import { __ } from "@wordpress/i18n";
 
-import { helloLib } from "@ionos-wordpress/test-lib";
+import { hello as hello_from_lib } from "@ionos-wordpress/test-lib";
 
-export function helloPlugin() {
+export function hello() {
 
-  helloLib();
+  hello_from_lib();
 
-  console.log(__("hello from test lib"));
+  console.log(__("hello from packages/wp-plugin/test-plugin/src/index.js"));
 }
+
+
+hello();

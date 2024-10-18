@@ -106,9 +106,9 @@ function ionos.wordpress.build_workspace_package_wp_plugin() {
     # start the bundler either in development or production mode
     # which will in turn control how the js/css is transpiled
     if [[ "${NODE_ENV}" == 'development' ]]; then
-      pnpm --filter "$PACKAGE_NAME" exec wp-scripts start --no-watch
+      pnpm --filter "$PACKAGE_NAME" exec wp-scripts start --no-watch --webpack-copy-php
     else
-      pnpm --filter "$PACKAGE_NAME" exec wp-scripts build
+      pnpm --filter "$PACKAGE_NAME" exec wp-scripts build --webpack-copy-php
     fi
   else
     ionos.wordpress.log_warn "transpiling js/css skipped : no ./src directory found"
