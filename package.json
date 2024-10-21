@@ -39,6 +39,7 @@
     "@devcontainers/cli": "^0.71.0",
     "@prettier/plugin-php": "^0.22.2",
     "@wordpress/env": "^10.8.0",
+    "@wordpress/scripts": "catalog:wp-plugin-devDependencies",
     "eslint": "9.11.1",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.30.0",
@@ -52,7 +53,6 @@
     "stylelint": "^16.9.0",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-recommended-scss": "^14.1.0",
-    "stylelint-scss": "^6.7.0",
-    "@wordpress/scripts": "catalog:wp-plugin-devDependencies"
+    "stylelint-scss": "^6.7.0"
   }
 }
