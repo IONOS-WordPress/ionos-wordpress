@@ -56,6 +56,10 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
 
     ```bash
     (source ./.secrets && echo $GITHUB_TOKEN) | gh auth login --with-token
+    # or alternatively
+    source ./.secrets
+    # will consume GitHub token from GH_TOKEN environment variable
+    gh auth login
     ```
     - install act as gh extension
 
@@ -64,6 +68,10 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
     # see https://nektosact.com/installation/gh.html
     gh extension install https://github.com/nektos/gh-act
     ```
+
+    > [!TIP]
+    > if you have provided the GH_TOKEN in the `.secrets` file you can use the following command to skip GitHub authentication using `gh auth login`:
+    > `source ./.secrets && gh extension install https://github.com/nektos/gh-act`
 
     - start act the first time using the following command:
 
