@@ -16,3 +16,4 @@ node_modules
 /.wp-env.override.json
 /bin/act
 build-info
+packages/*/*/webpack.config.js

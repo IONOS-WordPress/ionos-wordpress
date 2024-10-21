@@ -103,13 +103,36 @@ function ionos.wordpress.build_workspace_package_wp_plugin() {
 
   # transpile js/css scripts
   if [[ -d $path/src ]]; then
-    # start the bundler either in development or production mode
-    # which will in turn control how the js/css is transpiled
-    if [[ "${NODE_ENV}" == 'development' ]]; then
-      pnpm --filter "$PACKAGE_NAME" exec wp-scripts start --no-watch --webpack-copy-php
-    else
-      pnpm --filter "$PACKAGE_NAME" exec wp-scripts build --webpack-copy-php
-    fi
+    # generate webpack.config.js (see https://wordpress.stackexchange.com/a/425349)
+    cat << EOF | tee $path/webpack.config.js
+const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+
+module.exports = {
+    ...defaultConfig,
+    entry: {
+        ...defaultConfig.entry(),
+$(
+  # add recursively all {index,*-index}.js files in src directory to webpack entry
+  # ignore files with block.json in the same directory
+  for js_file in $(find $path/src -type f \( -name 'index.js' -o -name '*-index.js' \) ! -execdir test -f block.json \; -print | xargs -I {} realpath --relative-to $path/src {}); do
+    echo "        '${js_file%.*}': './src/$js_file',"
+  done
+)
+    },
+};
+EOF
+
+    # bundle js/css either in development or production mode depending on NODE_ENV
+    pnpm \
+      --filter "$PACKAGE_NAME" \
+      exec wp-scripts \
+      $([[ "${NODE_ENV}" == 'development' ]] && echo 'start --no-watch' || echo 'build') \
+      --webpack-copy-php
+
+    # @TODO: if wp 6.7 is out - enable manifest generation
+    # (see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#build-blocks-manifest)
+    # # if the plugin provides blocks => build also the blocks manifest
+    # # find $path/src -type f -name 'block.json' | grep -q . && echo pnpm --filter "$PACKAGE_NAME" exec wp-scripts build-blocks-manifest
   else
     ionos.wordpress.log_warn "transpiling js/css skipped : no ./src directory found"
   fi
@@ -142,7 +165,7 @@ function ionos.wordpress.build_workspace_package_wp_plugin() {
     $path/dist/$plugin_name
 
   # copy transpiled js/css to target folder
-  rsync -rupE $path/build $path/dist/$plugin_name/
+  test -d $path/build && rsync -rupE $path/build $path/dist/$plugin_name/
 
   (
     # we wrap the loop in a subshell call because of the nullglob shell behaviour change
