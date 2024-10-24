@@ -17,3 +17,5 @@ node_modules
 /bin/act
 build-info
 packages/*/*/webpack.config.js
+/build
+*storybook.log

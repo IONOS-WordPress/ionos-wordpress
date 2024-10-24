@@ -12,7 +12,9 @@
     "clean": "./scripts/clean.sh",
     "distclean": "./scripts/distclean.sh",
     "changeset": "./scripts/changeset.sh",
-    "update-dependencies": "./scripts/update-dependencies.sh"
+    "update-dependencies": "./scripts/update-dependencies.sh",
+    "storybook:start": "./scripts/storybook.sh dev -p 6006",
+    "storybook:build": "./scripts/storybook.sh build -o ./build/storybook-static"
   },
   "keywords": [
     "pnpm",
@@ -34,10 +36,20 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "2.27.8",
+    "@chromatic-com/storybook": "^1.9.0",
     "@commitlint/cli": "19.5.0",
     "@commitlint/config-conventional": "19.5.0",
     "@devcontainers/cli": "^0.71.0",
     "@prettier/plugin-php": "^0.22.2",
+    "@storybook/addon-essentials": "^8.3.6",
+    "@storybook/addon-interactions": "^8.3.6",
+    "@storybook/addon-links": "^8.3.6",
+    "@storybook/addon-onboarding": "^8.3.6",
+    "@storybook/addon-webpack5-compiler-swc": "^1.0.5",
+    "@storybook/blocks": "^8.3.6",
+    "@storybook/react": "^8.3.6",
+    "@storybook/react-webpack5": "^8.3.6",
+    "@storybook/test": "^8.3.6",
     "@wordpress/env": "^10.8.0",
     "@wordpress/scripts": "catalog:wp-plugin-devDependencies",
     "eslint": "9.11.1",
@@ -47,12 +59,20 @@
     "eslint-plugin-react": "7.37.1",
     "eslint-plugin-react-hooks": "4.6.2",
     "eslint-plugin-simple-import-sort": "12.1.1",
+    "eslint-plugin-storybook": "0.10.1",
     "git-cz": "4.9.0",
     "nano-staged": "0.8.0",
     "prettier": "3.3.3",
+    "prop-types": "^15.8.1",
+    "storybook": "^8.3.6",
     "stylelint": "^16.9.0",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-scss": "^6.7.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }
