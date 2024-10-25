@@ -2,21 +2,20 @@
 # This file is distributed under the @TODO: add license.
 msgid ""
 msgstr ""
-"Project-Id-Version: test-auto-load-i18n 0.0.1\n"
+"Project-Id-Version: ionos-wordpress/test-auto-load-i18n 0.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-25T05:49:03+00:00\n"
+"POT-Creation-Date: 2024-10-25T08:43:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
-"X-Domain: test-auto-load-i18n\n"
+"X-Generator: WP-CLI 2.10.0\n"
 
 #. Plugin Name of the plugin
 #: plugin.php
-msgid "test-auto-load-i18n"
+msgid "ionos-wordpress/test-auto-load-i18n"
 msgstr ""
 
 #. Description of the plugin
@@ -29,6 +28,6 @@ msgstr ""
 msgid "lars gersmann <lars.gersmann@ionos.com>"
 msgstr ""
 
-#: plugin.php:21
+#: plugin.php:20
 msgid "hello.world"
 msgstr ""

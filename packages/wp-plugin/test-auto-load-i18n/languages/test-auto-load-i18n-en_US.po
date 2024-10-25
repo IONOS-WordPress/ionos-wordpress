@@ -18,16 +18,16 @@ msgstr ""
 msgid "lars gersmann <lars.gersmann@ionos.com>"
 msgstr "Translated email of the plugin author (lars gersmann <lars.gersmann@ionos.com>)"
 
-#: plugin.php:21
+#: plugin.php:20
 msgid "hello.world"
 msgstr "Translated Hello world !"
 
 #. Description of the plugin
 #: plugin.php
 msgid "tests auto loading of i18n files"
-msgstr "Translated description of plugin test-auto-load-i18n"
+msgstr "Translated description of plugin cm4all-wordpress/test-auto-load-i18n"
 
 #. Plugin Name of the plugin
 #: plugin.php
-msgid "test-auto-load-i18n"
-msgstr "Translated name of the plugin test-auto-load-i18n"
+msgid "ionos-wordpress/test-auto-load-i18n"
+msgstr "Translated title of plugin cm4all-wordpress/test-auto-load-i18n"
