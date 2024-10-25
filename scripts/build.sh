@@ -40,6 +40,7 @@ EOF
 # @param $1 path to workspace package directory
 #
 function ionos.wordpress.build_workspace_package_wp_plugin.wp_cli() {
+
   docker run \
     $DOCKER_FLAGS \
     --user $DOCKER_USER \
@@ -66,13 +67,15 @@ function ionos.wordpress.build_workspace_package_wp_plugin() {
 
   # build localisation if languages folder exists
   if [[ -d $path/languages ]]; then
-    # create plugin.pod file if not exists
-    test -f $path/languages/plugin.pot || touch $path/languages/plugin.pot
-
     (
       # ionos.wordpress.build_workspace_package_wp_plugin.wp_cli assumes
       # that we stay in the the plugin directory
       cd $path
+
+      # create plugin.pod file if no pot file not exists
+      if ! compgen -G "./languages/*.pot" > /dev/null; then
+        touch $path/languages/plugin.pot
+      fi
 
       # create / update pod file
       ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-pot \
