@@ -115,6 +115,8 @@ importers:
 
   packages/wp-plugin/essentials: {}
 
+  packages/wp-plugin/test-auto-load-i18n: {}
+
   packages/wp-plugin/test-plugin:
     dependencies:
       '@ionos-wordpress/test-lib':
