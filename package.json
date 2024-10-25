@@ -50,7 +50,7 @@
     "@storybook/react": "^8.3.6",
     "@storybook/react-webpack5": "^8.3.6",
     "@storybook/test": "^8.3.6",
-    "@wordpress/env": "^10.8.0",
+    "@wordpress/env": "^10.10.0",
     "@wordpress/scripts": "catalog:wp-plugin-devDependencies",
     "eslint": "9.11.1",
     "eslint-config-prettier": "9.1.0",
@@ -63,16 +63,9 @@
     "git-cz": "4.9.0",
     "nano-staged": "0.8.0",
     "prettier": "3.3.3",
-    "prop-types": "^15.8.1",
-    "storybook": "^8.3.6",
     "stylelint": "^16.9.0",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-scss": "^6.7.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
   }
 }
