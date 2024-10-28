@@ -37,10 +37,11 @@ jobs:
         id: build_project
         with:
           runCmd: |
+            pnpm --version
+            pnpm exec node --version
             # pnpm store seems to be installed in the image in some cases
             pnpm install --frozen-lockfile
             echo "WP_ENV_HOME=${WP_ENV_HOME} !"
-            pnpm exec node --version
             pnpm build
 
       - name: print output
