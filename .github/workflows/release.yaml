@@ -38,8 +38,9 @@ jobs:
         with:
           runCmd: |
             # pnpm store seems to be installed in the image in some cases
-            echo 'y' | pnpm install --frozen-lockfile
+            pnpm install --frozen-lockfile
             echo "WP_ENV_HOME=${WP_ENV_HOME} !"
+            pnpm exec node --version
             pnpm build
 
       - name: print output
@@ -53,8 +54,7 @@ jobs:
         id: list_builded_directories
         with:
           runCmd: |
-            find -type d -name "build"
-
+            find ./packages -mindepth 3 -maxdepth 3 -type d -name "dist" -exec ls -la {} \;
       - name: print build directories
         run: |
           cat <<EOF
