@@ -1,4 +1,5 @@
 node_modules
+/.pnpm-store
 /wp-env-home
 /packages/*/*/node_modules
 /packages/*/*/build
