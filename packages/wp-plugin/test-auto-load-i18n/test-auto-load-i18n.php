@@ -6,9 +6,9 @@
  * Requires Plugins:
  * Requires PHP:      8.2
  * Version:           0.0.1
- * Author:            lars gersmann <lars.gersmann@ionos.com>
- * License:           @TODO: add license
- * License URI:       @TODO: add license url
+ * License:           GPL-2.0-or-later
+ * Author:            IONOS Group
+ * Author URI:        https://www.ionos-group.com/brands.html
  * Domain Path:       /languages
  */
 

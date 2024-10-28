@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ionos-wordpress/test-plugin 0.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-10-28T14:26:48+00:00\n"
+"PO-Revision-Date: 2024-10-28T14:26:48+00:00\n"
+"Language: de\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: test-plugin\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Plugin Name of the plugin
+#: test-plugin.php
+msgid "ionos-wordpress/test-plugin"
+msgstr ""
+
+#. Description of the plugin
+#: test-plugin.php
+msgid "a test plugin"
+msgstr ""
+
+#: src/feature-1/blocks/block-1/edit.js:35
+msgid "Example Static – hello from the editor!"
+msgstr ""
+
+#: src/feature-1/blocks/block-2/edit.js:35
+msgid "Dynamic Block 2 – hello from the editor!"
+msgstr ""
+
+#: src/index.js:9
+msgid "hello from packages/wp-plugin/test-plugin/src/index.js"
+msgstr ""
+
+#. Author of the plugin
+#: test-plugin.php
+msgid "IONOS Group"
+msgstr ""
+
+#. Author URI of the plugin
+#: test-plugin.php
+msgid "https://www.ionos-group.com/brands.html"
+msgstr ""

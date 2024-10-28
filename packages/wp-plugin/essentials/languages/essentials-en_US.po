@@ -1,39 +1,35 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ionos-wordpress/test-auto-load-i18n 0.0.1\n"
+"Project-Id-Version: ionos-wordpress/essentials 0.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-28T14:07:23+00:00\n"
-"PO-Revision-Date: 2024-10-28T14:07:23+00:00\n"
+"POT-Creation-Date: 2024-10-28T13:54:09+00:00\n"
+"PO-Revision-Date: 2024-10-28T13:54:09+00:00\n"
 "Language: en_US\n"
 "X-Generator: WP-CLI 2.10.0\n"
-"X-Domain: test-auto-load-i18n\n"
+"X-Domain: essentials\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Plugin Name of the plugin
-#: test-auto-load-i18n.php
-msgid "ionos-wordpress/test-auto-load-i18n"
-msgstr "ionos-wordpress/test-auto-load-i18n"
+#: essentials.php
+msgid "ionos-wordpress/essentials"
+msgstr "ionos-wordpress/essentials"
 
 #. Description of the plugin
-#: test-auto-load-i18n.php
-msgid "tests auto loading of i18n files"
-msgstr "tests auto loading of i18n files"
-
-#: test-auto-load-i18n.php:25
-msgid "hello.world"
-msgstr "hello.world"
+#: essentials.php
+msgid "The essentials plugins hosts IONOS hosting specific functionality."
+msgstr "The essentials plugins hosts IONOS hosting specific functionality."
 
 #. Author of the plugin
-#: test-auto-load-i18n.php
+#: essentials.php
 msgid "IONOS Group"
 msgstr ""
 
 #. Author URI of the plugin
-#: test-auto-load-i18n.php
+#: essentials.php
 msgid "https://www.ionos-group.com/brands.html"
 msgstr ""

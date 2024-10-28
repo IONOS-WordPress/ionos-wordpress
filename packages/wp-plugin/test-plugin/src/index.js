@@ -6,7 +6,7 @@ export function hello() {
 
   hello_from_lib();
 
-  console.log(__("hello from packages/wp-plugin/test-plugin/src/index.js"));
+  console.log(__("hello from packages/wp-plugin/test-plugin/src/index.js", "test-plugin"));
 }
 
 

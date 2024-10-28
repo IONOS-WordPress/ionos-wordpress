@@ -33,11 +33,44 @@ $(tar -ztf $path/dist/*.tgz | sort)
 EOF
 }
 
+# list all wordpress plugin files in the plugin directory
+# there can be multiple plugin files in a plugin directory
+# (see https://wordpress.stackexchange.com/a/102097)
+#
+# a plugin file is identified by
+#   - file suffix ".php"
+#   - the presence of a "Plugin Name: " header
+#
+# @param $1 path to plugin directory
+#
+function ionos.wordpress.get_plugin_filenames() {
+  local path="$1"
+  grep -l "Plugin Name: " $path/*.php | xargs -n1 basename
+}
+
+# get the textdomains of a wordpress plugin
+#
+# textdomains are computed from
+#  - the "Text Domain: <textdomain>" header in the plugin file
+#  or if not present
+#  - the directoryname of the plugin file
+#  - @TODO: not implemented yet : the text domains used in the plugin code
+#
+# @param $1 path to plugin php file
+#
+function ionos.wordpress.get_plugin_textdomains() {
+  local plugin_file="$1"
+
+  local text_domain=$(grep -oP 'Text Domain\s*:\s*\K(.*+)\s*$' $plugin_file || basename $(dirname $(realpath $plugin_file)))
+
+  echo $text_domain
+}
+
 # invoke dockerized wp-cli with current directory mounted at /var/www/html
 # the used docker image is the docker image wordpress:cli is independant from wp-env free us from starting up wp-env when building.
 # image to will be downloaded on demand.
 #
-# @param $1 path to workspace package directory
+# all params will be delegated to the dockerized wp-cli command
 #
 function ionos.wordpress.build_workspace_package_wp_plugin.wp_cli() {
 
@@ -65,6 +98,9 @@ function ionos.wordpress.build_workspace_package_wp_plugin() {
 
   pnpm --filter "$PACKAGE_NAME" --if-present run prebuild
 
+  # ensure directory 'languages' exists if WP_CLI_I18N_LOCALES is not empty
+  [[ "${WP_CLI_I18N_LOCALES:-}" != '' ]] && mkdir -p $path/languages
+
   # build localisation if languages folder exists
   if [[ -d $path/languages ]]; then
     (
@@ -72,36 +108,52 @@ function ionos.wordpress.build_workspace_package_wp_plugin() {
       # that we stay in the the plugin directory
       cd $path
 
-      # create plugin.pod file if no pot file not exists
-      if ! compgen -G "./languages/*.pot" > /dev/null; then
-        touch $path/languages/plugin.pot
-      fi
+      # clean up previously built localization files
+      rm -f ./languages/*{.mo,.json,.php}
 
-      # create / update pod file
-      ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-pot \
-      --ignore-domain \
-      --exclude=tests/,vendor/,package.json,node_modules/,build/ \
-      ./ ./languages/*.pot
+      # generate pot files for each plugin file in the plugin directory
+      plugin_filenames=$(ionos.wordpress.get_plugin_filenames .)
+      for plugin_filename in $plugin_filenames; do
+        text_domains=$(ionos.wordpress.get_plugin_textdomains ./$plugin_filename)
+        # create pot file for every text domain of the plugin
+        for text_domain in $text_domains; do
+          # generate/update pot file
+          ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-pot \
+            --domain=$text_domain  \
+            --exclude=tests/,vendor/,package.json,node_modules/,build/ \
+            ./ ./languages/$text_domain.pot
+
+          # generate po files if WP_CLI_I18N_LOCALES is set
+          if [[ "${WP_CLI_I18N_LOCALES:-}" != '' ]]; then
+            # generate po files for each locale
+            for locale in ${WP_CLI_I18N_LOCALES}; do
+              [[ -f "./languages/${text_domain}-${locale}.po" ]] && continue
+              msginit -i "./languages/${text_domain}.pot" -l ${locale} -o "./languages/${text_domain}-${locale}.po" --no-translator
+            done
+          fi
+        done
+      done
 
       # update po files
       ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n update-po ./languages/*.pot
 
+      # compile mo/json/php localization files
       if compgen -G "./languages/*.po" > /dev/null; then
         # compile mo files
-        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-mo languages/*.po
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-mo ./languages/
 
         # compile json files
-        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-json languages/*.po --no-purge --pretty-print
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-json languages/ --no-purge --update-mo-files $([[ "$NODE_ENV" == 'development' ]] && echo '--pretty-print')
 
         # compile php files
-        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-php languages/*.po
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-php languages/
       else
-        ionos.wordpress.log_warn "no po files found : consider creating one using '\$(cd $path/languages && msginit -i [pot_file] -l [locale] --no-translator'
+        ionos.wordpress.log_warn "no po files found : consider creating one using '\$(cd $path/languages && msginit -i [pot_file] -l [locale] -o [pot_file_basename]-[locale].po --no-translator)'
         "
       fi
     )
   else
-    ionos.wordpress.log_warn "processing i18n skipped : no ./languages directory found"
+    ionos.wordpress.log_warn "processing i18n skipped : no ./languages directory found nor env variable WP_CLI_I18N_LOCALES set"
   fi
 
   # transpile js/css scripts
@@ -143,7 +195,12 @@ EOF
 
   # update plugin version in plugin.php
   PACKAGE_VERSION=$(jq -r '.version' $PACKAGE_JSON)
-  sed -i "s/^ \* Version:\([[:space:]]*\).*/ \* Version:\1$PACKAGE_VERSION/" $path/plugin.php
+
+  # update version information in plugin filenames
+  plugin_filenames=$(ionos.wordpress.get_plugin_filenames $path)
+  for plugin_filename in $plugin_filenames; do
+    sed -i "s/^ \* Version:\([[:space:]]*\).*/ \* Version:\1$PACKAGE_VERSION/" "$path/$plugin_filename"
+  done
 
   pnpm --filter "$PACKAGE_NAME" --if-present run postbuild
 
@@ -194,8 +251,14 @@ EOF
         --no-progress-bar \
         process \
         dist
+
+      # update version information in plugin filenames
+      plugin_filenames=$(ionos.wordpress.get_plugin_filenames "$path/$TARGET_DIR")
+      for plugin_filename in $plugin_filenames; do
+        sed -i "s/^ \* Requires PHP:\([[:space:]]*\).*/ \* Requires PHP:\1${TARGET_PHP_VERSION}/" "$path/$TARGET_DIR/$plugin_filename"
+      done
+
       # update version information in readme.txt and plugin.php down/up-graded plugin variant
-      sed -i "s/^ \* Requires PHP:\([[:space:]]*\).*/ \* Requires PHP:\1${TARGET_PHP_VERSION}/" "$path/$TARGET_DIR/plugin.php"
       test ! -f $path/$TARGET_DIR/readme.txt || sed -i "s/^Requires PHP:\([[:space:]]*\).*/Requires PHP:\1${TARGET_PHP_VERSION}/" "$path/$TARGET_DIR/readme.txt"
     done
   )

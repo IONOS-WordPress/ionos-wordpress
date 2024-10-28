@@ -6,10 +6,10 @@
  * Requires Plugins:
  * Requires PHP:      8.3
  * Version:           0.0.1
- * Author:            lars gersmann <lars.gersmann@ionos.com>
- * License:           @TODO: add license
- * License URI:       @TODO: add license url
- * Text Domain:       ionos-wordpress/essentials
+ * License:           GPL-2.0-or-later
+ * Author:            IONOS Group
+ * Author URI:        https://www.ionos-group.com/brands.html
+ * Domain Path:       /languages
  */
 
 namespace ionos_wordpress\essentials;
