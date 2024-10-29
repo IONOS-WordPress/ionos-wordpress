@@ -49,8 +49,8 @@ jobs:
             php --version
             git --version
             composer --version
-            pnpm --version
-            node --version
+            echo "pnpm version: $(pnpm --version)"
+            echo "node --version: $(node --version)"
             gh --version
 
 

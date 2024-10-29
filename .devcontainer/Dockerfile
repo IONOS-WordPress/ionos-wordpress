@@ -25,6 +25,11 @@ EXPOSE 9003
 EXPOSE 8888
 EXPOSE 8889
 
+# expose storybook port
+EXPOSE 6006
+
+# doesnt work anymore as of 2024-10-29 because of devcontainer.json spec changes
+# 
 # # enable persisted bash completion
 # # https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
 # RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
@@ -55,6 +60,7 @@ USER $USERNAME
 ENV WP_ENV_HOME=./wp-env-home
 ENV PNPM_VERSION=9.12.3
 ENV PNPM_NODEJS_VERSION=20.17.0
+ENV XDEBUG_MODE=off
 
 # install pnpm
 RUN curl https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" PNPM_VERSION="$PNPM_VERSION" SHELL="$(which bash)" bash -

@@ -7,7 +7,6 @@
       // Path is relative to the devcontainer.json file.
       "dockerfile": "Dockerfile"
   },
-	// "image": "mcr.microsoft.com/devcontainers/base:${templateOption:imageVariant}",
 
 	"features": {
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {
@@ -15,38 +14,10 @@
 			"installDockerBuildx": true,
 			"version": "latest",
 			"dockerDashComposeVersion": "latest"
-		},
-    // "ghcr.io/devcontainers/features/php:1": {
-    //   "installComposer": true,
-    //   "version": "8.3"
-    // },
-    //   "ghcr.io/devcontainers/features/git:1": {
-    //   "version": "latest"
-    // },
-    // "ghcr.io/devcontainers/features/github-cli:1": {
-
-    // },
-    // // Optional - For tools that require SSH
-		// "ghcr.io/devcontainers/features/sshd:1": { }
+		}
 	},
 
-  // Error: Dev container build failed: Legacy feature 'appPort' not supported. Please check https://containers.dev/features for replacements.
-  //
-  // // We are using appPort since forwardPorts not yet supported directly
-	// // by the CLI. See https://github.com/devcontainers/cli/issues/22
-	// // A pre-processor can easily parse devcontainer.json and inject
-	// // these values as appropriate. We're omitting that for simplicity.
-	// "appPort": [
-	// 	// Expose SSH port for tools that need it (e.g. JetBrains)
-	// 	"127.0.0.1:2222:2222"
-	// ],
-
-  // [2024-10-29T08:09:53.004Z] Legacy feature 'runArgs' not supported. Please check https://containers.dev/features for replacements.
-  //
-  // "runArgs": [
-  //   "--env-file", "${localWorkspaceFolder}/.devcontainer/devcontainer.env"
-  // ],
-
+  // doesnt work anymore as of 2024-10-29
   // // Dev container build failed: Legacy feature 'mounts' not supported. Please check https://containers.dev/features for replacements
   // //
   // // enable persisted bash completion
@@ -55,19 +26,8 @@
   //   "source=projectname-bashhistory,target=/commandhistory,type=volume"
   // ],
 
-  // "forwardPorts": [
-  //   // forward php xdebug port
-  //   9003,
-  //   // forward wp-env ports
-  //   8888,
-  //   8889,
-  //   // forward ssh port
-  //   2222
-  // ],
-
-	// "postCreateCommand": "./.devcontainer/postCreateCommand.sh > .devcontainer/postCreateCommand.log  && code - r wordpress/wp-content/plugins/wp-codespace/wp-codespace.php",
-  // "postStartCommand": "service apache2 start",
-
+  // doesnt work anymore as of 2024-10-29
+  //
   // "customizations": {
   //   "vscode": {
   //     "extensions": [
@@ -92,6 +52,8 @@
   //   }
   // },
 
+  // doesnt work anymore as of 2024-10-29
+  //
   // "portsAttributes": {
 	// 	"9003": {
 	// 		"label": "PHP xdebug port"
@@ -104,9 +66,12 @@
 	// 	}
 	// },
 
-	// Connect as user vscode More info: https://aka.ms/dev-containers-non-root.
-  // we are using the default non-root user "vscode" to avoid permission issues
-	//"remoteUser": "vscode"
+  "forwardPorts": [
+    8888,
+    8889,
+    9003,
+    6006
+  ],
 
   "postStartCommand": "pnpm env use --global $PNPM_NODEJS_VERSION; pnpm config set store-dir ~/.pnpm-store"
 }
