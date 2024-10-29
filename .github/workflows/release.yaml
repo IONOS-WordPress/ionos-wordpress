@@ -34,6 +34,7 @@ jobs:
         run: echo "image_name=${{ needs.build_devcontainer_image.outputs.image_name }}"
 
       - uses: "./.github/shared/actions/devcontainer-shell-run"
+        name: build_project
         id: build_project
         with:
           runCmd: |
@@ -49,13 +50,15 @@ jobs:
           EOF
 
       - uses: "./.github/shared/actions/devcontainer-shell-run"
-        id: list_builded_directories
+        id: gather^_builded_directories
+        name: gather builded directories
         with:
           runCmd: |
             find ./packages -mindepth 3 -maxdepth 3 -type d -name "dist" -exec ls -la {} \;
+
       - name: print build directories
         run: |
           cat <<EOF
             stdout was=
-            ${{ steps.list_builded_directories.outputs.runCmdOutput }}
+            ${{ steps.gather^_builded_directories.outputs.runCmdOutput }}
           EOF
