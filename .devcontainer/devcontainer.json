@@ -20,10 +20,10 @@
     //   "installComposer": true,
     //   "version": "8.3"
     // },
-      "ghcr.io/devcontainers/features/git:1": {
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers/features/github-cli:1": {
+    //   "ghcr.io/devcontainers/features/git:1": {
+    //   "version": "latest"
+    // },
+    // "ghcr.io/devcontainers/features/github-cli:1": {
 
     // },
     // // Optional - For tools that require SSH

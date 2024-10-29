@@ -22,5 +22,8 @@ runs:
       with:
         push: never
         cacheFrom: ${{ steps.image_name.outputs.image_name }}
-        runCmd: ${{ inputs.runCmd }}
+        runCmd: |
+          pnpm env use --global $PNPM_NODEJS_VERSION
+          pnpm config set store-dir ~/.pnpm-store
+          ${{ inputs.runCmd }}
 

@@ -37,21 +37,21 @@ jobs:
         id: build_project
         with:
           runCmd: |
-            echo "PNPM environment : $(env | grep PNPM)"
-            set -x
-            echo "pnpm exec node --version=$(pnpm exec node --version || node --version || echo 'node not found')"
+            # echo "PNPM environment : $(env | grep PNPM)"
+            # set -x
+            # echo "pnpm exec node --version=$(pnpm exec node --version || node --version || echo 'node not found')"
             pnpm store path
-            ls -la $(pnpm store path)
-            pnpm env use --global 20.17.0
-            pnpm exec node --version=$(pnpm exec node --version || node --version || echo 'node not found')
-
-            whoami
-            pnpm --version
-            pnpm config set store-dir ~/.pnpm-store
+            # ls -la $(pnpm store path)
+            # pnpm env use --global 20.17.0
             pnpm exec node --version
-            # pnpm store seems to be installed in the image in some cases
-            echo 'y' | pnpm install --frozen-lockfile
-            echo "WP_ENV_HOME=${WP_ENV_HOME} !"
+
+            # whoami
+            # pnpm --version
+            # pnpm config set store-dir ~/.pnpm-store
+            # pnpm exec node --version
+            # # pnpm store seems to be installed in the image in some cases
+            pnpm install --frozen-lockfile
+            echo "WP_ENV_HOME=${WP_ENV_HOME}"
             pnpm build
 
       - name: print output
