@@ -52,26 +52,20 @@
   //   }
   // },
 
-  // doesnt work anymore as of 2024-10-29
-  //
-  // "portsAttributes": {
-	// 	"9003": {
-	// 		"label": "PHP xdebug port"
-	// 	},
-	// 	"8888": {
-	// 		"label": "wp-env developer instance"
-	// 	},
-	// 	"8889": {
-	// 		"label": "wp-env test instance"
-	// 	}
-	// },
-
-  "forwardPorts": [
-    8888,
-    8889,
-    9003,
-    6006
-  ],
+  "portsAttributes": {
+		"9003": {
+			"label": "PHP xdebug port"
+		},
+		"8888": {
+			"label": "wp-env developer instance"
+		},
+		"8889": {
+			"label": "wp-env test instance"
+		},
+		"6006": {
+			"label": "storybook dev server"
+		}
+	},
 
   "appPort": [
     8888,
