@@ -80,5 +80,5 @@
     6006
   ],
 
-  "postStartCommand": "pnpm config set store-dir ~/.pnpm-store"
+  "postStartCommand": "pnpm env use --global $PNPM_NODEJS_VERSION; pnpm config set store-dir ~/.pnpm-store"
 }
