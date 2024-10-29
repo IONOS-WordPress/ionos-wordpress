@@ -47,11 +47,13 @@
   //   "--env-file", "${localWorkspaceFolder}/.devcontainer/devcontainer.env"
   // ],
 
-  // enable persisted bash completion
-  // https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
-  "mounts": [
-    "source=projectname-bashhistory,target=/commandhistory,type=volume"
-  ],
+  // // Dev container build failed: Legacy feature 'mounts' not supported. Please check https://containers.dev/features for replacements
+  // //
+  // // enable persisted bash completion
+  // // https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
+  // "mounts": [
+  //   "source=projectname-bashhistory,target=/commandhistory,type=volume"
+  // ],
 
   "forwardPorts": [
     // forward php xdebug port

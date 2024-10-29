@@ -16,13 +16,13 @@ EXPOSE 9003
 EXPOSE 8888
 EXPOSE 8889
 
-# enable persisted bash completion
-# https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
-RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
-    && mkdir /commandhistory \
-    && touch /commandhistory/.bash_history \
-    && chown -R $USERNAME /commandhistory \
-    && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
+# # enable persisted bash completion
+# # https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
+# RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
+#     && mkdir /commandhistory \
+#     && touch /commandhistory/.bash_history \
+#     && chown -R $USERNAME /commandhistory \
+#     && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
 
 # create message to show at first vscode run
 # COPY .devcontainer/welcome.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt
