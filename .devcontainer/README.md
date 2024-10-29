@@ -16,7 +16,6 @@ _The WordPress plugin in this project is a very rudimentary plugin stub only for
     - [x] `wp-env`
     - [x] `php` including out of the box `xdebug` support
     - [x] SSH access
-    - [x] configurable environment (`./.devcontainer/devcontainer.env`)
 - [x] Automatic provisioning of the Dev Container for CI using a GitHub Action
   - [x] including caching of the Dev Container image
 - [x] VSCode Dev Container integration

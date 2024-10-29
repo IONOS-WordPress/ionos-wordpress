@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1.4
 
-FROM mcr.microsoft.com/devcontainers/base:ubuntu
+# FROM mcr.microsoft.com/devcontainers/base:ubuntu
+FROM mcr.microsoft.com/devcontainers/php:8.3-bullseye
 
 RUN export DEBIAN_FRONTEND=noninteractive
 
@@ -48,5 +49,3 @@ ENV PNPM_VERSION=9.12.3
 
 # install pnpm
 RUN curl https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" PNPM_VERSION="$PNPM_VERSION" SHELL="$(which bash)" bash -
-
-RUN find ~ -name ".devcontainer.env"
