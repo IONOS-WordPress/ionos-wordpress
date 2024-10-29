@@ -92,17 +92,17 @@
   //   }
   // },
 
-  "portsAttributes": {
-		"9003": {
-			"label": "PHP xdebug port"
-		},
-		"8888": {
-			"label": "wp-env developer instance"
-		},
-		"8889": {
-			"label": "wp-env test instance"
-		}
-	},
+  // "portsAttributes": {
+	// 	"9003": {
+	// 		"label": "PHP xdebug port"
+	// 	},
+	// 	"8888": {
+	// 		"label": "wp-env developer instance"
+	// 	},
+	// 	"8889": {
+	// 		"label": "wp-env test instance"
+	// 	}
+	// },
 
 	// Connect as user vscode More info: https://aka.ms/dev-containers-non-root.
   // we are using the default non-root user "vscode" to avoid permission issues
