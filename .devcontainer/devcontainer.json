@@ -73,5 +73,12 @@
     6006
   ],
 
-  "postStartCommand": "pnpm env use --global $PNPM_NODEJS_VERSION; pnpm config set store-dir ~/.pnpm-store"
+  "appPort": [
+    8888,
+    8889,
+    9003,
+    6006
+  ],
+
+  "postStartCommand": "pnpm config set store-dir ~/.pnpm-store"
 }
