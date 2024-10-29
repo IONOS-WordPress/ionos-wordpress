@@ -19,15 +19,15 @@ jobs:
       - name: checkout branch from git
         uses: actions/checkout@v4
 
-      - uses: "./.github/shared/devcontainer-image-name"
-        id: devcontainer_image_name
+      - uses: ./.github/shared/actions/devcontainer-image-name
+        id: image_name
 
       - name: use devcontainer image
         uses: devcontainers/ci@v0.3
         with:
           push: never
-          # use the devcontainer_image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
-          cacheFrom: ${{ steps.devcontainer_image_name.outputs.image_name }}
+          # use the image_name output variable produced by ./.github/shared/devcontainer-image-name.yaml
+          cacheFrom: ${{ steps.image_name.outputs.image_name }}
 
           runCmd: |
             # echo 'y' | pnpm install --frozen-lockfile

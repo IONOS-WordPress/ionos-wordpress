@@ -46,6 +46,8 @@ jobs:
           eventFilterForPush: push
           imageName: ${{ steps.image_name.outputs.image_name }}
           runCmd: |
-            echo "pnpm exec node --version=pnpm exec node --version"
+            echo "PNPM environment : $(env | grep PNPM)"
+            set -x
+            echo "pnpm exec node --version=$(pnpm exec node --version || node --version || echo 'node not found')"
 
 
