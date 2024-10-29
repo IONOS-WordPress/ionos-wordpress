@@ -30,14 +30,16 @@
 		// "ghcr.io/devcontainers/features/sshd:1": { }
 	},
 
-  // We are using appPort since forwardPorts not yet supported directly
-	// by the CLI. See https://github.com/devcontainers/cli/issues/22
-	// A pre-processor can easily parse devcontainer.json and inject
-	// these values as appropriate. We're omitting that for simplicity.
-	"appPort": [
-		// Expose SSH port for tools that need it (e.g. JetBrains)
-		"127.0.0.1:2222:2222"
-	],
+  // Error: Dev container build failed: Legacy feature 'appPort' not supported. Please check https://containers.dev/features for replacements.
+  //
+  // // We are using appPort since forwardPorts not yet supported directly
+	// // by the CLI. See https://github.com/devcontainers/cli/issues/22
+	// // A pre-processor can easily parse devcontainer.json and inject
+	// // these values as appropriate. We're omitting that for simplicity.
+	// "appPort": [
+	// 	// Expose SSH port for tools that need it (e.g. JetBrains)
+	// 	"127.0.0.1:2222:2222"
+	// ],
 
   "runArgs": [
     "--env-file", "${localWorkspaceFolder}/.devcontainer/devcontainer.env"
