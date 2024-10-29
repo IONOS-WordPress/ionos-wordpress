@@ -55,15 +55,15 @@
   //   "source=projectname-bashhistory,target=/commandhistory,type=volume"
   // ],
 
-  "forwardPorts": [
-    // forward php xdebug port
-    9003,
-    // forward wp-env ports
-    8888,
-    8889,
-    // forward ssh port
-    2222
-  ],
+  // "forwardPorts": [
+  //   // forward php xdebug port
+  //   9003,
+  //   // forward wp-env ports
+  //   8888,
+  //   8889,
+  //   // forward ssh port
+  //   2222
+  // ],
 
 	// "postCreateCommand": "./.devcontainer/postCreateCommand.sh > .devcontainer/postCreateCommand.log  && code - r wordpress/wp-content/plugins/wp-codespace/wp-codespace.php",
   // "postStartCommand": "service apache2 start",
