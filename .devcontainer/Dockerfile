@@ -43,5 +43,10 @@ EOF
 
 USER $USERNAME
 
+ENV WP_ENV_HOME=./wp-env-home
+ENV PNPM_VERSION=9.12.3
+
 # install pnpm
 RUN curl https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" PNPM_VERSION="$PNPM_VERSION" SHELL="$(which bash)" bash -
+
+RUN find ~ -name ".devcontainer.env"

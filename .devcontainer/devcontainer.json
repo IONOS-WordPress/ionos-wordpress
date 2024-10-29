@@ -41,9 +41,11 @@
 	// 	"127.0.0.1:2222:2222"
 	// ],
 
-  "runArgs": [
-    "--env-file", "${localWorkspaceFolder}/.devcontainer/devcontainer.env"
-  ],
+  // [2024-10-29T08:09:53.004Z] Legacy feature 'runArgs' not supported. Please check https://containers.dev/features for replacements.
+  //
+  // "runArgs": [
+  //   "--env-file", "${localWorkspaceFolder}/.devcontainer/devcontainer.env"
+  // ],
 
   // enable persisted bash completion
   // https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
