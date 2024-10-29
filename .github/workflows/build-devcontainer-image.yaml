@@ -45,5 +45,7 @@ jobs:
             refs/heads/develop
           eventFilterForPush: push
           imageName: ${{ steps.image_name.outputs.image_name }}
+          runCmd: |
+            echo "pnpm exec node --version=pnpm exec node --version"
 
 

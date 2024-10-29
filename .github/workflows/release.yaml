@@ -40,7 +40,7 @@ jobs:
             pnpm --version
             pnpm exec node --version
             # pnpm store seems to be installed in the image in some cases
-            pnpm install --frozen-lockfile
+            echo 'y' | pnpm install --frozen-lockfile
             echo "WP_ENV_HOME=${WP_ENV_HOME} !"
             pnpm build
 

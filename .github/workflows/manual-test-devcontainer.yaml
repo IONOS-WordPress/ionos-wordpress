@@ -30,6 +30,6 @@ jobs:
           cacheFrom: ${{ steps.devcontainer_image_name.outputs.image_name }}
 
           runCmd: |
-            pnpm install
-            pnpm build
+            # echo 'y' | pnpm install --frozen-lockfile
+            # pnpm build
             ${{ github.event.inputs.additionalTestCmd }}
