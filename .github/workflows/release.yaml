@@ -50,7 +50,7 @@ jobs:
           EOF
 
       - uses: "./.github/shared/actions/devcontainer-shell-run"
-        id: gather^_builded_directories
+        id: gather_builded_directories
         name: gather builded directories
         with:
           runCmd: |
@@ -60,5 +60,5 @@ jobs:
         run: |
           cat <<EOF
             stdout was=
-            ${{ steps.gather^_builded_directories.outputs.runCmdOutput }}
+            ${{ steps.gather_builded_directories.outputs.runCmdOutput }}
           EOF
