@@ -37,6 +37,14 @@ jobs:
         id: build_project
         with:
           runCmd: |
+            echo "PNPM environment : $(env | grep PNPM)"
+            set -x
+            echo "pnpm exec node --version=$(pnpm exec node --version || node --version || echo 'node not found')"
+            pnpm store path
+            ls -la $(pnpm store path)
+            pnpm env use --global 20.17.0
+            pnpm exec node --version=$(pnpm exec node --version || node --version || echo 'node not found')
+
             whoami
             pnpm --version
             pnpm config set store-dir ~/.pnpm-store

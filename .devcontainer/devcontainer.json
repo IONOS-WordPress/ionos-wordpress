@@ -106,5 +106,5 @@
 
 	// Connect as user vscode More info: https://aka.ms/dev-containers-non-root.
   // we are using the default non-root user "vscode" to avoid permission issues
-	// "remoteUser": "vscode"
+	//"remoteUser": "vscode"
 }
