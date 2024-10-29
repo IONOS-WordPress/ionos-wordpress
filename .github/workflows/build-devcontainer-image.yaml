@@ -49,5 +49,9 @@ jobs:
             echo "PNPM environment : $(env | grep PNPM)"
             set -x
             echo "pnpm exec node --version=$(pnpm exec node --version || node --version || echo 'node not found')"
+            pnpm store path
+            ls -la $(pnpm store path)
+            pnpm env use --global 20.17.0
+            echo "pnpm exec node --version=$(pnpm exec node --version || node --version || echo 'node not found')"
 
 

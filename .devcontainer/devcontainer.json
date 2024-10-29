@@ -16,18 +16,18 @@
 			"version": "latest",
 			"dockerDashComposeVersion": "latest"
 		},
-    "ghcr.io/devcontainers/features/php:1": {
-      "installComposer": true,
-      "version": "8.3"
-    },
+    // "ghcr.io/devcontainers/features/php:1": {
+    //   "installComposer": true,
+    //   "version": "8.3"
+    // },
       "ghcr.io/devcontainers/features/git:1": {
       "version": "latest"
     },
     "ghcr.io/devcontainers/features/github-cli:1": {
 
-    },
-    // Optional - For tools that require SSH
-		"ghcr.io/devcontainers/features/sshd:1": { }
+    // },
+    // // Optional - For tools that require SSH
+		// "ghcr.io/devcontainers/features/sshd:1": { }
 	},
 
   // We are using appPort since forwardPorts not yet supported directly
