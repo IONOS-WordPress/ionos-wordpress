@@ -68,29 +68,29 @@
 	// "postCreateCommand": "./.devcontainer/postCreateCommand.sh > .devcontainer/postCreateCommand.log  && code - r wordpress/wp-content/plugins/wp-codespace/wp-codespace.php",
   // "postStartCommand": "service apache2 start",
 
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "EditorConfig.EditorConfig",
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "stylelint.vscode-stylelint",
-        "yogensia.searchwpdocs",
-        "johnbillion.vscode-wordpress-hooks",
-        "bmewburn.vscode-intelephense-client",
-        "rexshi.phpdoc-comment-vscode-plugin",
-        "VisualStudioExptTeam.vscodeintellicode",
-        "johnbillion.vscode-wordpress-hooks",
-        "pucelle.vscode-css-navigation",
-        "xdebug.php-debug"
-      ],
-      // Set *default* container specific settings.json values on container create.
-      "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash",
-        "files.eol": "\n"
-      }
-    }
-  },
+  // "customizations": {
+  //   "vscode": {
+  //     "extensions": [
+  //       "EditorConfig.EditorConfig",
+  //       "dbaeumer.vscode-eslint",
+  //       "esbenp.prettier-vscode",
+  //       "stylelint.vscode-stylelint",
+  //       "yogensia.searchwpdocs",
+  //       "johnbillion.vscode-wordpress-hooks",
+  //       "bmewburn.vscode-intelephense-client",
+  //       "rexshi.phpdoc-comment-vscode-plugin",
+  //       "VisualStudioExptTeam.vscodeintellicode",
+  //       "johnbillion.vscode-wordpress-hooks",
+  //       "pucelle.vscode-css-navigation",
+  //       "xdebug.php-debug"
+  //     ],
+  //     // Set *default* container specific settings.json values on container create.
+  //     "settings": {
+  //       "terminal.integrated.shell.linux": "/bin/bash",
+  //       "files.eol": "\n"
+  //     }
+  //   }
+  // },
 
   "portsAttributes": {
 		"9003": {
