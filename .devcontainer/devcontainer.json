@@ -26,32 +26,6 @@
   //   "source=projectname-bashhistory,target=/commandhistory,type=volume"
   // ],
 
-  // doesnt work anymore as of 2024-10-29
-  //
-  // "customizations": {
-  //   "vscode": {
-  //     "extensions": [
-  //       "EditorConfig.EditorConfig",
-  //       "dbaeumer.vscode-eslint",
-  //       "esbenp.prettier-vscode",
-  //       "stylelint.vscode-stylelint",
-  //       "yogensia.searchwpdocs",
-  //       "johnbillion.vscode-wordpress-hooks",
-  //       "bmewburn.vscode-intelephense-client",
-  //       "rexshi.phpdoc-comment-vscode-plugin",
-  //       "VisualStudioExptTeam.vscodeintellicode",
-  //       "johnbillion.vscode-wordpress-hooks",
-  //       "pucelle.vscode-css-navigation",
-  //       "xdebug.php-debug"
-  //     ],
-  //     // Set *default* container specific settings.json values on container create.
-  //     "settings": {
-  //       "terminal.integrated.shell.linux": "/bin/bash",
-  //       "files.eol": "\n"
-  //     }
-  //   }
-  // },
-
   "portsAttributes": {
 		"9003": {
 			"label": "PHP xdebug port"
