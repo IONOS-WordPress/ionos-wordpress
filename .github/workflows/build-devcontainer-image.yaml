@@ -1,7 +1,14 @@
+#
+# this is a shared workflow that is used by other workflows
+#
+# its primary purpose is to build and push the devcontainer.
+# it returns the image name
+#
+# @see ./release.yaml for how it is used
+#
 name: Build DevContainer Image
 on:
   workflow_call:
-
     # secrets:
     #   GITHUB_TOKEN:
     #     required: true
