@@ -3,6 +3,8 @@ const config = {
   stories: [
     "../stories/**/*.mdx",
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    // find all stories below the src folder of workspace packages
+    "../packages/*/*/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   addons: [
     "@storybook/addon-webpack5-compiler-swc",

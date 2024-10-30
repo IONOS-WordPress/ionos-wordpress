@@ -17,29 +17,20 @@ export default {
     */
     layout: 'centered',
   },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-  tags: ['autodocs'],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
     disabled: {
-      control: {
-        type: 'number',
-        min: 0,
-        max: 100,
-        step: 10,
-      },
-     },
-     label: {
-      control: {
-        type: 'string'
-      },
-     },
-     variant: {
-      control: {
-        type: 'string',
-        control: 'radio',
-        options: ['primary', 'secondary', 'tertiary', 'link']
-      },
+      control: 'boolean',
+      description: 'Wether or not the button is disabled',
+    },
+    label: {
+      control: 'text',
+      description: 'The text of the button',
+    },
+    variant: {
+      control : 'inline-radio',
+      options: [ 'primary', 'secondary', 'tertiary', 'link'],
+      description: 'the visual representation of the button',
     },
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args

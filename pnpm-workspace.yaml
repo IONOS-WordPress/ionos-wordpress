@@ -10,6 +10,6 @@ packages:
 
 # catalogs can be used to maintain dependencies for a group of packages at a single place
 # see https://pnpm.io/catalogs
-catalogs:
-  wp-plugin-devDependencies:
-    "@wordpress/scripts" : ^30.3.0
+catalog:
+  "@wordpress/scripts" : ^30.3.0
+  "@wordpress/components" : ^28.10.0

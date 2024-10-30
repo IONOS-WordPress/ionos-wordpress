@@ -4,5 +4,8 @@
   "version": "0.0.1",
   "dependencies": {
     "@ionos-wordpress/test-lib": "workspace:*"
+  },
+  "devDependencies": {
+    "@wordpress/components": "catalog:"
   }
 }

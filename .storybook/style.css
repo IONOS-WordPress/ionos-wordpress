@@ -1,0 +1,9 @@
+/*
+  this quirks is taken from the gutenberg storybook
+  to be as near as possible to the gutenberg ui :
+
+  https://wordpress.github.io/gutenberg/?path=/story/components-button--primary
+*/
+body.sb-show-main {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif
+}
