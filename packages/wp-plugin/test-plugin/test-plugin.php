@@ -21,3 +21,16 @@ defined( 'ABSPATH' ) || exit;
 
   error_log("foo=$foo");
 });
+
+\add_action('admin_enqueue_scripts', function() : void {
+  $assets = include_once __DIR__ . '/build/index.asset.php';
+  \wp_enqueue_script(
+    handle: 'test-plugin-index',
+    src: \plugins_url( '/build/index.js', __FILE__ ),
+    deps: $assets['dependencies'],
+    ver : $assets['version'],
+    args: true,
+  );
+
+  \wp_set_script_translations( 'test-plugin-index', 'test-plugin', \plugin_dir_path( __FILE__ ) . 'languages' );
+});

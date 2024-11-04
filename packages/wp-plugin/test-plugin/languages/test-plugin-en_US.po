@@ -24,17 +24,17 @@ msgstr "ionos-wordpress/test-plugin"
 msgid "a test plugin"
 msgstr "a test plugin"
 
-#: src/feature-1/blocks/block-1/edit.js:35
+#: build/feature-1/blocks/block-1/index.js:1
 msgid "Example Static – hello from the editor!"
 msgstr ""
 
-#: src/feature-1/blocks/block-2/edit.js:35
+#: build/feature-1/blocks/block-2/index.js:1
 msgid "Dynamic Block 2 – hello from the editor!"
 msgstr ""
 
-#: src/index.js:9
+#: build/index.js:1
 msgid "hello from packages/wp-plugin/test-plugin/src/index.js"
-msgstr ""
+msgstr "hello from usa"
 
 #. Author of the plugin
 #: test-plugin.php

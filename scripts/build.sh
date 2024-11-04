@@ -98,64 +98,6 @@ function ionos.wordpress.build_workspace_package_wp_plugin() {
 
   pnpm --filter "$PACKAGE_NAME" --if-present run prebuild
 
-  # ensure directory 'languages' exists if WP_CLI_I18N_LOCALES is not empty
-  [[ "${WP_CLI_I18N_LOCALES:-}" != '' ]] && mkdir -p $path/languages
-
-  # build localisation if languages folder exists
-  if [[ -d $path/languages ]]; then
-    (
-      # ionos.wordpress.build_workspace_package_wp_plugin.wp_cli assumes
-      # that we stay in the the plugin directory
-      cd $path
-
-      # clean up previously built localization files
-      rm -f ./languages/*{.mo,.json,.php}
-
-      # generate pot files for each plugin file in the plugin directory
-      plugin_filenames=$(ionos.wordpress.get_plugin_filenames .)
-      for plugin_filename in $plugin_filenames; do
-        text_domains=$(ionos.wordpress.get_plugin_textdomains ./$plugin_filename)
-        # create pot file for every text domain of the plugin
-        for text_domain in $text_domains; do
-          # generate/update pot file
-          ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-pot \
-            --domain=$text_domain  \
-            --exclude=tests/,vendor/,package.json,node_modules/,build/ \
-            ./ ./languages/$text_domain.pot
-
-          # generate po files if WP_CLI_I18N_LOCALES is set
-          if [[ "${WP_CLI_I18N_LOCALES:-}" != '' ]]; then
-            # generate po files for each locale
-            for locale in ${WP_CLI_I18N_LOCALES}; do
-              [[ -f "./languages/${text_domain}-${locale}.po" ]] && continue
-              msginit -i "./languages/${text_domain}.pot" -l ${locale} -o "./languages/${text_domain}-${locale}.po" --no-translator
-            done
-          fi
-        done
-      done
-
-      # update po files
-      ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n update-po ./languages/*.pot
-
-      # compile mo/json/php localization files
-      if compgen -G "./languages/*.po" > /dev/null; then
-        # compile mo files
-        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-mo ./languages/
-
-        # compile json files
-        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-json languages/ --no-purge --update-mo-files $([[ "$NODE_ENV" == 'development' ]] && echo '--pretty-print')
-
-        # compile php files
-        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-php languages/
-      else
-        ionos.wordpress.log_warn "no po files found : consider creating one using '\$(cd $path/languages && msginit -i [pot_file] -l [locale] -o [pot_file_basename]-[locale].po --no-translator)'
-        "
-      fi
-    )
-  else
-    ionos.wordpress.log_warn "processing i18n skipped : no ./languages directory found nor env variable WP_CLI_I18N_LOCALES set"
-  fi
-
   # transpile js/css scripts
   if [[ -d $path/src ]]; then
     # generate webpack.config.js (see https://wordpress.stackexchange.com/a/425349)
@@ -191,6 +133,64 @@ EOF
     # # find $path/src -type f -name 'block.json' | grep -q . && echo pnpm --filter "$PACKAGE_NAME" exec wp-scripts build-blocks-manifest
   else
     ionos.wordpress.log_warn "transpiling js/css skipped : no ./src directory found"
+  fi
+
+  # ensure directory 'languages' exists if WP_CLI_I18N_LOCALES is not empty
+  [[ "${WP_CLI_I18N_LOCALES:-}" != '' ]] && mkdir -p $path/languages
+
+  # build localisation if languages folder exists
+  if [[ -d $path/languages ]]; then
+    (
+      # ionos.wordpress.build_workspace_package_wp_plugin.wp_cli assumes
+      # that we stay in the the plugin directory
+      cd $path
+
+      # clean up previously built localization files
+      rm -f ./languages/*{.mo,.json,.php}
+
+      # generate pot files for each plugin file in the plugin directory
+      plugin_filenames=$(ionos.wordpress.get_plugin_filenames .)
+      for plugin_filename in $plugin_filenames; do
+        text_domains=$(ionos.wordpress.get_plugin_textdomains ./$plugin_filename)
+        # create pot file for every text domain of the plugin
+        for text_domain in $text_domains; do
+          # generate/update pot file
+          ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-pot \
+            --domain=$text_domain  \
+            --exclude=tests/,vendor/,package.json,node_modules/,src/ \
+            ./ ./languages/$text_domain.pot
+
+          # generate po files if WP_CLI_I18N_LOCALES is set
+          if [[ "${WP_CLI_I18N_LOCALES:-}" != '' ]]; then
+            # generate po files for each locale
+            for locale in ${WP_CLI_I18N_LOCALES}; do
+              [[ -f "./languages/${text_domain}-${locale}.po" ]] && continue
+              msginit -i "./languages/${text_domain}.pot" -l ${locale} -o "./languages/${text_domain}-${locale}.po" --no-translator
+            done
+          fi
+        done
+      done
+
+      # update po files
+      ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n update-po ./languages/*.pot
+
+      # compile mo/json/php localization files
+      if compgen -G "./languages/*.po" > /dev/null; then
+        # compile mo files
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-mo ./languages/
+
+        # compile json files
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-json languages/ --no-purge --update-mo-files $([[ "$NODE_ENV" == 'development' ]] && echo '--pretty-print')
+
+        # compile php files
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-php languages/
+      else
+        ionos.wordpress.log_warn "no po files found : consider creating one using '\$(cd $path/languages && msginit -i [pot_file] -l [locale] -o [pot_file_basename]-[locale].po --no-translator)'
+        "
+      fi
+    )
+  else
+    ionos.wordpress.log_warn "processing i18n skipped : no ./languages directory found nor env variable WP_CLI_I18N_LOCALES set"
   fi
 
   # update plugin version in plugin.php
