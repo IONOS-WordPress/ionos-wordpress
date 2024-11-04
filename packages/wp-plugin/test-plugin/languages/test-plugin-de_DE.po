@@ -45,3 +45,7 @@ msgstr ""
 #: test-plugin.php
 msgid "https://www.ionos-group.com/brands.html"
 msgstr ""
+
+#: test-plugin.php:31
+msgid "hello.world"
+msgstr "Hallo Welt !"

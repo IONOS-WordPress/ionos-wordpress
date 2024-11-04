@@ -34,7 +34,7 @@ msgstr ""
 
 #: build/index.js:1
 msgid "hello from packages/wp-plugin/test-plugin/src/index.js"
-msgstr "hello from usa"
+msgstr "hello from the U.S."
 
 #. Author of the plugin
 #: test-plugin.php
@@ -45,3 +45,7 @@ msgstr ""
 #: test-plugin.php
 msgid "https://www.ionos-group.com/brands.html"
 msgstr ""
+
+#: test-plugin.php:31
+msgid "hello.world"
+msgstr "Hello world !"

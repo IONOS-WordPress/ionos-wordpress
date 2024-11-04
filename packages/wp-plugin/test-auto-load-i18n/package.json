@@ -1,6 +1,0 @@
-{
-  "name": "@ionos-wordpress/test-auto-load-i18n",
-  "private": true,
-  "version": "0.0.1",
-  "description": "tests auto loading of i18n files"
-}

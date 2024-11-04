@@ -22,6 +22,16 @@ defined( 'ABSPATH' ) || exit;
   error_log("foo=$foo");
 });
 
+\add_action('plugins_loaded', function() : void {
+  \load_plugin_textdomain(
+    domain : 'test-plugin',
+    plugin_rel_path: basename( __DIR__ ) . '/languages/'
+  );
+
+  $translatedText = \__('hello.world', 'test-plugin');
+  error_log($translatedText);
+});
+
 \add_action('admin_enqueue_scripts', function() : void {
   $assets = include_once __DIR__ . '/build/index.asset.php';
   \wp_enqueue_script(
