@@ -19,3 +19,4 @@ build-info
 packages/*/*/webpack.config.js
 /build
 *storybook.log
+/playwright/.*/

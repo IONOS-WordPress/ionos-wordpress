@@ -9,6 +9,8 @@
     "stylelint.vscode-stylelint",
     "mads-hartmann.bash-ide-vscode",
     "johnbillion.vscode-wordpress-hooks",
-    "bmewburn.vscode-intelephense-client"
+    "bmewburn.vscode-intelephense-client",
+    "ms-playwright.playwright",
+    "Gruntfuggly.todo-tree",
  ]
 }

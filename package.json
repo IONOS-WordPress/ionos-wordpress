@@ -14,7 +14,8 @@
     "changeset": "./scripts/changeset.sh",
     "update-dependencies": "./scripts/update-dependencies.sh",
     "storybook:start": "./scripts/storybook.sh dev -p 6006",
-    "storybook:build": "./scripts/storybook.sh build -o ./build/storybook-static"
+    "storybook:build": "./scripts/storybook.sh build -o ./build/storybook-static",
+    "test": "./scripts/test.sh"
   },
   "keywords": [
     "pnpm",
@@ -39,6 +40,9 @@
     "@commitlint/cli": "19.5.0",
     "@commitlint/config-conventional": "19.5.0",
     "@devcontainers/cli": "^0.71.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "@playwright/experimental-ct-react": "^1.48.2",
     "@prettier/plugin-php": "^0.22.2",
     "@storybook/addon-essentials": "^8.3.6",
     "@storybook/addon-interactions": "^8.3.6",
@@ -49,6 +53,8 @@
     "@storybook/react": "^8.3.6",
     "@storybook/react-webpack5": "^8.3.6",
     "@storybook/test": "^8.3.6",
+    "@types/node": "22.8.7",
+    "@wordpress/components": "catalog:",
     "@wordpress/env": "^10.10.0",
     "@wordpress/scripts": "catalog:",
     "eslint": "9.11.1",
@@ -66,7 +72,6 @@
     "stylelint": "^16.9.0",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-recommended-scss": "^14.1.0",
-    "stylelint-scss": "^6.7.0",
-    "@wordpress/components": "catalog:"
+    "stylelint-scss": "^6.7.0"
   }
 }
