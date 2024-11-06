@@ -197,7 +197,14 @@ EOF
     # solution:
     #   revert generated pot file to git version if only one line
     #   (the creation date) has changed
-    git diff --numstat *.pot | awk '$1 == 1 && $2 == 1 {print $3}' | xargs git checkout 1>/dev/null --
+    for pot_file in $(find "packages/$1/" -name "*.pot" -type f); do
+      diff_error_code=0
+      cmp -s \
+        <(sed -e '/"POT-Creation-Date: .*$/d' -e 's/^\(#:.*\):[0-9]\+/\1/g' $pot_file) \
+        <(git show HEAD:$pot_file 2>/dev/null | sed -e '/"POT-Creation-Date: .*$/d' -e 's/^\(#:.*\):[0-9]\+/\1/g') \
+        || diff_error_code=$?
+      [[ "0" == "$diff_error_code" ]] && git checkout $pot_file
+    done
   else
     ionos.wordpress.log_warn "processing i18n skipped : no ./languages directory found nor env variable WP_CLI_I18N_LOCALES set"
   fi
