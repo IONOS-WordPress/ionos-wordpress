@@ -18,5 +18,8 @@ const config = {
     name: "@storybook/react-webpack5",
     options: {},
   },
+  core: {
+    disableTelemetry: true, // 👈 Disables telemetry
+  },
 };
 export default config;
