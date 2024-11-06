@@ -189,6 +189,15 @@ EOF
         "
       fi
     )
+
+    # make-pot regenerates the pot file even if no localization changes are
+    # present in source files with a new creation date so that git always
+    # notices a changed pot pot file
+    #
+    # solution:
+    #   revert generated pot file to git version if only one line
+    #   (the creation date) has changed
+    git diff --numstat *.pot | awk '$1 == 1 && $2 == 1 {print $3}' | xargs git checkout 1>/dev/null --
   else
     ionos.wordpress.log_warn "processing i18n skipped : no ./languages directory found nor env variable WP_CLI_I18N_LOCALES set"
   fi
