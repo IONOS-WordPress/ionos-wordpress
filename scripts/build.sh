@@ -206,9 +206,10 @@ EOF
     #   (the creation date) has changed
     for pot_file in $(find "packages/$1/" -name "*.pot" -type f); do
       diff_error_code=0
+      # strip creation date and generator lines and line numbers using sed
       cmp -s \
-        <(sed -e '/"POT-Creation-Date: .*$/d' -e 's/^\(#:.*\):[0-9]\+/\1/g' $pot_file) \
-        <(git show HEAD:$pot_file 2>/dev/null | sed -e '/"POT-Creation-Date: .*$/d' -e 's/^\(#:.*\):[0-9]\+/\1/g') \
+        <(sed -e '/"POT-Creation-Date: .*$/d' -e '/"X-Generator: .*$/d' -e 's/^\(#:.*\):[0-9]\+/\1/g' $pot_file) \
+        <(git show HEAD:$pot_file 2>/dev/null | sed -e '/"POT-Creation-Date: .*$/d' -e '/"X-Generator: .*$/d' -e 's/^\(#:.*\):[0-9]\+/\1/g') \
         || diff_error_code=$?
       [[ "0" == "$diff_error_code" ]] && git checkout $pot_file
     done
