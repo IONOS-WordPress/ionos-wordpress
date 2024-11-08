@@ -4,6 +4,8 @@ class LoginTest extends WP_UnitTestCase {
 
   const TEST_USER_NAME = 'test-admin';
 
+  private $myTestUser;
+
   public function setUp(): void
   {
     parent::setUp();
