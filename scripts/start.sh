@@ -50,8 +50,8 @@ pnpm build
       "WP_DEVELOPMENT_MODE": "all"
     },
     "lifecycleScripts": {
-      "afterStart": "\$(command -v bash) ./.wp-env-afterStart.sh",
-      "afterDestroy": "rm -rf \$WP_ENV_HOME; rm -rf ./phpunit/vewndor"
+      "afterStart": "./scripts/wp-env-after-start.sh",
+      "afterDestroy": "./scripts/wp-env-after-destroy.sh"
     },
     "mappings": {
         "phpunit.xml": "./phpunit/phpunit.xml",
