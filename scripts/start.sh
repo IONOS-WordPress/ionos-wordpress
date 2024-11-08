@@ -51,7 +51,11 @@ pnpm build
     },
     "lifecycleScripts": {
       "afterStart": "\$(command -v bash) ./.wp-env-afterStart.sh",
-      "afterDestroy": "rm -rf \$WP_ENV_HOME"
+      "afterDestroy": "rm -rf \$WP_ENV_HOME; rm -rf ./phpunit/vewndor"
+    },
+    "mappings": {
+        "phpunit.xml": "./phpunit/phpunit.xml",
+        "bootstrap.php": "./phpunit/bootstrap.php"
     }
   }
 EOF

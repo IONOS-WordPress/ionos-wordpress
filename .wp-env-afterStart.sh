@@ -8,6 +8,17 @@ set -eo pipefail
 
 WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
 
+# execute only when not in CI environment
+# https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
+if [[ "${CI:-}" != "true" ]]; then
+
+  # install missing yoast/phpunit-polyfills
+  pnpm wp-env run tests-wordpress composer global require yoast/phpunit-polyfills:"^3.0" -W --dev
+
+  # copy phpunit files from wp-env container to phpunit-wordpress
+  docker cp $(docker ps -q --filter "name=tests-wordpress"):/home/$USER/.composer/vendor/ ./phpunit/
+fi
+
 # remove dolly demo plugin
 rm -f $WPENV_INSTALLPATH/{tests-WordPress,WordPress}/wp-content/plugins/hello.php
 
