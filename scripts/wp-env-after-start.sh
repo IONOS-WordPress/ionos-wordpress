@@ -57,6 +57,10 @@ if [[ "${CI:-}" != "true" ]]; then
 $(plugins)
 $(themes)
         "/var/www/html": "\${workspaceFolder}/${WPENV_INSTALLPATH}/WordPress",
+        // phpunit test path mappings
+        "/wordpress-phpunit/includes": "\${workspaceFolder}/${WPENV_INSTALLPATH}/tests-WordPress-PHPUnit/tests/phpunit/includes",
+        "/home/$USER/.composer/vendor": "\${workspaceFolder}/phpunit/vendor",
+
       }
     }
   ]
