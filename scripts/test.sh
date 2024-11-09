@@ -9,5 +9,8 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
+# ensure chromium browser is avaible for headless playwright test
+pnpx playwright install chromium
+
 # start storybook
 pnpm exec playwright test -c ./playwright-ct.config.js $@
