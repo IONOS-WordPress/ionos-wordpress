@@ -17,6 +17,19 @@ pnpm wp-env run tests-wordpress composer global require yoast/phpunit-polyfills:
 # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
 if [[ "${CI:-}" != "true" ]]; then
 
+  #region : local first development : supress xdebug warnings if vscode is not running
+  (
+    prefix=$(basename "$(pnpm wp-env install-path)")
+    # iterate over all wp-env containers and add "xdebug.log_level=0" to php.ini if not already present
+    for suffix in 'cli-1' 'tests-cli-1' 'tests-wordpress-1' 'wordpress-1' ; do
+      cat <<EOF | docker exec --interactive -u root "${prefix}-${suffix}" sh -
+        grep -q 'xdebug.log_level=' /usr/local/etc/php/php.ini || \
+          echo "xdebug.log_level=0" >> /usr/local/etc/php/php.ini
+EOF
+    done
+  )
+  #endregion
+
   #region local first development : phpunit related
   # copy phpunit files from wp-env container to phpunit-wordpress
   docker cp $(docker ps -q --filter "name=tests-wordpress"):/home/$USER/.composer/vendor/ ./phpunit/
