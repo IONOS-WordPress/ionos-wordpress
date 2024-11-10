@@ -43,6 +43,7 @@
     "@commitlint/config-conventional": "19.5.0",
     "@devcontainers/cli": "^0.72.0",
     "@playwright/experimental-ct-react": "^1.48.2",
+    "@playwright/browser-chromium" : "^1.48.2",
     "@prettier/plugin-php": "^0.22.2",
     "@storybook/addon-essentials": "^8.4.2",
     "@storybook/addon-interactions": "^8.4.2",
