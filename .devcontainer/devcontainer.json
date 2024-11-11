@@ -47,5 +47,7 @@
     8889,
     9003,
     6006
-  ]
+  ],
+
+  "postStartCommand": "rm -rf ./playwright/.cache"
 }
