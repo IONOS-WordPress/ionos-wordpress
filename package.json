@@ -16,7 +16,7 @@
     "storybook:start": "./scripts/storybook.sh dev -p 6006",
     "storybook:build": "./scripts/storybook.sh build -o ./build/storybook-static",
     "storybook:test": "./scripts/test.sh",
-    "phpunit:test": "pnpm wp-env run tests-wordpress -- phpunit",
+    "phpunit:test": "pnpm wp-env run tests-wordpress phpunit",
     "test": "./scripts/test.sh"
   },
   "keywords": [

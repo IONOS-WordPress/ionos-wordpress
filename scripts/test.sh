@@ -24,7 +24,6 @@ WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-pa
 # - or if the containers are not running
 if [[ ! -d "$WPENV_INSTALLPATH/WordPress" ]] || [[ "$(docker ps -q --filter "name=$(basename WPENV_INSTALLPATH)" | wc -l)" == '4' ]]; then
   pnpm start
-  export BUILD_UP_TO_DATE=1
 fi
 #endregion
 
