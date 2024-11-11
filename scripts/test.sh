@@ -9,8 +9,12 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-# execute storybook tests
+#region execute storybook tests
+# install playwright dependencies
+([[ "$CI" == "1" ]] || [[ "$CI" == "true" ]]) && pnpm exec playwright install-deps
+
 pnpm exec playwright test -c ./playwright-ct.config.js $@
+#endregion
 
 WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
 

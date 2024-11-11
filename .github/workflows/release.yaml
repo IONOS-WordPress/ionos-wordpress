@@ -45,6 +45,7 @@ jobs:
         id: build_project
         with:
           runCmd: |
+            env          
             pnpm install --frozen-lockfile
             echo "WP_ENV_HOME=${WP_ENV_HOME}"
             pnpm build

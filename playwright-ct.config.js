@@ -5,7 +5,7 @@ const { defineConfig, devices } = require('@playwright/experimental-ct-react');
  */
 module.exports = defineConfig({
   testMatch: '*.spec.jsx',
-  testDir: './',
+  testDir: '.',
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
   snapshotDir: './playwright/__snapshots__',
   /* Maximum time one test can run for. */
@@ -16,7 +16,7 @@ module.exports = defineConfig({
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
+  // Opt out of parallel tests on CI.
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
