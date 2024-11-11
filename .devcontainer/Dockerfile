@@ -16,9 +16,6 @@ RUN (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y
   && sudo apt update \
   && sudo apt install gh -y
 
-# pre install playwright native dependencies for chromium
-RUN npx playwright install --with-deps
-
 ARG USERNAME=vscode
 
 # expose PHP xdebug port 9003
@@ -69,3 +66,4 @@ ENV XDEBUG_MODE=off
 
 # install pnpm
 RUN curl https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" PNPM_VERSION="$PNPM_VERSION" SHELL="$(which bash)" bash -
+
