@@ -49,6 +49,11 @@ jobs:
             echo "WP_ENV_HOME=${WP_ENV_HOME}"
             pnpm build
 
+            # mark project already built for the next commands
+            export BUILD_UP_TO_DATE=1
+
+            pnpm test
+
       - name: print output
         run: |
           cat <<EOF
