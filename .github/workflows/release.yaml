@@ -43,9 +43,12 @@ jobs:
       - uses: "./.github/shared/actions/devcontainer-shell-run"
         name: build_project
         id: build_project
+        env:
+          GITHUB_ACTIONS: true
+          CI: true
         with:
           runCmd: |
-            env          
+            env
             pnpm install --frozen-lockfile
             echo "WP_ENV_HOME=${WP_ENV_HOME}"
             pnpm build
