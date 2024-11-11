@@ -5,7 +5,8 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "build": {
       // Path is relative to the devcontainer.json file.
-      "dockerfile": "Dockerfile"
+      "dockerfile": "Dockerfile",
+      "context": ".."
   },
 
 	"features": {
@@ -46,7 +47,5 @@
     8889,
     9003,
     6006
-  ],
-
-  "postStartCommand": "pnpm env use --global $PNPM_NODEJS_VERSION; pnpm config set store-dir ~/.pnpm-store"
+  ]
 }
