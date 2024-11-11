@@ -16,6 +16,9 @@ RUN (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y
   && sudo apt update \
   && sudo apt install gh -y
 
+# pre install playwright native dependencies for chromium
+RUN npx playwright install --with-deps
+
 ARG USERNAME=vscode
 
 # expose PHP xdebug port 9003
