@@ -6,14 +6,14 @@
 # this script is used to build all packages of the monorepo
 #
 
+# bootstrap the environment
+source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+
 # skip building if BUILD_UP_TO_DATE is set to 1
 if [[ "${BUILD_UP_TO_DATE:-}" == '1' ]]; then
   ionos.wordpress.log_info "skip (re)building : BUILD_UP_TO_DATE=1"
   exit 0
 fi
-
-# bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
 # build a monorepo workspace package of type npm
 #

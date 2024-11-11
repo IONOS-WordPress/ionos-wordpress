@@ -11,7 +11,7 @@ source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
 #region execute storybook tests
 # install playwright dependencies
-([[ "$CI" == "1" ]] || [[ "$CI" == "true" ]]) && pnpm exec playwright install-deps
+[[ -z $CI ]] && pnpm exec playwright install-deps
 
 pnpm exec playwright test -c ./playwright-ct.config.js $@
 #endregion
