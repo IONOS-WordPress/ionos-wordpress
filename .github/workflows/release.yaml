@@ -44,6 +44,7 @@ jobs:
         name: build_project
         id: build_project
         env:
+          # for some reason these default env vars are not available in the dev container by default
           GITHUB_ACTIONS: true
           CI: true
         with:
