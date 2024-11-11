@@ -10,8 +10,9 @@
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
 #region execute storybook tests
-# install playwright dependencies
-([[ "$CI" == "1" ]] || [[ "$CI" == "true" ]]) && pnpm exec playwright install-deps
+# install playwright and dependencies if running in conainer
+# - this is required because the container does not have the necessary dependencies to run playwright
+[[ "$USER" == "vscode" ]] && pnpm exec playwright --with-deps chromium
 
 pnpm exec playwright test -c ./playwright-ct.config.js $@
 #endregion

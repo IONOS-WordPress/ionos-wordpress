@@ -58,7 +58,7 @@ EOF
 USER $USERNAME
 
 # when running in a container, the default WP_ENV_HOME should be used
-ENV WP_ENV_HOME=~/.wp-env
+ENV WP_ENV_HOME=/home/$USERNAME/.wp-env
 
 ENV PNPM_VERSION=9.12.3
 ENV PNPM_NODEJS_VERSION=20.17.0

@@ -15,7 +15,7 @@
     "update-dependencies": "./scripts/update-dependencies.sh",
     "storybook:start": "./scripts/storybook.sh dev -p 6006",
     "storybook:build": "./scripts/storybook.sh build -o ./build/storybook-static",
-    "storybook:test": "./scripts/test.sh",
+    "storybook:test": "pnpm exec playwright test -c ./playwright-ct.config.js",
     "phpunit:test": "pnpm wp-env run tests-wordpress phpunit",
     "test": "./scripts/test.sh"
   },
