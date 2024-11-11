@@ -43,12 +43,11 @@ jobs:
       - uses: "./.github/shared/actions/devcontainer-shell-run"
         name: build_project
         id: build_project
-        env:
-          # for some reason these default env vars are not available in the dev container by default
-          GITHUB_ACTIONS: true
-          CI: true
         with:
           runCmd: |
+            # for some reason these default env vars are not available in the dev container by default
+            export GITHUB_ACTIONS=true
+            export CI=true
             env
             pnpm install --frozen-lockfile
             echo "WP_ENV_HOME=${WP_ENV_HOME}"
