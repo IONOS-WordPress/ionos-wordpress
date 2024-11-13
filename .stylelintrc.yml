@@ -1,0 +1,11 @@
+#
+# default stylelint configuration
+#
+# this file is usually referenced in your own top level .stylelintrc.yaml.
+#
+
+extends:
+  - stylelint-config-recommended-scss
+rules:
+  color-named: null
+  selector-class-pattern: null
