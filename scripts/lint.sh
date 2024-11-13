@@ -9,8 +9,8 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-POSITIONAL_ARGS=()
 FIX=no
+POSITIONAL_ARGS=()
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -41,8 +41,6 @@ EOF
   esac
 done
 
-set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
-
 [[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=(".")
 
 function ionos.wordpress.prettier() {
@@ -68,7 +66,9 @@ function ionos.wordpress.stylelint() {
     ${POSITIONAL_ARGS[@]}
 }
 
-ionos.wordpress.prettier
-ionos.wordpress.eslint
-ionos.wordpress.stylelint
+ionos.wordpress.prettier || exit_code=-1
+ionos.wordpress.eslint || exit_code=-1
+ionos.wordpress.stylelint || exit_code=-1
+
+exit ${exit_code:-0}
 
