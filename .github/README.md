@@ -23,7 +23,7 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
     # see https://nektosact.com/installation/index.html#bash-script
     ```
 
-    (Option 2)  If your Linux is in the docker group you can use the following command:
+    (Option 2) If your Linux is in the docker group you can use the following command:
 
     ```bash
     curl https://raw.githubusercontent.com/nektos/act/master/install.sh | bash
@@ -40,6 +40,7 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
     ```bash
     systemctl start docker
     ```
+
     Repeat the act command after starting the docker service to ensure everything is working fine.
 
     Now you can use act to run the workflows locally. For example to trigger the `release` workflow:
@@ -61,6 +62,7 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
     # will consume GitHub token from GH_TOKEN environment variable
     gh auth login
     ```
+
     - install act as gh extension
 
     ```bash
@@ -94,5 +96,3 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
 # Links
 
 - see https://nektosact.com/usage/index.html for detailed commandline actions
-
-

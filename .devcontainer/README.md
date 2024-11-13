@@ -2,7 +2,7 @@
 
 This project is a template for WordPress projects using Dev Containers.
 
-> Dev Containers are a standardized way to define and describe development environments. They are based on Docker containers and can be used with any editor or IDE. Dev Containers are a great way to __ensure that all developers on a project have the same development environment__, regardless of their operating system. The same Dev Container can be used for local development, CI/CD, and more.
+> Dev Containers are a standardized way to define and describe development environments. They are based on Docker containers and can be used with any editor or IDE. Dev Containers are a great way to **ensure that all developers on a project have the same development environment**, regardless of their operating system. The same Dev Container can be used for local development, CI/CD, and more.
 
 It shows how to use [Development Containers](https://containers.dev/) for WordPress plugins/theme development.
 
@@ -11,7 +11,7 @@ _The WordPress plugin in this project is a very rudimentary plugin stub only for
 ## Features
 
 - [x] Dev Container definition (`./.devcontainer`) providing
-    - [x] `pnpm`
+  - [x] `pnpm`
 - [x] Automatic provisioning of the Dev Container for CI using a GitHub Action
   - [x] including caching of the Dev Container image
 - [x] VSCode Dev Container integration
@@ -87,4 +87,3 @@ As a consequence of the above almost any editing environment can be used with De
 - https://github.com/devcontainers/cli
 
   A reference implementation for the specification that can create and configure a dev container from a devcontainer.json.
-

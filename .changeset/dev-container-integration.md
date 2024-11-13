@@ -1,5 +1,5 @@
 ---
-"ionos-wordpress": patch
+'ionos-wordpress': patch
 ---
 
 devcontainer integration
@@ -7,12 +7,12 @@ devcontainer integration
 - features
 
   - [x] Dev Container definition (`./.devcontainer`) providing
-      - [x] `pnpm`
-      - [x] `composer`
-      - [x] `wp-env`
-      - [x] `php` including out of the box `xdebug` support
-      - [x] SSH access
-      - [x] configurable environment (`./.devcontainer/devcontainer.env`)
+    - [x] `pnpm`
+    - [x] `composer`
+    - [x] `wp-env`
+    - [x] `php` including out of the box `xdebug` support
+    - [x] SSH access
+    - [x] configurable environment (`./.devcontainer/devcontainer.env`)
   - [x] Automatic provisioning of the Dev Container for CI using a GitHub Action
     - [x] including caching of the Dev Container image
   - [x] VSCode Dev Container integration
@@ -40,4 +40,3 @@ devcontainer integration
   - execute `composer --version` in dev container : `pnpm exec devcontainer exec --workspace-folder $(pwd) composer --version`
 
   - execute `pnpm exec devcontainer build --workspace-folder $(pwd)` to rebuild the devcontainer image
-

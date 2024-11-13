@@ -1,4 +1,4 @@
-name: "devcontainer shell run"
+name: 'devcontainer shell run'
 description: |
   set up computed dev container image and run a command within the dev container.
 inputs:
@@ -8,13 +8,13 @@ inputs:
     default: 'echo "WP_ENV_HOME=${WP_ENV_HOME} !"'
 outputs:
   runCmdOutput:
-    description: "the output of the command"
+    description: 'the output of the command'
     value: ${{ steps.devcontainer_shell_run.outputs.runCmdOutput }}
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
-    - uses: "./.github/shared/actions/devcontainer-image-name"
+    - uses: './.github/shared/actions/devcontainer-image-name'
       id: image_name
 
     - uses: devcontainers/ci@v0.3
@@ -27,4 +27,3 @@ runs:
           export GITHUB_ACTIONS=true
           export CI=true
           ${{ inputs.runCmd }}
-

@@ -30,9 +30,5 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 export default function Edit() {
-	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Dynamic Block 2 – hello from the editor!', 'test-plugin' ) }
-		</p>
-	);
+  return <p {...useBlockProps()}>{__('Dynamic Block 2 – hello from the editor!', 'test-plugin')}</p>;
 }

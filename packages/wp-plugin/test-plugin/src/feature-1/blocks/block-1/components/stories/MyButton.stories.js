@@ -28,8 +28,8 @@ export default {
       description: 'The text of the button',
     },
     variant: {
-      control : 'inline-radio',
-      options: [ 'primary', 'secondary', 'tertiary', 'link'],
+      control: 'inline-radio',
+      options: ['primary', 'secondary', 'tertiary', 'link'],
       description: 'the visual representation of the button',
     },
   },
@@ -40,21 +40,21 @@ export default {
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary = {
   args: {
-    variant : 'primary',
+    variant: 'primary',
     label: 'Primary Button',
   },
 };
 
 export const Secondary = {
   args: {
-    variant : 'secondary',
+    variant: 'secondary',
     label: 'Secondary Button',
   },
 };
 
 export const Tertiary = {
   args: {
-    variant : 'tertiary',
+    variant: 'tertiary',
     disabled: true,
     label: 'Tertiary disabled Button',
   },
@@ -62,7 +62,7 @@ export const Tertiary = {
 
 export const Link = {
   args: {
-    variant : 'link',
+    variant: 'link',
     disabled: true,
     label: 'Link disabled Button',
   },

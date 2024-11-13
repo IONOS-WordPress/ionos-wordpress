@@ -16,9 +16,5 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @return {Element} Element to render.
  */
 export default function save() {
-	return (
-		<p { ...useBlockProps.save() }>
-			{ 'Example Static – hello from the saved content!' }
-		</p>
-	);
+  return <p {...useBlockProps.save()}>{'Example Static – hello from the saved content!'}</p>;
 }

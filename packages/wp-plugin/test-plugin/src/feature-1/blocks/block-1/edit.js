@@ -30,12 +30,5 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 export default function Edit() {
-	return (
-		<p { ...useBlockProps() }>
-			{ __(
-				'Example Static – hello from the editor!',
-				'test-plugin'
-			) }
-		</p>
-	);
+  return <p {...useBlockProps()}>{__('Example Static – hello from the editor!', 'test-plugin')}</p>;
 }

@@ -1,11 +1,11 @@
-import { createTest } from '@storybook/react/experimental-playwright'
+import { createTest } from '@storybook/react/experimental-playwright';
 import { test as base, expect } from '@playwright/experimental-ct-react';
 
 import stories from './MyButton.stories.portable.js';
 
 import MyButton from '../MyButton.jsx';
 
-const test = createTest(base)
+const test = createTest(base);
 
 test('Link story', async ({ mount, page }) => {
   await mount(<stories.Link />);
@@ -18,11 +18,11 @@ test('Link story', async ({ mount, page }) => {
 
   expect(buttonLocator, 'button was found').toBeTruthy();
 
-  expect(await buttonLocator.evaluate( element => element.disabled ), 'button should be disabled').toBeTruthy();
+  expect(await buttonLocator.evaluate((element) => element.disabled), 'button should be disabled').toBeTruthy();
   // same same as the line above
   expect(buttonLocator).toBeDisabled();
 
   expect(buttonLocator, "button should have class 'is-link'").toHaveClass(/is-link/);
 
-  expect( buttonLocator.click(), 'button should not be clickable').rejects.toThrowError();
+  expect(buttonLocator.click(), 'button should not be clickable').rejects.toThrowError();
 });

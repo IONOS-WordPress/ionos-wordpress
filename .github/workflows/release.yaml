@@ -40,7 +40,7 @@ jobs:
       - name: display output name
         run: echo "image_name=${{ needs.build_devcontainer_image.outputs.image_name }}"
 
-      - uses: "./.github/shared/actions/devcontainer-shell-run"
+      - uses: './.github/shared/actions/devcontainer-shell-run'
         name: build_project
         id: build_project
         with:
@@ -61,7 +61,7 @@ jobs:
             ${{ steps.build_project.outputs.runCmdOutput }}"
           EOF
 
-      - uses: "./.github/shared/actions/devcontainer-shell-run"
+      - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_builded_directories
         name: gather builded directories
         with:

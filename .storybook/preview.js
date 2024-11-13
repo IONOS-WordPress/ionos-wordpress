@@ -1,5 +1,5 @@
-import "@wordpress/components/build-style/style.css";
-import "./style.css";
+import '@wordpress/components/build-style/style.css';
+import './style.css';
 
 /** @type { import('@storybook/react').Preview } */
 const preview = {

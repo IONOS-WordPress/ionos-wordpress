@@ -1,4 +1,4 @@
-import { composeStories } from '@storybook/react'
+import { composeStories } from '@storybook/react';
 
 import * as stories from '../stories/MyButton.stories.js';
 

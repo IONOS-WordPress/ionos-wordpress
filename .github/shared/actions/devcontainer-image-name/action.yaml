@@ -1,4 +1,4 @@
-name: "devcontainer image name"
+name: 'devcontainer image name'
 description: |
   set up environment variable IMAGE_NAME containing the computed dev container image.
   the dev container image name is constructed from the repository owner/name and the branch name all lowercased.
@@ -10,11 +10,11 @@ description: |
 #     default: 'World'
 outputs:
   image_name:
-    description: "the computed image name"
+    description: 'the computed image name'
     value: ${{ steps.compute_image_name.outputs.image_name }}
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - id: compute_image_name
       shell: bash
@@ -24,4 +24,3 @@ runs:
         image_name="ghcr.io/${GITHUB_REPOSITORY}-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}-devcontainer"
         # convert image_name to lowercase and provide it as step variable "image_name"
         echo "image_name=${image_name@L}" >> "$GITHUB_OUTPUT"
-

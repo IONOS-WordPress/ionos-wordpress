@@ -1,10 +1,10 @@
 <?php
-$WP_TESTS_DIR = getenv( 'WP_TESTS_DIR' );
+$WP_TESTS_DIR = getenv('WP_TESTS_DIR');
 
 // Forward custom PHPUnit Polyfills configuration to PHPUnit bootstrap file.
-$_phpunit_polyfills_path = getenv( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH' );
-if ( false !== $_phpunit_polyfills_path ) {
-	define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', $_phpunit_polyfills_path);
+$_phpunit_polyfills_path = getenv('WP_TESTS_PHPUNIT_POLYFILLS_PATH');
+if (false !== $_phpunit_polyfills_path) {
+  define('WP_TESTS_PHPUNIT_POLYFILLS_PATH', $_phpunit_polyfills_path);
 }
 
 require_once getenv('HOME') . '/.composer/vendor/autoload.php';

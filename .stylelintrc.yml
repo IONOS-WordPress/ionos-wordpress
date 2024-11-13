@@ -13,4 +13,3 @@ rules:
 plugins:
   - stylelint-scss
   - stylelint-prettier
-

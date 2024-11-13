@@ -1,5 +1,5 @@
 ---
-"ionos-wordpress": patch
+'ionos-wordpress': patch
 ---
 
 `pnpm build` will build all packages in the workspace.
@@ -10,4 +10,3 @@
 
       > [!TIP]
       > You can persist the `NODE_ENV` setting in you personal `.env.local` file. This file will not be commited to the repository.
-

@@ -1,5 +1,5 @@
 ---
-"ionos-wordpress": patch
+'ionos-wordpress': patch
 ---
 
 add storybook support

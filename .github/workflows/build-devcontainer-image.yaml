@@ -59,6 +59,3 @@ jobs:
             echo "pnpm version: $(pnpm --version)"
             echo "node --version: $(node --version)"
             gh --version
-
-
-
