@@ -1,13 +1,12 @@
-import { __ } from "@wordpress/i18n";
+// eslint-disable-next-line import/no-unresolved
+import { __ } from '@wordpress/i18n';
 
-import { hello as hello_from_lib } from "@ionos-wordpress/test-lib";
+import { hello as hello_from_lib } from '@ionos-wordpress/test-lib';
 
 export function hello() {
-
   hello_from_lib();
 
-  console.log(__("hello from packages/wp-plugin/test-plugin/src/index.js", "test-plugin"));
+  console.log(__('hello from packages/wp-plugin/test-plugin/src/index.js', 'test-plugin'));
 }
-
 
 hello();
