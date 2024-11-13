@@ -3,7 +3,7 @@
 #
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
-# this script is used to start storybook
+# this script is used to execute the tests
 #
 
 # bootstrap the environment
@@ -18,7 +18,7 @@ WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-pa
 # ensure wp-env is running
 # - if the install path does not exist
 # - or if the containers are not running
-if [[ ! -d "$WPENV_INSTALLPATH/WordPress" ]] || [[ "$(docker ps -q --filter "name=$(basename WPENV_INSTALLPATH)" | wc -l)" == '4' ]]; then
+if [[ ! -d "$WPENV_INSTALLPATH/WordPress" ]] || [[ "$(docker ps -q --filter "name=$(basename $WPENV_INSTALLPATH)" | wc -l)" != '6' ]]; then
   pnpm start
 fi
 #endregion
