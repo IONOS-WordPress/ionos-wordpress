@@ -23,7 +23,7 @@ const gitignorePath = path.resolve(__dirname, '.gitignore');
 export default [
   includeIgnoreFile(gitignorePath),
   {
-    ignores: ['**/*.md', 'packages/docs/**/*.min.js', '**/*.json', '**/*.code-workspace'],
+    ignores: ['**/*.md', '**/*.json', '**/*.code-workspace'],
   },
   ...compat.extends('prettier'),
   {
@@ -59,11 +59,24 @@ export default [
     },
 
     rules: {
-      'prettier/prettier': [0],
+      'prettier/prettier': ['warn'],
       'react-hooks/rules-of-hooks': ['error'],
       'react-hooks/exhaustive-deps': ['warn'],
       'react/prop-types': ['warn'],
-      'import/no-unresolved': ['warn'],
+      'import/no-unresolved': [
+        'error',
+        {
+          ignore: [
+            '@wordpress/components',
+            '@wordpress/i18n',
+            '@wordpress/data',
+            '@wordpress/element',
+            '@wordpress/hooks',
+            '@wordpress/block-editor',
+            '@wordpress/blocks',
+          ],
+        },
+      ],
       'no-console': ['warn'],
     },
   },

@@ -17,7 +17,8 @@ module.exports = {
   tabWidth: 2,
   singleQuote: true,
   printWidth: 120,
-  trailingComma: 'all',
+  bracketSameLine: true,
+  trailingComma: 'es5',
   overrides: [
     /*
       # {

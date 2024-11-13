@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import { __ } from '@wordpress/i18n';
 
 import { hello as hello_from_lib } from '@ionos-wordpress/test-lib';

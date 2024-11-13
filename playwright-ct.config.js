@@ -20,11 +20,8 @@ module.exports = defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    process.env.CI ?
-      ['dot'] :
-      ['list', { printSteps: true }]
-    ,
-    [ 'html', { outputFolder: './playwright/.playwright-report' } ]
+    process.env.CI ? ['dot'] : ['list', { printSteps: true }],
+    ['html', { outputFolder: './playwright/.playwright-report' }],
   ],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */

@@ -9,3 +9,8 @@ extends:
 rules:
   color-named: null
   selector-class-pattern: null
+  prettier/prettier: true
+plugins:
+  - stylelint-scss
+  - stylelint-prettier
+

@@ -140,6 +140,9 @@ importers:
       stylelint-config-recommended-scss:
         specifier: ^14.1.0
         version: 14.1.0(postcss@8.4.48)(stylelint@16.10.0(typescript@5.6.2))
+      stylelint-prettier:
+        specifier: ^5.0.2
+        version: 5.0.2(prettier@3.3.3)(stylelint@16.10.0(typescript@5.6.2))
       stylelint-scss:
         specifier: ^6.9.0
         version: 6.9.0(stylelint@16.10.0(typescript@5.6.2))
@@ -7429,6 +7432,13 @@ packages:
     engines: {node: '>=18.12.0'}
     peerDependencies:
       stylelint: ^16.1.0
+
+  stylelint-prettier@5.0.2:
+    resolution: {integrity: sha512-qJ+BN+1T2ZcKz9WIrv0x+eFGHzSUnXfXd5gL///T6XoJvr3D8/ztzz2fhtmXef7Vb8P33zBXmLTTveByr0nwBw==}
+    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      prettier: '>=3.0.0'
+      stylelint: '>=16.0.0'
 
   stylelint-scss@6.9.0:
     resolution: {integrity: sha512-oWOR+g6ccagfrENecImGmorWWjVyWpt2R8bmkhOW8FkNNPGStZPQMqb8QWMW4Lwu9TyPqmyjHkkAsy3weqsnNw==}
@@ -17053,6 +17063,12 @@ snapshots:
 
   stylelint-config-recommended@14.0.1(stylelint@16.10.0(typescript@5.6.2)):
     dependencies:
+      stylelint: 16.10.0(typescript@5.6.2)
+
+  stylelint-prettier@5.0.2(prettier@3.3.3)(stylelint@16.10.0(typescript@5.6.2)):
+    dependencies:
+      prettier: 3.3.3
+      prettier-linter-helpers: 1.0.0
       stylelint: 16.10.0(typescript@5.6.2)
 
   stylelint-scss@6.9.0(stylelint@16.10.0(typescript@5.6.2)):
