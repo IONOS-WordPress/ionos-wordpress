@@ -34,6 +34,12 @@ module.exports = defineConfig({
 
     /* keep only videos for failed tests */
     video: 'retain-on-failure',
+
+    launchOptions: {
+      // https://playwright.dev/docs/test-use-options#more-browser-and-context-options
+      // slow down the tests to make queries more stable
+      slowMo: 50,
+    },
   },
   outputDir: './playwright/.test-results',
 });
