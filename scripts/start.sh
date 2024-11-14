@@ -38,7 +38,7 @@ pnpm build
     ],
     "themes": [
       $(themes)
-      "https://downloads.wordpress.org/theme/twentytwentyfour.zip"
+      "https://downloads.wordpress.org/theme/twentytwentyfive.zip"
     ],
     "config": {
       "SCRIPT_DEBUG": true,
