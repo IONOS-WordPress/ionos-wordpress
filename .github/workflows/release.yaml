@@ -45,12 +45,12 @@ jobs:
         id: build_project
         with:
           runCmd: |
-            env
             pnpm install --frozen-lockfile
-            pnpm build
 
-            # mark project already built for the next commands
-            export BUILD_UP_TO_DATE=1
+            # build will already be called by the test command
+            # pnpm build
+            # # mark project already built for the next commands
+            # export BUILD_UP_TO_DATE=1
 
             pnpm test
 
