@@ -13,6 +13,7 @@
     "distclean": "./scripts/distclean.sh",
     "changeset": "./scripts/changeset.sh",
     "lint": "./scripts/lint.sh",
+    "lint-fix": "./scripts/lint.sh --fix",
     "update-dependencies": "./scripts/update-dependencies.sh",
     "storybook:start": "./scripts/storybook.sh dev -p 6006",
     "storybook:build": "./scripts/storybook.sh build -o ./build/storybook-static",
