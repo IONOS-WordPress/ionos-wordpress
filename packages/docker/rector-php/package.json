@@ -1,0 +1,12 @@
+{
+  "name": "@ionos-wordpress/rector-php",
+  "version": "1.0.3",
+  "description": "This image provides the most recent [rector](https://github.com/rectorphp/rector) in a docker image.",
+  "keywords": [
+    "rector",
+    "php",
+    "upgrade",
+    "downgrade"
+  ],
+  "license": "MIT"
+}

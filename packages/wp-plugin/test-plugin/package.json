@@ -6,6 +6,8 @@
     "@ionos-wordpress/test-lib": "workspace:*"
   },
   "devDependencies": {
-    "@wordpress/components": "catalog:"
+    "@wordpress/components": "catalog:",
+    "@ionos-wordpress/rector-php": "workspace:",
+    "@ionos-wordpress/ecs-php": "workspace:"
   }
 }

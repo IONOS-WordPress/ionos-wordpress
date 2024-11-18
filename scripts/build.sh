@@ -46,6 +46,60 @@ $(tar -ztf $path/dist/*.tgz | sort)
 EOF
 }
 
+# build a monorepo workspace package of type npm
+#
+# @param $1 path to workspace package directory
+#
+function ionos.wordpress.build_workspace_package_docker() {
+  # (example : docker/rector-php)
+  local path="./packages/$1"
+
+  PACKAGE_JSON="$path/package.json"
+  PACKAGE_NAME=$(jq -r '.name' $PACKAGE_JSON)
+
+  DOCKER_BUILDKIT="${DOCKER_BUILDKIT:-1}"
+  DOCKER_REGISTRY="${DOCKER_REGISTRY:-registry.hub.docker.com}"
+  DOCKER_IMAGE_AUTHOR="$(ionos.wordpress.author_name $PACKAGE_JSON) <$(ionos.wordpress.author_email $PACKAGE_JSON)>"
+  DOCKER_IMAGE_NAME="$(echo $PACKAGE_NAME | sed -r 's/@//g')"
+  # if DOCKER_USERNAME is not set take the package scope (example: "@foo/bar" package user is "foo")
+  DOCKER_USERNAME="${DOCKER_USERNAME:-${DOCKER_IMAGE_NAME%/*}}"
+  # if DOCKER_REPOSITORY is not set take the package repository (example: "@foo/bar" package repository is "bar")
+  DOCKER_REPOSITORY="${DOCKER_REPOSITORY:-${DOCKER_IMAGE_NAME#*/}}"
+  DOCKER_IMAGE_NAME="$DOCKER_USERNAME/$DOCKER_REPOSITORY"
+
+  rm -rf $path/{dist,build,build-info}
+
+  pnpm --filter "$PACKAGE_NAME" --if-present run prebuild
+  pnpm --filter "$PACKAGE_NAME" --if-present run build
+  pnpm --filter "$PACKAGE_NAME" --if-present run postbuild
+
+  # image labels : see https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys
+  docker build \
+    $(test -f $path/.env && cat $path/.env | sed 's/^/--build-arg /' ||:) \
+    --progress=plain \
+    -t $DOCKER_IMAGE_NAME:latest \
+    -t $DOCKER_IMAGE_NAME:$(jq -r '.version' $PACKAGE_JSON) \
+    --label "maintainer=$DOCKER_IMAGE_AUTHOR" \
+    --label "org.opencontainers.image.title=$DOCKER_IMAGE_NAME" \
+    --label "org.opencontainers.image.description=$(jq -r '.description | values' $PACKAGE_JSON)" \
+    --label "org.opencontainers.image.authors=$DOCKER_IMAGE_AUTHOR" \
+    --label "org.opencontainers.image.source=$(jq -re '.repository.url | values' $PACKAGE_JSON || jq -r '.repository.url | values' package.json)" \
+    --label "org.opencontainers.image.url=$(jq -re '.homepage | values' $PACKAGE_JSON || jq -r '.homepage | values' package.json)" \
+    --label "org.opencontainers.image.vendor=${VENDOR:-}" \
+    --label "org.opencontainers.image.licenses=$(jq -re '.license | values' $PACKAGE_JSON || jq -r '.license | values' package.json)" \
+    -f $path/Dockerfile .
+
+  # output generated image labels
+  cat << EOF | tee $path/build-info
+$(docker image inspect $DOCKER_IMAGE_NAME:latest | jq '.[0].Config.Labels | values')
+
+$(echo -n "---")
+
+$(docker image ls --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedAt}}\t{{.Size}}" $DOCKER_IMAGE_NAME:latest)
+EOF
+}
+
+
 # list all wordpress plugin files in the plugin directory
 # there can be multiple plugin files in a plugin directory
 # (see https://wordpress.stackexchange.com/a/102097)
@@ -351,6 +405,9 @@ function ionos.wordpress.build_workspace_package() {
           ;;
         "wp-plugin")
           ionos.wordpress.build_workspace_package_wp_plugin "$path"
+          ;;
+        "docker")
+          ionos.wordpress.build_workspace_package_docker "$path"
           ;;
         *)
           echo "Don't know how to build package type '$type'"

@@ -50,6 +50,41 @@ function ionos.wordpress.log_header() {
 }
 export -f ionos.wordpress.log_warn
 
+#
+# computes the author name by querying a priorized list of sources.
+# the first one found wins.
+#
+# - environment variable AUTHOR_NAME
+# - .author.name from the package.json provided as parameter $1 (sub package from packages/*/*/package.json)
+# - .author.name from the root package.json
+# - the configured git user name (git config user.name)
+#
+# @param $1 path to package.json
+# @return the first found author name or an empty string if not found
+#
+function ionos.wordpress.author_name() {
+  local VAL=${AUTHOR_NAME:-$(jq -re '.author.name | select( . != null )' "$1" || jq -re '.author.name | select( . != null )' ./package.json || git config user.name || echo "")}
+  echo "$VAL"
+}
+export -f ionos.wordpress.author_name
+
+#
+# computes the author email by querying a priorized list of sources.
+# the first one found wins.
+#
+# - environment variable AUTHOR_EMAIL
+# - .author.email from the package.json provided as first parameter (sub package from packages/*/*/package.json)
+# - .author.email from the root package.json
+# - the configured git user email (git config user.email)
+#
+# @param $1 path to package.json
+# @return the first found author email or an empty string if not found
+#
+function ionos.wordpress.author_email() {
+  local VAL=${AUTHOR_EMAIL:-$(jq -re '.author.email | select( . != null )' "$1" || jq -re '.author.email | select( . != null )' ./package.json || git config user.email || echo "")}
+  echo "$VAL"
+}
+export -f ionos.wordpress.author_email
 
 export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)
 

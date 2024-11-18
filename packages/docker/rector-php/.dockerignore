@@ -1,0 +1,4 @@
+/**/*
+!/packages/docker/rector-php
+/packages/docker/rector-php/build-info
+!/LICENSE.md
