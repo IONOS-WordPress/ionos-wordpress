@@ -259,6 +259,7 @@ EOF
     --exclude=.env \
     --exclude=vendor \
     --exclude=.secrets \
+    --exclude=webpack.config.js \
     $path/ \
     $path/dist/$plugin_name
 
