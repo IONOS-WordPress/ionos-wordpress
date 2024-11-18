@@ -34,6 +34,7 @@ function ionos.wordpress.build_workspace_package_npm() {
   PACKAGE_JSON="$path/package.json"
   PACKAGE_NAME=$(jq -r '.name' $PACKAGE_JSON)
   pnpm --filter "$PACKAGE_NAME" --if-present run prebuild
+  pnpm --filter "$PACKAGE_NAME" --if-present run build
   pnpm --filter "$PACKAGE_NAME" --if-present run postbuild
   tgz_file=$(cd $path && pnpm pack --pack-destination ./dist)
   cat << EOF | tee $path/build-info
