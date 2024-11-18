@@ -21,14 +21,11 @@ fi
 # execute playwright tests
 pnpm exec playwright test -c ./playwright-ct.config.js $@
 
-exit 0
-
-WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
-
 #region start wp-env if it is not running
 # ensure wp-env is running
 # - if the install path does not exist
 # - or if the containers are not running
+WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
 if [[ ! -d "$WPENV_INSTALLPATH/WordPress" ]] || [[ "$(docker ps -q --filter "name=$(basename $WPENV_INSTALLPATH)" | wc -l)" != '6' ]]; then
   pnpm start
 fi
