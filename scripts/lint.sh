@@ -45,7 +45,7 @@ done
 
 function ionos.wordpress.prettier() {
   # prettier
-  pnpm exec prettier --config ./.prettierrc.js --ignore-path ./.gitignore --check --ignore-unknown --log-level log \
+  pnpm exec prettier --config ./.prettierrc.js --ignore-path ./.gitignore --ignore-path ./.lintignore --check --ignore-unknown --log-level log \
     $([[ "$FIX" == 'yes' ]] && echo -n "--write" ||:) \
     ${POSITIONAL_ARGS[@]}
 }
@@ -61,7 +61,7 @@ function ionos.wordpress.stylelint() {
   [[ "${POSITIONAL_ARGS[@]}" == '.' ]] && POSITIONAL_ARGS=('**/*.{css,scss}')
 
   # stylelint
-  pnpm exec stylelint --config ./.stylelintrc.yml --ignore-path ./.gitignore --allow-empty-input \
+  pnpm exec stylelint --config ./.stylelintrc.yml --ignore-path ./.gitignore --ignore-path ./.lintignore --ignore-pattern '**/*.*' --ignore-pattern '!**/*.css' --ignore-pattern '!**/*.scss' --allow-empty-input \
     $([[ "$FIX" == 'yes' ]] && echo -n "--fix" ||:) \
     ${POSITIONAL_ARGS[@]}
 }

@@ -1,0 +1,4 @@
+# list files / paths here that you want to ignore
+# additionally to the paths listed in .gitignore
+
+pnpm-lock.yaml

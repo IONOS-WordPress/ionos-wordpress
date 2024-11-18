@@ -18,10 +18,12 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
-const gitignorePath = path.resolve(__dirname, '.gitignore');
+const gitIgnorePath = path.resolve(__dirname, '.gitignore');
+const lintIgnorePath = path.resolve(__dirname, '.lintignore');
 
 export default [
-  includeIgnoreFile(gitignorePath),
+  includeIgnoreFile(gitIgnorePath),
+  includeIgnoreFile(lintIgnorePath),
   {
     ignores: ['**/*.md', '**/*.json', '**/*.code-workspace'],
   },
