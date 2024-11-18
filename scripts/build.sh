@@ -15,6 +15,12 @@ if [[ "${BUILD_UP_TO_DATE:-}" == '1' ]]; then
   exit 0
 fi
 
+# quirks : when switch between devcontainer and local development
+# the noe deps are not identical for some reason. thats why we need to ensure
+# that the dependencies are installed in the current environment before building
+# => because of pnpm's caching this is at no cost
+echo 'y' | pnpm install
+
 # build a monorepo workspace package of type npm
 #
 # @param $1 path to workspace package directory
