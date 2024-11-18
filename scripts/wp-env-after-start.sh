@@ -93,6 +93,13 @@ EOF
   "prettier.ignorePath": ".gitignore",
   "prettier.enableDebugLogs": true,
   "eslint.lintTask.enable": true,
+  "eslint.useFlatConfig": true,
+  "eslint.format.enable" : true,
+  "eslint.ignoreUntitled": true,
+  "eslint.run": "onSave",
+    "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
   "cSpell.useGitignore": true,
   "editorconfig.generateAuto": false,
   "editor.codeActionsOnSave": {
@@ -105,9 +112,7 @@ EOF
   "stylelint.config": {
     "configBasedir": "\${workspaceFolder}"
   },
-  "eslint.codeAction.showDocumentation": {
-    "enable": true
-  },
+  "stylelint.configFile": ".stylelintrc.yml"
   "[php]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
