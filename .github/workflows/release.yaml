@@ -54,12 +54,12 @@ jobs:
 
             pnpm test
 
-      - name: print output
-        run: |
-          cat <<EOF
-            stdout was=
-            ${{ steps.build_project.outputs.runCmdOutput }}"
-          EOF
+      # - name: print output
+      #   run: |
+      #     cat <<EOF
+      #       stdout was=
+      #       ${{ steps.build_project.outputs.runCmdOutput }}"
+      #     EOF
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_builded_directories
