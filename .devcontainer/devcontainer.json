@@ -27,6 +27,17 @@
   //   "source=projectname-bashhistory,target=/commandhistory,type=volume"
   // ],
 
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "workbench.colorCustomizations": {
+          // highlight title bar to make developer sensuible that he is in a devcontainer
+          "titleBar.activeBackground": "#002b44"
+        }
+      }
+    }
+  },
+
   "portsAttributes": {
     "9003": {
       "label": "PHP xdebug port"
