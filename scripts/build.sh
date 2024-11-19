@@ -67,6 +67,15 @@ function ionos.wordpress.build_workspace_package_docker() {
   DOCKER_REPOSITORY="${DOCKER_REPOSITORY:-${DOCKER_IMAGE_NAME#*/}}"
   DOCKER_IMAGE_NAME="$DOCKER_USERNAME/$DOCKER_REPOSITORY"
 
+  # abort building image if
+  # - cli option --force is not set
+  # - workspace package build-info file exists
+  # - image with same name and version already exists locally
+  if [[ "$FORCE" == 'no' ]] && [[ -f "$path/build-info" ]] && docker image inspect $DOCKER_IMAGE_NAME:$PACKAGE_VERSION &>/dev/null; then
+    ionos.wordpress.log_warn "skip building docker image $DOCKER_IMAGE_NAME:$PACKAGE_VERSION : image already exists locally"
+    return
+  fi
+
   rm -rf $path/{dist,build,build-info}
 
   pnpm --filter "$PACKAGE_NAME" --if-present run prebuild
