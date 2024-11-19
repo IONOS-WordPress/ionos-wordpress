@@ -348,7 +348,7 @@ EOF
         --user "$DOCKER_USER" \
         -v $path/$TARGET_DIR:/project/dist \
         -v $(pwd)/${RECTOR_CONFIG}.php:/project/${RECTOR_CONFIG}.php \
-        pnpmkambrium/rector-php \
+        ionos-wordpress/rector-php \
         --clear-cache \
         --config "${RECTOR_CONFIG}.php" \
         --no-progress-bar \
@@ -484,7 +484,7 @@ WORKSPACE_PACKAGES=$(
 )
 
 if [[ "$WORKSPACE_PACKAGES" == '' ]]; then
-  ionos.wordpress.log_warn "No workspace packages found to build."
+  ionos.wordpress.log_warn "pnpm : no workspace packages matching ${FILTER:-*.*} found to build."
   exit 1
 fi
 

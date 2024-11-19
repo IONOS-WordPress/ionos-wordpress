@@ -27,7 +27,7 @@ RUN apt-get update && \
   && useradd --uid 1000 --gid php --shell /bin/bash --create-home php
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-COPY --chmod=755 ./packages/docker/ecs-php/entrypoint.sh /usr/bin
+COPY --chmod=755 ./packages/docker/rector-php/entrypoint.sh /usr/bin
 
 USER php
 RUN echo "RECTOR_VERSION=${RECTOR_VERSION}"
