@@ -53,6 +53,7 @@ done
 # ENDMARK:
 
 git clean $GIT_CLEAN_OPTS \
+  -ff \
   -e '!/*.code-workspace' \
   -e '!/*.secrets' \
   -e '!/*.env.local' \
