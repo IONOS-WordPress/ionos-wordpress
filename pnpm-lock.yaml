@@ -160,10 +160,10 @@ importers:
   packages/wp-plugin/essentials:
     devDependencies:
       '@ionos-wordpress/ecs-php':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../../docker/ecs-php
       '@ionos-wordpress/rector-php':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../../docker/rector-php
 
   packages/wp-plugin/test-plugin:
@@ -173,10 +173,10 @@ importers:
         version: link:../../npm/test-lib
     devDependencies:
       '@ionos-wordpress/ecs-php':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../../docker/ecs-php
       '@ionos-wordpress/rector-php':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../../docker/rector-php
       '@wordpress/components':
         specifier: 'catalog:'
