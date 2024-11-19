@@ -11,7 +11,7 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-#region ensure wp-env is not running
+# MARK: test wp-env not running
 # ensure wp-env is not running
 # - if the install path does not exist
 # - and the wp-env containers are not running
@@ -20,7 +20,7 @@ if [[ -d "$WPENV_INSTALLPATH/WordPress" ]] && [[ "$(docker ps -q --filter "name=
   ionos.wordpress.log_warn "wp-env is already running. Excecute 'pnpm stop' or 'pnpm destroy' to stop it before cleaning up."
   exit 1
 fi
-#endregion
+# ENDMARK
 
 # MARK: cleanup docker images
 # loop over all docker workspace packages

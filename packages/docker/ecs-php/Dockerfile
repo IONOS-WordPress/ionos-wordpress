@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 
-# php version of the docker image
+# php version from .env
 ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-cli as base
@@ -8,6 +8,7 @@ FROM php:${PHP_VERSION}-cli as base
 FROM php:${PHP_VERSION}-cli-alpine as build
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
+# ecs version from .env
 ARG ECS_VERSION
 
 ENV COMPOSER_HOME=/tmp

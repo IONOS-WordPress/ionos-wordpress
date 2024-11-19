@@ -17,7 +17,7 @@ pnpm wp-env run tests-wordpress composer global require yoast/phpunit-polyfills:
 # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
 if [[ "${CI:-}" != "true" ]]; then
 
-  #region : local first development : supress xdebug warnings if vscode is not running
+  # MARK: supress xdebug warnings if vscode is not running in local developmt mode
   (
     prefix=$(basename "$(pnpm wp-env install-path)")
     # iterate over all wp-env containers and add "xdebug.log_level=0" to php.ini if not already present
@@ -28,14 +28,14 @@ if [[ "${CI:-}" != "true" ]]; then
 EOF
     done
   )
-  #endregion
+  # ENDMARK
 
-  #region local first development : phpunit related
+  # MARK: copy PHPUNIT
   # copy phpunit files from wp-env container to phpunit-wordpress
   docker cp $(docker ps -q --filter "name=tests-wordpress"):/home/$USER/.composer/vendor/ ./phpunit/
-  #endregion
+  # ENDMARK
 
-  #region vscode configurations
+  # MARK: vscode configurations generation
   # generate .vscode/launch.json
   (
     # echoes comma spearated list of plugins
@@ -169,7 +169,7 @@ EOF
   }
 }
 EOF
-  #endregion
+  # ENDMARK
 
 fi
 
