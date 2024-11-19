@@ -428,6 +428,41 @@ function ionos.wordpress.build_workspace_package() {
   )
 }
 
+#
+# computes the build order of pnpm workspace packages
+#
+# @param $1 path to workspace package directory (example : 'wp-plugin/essentials')
+#
+# returns a list of pnpm workspace packages including their dependencies in topological order
+#
+function ionos.wordpress.get_workspace_package_dependency_order() {
+  declare -A PATH_BY_NAME
+  declare -A NAME_BY_PATH
+  declare -A WORKSPACE_PACKAGE_DEPENDENCIES_BY_NAME
+
+  # initialize assoc array containing [package.json : package name, ...]
+  for PACKAGE_PATH in "$@"; do
+    PACKAGE_JSON="./packages/$PACKAGE_PATH/package.json"
+    PACKAGE_NAME="$(jq -r '.name' "$PACKAGE_JSON")"
+    NAME_BY_PATH["$PACKAGE_PATH"]="$PACKAGE_NAME"
+    PATH_BY_NAME["$PACKAGE_NAME"]="$PACKAGE_PATH"
+    WORKSPACE_PACKAGE_DEPENDENCIES_BY_NAME["$PACKAGE_NAME"]=$(
+      jq -r \
+      '[.dependencies // {}, .devDependencies // {} | to_entries[] | select(.value == "workspace:*") | .key]|join(" ")' \
+      "$PACKAGE_JSON"
+    )
+  done
+
+  for PACKAGE_PATH in "$@"; do
+    PACKAGE_NAME="${NAME_BY_PATH[$PACKAGE_PATH]}"
+    WORKSPACE_PACKAGE_DEPENDENCIES="${WORKSPACE_PACKAGE_DEPENDENCIES_BY_NAME[$PACKAGE_NAME]:-0}"
+
+    for WORKSPACE_PACKAGE_DEPENDENCY in $WORKSPACE_PACKAGE_DEPENDENCIES; do
+      echo "${PACKAGE_PATH} ${PATH_BY_NAME[$WORKSPACE_PACKAGE_DEPENDENCY]:-0}"
+    done
+  done | tsort | tac | grep -v '^0$'
+}
+
 # MARK: parse arguments
 FORCE=no
 FILTER=()
@@ -437,7 +472,7 @@ while [[ $# -gt 0 ]]; do
   case $1 in
     --help)
       cat <<EOF
-Usage: $0 [options] [file file ...]"
+Usage: $0 [options]"
 
 By default all packages/{npm,wp-plugin} workspace packages will be build.
 
@@ -447,6 +482,12 @@ Options:
   --help      Show this help message and exit
   --force     will also build all packages/{docker} workspace packages
               even if a matching (name,version) docker image exists locally
+  --filter    Filter packages to build by package name.
+              Wildcards allowed
+              May occur multiple times
+              Examples:
+                pnpm build --filter 'wp-plugin/essentials'
+                pnpm build --filter '*/test*' --filter '*/essentials'
 EOF
       exit
       ;;
@@ -478,15 +519,14 @@ FILTER="${FILTER[@]/#/--filter=}"
 # MARK: build all
 # get all workspace packages in topological order
 # each line contains [type][workspace-package] (example : wp-plugin/essentials)
-# WORKSPACE_PACKAGES=$(pnpm -r $FILTER --sort exec realpath --relative-to=$(pwd)/packages .)
-WORKSPACE_PACKAGES=$(
-  pnpm list $FILTER --depth -1 --parseable --recursive --only-projects | grep packages | xargs -I {} realpath --relative-to=$(pwd)/packages {} ||:
-)
+WORKSPACE_PACKAGES=$(pnpm -r $FILTER --sort exec realpath --relative-to=$(pwd)/packages . | grep --invert "No projects matched the filters" ||:)
 
 if [[ "$WORKSPACE_PACKAGES" == '' ]]; then
-  ionos.wordpress.log_warn "pnpm : no workspace packages matching ${FILTER:-*.*} found to build."
+  ionos.wordpress.log_warn "pnpm : filters (${FILTER:-*.*}) doesnt match a pnpm workspace package."
   exit 1
 fi
+
+WORKSPACE_PACKAGES=$(ionos.wordpress.get_workspace_package_dependency_order $WORKSPACE_PACKAGES)
 
 # call build function for each workspace package
 while read -r path; do
