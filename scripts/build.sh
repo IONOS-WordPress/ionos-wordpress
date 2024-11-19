@@ -56,6 +56,7 @@ function ionos.wordpress.build_workspace_package_docker() {
 
   PACKAGE_JSON="$path/package.json"
   PACKAGE_NAME=$(jq -r '.name' $PACKAGE_JSON)
+  PACKAGE_VERSION=$(jq -r '.version' $PACKAGE_JSON)
 
   DOCKER_BUILDKIT="${DOCKER_BUILDKIT:-1}"
   DOCKER_REGISTRY="${DOCKER_REGISTRY:-registry.hub.docker.com}"
@@ -87,7 +88,7 @@ function ionos.wordpress.build_workspace_package_docker() {
     $(test -f $path/.env && cat $path/.env | sed 's/^/--build-arg /' ||:) \
     --progress=plain \
     -t $DOCKER_IMAGE_NAME:latest \
-    -t $DOCKER_IMAGE_NAME:$(jq -r '.version' $PACKAGE_JSON) \
+    -t $DOCKER_IMAGE_NAME:$PACKAGE_VERSION \
     --label "maintainer=$DOCKER_IMAGE_AUTHOR" \
     --label "org.opencontainers.image.title=$DOCKER_IMAGE_NAME" \
     --label "org.opencontainers.image.description=$(jq -r '.description | values' $PACKAGE_JSON)" \
@@ -400,7 +401,7 @@ function ionos.wordpress.build_workspace_package() {
     # polluting .env and .secret file contents the main shell scope
     # => its only loaded for building this workspace package
 
-    # inject .env and .secret files from plugin directory
+    # inject .env and .secret files from workspace package directory
     ionos.wordpress.load_env "$package_path"
 
     # check package has a build script in package.json
@@ -476,5 +477,6 @@ while read -r path; do
   ionos.wordpress.build_workspace_package $path
   echo
 done <<< "$WORKSPACE_PACKAGES"
+# ENDMARK:
 
 
