@@ -144,6 +144,7 @@ function ionos.wordpress.build_workspace_package_wp_plugin.wp_cli() {
   docker run \
     $DOCKER_FLAGS \
     --user $DOCKER_USER \
+    --rm \
     -v $(pwd):/var/www/html \
     wordpress:cli-php8.3 \
     wp \
