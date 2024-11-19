@@ -427,6 +427,46 @@ function ionos.wordpress.build_workspace_package() {
   )
 }
 
+# MARK: parse arguments
+FORCE=no
+POSITIONAL_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --help)
+      cat <<EOF
+Usage: $0 [options] [file file ...]"
+
+By default all packages/{npm,wp-plugin} workspace packages will be build.
+
+packages/{docker} workspace packages will only be build if no matching (name,version) docker image esists locally
+
+Options:
+  --help      Show this help message and exit
+  --force     will also build all packages/{docker} workspace packages
+              even if a matching (name,version) docker image exists locally
+EOF
+      exit
+      ;;
+    --force)
+      FORCE=yes
+      shift
+      ;;
+    -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1")
+      shift # past argument
+      ;;
+  esac
+done
+
+[[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=(".")
+# ENDMARK:
+
+# MARK: build all
 # get all workspace packages in topological order
 # each line contains [type][workspace-package] (example : wp-plugin/essentials)
 WORKSPACE_PACKAGES=$(pnpm -r --sort exec realpath --relative-to=$(pwd)/packages .)
