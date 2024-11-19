@@ -430,6 +430,7 @@ function ionos.wordpress.build_workspace_package() {
 
 # MARK: parse arguments
 FORCE=no
+FILTER=()
 POSITIONAL_ARGS=()
 
 while [[ $# -gt 0 ]]; do
@@ -453,6 +454,11 @@ EOF
       FORCE=yes
       shift
       ;;
+    --filter)
+      FILTER+=("$2")
+      shift
+      shift
+      ;;
     -*|--*)
       echo "Unknown option $1"
       exit 1
@@ -465,12 +471,22 @@ EOF
 done
 
 [[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=(".")
+
+FILTER="${FILTER[@]/#/--filter=}"
 # ENDMARK:
 
 # MARK: build all
 # get all workspace packages in topological order
 # each line contains [type][workspace-package] (example : wp-plugin/essentials)
-WORKSPACE_PACKAGES=$(pnpm -r --sort exec realpath --relative-to=$(pwd)/packages .)
+# WORKSPACE_PACKAGES=$(pnpm -r $FILTER --sort exec realpath --relative-to=$(pwd)/packages .)
+WORKSPACE_PACKAGES=$(
+  pnpm list $FILTER --depth -1 --parseable --recursive --only-projects | grep packages | xargs -I {} realpath --relative-to=$(pwd)/packages {} ||:
+)
+
+if [[ "$WORKSPACE_PACKAGES" == '' ]]; then
+  ionos.wordpress.log_warn "No workspace packages found to build."
+  exit 1
+fi
 
 # call build function for each workspace package
 while read -r path; do
