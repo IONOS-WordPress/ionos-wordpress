@@ -73,4 +73,3 @@ docker run -q -it --rm --user "$(id -u $USER):$(id -g $USER)" -v $(pwd):/project
 to get your project checked against the configured coding standard.
 
 Add `--fix` to get the fixable changes applied.
-

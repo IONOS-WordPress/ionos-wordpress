@@ -1,39 +1,43 @@
 # syntax=docker/dockerfile:1.4
 
-# php version of the docker image
+# php version from .env
 ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-cli as base
 
+FROM php:${PHP_VERSION}-cli-alpine as build
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
 # rector version to embed into docker image
 ARG RECTOR_VERSION
 
-# rector version to use in docker image
-ENV RECTOR_VERSION=${RECTOR_VERSION}
+ENV COMPOSER_HOME=/tmp
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# Fix add-apt-repository is broken with non-UTF-8 locales, see https://github.com/oerdnj/deb.sury.org/issues/56
-ENV LC_ALL C.UTF-8
-ENV DEBIAN_FRONTEND noninteractive
+RUN composer global require --dev rector/rector:${RECTOR_VERSION}
 
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends \
-  git unzip && \
-  # Cleanup
-  apt-get autoremove -y && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* && \
-  rm -rf /var/cache/apt/* && \
-  groupadd --gid 1000 php \
-  && useradd --uid 1000 --gid php --shell /bin/bash --create-home php
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-COPY --chmod=755 ./packages/docker/rector-php/entrypoint.sh /usr/bin
+FROM php:${PHP_VERSION}-cli-alpine
 
+# install apk packages to create a user
+# install i18n support into php
+RUN apk add --no-cache icu-dev shadow && docker-php-ext-install intl
+
+COPY --from=build /tmp/vendor/ /composer/
+COPY --chmod=755 <<EOF /usr/bin/entrypoint.sh
+#!/bin/sh
+
+exec /composer/bin/rector \$@
+EOF
+
+ENV PATH="${PATH}:/composer/bin/"
+
+# create user/group to run rector as non-root
+RUN groupadd --gid 1000 php && useradd --uid 1000 --gid php --shell /bin/sh --create-home php
 USER php
-RUN echo "RECTOR_VERSION=${RECTOR_VERSION}"
-RUN cd ~ && pwd && composer require --dev "rector/rector:${RECTOR_VERSION}"
 
 VOLUME ["/project"]
 WORKDIR /project
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+
