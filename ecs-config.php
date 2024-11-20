@@ -8,7 +8,9 @@ use Symplify\EasyCodingStandard\Config\ECSConfig;
 return ECSConfig::configure()
   ->withPaths([__DIR__])
   ->withRootFiles()
-  ->withSkip(['*/vendor/*', '*/build/*', '*/dist/*', '*/node_modules/*', '*/languages/*'])
+  ->withSkip(
+    ['*/vendor/*', '*/build/*', '*/dist/*', '*/node_modules/*', '*/languages/*', '/wp-env-home/*', '/phpunit/*']
+  )
   ->withPreparedSets(
     symplify: true,
     // psr12: true,
