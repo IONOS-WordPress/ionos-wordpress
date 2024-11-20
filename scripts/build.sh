@@ -315,6 +315,7 @@ EOF
     --exclude=package.json \
     --exclude=dist/ \
     --exclude=build/ \
+    --exclude=-exclude/build-info \
     --exclude=languages/*.po \
     --exclude=languages/*.pot \
     --exclude=tests/ \
@@ -368,7 +369,7 @@ EOF
   )
   # create zip file for each dist/[plugin]-[version]-[php-version] directory
   for DIR in $path/dist/*-*-php*/; do (cd $DIR && zip -9 -r -q - . >../$(basename $DIR).zip); done
-  cat << EOF | tee build-info
+  cat << EOF | tee $path/build-info
   $(cd $path/dist && ls -1shS *.zip)
 
   $(echo -n "---")
