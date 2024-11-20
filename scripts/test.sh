@@ -9,7 +9,7 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-# MARK  ensure the playwright cache is generated in the same environment (devcontainer or local) as the tests are executed
+# MARK: ensure the playwright cache is generated in the same environment (devcontainer or local) as the tests are executed
 # (this is necessary because the cache is not portable between environments)
 PLAYWRIGHT_DIR=$(realpath ./playwright)
 if [[ -f "$PLAYWRIGHT_DIR/.cache/metainfo.json" ]] && ! grep "$PLAYWRIGHT_DIR" ./playwright/.cache/metainfo.json > /dev/null; then
