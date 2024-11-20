@@ -15,7 +15,7 @@ ENV COMPOSER_HOME=/tmp
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer false \
-  && composer global require symplify/easy-coding-standard:${ECS_VERSION}
+  && composer global require symplify/easy-coding-standard:${ECS_VERSION} wp-coding-standards/wpcs --with-dependencies
 
 FROM php:${PHP_VERSION}-cli-alpine
 

@@ -5,6 +5,8 @@ declare(strict_types=1);
 // use Symplify\CodingStandard\Fixer\LineLength\LineLengthFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
+// use PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer;
+
 return ECSConfig::configure()
   ->withPaths([__DIR__])
   ->withRootFiles()
@@ -13,7 +15,7 @@ return ECSConfig::configure()
   )
   ->withPreparedSets(
     symplify: true,
-    // psr12: true,
+    psr12: true,
     // arrays: true,
     common: true, // (arrays | spaces | namespaces | docblocks | controlStructures | phpunit | comments)
     cleanCode: true,
@@ -27,9 +29,14 @@ return ECSConfig::configure()
     // docblocks: true,
   )
   // use 2 spaces instead of psr12 default (4 spaces)
-  ->withSpacing(indentation: '  ');
+  ->withSpacing(indentation: '  ')
+  // // force trailing commas in multiline arrays
+  // ->withRules([
+  //   TrailingCommaInMultilineArrayFixer::class,
+  // ]);
 /*
   ->withConfiguredRule(LineLengthFixer::class, [
     LineLengthFixer::LINE_LENGTH => 80,
     LineLengthFixer::BREAK_LONG_LINES => true,
   ])*/
+;
