@@ -453,6 +453,8 @@ function ionos.wordpress.get_workspace_package_dependency_order() {
     )
   done
 
+  # generate input for topological sort using tsort
+  # and return the dependency ordered list to caller
   for PACKAGE_PATH in "$@"; do
     PACKAGE_NAME="${NAME_BY_PATH[$PACKAGE_PATH]}"
     WORKSPACE_PACKAGE_DEPENDENCIES="${WORKSPACE_PACKAGE_DEPENDENCIES_BY_NAME[$PACKAGE_NAME]:-0}"
