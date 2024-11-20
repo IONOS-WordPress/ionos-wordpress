@@ -19,7 +19,7 @@ defined('ABSPATH') || exit();
 \add_action('init', function (): void {
   $foo = 'bar';
 
-  error_log("foo=$foo");
+  error_log("foo={$foo}");
 });
 
 \add_action('plugins_loaded', function (): void {

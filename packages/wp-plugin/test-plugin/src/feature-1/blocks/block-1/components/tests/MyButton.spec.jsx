@@ -6,7 +6,12 @@ test('MyButton component', async ({ mount, page }) => {
   let clicked = 0;
   const onClick = () => clicked++;
 
-  await mount(<MyButton variant={'link'} onClick={onClick} />);
+  await mount(
+    <MyButton
+      variant={'link'}
+      onClick={onClick}
+    />
+  );
 
   const buttonLocator = await page.locator('button[type="button"]');
 

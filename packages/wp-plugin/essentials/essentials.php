@@ -16,17 +16,19 @@ namespace ionos_wordpress\essentials;
 
 defined('ABSPATH') || exit();
 
-enum Mode: string {
+enum Mode: string
+{
   case LOCALE = 'local';
   case REMOTE = 'remote';
 }
 
-function foo(Mode $mode, int $count): void {
-  error_log("mode=$mode, count=$count");
+function foo(Mode $mode, int $count): void
+{
+  error_log("mode={$mode}, count={$count}");
 }
 
 \add_action('init', function (): void {
   $foo = 'bar';
 
-  error_log("foo=$foo");
+  error_log("foo={$foo}");
 });

@@ -10,7 +10,10 @@ function MyButton(props) {
   } = props;
 
   return (
-    <Button variant={variant} disabled={disabled} onClick={onClick}>
+    <Button
+      variant={variant}
+      disabled={disabled}
+      onClick={onClick}>
       {label}
     </Button>
   );
