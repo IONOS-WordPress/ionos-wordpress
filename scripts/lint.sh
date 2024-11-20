@@ -66,6 +66,22 @@ function ionos.wordpress.stylelint() {
     ${POSITIONAL_ARGS[@]}
 }
 
+function ionos.wordpress.ecs() {
+  # ecs-php
+  docker run \
+    $DOCKER_FLAGS \
+    --rm \
+    --user "$DOCKER_USER" \
+    -v $(pwd):/project/ \
+    -v $(pwd)/ecs-config.php:/ecs-config.php \
+    ionos-wordpress/ecs-php \
+    check \
+      $([[ "$FIX" == 'yes' ]] && echo -n "--fix" ||:) \
+      --clear-cache --config /ecs-config.php --no-progress-bar \
+      ${POSITIONAL_ARGS[@]}
+}
+
+ionos.wordpress.ecs || exit_code=-1
 ionos.wordpress.prettier || exit_code=-1
 ionos.wordpress.eslint || exit_code=-1
 ionos.wordpress.stylelint || exit_code=-1
