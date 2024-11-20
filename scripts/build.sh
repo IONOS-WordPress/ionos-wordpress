@@ -343,7 +343,8 @@ EOF
       TARGET_DIR="dist/${plugin_name}-php${TARGET_PHP_VERSION}"
       rsync -a $path/dist/${plugin_name}/ $path/$TARGET_DIR
       # call dockerized rector
-      docker run $DOCKER_FLAGS \
+      docker run \
+        $DOCKER_FLAGS \
         --rm \
         --user "$DOCKER_USER" \
         -v $path/$TARGET_DIR:/project/dist \
