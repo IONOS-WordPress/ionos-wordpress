@@ -5,6 +5,7 @@ import { hello as hello_from_lib } from '@ionos-wordpress/test-lib';
 export function hello() {
   hello_from_lib();
 
+  // eslint-disable-next-line no-console
   console.log(__('hello from packages/wp-plugin/test-plugin/src/index.js', 'test-plugin'));
 }
 

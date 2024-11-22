@@ -74,6 +74,7 @@ function ionos.wordpress.ecs() {
     --user "$DOCKER_USER" \
     -v $(pwd):/project/ \
     -v $(pwd)/ecs-config.php:/ecs-config.php \
+    -v $(pwd)/packages/docker/ecs-php/ruleset.xml:/ruleset.xml \
     ionos-wordpress/ecs-php \
     check \
       $([[ "$FIX" == 'yes' ]] && echo -n "--fix" ||:) \
@@ -81,7 +82,30 @@ function ionos.wordpress.ecs() {
       ${POSITIONAL_ARGS[@]}
 }
 
+# checks wordpress coding standards using phpcs
+# @FIXME: actually this could be done also using ecs but as of now it's not implemented
+function ionos.wordpress.phpcs() {
+  # php-cs
+  cat <<EOF | docker run \
+    $DOCKER_FLAGS \
+    --rm \
+    -i \
+    --user "$DOCKER_USER" \
+    -v $(pwd):/project/ \
+    -v $(pwd)/ecs-config.php:/ecs-config.php \
+    -v $(pwd)/packages/docker/ecs-php/ruleset.xml:/ruleset.xml \
+    --entrypoint /bin/sh \
+    ionos-wordpress/ecs-php \
+    -
+      echo "Running $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) ..."
+      $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) \
+      -s --no-cache --standard=/ruleset.xml \
+      ${POSITIONAL_ARGS[@]}
+EOF
+}
+
 ionos.wordpress.ecs || exit_code=-1
+ionos.wordpress.phpcs || exit_code=-1
 ionos.wordpress.prettier || exit_code=-1
 ionos.wordpress.eslint || exit_code=-1
 ionos.wordpress.stylelint || exit_code=-1

@@ -24,11 +24,13 @@ enum Mode: string
 
 function foo(Mode $mode, int $count): void
 {
+  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log("mode={$mode}, count={$count}");
 }
 
 \add_action('init', function (): void {
   $foo = 'bar';
 
+  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log("foo={$foo}");
 });

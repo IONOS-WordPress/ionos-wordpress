@@ -35,11 +35,11 @@ EOF
 
 COPY packages/docker/ecs-php/ruleset.xml /ruleset.xml
 
-ENV PATH="${PATH}:/composer/vendor/bin"
-
 # create user/group to run ecs as non-root
 RUN groupadd --gid 1000 php && useradd --uid 1000 --gid php --shell /bin/sh --create-home php
 USER php
+
+ENV PATH="${PATH}:/composer/vendor/bin"
 
 VOLUME ["/project"]
 WORKDIR /project

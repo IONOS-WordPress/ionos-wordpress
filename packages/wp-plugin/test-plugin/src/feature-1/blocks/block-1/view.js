@@ -20,6 +20,5 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
  */
 
-/* eslint-disable no-console */
+// eslint-disable-next-line no-console
 console.log('Hello World! (from feature-1-block-1 block)');
-/* eslint-enable no-console */

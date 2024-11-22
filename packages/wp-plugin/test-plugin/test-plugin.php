@@ -19,14 +19,16 @@ defined('ABSPATH') || exit();
 \add_action('init', function (): void {
   $foo = 'bar';
 
+  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log("foo={$foo}");
 });
 
 \add_action('plugins_loaded', function (): void {
   \load_plugin_textdomain(domain: 'test-plugin', plugin_rel_path: basename(__DIR__) . '/languages/');
 
-  $translatedText = \__('hello.world', 'test-plugin');
-  error_log($translatedText);
+  $translated_text = \__('hello.world', 'test-plugin');
+  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+  error_log($translated_text);
 });
 
 \add_action('admin_enqueue_scripts', function (): void {
@@ -36,7 +38,9 @@ defined('ABSPATH') || exit();
     src: \plugins_url('/build/index.js', __FILE__),
     deps: $assets['dependencies'],
     ver: $assets['version'],
-    args: true,
+    args: [
+      'in_footer' => true,
+    ],
   );
 
   \wp_set_script_translations('test-plugin-index', 'test-plugin', \plugin_dir_path(__FILE__) . 'languages');

@@ -73,3 +73,24 @@ docker run -q -it --rm --user "$(id -u $USER):$(id -g $USER)" -v $(pwd):/project
 to get your project checked against the configured coding standard.
 
 Add `--fix` to get the fixable changes applied.
+
+# Development
+
+## phpcs
+
+The image contains PHP_CodeSniffer. To jump into the image, use the following command:
+
+```sh
+docker run -q --rm -it --user 1000:1000 -v $(pwd):/project -v $(pwd)/ecs-config.php:/ecs-config.php -v $(pwd)/packages/docker/ecs-php/ruleset.xml:/ruleset.xml --entrypoint /bin/sh ionos-wordpress/ecs-php
+```
+
+Inside the image you can run phpcs like this:
+
+```sh
+# Example usage
+phpcs -s --no-cache --standard=/ruleset.xml .
+
+phpcs --report=source -s --no-cache --standard=/ruleset.xml .
+
+phpcbf -s --no-cache --standard=/ruleset.xml .
+```

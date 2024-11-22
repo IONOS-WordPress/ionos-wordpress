@@ -13,7 +13,16 @@ return ECSConfig::configure()
   ->withPaths([__DIR__])
   ->withRootFiles()
   ->withSkip(
-    ['*/vendor/*', '*/build/*', '*/dist/*', '*/node_modules/*', '*/languages/*', '/wp-env-home/*', '/phpunit/*', '/tmp/*']
+    [
+      '*/vendor/*',
+      '*/build/*',
+      '*/dist/*',
+      '*/node_modules/*',
+      '*/languages/*',
+      '/wp-env-home/*',
+      '/phpunit/*',
+      '/tmp/*',
+    ]
   )
   ->withPreparedSets(
     symplify: true,
