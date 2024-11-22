@@ -24,15 +24,26 @@
 
   <arg name="extensions" value="php" />
 
-	<!--
-	Included via WordPress-Extra.
-	<rule ref="WordPress-Core"/>
-	-->
 	<rule ref="WordPress-Extra">
     <exclude name="Squiz"/>
     <exclude name="PEAR"/>
     <exclude name="Universal"/>
     <exclude name="Generic"/>
+
+    <!--
+      disabled because it's ok to have the lowercased 'wordpress' in our namespaces
+    -->
+    <exclude name="WordPress.WP.CapitalPDangit.MisspelledNamespaceName"/>
+
+    <!--
+      Outdated sniff: see https://github.com/WordPress/WordPress-Coding-Standards/issues/2420
+    -->
+    <exclude name="WordPress.WP.EnqueuedResourceParameters.NotInFooter"/>
+
+    <!--
+      formatting is handled by ecs-php
+    -->
+    <exclude name="WordPress.Arrays.ArrayIndentation.ItemNotAligned"/>
   </rule>
 
 </ruleset>
