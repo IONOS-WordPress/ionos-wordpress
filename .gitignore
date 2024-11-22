@@ -21,3 +21,4 @@ packages/*/*/webpack.config.js
 *storybook.log
 /playwright/.*/
 /phpunit/vendor/
+/tmp
