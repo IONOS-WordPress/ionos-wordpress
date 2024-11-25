@@ -2,6 +2,7 @@
   "name": "@ionos-wordpress/dennis-i18n",
   "version": "1.0.0",
   "description": "This image provides the most recent [dennis](https://github.com/mozilla/dennis) pot/po linter in a docker image.",
+  "private": true,
   "keywords": [
     "dennis",
     "mozilla",
