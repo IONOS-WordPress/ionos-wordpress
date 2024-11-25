@@ -44,6 +44,8 @@ done
 [[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=(".")
 
 function ionos.wordpress.prettier() {
+  ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") html/yml/md/etc. files with prettier ..."
+
   # prettier
   pnpm exec prettier --config ./.prettierrc.js --ignore-path ./.gitignore --ignore-path ./.lintignore --check --ignore-unknown --log-level log \
     $([[ "$FIX" == 'yes' ]] && echo -n "--write" ||:) \
@@ -51,6 +53,8 @@ function ionos.wordpress.prettier() {
 }
 
 function ionos.wordpress.eslint() {
+  ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") js/jsx files with eslint ..."
+
   # eslint
   pnpm exec eslint --config ./eslint.config.mjs --no-error-on-unmatched-pattern --no-warn-ignored \
     $([[ "$FIX" == 'yes' ]] && echo -n "--fix" ||:) \
@@ -58,6 +62,8 @@ function ionos.wordpress.eslint() {
 }
 
 function ionos.wordpress.stylelint() {
+  ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") css/scss files with stylelint ..."
+
   [[ "${POSITIONAL_ARGS[@]}" == '.' ]] && POSITIONAL_ARGS=('**/*.{css,scss}')
 
   # stylelint
@@ -67,6 +73,8 @@ function ionos.wordpress.stylelint() {
 }
 
 function ionos.wordpress.ecs() {
+  ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") php files files with ecs ..."
+
   # ecs-php
   docker run \
     $DOCKER_FLAGS \
@@ -85,6 +93,8 @@ function ionos.wordpress.ecs() {
 # checks wordpress coding standards using phpcs
 # @FIXME: actually this could be done also using ecs but as of now it's not implemented
 function ionos.wordpress.phpcs() {
+  ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") php files with PHP Codefixer ..."
+
   # php-cs
   cat <<EOF | docker run \
     $DOCKER_FLAGS \
@@ -112,7 +122,7 @@ function ionos.wordpress.dennis() {
      exit 0
   fi
 
-  echo "linting wordpress plugin pot/po files ..."
+  ionos.wordpress.log_header "lint po/pot files with dennis ..."
 
   # [[ "${POSITIONAL_ARGS[@]}" == '.' ]] && POSITIONAL_ARGS=($(find packages/wp-plugin -maxdepth 2 -mindepth 2 -type d  -name "languages"))
   POSITIONAL_ARGS=($(find packages/wp-plugin -maxdepth 2 -mindepth 2 -type d  -name "languages"))
