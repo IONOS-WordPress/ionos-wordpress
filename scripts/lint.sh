@@ -104,11 +104,36 @@ function ionos.wordpress.phpcs() {
 EOF
 }
 
+# checks wordpress plugin translations using dennis (https://github.com/mozilla/dennis)
+# @FIXME: the image could made smaller using distroless base image
+# @FIXME: the docker call could be
+function ionos.wordpress.dennis() {
+  if [[ "$FIX" == 'yes' ]]; then
+     exit 0
+  fi
+
+  echo "linting wordpress plugin pot/po files ..."
+
+  # [[ "${POSITIONAL_ARGS[@]}" == '.' ]] && POSITIONAL_ARGS=($(find packages/wp-plugin -maxdepth 2 -mindepth 2 -type d  -name "languages"))
+  POSITIONAL_ARGS=($(find packages/wp-plugin -maxdepth 2 -mindepth 2 -type d  -name "languages"))
+
+  # dennis
+  docker run \
+    $DOCKER_FLAGS \
+    --rm \
+    -i \
+    -v $(pwd):/project/ \
+    ionos-wordpress/dennis-i18n \
+    status --showuntranslated \
+    ${POSITIONAL_ARGS[@]}
+}
+
 ionos.wordpress.ecs || exit_code=-1
 ionos.wordpress.phpcs || exit_code=-1
 ionos.wordpress.prettier || exit_code=-1
 ionos.wordpress.eslint || exit_code=-1
 ionos.wordpress.stylelint || exit_code=-1
+ionos.wordpress.dennis || exit_code=-1
 
 exit ${exit_code:-0}
 

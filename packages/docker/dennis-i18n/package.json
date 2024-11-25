@@ -1,0 +1,15 @@
+{
+  "name": "@ionos-wordpress/dennis-i18n",
+  "version": "1.0.0",
+  "description": "This image provides the most recent [dennis](https://github.com/mozilla/dennis) pot/po linter in a docker image.",
+  "keywords": [
+    "dennis",
+    "mozilla",
+    "gettext",
+    "i18n",
+    "translation",
+    "lint",
+    "po",
+    "pot"
+  ]
+}
