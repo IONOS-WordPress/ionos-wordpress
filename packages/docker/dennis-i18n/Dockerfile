@@ -5,8 +5,6 @@ FROM debian:12-slim
 # dennis version from .env
 ARG DENNIS_VERSION
 
-ENV foo=bar
-
 RUN apt-get update && \
   apt-get install  --no-install-suggests --no-install-recommends --yes pipx && \
   apt-get clean && \
