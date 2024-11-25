@@ -8,6 +8,7 @@
   "devDependencies": {
     "@wordpress/components": "catalog:",
     "@ionos-wordpress/rector-php": "workspace:*",
-    "@ionos-wordpress/ecs-php": "workspace:*"
+    "@ionos-wordpress/ecs-php": "workspace:*",
+    "@ionos-wordpress/dennis-i18n": "workspace:*"
   }
 }
