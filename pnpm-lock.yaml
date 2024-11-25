@@ -158,6 +158,9 @@ importers:
 
   packages/wp-plugin/essentials:
     devDependencies:
+      '@ionos-wordpress/dennis-i18n':
+        specifier: workspace:*
+        version: link:../../docker/dennis-i18n
       '@ionos-wordpress/ecs-php':
         specifier: workspace:*
         version: link:../../docker/ecs-php
@@ -171,6 +174,9 @@ importers:
         specifier: workspace:*
         version: link:../../npm/test-lib
     devDependencies:
+      '@ionos-wordpress/dennis-i18n':
+        specifier: workspace:*
+        version: link:../../docker/dennis-i18n
       '@ionos-wordpress/ecs-php':
         specifier: workspace:*
         version: link:../../docker/ecs-php
