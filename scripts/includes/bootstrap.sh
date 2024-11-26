@@ -137,6 +137,49 @@ function ionos.wordpress.author_email() {
 }
 export -f ionos.wordpress.author_email
 
+#
+# outputs the distributable artefacts of all workspace packages
+# the workspace needs to be built to get correct results
+#
+# distributable artefacts are workspace package flavor specific
+# and can be a .zip or .tgz files usually located in the dist folder of the package
+#
+function ionos.wordpress.get_distributable_artefacts() {
+  local PACKAGE_PATH PACKAGE_NAME FLAVOUR ARTEFACTS=()
+
+  for PACKAGE_PATH in $(find ./packages -mindepth 2 -maxdepth 2 -type d | sort); do
+    PACKAGE_NAME=$(jq -r '.name // false' $PACKAGE_PATH/package.json)
+
+    if [[ "$(jq -r '.private // false' $PACKAGE_PATH/package.json)" == "true" ]]; then
+      ionos.wordpress.log_warn "skipping package $PACKAGE_NAME - it is marked as private"
+      continue
+    fi
+
+    FLAVOUR=$(basename $(dirname $PACKAGE_PATH))
+    case "$FLAVOUR" in
+      docker)
+        ionos.wordpress.log_warn "skipping $FLAVOUR package $PACKAGE_NAME - docker packages are not distributable"
+        ;;
+      npm)
+        ARTEFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.tgz')")
+        ;;
+      wp-plugin)
+        ARTEFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip')")
+        ;;
+      wp-theme)
+        ARTEFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip')")
+        ;;
+      *)
+        ionos.wordpress.log_error "don't know how to handle workspace package flavor '$FLAVOUR' (extracted from path=$PACKAGE_PATH)"
+        exit 1
+        ;;
+    esac
+  done
+
+  echo "${ARTEFACTS[@]}"
+}
+export -f ionos.wordpress.get_distributable_artefacts
+
 export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)
 
 # docker flags to use if docker containers will be invoked
