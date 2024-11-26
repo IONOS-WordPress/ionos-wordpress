@@ -35,7 +35,7 @@ export -f ionos.wordpress.load_env
 #
 function ionos.wordpress.log_warn() {
   # see https://unix.stackexchange.com/a/269085/564826
-  echo -e "\e[33m$1\e[0m"  >&2
+  echo -e "\e[33m${FUNCNAME[1]} : $1\e[0m"  >&2
 }
 export -f ionos.wordpress.log_warn
 
@@ -75,7 +75,7 @@ function ionos.wordpress.log_error() {
   fi
 
   # see https://unix.stackexchange.com/a/269085/564826
-  echo -e "\e[31m$1\e[0m$STACKTRACE" >&2
+  echo -e "\e[31m${FUNCNAME[1]} : $1\e[0m$STACKTRACE" >&2
 }
 export -f ionos.wordpress.log_error
 
