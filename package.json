@@ -2,6 +2,7 @@
   "name": "ionos-wordpress",
   "version": "0.0.1",
   "description": "Mono repository containing all WordPress plugins and themes developed for IONOS hosting",
+  "private": true,
   "scripts": {
     "build": "./scripts/build.sh",
     "watch": "./scripts/watch.sh",
