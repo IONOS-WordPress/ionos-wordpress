@@ -29,7 +29,18 @@ function ionos.wordpress.load_env() {
 export -f ionos.wordpress.load_env
 
 #
-# logs a warning message
+# logs a info message to stderr
+#
+# @param $1 the info message
+#
+function ionos.wordpress.log_info() {
+  # see https://unix.stackexchange.com/a/269085/564826
+  echo -e "${FUNCNAME[1]} : $1"  >&2
+}
+export -f ionos.wordpress.log_info
+
+#
+# logs a warning message to stderr
 #
 # @param $1 the warning message
 #
@@ -53,7 +64,7 @@ function ionos.wordpress.print_stacktrace() {
 export -f ionos.wordpress.print_stacktrace
 
 #
-# logs a error message
+# logs a error message to stderr
 #
 # @param $1 the error message
 # @param $2 (optional, number) if set, renders also a stacktrace
