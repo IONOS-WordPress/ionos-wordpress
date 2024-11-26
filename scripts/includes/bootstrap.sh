@@ -40,6 +40,17 @@ function ionos.wordpress.log_warn() {
 export -f ionos.wordpress.log_warn
 
 #
+# logs a error message
+#
+# @param $1 the error message
+#
+function ionos.wordpress.log_error() {
+  # see https://unix.stackexchange.com/a/269085/564826
+  echo -e "\e[31m$1\e[0m"
+}
+export -f ionos.wordpress.log_error
+
+#
 # logs a header message
 #
 # @param $1 the warning message
