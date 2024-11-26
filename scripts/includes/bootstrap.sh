@@ -40,13 +40,42 @@ function ionos.wordpress.log_warn() {
 export -f ionos.wordpress.log_warn
 
 #
+# echo bash stacktrace to stdout
+#
+# @param $1 the starting index of the stacktrace (default=0)
+#
+function ionos.wordpress.print_stacktrace() {
+  local i=$(( 1 + ${1:-0} ))
+  for ((; i < (${#BASH_LINENO[@]}-1); i++)); do
+    echo "  at ${FUNCNAME[$i]} (${BASH_SOURCE[$i]}:${BASH_LINENO[$i]})"
+  done
+}
+export -f ionos.wordpress.print_stacktrace
+
+#
 # logs a error message
 #
 # @param $1 the error message
+# @param $2 (optional, number) if set, renders also a stacktrace
+#           set it to the the starting index of the stacktrace
 #
 function ionos.wordpress.log_error() {
+  # if second arument is given
+  if [[ -n "$2" ]]; then
+    # check if second argument is not a positive number
+    if [[ ! "$2" =~ ^[0-9]+$ ]]; then
+      # print error message including stack trace and exit
+      local _args x=("$@")
+      printf -v _args '%s, ' "${x[@]}"
+      ionos.wordpress.log_error "${FUNCNAME[0]}(${_args%, }): second parameter must be a number" 0
+      exit 1
+    fi
+
+    STACKTRACE="\n$(ionos.wordpress.print_stacktrace "(( $2 + 1))")"
+  fi
+
   # see https://unix.stackexchange.com/a/269085/564826
-  echo -e "\e[31m$1\e[0m"
+  echo -e "\e[31m$1\e[0m$STACKTRACE"
 }
 export -f ionos.wordpress.log_error
 
