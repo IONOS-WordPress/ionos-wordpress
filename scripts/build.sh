@@ -37,7 +37,6 @@ function ionos.wordpress.author_name() {
   local VAL=${AUTHOR_NAME:-$(jq -re '.author.name | select( . != null )' "$1" || jq -re '.author.name | select( . != null )' ./package.json || git config user.name || echo "")}
   echo "$VAL"
 }
-export -f ionos.wordpress.author_name
 
 #
 # computes the author email by querying a priorized list of sources.
@@ -55,7 +54,6 @@ function ionos.wordpress.author_email() {
   local VAL=${AUTHOR_EMAIL:-$(jq -re '.author.email | select( . != null )' "$1" || jq -re '.author.email | select( . != null )' ./package.json || git config user.email || echo "")}
   echo "$VAL"
 }
-export -f ionos.wordpress.author_email
 
 #
 # build a monorepo workspace package of type npm
