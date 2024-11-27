@@ -64,6 +64,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifacts
+          # see https://github.com/actions/upload-artifact/issues/424
           path: |-
             ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
 
