@@ -67,6 +67,8 @@ jobs:
           # see https://github.com/actions/upload-artifact/issues/424
           path: |-
             ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
+          # do not merge multiple artifacts into one downloadable archive
+          merge-multiple: false
 
       # - name: print build directories
       #   run: |
