@@ -138,15 +138,21 @@ function ionos.wordpress.author_email() {
 export -f ionos.wordpress.author_email
 
 #
-# outputs the distributable artefacts of all workspace packages
+# outputs the workflow distributable artefacts of all workspace packages
 # the workspace needs to be built to get correct results
 #
-# distributable artefacts are workspace package flavor specific
-# and can be a .zip or .tgz files usually located in the dist folder of the package
+# workflow distributable artefacts are
+# - workspace package flavor specific and can be a .zip or .tgz files usually located in the dist folder of the package
+# - playwright test results if any
 #
-function ionos.wordpress.get_distributable_artefacts() {
+function ionos.wordpress.get_workflow_artefacts() {
   local PACKAGE_PATH PACKAGE_NAME FLAVOUR ARTEFACTS=()
 
+  # add plawright test results if any
+  test -d ./playwright/.playwright-report/ && ARTEFACTS+=(./playwright/.playwright-report/)
+  test -d ./playwright/.test-results/ && ARTEFACTS+=(./playwright/.test-results/)
+
+  # loop over workspace packages and grab flavor specific artefacts
   for PACKAGE_PATH in $(find ./packages -mindepth 2 -maxdepth 2 -type d | sort); do
     PACKAGE_NAME=$(jq -r '.name // false' $PACKAGE_PATH/package.json)
 
@@ -176,9 +182,13 @@ function ionos.wordpress.get_distributable_artefacts() {
     esac
   done
 
-  echo "${ARTEFACTS[@]}"
+  # convert array into newline separated string of items
+  printf -v ARTEFACTS "%s\n" "${ARTEFACTS[@]}"
+
+  # if artefacts not empty print artefacts to stdout and remove trailing newline
+  [[ -n "$ARTEFACTS" ]] && echo "${ARTEFACTS%$'\n'}"
 }
-export -f ionos.wordpress.get_distributable_artefacts
+export -f ionos.wordpress.get_workflow_artefacts
 
 export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)
 

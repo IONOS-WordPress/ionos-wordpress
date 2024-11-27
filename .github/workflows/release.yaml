@@ -42,7 +42,6 @@ jobs:
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: build_project
-        id: build_project
         with:
           runCmd: |
             pnpm install --frozen-lockfile
@@ -54,23 +53,23 @@ jobs:
 
             pnpm test
 
-      # - name: print output
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        id: gather_workflow_artifacts
+        name: gather_workflow_artifacts
+        with:
+          runCmd: |
+            pnpm exec /bin/bash -c '. ./scripts/includes/bootstrap.sh; ionos.wordpress.get_workflow_artefacts'
+
+      - name: attach workflow artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: |-
+            ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
+
+      # - name: print build directories
       #   run: |
       #     cat <<EOF
       #       stdout was=
-      #       ${{ steps.build_project.outputs.runCmdOutput }}"
+      #       ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
       #     EOF
-
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        id: gather_builded_directories
-        name: gather builded directories
-        with:
-          runCmd: |
-            pnpm exec /bin/bash -c '. ./scripts/includes/bootstrap.sh; ionos.wordpress.get_distributable_artefacts'
-
-      - name: print build directories
-        run: |
-          cat <<EOF
-            stdout was=
-            ${{ steps.gather_builded_directories.outputs.runCmdOutput }}
-          EOF
