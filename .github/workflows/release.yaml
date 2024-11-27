@@ -61,7 +61,7 @@ jobs:
             pnpm exec /bin/bash -c '. ./scripts/includes/bootstrap.sh; ionos.wordpress.get_workflow_artifacts'
 
       - name: attach workflow artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: artifacts
           # see https://github.com/actions/upload-artifact/issues/424
