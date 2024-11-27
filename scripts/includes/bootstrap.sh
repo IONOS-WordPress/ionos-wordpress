@@ -138,21 +138,21 @@ function ionos.wordpress.author_email() {
 export -f ionos.wordpress.author_email
 
 #
-# outputs the workflow distributable artefacts of all workspace packages
+# outputs the workflow distributable artifacts of all workspace packages
 # the workspace needs to be built to get correct results
 #
-# workflow distributable artefacts are
+# workflow distributable artifacts are
 # - workspace package flavor specific and can be a .zip or .tgz files usually located in the dist folder of the package
 # - playwright test results if any
 #
-function ionos.wordpress.get_workflow_artefacts() {
-  local PACKAGE_PATH PACKAGE_NAME FLAVOUR ARTEFACTS=()
+function ionos.wordpress.get_workflow_artifacts() {
+  local PACKAGE_PATH PACKAGE_NAME FLAVOUR ARTIFACTS=()
 
   # add plawright test results if any
-  test -d ./playwright/.playwright-report/ && ARTEFACTS+=(./playwright/.playwright-report/)
-  test -d ./playwright/.test-results/ && ARTEFACTS+=(./playwright/.test-results/)
+  test -d ./playwright/.playwright-report/ && ARTIFACTS+=(./playwright/.playwright-report/)
+  test -d ./playwright/.test-results/ && ARTIFACTS+=(./playwright/.test-results/)
 
-  # loop over workspace packages and grab flavor specific artefacts
+  # loop over workspace packages and grab flavor specific artifacts
   for PACKAGE_PATH in $(find ./packages -mindepth 2 -maxdepth 2 -type d | sort); do
     PACKAGE_NAME=$(jq -r '.name // false' $PACKAGE_PATH/package.json)
 
@@ -167,13 +167,13 @@ function ionos.wordpress.get_workflow_artefacts() {
         ionos.wordpress.log_warn "skipping $FLAVOUR package $PACKAGE_NAME - docker packages are not distributable"
         ;;
       npm)
-        ARTEFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.tgz')")
+        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.tgz')")
         ;;
       wp-plugin)
-        ARTEFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip')")
+        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip')")
         ;;
       wp-theme)
-        ARTEFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip')")
+        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip')")
         ;;
       *)
         ionos.wordpress.log_error "don't know how to handle workspace package flavor '$FLAVOUR' (extracted from path=$PACKAGE_PATH)"
@@ -183,12 +183,12 @@ function ionos.wordpress.get_workflow_artefacts() {
   done
 
   # convert array into newline separated string of items
-  printf -v ARTEFACTS "%s\n" "${ARTEFACTS[@]}"
+  printf -v ARTIFACTS "%s\n" "${ARTIFACTS[@]}"
 
-  # if artefacts not empty print artefacts to stdout and remove trailing newline
-  [[ -n "$ARTEFACTS" ]] && echo "${ARTEFACTS%$'\n'}"
+  # if artifacts not empty print artifacts to stdout and remove trailing newline
+  [[ -n "$ARTIFACTS" ]] && echo "${ARTIFACTS%$'\n'}"
 }
-export -f ionos.wordpress.get_workflow_artefacts
+export -f ionos.wordpress.get_workflow_artifacts
 
 export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)
 
