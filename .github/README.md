@@ -1,3 +1,5 @@
+**Local GitHub workflow devlopment using [act](https://github.com/nektos/act) is currently broken due to a [act](https://github.com/nektos/act) issue : see https://github.com/nektos/act/issues/2095**
+
 # Local workflow development
 
 Local GitHub workflow development frees you from commit and push cycles to test your workflows.
