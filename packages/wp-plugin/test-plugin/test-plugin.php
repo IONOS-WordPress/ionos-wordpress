@@ -23,7 +23,7 @@ defined('ABSPATH') || exit();
   error_log("foo={$foo}");
 });
 
-\add_action('plugins_loaded', function (): void {
+\add_action('init', function (): void {
   \load_plugin_textdomain(domain: 'test-plugin', plugin_rel_path: basename(__DIR__) . '/languages/');
 
   $translated_text = \__('hello.world', 'test-plugin');
