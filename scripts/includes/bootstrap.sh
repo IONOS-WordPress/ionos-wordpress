@@ -86,7 +86,11 @@ function ionos.wordpress.log_error() {
   fi
 
   # see https://unix.stackexchange.com/a/269085/564826
-  echo -e "\e[31m${FUNCNAME[1]} : $1\e[0m$STACKTRACE" >&2
+  # SOURCE will be the function-name-or-file and line number of the caller
+  [[ "${#BASH_SOURCE[@]}" -eq 2 ]] && SOURCE="${BASH_SOURCE[1]}" || SOURCE="${FUNCNAME[1]}"
+  SOURCE="${SOURCE}:${BASH_LINENO[$i]}"
+
+  echo -e "\e[31m${SOURCE} : $1\e[0m$STACKTRACE" >&2
 }
 export -f ionos.wordpress.log_error
 
