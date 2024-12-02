@@ -6,18 +6,17 @@
 
 - 5dddc7f: `pnpm build` will build all packages in the workspace.
 
-      - By default the JS/CSS will be transpiled for production.
+  - By default the JS/CSS will be transpiled for production.
 
-        To compile to development mode you can set `NODE_ENV=development` before running the build command.
+    To compile to development mode you can set `NODE_ENV=development` before running the build command.
 
-        > [!TIP]
-        > You can persist the `NODE_ENV` setting in you personal `.env.local` file. This file will not be commited to the repository.
+    > [!TIP]
+    > You can persist the `NODE_ENV` setting in you personal `.env.local` file. This file will not be commited to the repository.
 
 - 2e44af5: changeset integration
 
   - detailed workflow (local first) :
 
-  ```
   ...
   # add as many changesets as you want while developing on a release
   pnpm changeset add
