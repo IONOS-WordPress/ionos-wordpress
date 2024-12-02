@@ -1,6 +1,6 @@
 {
   "name": "ionos-wordpress",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Mono repository containing all WordPress plugins and themes developed for IONOS hosting",
   "private": true,
   "scripts": {
