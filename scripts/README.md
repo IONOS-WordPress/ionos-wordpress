@@ -8,4 +8,6 @@
 
   they are used internally (for example in github workflows)
 
+  _Think of it as non-public scripts._
+
 - scripts marked as non-executable are intended to be included in other scripts

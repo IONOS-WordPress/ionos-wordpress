@@ -1,19 +1,22 @@
 #
-# this is the release workflow that is triggered by a push to the main branch
+# this is the integration workflow that is triggered by a push to the develop branches
 #
 # it will
-# - update the versions of all packages
 # - build the project
-# - @TODO test the project
-# - create a releases for all packages that have changed and add its artifacts to the release
+# - test the project
 # - gather the workflow artifacts
 #
-name: 'release'
+name: 'integration'
 
 on:
+  # rebuild any PRs and main branch changes
+  pull_request:
+
   push:
     branches:
-      - main
+      - develop
+      - feature/*
+      - bugfix/*
 
 permissions:
   # write-all is too much, but we need to write to packages
@@ -28,18 +31,16 @@ jobs:
     uses: ./.github/workflows/build-devcontainer-image.yaml
     secrets: inherit
 
-  release:
+  build:
     runs-on: ubuntu-latest
     needs:
       - build_devcontainer_image
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
-    if: "!contains(github.event.head_commit.message, 'skip release')"
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+
+      - name: display output name
+        run: echo "image_name=${{ needs.build_devcontainer_image.outputs.image_name }}"
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: build_project
@@ -47,7 +48,12 @@ jobs:
           runCmd: |
             pnpm install --frozen-lockfile
 
-            pnpm release
+            # build will already be called by the test command
+            # pnpm build
+            # # mark project already built for the next commands
+            # export BUILD_UP_TO_DATE=1
+
+            pnpm test
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts
@@ -62,3 +68,10 @@ jobs:
           # see https://github.com/actions/upload-artifact/issues/424
           path: |-
             ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
+
+      # - name: print build directories
+      #   run: |
+      #     cat <<EOF
+      #       stdout was=
+      #       ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
+      #     EOF

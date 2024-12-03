@@ -13,6 +13,7 @@
     "clean": "./scripts/clean.sh",
     "distclean": "./scripts/distclean.sh",
     "changeset": "./scripts/changeset.sh",
+    "release": "./scripts/release.sh",
     "lint": "./scripts/lint.sh",
     "lint-fix": "./scripts/lint.sh --fix",
     "update-dependencies": "./scripts/update-dependencies.sh",
