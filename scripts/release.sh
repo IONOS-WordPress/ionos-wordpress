@@ -64,8 +64,12 @@ set -x
 # see https://github.com/actions/checkout/pull/1184#issue-1595060720
 git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}"
+# git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}"
 
+git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+# https://github.com/IONOS-WordPress/ionos-wordpress.git
+# https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/USER/REPO.git
 
 # commit changes
 git commit -am "chore(release) : updated versions [skip release]"
@@ -74,6 +78,10 @@ git commit -am "chore(release) : updated versions [skip release]"
 pnpm changeset tag
 
 # push changes and tags
+git push && git push --tags
+
+echo "try 2"
+git remote set-url origin https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
 git push && git push --tags
 
 # ensure ./tmp/release is a fresh empty directory

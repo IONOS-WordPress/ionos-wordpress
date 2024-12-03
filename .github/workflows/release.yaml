@@ -46,10 +46,9 @@ jobs:
             pnpm install --frozen-lockfile
 
             export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
-            export GITHUB_REPOSITORY="${{ github.repository }}"
 
-            git remote -v
-            git checkout "${GITHUB_REF:11}"
+            export GITHUB_REPOSITORY
+            echo "GITHUB_REF=${GITHUB_REF}"
             git remote -v
 
             pnpm release
