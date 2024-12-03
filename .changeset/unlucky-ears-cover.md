@@ -1,0 +1,3 @@
+---
+ionos-wordpress: patch
+---
