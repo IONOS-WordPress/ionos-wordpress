@@ -48,6 +48,10 @@ jobs:
             export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
             export GITHUB_REPOSITORY="${{ github.repository }}"
 
+            git remote -v
+            git checkout "${GITHUB_REF:11}"
+            git remote -v
+
             pnpm release
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
