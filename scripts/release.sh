@@ -49,6 +49,8 @@ pnpm build
 # add updated files to git
 git add .
 
+env
+
 set -x
 
 # set git user to the user who made the last commit
