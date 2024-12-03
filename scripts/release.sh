@@ -66,6 +66,7 @@ git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}"
 
+
 # commit changes
 git commit -am "chore(release) : updated versions [skip release]"
 
@@ -78,6 +79,10 @@ git push && git push --tags
 # ensure ./tmp/release is a fresh empty directory
 rm -rf ./tmp/release
 mkdir -p ./tmp/release
+
+# set GH_TOKEN to GITHUB_TOKEN if not set
+# this is needed for gh cli to work
+export GH_TOKEN=${GH_TOKEN:-$GITHUB_TOKEN}
 
 # loop over all package.json files changed by changeset version command
 for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'package.json'); do
@@ -101,33 +106,31 @@ for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'packag
   PACKAGE_ARTIFACTS=()
   # PACKAGE_FLAVOUR is the name of the parent directory of the package (i.e. wp-plugin|npm|docker|...)
   PACKAGE_FLAVOUR=$(basename $(dirname $PACKAGE_PATH))
+
+  if [[ "$PACKAGE_FLAVOUR" == "." ]]; then
+    # if root package is being released, collect all artifacts
+    ARTIFACTS=($(find ./packages -mindepth 4 -maxdepth 4 -type f -name '*.zip ' -or -name "*.tgz"))
+  else
+    case "$PACKAGE_FLAVOUR" in
+      docker)
+        ionos.wordpress.log_warn "skipping $PACKAGE_FLAVOUR package $PACKAGE_NAME - docker packages are not distributable"
+        ;;
+      npm)
+        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.tgz')")
+        ;;
+      wp-plugin|wp-theme)
+        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip')")
+        ;;
+      *)
+        ionos.wordpress.log_error "don't know how to handle workspace package flavor '$PACKAGE_FLAVOUR' (extracted from path=$PACKAGE_PATH)"
+        exit 1
+        ;;
+    esac
+  fi
+
+  RELEASE_TITLE=$([[ "$PACKAGE_FLAVOUR" == "." ]] && echo "$PACKAGE_VERSION" || echo "$PACKAGE_NAME@$PACKAGE_VERSION")
+  gh release create "$PACKAGE_NAME@$PACKAGE_VERSION" "${ARTIFACTS[@]}" --title "$RELEASE_TITLE" --notes-file "$PACKAGE_RELEASENOTES_FILE"
 done
-
-if [[ "$PACKAGE_FLAVOUR" == "." ]]; then
-  # if root package is being released, collect all artifacts
-  ARTIFACTS=($(find ./packages -mindepth 4 -maxdepth 4 -type f -name '*.zip ' -or -name "*.tgz"))
-else
-  case "$PACKAGE_FLAVOUR" in
-    docker)
-      ionos.wordpress.log_warn "skipping $PACKAGE_FLAVOUR package $PACKAGE_NAME - docker packages are not distributable"
-      ;;
-    npm)
-      ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.tgz')")
-      ;;
-    wp-plugin|wp-theme)
-      ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip')")
-      ;;
-    *)
-      ionos.wordpress.log_error "don't know how to handle workspace package flavor '$PACKAGE_FLAVOUR' (extracted from path=$PACKAGE_PATH)"
-      exit 1
-      ;;
-  esac
-fi
-
-RELEASE_TITLE=$([[ "$PACKAGE_FLAVOUR" == "." ]] && echo "$PACKAGE_VERSION" || echo "$PACKAGE_NAME@$PACKAGE_VERSION")
-# set GH_TOKEN to GITHUB_TOKEN if not set
-export GH_TOKEN=${GH_TOKEN:-$GITHUB_TOKEN}
-gh release create "$PACKAGE_NAME@$PACKAGE_VERSION" "${ARTIFACTS[@]}" --title "$RELEASE_TITLE" --notes-file "$PACKAGE_RELEASENOTES_FILE"
 
 # merge changes back to develop branch
 git checkout develop

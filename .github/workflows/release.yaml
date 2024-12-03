@@ -46,6 +46,7 @@ jobs:
             pnpm install --frozen-lockfile
 
             export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
+            export GITHUB_REPOSITORY="${{ github.repository }}"
 
             pnpm release
 
