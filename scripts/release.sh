@@ -21,6 +21,12 @@ if [[ -n "$(git status --porcelain)" ]]; then
   exit 1
 fi
 
+# ensure we have a GITHUB_TOKEN
+if [[ -z "${GITHUB_TOKEN}" ]]; then
+  ionos.wordpress.log_error "GITHUB_TOKEN environment variable is not set. Please set it before releasing."
+  exit 1
+fi
+
 # ensure ./tmp/release is a fresh empty directory
 rm -rf ./tmp/release
 mkdir -p ./tmp/release
@@ -47,16 +53,18 @@ pnpm install
 pnpm build
 
 # add updated files to git
-git add .
-
-env
+git add -A .
 
 set -x
 
 # set git user to the user who made the last commit
 # (aka the user who triggered the release)
-git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
-git config user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+# git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+# git config user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+# see https://github.com/actions/checkout/pull/1184#issue-1595060720
+git config user.name "github-actions[bot]"
+git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}"
 
 # commit changes
 git commit -am "chore(release) : updated versions [skip release]"
@@ -117,6 +125,8 @@ else
 fi
 
 RELEASE_TITLE=$([[ "$PACKAGE_FLAVOUR" == "." ]] && echo "$PACKAGE_VERSION" || echo "$PACKAGE_NAME@$PACKAGE_VERSION")
+# set GH_TOKEN to GITHUB_TOKEN if not set
+export GH_TOKEN=${GH_TOKEN:-$GITHUB_TOKEN}
 gh release create "$PACKAGE_NAME@$PACKAGE_VERSION" "${ARTIFACTS[@]}" --title "$RELEASE_TITLE" --notes-file "$PACKAGE_RELEASENOTES_FILE"
 
 # merge changes back to develop branch

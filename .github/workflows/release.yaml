@@ -38,14 +38,14 @@ jobs:
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: build_project
         with:
           runCmd: |
             pnpm install --frozen-lockfile
+
+            export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
 
             pnpm release
 
