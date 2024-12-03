@@ -49,6 +49,11 @@ pnpm build
 # add updated files to git
 git add .
 
+# set git user to the user who made the last commit
+# (aka the user who triggered the release)
+git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+git config user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+
 # commit changes
 git commit -am "chore(release) : updated versions [skip release]"
 
