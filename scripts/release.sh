@@ -49,6 +49,8 @@ pnpm build
 # add updated files to git
 git add .
 
+set -x
+
 # set git user to the user who made the last commit
 # (aka the user who triggered the release)
 git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
