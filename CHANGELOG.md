@@ -1,5 +1,11 @@
 # ionos-wordpress
 
+## 0.0.3
+
+### Patch Changes
+
+- c59365e:
+
 ## 0.0.2
 
 ### Patch Changes
