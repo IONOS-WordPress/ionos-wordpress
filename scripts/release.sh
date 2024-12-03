@@ -11,7 +11,7 @@ source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
 # abort if we are not on the "main" branch
 if [[ "$(git rev-parse --abbrev-ref HEAD)" != 'main' ]]; then
-  ionos.wordpress.log_error "You can only release from the develop branch"
+  ionos.wordpress.log_error "You can only release from the main branch"
   exit 1
 fi
 
@@ -29,7 +29,7 @@ mkdir -p ./tmp/release
 # changeset does not support --format option as of now so we need to use the --output option
 # see https://github.com/changesets/changesets/issues/1020
 # fetch changeset status into ./tmp/release/status.json
-pnpm changeset status --verbose --output ./tmp/release/status.json --since main
+pnpm changeset status --verbose --output ./tmp/release/status.json
 # count changesets
 CHANGESETS_COUNT=$(jq '.changesets // [] | length' ./tmp/release/status.json)
 if [[ $CHANGESETS_COUNT -eq 0 ]]; then
