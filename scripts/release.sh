@@ -142,7 +142,9 @@ done
 
 # merge changes back to develop branch
 git checkout develop
-git merge main
+# pull changes from main branch instead of merging to avoid merge commits
+git pull . main
+# push changes to remote develop branch
 git push -u origin develop
 
 
