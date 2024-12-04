@@ -17,6 +17,19 @@
 # - (local) if the GITHUB_TOKEN environment variable is not set
 # - if no changesets proposing version changes were found
 #
+# local usage:
+# - ensure branches develop and main are up to date : `git fetch -all`
+# - switch to local develop branch and ensure it's clean (i.e no uncommit changes): `git switch develop && git status`
+# - go to branch main and pull changes from local develop branch : `git switch main && git pull . develop`
+# - execute the release script : `pnpm release`
+#
+# remote usage:
+# - switch to develop branch: `git switch develop`
+# - ensure remote branches develop and main are up to date : `git push origin develop && git push origin main`
+# - push changes on develop branch to remote branch main : `git push origin develop:main`
+# - wait for the github workflow to finish
+# - merge changes back to develop branch : `git switch develop && git merge main && git push origin develop`
+
 
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
