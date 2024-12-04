@@ -21,7 +21,8 @@
     "storybook:build": "./scripts/storybook.sh build -o ./build/storybook-static",
     "storybook:test": "pnpm exec playwright test -c ./playwright-ct.config.js",
     "phpunit:test": "pnpm wp-env run tests-wordpress phpunit",
-    "test": "./scripts/test.sh"
+    "test": "./scripts/test.sh",
+    "gh-cli": "./scripts/gh-cli.sh"
   },
   "keywords": [
     "pnpm",
