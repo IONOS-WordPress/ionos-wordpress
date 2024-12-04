@@ -3,7 +3,19 @@
 #
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
-# this script is used to create a github release
+# this script is used to create a github release.
+# only packages not marked as private will be released
+#
+# workflow:
+# - features (including changesets) will be developed on feature branches and merged into the develop branch
+# - releasing means merging the develop branch into the main branch. the github workflow will automatically create the release and the artifacts
+# - after creating the releases the release changes will be merged back into the maiin and develop branch
+#
+# the script will abort
+# - if the current branch is not the main branch
+# - if the working directory is not clean
+# - (local) if the GITHUB_TOKEN environment variable is not set
+# - if no changesets proposing version changes were found
 #
 
 # bootstrap the environment
