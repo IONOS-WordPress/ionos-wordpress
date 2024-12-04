@@ -22,7 +22,8 @@
     "storybook:test": "pnpm exec playwright test -c ./playwright-ct.config.js",
     "phpunit:test": "pnpm wp-env run tests-wordpress phpunit",
     "test": "./scripts/test.sh",
-    "gh-cli": "./scripts/gh-cli.sh"
+    "gh-cli": "./scripts/gh-cli.sh",
+    "go-waas": "./scripts/go-waas.sh"
   },
   "keywords": [
     "pnpm",
