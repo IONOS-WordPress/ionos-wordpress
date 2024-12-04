@@ -26,6 +26,18 @@ EOF
   exit 0
 fi
 
+if ! command -v gh &> /dev/null; then
+  ionos.wordpress.log_error 'Error: GitHub CLI (gh) is not installed or not in PATH.'
+
+  cat <<'EOF'
+
+GitHub CLI (gh) is required to run this script. Script is automatically installed inm the DevContainer
+
+If you really want to use it locally you can install it from https://cli.github.com/
+EOF
+  exit 1
+fi
+
 exec gh "$@"
 
 
