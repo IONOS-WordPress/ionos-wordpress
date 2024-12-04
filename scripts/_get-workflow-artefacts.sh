@@ -46,13 +46,12 @@ function ionos.wordpress.get_workflow_artifacts() {
         ionos.wordpress.log_warn "skipping $FLAVOUR package $PACKAGE_NAME - docker packages are not distributable"
         ;;
       npm)
-        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.tgz' 2>/dev/null || ionos.wordpress.log_warn "skip collecting build artifacts in $PACKAGE_PATH/dist : directory does not exist" >&2)")
+        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.tgz' 2>/dev/null || \
+          ionos.wordpress.log_warn "skip collecting build artifacts in $PACKAGE_PATH/dist : directory does not exist" >&2)")
         ;;
-      wp-plugin)
-        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip' 2>/dev/null  || ionos.wordpress.log_warn "skip collecting build artifacts in $PACKAGE_PATH/dist : directory does not exist" >&2)")
-        ;;
-      wp-theme)
-        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip'  || ionos.wordpress.log_warn "skip collecting build artifacts in $PACKAGE_PATH/dist : directory does not exist" >&2)")
+      wp-plugin|wp-theme)
+        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip'  || \
+          ionos.wordpress.log_warn "skip collecting build artifacts in $PACKAGE_PATH/dist : directory does not exist" >&2)")
         ;;
       *)
         ionos.wordpress.log_error "don't know how to handle workspace package flavor '$FLAVOUR' (extracted from path=$PACKAGE_PATH)"
