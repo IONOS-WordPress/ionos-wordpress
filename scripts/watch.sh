@@ -9,5 +9,6 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-pnpm run --recursive --parallel --if-present watch
+ionos.wordpress.log_error "watch script is not yet implemented"
+exit -1
 
