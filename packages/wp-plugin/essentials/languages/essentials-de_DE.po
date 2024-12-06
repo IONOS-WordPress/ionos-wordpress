@@ -33,3 +33,8 @@ msgstr ""
 #: essentials.php
 msgid "https://www.ionos-group.com/brands.html"
 msgstr ""
+
+#. Plugin URI of the plugin
+#: essentials.php
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/develop/packages/wp-plugin/essentials"
+msgstr ""
