@@ -165,8 +165,10 @@ function ionos.wordpress.dennis() {
     ${POSITIONAL_ARGS[@]} \
   )
 
-  echo "$OUTPUT"
+  # map file path references from within docker container to host paths
+  echo "$OUTPUT" | sed 's|Working on: /project/|Working on: ./|ig'
 
+  # abort with error if there were untranslated strings
   if echo "$OUTPUT" | grep -q 'Untranslated:\s*[1-9]'; then
     ionos.wordpress.log_error "dennis validation failed : some strings are untranslated"
     exit 1
