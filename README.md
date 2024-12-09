@@ -74,15 +74,15 @@ The repository provides
 
 ## Requirements
 
-- `vscode`
+- [`vscode`](https://code.visualstudio.com/)
 
   Actually vscode is _not really_ required but it makes working with the repository much easier.
 
   _You can use [DevContainer](https://containers.dev/) even on other IDEs like PHPStorm but this repository takes only care for `vscode` for now._
 
-- a modern `docker` version (including `docker compose` sub command)
+  Install the [`ms-vscode-remote.remote-containers` extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) to use the [DevContainer](https://containers.dev/) feature.
 
-- `git` for doing version control and managing the repository
+- a modern `docker` version (including `docker compose` sub command)
 
 All other tools are located in a [DevContainer](https://containers.dev/) providing a unified development experience across all platforms.
 
@@ -305,7 +305,7 @@ In the `frontmatter` section of this file will be noted which sub projects the t
 
 The changets file will be taken under version control as long as it takes to create a new release. After the release is created the changeset file will be merged into the affected changelog files and removed from the changeset directory.
 
-#### Create a release
+#### Create a release manually
 
 Using `changeset` to create a release
 
