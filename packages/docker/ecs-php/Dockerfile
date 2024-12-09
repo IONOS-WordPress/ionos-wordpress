@@ -6,13 +6,9 @@ ARG PHP_VERSION
 FROM php:${PHP_VERSION}-cli-alpine as build
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-RUN composer --version
-
 # ecs version from .env
 ARG ECS_VERSION
 ARG WORDPRESS_CODING_STANDARDS_VERSION
-
-RUN echo "WORDPRESS_CODING_STANDARDS_VERSION=${WORDPRESS_CODING_STANDARDS_VERSION}"
 
 ENV COMPOSER_HOME=/composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
