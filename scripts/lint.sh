@@ -146,6 +146,36 @@ EOF
 # @FIXME: the docker call could be
 function ionos.wordpress.dennis() {
   if [[ "$FIX" == 'yes' ]]; then
+    # abort lint fix if DEEP_API_KEY is not set
+    if [[ -z "${DEEPL_API_KEY}" ]]; then
+      ionos.wordpress.log_warn "Skip auto translating po files using deepl - DEEPL_API_KEY environment variable is not set in './.secrets'"
+      exit 0
+    fi
+
+    ionos.wordpress.log_header "auto translating po files with missing translations using deepl ..."
+
+    # loop over all po files and translate missing entries
+    for PO_FILE in $(find ./packages -maxdepth 4 -mindepth 4 -type f -path '*/languages/*.po'); do
+      # extract target language from file name
+      TARGET_LANGUAGE=$(basename "$PO_FILE" | sed -n 's/.*-\([a-zA-Z]*\)_.*\.po$/\1/p')
+      echo "auto translate missing entries in $PO_FILE to language $TARGET_LANGUAGE"
+
+      # translate missing entries
+      docker run \
+        $DOCKER_FLAGS \
+        --rm \
+        -i \
+        -e DEEPL_API_KEY="${DEEPL_API_KEY}" \
+        -v $(pwd):/project/ \
+        ionos-wordpress/potrans \
+          deepl \
+          --from="en" \
+          --to="$TARGET_LANGUAGE" \
+          --no-cache \
+          $PO_FILE \
+          $(dirname $PO_FILE)
+    done
+
     exit 0
   fi
 

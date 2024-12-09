@@ -148,6 +148,8 @@ importers:
 
   packages/docker/ecs-php: {}
 
+  packages/docker/potrans: {}
+
   packages/docker/rector-php: {}
 
   packages/npm/test-lib:
