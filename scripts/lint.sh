@@ -155,14 +155,22 @@ function ionos.wordpress.dennis() {
   POSITIONAL_ARGS=($(find packages/wp-plugin -maxdepth 2 -mindepth 2 -type d  -name "languages"))
 
   # dennis
-  docker run \
+  OUTPUT=$(docker run \
     $DOCKER_FLAGS \
     --rm \
     -i \
     -v $(pwd):/project/ \
     ionos-wordpress/dennis-i18n \
     status --showuntranslated \
-    ${POSITIONAL_ARGS[@]}
+    ${POSITIONAL_ARGS[@]} \
+  )
+
+  echo "$OUTPUT"
+
+  if echo "$OUTPUT" | grep -q 'Untranslated:\s*[1-9]'; then
+    ionos.wordpress.log_error "dennis validation failed : some strings are untranslated"
+    exit 1
+  fi
 }
 
 #
