@@ -80,7 +80,7 @@ The repository provides
 
   _You can use [DevContainer](https://containers.dev/) even on other IDEs like PHPStorm but this repository takes only care for `vscode` for now._
 
-  Install the [`ms-vscode-remote.remote-containers` extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) to use the [DevContainer](https://containers.dev/) feature.
+  - Install the [`ms-vscode-remote.remote-containers` extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) to use the [DevContainer](https://containers.dev/) feature.
 
 - a modern `docker` version (including `docker compose` sub command)
 
