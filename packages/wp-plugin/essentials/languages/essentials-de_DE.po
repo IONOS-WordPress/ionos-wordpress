@@ -17,24 +17,24 @@ msgstr ""
 #. Plugin Name of the plugin
 #: essentials.php
 msgid "ionos-wordpress/essentials"
-msgstr ""
+msgstr "ionos-wordpress/essentials"
 
 #. Description of the plugin
 #: essentials.php
 msgid "The essentials plugins hosts IONOS hosting specific functionality."
-msgstr ""
+msgstr "The essentials plugins hosts IONOS hosting specific functionality."
 
 #. Author of the plugin
 #: essentials.php
 msgid "IONOS Group"
-msgstr ""
+msgstr "IONOS Group"
 
 #. Author URI of the plugin
 #: essentials.php
 msgid "https://www.ionos-group.com/brands.html"
-msgstr ""
+msgstr "https://www.ionos-group.com/brands.html"
 
 #. Plugin URI of the plugin
 #: essentials.php
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/develop/packages/wp-plugin/essentials"
-msgstr ""
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/develop/packages/wp-plugin/essentials"

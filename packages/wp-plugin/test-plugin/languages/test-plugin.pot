@@ -27,12 +27,12 @@ msgstr ""
 #. Author of the plugin
 #: test-plugin.php
 msgid "IONOS Group"
-msgstr ""
+msgstr "IONOS Group"
 
 #. Author URI of the plugin
 #: test-plugin.php
 msgid "https://www.ionos-group.com/brands.html"
-msgstr ""
+msgstr "https://www.ionos-group.com/brands.html"
 
 #: test-plugin.php:31
 msgid "hello.world"

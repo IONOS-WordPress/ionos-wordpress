@@ -26,11 +26,11 @@ msgstr "a test plugin"
 
 #: build/feature-1/blocks/block-1/index.js:1
 msgid "Example Static – hello from the editor!"
-msgstr ""
+msgstr "Example Static – hello from the editor!"
 
 #: build/feature-1/blocks/block-2/index.js:1
 msgid "Dynamic Block 2 – hello from the editor!"
-msgstr ""
+msgstr "Dynamic Block 2 – hello from the editor!"
 
 #: build/index.js:1
 msgid "hello from packages/wp-plugin/test-plugin/src/index.js"
@@ -39,12 +39,12 @@ msgstr "hello from the U.S."
 #. Author of the plugin
 #: test-plugin.php
 msgid "IONOS Group"
-msgstr ""
+msgstr "IONOS Group"
 
 #. Author URI of the plugin
 #: test-plugin.php
 msgid "https://www.ionos-group.com/brands.html"
-msgstr ""
+msgstr "https://www.ionos-group.com/brands.html"
 
 #: test-plugin.php:29
 msgid "hello.world"
