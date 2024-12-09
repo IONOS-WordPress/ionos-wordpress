@@ -119,7 +119,7 @@ EOF
 # @FIXME: the docker call could be
 function ionos.wordpress.dennis() {
   if [[ "$FIX" == 'yes' ]]; then
-     exit 0
+    exit 0
   fi
 
   ionos.wordpress.log_header "lint po/pot files with dennis ..."
@@ -138,11 +138,41 @@ function ionos.wordpress.dennis() {
     ${POSITIONAL_ARGS[@]}
 }
 
+#
+# check if pnpm lock file (`./pnpm-lock.yaml`) is up to date
+# and references all workspace dependencies correctly
+#
+function ionos.wordpress.pnpm() {
+  if [[ "$FIX" == 'yes' ]]; then
+    pnpm install
+  fi
+
+  ionos.wordpress.log_header "lint pnpm lock file ..."
+
+  if [[ ! -f ./pnpm-lock.yaml ]]; then
+    ionos.wordpress.error_log "pnpm validation failed : ./pnpm-lock.yaml not found"
+    exit 1
+  fi
+
+  # backup lock file
+  PNPM_LOCK_YAML=$(cat ./pnpm-lock.yaml)
+
+  # validate lock file is valid
+  if ! pnpm -s install --lockfile-only; then
+    ionos.wordpress.error_log "pnpm validation failed : pnpüm lock file is outdated - please update it using 'pnpm install'"
+    exit 1
+  fi
+
+  # restore lock file
+  echo "$PNPM_LOCK_YAML" > ./pnpm-lock.yaml
+}
+
 ionos.wordpress.ecs || exit_code=-1
 ionos.wordpress.phpcs || exit_code=-1
 ionos.wordpress.prettier || exit_code=-1
 ionos.wordpress.eslint || exit_code=-1
 ionos.wordpress.stylelint || exit_code=-1
+ionos.wordpress.pnpm || exit_code=-1
 ionos.wordpress.dennis || exit_code=-1
 
 exit ${exit_code:-0}
