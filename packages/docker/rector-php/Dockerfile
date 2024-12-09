@@ -16,7 +16,6 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN composer global require --dev rector/rector:${RECTOR_VERSION}
 
-
 FROM php:${PHP_VERSION}-cli-alpine
 
 # install apk packages to create a user
