@@ -12,6 +12,8 @@ source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 FIX=no
 POSITIONAL_ARGS=()
 
+USE=()
+
 while [[ $# -gt 0 ]]; do
   case $1 in
     --help)
@@ -21,14 +23,36 @@ Usage: $0 [options] [file file ...]"
 By default every source file will be linted.
 
 Options:
-  --help     Show this help message and exit
-  --fix      apply lint fixes where possible
+
+  --help    Show this help message and exit
+
+  --fix     Apply lint fixes where possible
+
+  --use     Specify which linters to use (default: all)
+
+            Available options:
+              - all      operate on all files
+              - php      operate on php files
+              - prettier operate html/yml/md/etc. files
+              - js       operate on js/jsx files
+              - css      operate on css/scss files
+              - pnpm     operate on pnpm lock file
+              - i18n     operate on po/pot files
+
+  Example usage : lint all files matching prettier and i18n, skip php files etc.
+
+    pnpm lint --use prettier -use i18n
 EOF
       exit
       ;;
     --fix)
       FIX=yes
       shift
+      ;;
+    --use)
+      # onvert value to lowercase and append value to USE array
+      USE+=("${2,,}")
+      shift 2
       ;;
     -*|--*)
       echo "Unknown option $1"
@@ -42,6 +66,9 @@ EOF
 done
 
 [[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=(".")
+
+# invoke all linters by default
+[[ ${#USE[@]} -eq 0 ]] && USE=("all")
 
 function ionos.wordpress.prettier() {
   ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") html/yml/md/etc. files with prettier ..."
@@ -167,13 +194,33 @@ function ionos.wordpress.pnpm() {
   echo "$PNPM_LOCK_YAML" > ./pnpm-lock.yaml
 }
 
-ionos.wordpress.ecs || exit_code=-1
-ionos.wordpress.phpcs || exit_code=-1
-ionos.wordpress.prettier || exit_code=-1
-ionos.wordpress.eslint || exit_code=-1
-ionos.wordpress.stylelint || exit_code=-1
-ionos.wordpress.pnpm || exit_code=-1
-ionos.wordpress.dennis || exit_code=-1
+if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "php" ]]; then
+  ionos.wordpress.ecs || exit_code=-1
+fi
+
+if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "php" ]]; then
+  ionos.wordpress.phpcs || exit_code=-1
+fi
+
+if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "prettier" ]]; then
+  ionos.wordpress.prettier || exit_code=-1
+fi
+
+if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "js" ]]; then
+  ionos.wordpress.eslint || exit_code=-1
+fi
+
+if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "css" ]]; then
+  ionos.wordpress.stylelint || exit_code=-1
+fi
+
+if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "pnpm" ]]; then
+  ionos.wordpress.pnpm || exit_code=-1
+fi
+
+if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "i18n" ]]; then
+  ionos.wordpress.dennis || exit_code=-1
+fi
 
 exit ${exit_code:-0}
 
