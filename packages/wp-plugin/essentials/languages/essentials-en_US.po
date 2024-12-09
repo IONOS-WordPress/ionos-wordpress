@@ -21,8 +21,8 @@ msgstr "ionos-wordpress/essentials"
 
 #. Description of the plugin
 #: essentials.php
-msgid "The essentials plugins hosts IONOS hosting specific functionality."
-msgstr "The essentials plugins hosts IONOS hosting specific functionality."
+msgid "The essentials plugin provides IONOS hosting specific functionality."
+msgstr "The essentials plugin provides IONOS hosting specific functionality."
 
 #. Author of the plugin
 #: essentials.php

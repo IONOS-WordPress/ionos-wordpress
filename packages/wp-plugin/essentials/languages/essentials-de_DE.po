@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: de\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2024-10-28T13:54:09+00:00\n"
+"POT-Creation-Date: 2024-10-28T13:54:09+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-10-28T13:54:09+00:00\n"
-"PO-Revision-Date: 2024-10-28T13:54:09+00:00\n"
-"Language: de\n"
-"X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: essentials\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: WP-CLI 2.10.0\n"
 
 #. Plugin Name of the plugin
 #: essentials.php
@@ -21,8 +21,8 @@ msgstr "ionos-wordpress/essentials"
 
 #. Description of the plugin
 #: essentials.php
-msgid "The essentials plugins hosts IONOS hosting specific functionality."
-msgstr "The essentials plugins hosts IONOS hosting specific functionality."
+msgid "The essentials plugin provides IONOS hosting specific functionality."
+msgstr "The essentials plugin provides IONOS hosting specific functionality."
 
 #. Author of the plugin
 #: essentials.php
