@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-04T13:49:17+00:00\n"
+"POT-Creation-Date: 2024-12-09T13:14:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: test-plugin\n"
@@ -17,12 +17,12 @@ msgstr ""
 #. Plugin Name of the plugin
 #: test-plugin.php
 msgid "ionos-wordpress/test-plugin"
-msgstr ""
+msgstr "ionos-wordpress/test-plugin"
 
 #. Description of the plugin
 #: test-plugin.php
 msgid "a test plugin"
-msgstr ""
+msgstr "a test plugin"
 
 #. Author of the plugin
 #: test-plugin.php
@@ -34,9 +34,9 @@ msgstr "IONOS Group"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: test-plugin.php:31
+#: test-plugin.php:29
 msgid "hello.world"
-msgstr ""
+msgstr "hello.world"
 
 #: build/feature-1/blocks/block-1/index.js:1
 msgid "Example Static – hello from the editor!"

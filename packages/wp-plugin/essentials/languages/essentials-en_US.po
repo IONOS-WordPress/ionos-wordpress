@@ -36,5 +36,5 @@ msgstr "https://www.ionos-group.com/brands.html"
 
 #. Plugin URI of the plugin
 #: essentials.php
-msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/develop/packages/wp-plugin/essentials"
-msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/develop/packages/wp-plugin/essentials"
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
