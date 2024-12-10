@@ -173,7 +173,10 @@ function ionos.wordpress.dennis() {
           --to="$TARGET_LANGUAGE" \
           --no-cache \
           $PO_FILE \
-          $(dirname $PO_FILE)
+          $(dirname $PO_FILE) || (
+            ionos.wordpress.log_error "auto translation failed - see error above"
+            exit 1
+          )
     done
 
     exit 0
