@@ -20,6 +20,7 @@ use stdClass;
 
 defined('ABSPATH') || exit();
 
+/* this is just demo code how to use enums */
 enum Mode: string
 {
   case LOCALE = 'local';
@@ -31,6 +32,16 @@ function foo(Mode $mode, int $count): void
   // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log("mode={$mode}, count={$count}");
 }
+/* -- */
+
+\add_action('init', fn() => \load_plugin_textdomain(domain: 'essentials', plugin_rel_path: basename(__DIR__) . '/languages/'));
+
+\add_action('init', function() {
+  $translated_text = \__('Hello World !', 'essentials');
+  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+  error_log($translated_text);
+});
+
 
 // only needed for debugging purposes
 \add_action('plugins_loaded', function () {
