@@ -17,13 +17,6 @@ namespace ionos_wordpress\essentials;
 defined('ABSPATH') || exit();
 
 \add_action('init', function (): void {
-  $foo = 'bar';
-
-  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-  error_log("foo={$foo}");
-});
-
-\add_action('init', function (): void {
   \load_plugin_textdomain(domain: 'test-plugin', plugin_rel_path: basename(__DIR__) . '/languages/');
 
   $translated_text = \__('hello.world', 'test-plugin');
