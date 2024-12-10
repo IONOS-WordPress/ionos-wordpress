@@ -10,9 +10,9 @@ msgstr ""
 "POT-Creation-Date: 2024-10-28T13:54:09+00:00\n"
 "PO-Revision-Date: 2024-10-28T13:54:09+00:00\n"
 "Language: en_US\n"
-"X-Generator: WP-CLI 2.10.0\n"
-"X-Domain: essentials\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: essentials\n"
+"X-Generator: WP-CLI 2.10.0\n"
 
 #. Plugin Name of the plugin
 #: essentials.php
@@ -38,3 +38,7 @@ msgstr "https://www.ionos-group.com/brands.html"
 #: essentials.php
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
+
+#: essentials.php:40
+msgid "Hello World !"
+msgstr "Hello World !"

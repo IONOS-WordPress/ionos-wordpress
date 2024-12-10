@@ -10,9 +10,9 @@ msgstr ""
 "POT-Creation-Date: 2024-10-28T14:26:48+00:00\n"
 "PO-Revision-Date: 2024-10-28T14:26:48+00:00\n"
 "Language: en_US\n"
-"X-Generator: WP-CLI 2.10.0\n"
-"X-Domain: test-plugin\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: test-plugin\n"
+"X-Generator: WP-CLI 2.10.0\n"
 
 #. Plugin Name of the plugin
 #: test-plugin.php
@@ -46,6 +46,6 @@ msgstr "IONOS Group"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: test-plugin.php:29
+#: test-plugin.php:22
 msgid "hello.world"
 msgstr "Hello world !"
