@@ -6,7 +6,7 @@
  * Requires Plugins:
  * Requires PHP:      8.3
  * Version:           0.0.4
- * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases
+ * Update URI:        https://api.github.com/repos/IONOS-WordPress/ionos-wordpress/releases
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials
  * License:           GPL-2.0-or-later
  * Author:            IONOS Group
@@ -15,8 +15,6 @@
  */
 
 namespace ionos_wordpress\essentials;
-
-use stdClass;
 
 defined('ABSPATH') || exit();
 
@@ -34,49 +32,106 @@ function foo(Mode $mode, int $count): void
 }
 /* -- */
 
-\add_action('init', fn() => \load_plugin_textdomain(domain: 'essentials', plugin_rel_path: basename(__DIR__) . '/languages/'));
+\add_action(
+  'init',
+  fn () => \load_plugin_textdomain(domain: 'essentials', plugin_rel_path: basename(__DIR__) . '/languages/')
+);
 
-\add_action('init', function() {
+\add_action('init', function () {
   $translated_text = \__('Hello World !', 'essentials');
   // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log($translated_text);
 });
 
-/*
 // only needed for debugging purposes
 \add_action('plugins_loaded', function () {
   // if wordpress is in development mode (https://developer.wordpress.org/reference/functions/wp_get_development_mode/)
   // force plugin update checks / disable transient caching
-  if( array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
-    \delete_site_transient( 'update_plugins' );
+  if (array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
+    \delete_site_transient('update_plugins');
   }
 });
 
-\add_filter('update_plugins_github.com', function( array|false $update, array $plugin_data, string $plugin_file, array $locales) : array|false {
-  if ($plugin_file === \plugin_basename(__FILE__)) {
-    $update = '{
-      "version": "0.3.9",
-      "slug": "essentials/essentials.php",
+\add_filter('update_plugins_api.github.com', function (
+  array|false $update,
+  array $plugin_data,
+  string $plugin_slug,
+  array $locales
+): array|false {
+  if ($plugin_slug === \plugin_basename(__FILE__)) {
+    /*
+    $update = strtr('{
+      "version": "0.0.6",
+      "slug": "${plugin_slug}",
       "tested": "6.6",
       "icons": {
         "svg": "https://example.com/icon.svg"
       },
       "package": "https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.0.4/essentials-0.0.4-php7.4.zip"
-    }';
+    }', ['${plugin_slug}' => $plugin_slug]);
     $update = json_decode( $update, true );
-		// $request = wp_remote_get($plugin_data['UpdateURI']);
-		// $request_body = wp_remote_retrieve_body( $request );
-		// $update = json_decode( $request_body, true );
-	}
-	return $update;
+    */
+
+    // get the update information from github releases
+    $res = \wp_remote_get($plugin_data['UpdateURI'], [
+      'headers' => [
+        'Accept' => 'application/json',
+      ],
+    ]);
+    if (\is_wp_error($res) || (\wp_remote_retrieve_response_code($res) !== 200)) {
+      return $update;
+    }
+
+    if ('' === ($res = \wp_remote_retrieve_body($res))) {
+      return $update;
+    }
+
+    // releases is an array of release objects
+    $releases = json_decode($res, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+      return $update;
+    }
+
+    // we filter out all releases that do not contain the plugin name
+    // (remember example: plugin slug is `essential/essentials.php` and the plugin name is `ionos-wordpress/essentials`)
+    $releases = array_filter($releases, fn ($release) => str_contains($release['name'], $plugin_data['Name']));
+
+    // return if no releases for our plugin are found
+    if (empty($releases)) {
+      return $update;
+    }
+
+    // convert the releases array to an associative array with the name as key
+    $releases = array_column($releases, null, 'name');
+
+    // get the latest release by sorting the releases names in natural order
+    // example release name : '@ionos-wordpress/essentials@0.0.4'
+    $releaseNames = array_keys($releases);
+    natsort($releaseNames);
+
+    // get the latest release name
+    $latestReleaseName = end($releaseNames);
+
+    // extract version from release name
+    // (example: '@ionos-wordpress/essentials@0.0.4' => '0.0.4')
+    $version = explode('@', $latestReleaseName)[1];
+
+    // @TODO: implement the logic to get the package url from the release object
+
+    // $update = [
+    //   'version' => '0.0.6',
+    //   'package' => 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.0.4/essentials-0.0.4-php7.4.zip',
+    // ];
+  }
+  return $update;
 }, 10, 4);
 
-add_filter( "plugins_api", function ( \stdClass|false $result, string $action, \stdClass $args) : \stdClass|false {
-  if( $args->slug !== 'essentials/essentials.php' ) {
+add_filter('plugins_api', function (\stdClass|false $result, string $action, \stdClass $args): \stdClass|false {
+  if ($args->slug !== \plugin_basename(__FILE__)) {
     return $result;
   }
 
-  $plugin_data = \get_plugin_data( ABSPATH . 'wp-content/plugins/' . $args->slug, false, false );
+  $plugin_data = \get_plugin_data(ABSPATH . 'wp-content/plugins/' . $args->slug, false, false);
 
   $result = (object) [
     // 'name' => $plugin_data['Name'],
@@ -86,13 +141,12 @@ add_filter( "plugins_api", function ( \stdClass|false $result, string $action, \
       'changelog' => '<h4>This is the Changelog</h4>',
       // 'description' => '<h4>This is the Description</h4>',
       // 'faq' => '<h4>This is the FAQ</h4>',
-    ]
+    ],
   ];
 
   // Update the $result variable according to your website requirements and return this variable. You can modify the $result variable conditionally too if you want.
   return $result;
 }, 10, 3);
-*/
 
 /*
 
