@@ -46,6 +46,11 @@ msgstr "IONOS Group"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: test-plugin.php:22
+#: test-plugin.php:24
 msgid "hello.world"
 msgstr "Hello world !"
+
+#. Plugin URI of the plugin
+#: test-plugin.php
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/test-plugin"
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/test-plugin"
