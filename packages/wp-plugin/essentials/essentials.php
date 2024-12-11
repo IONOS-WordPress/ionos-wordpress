@@ -42,7 +42,7 @@ function foo(Mode $mode, int $count): void
   error_log($translated_text);
 });
 
-
+/*
 // only needed for debugging purposes
 \add_action('plugins_loaded', function () {
   // if wordpress is in development mode (https://developer.wordpress.org/reference/functions/wp_get_development_mode/)
@@ -92,6 +92,7 @@ add_filter( "plugins_api", function ( \stdClass|false $result, string $action, \
   // Update the $result variable according to your website requirements and return this variable. You can modify the $result variable conditionally too if you want.
   return $result;
 }, 10, 3);
+*/
 
 /*
 
