@@ -59,19 +59,6 @@ function foo(Mode $mode, int $count): void
   array $locales
 ): array|false {
   if ($plugin_slug === \plugin_basename(__FILE__)) {
-    /*
-    $update = strtr('{
-      "version": "0.0.6",
-      "slug": "${plugin_slug}",
-      "tested": "6.6",
-      "icons": {
-        "svg": "https://example.com/icon.svg"
-      },
-      "package": "https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.0.4/essentials-0.0.4-php7.4.zip"
-    }', ['${plugin_slug}' => $plugin_slug]);
-    $update = json_decode( $update, true );
-    */
-
     // get the update information from github releases
     $res = \wp_remote_get($plugin_data['UpdateURI'], [
       'headers' => [
@@ -117,6 +104,8 @@ function foo(Mode $mode, int $count): void
     $version = explode('@', $latestReleaseName)[1];
 
     // @TODO: implement the logic to get the package url from the release object
+
+    // @TODO: configure $update object
 
     // $update = [
     //   'version' => '0.0.6',
