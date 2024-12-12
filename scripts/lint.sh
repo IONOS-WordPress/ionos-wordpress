@@ -157,7 +157,18 @@ function ionos.wordpress.dennis() {
     # loop over all po files and translate missing entries
     for PO_FILE in $(find ./packages -maxdepth 4 -mindepth 4 -type f -path '*/languages/*.po'); do
       # extract target language from file name
-      TARGET_LANGUAGE=$(basename "$PO_FILE" | sed -n 's/.*-\([a-zA-Z]*\)_.*\.po$/\1/p')
+      TARGET_LANGUAGE=$(basename "$PO_FILE" | sed -n 's/.*-\([a-zA-Z_]*\)\.po$/\1/p')
+
+      # deepl requires simple language names like "de" instead of "de_DE"
+      # except for english - there we need to replace "_" with "-" to get en_US | en-GB
+      if [[ "$TARGET_LANGUAGE" == en* ]]; then
+        # en_US with en-US
+        TARGET_LANGUAGE="${TARGET_LANGUAGE//_/-}"
+      else
+        # strip country code from language for all other languages
+        TARGET_LANGUAGE="${TARGET_LANGUAGE%%_*}"
+      fi
+
       echo "auto translate missing entries in $PO_FILE to language $TARGET_LANGUAGE"
 
       # translate missing entries
