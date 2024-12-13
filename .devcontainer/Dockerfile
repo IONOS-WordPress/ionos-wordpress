@@ -21,6 +21,14 @@ RUN (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y
 
 ARG USERNAME=vscode
 
+# enable persisted bash completion
+# https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
+  && mkdir /commandhistory \
+  && touch /commandhistory/.bash_history \
+  && chown -R $USERNAME /commandhistory \
+  && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
+
 # expose PHP xdebug port 9003
 EXPOSE 9003
 
@@ -30,16 +38,6 @@ EXPOSE 8889
 
 # expose storybook port
 EXPOSE 6006
-
-# doesnt work anymore as of 2024-10-29 because of devcontainer.json spec changes
-#
-# # enable persisted bash completion
-# # https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
-# RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
-#     && mkdir /commandhistory \
-#     && touch /commandhistory/.bash_history \
-#     && chown -R $USERNAME /commandhistory \
-#     && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
 
 # create message to show at first vscode run
 # COPY .devcontainer/welcome.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt
