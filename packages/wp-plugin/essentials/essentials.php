@@ -114,7 +114,8 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
         return [
           'version' => $version,
           'package' => $asset['browser_download_url'],
-          'changelog' => '<h4>This is the Changelog</h4>'
+          // slug is required to trigger the 'plugins_api' filter below
+          'slug'    => $plugin_slug,
         ];
       }
     }
@@ -122,11 +123,14 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
     // // this is just an example how the $update array should look like
     // $update = [
     //   'version' => '0.0.6',
+    //   'slug'    => $plugin_slug,
     //   'package' => 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.0.4/essentials-0.0.4-php7.4.zip',
     // ];
   }
   return $update;
 }, 10, 4);
+
+// action in_plugin_update_message-{$file}"in_plugin_update_message-{$file}"
 
 /*
 If testing from a local IP then the filter below is required. WordPress uses wp_safe_remote_get() when downloading plugin packages.
