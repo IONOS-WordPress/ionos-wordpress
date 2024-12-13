@@ -44,13 +44,11 @@ function foo(Mode $mode, int $count): void
 });
 
 // only needed for debugging purposes
-\add_action('plugins_loaded', function () {
+if (array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
   // if wordpress is in development mode (https://developer.wordpress.org/reference/functions/wp_get_development_mode/)
   // force plugin update checks / disable transient caching
-  if (array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
-    \delete_site_transient('update_plugins');
-  }
-});
+  \add_action('plugins_loaded', fn() => \delete_site_transient('update_plugins'));
+}
 
 \add_filter('update_plugins_api.github.com', function (
   array|false $update,
@@ -107,10 +105,10 @@ function foo(Mode $mode, int $count): void
 
     // @TODO: configure $update object
 
-    // $update = [
-    //   'version' => '0.0.6',
-    //   'package' => 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.0.4/essentials-0.0.4-php7.4.zip',
-    // ];
+    $update = [
+      'version' => '0.0.6',
+      'package' => 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.0.4/essentials-0.0.4-php7.4.zip',
+    ];
   }
   return $update;
 }, 10, 4);
