@@ -63,22 +63,19 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
         'Accept' => 'application/json',
       ],
     ]);
-    if (\is_wp_error($res) || (\wp_remote_retrieve_response_code($res) !== 200)) {
-      return $update;
-    }
-
-    if ('' === ($res = \wp_remote_retrieve_body($res))) {
+    // abort if the request failed or the response code is not 200 or the response body is empty
+    if ((\wp_remote_retrieve_response_code($res) !== 200) || ('' === \wp_remote_retrieve_body($res))) {
       return $update;
     }
 
     // releases is an array of release objects
-    $releases = json_decode($res, true);
+    $releases = json_decode($res['body'], true);
     if (json_last_error() !== JSON_ERROR_NONE) {
       return $update;
     }
 
     // we filter out all releases that do not contain the plugin name
-    // (remember example: plugin slug is `essential/essentials.php` and the plugin name is `ionos-wordpress/essentials`)
+    // (remember example: plugin slug is 'essential/essentials.php' and the plugin name is 'ionos-wordpress/essentials')
     $releases = array_filter($releases, fn ($release) => str_contains($release['name'], $plugin_data['Name']));
 
     // return if no releases for our plugin are found
@@ -99,21 +96,51 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
 
     // extract version from release name
     // (example: '@ionos-wordpress/essentials@0.0.4' => '0.0.4')
-    $version = explode('@', $latestReleaseName)[1];
+    $version = end(explode('@', $latestReleaseName));
 
-    // @TODO: implement the logic to get the package url from the release object
+    // example value : '0.0.4'
+    $latestRelease = $releases[$latestReleaseName];
 
-    // @TODO: configure $update object
+    // example $assetNameRegExp : '/essentials-0\.\0\.4-php.*\.zip/'
+    $assetNameRegExp = '/'
+      . preg_quote(end(explode('/', $plugin_data['Name']))) // 'ionos-wordpress/essentials' => 'essentials'
+      . '-' . preg_quote($version, '/') // '0\.0\.4'
+      . '-php.*\.zip/';
 
-    $update = [
-      'version' => '0.0.6',
-      'package' => 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.0.4/essentials-0.0.4-php7.4.zip',
-    ];
+    // find the asset that matches the asset name regular expression
+    // and return the $update data if found
+    foreach ($latestRelease['assets'] as $asset) {
+      if (preg_match($assetNameRegExp, $asset['name'])) {
+        return [
+          'version' => $version,
+          'package' => $asset['browser_download_url'],
+          'changelog' => '<h4>This is the Changelog</h4>'
+        ];
+      }
+    }
+
+    // // this is just an example how the $update array should look like
+    // $update = [
+    //   'version' => '0.0.6',
+    //   'package' => 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.0.4/essentials-0.0.4-php7.4.zip',
+    // ];
   }
   return $update;
 }, 10, 4);
 
-add_filter('plugins_api', function (\stdClass|false $result, string $action, \stdClass $args): \stdClass|false {
+/*
+If testing from a local IP then the filter below is required. WordPress uses wp_safe_remote_get() when downloading plugin packages.
+wp_safe_remote_get() sets $args['reject_unsafe_urls'] to true which will reject local IPs.
+ */
+
+/*
+add_filter('http_request_host_is_external', function($external, $host, $url) {
+	$external = $host == "example.com" ? true : $external;
+	return $external;
+},10, 3);
+ */
+
+\add_filter('plugins_api', function (\stdClass|false $result, string $action, \stdClass $args): \stdClass|false {
   if ($args->slug !== \plugin_basename(__FILE__)) {
     return $result;
   }
