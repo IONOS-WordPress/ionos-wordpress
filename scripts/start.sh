@@ -61,5 +61,5 @@ pnpm build
 EOF
 )
 
-pnpm exec wp-env start ${WP_ENV_START_OPTS:-}
-
+# start wp-env with xdebug enabled by default
+pnpm exec wp-env start $([[ "${CI:-}" != "true" ]] && echo '--xdebug') ${WP_ENV_START_OPTS:-}
