@@ -43,17 +43,11 @@
     <!--
       formatting is handled by ecs-php
     -->
-    <exclude name="WordPress.Arrays.ArrayIndentation.ItemNotAligned"/>
+    <exclude name="WordPress.Arrays.ArrayIndentation"/>
+    <exclude name="WordPress.WhiteSpace.ControlStructureSpacing"/>
   </rule>
 
-  <rule ref="SlevomatCodingStandard">
-    <exclude name="SlevomatCodingStandard.Whitespaces"/>
-    <exclude name="SlevomatCodingStandard.Namespaces"/>
-    <exclude name="SlevomatCodingStandard.ControlStructures"/>
-    <exclude name="SlevomatCodingStandard.Files.TypeNameMatchesFileName"/>
-    <exclude name="SlevomatCodingStandard.Classes"/>
-    <exclude name="SlevomatCodingStandard.Functions"/>
-    <exclude name="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing"/>
-    <exclude name="SlevomatCodingStandard.Commenting"/>
-	</rule>
+  <rule ref="NormalizedArrays">
+    <exclude name="NormalizedArrays.Arrays.ArrayBraceSpacing"/>
+  </rule>
 </ruleset>

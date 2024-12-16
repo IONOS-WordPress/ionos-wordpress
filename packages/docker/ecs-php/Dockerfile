@@ -14,7 +14,7 @@ ENV COMPOSER_HOME=/composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true \
-  && composer global require --dev wp-coding-standards/wpcs:${WORDPRESS_CODING_STANDARDS_VERSION} slevomat/coding-standard
+  && composer global require --dev wp-coding-standards/wpcs:${WORDPRESS_CODING_STANDARDS_VERSION}
 
 RUN composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer false \
   && composer global require symplify/easy-coding-standard:${ECS_VERSION} --with-dependencies
