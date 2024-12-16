@@ -58,7 +58,7 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   string $plugin_slug,
   array $locales
 ): array|false {
-  if ("$plugin_slug" === \plugin_basename(__FILE__)) {
+  if ("{$plugin_slug}" === \plugin_basename(__FILE__)) {
     // get the update information from github releases
     $res = \wp_remote_get($plugin_data['UpdateURI'], [
       'headers' => [
