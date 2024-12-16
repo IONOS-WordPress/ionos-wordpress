@@ -188,6 +188,18 @@ function ionos.wordpress.dennis() {
             ionos.wordpress.log_error "auto translation failed - see error above"
             exit 1
           )
+
+      # potrans wil regenerate the po file even if no localization changes are
+      # present in source files with a new creation date so that git always
+      # solution:
+      #   revert generated pot file to git version if nothing but po headers changed
+      diff_error_code=0
+      # strip creation date and generator lines and line numbers using sed
+      cmp -s \
+        <(sed -e '/^".*$/d' -e 's/^\(#:.*\):[0-9]\+/\1/g' $PO_FILE) \
+        <(git show HEAD:$PO_FILE 2>/dev/null | sed -e '/^".*$/d' -e 's/^\(#:.*\):[0-9]\+/\1/g') \
+        || diff_error_code=$?
+      [[ "0" == "$diff_error_code" ]] && git checkout $PO_FILE
     done
 
     exit 0
