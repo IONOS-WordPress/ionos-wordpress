@@ -16,6 +16,8 @@
 
 namespace ionos_wordpress\essentials;
 
+use DOMDocument;
+
 defined('ABSPATH') || exit();
 
 /* this is just demo code how to use enums */
@@ -47,7 +49,7 @@ function foo(Mode $mode, int $count): void
 if (array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
   // if wordpress is in development mode (https://developer.wordpress.org/reference/functions/wp_get_development_mode/)
   // force plugin update checks / disable transient caching
-  \add_action('plugins_loaded', fn() => \delete_site_transient('update_plugins'));
+  \add_action('plugins_loaded', fn () => \delete_site_transient('update_plugins'));
 }
 
 \add_filter('update_plugins_api.github.com', function (
@@ -63,8 +65,26 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
         'Accept' => 'application/json',
       ],
     ]);
+
+    // if we return earlier (for example if rate limit was exceeded)
+    // the plugin redirect to the "plugin uri" header which is a fair behaviour.
+
     // abort if the request failed or the response code is not 200 or the response body is empty
-    if ((\wp_remote_retrieve_response_code($res) !== 200) || ('' === \wp_remote_retrieve_body($res))) {
+    if ((\wp_remote_retrieve_response_code($res) !== 200) || (\wp_remote_retrieve_body($res) === '')) {
+      if (\wp_remote_retrieve_response_code($res) !== '') {
+        // may happen for rate limit exceeded
+        error_log(
+          sprintf(
+            'Failed to download update information from "%s"(http-status=%s) : %s',
+            $plugin_data['UpdateURI'],
+            \wp_remote_retrieve_response_code($res),
+            \wp_remote_retrieve_body($res),
+          )
+        );
+      } else {
+        error_log(sprintf('Failed to download update information from "%s"', $plugin_data['UpdateURI']));
+      }
+
       return $update;
     }
 
@@ -115,7 +135,7 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
           'version' => $version,
           'package' => $asset['browser_download_url'],
           // slug is required to trigger the 'plugins_api' filter below
-          'slug'    => $plugin_slug,
+          'slug' => $plugin_slug,
         ];
       }
     }
@@ -133,17 +153,10 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin']) !== false) {
 // action in_plugin_update_message-{$file}"in_plugin_update_message-{$file}"
 
 /*
-If testing from a local IP then the filter below is required. WordPress uses wp_safe_remote_get() when downloading plugin packages.
-wp_safe_remote_get() sets $args['reject_unsafe_urls'] to true which will reject local IPs.
- */
-
-/*
-add_filter('http_request_host_is_external', function($external, $host, $url) {
-	$external = $host == "example.com" ? true : $external;
-	return $external;
-},10, 3);
- */
-
+* This filter is used to modify the plugin information that is displayed in the WordPress admin panel as plugin details.
+*
+* see https://gist.github.com/CruelDrool/4cc70b819a33793396456c5ddb81781d
+*/
 \add_filter('plugins_api', function (\stdClass|false $result, string $action, \stdClass $args): \stdClass|false {
   if ($args->slug !== \plugin_basename(__FILE__)) {
     return $result;
@@ -151,16 +164,46 @@ add_filter('http_request_host_is_external', function($external, $host, $url) {
 
   $plugin_data = \get_plugin_data(ABSPATH . 'wp-content/plugins/' . $args->slug, false, false);
 
-  $result = (object) [
-    // 'name' => $plugin_data['Name'],
-    // 'slug' => $args->slug,
-    // 'version' => $plugin_data['Version'],
-    'sections' => [
-      'changelog' => '<h4>This is the Changelog</h4>',
-      // 'description' => '<h4>This is the Description</h4>',
-      // 'faq' => '<h4>This is the FAQ</h4>',
-    ],
-  ];
+  // fetch changelog from github
+  // (example : https://github.com/IONOS-WordPress/ionos-wordpress/blob/develop/packages/wp-plugin/essentials/CHANGELOG.md)
+  $res = \wp_remote_get($plugin_data['PluginURI'] . '/CHANGELOG.md');
+
+  // abort if the request failed or the response code is not 200 or the response body is empty
+  if ((\wp_remote_retrieve_response_code($res) !== 200) || (\wp_remote_retrieve_body($res) === '')) {
+    return $result;
+  }
+
+  $dom = new DOMDocument();
+  if (! $dom->loadHTML($res['body'])) {
+    return $result;
+  }
+  $articleNodeList = $dom->getElementsByTagName('article');
+  foreach ($articleNodeList as $articleNode) {
+    // remove first div containing just the name of the workspace package
+    $articleNode->removeChild($articleNode->firstChild);
+    $articleHTML = $dom->saveHTML($articleNode);
+
+    return (object) [
+      'name' => $plugin_data['Name'],
+      'version' => $plugin_data['Version'],
+      'slug' => $args->slug,
+      'sections' => [
+        'changelog' => $articleHTML,
+        // 'description' => $plugin_data['Description'],
+      ],
+    ];
+  }
+
+  // $result = (object) [
+  //   // 'name' => $plugin_data['Name'],
+  //   // 'slug' => $args->slug,
+  //   // 'version' => $plugin_data['Version'],
+  //   'sections' => [
+  //     'changelog' => '<h4>This is the Changelog</h4>',
+  //     // 'description' => '<h4>This is the Description</h4>',
+  //     // 'faq' => '<h4>This is the FAQ</h4>',
+  //   ],
+  // ];
 
   // Update the $result variable according to your website requirements and return this variable. You can modify the $result variable conditionally too if you want.
   return $result;
