@@ -23,7 +23,8 @@
     "phpunit:test": "pnpm wp-env run tests-wordpress phpunit",
     "test": "./scripts/test.sh",
     "gh-cli": "./scripts/gh-cli.sh",
-    "go-waas": "./scripts/go-waas.sh"
+    "go-waas": "./scripts/go-waas.sh",
+    "playground": "./scripts/playground.sh"
   },
   "keywords": [
     "pnpm",
@@ -84,6 +85,7 @@
     "stylelint": "^16.11.0",
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-prettier": "^5.0.2",
-    "stylelint-scss": "^6.10.0"
+    "stylelint-scss": "^6.10.0",
+    "@wp-now/wp-now": "0.1.74"
   }
 }

@@ -22,3 +22,5 @@ packages/*/*/webpack.config.js
 /playwright/.*/
 /phpunit/vendor/
 /tmp
+/wp-playground-blueprint.json
+/wp-playground-blueprint.local.json
