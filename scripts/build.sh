@@ -527,7 +527,7 @@ Options:
               Wildcards allowed
               May occur multiple times
               Examples:
-                pnpm build --filter 'wp-plugin/essentials'
+                pnpm build --filter '@ionos-wordpress/essentials'
                 pnpm build --filter '*/test*' --filter '*/essentials'
 EOF
       exit
