@@ -18,6 +18,10 @@ on:
       - feature/*
       - bugfix/*
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   # write-all is too much, but we need to write to packages
   # see https://github.com/orgs/community/discussions/57724 for more info
