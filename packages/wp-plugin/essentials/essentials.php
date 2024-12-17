@@ -53,7 +53,7 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
 
   // show error(s) on plugin row if plugin metadata keys are missing
   \add_filter('plugin_row_meta', function (array $plugin_meta, string $plugin_file, array $plugin_data): array {
-    if ($plugin_file == \plugin_basename(__FILE__) && current_user_can('install_plugins')) {
+    if (\plugin_basename(__FILE__) === $plugin_file && current_user_can('install_plugins')) {
       if (empty($plugin_data['PluginURI'])) {
         $plugin_meta[] = sprintf('<span style="color:red">%s</span>', 'Plugin metadata key "PluginURI" is missing');
       }
@@ -71,101 +71,82 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   array|false $update,
   array $plugin_data,
   string $plugin_slug,
-  array $locales
 ): array|false {
-  if ("{$plugin_slug}" === \plugin_basename(__FILE__)) {
-    // get the update information from github releases
-    $res = \wp_remote_get($plugin_data['UpdateURI'], [
-      'headers' => [
-        'Accept' => 'application/json',
-      ],
-    ]);
+  if (\plugin_basename(__FILE__) !== $plugin_slug) {
+    return $update;
+  }
+  // get the update information from github releases
+  $res = \wp_remote_get($plugin_data['UpdateURI'], [
+    'headers' => [
+      'Accept' => 'application/json',
+    ],
+  ]);
 
-    // if we return earlier (for example if rate limit was exceeded)
-    // the plugin redirect to the "plugin uri" header which is a fair behaviour.
-
-    // abort if the request failed or the response code is not 200 or the response body is empty
-    if ((\wp_remote_retrieve_response_code($res) !== 200) || (\wp_remote_retrieve_body($res) === '')) {
-      if (\wp_remote_retrieve_response_code($res) !== '') {
-        // may happen for rate limit exceeded
-        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-        error_log(
-          sprintf(
-            'Failed to download update information from "%s"(http-status=%s) : %s',
-            $plugin_data['UpdateURI'],
-            \wp_remote_retrieve_response_code($res),
-            \wp_remote_retrieve_body($res),
-          )
-        );
-      } else {
-        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-        error_log(sprintf('Failed to download update information from "%s"', $plugin_data['UpdateURI']));
-      }
-
-      return $update;
+  // abort if the request failed or the response code is not 200 or the response body is empty
+  if ((\wp_remote_retrieve_response_code($res) !== 200) || (\wp_remote_retrieve_body($res) === '')) {
+    if (\wp_remote_retrieve_response_code($res) !== '') {
+      // may happen for rate limit exceeded
+      // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+      error_log(
+        sprintf(
+          'Failed to download update information from "%s"(http-status=%s) : %s',
+          $plugin_data['UpdateURI'],
+          \wp_remote_retrieve_response_code($res),
+          \wp_remote_retrieve_body($res),
+        )
+      );
+    } else {
+      // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+      error_log(sprintf('Failed to download update information from "%s"', $plugin_data['UpdateURI']));
     }
+    return $update;
+  }
 
-    // releases is an array of release objects
-    $releases = json_decode($res['body'], true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-      return $update;
+  // releases is an array of release objects
+  $releases = json_decode($res['body'], true);
+  if (json_last_error() !== JSON_ERROR_NONE) {
+    return $update;
+  }
+
+  // we filter out all releases that do not contain the plugin name
+  $releases = array_filter($releases, fn ($release) => str_contains($release['name'], $plugin_data['Name']));
+  if (empty($releases)) {
+    return $update;
+  }
+
+  // convert the releases array to an associative array with the name as key
+  $releases = array_column($releases, null, 'name');
+
+  // get the latest release by sorting the releases names in natural order
+  // example release name : '@ionos-wordpress/essentials@0.0.4'
+  $release_names = array_keys($releases);
+  natsort($release_names);
+  $latest_release_name = end($release_names);
+
+  // extract version from release name
+  $version = end(explode('@', $latest_release_name));
+  $latest_release = $releases[ $latest_release_name ];
+
+  // example : '/essentials-0\.\0\.4-php.*\.zip/'
+  $asset_name_regexp = '/'
+    . preg_quote(end(explode('/', $plugin_data['Name'])), '/') // 'ionos-wordpress/essentials' => 'essentials'
+    . '-' . preg_quote($version, '/') // '0\.0\.4'
+    . '-php.*\.zip/';
+
+  // find the asset that matches the asset name regular expression
+  // and return the $update data if found
+  foreach ($latest_release['assets'] as $asset) {
+    if (preg_match($asset_name_regexp, $asset['name'])) {
+      return [
+        'version' => $version,
+        'package' => $asset['browser_download_url'],
+        // slug is required to trigger the 'plugins_api' filter below
+        'slug'    => $plugin_slug,
+      ];
     }
-
-    // we filter out all releases that do not contain the plugin name
-    // (remember example: plugin slug is 'essential/essentials.php' and the plugin name is 'ionos-wordpress/essentials')
-    $releases = array_filter($releases, fn ($release) => str_contains($release['name'], $plugin_data['Name']));
-
-    // return if no releases for our plugin are found
-    if (empty($releases)) {
-      return $update;
-    }
-
-    // convert the releases array to an associative array with the name as key
-    $releases = array_column($releases, null, 'name');
-
-    // get the latest release by sorting the releases names in natural order
-    // example release name : '@ionos-wordpress/essentials@0.0.4'
-    $release_names = array_keys($releases);
-    natsort($release_names);
-
-    // get the latest release name
-    $latest_release_name = end($release_names);
-
-    // extract version from release name
-    // (example: '@ionos-wordpress/essentials@0.0.4' => '0.0.4')
-    $version = end(explode('@', $latest_release_name));
-
-    // example value : '0.0.4'
-    $latest_release = $releases[ $latest_release_name ];
-
-    // example : '/essentials-0\.\0\.4-php.*\.zip/'
-    $asset_name_regexp = '/'
-      . preg_quote(end(explode('/', $plugin_data['Name'])), '/') // 'ionos-wordpress/essentials' => 'essentials'
-      . '-' . preg_quote($version, '/') // '0\.0\.4'
-      . '-php.*\.zip/';
-
-    // find the asset that matches the asset name regular expression
-    // and return the $update data if found
-    foreach ($latest_release['assets'] as $asset) {
-      if (preg_match($asset_name_regexp, $asset['name'])) {
-        return [
-          'version' => $version,
-          'package' => $asset['browser_download_url'],
-          // slug is required to trigger the 'plugins_api' filter below
-          'slug'    => $plugin_slug,
-        ];
-      }
-    }
-
-    // // this is just an example how the $update array should look like
-    // $update = [
-    //   'version' => '0.0.6',
-    //   'slug'    => $plugin_slug,
-    //   'package' => 'https://github.com/.../%40ionos-wordpress%2Fessentials%400.0.4/essentials-0.0.4-php7.4.zip',
-    // ];
   }
   return $update;
-}, 10, 4);
+}, 10, 3);
 
 // action in_plugin_update_message-{$file}"in_plugin_update_message-{$file}"
 
