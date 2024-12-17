@@ -211,6 +211,15 @@ function ionos.wordpress.build_workspace_package_wp_plugin() {
 
   pnpm --filter "$PACKAGE_NAME" --if-present run prebuild
 
+  # update plugin version in plugin.php
+  PACKAGE_VERSION=$(jq -r '.version' $PACKAGE_JSON)
+
+  # update version information in plugin filenames
+  plugin_filenames=$(ionos.wordpress.get_plugin_filenames $path)
+  for plugin_filename in $plugin_filenames; do
+    sed -i "s/^ \* Version:\([[:space:]]*\).*/ \* Version:\1$PACKAGE_VERSION/" "$path/$plugin_filename"
+  done
+
   # transpile js/css scripts
   if [[ -d $path/src ]]; then
     # generate webpack.config.js (see https://wordpress.stackexchange.com/a/425349)
@@ -330,15 +339,6 @@ EOF
   else
     ionos.wordpress.log_warn "processing i18n skipped : no ./languages directory found nor env variable WP_CLI_I18N_LOCALES set"
   fi
-
-  # update plugin version in plugin.php
-  PACKAGE_VERSION=$(jq -r '.version' $PACKAGE_JSON)
-
-  # update version information in plugin filenames
-  plugin_filenames=$(ionos.wordpress.get_plugin_filenames $path)
-  for plugin_filename in $plugin_filenames; do
-    sed -i "s/^ \* Version:\([[:space:]]*\).*/ \* Version:\1$PACKAGE_VERSION/" "$path/$plugin_filename"
-  done
 
   pnpm --filter "$PACKAGE_NAME" --if-present run postbuild
 
