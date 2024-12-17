@@ -18,6 +18,20 @@ namespace ionos_wordpress\essentials;
 
 defined('ABSPATH') || exit();
 
+/* this is just demo code how to use enums and to see how rector transforms it */
+enum ModeParam: string
+{
+  case LOCALE = 'local';
+  case REMOTE = 'remote';
+}
+
+function dummyFunctionUsingModeParam(ModeParam $mode_param, int $count): void
+{
+  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+  error_log("mode_param={$mode_param}, count={$count}");
+}
+/* -- */
+
 \add_action('init', function (): void {
   \load_plugin_textdomain(domain: 'test-plugin', plugin_rel_path: basename(__DIR__) . '/languages/');
 
