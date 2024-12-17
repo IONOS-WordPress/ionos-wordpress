@@ -1,6 +1,6 @@
-function helloFromFeature2Special() {
+function hello() {
   // eslint-disable-next-line no-console
-  console.log('packages/wp-plugin/test-plugin/src/feature-2/frontend/feature-2-special-index.js');
+  console.log('hello from packages/wp-plugin/test-plugin/src/feature-2/frontend/feature-2-special-index.js');
 }
 
 hello();

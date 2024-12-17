@@ -9,3 +9,6 @@ function hello(): void
 }
 
 hello();
+
+require_once __DIR__ . '/backend/feature-2.php';
+require_once __DIR__ . '/frontend/feature-2.php';
