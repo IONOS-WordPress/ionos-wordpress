@@ -257,10 +257,11 @@ EOF
       $([[ "${NODE_ENV}" == 'development' ]] && echo 'start --no-watch' || echo 'build') \
       --webpack-copy-php
 
-    # @TODO: if wp 6.7 is out - enable manifest generation
     # (see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#build-blocks-manifest)
-    # # if the plugin provides blocks => build also the blocks manifest
-    # # find $path/src -type f -name 'block.json' | grep -q . && echo pnpm --filter "$PACKAGE_NAME" exec wp-scripts build-blocks-manifest
+    # if the plugin provides blocks => build also the blocks manifest
+    for blocks_dir in $(find "$path/build" -type d -name 'blocks'); do
+      pnpm exec wp-scripts build-blocks-manifest --input="$blocks_dir" --output="$blocks_dir/blocks-manifest.php"
+    done
   else
     ionos.wordpress.log_warn "transpiling js/css skipped : no ./src directory found"
   fi
