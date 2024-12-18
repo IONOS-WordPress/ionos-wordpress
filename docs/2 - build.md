@@ -45,6 +45,22 @@
 
   See [`packages/wp-plugin/test-plugin`](packages/wp-plugin/test-plugin) for a complete example.
 
+# Forcefully rebuilding the while monorepo
+
+- The build command will build the workspace packages no matter of their flavor.
+
+- Most importantly it will take care of the dependencies between the packages.
+
+  **If a package is dependent on another package, the dependent package will be built first.**
+
+- Caveat : `docker` images are only rebuilt if the package version was changed for performance reasons.
+
+  **To force rebuilding everything you can use the `--force` flage to rebuild everything**
+
+  > After `git pull` or `git checkout` it is always a good idea to rebuild the whole workspace using `pnpm build --force`.
+
+> Most monorepo command support the `--help` commandline flag. Use it to get more information about the command.
+
 # Let's build a new plugin
 
 - create a new directory `foo` in `./packages/wp-plugin` :
