@@ -45,7 +45,7 @@
 
   See [`packages/wp-plugin/test-plugin`](packages/wp-plugin/test-plugin) for a complete example.
 
-# Forcefully rebuilding the while monorepo
+# Forcefully rebuilding the whole monorepo
 
 - The build command will build the workspace packages no matter of their flavor.
 
