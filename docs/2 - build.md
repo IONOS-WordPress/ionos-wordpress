@@ -116,7 +116,7 @@
 
   The [`wp-scripts`](https://developer.wordpress.org/block-editor/reference-guidespackages/packages-scripts/) tool will also copy all PHP files from the `src` folder.
 
-  The transpilation will generate production assets for minimum asset size and without any debuggin information.
+  The transpilation will generate production assets for minimum asset size and without any debugging information.
 
   > You can configure the transpilation process to generate debugging friendly assets by setting `NODE_ENV` environment variable to `'development'` in your `.env.local` file.
 
@@ -186,6 +186,13 @@ Place your shared PHP Code in the `./shared/` top level folder.
   // ensure that function gets not redeclared
   if (!function_exists('ionos_wordpress\shared\nuts\eat')) {
     function eat(): void {
+      // smack smack smack ...
+    }
+  }
+
+  // ensure that function gets not redeclared
+  if (!function_exists('ionos_wordpress\shared\nuts\snack')) {
+    function snack(): void {
       // smack smack smack ...
     }
   }
