@@ -50,21 +50,6 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   // if wordpress is in development mode (https://developer.wordpress.org/reference/functions/wp_get_development_mode/)
   // force plugin update checks / disable transient caching
   \add_action('plugins_loaded', fn () => \delete_site_transient('update_plugins'));
-
-  // show error(s) on plugin row if plugin metadata keys are missing
-  \add_filter('plugin_row_meta', function (array $plugin_meta, string $plugin_file, array $plugin_data): array {
-    if (\plugin_basename(__FILE__) === $plugin_file && current_user_can('install_plugins')) {
-      if (empty($plugin_data['PluginURI'])) {
-        $plugin_meta[] = sprintf('<span style="color:red">%s</span>', 'Plugin metadata key "PluginURI" is missing');
-      }
-
-      if (empty($plugin_data['UpdateURI'])) {
-        $plugin_meta[] = sprintf('<span style="color:red">%s</span>', 'Plugin metadata key "UpdateURI" is missing');
-      }
-    }
-
-    return $plugin_meta;
-  }, 10, 3);
 }
 
 \add_filter('update_plugins_api.github.com', function (
