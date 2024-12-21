@@ -5,12 +5,10 @@ updates:
       - '/'
       - '/packages/npm/*'
       - '/packages/wp-plugin/*'
-    versioning-strategy: 'increase'
     schedule:
       interval: 'weekly'
   - package-ecosystem: 'docker'
     directories:
       - '/packages/docker/*'
-    versioning-strategy: 'increase'
     schedule:
       interval: 'weekly'
