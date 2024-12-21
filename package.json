@@ -44,7 +44,7 @@
   "homepage": "https://ionos-wordpress.github.io/ionos-wordpress/",
   "license": "MIT",
   "devDependencies": {
-    "@changesets/cli": "2.27.10",
+    "@changesets/cli": "2.27.11",
     "@chromatic-com/storybook": "^3.2.3",
     "@commitlint/cli": "19.6.1",
     "@commitlint/config-conventional": "19.6.0",
