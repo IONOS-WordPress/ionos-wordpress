@@ -50,7 +50,7 @@ EOF
       shift
       ;;
     --use)
-      # onvert value to lowercase and append value to USE array
+      # convert value to lowercase and append value to USE array
       USE+=("${2,,}")
       shift 2
       ;;
@@ -260,31 +260,31 @@ function ionos.wordpress.pnpm() {
   echo "$PNPM_LOCK_YAML" > ./pnpm-lock.yaml
 }
 
-if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "php" ]]; then
+if [[ "${USE[@]}" =~ all|php ]]; then
   ionos.wordpress.phpcs || exit_code=-1
 fi
 
-if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "php" ]]; then
+if [[ "${USE[@]}" =~ all|php ]]; then
   ionos.wordpress.ecs || exit_code=-1
 fi
 
-if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "prettier" ]]; then
+if [[ "${USE[@]}" =~ all|prettier ]]; then
   ionos.wordpress.prettier || exit_code=-1
 fi
 
-if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "js" ]]; then
+if [[ "${USE[@]}" =~ all|js ]]; then
   ionos.wordpress.eslint || exit_code=-1
 fi
 
-if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "css" ]]; then
+if [[ "${USE[@]}" =~ all|css ]]; then
   ionos.wordpress.stylelint || exit_code=-1
 fi
 
-if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "pnpm" ]]; then
+if [[ "${USE[@]}" =~ all|pnpm ]]; then
   ionos.wordpress.pnpm || exit_code=-1
 fi
 
-if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "i18n" ]]; then
+if [[ " ${USE[@]} " =~ all|i18n ]]; then
   ionos.wordpress.dennis || exit_code=-1
 fi
 
