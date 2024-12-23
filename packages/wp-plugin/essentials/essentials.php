@@ -18,20 +18,6 @@ namespace ionos_wordpress\essentials;
 
 defined('ABSPATH') || exit();
 
-/* this is just demo code how to use enums */
-enum Mode: string
-{
-  case LOCALE = 'local';
-  case REMOTE = 'remote';
-}
-
-function foo(Mode $mode, int $count): void
-{
-  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-  error_log("mode={$mode}, count={$count}");
-}
-/* -- */
-
 \add_action(
   'init',
   fn () => \load_plugin_textdomain(domain: 'essentials', plugin_rel_path: basename(__DIR__) . '/languages/')
