@@ -147,6 +147,15 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
 
   $plugin_data = \get_plugin_data(ABSPATH . 'wp-content/plugins/' . $args->slug, false, false);
 
+  $result = (object) [
+    'name'     => $plugin_data['Name'],
+    'version'  => $plugin_data['Version'],
+    'slug'     => $args->slug,
+    'sections' => [
+      'changelog' => '',  // will be filled later
+    ],
+  ];
+
   // fetch changelog from github
   // (example : https://github.com/IONOS-WordPress/.../packages/wp-plugin/essentials/CHANGELOG.md)
   $res = \wp_remote_get($plugin_data['PluginURI'] . '/CHANGELOG.md');
@@ -155,56 +164,35 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   if ((\wp_remote_retrieve_response_code($res) !== 200) || (\wp_remote_retrieve_body($res) === '')) {
     // abort gracefully
     // show error message including link in the changelog section
-    $result = (object) [
-      'name'     => $plugin_data['Name'],
-      'version'  => $plugin_data['Version'],
-      'slug'     => $args->slug,
-      'sections' => [
-        'changelog' => sprintf('
-          Failed to download <a href=\"%s\">changelog</a>
-          (response=%s} .
-        ', $plugin_data['PluginURI'] . '/CHANGELOG.md', print_r(\wp_remote_retrieve_response_code($res), true))
-      ],
-    ];
+    $result->sections['changelog'] = sprintf(
+      'Failed to download <a href=\"%s\">changelog</a>(response=%s)',
+      $plugin_data['PluginURI'] . '/CHANGELOG.md',
+      print_r(\wp_remote_retrieve_response_code($res), true),
+    );
 
     return $result;
   }
 
-  $dom = new DOMDocument();
-  if ( ! $dom->loadHTML($res['body'])) {
+  // extract changelog from response
+  $body = $res['body'];
+  $start = strpos($body, '<article');
+  $end = strpos($body, '</article>', $start);
+  if ($start === false || $end === false) {
+    // abort gracefully
+    // show error message including link in the changelog section
+    $result->sections['changelog'] = sprintf(
+      'Failed to extract %s tag from <a href=\"%s\">changelog</a>',
+      esc_html('<article>'),
+      $plugin_data['PluginURI'] . '/CHANGELOG.md',
+    );
+
     return $result;
   }
-  $article_nodelist = $dom->getElementsByTagName('article');
-  foreach ($article_nodelist as $article_node) {
-    // remove first div containing just the name of the workspace package
-    // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-    $article_node->removeChild($article_node->firstChild);
-    $article_html = $dom->saveHTML($article_node);
 
-    return (object) [
-      'name'     => $plugin_data['Name'],
-      'version'  => $plugin_data['Version'],
-      'slug'     => $args->slug,
-      'sections' => [
-        'changelog' => $article_html,
-        // 'description' => $plugin_data['Description'],
-      ],
-    ];
-  }
+  $article_html = substr($body, $start, $end - $start + strlen('</article>'));
+  $article_html = str_replace('@' . $result->name, $result->name, $article_html);
+  $result->sections['changelog'] = $article_html;
 
-  // $result = (object) [
-  //   // 'name' => $plugin_data['Name'],
-  //   // 'slug' => $args->slug,
-  //   // 'version' => $plugin_data['Version'],
-  //   'sections' => [
-  //     'changelog' => '<h4>This is the Changelog</h4>',
-  //     // 'description' => '<h4>This is the Description</h4>',
-  //     // 'faq' => '<h4>This is the FAQ</h4>',
-  //   ],
-  // ];
-
-  // Update the $result variable according to your website requirements and
-  // return this variable. You can modify the $result variable conditionally too if you want.
   return $result;
 }, 10, 3);
 
