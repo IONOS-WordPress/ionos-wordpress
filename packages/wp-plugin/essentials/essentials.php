@@ -16,8 +16,6 @@
 
 namespace ionos_wordpress\essentials;
 
-use DOMDocument;
-
 defined('ABSPATH') || exit();
 
 /* this is just demo code how to use enums */
@@ -184,7 +182,7 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
     // show error message including link in the changelog section
     $result->sections['changelog'] = sprintf(
       'Failed to extract %s tag from <a href=\"%s\">changelog</a>',
-      esc_html('<article>'),
+      \esc_html('<article>'),
       $plugin_data['PluginURI'] . '/CHANGELOG.md',
     );
 
