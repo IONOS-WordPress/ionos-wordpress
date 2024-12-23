@@ -261,11 +261,11 @@ function ionos.wordpress.pnpm() {
 }
 
 if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "php" ]]; then
-  ionos.wordpress.ecs || exit_code=-1
+  ionos.wordpress.phpcs || exit_code=-1
 fi
 
 if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "php" ]]; then
-  ionos.wordpress.phpcs || exit_code=-1
+  ionos.wordpress.ecs || exit_code=-1
 fi
 
 if [[ " ${USE[@]} " =~ "all" || " ${USE[@]} " =~ "prettier" ]]; then
