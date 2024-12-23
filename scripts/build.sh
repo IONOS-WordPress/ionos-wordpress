@@ -144,22 +144,6 @@ $(docker image ls --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.Created
 EOF
 }
 
-
-# list all wordpress plugin files in the plugin directory
-# there can be multiple plugin files in a plugin directory
-# (see https://wordpress.stackexchange.com/a/102097)
-#
-# a plugin file is identified by
-#   - file suffix ".php"
-#   - the presence of a "Plugin Name: " header
-#
-# @param $1 path to plugin directory
-#
-function ionos.wordpress.get_plugin_filenames() {
-  local path="$1"
-  grep -l "Plugin Name: " $path/*.php | xargs -n1 basename
-}
-
 # get the textdomains of a wordpress plugin
 #
 # textdomains are computed from
