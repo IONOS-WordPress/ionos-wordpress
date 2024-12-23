@@ -153,6 +153,20 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
 
   // abort if the request failed or the response code is not 200 or the response body is empty
   if ((\wp_remote_retrieve_response_code($res) !== 200) || (\wp_remote_retrieve_body($res) === '')) {
+    // abort gracefully
+    // show error message including link in the changelog section
+    $result = (object) [
+      'name'     => $plugin_data['Name'],
+      'version'  => $plugin_data['Version'],
+      'slug'     => $args->slug,
+      'sections' => [
+        'changelog' => sprintf('
+          Failed to download <a href=\"%s\">changelog</a>
+          (response=%s} .
+        ', $plugin_data['PluginURI'] . '/CHANGELOG.md', print_r(\wp_remote_retrieve_response_code($res), true))
+      ],
+    ];
+
     return $result;
   }
 
