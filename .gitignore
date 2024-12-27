@@ -19,7 +19,9 @@ build-info
 packages/*/*/webpack.config.js
 /build
 *storybook.log
-/playwright/.*/
+/playwright/.cache
+/playwright/storybook/.*
+/playwright/e2e/.*
 /phpunit/vendor/
 /tmp
 /wp-playground-blueprint.json

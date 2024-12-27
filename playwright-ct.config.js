@@ -1,3 +1,4 @@
+// playwright config for storybook and react component testing
 const { defineConfig, devices } = require('@playwright/experimental-ct-react');
 
 /**
@@ -7,7 +8,7 @@ module.exports = defineConfig({
   testMatch: '*.spec.jsx',
   testDir: '.',
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
-  snapshotDir: './playwright/__snapshots__',
+  snapshotDir: './playwright/storybook/__snapshots__',
   /* Maximum time one test can run for. */
   timeout: 10 * 1000,
   /* Run tests in files in parallel */
@@ -21,7 +22,7 @@ module.exports = defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     process.env.CI ? ['dot'] : ['list', { printSteps: true }],
-    ['html', { outputFolder: './playwright/.playwright-report' }],
+    ['html', { outputFolder: './playwright/storybook/.playwright-report' }],
   ],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -41,5 +42,5 @@ module.exports = defineConfig({
       slowMo: 50,
     },
   },
-  outputDir: './playwright/.test-results',
+  outputDir: './playwright/storybook/.test-results',
 });
