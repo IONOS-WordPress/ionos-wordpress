@@ -19,6 +19,7 @@ fi
 # ENDMARK
 
 # execute playwright tests
+# when executed locally it expects chromium to be installed on the host machine : `playwright install --with-deps chromium`
 pnpm exec playwright test -c ./playwright-ct.config.js $@
 
 # MARK: ensure wp-env started
@@ -31,6 +32,15 @@ if [[ ! -d "$WPENV_INSTALLPATH/WordPress" ]] || [[ "$(docker ps -q --filter "nam
 fi
 # ENDMARK
 
+# start wp-env unit tests
 pnpm phpunit:test
 
-
+# start wp-env e2e tests
+(
+  # used to prevent wp-scripts test-playwright command from downloading browsers
+  export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+  # we need to inject the path to the installed chrome binary
+  # via PLAYWRIGHT_CHROME_PATH
+  export PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -name "chrome")
+  pnpm exec wp-scripts test-playwright -c ./playwright.config.js
+)
