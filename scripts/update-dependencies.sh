@@ -55,8 +55,21 @@ function ionos.wordpress.check_pnpm_version() {
   fi
 }
 
+# check docker is up to date
+function ionos.wordpress.check_docker_version() {
+  CURRENT_DOCKER_VERSION=$(docker version --format '{{.Client.Version}}')
+  LATEST_DOCKER_VERSION=$(curl -Ls https://api.github.com/repos/docker/cli/tags | \jq -r '.[] | .name | select(test("^v([0-9]+\\.){2}[0-9]+$"))' | head -n 1 | tr -d 'v')
+
+  if [[ "$CURRENT_DOCKER_VERSION" != "$LATEST_DOCKER_VERSION" ]]; then
+    ionos.wordpress.log_warn "docker version can be updated ($CURRENT_DOCKER_VERSION => $LATEST_DOCKER_VERSION) manually."
+    echo "GIT managed files potentially referencing docker current pnpm version '$CURRENT_DOCKER_VERSION' are :"
+    git grep -w "${CURRENT_DOCKER_VERSION}" || echo "No docker version references found - it's up to you to update your docker installation in your host system."
+  fi
+}
+
 ionos.wordpress.update_package_dependencies $@
 ionos.wordpress.check_nodejs_updates
 ionos.wordpress.check_pnpm_version
+ionos.wordpress.check_docker_version
 
 # @TODO: add checks for docker image updates
