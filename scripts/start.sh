@@ -43,7 +43,7 @@ pnpm build
     "config": {
       "SCRIPT_DEBUG": true,
       "WP_DEBUG": true,
-      "WP_DEBUG_DISPLAY": false,
+      "WP_DEBUG_DISPLAY": true,
       "WP_DEBUG_LOG": true,
       "SAVEQUERIES": true,
       "FS_METHOD": "direct",
