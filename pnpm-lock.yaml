@@ -57,8 +57,8 @@ importers:
         specifier: ^8.4.7
         version: 8.4.7(react@19.0.0)(storybook@8.4.7(prettier@3.4.2))
       '@storybook/addon-webpack5-compiler-swc':
-        specifier: ^1.0.5
-        version: 1.0.5(webpack@5.97.1)
+        specifier: ^2.0.0
+        version: 2.0.0(webpack@5.97.1)
       '@storybook/blocks':
         specifier: ^8.4.7
         version: 8.4.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(storybook@8.4.7(prettier@3.4.2))
@@ -156,7 +156,7 @@ importers:
     devDependencies:
       '@wordpress/components':
         specifier: 'catalog:'
-        version: 29.0.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
+        version: 29.0.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
   packages/wp-plugin/essentials:
     devDependencies:
@@ -2040,8 +2040,8 @@ packages:
     peerDependencies:
       storybook: ^8.4.7
 
-  '@storybook/addon-webpack5-compiler-swc@1.0.5':
-    resolution: {integrity: sha512-1NlM3noit2vA22OyWb8Ma2lhcEKCS1Snv2kr+EkaVABUqNDfVc9AD/GgYQhF7F/2CoF5N2JU7uzXDzFHd5TzZg==}
+  '@storybook/addon-webpack5-compiler-swc@2.0.0':
+    resolution: {integrity: sha512-8lL6vzXMgBFYQ89TFNPG4KjQ1WcRjKOubCTsnv0lRWC6KbF1ipyMFiEDpHOxxHbKhfk2kvQKZVqt8KLNV5zwcg==}
     engines: {node: '>=18'}
 
   '@storybook/blocks@8.4.7':
@@ -8368,14 +8368,6 @@ snapshots:
 
   '@ariakit/core@0.4.14': {}
 
-  '@ariakit/react-core@0.4.15(react-dom@19.0.0(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@ariakit/core': 0.4.14
-      '@floating-ui/dom': 1.6.12
-      react: 18.3.1
-      react-dom: 19.0.0(react@18.3.1)
-      use-sync-external-store: 1.4.0(react@18.3.1)
-
   '@ariakit/react-core@0.4.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@ariakit/core': 0.4.14
@@ -8383,12 +8375,6 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
       use-sync-external-store: 1.4.0(react@19.0.0)
-
-  '@ariakit/react@0.4.15(react-dom@19.0.0(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@ariakit/react-core': 0.4.15(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 19.0.0(react@18.3.1)
 
   '@ariakit/react@0.4.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -9702,22 +9688,6 @@ snapshots:
 
   '@emotion/memoize@0.9.0': {}
 
-  '@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1)':
-    dependencies:
-      '@babel/runtime': 7.25.7
-      '@emotion/babel-plugin': 11.13.5
-      '@emotion/cache': 11.14.0
-      '@emotion/serialize': 1.3.3
-      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@18.3.1)
-      '@emotion/utils': 1.4.2
-      '@emotion/weak-memoize': 0.4.0
-      hoist-non-react-statics: 3.3.2
-      react: 18.3.1
-    optionalDependencies:
-      '@types/react': 18.3.18
-    transitivePeerDependencies:
-      - supports-color
-
   '@emotion/react@11.14.0(@types/react@18.3.18)(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.25.7
@@ -9744,21 +9714,6 @@ snapshots:
 
   '@emotion/sheet@1.4.0': {}
 
-  '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)':
-    dependencies:
-      '@babel/runtime': 7.25.7
-      '@emotion/babel-plugin': 11.13.5
-      '@emotion/is-prop-valid': 1.3.1
-      '@emotion/react': 11.14.0(@types/react@18.3.18)(react@18.3.1)
-      '@emotion/serialize': 1.3.3
-      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@18.3.1)
-      '@emotion/utils': 1.4.2
-      react: 18.3.1
-    optionalDependencies:
-      '@types/react': 18.3.18
-    transitivePeerDependencies:
-      - supports-color
-
   '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@19.0.0))(@types/react@18.3.18)(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.25.7
@@ -9775,10 +9730,6 @@ snapshots:
       - supports-color
 
   '@emotion/unitless@0.10.0': {}
-
-  '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@18.3.1)':
-    dependencies:
-      react: 18.3.1
 
   '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@19.0.0)':
     dependencies:
@@ -10012,12 +9963,6 @@ snapshots:
     dependencies:
       '@floating-ui/core': 1.6.8
       '@floating-ui/utils': 0.2.8
-
-  '@floating-ui/react-dom@2.1.2(react-dom@19.0.0(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@floating-ui/dom': 1.6.12
-      react: 18.3.1
-      react-dom: 19.0.0(react@18.3.1)
 
   '@floating-ui/react-dom@2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -10706,7 +10651,7 @@ snapshots:
       memoizerific: 1.11.3
       storybook: 8.4.7(prettier@3.4.2)
 
-  '@storybook/addon-webpack5-compiler-swc@1.0.5(webpack@5.97.1)':
+  '@storybook/addon-webpack5-compiler-swc@2.0.0(webpack@5.97.1)':
     dependencies:
       '@swc/core': 1.10.2
       swc-loader: 0.2.6(@swc/core@1.10.2)(webpack@5.97.1)
@@ -11570,11 +11515,6 @@ snapshots:
 
   '@use-gesture/core@10.3.1': {}
 
-  '@use-gesture/react@10.3.1(react@18.3.1)':
-    dependencies:
-      '@use-gesture/core': 10.3.1
-      react: 18.3.1
-
   '@use-gesture/react@10.3.1(react@19.0.0)':
     dependencies:
       '@use-gesture/core': 10.3.1
@@ -11744,60 +11684,6 @@ snapshots:
 
   '@wordpress/browserslist-config@6.14.0': {}
 
-  '@wordpress/components@29.0.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@ariakit/react': 0.4.15(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
-      '@babel/runtime': 7.25.7
-      '@emotion/cache': 11.14.0
-      '@emotion/css': 11.13.5
-      '@emotion/react': 11.14.0(@types/react@18.3.18)(react@18.3.1)
-      '@emotion/serialize': 1.3.3
-      '@emotion/styled': 11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)
-      '@emotion/utils': 1.4.2
-      '@floating-ui/react-dom': 2.1.2(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
-      '@types/gradient-parser': 0.1.3
-      '@types/highlight-words-core': 1.2.1
-      '@use-gesture/react': 10.3.1(react@18.3.1)
-      '@wordpress/a11y': 4.14.0
-      '@wordpress/compose': 7.14.0(react@18.3.1)
-      '@wordpress/date': 5.14.0
-      '@wordpress/deprecated': 4.14.0
-      '@wordpress/dom': 4.14.0
-      '@wordpress/element': 6.14.0
-      '@wordpress/escape-html': 3.14.0
-      '@wordpress/hooks': 4.14.0
-      '@wordpress/html-entities': 4.14.0
-      '@wordpress/i18n': 5.14.0
-      '@wordpress/icons': 10.14.0(react@18.3.1)
-      '@wordpress/is-shallow-equal': 5.14.0
-      '@wordpress/keycodes': 4.14.0
-      '@wordpress/primitives': 4.14.0(react@18.3.1)
-      '@wordpress/private-apis': 1.14.0
-      '@wordpress/rich-text': 7.14.0(react@18.3.1)
-      '@wordpress/warning': 3.14.0
-      change-case: 4.1.2
-      clsx: 2.1.1
-      colord: 2.9.3
-      date-fns: 3.6.0
-      deepmerge: 4.3.1
-      fast-deep-equal: 3.1.3
-      framer-motion: 11.15.0(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
-      gradient-parser: 0.1.5
-      highlight-words-core: 1.2.3
-      is-plain-object: 5.0.0
-      memize: 2.1.0
-      path-to-regexp: 6.3.0
-      re-resizable: 6.10.3(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-colorful: 5.6.1(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
-      react-dom: 19.0.0(react@18.3.1)
-      remove-accents: 0.5.0
-      uuid: 9.0.1
-    transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
-      - '@types/react'
-      - supports-color
-
   '@wordpress/components@29.0.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@ariakit/react': 0.4.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -11852,23 +11738,6 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@wordpress/compose@7.14.0(react@18.3.1)':
-    dependencies:
-      '@babel/runtime': 7.25.7
-      '@types/mousetrap': 1.6.15
-      '@wordpress/deprecated': 4.14.0
-      '@wordpress/dom': 4.14.0
-      '@wordpress/element': 6.14.0
-      '@wordpress/is-shallow-equal': 5.14.0
-      '@wordpress/keycodes': 4.14.0
-      '@wordpress/priority-queue': 3.14.0
-      '@wordpress/undo-manager': 1.14.0
-      change-case: 4.1.2
-      clipboard: 2.0.11
-      mousetrap: 1.6.5
-      react: 18.3.1
-      use-memo-one: 1.1.3(react@18.3.1)
-
   '@wordpress/compose@7.14.0(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.25.7
@@ -11885,25 +11754,6 @@ snapshots:
       mousetrap: 1.6.5
       react: 19.0.0
       use-memo-one: 1.1.3(react@19.0.0)
-
-  '@wordpress/data@10.14.0(react@18.3.1)':
-    dependencies:
-      '@babel/runtime': 7.25.7
-      '@wordpress/compose': 7.14.0(react@18.3.1)
-      '@wordpress/deprecated': 4.14.0
-      '@wordpress/element': 6.14.0
-      '@wordpress/is-shallow-equal': 5.14.0
-      '@wordpress/priority-queue': 3.14.0
-      '@wordpress/private-apis': 1.14.0
-      '@wordpress/redux-routine': 5.14.0(redux@5.0.1)
-      deepmerge: 4.3.1
-      equivalent-key-map: 0.2.2
-      is-plain-object: 5.0.0
-      is-promise: 4.0.0
-      react: 18.3.1
-      redux: 5.0.1
-      rememo: 4.0.2
-      use-memo-one: 1.1.3(react@18.3.1)
 
   '@wordpress/data@10.14.0(react@19.0.0)':
     dependencies:
@@ -12044,14 +11894,6 @@ snapshots:
       sprintf-js: 1.1.3
       tannin: 1.2.0
 
-  '@wordpress/icons@10.14.0(react@18.3.1)':
-    dependencies:
-      '@babel/runtime': 7.25.7
-      '@wordpress/element': 6.14.0
-      '@wordpress/primitives': 4.14.0(react@18.3.1)
-    transitivePeerDependencies:
-      - react
-
   '@wordpress/icons@10.14.0(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.25.7
@@ -12098,13 +11940,6 @@ snapshots:
     dependencies:
       prettier: wp-prettier@3.0.3
 
-  '@wordpress/primitives@4.14.0(react@18.3.1)':
-    dependencies:
-      '@babel/runtime': 7.25.7
-      '@wordpress/element': 6.14.0
-      clsx: 2.1.1
-      react: 18.3.1
-
   '@wordpress/primitives@4.14.0(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.25.7
@@ -12128,20 +11963,6 @@ snapshots:
       is-promise: 4.0.0
       redux: 5.0.1
       rungen: 0.3.2
-
-  '@wordpress/rich-text@7.14.0(react@18.3.1)':
-    dependencies:
-      '@babel/runtime': 7.25.7
-      '@wordpress/a11y': 4.14.0
-      '@wordpress/compose': 7.14.0(react@18.3.1)
-      '@wordpress/data': 10.14.0(react@18.3.1)
-      '@wordpress/deprecated': 4.14.0
-      '@wordpress/element': 6.14.0
-      '@wordpress/escape-html': 3.14.0
-      '@wordpress/i18n': 5.14.0
-      '@wordpress/keycodes': 4.14.0
-      memize: 2.1.0
-      react: 18.3.1
 
   '@wordpress/rich-text@7.14.0(react@19.0.0)':
     dependencies:
@@ -14498,16 +14319,6 @@ snapshots:
 
   fraction.js@4.3.7: {}
 
-  framer-motion@11.15.0(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@18.3.1))(react@18.3.1):
-    dependencies:
-      motion-dom: 11.14.3
-      motion-utils: 11.14.3
-      tslib: 2.8.1
-    optionalDependencies:
-      '@emotion/is-prop-valid': 1.3.1
-      react: 18.3.1
-      react-dom: 19.0.0(react@18.3.1)
-
   framer-motion@11.15.0(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       motion-dom: 11.14.3
@@ -16838,20 +16649,10 @@ snapshots:
       iconv-lite: 0.4.24
       unpipe: 1.0.0
 
-  re-resizable@6.10.3(react-dom@19.0.0(react@18.3.1))(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-      react-dom: 19.0.0(react@18.3.1)
-
   re-resizable@6.10.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
-
-  react-colorful@5.6.1(react-dom@19.0.0(react@18.3.1))(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-      react-dom: 19.0.0(react@18.3.1)
 
   react-colorful@5.6.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
@@ -16887,11 +16688,6 @@ snapshots:
       loose-envify: 1.4.0
       react: 18.3.1
       scheduler: 0.23.2
-
-  react-dom@19.0.0(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-      scheduler: 0.25.0
 
   react-dom@19.0.0(react@19.0.0):
     dependencies:
@@ -18116,17 +17912,9 @@ snapshots:
       punycode: 1.4.1
       qs: 6.13.1
 
-  use-memo-one@1.1.3(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-
   use-memo-one@1.1.3(react@19.0.0):
     dependencies:
       react: 19.0.0
-
-  use-sync-external-store@1.4.0(react@18.3.1):
-    dependencies:
-      react: 18.3.1
 
   use-sync-external-store@1.4.0(react@19.0.0):
     dependencies:
