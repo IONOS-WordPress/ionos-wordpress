@@ -75,7 +75,7 @@
     "eslint-plugin-react": "7.37.3",
     "eslint-plugin-react-hooks": "5.1.0",
     "eslint-plugin-simple-import-sort": "12.1.1",
-    "eslint-plugin-storybook": "^0.11.1",
+    "eslint-plugin-storybook": "^0.11.2",
     "git-cz": "4.9.0",
     "globals": "15.14.0",
     "nano-staged": "0.8.0",
