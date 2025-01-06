@@ -65,7 +65,7 @@
     "@storybook/test": "^8.4.7",
     "@types/node": "22.10.2",
     "@wordpress/components": "catalog:",
-    "@wordpress/env": "^10.14.0",
+    "@wordpress/env": "^10.15.0",
     "@wordpress/scripts": "^30.7.0",
     "@wp-now/wp-now": "0.1.74",
     "eslint": "9.17.0",
