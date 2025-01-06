@@ -61,7 +61,7 @@ USER $USERNAME
 # # when running in a container, the default WP_ENV_HOME should be used
 # ENV WP_ENV_HOME /home/$USERNAME/.wp-env
 
-ENV PNPM_VERSION 9.12.3
+ENV PNPM_VERSION 9.15.3
 ENV PNPM_NODEJS_VERSION 20.17.0
 ENV XDEBUG_MODE off
 
