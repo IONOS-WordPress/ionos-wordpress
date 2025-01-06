@@ -71,9 +71,9 @@ function ionos.wordpress.build_workspace_package_npm() {
   pnpm --filter "$PACKAGE_NAME" --if-present run prebuild
   pnpm --filter "$PACKAGE_NAME" --if-present run build
   pnpm --filter "$PACKAGE_NAME" --if-present run postbuild
-  tgz_file=$(cd $path && pnpm pack --pack-destination ./dist)
+  tgz_file=$((cd $path && pnpm pack --pack-destination ./dist) | tail -n 1)
   cat << EOF | tee $path/build-info
-$(ls -lah $tgz_file | cut -d ' ' -f 5) $(basename $tgz_file)
+$(ls -lah "$tgz_file" | cut -d ' ' -f 5) $(basename "$tgz_file")
 
 $(echo -n "---")
 
