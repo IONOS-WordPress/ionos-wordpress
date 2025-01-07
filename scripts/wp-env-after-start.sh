@@ -182,10 +182,11 @@ for prefix in '' 'tests-' ; do
   # this wp-cli configuration file needs to be created to enable wp-cli to work with the apache mod_rewrite module
   pnpm exec wp-env run ${prefix}cli sh -c 'echo -e "apache_modules:\n  - mod_rewrite" > /var/www/html/wp-cli.yml'
 
-  # The wp rewrite flush command regenerates the rewrite rules for your WordPress site, which includes refreshing the permalinks.
-  pnpm exec wp-env run ${prefix}cli wp --quiet rewrite flush
   # The wp rewrite structure command updates the permalink structure. --hard also updates the .htaccess file
   pnpm exec wp-env run ${prefix}cli wp --quiet rewrite structure '/%postname%' --hard
+
+  # The wp rewrite flush command regenerates the rewrite rules for your WordPress site, which includes refreshing the permalinks.
+  pnpm exec wp-env run ${prefix}cli wp --quiet rewrite flush
 
   # Updates an option value for example the value of Simple page is id = 2
   pnpm exec wp-env run ${prefix}cli wp option update page_on_front 2
