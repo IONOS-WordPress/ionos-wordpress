@@ -3,6 +3,7 @@
 // use Symplify\CodingStandard\Fixer\LineLength\LineLengthFixer;
 // use WordPressCS\WordPress\Sniffs\Arrays\ArrayDeclarationSpacingSniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
+use PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer;
 
 // use PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer;
 // $codeSnifferConfig = new PHP_CodeSniffer\Config(["--standard=WordPress"]);
@@ -43,6 +44,12 @@ return ECSConfig::configure()
   )
   // use 2 spaces instead of psr12 default (4 spaces)
   ->withSpacing(indentation: '  ')
+
+  ->withConfiguredRule(YodaStyleFixer::class, [
+    'equal' => true,
+    'identical' => true,
+    'less_and_greater' => true,
+  ])
 
   /*
     // example of adding a single rule without configuration
