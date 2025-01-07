@@ -22,6 +22,8 @@ return ECSConfig::configure()
       '/wp-env-home/*',
       '/phpunit/*',
       '/tmp/*',
+      './rector-config-php7.4.php',
+      './ecs-config.php',
     ]
   )
   ->withPreparedSets(
