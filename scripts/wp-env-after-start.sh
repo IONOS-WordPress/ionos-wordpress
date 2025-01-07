@@ -42,6 +42,7 @@ EOF
     function plugins {
       for PLUGIN in $(find packages/wp-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
         echo "        \"/var/www/html/wp-content/plugins/${PLUGIN}\":\"\${workspaceFolder}/packages/wp-plugin/${PLUGIN}\","
+        echo "        \"/var/www/html/wp-content/plugins/${PLUGIN}/build\":\"\${workspaceFolder}/packages/wp-plugin/${PLUGIN}/src\","
       done
     }
 
@@ -49,6 +50,7 @@ EOF
     function themes {
       for THEME in $(find packages/wp-theme -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
         echo "        \"/var/www/html/wp-content/themes/${THEME}\":\"\${workspaceFolder}/packages/wp-theme/${THEME}\","
+        echo "        \"/var/www/html/wp-content/themes/${THEME}/build\":\"\${workspaceFolder}/packages/wp-theme/${THEME}/src\","
       done
     }
 
