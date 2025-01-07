@@ -45,6 +45,14 @@
     -->
     <exclude name="WordPress.Arrays.ArrayIndentation"/>
     <exclude name="WordPress.WhiteSpace.ControlStructureSpacing"/>
+    <exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned"/>
+    <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents"/>
+    <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r"/>
+    <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r"/>
+    <exclude name="WordPress.Arrays.ArrayKeySpacingRestrictions.NoSpacesAroundArrayKeys"/>
+    <exclude name="WordPress.WhiteSpace.OperatorSpacing.NoSpaceBefore"/>
+    <exclude name="WordPress.WP.AlternativeFunctions.file_system_operations_mkdir"/>
+    <exclude name="WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents"/>
   </rule>
 
   <rule ref="NormalizedArrays">
