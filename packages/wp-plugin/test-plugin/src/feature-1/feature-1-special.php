@@ -22,14 +22,18 @@ hello2();
     ],
   );
 
-  \wp_set_script_translations('test-plugin-feature-1-special-index', 'test-plugin', \plugin_dir_path(__FILE__) . 'languages');
+  \wp_set_script_translations(
+    'test-plugin-feature-1-special-index',
+    'test-plugin',
+    \plugin_dir_path(__FILE__) . 'languages'
+  );
 });
 
 \add_action('init', function (): void {
   \wp_register_block_metadata_collection(
-    \plugin_dir_path( __FILE__ ) . 'blocks',
-    \plugin_dir_path( __FILE__ ) . 'blocks/blocks-manifest.php'
+    \plugin_dir_path(__FILE__) . 'blocks',
+    \plugin_dir_path(__FILE__) . 'blocks/blocks-manifest.php'
   );
-  \register_block_type( __DIR__ . '/blocks/block-1' );
-  \register_block_type( __DIR__ . '/blocks/block-2' );
+  \register_block_type(__DIR__ . '/blocks/block-1');
+  \register_block_type(__DIR__ . '/blocks/block-2');
 });

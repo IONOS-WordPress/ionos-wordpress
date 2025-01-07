@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:       ionos-wordpress/test-plugin
  * Description:       a test plugin
@@ -25,7 +26,7 @@ enum ModeParam: string
   case REMOTE = 'remote';
 }
 
-function dummyFunctionUsingModeParam(ModeParam $mode_param, int $count): void
+function dummy_function_using_mode_param(ModeParam $mode_param, int $count): void
 {
   // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log("mode_param={$mode_param}, count={$count}");

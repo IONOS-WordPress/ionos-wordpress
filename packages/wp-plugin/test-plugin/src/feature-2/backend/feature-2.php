@@ -22,5 +22,9 @@ hello();
     ],
   );
 
-  \wp_set_script_translations('test-plugin-feature-2-backend-index', 'test-plugin', \plugin_dir_path(__FILE__) . 'languages');
+  \wp_set_script_translations(
+    'test-plugin-feature-2-backend-index',
+    'test-plugin',
+    \plugin_dir_path(__FILE__) . 'languages'
+  );
 });
