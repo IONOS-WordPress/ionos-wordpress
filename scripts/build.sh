@@ -339,7 +339,9 @@ EOF
       --exclude=.env \
       --exclude=vendor \
       --exclude=.secrets \
+      --exclude=.distignore \
       --exclude=webpack.config.js \
+      $(test -f $path/.distignore && echo "--exclude-from=$path/.distignore") \
       $path/ \
       $path/dist/$plugin_name
 
