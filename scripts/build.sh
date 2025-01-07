@@ -328,7 +328,6 @@ EOF
       --exclude=node_modules/ \
       --exclude=package.json \
       --exclude=dist/ \
-      --exclude=build/ \
       --exclude=-exclude/build-info \
       --exclude=languages/*.po \
       --exclude=languages/*.pot \
@@ -344,9 +343,6 @@ EOF
       $(test -f $path/.distignore && echo "--exclude-from=$path/.distignore") \
       $path/ \
       $path/dist/$plugin_name
-
-    # copy transpiled js/css to target folder
-    test -d $path/build && rsync -rupE $path/build $path/dist/$plugin_name/
   fi
 
   if [[ "${USE[@]}" =~ all|wp-plugin:rector ]]; then
