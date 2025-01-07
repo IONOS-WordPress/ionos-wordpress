@@ -1,0 +1,3 @@
+# disable dashboard editor feature in production zip archives
+
+build/dashboard/editor.php

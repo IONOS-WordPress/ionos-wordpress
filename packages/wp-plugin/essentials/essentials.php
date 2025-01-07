@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:       ionos-wordpress/essentials
  * Description:       The essentials plugin provides IONOS hosting specific functionality.
@@ -12,6 +13,7 @@
  * Author:            IONOS Group
  * Author URI:        https://www.ionos-group.com/brands.html
  * Domain Path:       /languages
+ * Text Domain:       ionos-essentials
  */
 
 namespace ionos_wordpress\essentials;
@@ -20,11 +22,11 @@ defined('ABSPATH') || exit();
 
 \add_action(
   'init',
-  fn () => \load_plugin_textdomain(domain: 'essentials', plugin_rel_path: basename(__DIR__) . '/languages/')
+  fn () => \load_plugin_textdomain(domain: 'ionos-essentials', plugin_rel_path: basename(__DIR__) . '/languages/')
 );
 
 \add_action('init', function (): void {
-  $translated_text = \__('Hello World !', 'essentials');
+  $translated_text = \__('Hello World !', 'ionos-essentials');
   // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log($translated_text);
 });
@@ -54,8 +56,8 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   ]);
 
   // abort if the request failed or the response code is not 200 or the response body is empty
-  if ((\wp_remote_retrieve_response_code($res) !== 200) || (\wp_remote_retrieve_body($res) === '')) {
-    if (\wp_remote_retrieve_response_code($res) !== '') {
+  if ((200 !== \wp_remote_retrieve_response_code($res)) || ('' === \wp_remote_retrieve_body($res))) {
+    if ('' !== \wp_remote_retrieve_response_code($res)) {
       // may happen for rate limit exceeded
       // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
       error_log(
@@ -75,7 +77,7 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
 
   // releases is an array of release objects
   $releases = json_decode($res['body'], true);
-  if (json_last_error() !== JSON_ERROR_NONE) {
+  if (JSON_ERROR_NONE !== json_last_error()) {
     return $update;
   }
 
@@ -97,7 +99,7 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   // extract version from release name
   $_ = explode('@', $latest_release_name);
   $version = end($_);
-  $latest_release = $releases[ $latest_release_name ];
+  $latest_release = $releases[$latest_release_name];
 
   // example : '/essentials-0\.\0\.4-php.*\.zip/'
   $_ = explode('/', $plugin_data['Name']);
@@ -114,7 +116,7 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
         'version' => $version,
         'package' => $asset['browser_download_url'],
         // slug is required to trigger the 'plugins_api' filter below
-        'slug'    => $plugin_slug,
+        'slug' => $plugin_slug,
       ];
     }
   }
@@ -136,9 +138,9 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   $plugin_data = \get_plugin_data(ABSPATH . 'wp-content/plugins/' . $args->slug, false, false);
 
   $result = (object) [
-    'name'     => $plugin_data['Name'],
-    'version'  => $plugin_data['Version'],
-    'slug'     => $args->slug,
+    'name' => $plugin_data['Name'],
+    'version' => $plugin_data['Version'],
+    'slug' => $args->slug,
     'sections' => [
       'changelog' => '',  // will be filled later
     ],
@@ -149,7 +151,7 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   $res = \wp_remote_get($plugin_data['PluginURI'] . '/CHANGELOG.md');
 
   // abort if the request failed or the response code is not 200 or the response body is empty
-  if ((\wp_remote_retrieve_response_code($res) !== 200) || (\wp_remote_retrieve_body($res) === '')) {
+  if ((200 !== \wp_remote_retrieve_response_code($res)) || ('' === \wp_remote_retrieve_body($res))) {
     // abort gracefully
     // show error message including link in the changelog section
     $result->sections['changelog'] = sprintf(
@@ -165,7 +167,7 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   $body = $res['body'];
   $start = strpos($body, '<article');
   $end = strpos($body, '</article>', $start);
-  if ($start === false || $end === false) {
+  if (false === $start || false === $end) {
     // abort gracefully
     // show error message including link in the changelog section
     $result->sections['changelog'] = sprintf(
@@ -184,8 +186,11 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   return $result;
 }, 10, 3);
 
-/*
+if (is_file(__DIR__ . '/build/dashboard/index.php')) {
+  require_once __DIR__ . '/build/dashboard/index.php';
+}
 
+/*
 [
   'name' => 'cm4all-wp-impex',
   'slug' => 'cm4all-wp-impex',
@@ -258,5 +263,4 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   ],
   'preview_link' => '',
 ]
-
 */
