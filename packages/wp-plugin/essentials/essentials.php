@@ -95,12 +95,14 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   $latest_release_name = end($release_names);
 
   // extract version from release name
-  $version = end(explode('@', $latest_release_name));
+  $_ = explode('@', $latest_release_name);
+  $version = end($_);
   $latest_release = $releases[ $latest_release_name ];
 
   // example : '/essentials-0\.\0\.4-php.*\.zip/'
+  $_ = explode('/', $plugin_data['Name']);
   $asset_name_regexp = '/'
-    . preg_quote(end(explode('/', $plugin_data['Name'])), '/') // 'ionos-wordpress/essentials' => 'essentials'
+    . preg_quote(end($_), '/') // 'ionos-wordpress/essentials' => 'essentials'
     . '-' . preg_quote($version, '/') // '0\.0\.4'
     . '-php.*\.zip/';
 
