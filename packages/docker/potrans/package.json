@@ -10,5 +10,8 @@
     "deepl",
     "translation",
     "gettext"
-  ]
+  ],
+  "scripts": {
+    "update-dependencies": "./scripts/update-dependencies.sh"
+  }
 }

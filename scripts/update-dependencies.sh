@@ -46,7 +46,8 @@ function ionos.wordpress.check_nodejs_updates() {
 # check pnpm is up to date
 function ionos.wordpress.check_pnpm_version() {
   CURRENT_PNPM_VERSION=$(pnpm --version)
-  LATEST_PNPM_VERSION=$(pnpm view pnpm version)
+  LATEST_PNPM_VERSION=$(curl -Ls https://api.github.com/repos/pnpm/pnpm/tags | \jq -r '.[] | .name
+| select(test("^v([0-9]+\\.){2}[0-9]+$"))' | head -n 1 | tr -d 'v')
 
   if [[ "$CURRENT_PNPM_VERSION" != "$LATEST_PNPM_VERSION" ]]; then
     ionos.wordpress.log_warn "pnpm version can be updated ($CURRENT_PNPM_VERSION => $LATEST_PNPM_VERSION) manually."
@@ -67,17 +68,57 @@ function ionos.wordpress.check_docker_version() {
   fi
 }
 
-# ionos.wordpress.update_package_dependencies $@
-# ionos.wordpress.check_nodejs_updates
-# ionos.wordpress.check_pnpm_version
-# ionos.wordpress.check_docker_version
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --help)
+      cat <<EOF
+Usage: $0 [options] ..."
+
+Check for updates of
+
+- package dependencies
+- nodejs version
+- pnpm version
+- docker version
+- updates in workspace packages of the 'docker' flavour
+
+Options:
+
+  --help                    Show this help message and exit
+
+  --pnpm-opts <pnpm-opts>   Pass additional options to pnpm command
+
+Example usage :
+
+  update package dependencies : pnpm update-dependencies
+
+  update package dependencies to latest version : pnpm update-dependencies --pnpm-opts '--latest'
+EOF
+      exit
+      ;;
+    --pnpm-opts)
+      PNPM_OPTS=$2
+      shift
+      shift
+      ;;
+    *)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+  esac
+done
+
+ionos.wordpress.update_package_dependencies "${PNPM_OPTS:-}"
+ionos.wordpress.check_nodejs_updates
+ionos.wordpress.check_pnpm_version
+ionos.wordpress.check_docker_version
 
 # execute optional "update-dependencies" script targets of individual workspace packages
 for package_path in $(find packages -mindepth 2 -maxdepth 2 -type d); do
   PACKAGE_NAME=$(jq -r '.name' $package_path/package.json)
   PACKAGE_SCRIPT_UPDATE_DEPENDENCIES=$(jq -r '.scripts."update-dependencies" // ""' $package_path/package.json)
   if [[ "$PACKAGE_SCRIPT_UPDATE_DEPENDENCIES" != '' ]]; then
-    pnpm -s --filter "$PACKAGE_NAME" run update-dependencies $@
+    pnpm -s --filter "$PACKAGE_NAME" run update-dependencies
   fi
 done
 

@@ -9,5 +9,8 @@
     "upgrade",
     "downgrade"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "update-dependencies": "./scripts/update-dependencies.sh"
+  }
 }
