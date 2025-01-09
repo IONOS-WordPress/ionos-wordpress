@@ -18,6 +18,8 @@
 
 namespace ionos_wordpress\essentials;
 
+const IONOS_ESSENTIALS_PLUGIN_DIR = __DIR__;
+
 defined('ABSPATH') || exit();
 
 \add_action(
@@ -186,8 +188,8 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   return $result;
 }, 10, 3);
 
-if (is_file(__DIR__ . '/build/dashboard/index.php')) {
-  require_once __DIR__ . '/build/dashboard/index.php';
+if (is_file(__DIR__ . '/inc/dashboard/index.php')) {
+  require_once __DIR__ . '/inc/dashboard/index.php';
 }
 
 /*

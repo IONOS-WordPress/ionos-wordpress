@@ -5,8 +5,5 @@
     "@ionos-wordpress/rector-php": "workspace:*",
     "@ionos-wordpress/ecs-php": "workspace:*",
     "@ionos-wordpress/dennis-i18n": "workspace:*"
-  },
-  "scripts": {
-    "postbuild": "cp -r src/dashboard/data build/dashboard/"
   }
 }

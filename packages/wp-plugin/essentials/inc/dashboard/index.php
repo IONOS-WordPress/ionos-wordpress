@@ -2,6 +2,8 @@
 
 namespace ionos_wordpress\essentials\dashboard;
 
+use const ionos_wordpress\essentials\IONOS_ESSENTIALS_PLUGIN_DIR;
+
 /*
    this file features a admin page that renders a dashboard.
    this files renders a custom admin page with an iframe that displays a custom dashboard page.
@@ -32,8 +34,8 @@ if (is_file(__DIR__ . '/editor.php')) {
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', __('IONOS Dashboard', 'ionos-essentials'));
 
-  \wp_register_block_metadata_collection(__DIR__ . '/blocks', __DIR__ . '/blocks/blocks-manifest.php');
-  \register_block_type(__DIR__ . '/blocks/clock-block');
+  \wp_register_block_metadata_collection(IONOS_ESSENTIALS_PLUGIN_DIR . '/build/dashboard/blocks', IONOS_ESSENTIALS_PLUGIN_DIR . '/build/dashboard/blocks/blocks-manifest.php');
+  \register_block_type(IONOS_ESSENTIALS_PLUGIN_DIR . '/build/dashboard/blocks/clock-block');
 });
 
 // remove our blocks from all other post types
