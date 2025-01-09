@@ -9,5 +9,8 @@
     "easy-coding-standard",
     "phpcs",
     "static-analysis"
-  ]
+  ],
+  "scripts": {
+    "update-dependencies": "./scripts/update-dependencies.sh"
+  }
 }

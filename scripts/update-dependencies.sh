@@ -67,9 +67,17 @@ function ionos.wordpress.check_docker_version() {
   fi
 }
 
-ionos.wordpress.update_package_dependencies $@
-ionos.wordpress.check_nodejs_updates
-ionos.wordpress.check_pnpm_version
-ionos.wordpress.check_docker_version
+# ionos.wordpress.update_package_dependencies $@
+# ionos.wordpress.check_nodejs_updates
+# ionos.wordpress.check_pnpm_version
+# ionos.wordpress.check_docker_version
 
-# @TODO: add checks for docker image updates
+# execute optional "update-dependencies" script targets of individual workspace packages
+for package_path in $(find packages -mindepth 2 -maxdepth 2 -type d); do
+  PACKAGE_NAME=$(jq -r '.name' $package_path/package.json)
+  PACKAGE_SCRIPT_UPDATE_DEPENDENCIES=$(jq -r '.scripts."update-dependencies" // ""' $package_path/package.json)
+  if [[ "$PACKAGE_SCRIPT_UPDATE_DEPENDENCIES" != '' ]]; then
+    pnpm -s --filter "$PACKAGE_NAME" run update-dependencies $@
+  fi
+done
+

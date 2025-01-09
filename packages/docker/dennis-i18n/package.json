@@ -12,5 +12,8 @@
     "lint",
     "po",
     "pot"
-  ]
+  ],
+  "scripts": {
+    "update-dependencies": "./scripts/update-dependencies.sh"
+  }
 }
