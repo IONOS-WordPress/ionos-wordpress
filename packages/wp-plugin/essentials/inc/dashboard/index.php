@@ -67,9 +67,8 @@ if (is_file(__DIR__ . '/editor.php')) {
     menu_slug  : ADMIN_PAGE_SLUG,
     callback   : function () {
       printf(
-        '<iframe src="%s?page=%s&noheader=1" style="width: 100%%; height: 100%%;"></iframe>',
-        esc_attr(\get_admin_url()),
-        esc_attr(HIDDEN_ADMIN_PAGE_IFRAME_SLUG),
+        '<iframe src="%s&noheader=1" style="width: 100%%; height: 100%%;"></iframe>',
+        esc_attr(\menu_page_url(HIDDEN_ADMIN_PAGE_IFRAME_SLUG, false))
       );
     },
     position: 1,
@@ -121,7 +120,7 @@ if (is_file(__DIR__ . '/editor.php')) {
       return;
     }
 
-    \wp_safe_redirect(\admin_url('admin.php?page=' . ADMIN_PAGE_SLUG));
+    \wp_safe_redirect(\menu_page_url(ADMIN_PAGE_SLUG, false));
   }
 });
 
