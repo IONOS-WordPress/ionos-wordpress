@@ -5,11 +5,7 @@ use const ionos_wordpress\essentials\dashboard\HIDDEN_ADMIN_PAGE_IFRAME_SLUG;
 use const ionos_wordpress\essentials\IONOS_ESSENTIALS_PLUGIN_DIR;
 
 /**
- * covers the acceptance tests for the essentials dashboard feature
- *
- * To test only dashboard features, run `pnpm phpunit:test -- --group dashboard`
- * To test only a single test from this testcase, run `pnpm phpunit:test -- --filter test_dashboard_blocks_registered`
- * To test only ththis unit test, run `pnpm phpunit:test -- --filter AcceptanceTest`
+ * covers the acceptance tests for the essentials dashboard features.
  *
  * @group dashboard
  * @group essentials
