@@ -98,8 +98,7 @@ EOF
       ;;
     --pnpm-opts)
       PNPM_OPTS=$2
-      shift
-      shift
+      shift 2
       ;;
     *)
       echo "Unknown option $1"
