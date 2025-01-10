@@ -34,7 +34,10 @@ if (is_file(__DIR__ . '/editor.php')) {
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', __('IONOS Dashboard', 'ionos-essentials'));
 
-  \wp_register_block_metadata_collection(IONOS_ESSENTIALS_PLUGIN_DIR . '/build/dashboard/blocks', IONOS_ESSENTIALS_PLUGIN_DIR . '/build/dashboard/blocks/blocks-manifest.php');
+  \wp_register_block_metadata_collection(
+    IONOS_ESSENTIALS_PLUGIN_DIR . '/build/dashboard/blocks',
+    IONOS_ESSENTIALS_PLUGIN_DIR . '/build/dashboard/blocks/blocks-manifest.php'
+  );
   \register_block_type(IONOS_ESSENTIALS_PLUGIN_DIR . '/build/dashboard/blocks/clock-block');
 });
 
