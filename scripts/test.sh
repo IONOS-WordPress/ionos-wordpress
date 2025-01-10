@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
 #
-# script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
+# script is not intended to be executed directly. use 'pnpm exec ...' instead or call it as package script.
 #
 # this script is used to execute the tests
+#
+# run 'pnpm run test --help' for help
 #
 
 # bootstrap the environment
@@ -20,6 +22,7 @@ while [[ $# -gt 0 ]]; do
 Usage: $0 [options] [-- additional-args]"
 
 Executes tests.
+
 This action will start wp-env if it is not already running.
 
 Options:
@@ -36,17 +39,17 @@ Options:
             This option can be used multiple times to specify multiple tests.
 
   Example usage :
-    Execute only PHPUnit and E2e tests: `pnpm run test --use e2e --use php`
+    Execute only PHPUnit and E2e tests: 'pnpm run test --use e2e --use php'
 
     Execute PHPUnit tests and provide additional args to PHPUnit :
 
-      `pnpm test --use php -- --filter test_my_test_method`
+      'pnpm test --use php -- --filter test_my_test_method'
 
-      `pnpm test --use php -- --filter MyTestClass`
+      'pnpm test --use php -- --filter MyTestClass'
 
-      `pnpm run test --use php -- --group foo`
+      'pnpm run test --use php -- --group foo'
 EOF
-      exit
+      exit 0
       ;;
     --use)
       # convert value to lowercase and append value to USE array
@@ -68,7 +71,6 @@ done
 # invoke all linters by default
 [[ ${#USE[@]} -eq 0 ]] && USE=("all")
 
-
 if [[ "${USE[@]}" =~ all|react ]]; then
   # MARK: ensure the playwright cache is generated in the same environment (devcontainer or local) as the tests are executed
   # (this is necessary because the cache is not portable between environments)
@@ -80,7 +82,7 @@ if [[ "${USE[@]}" =~ all|react ]]; then
   # ENDMARK
 
   # execute playwright tests
-  # when executed locally it expects chromium to be installed on the host machine : `playwright install --with-deps chromium`
+  # when executed locally it expects chromium to be installed on the host machine : 'playwright install --with-deps chromium'
   pnpm exec playwright test -c ./playwright-ct.config.js "${ADDITIONAL_ARGS[@]}"
 fi
 
