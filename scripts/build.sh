@@ -545,8 +545,7 @@ EOF
       ;;
     --filter)
       FILTER+=("$2")
-      shift
-      shift
+      shift 2
       ;;
     --use)
       # convert value to lowercase and append value to USE array
