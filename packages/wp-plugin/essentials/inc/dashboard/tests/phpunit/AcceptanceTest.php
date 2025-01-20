@@ -35,8 +35,6 @@ class AcceptanceTest extends WP_UnitTestCase {
     $registered_block_names = array_keys(\WP_Block_Type_Registry::get_instance()->get_all_registered());
     $registered_block_names = array_filter($registered_block_names, fn($_) => str_starts_with($_, 'ionos-dashboard-page/'));
 
-    $this->assertEqualsCanonicalizing($declared_dashboard_block_names, $registered_block_names, 'all dashboard blocks are registered.');
-    // alternative
-    // $this->assertSameSets($declared_dashboard_block_names, $registered_block_names, 'all dashboard blocks are registered.');
+     $this->assertEqualsCanonicalizing($declared_dashboard_block_names, $registered_block_names, 'all dashboard blocks are registered.');
   }
 }
