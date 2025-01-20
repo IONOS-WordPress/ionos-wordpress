@@ -1,7 +1,5 @@
 <?php
 
-use const ionos_wordpress\essentials\dashboard\ADMIN_PAGE_SLUG;
-use const ionos_wordpress\essentials\dashboard\HIDDEN_ADMIN_PAGE_IFRAME_SLUG;
 use const ionos_wordpress\essentials\PLUGIN_DIR;
 
 /**

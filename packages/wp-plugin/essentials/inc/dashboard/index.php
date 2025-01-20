@@ -19,7 +19,7 @@ if (! defined('ABSPATH')) {
 
 const REQUIRED_USER_CAPABILITIES = 'read';
 
-const ADMIN_PAGE_SLUG = 'custom-page';
+const ADMIN_PAGE_SLUG = 'ionos-essentials-dashboard';
 const HIDDEN_ADMIN_PAGE_IFRAME_SLUG = 'ionos-essentials-dashboard-hidden-admin-page-iframe';
 const ADMIN_PAGE_HOOK = 'toplevel_page_' . ADMIN_PAGE_SLUG;
 
