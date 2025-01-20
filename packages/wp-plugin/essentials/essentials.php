@@ -18,7 +18,7 @@
 
 namespace ionos_wordpress\essentials;
 
-const IONOS_ESSENTIALS_PLUGIN_DIR = __DIR__;
+const PLUGIN_DIR = __DIR__;
 
 defined('ABSPATH') || exit();
 

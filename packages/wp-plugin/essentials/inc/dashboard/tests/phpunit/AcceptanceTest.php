@@ -2,7 +2,7 @@
 
 use const ionos_wordpress\essentials\dashboard\ADMIN_PAGE_SLUG;
 use const ionos_wordpress\essentials\dashboard\HIDDEN_ADMIN_PAGE_IFRAME_SLUG;
-use const ionos_wordpress\essentials\IONOS_ESSENTIALS_PLUGIN_DIR;
+use const ionos_wordpress\essentials\PLUGIN_DIR;
 
 /**
  * covers the acceptance tests for the essentials dashboard features.
@@ -26,7 +26,7 @@ class AcceptanceTest extends WP_UnitTestCase {
     // our dashboard blocks (aka expected)
     $declared_dashboard_block_names = array_map(
       fn($block) => $block['name'],
-      require(IONOS_ESSENTIALS_PLUGIN_DIR . '/build/dashboard/blocks/blocks-manifest.php'),
+      require(PLUGIN_DIR . '/build/dashboard/blocks/blocks-manifest.php'),
     );
 
     \do_action('init');
