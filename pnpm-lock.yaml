@@ -141,8 +141,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(prettier@3.4.2)(stylelint@16.13.0(typescript@5.6.2))
       stylelint-scss:
-        specifier: ^6.10.0
-        version: 6.10.0(stylelint@16.13.0(typescript@5.6.2))
+        specifier: ^6.10.1
+        version: 6.10.1(stylelint@16.13.0(typescript@5.6.2))
 
   packages/docker/dennis-i18n: {}
 
@@ -6118,8 +6118,8 @@ packages:
   mdn-data@2.12.2:
     resolution: {integrity: sha512-IEn+pegP1aManZuckezWCO+XZQDplx1366JoVhTpMpBB1sPey/SbveZQUosKiKiGYjg1wH4pMlNgXbCiYgihQA==}
 
-  mdn-data@2.14.0:
-    resolution: {integrity: sha512-QjcSiIvUHjmXp5wNLClRjQeU0Zp+I2Dag+AhtQto0nyKYZ3IF/pUzCuHe7Bv77EC92XE5t3EXeEiEv/to2Bwig==}
+  mdn-data@2.15.0:
+    resolution: {integrity: sha512-KIrS0lFPOqA4DgeO16vI5fkAsy8p++WBlbXtB5P1EQs8ubBgguAInNd1DnrCeTRfGchY0kgThgDOOIPyOLH2dQ==}
 
   mdurl@1.0.1:
     resolution: {integrity: sha512-/sKlQJCBYVY9Ers9hqzKou4H6V5UWc/M59TH2dvkt+84itfnq7uFOMLpOiOS4ujvHP4etln18fmIxA5R5fll0g==}
@@ -7727,8 +7727,8 @@ packages:
       prettier: '>=3.0.0'
       stylelint: '>=16.0.0'
 
-  stylelint-scss@6.10.0:
-    resolution: {integrity: sha512-y03if6Qw9xBMoVaf7tzp5BbnYhYvudIKzURkhSHzcHG0bW0fAYvQpTUVJOe7DyhHaxeThBil4ObEMvGbV7+M+w==}
+  stylelint-scss@6.10.1:
+    resolution: {integrity: sha512-CBqs0jecftIyhic6xba+4OvZUp4B0wNbX19w6Rq1fPo+lBDmTevk+olo8H7u/WQpTSDCDbBN4f3oocQurvXLTQ==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       stylelint: ^16.0.2
@@ -16249,7 +16249,7 @@ snapshots:
 
   mdn-data@2.12.2: {}
 
-  mdn-data@2.14.0: {}
+  mdn-data@2.15.0: {}
 
   mdurl@1.0.1: {}
 
@@ -17960,7 +17960,7 @@ snapshots:
       postcss-scss: 4.0.9(postcss@8.4.49)
       stylelint: 16.13.0(typescript@5.6.2)
       stylelint-config-recommended: 14.0.1(stylelint@16.13.0(typescript@5.6.2))
-      stylelint-scss: 6.10.0(stylelint@16.13.0(typescript@5.6.2))
+      stylelint-scss: 6.10.1(stylelint@16.13.0(typescript@5.6.2))
     optionalDependencies:
       postcss: 8.4.49
 
@@ -17974,12 +17974,12 @@ snapshots:
       prettier-linter-helpers: 1.0.0
       stylelint: 16.13.0(typescript@5.6.2)
 
-  stylelint-scss@6.10.0(stylelint@16.13.0(typescript@5.6.2)):
+  stylelint-scss@6.10.1(stylelint@16.13.0(typescript@5.6.2)):
     dependencies:
       css-tree: 3.1.0
       is-plain-object: 5.0.0
       known-css-properties: 0.35.0
-      mdn-data: 2.14.0
+      mdn-data: 2.15.0
       postcss-media-query-parser: 0.2.3
       postcss-resolve-nested-selector: 0.1.6
       postcss-selector-parser: 7.0.0
