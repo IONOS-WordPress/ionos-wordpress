@@ -45,6 +45,12 @@
     "8889": {
       "label": "wp-env test instance"
     },
+    "9000": {
+      "label": "wp-env phpmyadmin"
+    },
+    "9001": {
+      "label": "wp-env test phpmyadmin"
+    },
     "6006": {
       "label": "storybook dev server"
     }
