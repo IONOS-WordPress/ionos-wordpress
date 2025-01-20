@@ -28,7 +28,6 @@ const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
       'publicly_queryable' => true,
       'show_in_menu' => 'options-general.php',
       'show_in_admin_bar' => true,
-      'menu_icon' => 'dashicons-admin-generic', // @TODO: add icon
       'show_in_rest' => true,
       'supports' => ['title', 'editor'],
     ]
