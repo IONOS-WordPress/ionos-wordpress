@@ -86,6 +86,6 @@
     "stylelint": "^16.13.0",
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-prettier": "^5.0.2",
-    "stylelint-scss": "^6.10.0"
+    "stylelint-scss": "^6.10.1"
   }
 }
