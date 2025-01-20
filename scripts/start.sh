@@ -40,6 +40,14 @@ pnpm build
       $(themes)
       "https://downloads.wordpress.org/theme/twentytwentyfive.zip"
     ],
+    "env": {
+      "development": {
+        "phpmyadminPort": 9000
+      },
+      "tests": {
+        "phpmyadminPort": 9001
+      }
+    },
     "config": {
       "SCRIPT_DEBUG": true,
       "WP_DEBUG": true,
