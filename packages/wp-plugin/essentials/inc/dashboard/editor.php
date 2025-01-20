@@ -16,6 +16,7 @@ const POST_TYPE_TEMPLATE_SLUG = 'custom-dashboard-template';
 const DASHBOARD_POST_TITLE = 'Custom IONOS Dashboard';
 const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
 
+// register our initial custom dashboard post type and register/assign the template with it
 \add_action('init', function () {
   $post_type = \register_post_type(
     POST_TYPE_SLUG,
@@ -46,7 +47,6 @@ const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
   ]);
 });
 
-// register our initial custom dashboard post type and register/assign the template with it
 \add_action('admin_init', function () {
   if (wp_doing_ajax()) {
     return;
