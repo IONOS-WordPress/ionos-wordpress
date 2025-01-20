@@ -5,11 +5,11 @@ namespace ionos_wordpress\essentials\dashboard;
 use const ionos_wordpress\essentials\PLUGIN_DIR;
 
 /*
-   this file features a admin page that renders a dashboard.
+   this file features an admin page that renders a dashboard.
    this files renders a custom admin page with an iframe that displays a custom dashboard page.
    the custom dashboard page is a prerendered WordPress post that is displayed in an iframe.
    we use a custom post type to store the dashboard page content and a custom block template to render the content.
-   the matching editor for the dashboard page is in ionos-dashboard-page-edit.php
+   the matching editor for the dashboard page is in packages/wp-plugin/essentials/inc/dashboard/editor.php
  */
 
 // exit if accessed directly
