@@ -17,8 +17,10 @@ custom-ionos-dashboard -> edit
 ### code split
 
 The plugin code is split into two parts resembling the two features above.
-To be able to edit and save the dashboard(s), the constant EDITOR_ENABLED has to be set.
-This includes "ionos-dashboard-page-edit.php".
+To be able to edit and save the dashboard(s), the file `packages/wp-plugin/essentials/inc/dashboard/editor.php` is needed.
+
+If the file is not available, the dashboard can still be viewed but not edited.
+In the production release, the file is not included in the release and the dashboard can only be viewed.
 
 For simply being able to view the dashboard (our MVP customer use case), the main plugin file is enough.
 
