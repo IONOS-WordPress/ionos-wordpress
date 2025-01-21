@@ -137,21 +137,25 @@ function _persist_dashboard(\WP_Post $post): void
   $start_marker_pos = strpos($html, POST_TYPE_TEMPLATE_CONTENT_START_MARKER);
   if (false === $start_marker_pos) {
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    \wp_die(sprintf(
+    $error_message = sprintf(
       'Could not find start marker "%s" in file "%s"',
       \esc_html(POST_TYPE_TEMPLATE_CONTENT_START_MARKER),
       \esc_html($html)
-    ));
+    );
+    error_log($error_message);
+    \wp_die($error_message);
   }
 
   $end_marker_pos = strpos($html, POST_TYPE_TEMPLATE_CONTENT_END_MARKER, $start_marker_pos);
   if (false === $end_marker_pos) {
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    \wp_die(
-      sprintf('Could not find end marker "%s" in file "%s"', \esc_html(
-        POST_TYPE_TEMPLATE_CONTENT_END_MARKER
-      ), \esc_html($html))
+    $error_message = sprintf(
+      'Could not find end marker "%s" in file "%s"',
+      \esc_html(POST_TYPE_TEMPLATE_CONTENT_END_MARKER),
+      \esc_html($html)
     );
+    error_log($error_message);
+    \wp_die($error_message);
   }
 
   // workaround :	the core/post-content block encapsulates the post content in a <div class="..."> tag
