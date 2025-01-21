@@ -190,4 +190,7 @@ for prefix in '' 'tests-' ; do
   pnpm exec wp-env run ${prefix}cli wp option update page_on_front 2
   # Update the page as front page by default.
   pnpm exec wp-env run ${prefix}cli wp option update show_on_front page
+
+  # emulate ionos brand by default
+  pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand_name ionos
 done
