@@ -1,6 +1,6 @@
 <?php
 
-$tenant = strtolower(get_option('ionos_group_brand_name', false));
+$tenant = strtolower(\get_option('ionos_group_brand_name', false));
 
 $config_file = __DIR__ . '/config/' . $tenant . '.php';
 
