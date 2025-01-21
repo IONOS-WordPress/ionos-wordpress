@@ -502,7 +502,7 @@ Usage: $0 [options]"
 
 By default all packages/{npm,wp-plugin} workspace packages will be build.
 
-packages/{docker} workspace packages will only be build if no matching (name,version) docker image esists locally
+packages/{docker} workspace packages will only be build if no matching (name,version) docker image exists locally
 
 Options:
   --help      Show this help message and exit
