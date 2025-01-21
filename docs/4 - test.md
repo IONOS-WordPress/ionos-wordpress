@@ -64,7 +64,7 @@ Example: packages/wp-plugin/essentials/inc/dashboard/tests/phpunit/AcceptanceTes
 
 # e2e tests
 
-> e2e tests are identified by file name convention (`*spec.js`)
+> e2e tests are identified by file name convention (`**/tests/e2e/*.spec.js`)
 
 Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
