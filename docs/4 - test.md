@@ -1,0 +1,77 @@
+# test
+
+run all tests (e2e, react/storybook, phpunit) : `pnpm test`
+
+`pnpm test` will _by default_ rebuild the project and start wp-env if it is not already running.
+
+You can skip rebuilding by setting the environment variable `BUILD_UP_TO_DATE=1` : `BUILD_UP_TO_DATE=1 pnpm test`
+
+## react/storybook
+
+> react/storybook test are identified by file name convention (`*.spec.jsx`)
+
+Example: packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/tests/MyButton.spec.jsx
+
+- Develop using Storybook : `pnpm storybook:start`
+
+  Featuring hot-reloading, you can develop your components in isolation.
+
+- Generate static storybook artifact which can be uploaded to a web server like GitHub pages : `pnpm storybook:build`
+
+  This will generate a static storybook that can be deployed to a static site hosting service.
+
+- run react tests written in Playwright : `pnpm run test --use react`
+
+  react/storybook tests utilize playwright to test the components in storybook.
+
+  **For frontend testing we can use the same framework - playwright 🙌**
+
+  - Run tests continuously when files change : `pnpm watch -- pnpm run test --use react`
+
+  - vscode supports running tests by clicking on the play button in the test file.
+
+    - same same for debugging tests.
+
+## phpunit
+
+> phpunit test are identified by file name convention (`*Test.php`)
+
+Example: packages/wp-plugin/essentials/inc/dashboard/tests/phpunit/AcceptanceTest.php
+
+- run phpunit tests : `pnpm run test --use phpunit`
+
+- (fester) run phpunit tests without rebuilding : `BUILD_UP_TO_DATE=1 pnpm run test --use phpunit`
+
+- (fastest) run phpunit tests without rebuilding and checking wp-env is alive : `pnpm wp-env run tests-wordpress phpunit`
+
+  - run whenever you changed a file : `pnpm watch -- pnpm wp-env run tests-wordpress phpunit`
+
+  - run tests continuously when files change : `pnpm watch -- pnpm run test --use phpunit`
+
+- debug phpunit tests :
+
+  - start wp-env launch configuration in vscode
+
+  - `pnpm wp-env run tests-wordpress phpunit`
+
+- run tests selectively :
+
+  - by test method name : `pnpm wp-env run tests-wordpress phpunit --filter test_dashboard_blocks_registered`
+
+  - by unit test class : `pnpm wp-env run tests-wordpress phpunit --filter AcceptanceTest`
+
+  - by test group : `pnpm wp-env run tests-wordpress phpunit --group essentials`
+
+# e2e tests
+
+> e2e tests are identified by file name convention (`*spec.js`)
+
+Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
+
+- run e2e tests : `pnpm run test --use e2e`
+
+  - run e2e tests without rebuilding : `BUILD_UP_TO_DATE=1 pnpm run test --use e2e`
+
+  - (fastest) run e2e tests without rebuilding and checking wp-env is alive : `pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
+
+- run whenever you changed a file : `pnpm watch -- pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
