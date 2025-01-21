@@ -68,7 +68,7 @@ EOF
   esac
 done
 
-# invoke all linters by default
+# invoke all tests by default
 [[ ${#USE[@]} -eq 0 ]] && USE=("all")
 
 if [[ "${USE[@]}" =~ all|react ]]; then
