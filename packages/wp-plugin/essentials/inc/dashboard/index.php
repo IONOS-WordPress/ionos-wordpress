@@ -39,6 +39,7 @@ if (is_file(__DIR__ . '/editor.php')) {
     PLUGIN_DIR . '/build/dashboard/blocks/blocks-manifest.php'
   );
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/clock-block');
+  \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/deep-links');
 });
 
 // remove our blocks from all other post types
