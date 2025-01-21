@@ -32,6 +32,7 @@ EOF
 
   # MARK: copy PHPUNIT
   # copy phpunit files from wp-env container to phpunit-wordpress
+  set -x
   WORDPRESS_TEST_CONTAINER=$(docker ps -q --filter "name=tests-wordpress")
   docker cp $WORDPRESS_TEST_CONTAINER:/home/$USER/.composer/vendor/ ./phpunit/
   # copy our phpunit config and bootstrap file to the wp-env wordpress test instance
