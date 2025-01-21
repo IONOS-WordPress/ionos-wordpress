@@ -110,7 +110,7 @@ if [[ "${USE[@]}" =~ all|e2e ]]; then
     export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
     # we need to inject the path to the installed chrome binary
     # via PLAYWRIGHT_CHROME_PATH
-    export PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -name "chrome")
+    export PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome")
     pnpm exec wp-scripts test-playwright -c ./playwright.config.js "${ADDITIONAL_ARGS[@]}"
   )
 fi
