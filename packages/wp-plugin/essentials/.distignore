@@ -1,3 +1,5 @@
 # disable dashboard editor feature in production zip archives
 
 inc/dashboard/editor.php
+inc/dashboard/block-template.php
+inc/dashboard/global-styles.json
