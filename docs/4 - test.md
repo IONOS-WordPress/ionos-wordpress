@@ -75,3 +75,13 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
   - (fastest) run e2e tests without rebuilding and checking wp-env is alive : `pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
 
 - run whenever you changed a file : `pnpm watch -- pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
+
+# Linux bare metal testing (without being in devcontainer)
+
+everything works exactly as in devcontainer, but you need to have the requirements installed globally.
+
+## requirements
+
+- matching pnpm version (grep for `PNPM_VERSION` to get current version used in project) installed globally
+
+- playwright dependencies installed globally (see `.devcontainer/Dockerfile`) : `pnpx playwright install --with-deps chromium`
