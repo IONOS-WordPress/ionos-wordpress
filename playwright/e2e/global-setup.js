@@ -16,7 +16,8 @@ async function globalSetup(config) {
   // Reset the test environment before running the tests.
   await Promise.all([
     requestUtils.activateTheme('twentytwentyfive'),
-    // requestUtils.activatePlugin('ionos-wordpress/essentials'),
+    // @FIXME: activate all plugins
+    requestUtils.activatePlugin('ionos-wordpress-essentials'),
     // // Disable this test plugin as it's conflicting with some of the tests.
     // // We already have reduced motion enabled and Playwright will wait for most of the animations anyway.
     // requestUtils.deactivatePlugin(
