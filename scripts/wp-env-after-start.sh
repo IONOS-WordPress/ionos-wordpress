@@ -201,6 +201,9 @@ for prefix in '' 'tests-' ; do
   # activate twentytwenty-five theme in all wp-env instances (test and development)
   pnpm exec wp-env run ${prefix}cli wp theme activate twentytwentyfive
 
+  # activate all installed plugins in all wp-env instances (test and development)
+  pnpm exec wp-env run ${prefix}cli wp plugin activate --all
+
   # emulate ionos brand by default
   pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand_name ionos
 done
