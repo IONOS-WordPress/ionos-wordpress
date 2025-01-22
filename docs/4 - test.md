@@ -85,3 +85,15 @@ everything works exactly as in devcontainer, but you need to have the requiremen
 - matching pnpm version (grep for `PNPM_VERSION` to get current version used in project) installed globally
 
 - playwright dependencies installed globally (see `.devcontainer/Dockerfile`) : `pnpx playwright install --with-deps chromium`
+
+# links
+
+- dozens of useful playwright/wordpress testcases to borrow from :
+
+  https://github.com/WordPress/gutenberg/tree/trunk/test/e2e/specs
+
+  https://github.com/WordPress/wordpress-develop/tree/trunk/tests/e2e/specs
+
+- hundreds of wordpress phpunit tests to borrow from :
+
+  https://github.com/WordPress/wordpress-develop/tree/trunk/tests/phpunit/tests
