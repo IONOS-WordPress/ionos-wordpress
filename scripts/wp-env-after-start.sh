@@ -198,6 +198,9 @@ for prefix in '' 'tests-' ; do
   # Update the page as front page by default.
   pnpm exec wp-env run ${prefix}cli wp option update show_on_front page
 
+  # activate twentytwenty-five theme in all wp-env instances (test and development)
+  pnpm exec wp-env run ${prefix}cli wp theme activate twentytwentyfive
+
   # emulate ionos brand by default
   pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand_name ionos
 done
