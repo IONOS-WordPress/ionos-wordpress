@@ -72,9 +72,9 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
   - run e2e tests without rebuilding : `BUILD_UP_TO_DATE=1 pnpm run test --use e2e`
 
-  - (fastest) run e2e tests without rebuilding and checking wp-env is alive : `pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
+  - (fastest) run e2e tests without rebuilding and checking wp-env is alive : `PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
 
-- run whenever you changed a file : `pnpm watch -- pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
+- run whenever you changed a file : `pnpm watch -- PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
 
 # Linux bare metal testing (without being in devcontainer)
 
