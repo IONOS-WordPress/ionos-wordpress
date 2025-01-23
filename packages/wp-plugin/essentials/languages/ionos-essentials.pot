@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-21T07:13:11+00:00\n"
+"POT-Creation-Date: 2025-01-23T11:36:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: ionos-essentials\n"
 
 #. Plugin Name of the plugin
@@ -47,11 +47,11 @@ msgstr ""
 msgid "Login & Account security"
 msgstr ""
 
-#: build/dashboard/blocks/deep-links/view.php:4
+#: build/dashboard/blocks/deep-links/view.php:3
 msgid "Deep-Links"
 msgstr ""
 
-#: build/dashboard/blocks/deep-links/view.php:5
+#: build/dashboard/blocks/deep-links/view.php:4
 msgid "Use these links to get to your control panel."
 msgstr ""
 
@@ -61,16 +61,6 @@ msgstr ""
 
 #: inc/dashboard/index.php:35
 msgid "IONOS Dashboard"
-msgstr ""
-
-#: build/dashboard/blocks/clock-block/block.json
-msgctxt "block title"
-msgid "Clock Block"
-msgstr ""
-
-#: build/dashboard/blocks/clock-block/block.json
-msgctxt "block description"
-msgid "Example block scaffolded with Create Block tool."
 msgstr ""
 
 #: build/dashboard/blocks/deep-links/block.json
