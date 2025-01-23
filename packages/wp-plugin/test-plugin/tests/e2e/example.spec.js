@@ -1,4 +1,5 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { execSync } from 'child_process';
 
 // @see https://pascalbirchler.com/wordpress-performance-testing/ for more e2e test details
 // @see https://github.com/WordPress/gutenberg/tree/trunk/packages/e2e-test-utils-playwright

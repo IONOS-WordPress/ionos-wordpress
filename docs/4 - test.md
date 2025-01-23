@@ -2,9 +2,11 @@
 
 run all tests (e2e, react/storybook, phpunit) : `pnpm test`
 
-`pnpm test` will _by default_ rebuild the project and start wp-env if it is not already running.
+- `pnpm test` will _by default_ rebuild the project and start wp-env if it is not already running.
 
-You can skip rebuilding by setting the environment variable `BUILD_UP_TO_DATE=1` : `BUILD_UP_TO_DATE=1 pnpm test`
+  You can skip rebuilding by setting the environment variable `BUILD_UP_TO_DATE=1` : `BUILD_UP_TO_DATE=1 pnpm test`
+
+- `pnpm test` will start `wp-env` for e2e and phpunit tests if not running.
 
 ## react/storybook
 
@@ -74,6 +76,8 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
   - (fastest) run e2e tests without rebuilding and checking wp-env is alive : `PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
 
+  - (fastest) run a single e2e test without rebuilding and checking wp-env is alive : `PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
+
 - run whenever you changed a file : `pnpm watch -- PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
 
 # Linux bare metal testing (without being in devcontainer)
@@ -85,3 +89,15 @@ everything works exactly as in devcontainer, but you need to have the requiremen
 - matching pnpm version (grep for `PNPM_VERSION` to get current version used in project) installed globally
 
 - playwright dependencies installed globally (see `.devcontainer/Dockerfile`) : `pnpx playwright install --with-deps chromium`
+
+# links
+
+- dozens of useful playwright/wordpress testcases to borrow from :
+
+  https://github.com/WordPress/gutenberg/tree/trunk/test/e2e/specs
+
+  https://github.com/WordPress/wordpress-develop/tree/trunk/tests/e2e/specs
+
+- hundreds of wordpress phpunit tests to borrow from :
+
+  https://github.com/WordPress/wordpress-develop/tree/trunk/tests/phpunit/tests
