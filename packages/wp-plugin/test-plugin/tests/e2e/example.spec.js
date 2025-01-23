@@ -6,14 +6,14 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 // @see https://medium.com/@tetsuaki.hamano/introducing-e2e-testing-to-wordpress-block-development-43efce96a806
 // @see https://aki-hamano.blog/en/2023/11/05/block-e2e
 
-test.describe('wp-admin dashboard', () => {
+test.describe('test-plugin: wp-admin dashboard', () => {
   // test.beforeEach(async ({ requestUtils, admin }) => {
   //   await admin.createNewPost();
   // });
 
-  test('Should load properly', async ({ requestUtils, admin, page }) => {
+  test('test-plugin: dashboard should load properly', async ({ requestUtils, admin, page }) => {
     // requestUtils.activateTheme('twentytwentyfive');
-    await admin.visitAdminPage('/');
+    await admin.visitAdminPage('/index.php');
     expect(page.getByRole('heading', { name: 'Welcome to WordPress', level: 2 })).toBeVisible();
   });
 });
