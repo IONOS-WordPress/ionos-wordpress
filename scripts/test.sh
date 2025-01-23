@@ -71,6 +71,20 @@ done
 # invoke all tests by default
 [[ ${#USE[@]} -eq 0 ]] && USE=("all")
 
+function ionos.wordpress.prepare_playwright_environment() {
+    # used to prevent wp-scripts test-playwright command from downloading browsers
+  export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+  # we need to inject the path to the installed chrome binary
+  # via PLAYWRIGHT_CHROME_PATH
+  export PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null)
+
+  if [[ "$PLAYWRIGHT_CHROME_PATH" == '' ]]; then
+    ionos.wordpress.log_error 'Playwright chromium path not found (test: find ~/.cache/ms-playwright -path "*/chrome-linux/chrome").'
+    ionos.wordpress.log_error 'Please install it manually by running "PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium"'
+    exit 1
+  fi
+}
+
 if [[ "${USE[@]}" =~ all|react ]]; then
   # MARK: ensure the playwright cache is generated in the same environment (devcontainer or local) as the tests are executed
   # (this is necessary because the cache is not portable between environments)
@@ -81,9 +95,13 @@ if [[ "${USE[@]}" =~ all|react ]]; then
   fi
   # ENDMARK
 
-  # execute playwright tests
-  # when executed locally it expects chromium to be installed on the host machine : 'playwright install --with-deps chromium'
-  pnpm exec playwright test -c ./playwright-ct.config.js "${ADDITIONAL_ARGS[@]}"
+  (
+    ionos.wordpress.prepare_playwright_environment
+
+    # execute playwright tests
+    # when executed locally it expects chromium to be installed on the host machine : 'pnpx playwright install --with-deps chromium'
+    pnpm exec playwright test -c ./playwright-ct.config.js "${ADDITIONAL_ARGS[@]}"
+  )
 fi
 
 if [[ "${USE[@]}" =~ all|php|e2e ]]; then
@@ -106,11 +124,7 @@ fi
 if [[ "${USE[@]}" =~ all|e2e ]]; then
   # start wp-env e2e tests
   (
-    # used to prevent wp-scripts test-playwright command from downloading browsers
-    export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-    # we need to inject the path to the installed chrome binary
-    # via PLAYWRIGHT_CHROME_PATH
-    export PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome")
+    ionos.wordpress.prepare_playwright_environment
     pnpm exec wp-scripts test-playwright -c ./playwright.config.js "${ADDITIONAL_ARGS[@]}"
   )
 fi

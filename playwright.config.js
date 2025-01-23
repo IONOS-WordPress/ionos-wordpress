@@ -1,5 +1,5 @@
 // playwright config for wp-env based e2e tests
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
 import baseConfig from '@wordpress/scripts/config/playwright.config.js';
 
@@ -22,7 +22,22 @@ const config = defineConfig({
       executablePath: process.env.PLAYWRIGHT_CHROME_PATH,
     },
   },
+  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  reporter: [
+    process.env.CI ? ['dot'] : ['list', { printSteps: true }],
+    ['html', { outputFolder: './playwright/storybook/.playwright-report', open: 'never' }],
+    ['line'],
+  ],
   globalSetup: './playwright/e2e/global-setup.js',
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chromium',
+      },
+    },
+  ],
 });
 
 export default config;
