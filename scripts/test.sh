@@ -99,7 +99,6 @@ if [[ "${USE[@]}" =~ all|react ]]; then
     ionos.wordpress.prepare_playwright_environment
 
     # execute playwright tests
-    # when executed locally it expects chromium to be installed on the host machine : 'pnpx playwright install --with-deps chromium'
     pnpm exec playwright test -c ./playwright-ct.config.js "${ADDITIONAL_ARGS[@]}"
   )
 fi

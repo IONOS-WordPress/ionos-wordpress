@@ -78,4 +78,4 @@ ENV PNPM_HOME /home/$USERNAME/.local/share/pnpm
 ENV PATH $PNPM_HOME:$PATH
 RUN pnpm env use --global $PNPM_NODEJS_VERSION
 RUN pnpm config set store-dir home/$USERNAME/.pnpm-store
-RUN PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium"
+RUN bash -c "PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium"
