@@ -22,6 +22,7 @@ const config = defineConfig({
       executablePath: process.env.PLAYWRIGHT_CHROME_PATH,
     },
   },
+  globalSetup: './playwright/e2e/global-setup.js',
 });
 
 export default config;
