@@ -132,17 +132,17 @@ importers:
         specifier: ^8.5.0
         version: 8.5.0(prettier@3.4.2)
       stylelint:
-        specifier: ^16.13.0
-        version: 16.13.0(typescript@5.6.2)
+        specifier: ^16.13.2
+        version: 16.13.2(typescript@5.6.2)
       stylelint-config-recommended-scss:
         specifier: ^14.1.0
-        version: 14.1.0(postcss@8.4.49)(stylelint@16.13.0(typescript@5.6.2))
+        version: 14.1.0(postcss@8.4.49)(stylelint@16.13.2(typescript@5.6.2))
       stylelint-prettier:
         specifier: ^5.0.2
-        version: 5.0.2(prettier@3.4.2)(stylelint@16.13.0(typescript@5.6.2))
+        version: 5.0.2(prettier@3.4.2)(stylelint@16.13.2(typescript@5.6.2))
       stylelint-scss:
         specifier: ^6.10.1
-        version: 6.10.1(stylelint@16.13.0(typescript@5.6.2))
+        version: 6.10.1(stylelint@16.13.2(typescript@5.6.2))
 
   packages/docker/dennis-i18n: {}
 
@@ -156,7 +156,7 @@ importers:
     devDependencies:
       '@wordpress/components':
         specifier: 'catalog:'
-        version: 29.0.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 29.0.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
 
   packages/wp-plugin/essentials:
     devDependencies:
@@ -7740,8 +7740,8 @@ packages:
     peerDependencies:
       stylelint: ^16.0.2
 
-  stylelint@16.13.0:
-    resolution: {integrity: sha512-muxVjMhZB8BrDFSKNva0dmvD2tM0o/szrvuZuXYcAnN9a8nQmbGLqNUOemSgumaCMCPQ+0USYyG3hA5vJjUC1Q==}
+  stylelint@16.13.2:
+    resolution: {integrity: sha512-wDlgh0mRO9RtSa3TdidqHd0nOG8MmUyVKl+dxA6C1j8aZRzpNeEgdhFmU5y4sZx4Fc6r46p0fI7p1vR5O2DZqA==}
     engines: {node: '>=18.12.0'}
     hasBin: true
 
@@ -8498,6 +8498,14 @@ snapshots:
 
   '@ariakit/core@0.4.14': {}
 
+  '@ariakit/react-core@0.4.15(react-dom@19.0.0(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@ariakit/core': 0.4.14
+      '@floating-ui/dom': 1.6.12
+      react: 18.3.1
+      react-dom: 19.0.0(react@18.3.1)
+      use-sync-external-store: 1.4.0(react@18.3.1)
+
   '@ariakit/react-core@0.4.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@ariakit/core': 0.4.14
@@ -8505,6 +8513,12 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
       use-sync-external-store: 1.4.0(react@19.0.0)
+
+  '@ariakit/react@0.4.15(react-dom@19.0.0(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@ariakit/react-core': 0.4.15(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-dom: 19.0.0(react@18.3.1)
 
   '@ariakit/react@0.4.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -9818,6 +9832,22 @@ snapshots:
 
   '@emotion/memoize@0.9.0': {}
 
+  '@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.26.0
+      '@emotion/babel-plugin': 11.13.5
+      '@emotion/cache': 11.14.0
+      '@emotion/serialize': 1.3.3
+      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@18.3.1)
+      '@emotion/utils': 1.4.2
+      '@emotion/weak-memoize': 0.4.0
+      hoist-non-react-statics: 3.3.2
+      react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.18
+    transitivePeerDependencies:
+      - supports-color
+
   '@emotion/react@11.14.0(@types/react@18.3.18)(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.26.0
@@ -9844,6 +9874,21 @@ snapshots:
 
   '@emotion/sheet@1.4.0': {}
 
+  '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.26.0
+      '@emotion/babel-plugin': 11.13.5
+      '@emotion/is-prop-valid': 1.3.1
+      '@emotion/react': 11.14.0(@types/react@18.3.18)(react@18.3.1)
+      '@emotion/serialize': 1.3.3
+      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@18.3.1)
+      '@emotion/utils': 1.4.2
+      react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.18
+    transitivePeerDependencies:
+      - supports-color
+
   '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@19.0.0))(@types/react@18.3.18)(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.26.0
@@ -9860,6 +9905,10 @@ snapshots:
       - supports-color
 
   '@emotion/unitless@0.10.0': {}
+
+  '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
 
   '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@19.0.0)':
     dependencies:
@@ -10094,6 +10143,12 @@ snapshots:
     dependencies:
       '@floating-ui/core': 1.6.8
       '@floating-ui/utils': 0.2.8
+
+  '@floating-ui/react-dom@2.1.2(react-dom@19.0.0(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@floating-ui/dom': 1.6.12
+      react: 18.3.1
+      react-dom: 19.0.0(react@18.3.1)
 
   '@floating-ui/react-dom@2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -11123,7 +11178,7 @@ snapshots:
     dependencies:
       storybook: 8.5.0(prettier@3.4.2)
 
-  '@stylistic/stylelint-plugin@3.1.1(stylelint@16.13.0(typescript@5.6.2))':
+  '@stylistic/stylelint-plugin@3.1.1(stylelint@16.13.2(typescript@5.6.2))':
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.4(@csstools/css-tokenizer@3.0.3)
       '@csstools/css-tokenizer': 3.0.3
@@ -11132,7 +11187,7 @@ snapshots:
       postcss-selector-parser: 6.1.2
       postcss-value-parser: 4.2.0
       style-search: 0.1.0
-      stylelint: 16.13.0(typescript@5.6.2)
+      stylelint: 16.13.2(typescript@5.6.2)
 
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0(@babel/core@7.25.7)':
     dependencies:
@@ -11753,6 +11808,11 @@ snapshots:
 
   '@use-gesture/core@10.3.1': {}
 
+  '@use-gesture/react@10.3.1(react@18.3.1)':
+    dependencies:
+      '@use-gesture/core': 10.3.1
+      react: 18.3.1
+
   '@use-gesture/react@10.3.1(react@19.0.0)':
     dependencies:
       '@use-gesture/core': 10.3.1
@@ -11922,6 +11982,60 @@ snapshots:
 
   '@wordpress/browserslist-config@6.15.0': {}
 
+  '@wordpress/components@29.0.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@ariakit/react': 0.4.15(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
+      '@babel/runtime': 7.25.7
+      '@emotion/cache': 11.14.0
+      '@emotion/css': 11.13.5
+      '@emotion/react': 11.14.0(@types/react@18.3.18)(react@18.3.1)
+      '@emotion/serialize': 1.3.3
+      '@emotion/styled': 11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)
+      '@emotion/utils': 1.4.2
+      '@floating-ui/react-dom': 2.1.2(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
+      '@types/gradient-parser': 0.1.3
+      '@types/highlight-words-core': 1.2.1
+      '@use-gesture/react': 10.3.1(react@18.3.1)
+      '@wordpress/a11y': 4.15.1
+      '@wordpress/compose': 7.15.1(react@18.3.1)
+      '@wordpress/date': 5.15.1
+      '@wordpress/deprecated': 4.15.1
+      '@wordpress/dom': 4.15.1
+      '@wordpress/element': 6.15.1
+      '@wordpress/escape-html': 3.15.0
+      '@wordpress/hooks': 4.15.0
+      '@wordpress/html-entities': 4.15.0
+      '@wordpress/i18n': 5.15.1
+      '@wordpress/icons': 10.15.1(react@18.3.1)
+      '@wordpress/is-shallow-equal': 5.15.0
+      '@wordpress/keycodes': 4.15.1
+      '@wordpress/primitives': 4.15.1(react@18.3.1)
+      '@wordpress/private-apis': 1.15.0
+      '@wordpress/rich-text': 7.15.1(react@18.3.1)
+      '@wordpress/warning': 3.15.0
+      change-case: 4.1.2
+      clsx: 2.1.1
+      colord: 2.9.3
+      date-fns: 3.6.0
+      deepmerge: 4.3.1
+      fast-deep-equal: 3.1.3
+      framer-motion: 11.15.0(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
+      gradient-parser: 0.1.5
+      highlight-words-core: 1.2.3
+      is-plain-object: 5.0.0
+      memize: 2.1.0
+      path-to-regexp: 6.3.0
+      re-resizable: 6.10.3(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-colorful: 5.6.1(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
+      react-dom: 19.0.0(react@18.3.1)
+      remove-accents: 0.5.0
+      uuid: 9.0.1
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - '@types/react'
+      - supports-color
+
   '@wordpress/components@29.0.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@ariakit/react': 0.4.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -11976,6 +12090,23 @@ snapshots:
       - '@types/react'
       - supports-color
 
+  '@wordpress/compose@7.15.1(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.25.7
+      '@types/mousetrap': 1.6.15
+      '@wordpress/deprecated': 4.15.1
+      '@wordpress/dom': 4.15.1
+      '@wordpress/element': 6.15.1
+      '@wordpress/is-shallow-equal': 5.15.0
+      '@wordpress/keycodes': 4.15.1
+      '@wordpress/priority-queue': 3.15.0
+      '@wordpress/undo-manager': 1.15.1
+      change-case: 4.1.2
+      clipboard: 2.0.11
+      mousetrap: 1.6.5
+      react: 18.3.1
+      use-memo-one: 1.1.3(react@18.3.1)
+
   '@wordpress/compose@7.15.1(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.25.7
@@ -11992,6 +12123,25 @@ snapshots:
       mousetrap: 1.6.5
       react: 19.0.0
       use-memo-one: 1.1.3(react@19.0.0)
+
+  '@wordpress/data@10.15.1(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.25.7
+      '@wordpress/compose': 7.15.1(react@18.3.1)
+      '@wordpress/deprecated': 4.15.1
+      '@wordpress/element': 6.15.1
+      '@wordpress/is-shallow-equal': 5.15.0
+      '@wordpress/priority-queue': 3.15.0
+      '@wordpress/private-apis': 1.15.0
+      '@wordpress/redux-routine': 5.15.0(redux@5.0.1)
+      deepmerge: 4.3.1
+      equivalent-key-map: 0.2.2
+      is-plain-object: 5.0.0
+      is-promise: 4.0.0
+      react: 18.3.1
+      redux: 5.0.1
+      rememo: 4.0.2
+      use-memo-one: 1.1.3(react@18.3.1)
 
   '@wordpress/data@10.15.1(react@19.0.0)':
     dependencies:
@@ -12133,6 +12283,14 @@ snapshots:
       sprintf-js: 1.1.3
       tannin: 1.2.0
 
+  '@wordpress/icons@10.15.1(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.25.7
+      '@wordpress/element': 6.15.1
+      '@wordpress/primitives': 4.15.1(react@18.3.1)
+    transitivePeerDependencies:
+      - react
+
   '@wordpress/icons@10.15.1(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.25.7
@@ -12179,6 +12337,13 @@ snapshots:
     dependencies:
       prettier: wp-prettier@3.0.3
 
+  '@wordpress/primitives@4.15.1(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.25.7
+      '@wordpress/element': 6.15.1
+      clsx: 2.1.1
+      react: 18.3.1
+
   '@wordpress/primitives@4.15.1(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.25.7
@@ -12202,6 +12367,20 @@ snapshots:
       is-promise: 4.0.0
       redux: 5.0.1
       rungen: 0.3.2
+
+  '@wordpress/rich-text@7.15.1(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.25.7
+      '@wordpress/a11y': 4.15.1
+      '@wordpress/compose': 7.15.1(react@18.3.1)
+      '@wordpress/data': 10.15.1(react@18.3.1)
+      '@wordpress/deprecated': 4.15.1
+      '@wordpress/element': 6.15.1
+      '@wordpress/escape-html': 3.15.0
+      '@wordpress/i18n': 5.15.1
+      '@wordpress/keycodes': 4.15.1
+      memize: 2.1.0
+      react: 18.3.1
 
   '@wordpress/rich-text@7.15.1(react@19.0.0)':
     dependencies:
@@ -12232,7 +12411,7 @@ snapshots:
       '@wordpress/npm-package-json-lint-config': 5.15.0(npm-package-json-lint@6.4.0(typescript@5.6.2))
       '@wordpress/postcss-plugins-preset': 5.15.1(postcss@8.4.49)
       '@wordpress/prettier-config': 4.15.0(wp-prettier@3.0.3)
-      '@wordpress/stylelint-config': 23.7.0(postcss@8.4.49)(stylelint@16.13.0(typescript@5.6.2))
+      '@wordpress/stylelint-config': 23.7.0(postcss@8.4.49)(stylelint@16.13.2(typescript@5.6.2))
       adm-zip: 0.5.16
       babel-jest: 29.7.0(@babel/core@7.25.7)
       babel-loader: 9.2.1(@babel/core@7.25.7)(webpack@5.97.1)
@@ -12275,7 +12454,7 @@ snapshots:
       sass-loader: 16.0.4(sass@1.83.1)(webpack@5.97.1)
       schema-utils: 4.3.0
       source-map-loader: 3.0.2(webpack@5.97.1)
-      stylelint: 16.13.0(typescript@5.6.2)
+      stylelint: 16.13.2(typescript@5.6.2)
       terser-webpack-plugin: 5.3.11(@swc/core@1.10.4)(esbuild@0.24.2)(webpack@5.97.1)
       url-loader: 4.1.1(webpack@5.97.1)
       webpack: 5.97.1(@swc/core@1.10.4)(esbuild@0.24.2)(webpack-cli@5.1.4)
@@ -12311,12 +12490,12 @@ snapshots:
       - webpack-hot-middleware
       - webpack-plugin-serve
 
-  '@wordpress/stylelint-config@23.7.0(postcss@8.4.49)(stylelint@16.13.0(typescript@5.6.2))':
+  '@wordpress/stylelint-config@23.7.0(postcss@8.4.49)(stylelint@16.13.2(typescript@5.6.2))':
     dependencies:
-      '@stylistic/stylelint-plugin': 3.1.1(stylelint@16.13.0(typescript@5.6.2))
-      stylelint: 16.13.0(typescript@5.6.2)
-      stylelint-config-recommended: 14.0.1(stylelint@16.13.0(typescript@5.6.2))
-      stylelint-config-recommended-scss: 14.1.0(postcss@8.4.49)(stylelint@16.13.0(typescript@5.6.2))
+      '@stylistic/stylelint-plugin': 3.1.1(stylelint@16.13.2(typescript@5.6.2))
+      stylelint: 16.13.2(typescript@5.6.2)
+      stylelint-config-recommended: 14.0.1(stylelint@16.13.2(typescript@5.6.2))
+      stylelint-config-recommended-scss: 14.1.0(postcss@8.4.49)(stylelint@16.13.2(typescript@5.6.2))
     transitivePeerDependencies:
       - postcss
 
@@ -14572,6 +14751,16 @@ snapshots:
   forwarded@0.2.0: {}
 
   fraction.js@4.3.7: {}
+
+  framer-motion@11.15.0(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@18.3.1))(react@18.3.1):
+    dependencies:
+      motion-dom: 11.14.3
+      motion-utils: 11.14.3
+      tslib: 2.8.1
+    optionalDependencies:
+      '@emotion/is-prop-valid': 1.3.1
+      react: 18.3.1
+      react-dom: 19.0.0(react@18.3.1)
 
   framer-motion@11.15.0(@emotion/is-prop-valid@1.3.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
@@ -16939,10 +17128,20 @@ snapshots:
       iconv-lite: 0.4.24
       unpipe: 1.0.0
 
+  re-resizable@6.10.3(react-dom@19.0.0(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-dom: 19.0.0(react@18.3.1)
+
   re-resizable@6.10.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
+
+  react-colorful@5.6.1(react-dom@19.0.0(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-dom: 19.0.0(react@18.3.1)
 
   react-colorful@5.6.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
@@ -16978,6 +17177,11 @@ snapshots:
       loose-envify: 1.4.0
       react: 18.3.1
       scheduler: 0.23.2
+
+  react-dom@19.0.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      scheduler: 0.25.0
 
   react-dom@19.0.0(react@19.0.0):
     dependencies:
@@ -17759,26 +17963,26 @@ snapshots:
       postcss: 8.4.49
       postcss-selector-parser: 6.1.2
 
-  stylelint-config-recommended-scss@14.1.0(postcss@8.4.49)(stylelint@16.13.0(typescript@5.6.2)):
+  stylelint-config-recommended-scss@14.1.0(postcss@8.4.49)(stylelint@16.13.2(typescript@5.6.2)):
     dependencies:
       postcss-scss: 4.0.9(postcss@8.4.49)
-      stylelint: 16.13.0(typescript@5.6.2)
-      stylelint-config-recommended: 14.0.1(stylelint@16.13.0(typescript@5.6.2))
-      stylelint-scss: 6.10.1(stylelint@16.13.0(typescript@5.6.2))
+      stylelint: 16.13.2(typescript@5.6.2)
+      stylelint-config-recommended: 14.0.1(stylelint@16.13.2(typescript@5.6.2))
+      stylelint-scss: 6.10.1(stylelint@16.13.2(typescript@5.6.2))
     optionalDependencies:
       postcss: 8.4.49
 
-  stylelint-config-recommended@14.0.1(stylelint@16.13.0(typescript@5.6.2)):
+  stylelint-config-recommended@14.0.1(stylelint@16.13.2(typescript@5.6.2)):
     dependencies:
-      stylelint: 16.13.0(typescript@5.6.2)
+      stylelint: 16.13.2(typescript@5.6.2)
 
-  stylelint-prettier@5.0.2(prettier@3.4.2)(stylelint@16.13.0(typescript@5.6.2)):
+  stylelint-prettier@5.0.2(prettier@3.4.2)(stylelint@16.13.2(typescript@5.6.2)):
     dependencies:
       prettier: 3.4.2
       prettier-linter-helpers: 1.0.0
-      stylelint: 16.13.0(typescript@5.6.2)
+      stylelint: 16.13.2(typescript@5.6.2)
 
-  stylelint-scss@6.10.1(stylelint@16.13.0(typescript@5.6.2)):
+  stylelint-scss@6.10.1(stylelint@16.13.2(typescript@5.6.2)):
     dependencies:
       css-tree: 3.1.0
       is-plain-object: 5.0.0
@@ -17788,9 +17992,9 @@ snapshots:
       postcss-resolve-nested-selector: 0.1.6
       postcss-selector-parser: 7.0.0
       postcss-value-parser: 4.2.0
-      stylelint: 16.13.0(typescript@5.6.2)
+      stylelint: 16.13.2(typescript@5.6.2)
 
-  stylelint@16.13.0(typescript@5.6.2):
+  stylelint@16.13.2(typescript@5.6.2):
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.4(@csstools/css-tokenizer@3.0.3)
       '@csstools/css-tokenizer': 3.0.3
@@ -18207,9 +18411,17 @@ snapshots:
       punycode: 1.4.1
       qs: 6.13.1
 
+  use-memo-one@1.1.3(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+
   use-memo-one@1.1.3(react@19.0.0):
     dependencies:
       react: 19.0.0
+
+  use-sync-external-store@1.4.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   use-sync-external-store@1.4.0(react@19.0.0):
     dependencies:
