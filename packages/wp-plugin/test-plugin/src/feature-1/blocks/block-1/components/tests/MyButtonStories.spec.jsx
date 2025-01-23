@@ -10,11 +10,12 @@ const test = createTest(base);
 test('Link story', async ({ mount, page }) => {
   await mount(<stories.Link />);
 
+  const buttonLocator = await page.locator('button[type="button"]');
+
+  console.log('located button : ', await buttonLocator.evaluate((_) => _.outerHTML));
   /*
   <button type="button" disabled="" class="components-button is-link">Link disabled Button</button>
   */
-
-  const buttonLocator = await page.locator('button[type="button"]');
 
   expect(buttonLocator, 'button was found').toBeTruthy();
 

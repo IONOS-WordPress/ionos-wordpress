@@ -56,3 +56,29 @@ msgstr "Uhr-Block"
 msgctxt "block description"
 msgid "Example block scaffolded with Create Block tool."
 msgstr "Beispielblock, der mit dem Werkzeug \"Block erstellen\" eingerüstet wurde."
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block title"
+msgid "Deep Links"
+msgstr "Tiefe Links"
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block description"
+msgid "Show links to the Control Panel of your provider."
+msgstr "Links zum Control Panel Ihres Providers anzeigen."
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:4
+msgid "Contracts & Subscriptions"
+msgstr "Verträge & Abonnements"
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:5
+msgid "Login & Account security"
+msgstr "Login & Kontosicherheit"
+
+#: build/dashboard/blocks/deep-links/view.php:4
+msgid "Deep-Links"
+msgstr "Deep-Links"
+
+#: build/dashboard/blocks/deep-links/view.php:5
+msgid "Use these links to get to your control panel."
+msgstr "Verwenden Sie diese Links, um zu Ihrem Bedienfeld zu gelangen."

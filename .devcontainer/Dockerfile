@@ -21,7 +21,7 @@ RUN (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y
 
 ARG USERNAME=vscode
 
-# enable persisted bash completion
+# enable bash completion persistency
 # https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
   && mkdir /commandhistory \
@@ -38,6 +38,12 @@ EXPOSE 8889
 
 # expose storybook port
 EXPOSE 6006
+
+# expose wp-env phpmyadmin port
+EXPOSE 9000
+# expose wp-env phpmyadmin test port
+EXPOSE 9001
+
 
 # create message to show at first vscode run
 # COPY .devcontainer/welcome.txt /usr/local/etc/vscode-dev-containers/first-run-notice.txt

@@ -26,7 +26,7 @@ Usage: $0 [options] -- command ..."
 
 Execute the given command on file changes.
 
-By default 'pnpm build' will be executed on file changes.
+By default 'pnpm watch' will be executed on file changes.
 
 Options:
 

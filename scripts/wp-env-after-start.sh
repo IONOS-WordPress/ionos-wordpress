@@ -32,7 +32,14 @@ EOF
 
   # MARK: copy PHPUNIT
   # copy phpunit files from wp-env container to phpunit-wordpress
-  docker cp $(docker ps -q --filter "name=tests-wordpress"):/home/$USER/.composer/vendor/ ./phpunit/
+  WORDPRESS_TEST_CONTAINER=$(docker ps -q --filter "name=tests-wordpress")
+  docker cp $WORDPRESS_TEST_CONTAINER:/home/$USER/.composer/vendor/ ./phpunit/
+
+  # @FIXME: doesnt work for me in github ci for some reason
+  # # copy our phpunit config and bootstrap file to the wp-env wordpress test instance instead of mapping them in wp-env.json
+  # # docker cp ./phpunit/phpunit.xml $WORDPRESS_TEST_CONTAINER:/var/www/html/
+  # # docker cp ./phpunit/bootstrap.php $WORDPRESS_TEST_CONTAINER:/var/www/html/
+
   # ENDMARK
 
   # MARK: vscode configurations generation
@@ -190,4 +197,13 @@ for prefix in '' 'tests-' ; do
   pnpm exec wp-env run ${prefix}cli wp option update page_on_front 2
   # Update the page as front page by default.
   pnpm exec wp-env run ${prefix}cli wp option update show_on_front page
+
+  # activate twentytwenty-five theme in all wp-env instances (test and development)
+  pnpm exec wp-env run ${prefix}cli wp theme activate twentytwentyfive
+
+  # activate all installed plugins in all wp-env instances (test and development)
+  pnpm exec wp-env run ${prefix}cli wp plugin activate --all
+
+  # emulate ionos brand by default
+  pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand_name ionos
 done

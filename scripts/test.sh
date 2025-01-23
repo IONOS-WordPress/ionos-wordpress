@@ -68,7 +68,7 @@ EOF
   esac
 done
 
-# invoke all linters by default
+# invoke all tests by default
 [[ ${#USE[@]} -eq 0 ]] && USE=("all")
 
 if [[ "${USE[@]}" =~ all|react ]]; then
@@ -92,7 +92,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # - if the install path does not exist
   # - or if the containers are not running
   WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
-  if [[ ! -d "$WPENV_INSTALLPATH/WordPress" ]] || [[ "$(docker ps -q --filter "name=$(basename $WPENV_INSTALLPATH)" | wc -l)" != '6' ]]; then
+  if [[ ! -d "$WPENV_INSTALLPATH/WordPress" ]] || [[ "$(docker ps -q --filter "name=$(basename $WPENV_INSTALLPATH)" | wc -l)" -lt '6' ]]; then
     pnpm start
   fi
   # ENDMARK
@@ -110,7 +110,7 @@ if [[ "${USE[@]}" =~ all|e2e ]]; then
     export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
     # we need to inject the path to the installed chrome binary
     # via PLAYWRIGHT_CHROME_PATH
-    export PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -name "chrome")
+    export PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome")
     pnpm exec wp-scripts test-playwright -c ./playwright.config.js "${ADDITIONAL_ARGS[@]}"
   )
 fi
