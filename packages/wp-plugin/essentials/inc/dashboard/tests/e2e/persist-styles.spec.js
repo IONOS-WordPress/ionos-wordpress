@@ -25,7 +25,7 @@ test.describe('Dashboard Global Styles', () => {
   test('Initially load global styles from file', async ({ admin, editor }) => {
     // preparation: remove any global styles posts from database
     execSync(
-      'pnpm run wp-env tests-cli wp post delete $(pnpm run wp-env tests-cli post list --format=ids --post_type=wp_global_styles) --force'
+      'pnpm -s run wp-env run tests-cli wp post delete $(pnpm -s run wp-env run tests-cli wp post list --format=ids --post_type=wp_global_styles) --force'
     );
 
     const EXPECTED_BACKGROUND_RGB = 'rgb(6, 6, 6)';
@@ -38,6 +38,7 @@ test.describe('Dashboard Global Styles', () => {
     await admin.visitAdminPage('site-editor.php');
 
     const body = await editor.canvas.locator('body');
+
     await expect(body).toHaveCSS('background-color', EXPECTED_BACKGROUND_RGB);
   });
 });
