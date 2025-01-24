@@ -228,7 +228,7 @@ function _persist_dashboard(\WP_Post $post): void
   callback: function ($post, $request) {
     $data = $request->get_json_params();
     unset($data['id'], $data['context'], $data['_links']); // drop wp- and db-specific fields
-    if (false === file_put_contents(GLOBAL_STYLES_FILE, \wp_json_encode($data))){
+    if (false === file_put_contents(GLOBAL_STYLES_FILE, \wp_json_encode($data, JSON_PRETTY_PRINT))) {
       \wp_die('Failed to save global styles to file');
     }
   },
