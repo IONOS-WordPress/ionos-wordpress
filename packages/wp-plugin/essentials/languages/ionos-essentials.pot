@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-23T11:36:17+00:00\n"
+"POT-Creation-Date: 2025-01-24T10:52:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
 
 #. Plugin Name of the plugin
@@ -45,6 +45,38 @@ msgstr ""
 
 #: build/dashboard/blocks/deep-links/config/ionos.php:5
 msgid "Login & Account security"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:6
+msgid "Invoices & Payment Details"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:7
+msgid "Data Protection & Privacy Notice"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:8
+msgid "Contact Details"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:9
+msgid "Profile Details"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/config/strato.php:4
+msgid "Package overview"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/config/strato.php:5
+msgid "Your invoices"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/config/strato.php:6
+msgid "Your contract"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/config/strato.php:7
+msgid "Current offers"
 msgstr ""
 
 #: build/dashboard/blocks/deep-links/view.php:3
