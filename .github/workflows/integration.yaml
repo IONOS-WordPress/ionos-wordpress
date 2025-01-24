@@ -47,13 +47,13 @@ jobs:
         with:
           runCmd: |
             pnpm install --frozen-lockfile
+            pnpm build
 
-            # build will already be called by the test command
-            # pnpm build
-            # # mark project already built for the next commands
-            # export BUILD_UP_TO_DATE=1
-
-            pnpm test
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: test_project
+        with:
+          runCmd: |
+            BUILD_UP_TO_DATE=1 pnpm test
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts
