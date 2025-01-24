@@ -7,6 +7,18 @@ const config = defineConfig({
   ...baseConfig,
   testMatch: '**/wp-plugin/**/tests/e2e/*.spec.js',
   testDir: '.',
+  /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
+  snapshotDir: './playwright/storybook/__snapshots__',
+  /* Maximum time one test can run for. */
+  timeout: 10 * 1000,
+  /* Run tests in files in parallel */
+  fullyParallel: false,
+  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  forbidOnly: !!process.env.CI,
+  /* Retry on CI only */
+  retries: process.env.CI ? 2 : 0,
+  // Opt out of parallel tests on CI.
+  workers: process.env.CI ? 1 : undefined,
   webServer: {
     ...baseConfig.webServer,
     command: 'pnpm start',
