@@ -1,8 +1,8 @@
-import { test, expect, canvas } from '@wordpress/e2e-test-utils-playwright';
-import { exec, execSync } from 'node:child_process';
+import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { execSync } from 'node:child_process';
 import { writeFileSync, unlinkSync, existsSync, renameSync } from 'node:fs';
 
-test.describe('Dashboard Global Styles', () => {
+test.describe('essentials:dashboard:editor Global Styles', () => {
   test('Initially load global styles from file', async ({ admin, editor }) => {
     // preparation: remove any global styles posts from database
     execSync(
