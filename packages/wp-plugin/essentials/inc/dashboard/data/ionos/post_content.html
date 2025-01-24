@@ -1,25 +1,32 @@
 <!-- wp:group {"align":"full","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull"><!-- wp:columns -->
 <div class="wp-block-columns"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:heading -->
-<h2 class="wp-block-heading">Next best action block</h2>
+<div class="wp-block-column"><!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:heading {"style":{"spacing":{"padding":{"left":"var:preset|spacing|30"}}}} -->
+<h2 class="wp-block-heading" style="padding-left:var(--wp--preset--spacing--30)">Next best action block</h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"className":"equal-height-columns"} -->
-<p class="equal-height-columns">Description of this block and what can be done here.</p>
-<!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"equal-height-columns","style":{"spacing":{"padding":{"left":"var:preset|spacing|30"}}}} -->
+<p class="equal-height-columns" style="padding-left:var(--wp--preset--spacing--30)">Description of this block and what can be done here.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
 
-<!-- wp:columns {"verticalAlignment":null} -->
-<div class="wp-block-columns"><!-- wp:column {"verticalAlignment":"stretch"} -->
-<div class="wp-block-column is-vertically-aligned-stretch"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Edit page</h3>
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:group {"layout":{"type":"flex","orientation":"vertical","verticalAlignment":"top"}} -->
+<div class="wp-block-group"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","orientation":"vertical","justifyContent":"stretch"}} -->
+<div class="wp-block-group"><!-- wp:heading {"level":3,"style":{"spacing":{"padding":{"bottom":"0"}}}} -->
+<h3 class="wp-block-heading" style="padding-bottom:0">Edit page</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>Description of this block</p>
-<!-- /wp:paragraph -->
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
 
-<!-- wp:buttons {"layout":{"type":"flex","verticalAlignment":"top"}} -->
+<!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:buttons {"layout":{"type":"flex","verticalAlignment":"bottom"}} -->
 <div class="wp-block-buttons"><!-- wp:button -->
 <div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Go to edit page</a></div>
 <!-- /wp:button -->
@@ -28,18 +35,24 @@
 <div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button">Dismiss</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
+<!-- /wp:group --></div>
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"stretch"} -->
-<div class="wp-block-column is-vertically-aligned-stretch"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Add a new page</h3>
+<div class="wp-block-column is-vertically-aligned-stretch"><!-- wp:group {"layout":{"type":"flex","orientation":"vertical","verticalAlignment":"top"}} -->
+<div class="wp-block-group"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","orientation":"vertical","justifyContent":"stretch"}} -->
+<div class="wp-block-group"><!-- wp:heading {"level":3,"style":{"spacing":{"padding":{"bottom":"0"}}}} -->
+<h3 class="wp-block-heading" style="padding-bottom:0">Add a new page</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>Description of this block what has do be done</p>
-<!-- /wp:paragraph -->
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
 
-<!-- wp:buttons -->
+<!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:buttons {"layout":{"type":"flex","verticalAlignment":"bottom"}} -->
 <div class="wp-block-buttons"><!-- wp:button -->
 <div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Add a page</a></div>
 <!-- /wp:button -->
@@ -48,18 +61,24 @@
 <div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button">Dismiss</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
+<!-- /wp:group --></div>
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"stretch"} -->
-<div class="wp-block-column is-vertically-aligned-stretch"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Upload a logo</h3>
+<div class="wp-block-column is-vertically-aligned-stretch"><!-- wp:group {"layout":{"type":"flex","orientation":"vertical","verticalAlignment":"top"}} -->
+<div class="wp-block-group"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","orientation":"vertical","justifyContent":"stretch"}} -->
+<div class="wp-block-group"><!-- wp:heading {"level":3,"style":{"spacing":{"padding":{"bottom":"0"}}}} -->
+<h3 class="wp-block-heading" style="padding-bottom:0">Upload a logo</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>Description of this block what has do be done for uploading a logo to this page</p>
-<!-- /wp:paragraph -->
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
 
-<!-- wp:buttons -->
+<!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:buttons {"layout":{"type":"flex","verticalAlignment":"bottom"}} -->
 <div class="wp-block-buttons"><!-- wp:button -->
 <div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Upload logo</a></div>
 <!-- /wp:button -->
@@ -68,6 +87,7 @@
 <div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button">Dismiss</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
+<!-- /wp:group --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div>
 <!-- /wp:column --></div>
@@ -77,73 +97,125 @@
 <!-- wp:group {"align":"full","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull"><!-- wp:columns -->
 <div class="wp-block-columns"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:heading {"level":3} -->
+<div class="wp-block-column"><!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Vulnerability Block</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>Description of this block. With WP Scan data</p>
-<!-- /wp:paragraph -->
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
 
-<!-- wp:buttons -->
+<!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button -->
 <div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Vulnerability Tab</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
+<!-- /wp:group --></div>
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column"><!-- wp:heading {"level":3} -->
+<div class="wp-block-column"><!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Dummy block</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>Description of this block with a lot of space to provoct some spacing in the other boxes so we can adjust the height.</p>
-<!-- /wp:paragraph -->
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
 
-<!-- wp:buttons -->
+<!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button -->
 <div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Button</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
+<!-- /wp:group --></div>
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column"><!-- wp:heading {"level":3} -->
+<div class="wp-block-column"><!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Dummy Block</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>Description</p>
-<!-- /wp:paragraph -->
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
 
-<!-- wp:buttons -->
+<!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Action button</a></div>
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Button</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
+<!-- /wp:group --></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns --></div>
 <!-- /wp:group -->
 
+<!-- wp:group {"align":"full","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull"><!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Vulnerability Block</h3>
+<!-- /wp:heading -->
+
 <!-- wp:paragraph -->
-<p></p>
-<!-- /wp:paragraph -->
+<p>Description of this block. With WP Scan data</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Vulnerability Tab</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"width":"60%"} -->
+<div class="wp-block-column" style="flex-basis:60%"><!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">A block which is 2 columns wide</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Description of this block with a lot of space to provoct some spacing in the other boxes so we can adjust the height.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group"><!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button -->
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Button</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></div>
+<!-- /wp:group -->
 
 <!-- wp:columns -->
 <div class="wp-block-columns"><!-- wp:column -->
-  <div class="wp-block-column"><!-- wp:ionos-dashboard-page/deep-links /--></div>
-  <!-- /wp:column -->
+<div class="wp-block-column"><!-- wp:ionos-dashboard-page/deep-links /--></div>
+<!-- /wp:column -->
 
-  <!-- wp:column -->
-  <div class="wp-block-column"><!-- wp:paragraph -->
-  <p>Hier ist Spalte zwei</p>
-  <!-- /wp:paragraph --></div>
-  <!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph -->
+<p>Hier ist Spalte zwei</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column -->
 
-  <!-- wp:column -->
-  <div class="wp-block-column"><!-- wp:paragraph -->
-  <p>Und hier die dritte Dummyspalte</p>
-  <!-- /wp:paragraph --></div>
-  <!-- /wp:column --></div>
-  <!-- /wp:columns -->
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:paragraph -->
+<p>Und hier die dritte Dummyspalte</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
