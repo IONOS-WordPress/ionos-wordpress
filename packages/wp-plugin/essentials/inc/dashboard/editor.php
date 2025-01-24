@@ -18,6 +18,7 @@ const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
 
 // register our initial custom dashboard post type and register/assign the template with it
 \add_action('init', function () {
+  define('GLOBAL_STYLES_FILE', __DIR__ . '/data/' . \get_stylesheet() . '-global-styles.json');
   $post_type = \register_post_type(
     POST_TYPE_SLUG,
     [
@@ -60,6 +61,7 @@ const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
     'post_name'
   );
   $dashboard_dirs = glob(__DIR__ . '/data/*', GLOB_ONLYDIR) ?: [];
+  $dashboard_dirs = array_filter($dashboard_dirs, fn ($dir) => is_file($dir . '/post_content.html'));
   foreach ($dashboard_dirs as $dir) {
     $name = basename($dir);
     if (in_array($name, $custom_dashboard_names, true)) {
@@ -219,3 +221,33 @@ function _persist_dashboard(\WP_Post $post): void
     }
   }
 });
+
+// persist global styles when they are edited and saved in the site-editor
+\add_action(
+  hook_name: 'rest_after_insert_wp_global_styles',
+  callback: function ($post, $request) {
+    $data = $request->get_json_params();
+    unset($data['id'], $data['context'], $data['_links']); // drop wp- and db-specific fields
+    if (false === file_put_contents(GLOBAL_STYLES_FILE, \wp_json_encode($data))){
+      \wp_die('Failed to save global styles to file');
+    }
+  },
+  accepted_args: 2
+);
+
+// when the global styles post is created, merge the global styles from the file into the post
+\add_filter(
+  hook_name: 'wp_insert_post_data',
+  callback: function ($data, $postarr, $unsanitized_postarr, $update) {
+    if (file_exists(GLOBAL_STYLES_FILE) && 'wp_global_styles' === $data['post_type'] && ! $update) {
+      $post_content = json_decode($data['post_content'], true);
+      $data_from_file = \wp_json_file_decode(GLOBAL_STYLES_FILE, [
+        'associative' => true,
+      ]);
+      $new_data = array_merge($post_content, $data_from_file);
+      $data['post_content'] = \wp_json_encode($new_data);
+    }
+    return $data;
+  },
+  accepted_args: 4
+);

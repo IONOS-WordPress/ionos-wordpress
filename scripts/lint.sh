@@ -94,8 +94,16 @@ function ionos.wordpress.stylelint() {
   [[ "${POSITIONAL_ARGS[@]}" == '.' ]] && POSITIONAL_ARGS=('**/*.{css,scss}')
 
   # stylelint
-  pnpm exec stylelint --config ./.stylelintrc.yml --ignore-path ./.gitignore --ignore-path ./.lintignore --ignore-pattern '**/*.*' --ignore-pattern '!**/*.css' --ignore-pattern '!**/*.scss' --allow-empty-input \
-    $([[ "$FIX" == 'yes' ]] && echo -n "--fix" ||:) \
+  pnpm exec stylelint \
+    --config ./.stylelintrc.yml \
+    --ignore-path ./.gitignore \
+    --ignore-path ./.lintignore \
+    --ignore-pattern '**/*.*' \
+    --ignore-pattern '!**/*.css' \
+    --ignore-pattern '!**/*.scss' \
+    --allow-empty-input \
+    --no-cache \
+    $([[ "$FIX" == 'yes' ]] && echo -n '--fix strict' ||:) \
     ${POSITIONAL_ARGS[@]}
 }
 
