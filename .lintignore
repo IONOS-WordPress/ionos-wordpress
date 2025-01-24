@@ -2,3 +2,4 @@
 # additionally to the paths listed in .gitignore
 
 pnpm-lock.yaml
+packages/wp-plugin/essentials/inc/dashboard/data/ionos
