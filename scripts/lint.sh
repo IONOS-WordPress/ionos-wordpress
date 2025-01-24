@@ -273,8 +273,8 @@ function ionos.wordpress.pnpm() {
 #
 function ionos.wordpress.wordpress_plugin() {
   if [[ "$FIX" == 'yes' ]]; then
-    # @TODO implement fix
-    noop
+    # there is nothing done yet in lint-fix mode
+    :
   fi
 
   ionos.wordpress.log_header "lint wordpress plugin header files ..."
