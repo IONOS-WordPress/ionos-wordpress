@@ -225,14 +225,12 @@ function _persist_dashboard(\WP_Post $post): void
 // persist global styles when they are edited and saved in the site-editor
 \add_action(
   hook_name: 'rest_after_insert_wp_global_styles',
-  callback: function ($post, $request) {
-    $data = $request->get_json_params();
-    unset($data['id'], $data['context'], $data['_links']); // drop wp- and db-specific fields
+  callback: function ($post) {
+    $data = json_decode($post->post_content, true);
     if (false === file_put_contents(GLOBAL_STYLES_FILE, \wp_json_encode($data, JSON_PRETTY_PRINT))) {
       \wp_die('Failed to save global styles to file');
     }
-  },
-  accepted_args: 2
+  }
 );
 
 // when the global styles post is created, merge the global styles from the file into the post
