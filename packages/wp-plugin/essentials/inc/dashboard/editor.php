@@ -82,14 +82,14 @@ const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
 // always assign our custom template to our custom post type
 \add_action(
   hook_name: 'wp_after_insert_post',
-  callback: function (int $post_id, \WP_Post $post): void {
-    if (POST_TYPE_SLUG !== $post->post_type) {
+  callback: function (int $post_id, \WP_Post $post, bool $update): void {
+    if (POST_TYPE_SLUG !== $post->post_type || ! $update) {
       return;
     }
 
     // if the post has not yet our template assigned, assign it
-    if (POST_TYPE_TEMPLATE_SLUG !== \get_post_meta($post->ID, '_wp_page_template', true)) {
-      \update_post_meta($post->ID, '_wp_page_template', POST_TYPE_TEMPLATE_SLUG);
+    if (POST_TYPE_TEMPLATE_SLUG !== \get_post_meta($post_id, '_wp_page_template', true)) {
+      \update_post_meta($post_id, '_wp_page_template', POST_TYPE_TEMPLATE_SLUG);
     }
 
     // only prerender if the post is published
@@ -97,7 +97,7 @@ const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
       _persist_dashboard($post);
     }
   },
-  accepted_args: 2
+  accepted_args: 3,
 );
 
 /**
