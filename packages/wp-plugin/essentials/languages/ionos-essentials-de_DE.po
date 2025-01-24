@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: de\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
+"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
-"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.10.0\n"
 
@@ -72,3 +72,35 @@ msgstr "Deep-Links"
 #: build/dashboard/blocks/deep-links/view.php:4
 msgid "Use these links to get to your control panel."
 msgstr "Verwenden Sie diese Links, um zu Ihrem Bedienfeld zu gelangen."
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:6
+msgid "Invoices & Payment Details"
+msgstr "Rechnungen & Zahlungsdetails"
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:7
+msgid "Data Protection & Privacy Notice"
+msgstr "Hinweis zum Datenschutz und zur Privatsphäre"
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:8
+msgid "Contact Details"
+msgstr "Kontakt Details"
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:9
+msgid "Profile Details"
+msgstr "Profil-Details"
+
+#: build/dashboard/blocks/deep-links/config/strato.php.php:4
+msgid "Package overview"
+msgstr "Übersicht über das Paket"
+
+#: build/dashboard/blocks/deep-links/config/strato.php.php:5
+msgid "Your invoices"
+msgstr "Ihre Rechnungen"
+
+#: build/dashboard/blocks/deep-links/config/strato.php.php:6
+msgid "Your contract"
+msgstr "Ihr Vertrag"
+
+#: build/dashboard/blocks/deep-links/config/strato.php.php:7
+msgid "Current offers"
+msgstr "Aktuelle Angebote"
