@@ -25,7 +25,7 @@ test.describe('Dashboard Global Styles', () => {
   test('Initially load global styles from file', async ({ admin, editor }) => {
     // preparation: remove any global styles posts from database
     execSync(
-      'pnpm -s run wp-env run tests-cli wp post delete $(pnpm -s run wp-env run tests-cli wp post list --format=ids --post_type=wp_global_styles) --force'
+      'pnpm -s run wp-env run tests-cli wp post delete $(pnpm -s run wp-env run tests-cli wp post list --format=ids --post_type=wp_global_styles) --force ||:'
     );
 
     const EXPECTED_BACKGROUND_RGB = 'rgb(6, 6, 6)';
