@@ -9,14 +9,10 @@
 name: 'integration'
 
 on:
-  # rebuild any PRs and main branch changes
-  pull_request:
-
+  # run for push to any branch
   push:
     branches:
-      - develop
-      - feature/*
-      - bugfix/*
+      - '**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
