@@ -89,18 +89,18 @@ msgstr "Contact Details"
 msgid "Profile Details"
 msgstr "Profile Details"
 
-#: build/dashboard/blocks/deep-links/config/strato.php.php:4
+#: build/dashboard/blocks/deep-links/config/strato.php:4
 msgid "Package overview"
 msgstr "Package overview"
 
-#: build/dashboard/blocks/deep-links/config/strato.php.php:5
+#: build/dashboard/blocks/deep-links/config/strato.php:5
 msgid "Your invoices"
 msgstr "Your invoices"
 
-#: build/dashboard/blocks/deep-links/config/strato.php.php:6
+#: build/dashboard/blocks/deep-links/config/strato.php:6
 msgid "Your contract"
 msgstr "Your contract"
 
-#: build/dashboard/blocks/deep-links/config/strato.php.php:7
+#: build/dashboard/blocks/deep-links/config/strato.php:7
 msgid "Current offers"
 msgstr "Current offers"
