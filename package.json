@@ -52,8 +52,8 @@
     "@eslint/compat": "1.2.5",
     "@eslint/eslintrc": "3.2.0",
     "@eslint/js": "9.18.0",
-    "@playwright/browser-chromium": "^1.49.1",
-    "@playwright/experimental-ct-react": "^1.49.1",
+    "@playwright/browser-chromium": "^1.50.0",
+    "@playwright/experimental-ct-react": "^1.50.0",
     "@storybook/addon-essentials": "^8.5.0",
     "@storybook/addon-interactions": "^8.5.0",
     "@storybook/addon-links": "^8.5.0",
@@ -86,6 +86,7 @@
     "stylelint": "^16.13.2",
     "stylelint-config-recommended-scss": "^14.1.0",
     "stylelint-prettier": "^5.0.2",
-    "stylelint-scss": "^6.10.1"
+    "stylelint-scss": "^6.10.1",
+    "@playwright/test": "1.50.0"
   }
 }

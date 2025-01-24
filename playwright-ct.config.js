@@ -22,7 +22,8 @@ module.exports = defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     process.env.CI ? ['dot'] : ['list', { printSteps: true }],
-    ['html', { outputFolder: './playwright/storybook/.playwright-report' }],
+    ['html', { outputFolder: './playwright/storybook/.playwright-report', open: 'never' }],
+    ['line'],
   ],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -43,4 +44,13 @@ module.exports = defineConfig({
     },
   },
   outputDir: './playwright/storybook/.test-results',
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chromium',
+      },
+    },
+  ],
 });
