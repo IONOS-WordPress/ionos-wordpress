@@ -2,7 +2,7 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { execSync } from 'node:child_process';
 
 test.describe('essentials:dashboard ionos-essentials-dashboard-admin', () => {
-  test('/admin will contain a iframe referencing our essentials dashboard page', async ({ admin, page }) => {
+  test('/admin will contain an iframe referencing our essentials dashboard page', async ({ admin, page }) => {
     await admin.visitAdminPage('/');
 
     const iframeLocator = await page.locator('iframe');
