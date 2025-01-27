@@ -63,7 +63,7 @@
     "@storybook/react": "^8.5.0",
     "@storybook/react-webpack5": "^8.5.0",
     "@storybook/test": "^8.5.0",
-    "@types/node": "22.10.7",
+    "@types/node": "22.10.10",
     "@wordpress/components": "catalog:",
     "@wordpress/env": "^10.16.0",
     "@wordpress/scripts": "^30.8.1",
