@@ -51,7 +51,7 @@
     "@devcontainers/cli": "^0.72.0",
     "@eslint/compat": "1.2.5",
     "@eslint/eslintrc": "3.2.0",
-    "@eslint/js": "9.18.0",
+    "@eslint/js": "9.19.0",
     "@playwright/browser-chromium": "^1.50.0",
     "@playwright/experimental-ct-react": "^1.50.0",
     "@storybook/addon-essentials": "^8.5.0",
