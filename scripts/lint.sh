@@ -142,11 +142,18 @@ function ionos.wordpress.phpcs() {
     --entrypoint /bin/sh \
     ionos-wordpress/ecs-php \
     -
-      echo "Running $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) ..."
-      $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) \
+      cd /project
+      echo "Running $([[ "$FIX" == 'yes' ]] && echo -n "phpcs" || echo -n "phpcs" ) ..."
+      $([[ "$FIX" == 'yes' ]] && echo -n "phpcs" || echo -n "phpcs" ) \
       -s --no-cache --standard=/ruleset.xml \
       ${POSITIONAL_ARGS[@]}
 EOF
+# @FIXME: right now we only use phpcs
+# echo "Running $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) ..."
+# $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) \
+  if [[ $? -ne 0 ]]; then
+    return -1
+  fi
 }
 
 # checks wordpress plugin translations using dennis (https://github.com/mozilla/dennis)
@@ -291,49 +298,49 @@ function ionos.wordpress.wordpress_plugin() {
       PACKAGE_VERSION=$(jq -r '.version' $dir/package.json)
       if [[ "$PLUGIN_VERSION" != "$PACKAGE_VERSION" ]]; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin version(=$PLUGIN_VERSION) does not match package.json version(=$PACKAGE_VERSION)"
-        exit_code=-1
+        exit_code=1
       fi
 
       # test 'Description' field
       if ! grep -qoP "Description:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Description' is missing or empty"
-        exit_code=-1
+        exit_code=1
       fi
 
       # test 'Requires at least' field
       if ! grep -qoP "Requires at least:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Requires at least' is missing or empty"
-        exit_code=-1
+        exit_code=1
       fi
 
       # test 'Plugin URI' field
       if ! grep -qoP "Plugin URI:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Plugin URI' is missing or empty"
-        exit_code=-1
+        exit_code=1
       fi
 
       # test 'Update URI' field
       if ! grep -qoP "Update URI:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Update URI' is missing or empty"
-        exit_code=-1
+        exit_code=1
       fi
 
       # test 'Author' field
       if ! grep -qoP "Author:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Author' is missing or empty"
-        exit_code=-1
+        exit_code=1
       fi
 
       # test 'Author URI' field
       if ! grep -qoP "Author URI:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Author URI' is missing or empty"
-        exit_code=-1
+        exit_code=1
       fi
 
       # test 'Domain Path' field
       if ! grep -qoP "Domain Path:\s*/languages$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Domain Path: /languages' is missing or invalid"
-        exit_code=-1
+        exit_code=1
       fi
     done
   done
