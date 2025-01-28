@@ -260,7 +260,7 @@ function ionos.wordpress.pnpm() {
 
   # validate lock file is valid
   if ! pnpm -s install --lockfile-only; then
-    ionos.wordpress.error_log "pnpm validation failed : pnpüm lock file is outdated - please update it using 'pnpm install'"
+    ionos.wordpress.error_log "pnpm validation failed : pnpm lock file is outdated - please update it using 'pnpm install'"
     exit 1
   fi
 
