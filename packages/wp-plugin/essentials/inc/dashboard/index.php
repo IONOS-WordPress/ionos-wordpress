@@ -2,6 +2,8 @@
 
 namespace ionos_wordpress\essentials\dashboard;
 
+use Ionos\Security\Controllers\WPScan;
+
 use const ionos_wordpress\essentials\PLUGIN_DIR;
 
 /*
@@ -39,7 +41,33 @@ if (is_file(__DIR__ . '/editor.php')) {
     PLUGIN_DIR . '/build/dashboard/blocks/blocks-manifest.php'
   );
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/deep-links');
-});
+
+  });
+
+  if (!function_exists('is_plugin_active')) {
+    require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+}
+
+if (is_plugin_active('ionos-security/ionos-security.php')) {
+  echo 'plugin active';
+
+  add_action('init', function() {
+    if (class_exists('Ionos\Security\Controllers\WPScan')) {
+      $controller = new WPScan();
+      if (method_exists($controller, 'dashboad_widget_content')) {
+        echo "function exists";
+        \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/vulnerability');
+      } else {
+        echo "function not exists";
+      }
+    } else {
+        echo 'Class not found!';
+    }
+  });
+
+} else {
+  echo 'plugin not active';
+}
 
 // remove our blocks from all other post types
 \add_filter(
