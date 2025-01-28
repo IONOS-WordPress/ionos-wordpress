@@ -142,7 +142,6 @@ function ionos.wordpress.phpcs() {
     --entrypoint /bin/sh \
     ionos-wordpress/ecs-php \
     -
-      cd /project
       echo "Running $([[ "$FIX" == 'yes' ]] && echo -n "phpcs" || echo -n "phpcs" ) ..."
       $([[ "$FIX" == 'yes' ]] && echo -n "phpcs" || echo -n "phpcs" ) \
       -s --no-cache --standard=/ruleset.xml \
