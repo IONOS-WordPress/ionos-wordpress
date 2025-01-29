@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# script implements the precommit hook for automatic linting on "git commit"
+#
+# this script is used to build all packages of the monorepo
+#
+
+pnpm exec nano-staged \
+  --config './.nano-staged.mjs' \
+  --allow-empty
