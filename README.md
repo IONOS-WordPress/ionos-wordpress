@@ -343,7 +343,7 @@ Using `changeset` to create a release
 
 ### Git
 
-The project used git hooks at various stages.
+The project uses git hooks at various stages.
 
 For example the `pre-commit` hook will automatically lint-fix the code before committing and will abort the commit process if lint-fix was not successful.
 
