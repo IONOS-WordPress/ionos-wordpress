@@ -343,7 +343,17 @@ Using `changeset` to create a release
 
 ### Git
 
-@TODO: Git Flow vs Git-Flow vs Trunk based development. we need a decision here.
+The project used git hooks at various stages.
+
+For example the `pre-commit` hook will automatically lint-fix the code before committing and will abort the commit process if lint-fix was not successful.
+
+Git hooks are located in the `./.githooks` directory.
+
+The hooks are automatically installed by the `pnpm install` command.
+
+> [!TIP]
+> If you want to disable git hooks for some reason you can disable the git hooks by adding `--no-verify` to the git command.
+> Example : `git commit --no-verify`
 
 #### Workflows
 

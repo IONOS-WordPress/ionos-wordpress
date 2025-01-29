@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 #
-# script implements the precommit hook for automatic linting on "git commit"
+# script implements the precommit hook for automatic lint-fix staged files on "git commit"
 #
-# this script is used to build all packages of the monorepo
+# this script is executed by the pre-commit hook in .git/hooks and will automatically lin-fix all staged files
+# any fixes will be automatically be included in the commit
+#
+# If you want to disable git hooks for some reason you can disable the git hooks by adding `--no-verify` to the git command.
+# Example : `git commit --no-verify`
 #
 
 pnpm exec nano-staged \

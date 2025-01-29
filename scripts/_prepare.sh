@@ -15,6 +15,7 @@ if [[ "${CI:-}" == "true" ]]; then
   exit 0
 fi
 
-
+# If you want to disable git hooks for some reason you can disable the git hooks by adding `--no-verify` to the git command.
+# Example : `git commit --no-verify`
 ionos.wordpress.log_info "Setting up git hooks"
 git config core.hookspath "./.githooks"
