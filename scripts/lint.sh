@@ -151,7 +151,7 @@ EOF
 # echo "Running $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) ..."
 # $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) \
   if [[ $? -ne 0 ]]; then
-    return -1
+    return 1
   fi
 }
 
@@ -348,35 +348,35 @@ function ionos.wordpress.wordpress_plugin() {
 }
 
 if [[ "${USE[@]}" =~ all|php|wp ]]; then
-  ionos.wordpress.wordpress_plugin || exit_code=-1
+  ionos.wordpress.wordpress_plugin || exit_code=1
 fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
-  ionos.wordpress.phpcs || exit_code=-1
+  ionos.wordpress.phpcs || exit_code=1
 fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
-  ionos.wordpress.ecs || exit_code=-1
+  ionos.wordpress.ecs || exit_code=1
 fi
 
 if [[ "${USE[@]}" =~ all|prettier ]]; then
-  ionos.wordpress.prettier || exit_code=-1
+  ionos.wordpress.prettier || exit_code=1
 fi
 
 if [[ "${USE[@]}" =~ all|js ]]; then
-  ionos.wordpress.eslint || exit_code=-1
+  ionos.wordpress.eslint || exit_code=1
 fi
 
 if [[ "${USE[@]}" =~ all|css ]]; then
-  ionos.wordpress.stylelint || exit_code=-1
+  ionos.wordpress.stylelint || exit_code=1
 fi
 
 if [[ "${USE[@]}" =~ all|pnpm ]]; then
-  ionos.wordpress.pnpm || exit_code=-1
+  ionos.wordpress.pnpm || exit_code=1
 fi
 
 if [[ " ${USE[@]} " =~ all|i18n ]]; then
-  ionos.wordpress.dennis || exit_code=-1
+  ionos.wordpress.dennis || exit_code=1
 fi
 
 exit ${exit_code:-0}
