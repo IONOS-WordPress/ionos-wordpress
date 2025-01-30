@@ -49,22 +49,14 @@ if (is_file(__DIR__ . '/editor.php')) {
 }
 
 if (is_plugin_active('ionos-security/ionos-security.php')) {
-  echo 'plugin active';
-
   add_action('init', function() {
     if (class_exists('Ionos\Security\Controllers\WPScan')) {
       $controller = new WPScan();
       if (method_exists($controller, 'dashboad_widget_content')) {
-        echo "function exists";
         \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/vulnerability');
-      } else {
-        echo "function not exists";
       }
-    } else {
-        echo 'Class not found!';
     }
   });
-
 } else {
   echo 'plugin not active';
 }
