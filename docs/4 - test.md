@@ -38,6 +38,8 @@ Example: packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/
     > vscode requires a single manual step to enable running/debugging single tests from within the ide:
     > Go to the Testing View, click on the gear icon in the Playwright panel and enable all Plawright configurations.
     > See Video for this steps : https://www.youtube.com/watch?v=cYHyOF5j5K8
+    >
+    > There is a GitHub feature request to make this step unnecessary: https://github.com/microsoft/playwright/issues/34572 - but until then, we have to do this step manually.
 
 ## phpunit
 
@@ -93,6 +95,8 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
   > vscode requires a single manual step to enable running/debugging single tests from within the ide:
   > Go to the Testing View, click on the gear icon in the Playwright panel and enable all Plawright configurations.
   > See Video for this steps : https://www.youtube.com/watch?v=cYHyOF5j5K8
+  >
+  > There is a GitHub feature request to make this step unnecessary: https://github.com/microsoft/playwright/issues/34572 - but until then, we have to do this step manually.
 
 # Linux bare metal testing (without being in devcontainer)
 
