@@ -72,7 +72,7 @@ if (is_file(__DIR__ . '/editor.php')) {
     callback   : function () {
       printf(
         '<iframe src="%s&noheader=1" style="width: 100%%; height: 100%%;"></iframe>',
-        esc_attr(\menu_page_url(HIDDEN_ADMIN_PAGE_IFRAME_SLUG, false))
+        \esc_attr(\menu_page_url(HIDDEN_ADMIN_PAGE_IFRAME_SLUG, false))
       );
     },
     position: 1,
