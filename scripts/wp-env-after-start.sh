@@ -171,7 +171,8 @@ EOF
   ],
   "[html]": {
     "editor.formatOnSave": false
-  }
+  },
+  "playwright.runGlobalSetupOnEachRun": true,
 }
 EOF
   # ENDMARK
