@@ -150,7 +150,12 @@ for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'packag
   fi
 
   RELEASE_TITLE=$([[ "$PACKAGE_FLAVOUR" == "." ]] && echo "$PACKAGE_VERSION" || echo "$PACKAGE_NAME@$PACKAGE_VERSION")
-  gh release create "$PACKAGE_NAME@$PACKAGE_VERSION" "${ARTIFACTS[@]}" --title "$RELEASE_TITLE" --notes-file "$PACKAGE_RELEASENOTES_FILE"
+
+  if [[ ${#ARTIFACTS[@]} -eq 0 ]]; then
+    ionos.wordpress.log_warn "no artifacts found for package $PACKAGE_NAME"
+    continue
+  fi
+  pnpm gh release create "$PACKAGE_NAME@$PACKAGE_VERSION" "${ARTIFACTS[@]}" --title "$RELEASE_TITLE" --notes-file "$PACKAGE_RELEASENOTES_FILE"
 done
 
 # merge changes back to develop branch
