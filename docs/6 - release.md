@@ -71,7 +71,7 @@ the release script is located in `./scripts/release.sh`
 
 ## What happens if i accidently pushed to GitHub 'main' branch instead of 'develop' and triggered a new release ?
 
-**Don't worry** - because the job takes about 5-7 minutes you have enough time to stop the jobs.
+**Don't worry** - because the job takes a few minutes you have enough time to stop the jobs.
 
 Stopping the jubs will abort to release process.
 
