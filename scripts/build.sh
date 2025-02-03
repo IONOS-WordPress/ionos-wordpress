@@ -439,6 +439,10 @@ function ionos.wordpress.build_workspace_package() {
         "wp-plugin")
           ionos.wordpress.build_workspace_package_wp_plugin "$path"
           ;;
+        "wp-mu-plugin")
+          # ionos.wordpress.build_workspace_package_wp_plugin "$path"
+          true
+          ;;
         "docker")
           ionos.wordpress.build_workspace_package_docker "$path"
           ;;
