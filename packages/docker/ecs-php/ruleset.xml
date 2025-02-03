@@ -53,6 +53,7 @@
     <exclude name="WordPress.WhiteSpace.OperatorSpacing.NoSpaceBefore"/>
     <exclude name="WordPress.WP.AlternativeFunctions.file_system_operations_mkdir"/>
     <exclude name="WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents"/>
+    <exclude name="WordPress.WhiteSpace.OperatorSpacing.NoSpaceAfter"/>
   </rule>
 
   <rule ref="NormalizedArrays">
