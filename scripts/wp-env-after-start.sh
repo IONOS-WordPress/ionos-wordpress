@@ -221,4 +221,6 @@ for prefix in '' 'tests-' ; do
   if find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' &>/dev/null; then
     pnpm exec wp-env run ${prefix}cli sh -c 'sudo chmod a+w -R /var/www/html/wp-content/mu-plugins' 2>/dev/null || true
   fi
+  pnpm exec wp-env run ${prefix}cli sh -c 'sudo chmod a+w -R /var/www/html/phpunit.xml' 2>/dev/null || true
+  pnpm exec wp-env run ${prefix}cli sh -c 'sudo chmod a+w -R /var/www/html/bootstrap.php' 2>/dev/null || true
 done
