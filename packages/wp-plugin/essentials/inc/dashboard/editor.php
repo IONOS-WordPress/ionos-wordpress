@@ -138,25 +138,27 @@ function _persist_dashboard(\WP_Post $post): void
   # strip page content
   $start_marker_pos = strpos($html, POST_TYPE_TEMPLATE_CONTENT_START_MARKER);
   if (false === $start_marker_pos) {
-    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     $error_message = sprintf(
       'Could not find start marker "%s" in file "%s"',
       \esc_html(POST_TYPE_TEMPLATE_CONTENT_START_MARKER),
       \esc_html($html)
     );
+    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
     error_log($error_message);
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     \wp_die($error_message);
   }
 
   $end_marker_pos = strpos($html, POST_TYPE_TEMPLATE_CONTENT_END_MARKER, $start_marker_pos);
   if (false === $end_marker_pos) {
-    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     $error_message = sprintf(
       'Could not find end marker "%s" in file "%s"',
       \esc_html(POST_TYPE_TEMPLATE_CONTENT_END_MARKER),
       \esc_html($html)
     );
+    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
     error_log($error_message);
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     \wp_die($error_message);
   }
 

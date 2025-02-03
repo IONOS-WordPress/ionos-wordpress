@@ -3,3 +3,5 @@
 
 pnpm-lock.yaml
 packages/wp-plugin/essentials/inc/dashboard/data/ionos
+packages/wp-plugin/essentials/inc/dashboard/data/twentytwentyfive-global-styles.json
+

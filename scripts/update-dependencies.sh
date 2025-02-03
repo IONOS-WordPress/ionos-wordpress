@@ -5,7 +5,7 @@
 #
 # this script is a wrapper for the pnpm update
 #
-# example usage: `pnpm update-dependencies` or `pnpm update-dependencies --latest`
+# example usage: `pnpm update-dependencies` or `pnpm update-dependencies --pnpm-opts '--latest'`
 #
 
 # bootstrap the environment
