@@ -109,7 +109,7 @@ export GH_TOKEN=${GH_TOKEN:-$GITHUB_TOKEN}
 if [[ "${CI}" == '' ]]; then
   # echo "${GH_TOKEN}" | pnpm gh auth login --with-token
   # in case the repo is forked we need to explicitly set the default repo
-  gh repo set-default $(git remote get-url origin | sed -E 's/.*[:\/]([^\/]+\/[^\/]+)\.git/\1/')
+  pnpm gh repo set-default $(git remote get-url origin | sed -E 's/.*[:\/]([^\/]+\/[^\/]+)\.git/\1/')
 fi
 
 # loop over all package.json files changed by changeset version command
