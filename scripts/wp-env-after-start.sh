@@ -52,6 +52,14 @@ EOF
       done
     }
 
+    # echoes comma spearated list of mu plugins
+    function mu_plugins {
+      for PLUGIN in $(find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
+        echo "        \"/var/www/html/wp-content/mu-plugins/${PLUGIN}.php\":\"\${workspaceFolder}/packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}.php\","
+        echo "        \"/var/www/html/wp-content/mu-plugins/${PLUGIN}\":\"\${workspaceFolder}/packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}\","
+      done
+    }
+
     # echoes comma spearated list of plugins
     function themes {
       for THEME in $(find packages/wp-theme -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
@@ -75,6 +83,7 @@ EOF
       "log": false,         // set to true to get extensive xdebug logs
       "pathMappings": {
 $(plugins)
+$(mu_plugins)
 $(themes)
         "/var/www/html": "\${workspaceFolder}/${WPENV_INSTALLPATH}/WordPress",
         // phpunit test path mappings
@@ -206,4 +215,10 @@ for prefix in '' 'tests-' ; do
 
   # emulate ionos brand by default
   pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand_name ionos
+
+  # fix permissions for mu-plugins folder if any
+  # (leaving the permisions as-is will rsult in an error on destroy restart wp-env)
+  if find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' &>/dev/null; then
+    pnpm exec wp-env run ${prefix}cli sh -c 'sudo chmod a+w -R /var/www/html/wp-content/mu-plugins' 2>/dev/null || true
+  fi
 done
