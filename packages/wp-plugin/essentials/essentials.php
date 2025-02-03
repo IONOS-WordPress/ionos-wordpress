@@ -133,7 +133,7 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
 * see https://gist.github.com/CruelDrool/4cc70b819a33793396456c5ddb81781d
 */
 \add_filter('plugins_api', function (\stdClass|false $result, string $action, \stdClass $args): \stdClass|false {
-  if (!isset($args->slug) || "{$args->slug}" !== \plugin_basename(__FILE__)) {
+  if (! isset($args->slug) || "{$args->slug}" !== \plugin_basename(__FILE__)) {
     return $result;
   }
 
