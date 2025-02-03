@@ -3,7 +3,7 @@ import { execSync } from 'node:child_process';
 
 test.describe('Deep Links in Dashboard', () => {
   test('Dashboard contains Deep Links for valid tenant', async ({ requestUtils, admin, page }) => {
-    execSync('pnpm wp-env run tests-cli wp option update ionos_group_brand_name ionos');
+    execSync('pnpm wp-env run tests-cli wp option update ionos_group_brand ionos');
     //await page.goto('/?custom_dashboard=ionos');
     await admin.visitAdminPage('admin.php?page=ionos-essentials-dashboard-hidden-admin-page-iframe&noheader=1');
 
@@ -12,7 +12,7 @@ test.describe('Deep Links in Dashboard', () => {
   });
 
   test('Dashboard does not contain Deep Links for invalid tenant', async ({ requestUtils, admin, page }) => {
-    execSync('pnpm wp-env run tests-cli wp option update ionos_group_brand_name invalid_tenant');
+    execSync('pnpm wp-env run tests-cli wp option update ionos_group_brand invalid_tenant');
     // await page.goto('/?custom_dashboard=ionos');
     await admin.visitAdminPage('admin.php?page=ionos-essentials-dashboard-hidden-admin-page-iframe&noheader=1');
 
