@@ -73,7 +73,7 @@ the release script is located in `./scripts/release.sh`
 
 **Don't worry** - because the job takes a few minutes you have enough time to stop the jobs.
 
-Stopping the jubs will abort to release process.
+Stopping the jobs will abort to release process.
 
 You can then revert you acidently pushed changes in `main` and everything is fine.
 
