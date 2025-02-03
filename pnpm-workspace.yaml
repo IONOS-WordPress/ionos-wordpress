@@ -5,6 +5,7 @@ packages:
   - 'packages/docker/*'
   - 'packages/docs/*'
   - 'packages/wp-plugin/*'
+  - 'packages/wp-mu-plugin/*'
   - 'packages/wp-theme/*'
   - 'packages/generic/*'
 
