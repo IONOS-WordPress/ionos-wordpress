@@ -1,0 +1,14 @@
+{
+  "name": "@ionos-wordpress/test-mu-plugin",
+  "private": true,
+  "version": "0.0.1",
+  "dependencies": {
+    "@ionos-wordpress/test-lib": "workspace:*"
+  },
+  "devDependencies": {
+    "@wordpress/components": "catalog:",
+    "@ionos-wordpress/rector-php": "workspace:*",
+    "@ionos-wordpress/ecs-php": "workspace:*",
+    "@ionos-wordpress/dennis-i18n": "workspace:*"
+  }
+}
