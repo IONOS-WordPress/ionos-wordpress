@@ -50,11 +50,8 @@ if (is_file(__DIR__ . '/editor.php')) {
 
 if (is_plugin_active('ionos-security/ionos-security.php')) {
   add_action('init', function() {
-    if (class_exists('Ionos\Security\Controllers\WPScan')) {
-      $controller = new WPScan();
-      if (method_exists($controller, 'dashboad_widget_content')) {
-        \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/vulnerability');
-      }
+    if (method_exists('Ionos\Security\Controllers\WPScan', 'dashboad_widget_content')) {
+      \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/vulnerability');
     }
   });
 } else {
