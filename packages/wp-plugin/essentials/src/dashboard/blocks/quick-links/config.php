@@ -1,6 +1,8 @@
 <?php
 
-$blog_url = get_bloginfo('url');
+namespace ionos_wordpress\essentials\dashboard\blocks\quick_links;
+
+$blog_url = \get_bloginfo('url');
 $links = [
   $blog_url . '/wp-admin/post-new.php?post_type=page' => __('Add new page', 'ionos-essentials'),
   $blog_url . '/wp-admin/post-new.php' => __('Add new post', 'ionos-essentials'),

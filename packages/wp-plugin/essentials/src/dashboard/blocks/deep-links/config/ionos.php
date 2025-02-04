@@ -1,10 +1,44 @@
 <?php
 
+namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
+
 $links = [
-  'https://my.ionos.com/subscriptions?filter.contract=any&filter.type=any' => __('Contracts & Subscriptions', 'ionos-essentials'),
-  'https://my.ionos.com/account-security' => __('Login & Account security', 'ionos-essentials'),
-  'https://my.ionos.com/invoices' => __('Invoices & Payment Details', 'ionos-essentials'),
-  'https://my.ionos.com/privacy-overview' => __('Data Protection & Privacy Notice', 'ionos-essentials'),
-  'https://my.ionos.com/address' => __('Contact Details', 'ionos-essentials'),
-  'https://my.ionos.com/account/edit-customerprofile' => __('Profile Details', 'ionos-essentials'),
+  [
+    'url' => 'subscriptions?filter.contract=any&filter.type=any',
+    'anchor' => __('Contracts & Subscriptions', 'ionos-essentials'),
+  ],
+  [
+    'url' => 'account-security',
+    'anchor' => __('Login & Account security', 'ionos-essentials'),
+  ],
+  [
+    'url' => 'invoices',
+    'anchor' => __('Invoices & Payment Details', 'ionos-essentials'),
+  ],
+  [
+    'url' => 'privacy-overview',
+    'anchor' => __('Data Protection & Privacy Notice', 'ionos-essentials'),
+  ],
+  [
+    'url' => 'address',
+    'anchor' => __('Contact Details', 'ionos-essentials'),
+  ],
+  [
+    'url' => 'account/edit-customerprofile',
+    'anchor' => __('Profile Details', 'ionos-essentials'),
+  ],
+];
+
+// Trainling slash
+// The first market is the default market
+$market_domains = [
+  'de' => 'https://my.ionos.com/',
+  'uk' => 'my.ionos.co.uk',
+  'gb' => 'my.ionos.co.uk',
+  'ft' => 'my.ionos.fr',
+  'us' => 'my.ionos.com',
+  'es' => 'my.ionos.es',
+  'ca' => 'my.ionos.ca',
+  'it' => 'my.ionos.it',
+  'mx' => 'my.ionos.mx',
 ];
