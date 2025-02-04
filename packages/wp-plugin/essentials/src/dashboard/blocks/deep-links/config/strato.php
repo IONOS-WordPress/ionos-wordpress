@@ -2,7 +2,7 @@
 
 namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
 
-const links = [
+$links = [
   [
     'url' => 'https://www.strato.de/apps/CustomerService?dlink=kds_CustomerEntryPage',
     'anchor' => __('Package overview', 'ionos-essentials'),
@@ -21,7 +21,7 @@ const links = [
   ],
 ];
 
-const market_domains = [
+$market_domains = [
   'de' => 'https://strato.de/',
   'es' => 'https://strato.es/',
   'se' => 'https://strato.se/',

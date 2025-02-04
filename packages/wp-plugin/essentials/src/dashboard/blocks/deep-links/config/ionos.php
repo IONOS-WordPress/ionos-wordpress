@@ -2,7 +2,7 @@
 
 namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
 
-const links = [
+$links = [
   [
     'url' => 'subscriptions?filter.contract=any&filter.type=any',
     'anchor' => __('Contracts & Subscriptions', 'ionos-essentials'),
@@ -31,7 +31,7 @@ const links = [
 
 // Trainling slash
 // The first market is the default market
-const market_domains = [
+$market_domains = [
   'de' => 'https://my.ionos.com/',
   'uk' => 'my.ionos.co.uk',
   'gb' => 'my.ionos.co.uk',
