@@ -9,6 +9,5 @@
 # Example : `git commit --no-verify`
 #
 
-pnpm exec nano-staged \
-  --config './.nano-staged.mjs' \
-  --allow-empty
+# run lint-fix on all staged files and update the staged files with fixes
+pnpm lint-fix && git add -u $(git diff --cached --name-only --diff-filter=ACMRT)
