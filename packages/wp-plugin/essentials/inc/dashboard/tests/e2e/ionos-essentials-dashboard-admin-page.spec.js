@@ -30,7 +30,7 @@ test.describe('essentials:dashboard ionos-essentials-dashboard-admin', () => {
   });
 
   test('/admin iframe rendered page contains Deep Links block', async ({ admin, page }) => {
-    execSync('pnpm wp-env run tests-cli wp option update ionos_group_brand_name ionos');
+    execSync('pnpm wp-env run tests-cli wp option update ionos_group_brand ionos');
     await admin.visitAdminPage('/');
 
     // get the iframe element

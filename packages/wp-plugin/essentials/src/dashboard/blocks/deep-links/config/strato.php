@@ -2,9 +2,28 @@
 
 namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
 
-$links = [
-  'https://www.strato.de/apps/CustomerService?dlink=kds_CustomerEntryPage' => __('Package overview', 'ionos-essentials'),
-  'https://www.strato.de/apps/CustomerService?dlink=OnlineInvoice' => __('Your invoices', 'ionos-essentials'),
-  'https://www.strato.de/apps/CustomerService?dlink=kds_Vertragsbetreuung_2' => __('Your contract', 'ionos-essentials'),
-  'https://www.strato.de/apps/CustomerService?dlink=Offers_EntryPage' => __('Current offers', 'ionos-essentials'),
+const links = [
+  [
+    'url' => 'https://www.strato.de/apps/CustomerService?dlink=kds_CustomerEntryPage',
+    'anchor' => __('Package overview', 'ionos-essentials'),
+  ],
+  [
+    'url' => 'https://www.strato.de/apps/CustomerService?dlink=OnlineInvoice',
+    'anchor' => __('Your invoices', 'ionos-essentials'),
+  ],
+  [
+    'url' => 'https://www.strato.de/apps/CustomerService?dlink=kds_Vertragsbetreuung_2',
+    'anchor' => __('Your contract', 'ionos-essentials'),
+  ],
+  [
+    'url' => 'https://www.strato.de/apps/CustomerService?dlink=Offers_EntryPage',
+    'anchor' => __('Current offers', 'ionos-essentials'),
+  ],
+];
+
+const market_domains = [
+  'de' => 'https://strato.de/',
+  'es' => 'https://strato.es/',
+  'se' => 'https://strato.se/',
+  'nl' => 'https://strato.nl/',
 ];

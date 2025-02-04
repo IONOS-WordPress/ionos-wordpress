@@ -34,6 +34,13 @@ Example: packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/
 
     - same same for debugging tests.
 
+    > [!TIP]
+    > vscode requires a single manual step to enable running/debugging single tests from within the ide:
+    > Go to the Testing View, click on the gear icon in the Playwright panel and enable all Plawright configurations.
+    > See Video for this steps : https://www.youtube.com/watch?v=cYHyOF5j5K8
+    >
+    > There is a GitHub feature request to make this step unnecessary: https://github.com/microsoft/playwright/issues/34572 - but until then, we have to do this step manually.
+
 ## phpunit
 
 > phpunit test are identified by file name convention (`*Test.php`)
@@ -79,6 +86,17 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
   - (fastest) run a single e2e test without rebuilding and checking wp-env is alive : `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
 - run whenever you changed a file : `pnpm watch -- PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
+
+- vscode supports running e2e tests by clicking on the play button in the test file.
+
+  - same same for debugging tests.
+
+  > [!TIP]
+  > vscode requires a single manual step to enable running/debugging single tests from within the ide:
+  > Go to the Testing View, click on the gear icon in the Playwright panel and enable all Plawright configurations.
+  > See Video for this steps : https://www.youtube.com/watch?v=cYHyOF5j5K8
+  >
+  > There is a GitHub feature request to make this step unnecessary: https://github.com/microsoft/playwright/issues/34572 - but until then, we have to do this step manually.
 
 # Linux bare metal testing (without being in devcontainer)
 
