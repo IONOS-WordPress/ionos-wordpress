@@ -15,16 +15,16 @@ test('MyButton component', async ({ mount, page }) => {
 
   const buttonLocator = await page.locator('button[type="button"]');
 
-  expect(buttonLocator, 'button was found').toBeTruthy();
+  await expect(buttonLocator, 'button was found').toBeTruthy();
 
-  expect(await buttonLocator.evaluate((element) => !element.disabled), 'button should be enabled').toBeTruthy();
+  await expect(await buttonLocator.evaluate((element) => !element.disabled), 'button should be enabled').toBeTruthy();
   // same same as the line above
-  expect(buttonLocator).toBeEnabled();
+  await expect(buttonLocator).toBeEnabled();
 
-  expect(buttonLocator, "button should not have class 'is-link'").not.toHaveClass(/is-primary/);
+  await expect(buttonLocator, "button should not have class 'is-link'").not.toHaveClass(/is-primary/);
 
-  expect(clicked).toBe(0);
+  await expect(clicked).toBe(0);
   await buttonLocator.click();
-  expect(clicked).not.toBe(0);
-  expect(clicked).toBe(1);
+  await expect(clicked).not.toBe(0);
+  await expect(clicked).toBe(1);
 });
