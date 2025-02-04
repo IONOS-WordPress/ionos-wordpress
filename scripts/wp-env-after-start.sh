@@ -17,7 +17,7 @@ pnpm wp-env run tests-wordpress composer global require yoast/phpunit-polyfills:
 # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
 if [[ "${CI:-}" != "true" ]]; then
 
-  # MARK: supress xdebug warnings if vscode is not running in local developmt mode
+  # MARK: supress xdebug warnings if vscode is not running in local development mode
   (
     prefix=$(basename "$(pnpm wp-env install-path)")
     # iterate over all wp-env containers and add "xdebug.log_level=0" to php.ini if not already present
@@ -205,6 +205,6 @@ for prefix in '' 'tests-' ; do
 
   # emulate ionos brand by default
   pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand ionos
-  pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand_name Ionos
+  pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand Ionos
 
 done

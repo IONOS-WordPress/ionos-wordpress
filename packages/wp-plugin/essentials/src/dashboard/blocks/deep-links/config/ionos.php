@@ -1,5 +1,7 @@
 <?php
 
+namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
+
 $links = [
   [
     'url' => 'subscriptions?filter.contract=any&filter.type=any',

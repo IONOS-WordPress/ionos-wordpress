@@ -1,5 +1,7 @@
 <?php
 
+namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
+
 $links = [
   [
     'url' => 'https://www.strato.de/apps/CustomerService?dlink=kds_CustomerEntryPage',
