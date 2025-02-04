@@ -44,19 +44,12 @@ if (is_file(__DIR__ . '/editor.php')) {
 
   });
 
-  if (!function_exists('is_plugin_active')) {
-    require_once(ABSPATH . 'wp-admin/includes/plugin.php');
-}
-
-if (is_plugin_active('ionos-security/ionos-security.php')) {
   add_action('init', function() {
     if (method_exists('Ionos\Security\Controllers\WPScan', 'dashboad_widget_content')) {
       \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/vulnerability');
     }
   });
-} else {
-  echo 'plugin not active';
-}
+
 
 // remove our blocks from all other post types
 \add_filter(
