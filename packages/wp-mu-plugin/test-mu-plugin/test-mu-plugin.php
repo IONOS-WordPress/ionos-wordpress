@@ -25,22 +25,20 @@ defined('ABSPATH') || exit();
   error_log($translated_text);
 });
 
-require_once __DIR__ . '/test-mu-plugin/inc/feature-1.php';
+require_once __DIR__ . '/test-mu-plugin/test-mu-plugin/inc/feature-1.php';
 
-/*
 \add_action('admin_enqueue_scripts', function (): void {
-  $assets = include_once __DIR__ . '/build/index.asset.php';
+  $assets = include_once __DIR__ . '/build/test-mu-plugin/index.asset.php';
   \wp_enqueue_script(
     handle: 'test-plugin-index',
-    src: \plugins_url('/build/index.js', __FILE__),
+    src: \plugins_url('/test-mu-plugin/build/index.js', __FILE__),
     deps: $assets['dependencies'],
     ver: $assets['version'],
     args: [
       'in_footer' => true,
     ],
   );
-  \wp_set_script_translations('test-plugin-index', 'test-mu-plugin', \plugin_dir_path(__FILE__) . 'languages');
+  \wp_set_script_translations(handle : 'test-plugin-index', domain : 'test-mu-plugin', path : basename(__DIR__) . '/test-mu-plugin/languages');
 });
-require_once __DIR__ . '/build/feature-1/feature-1.php';
-require_once __DIR__ . '/build/feature-2/feature-2.php';
-*/
+
+# require_once __DIR__ . '/test-mu-plugin/test-mu-plugin/build/feature-2/index.php';
