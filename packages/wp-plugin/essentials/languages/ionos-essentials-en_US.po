@@ -57,11 +57,11 @@ msgctxt "block description"
 msgid "Show links to the Control Panel of your provider."
 msgstr "Show links to the Control Panel of your provider."
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:4
+#: build/dashboard/blocks/deep-links/config/ionos.php:6
 msgid "Contracts & Subscriptions"
 msgstr "Contracts & Subscriptions"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:5
+#: build/dashboard/blocks/deep-links/config/ionos.php:10
 msgid "Login & Account security"
 msgstr "Login & Account security"
 
@@ -74,35 +74,35 @@ msgstr "Deep-Links"
 msgid "Use these links to get to your control panel."
 msgstr "Use these links to get to your control panel."
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:6
+#: build/dashboard/blocks/deep-links/config/ionos.php:14
 msgid "Invoices & Payment Details"
 msgstr "Invoices & Payment Details"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:7
+#: build/dashboard/blocks/deep-links/config/ionos.php:18
 msgid "Data Protection & Privacy Notice"
 msgstr "Data Protection & Privacy Notice"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:8
+#: build/dashboard/blocks/deep-links/config/ionos.php:22
 msgid "Contact Details"
 msgstr "Contact Details"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:9
+#: build/dashboard/blocks/deep-links/config/ionos.php:26
 msgid "Profile Details"
 msgstr "Profile Details"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:4
+#: build/dashboard/blocks/deep-links/config/strato.php:6
 msgid "Package overview"
 msgstr "Package overview"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:5
+#: build/dashboard/blocks/deep-links/config/strato.php:10
 msgid "Your invoices"
 msgstr "Your invoices"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:6
+#: build/dashboard/blocks/deep-links/config/strato.php:14
 msgid "Your contract"
 msgstr "Your contract"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:7
+#: build/dashboard/blocks/deep-links/config/strato.php:18
 msgid "Current offers"
 msgstr "Current offers"
 
@@ -139,3 +139,25 @@ msgstr "Edit template"
 #: build/dashboard/blocks/quick-links/config.php:9
 msgid "Edit navigation"
 msgstr "Edit navigation"
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block title"
+msgid "Vulnerability"
+msgstr "Vulnerability"
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block description"
+msgid "Show wp scan data."
+msgstr "Show wp scan data."
+
+#: build/dashboard/blocks/vulnerability/class-wpscan.php:18
+msgid "Vulnerability Scan"
+msgstr "Vulnerability Scan"
+
+#: build/dashboard/blocks/vulnerability/render.php:37
+msgid "Please, install the IONOS Security Plugin"
+msgstr "Please, install the IONOS Security Plugin"
+
+#: build/dashboard/blocks/vulnerability/render.php:39
+msgid "Please, activate the IONOS Security Plugin"
+msgstr "Please, activate the IONOS Security Plugin"
