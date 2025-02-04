@@ -46,6 +46,9 @@ if (is_file(__DIR__ . '/editor.php')) {
 \add_filter(
   hook_name: 'allowed_block_types_all',
   callback: function (bool|array $allowed_block_types, \WP_Block_Editor_Context $editor_context): bool|array {
+    if (! $editor_context->post) {
+      return $allowed_block_types;
+    }
     if (POST_TYPE_SLUG !== $editor_context->post->post_type) {
       if (! is_array($allowed_block_types)) {
         $allowed_block_types = array_keys(\WP_Block_Type_Registry::get_instance()->get_all_registered());
