@@ -205,6 +205,6 @@ for prefix in '' 'tests-' ; do
 
   # emulate ionos brand by default
   pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand ionos
-  pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand_name Ionos
+  pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand Ionos
 
 done
