@@ -40,10 +40,7 @@ if (is_file(__DIR__ . '/editor.php')) {
   );
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/deep-links');
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/quick-links');
-
-  if (method_exists('Ionos\Security\Controllers\WPScan', 'dashboad_widget_content')) {
-    \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/vulnerability');
-  }
+  \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/vulnerability');
 });
 
 // remove our blocks from all other post types
