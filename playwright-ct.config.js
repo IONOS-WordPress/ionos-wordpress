@@ -1,5 +1,5 @@
 // playwright config for storybook and react component testing
-const { defineConfig, devices } = require('@playwright/experimental-ct-react');
+import { defineConfig, devices } from '@playwright/experimental-ct-react';
 
 /**
  * @see https://playwright.dev/docs/test-configuration

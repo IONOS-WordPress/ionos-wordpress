@@ -89,7 +89,8 @@ git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
 # commit changes
-git commit -am "chore(release) : updated versions [skip release]"
+# no-verify will disable the pre-commit hook since we wont automatically run lint-fix
+git commit --no-verify -am "chore(release) : updated versions [skip release]"
 
 # tag release
 pnpm changeset tag

@@ -305,6 +305,22 @@ In the `frontmatter` section of this file will be noted which sub projects the t
 
 The changets file will be taken under version control as long as it takes to create a new release. After the release is created the changeset file will be merged into the affected changelog files and removed from the changeset directory.
 
+### Git
+
+The project uses git hooks at various stages.
+
+For example the `pre-commit` hook will automatically lint-fix the code before committing and will abort the commit process if lint-fix was not successful (MUST BE enabled by environment variable `LINTFIX_ON_COMMIT`, see `./.env.local`).
+
+Git hooks are located in the `./.githooks` directory.
+
+The hooks are automatically installed by the `pnpm install` command.
+
+> [!TIP]
+> If you want to disable git hooks for some reason you can disable the git hooks by adding `--no-verify` to the git command.
+> Example : `git commit --no-verify`
+
+#### Workflows
+
 ## CI/CD
 
 The [DevContainer](https://containers.dev/) of this repository will also be used by the CI/CD pipeline to ensure exactly the same development environment for both local development, CI/CD and release.

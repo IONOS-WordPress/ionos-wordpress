@@ -12,9 +12,9 @@ test.describe('test-plugin: wp-admin dashboard', () => {
   //   await admin.createNewPost();
   // });
 
-  test('test-plugin: dashboard should load properly', async ({ requestUtils, admin, page }) => {
+  test('test-plugin: dashboard should load properly', async ({ admin, page }) => {
     // requestUtils.activateTheme('twentytwentyfive');
     await admin.visitAdminPage('/index.php');
-    expect(page.getByRole('heading', { name: 'Welcome to WordPress', level: 2 })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Welcome to WordPress', level: 2 })).toBeVisible();
   });
 });

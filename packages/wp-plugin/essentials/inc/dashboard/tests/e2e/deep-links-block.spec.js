@@ -9,7 +9,7 @@ test.describe('essentials:dashboard deep-links block', () => {
   );
 
   test('contains output for valid tenant "ionos"', async ({ admin, editor }) => {
-    execSync('pnpm wp-env run tests-cli wp option update ionos_group_brand_name ionos');
+    execSync('pnpm wp-env run tests-cli wp option update ionos_group_brand ionos');
     await admin.visitAdminPage('/post-new.php?post_type=custom_dashboard');
 
     await editor.insertBlock({ name: 'ionos-dashboard-page/deep-links' });
@@ -24,7 +24,7 @@ test.describe('essentials:dashboard deep-links block', () => {
   });
 
   test('contains no output for invalid tenant', async ({ admin, editor }) => {
-    execSync('pnpm wp-env run tests-cli wp option update ionos_group_brand_name invalid_tenant');
+    execSync('pnpm wp-env run tests-cli wp option update ionos_group_brand invalid_tenant');
     await admin.visitAdminPage('/post-new.php?post_type=custom_dashboard');
 
     await editor.insertBlock({ name: 'ionos-dashboard-page/deep-links' });

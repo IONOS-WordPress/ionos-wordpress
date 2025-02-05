@@ -35,7 +35,7 @@ test.describe('Dashboard Global Styles', () => {
 
     // when entering the site-editor a new global styles post should be created
     // and the global styles should be loaded from the tmp file
-    await admin.visitAdminPage('site-editor.php');
+    await admin.visitAdminPage('post-new.php?post_type=custom_dashboard');
 
     const body = await editor.canvas.locator('body');
 
