@@ -545,9 +545,16 @@ Options:
 
                 pnpm build --use wp-plugin:wp-scripts --use wp-plugin:i18n
 
-                              do only wp-scripts transpilation and localization on wordpress plugin essentials
+                  do only wp-scripts transpilation and localization on wordpress plugin essentials
 
-                pnpm build --use wp-plugin:wp-scripts --use wp-plugin:i18n --filter '@wordpress-ionos/essentials'
+                pnpm build --use wp-plugin:wp-scripts --use wp-plugin:i18n --filter @ionos-wordpress/essentials
+
+                  build only the js/css and i18n part of workspace package @ionos-wordpress/essentials.
+
+                pnpm build --use wp-plugin:wp-scripts --filter essentials
+
+                  build only the js/css part of every workspace package containh 'essentials' in the name.
+                  We can even use wildcards in the filter option.
 EOF
       exit
       ;;
