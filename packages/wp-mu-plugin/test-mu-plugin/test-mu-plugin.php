@@ -20,7 +20,10 @@ defined('ABSPATH') || exit();
 const PLUGIN_FILE = __FILE__;
 
 \add_action('init', function (): void {
-  \load_muplugin_textdomain(domain: 'test-mu-plugin', mu_plugin_rel_path: basename(__DIR__) . '/test-mu-plugin/languages/');
+  \load_muplugin_textdomain(
+    domain: 'test-mu-plugin',
+    mu_plugin_rel_path: basename(__DIR__) . '/test-mu-plugin/languages/'
+  );
 
   $translated_text = \__('hello.world', 'test-mu-plugin');
   // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
@@ -38,7 +41,11 @@ const PLUGIN_FILE = __FILE__;
       'in_footer' => true,
     ],
   );
-  \wp_set_script_translations(handle : 'test-test-mu-plugin-index', domain : 'test-mu-plugin', path : basename(__DIR__) . '/test-mu-plugin/languages');
+  \wp_set_script_translations(
+    handle : 'test-test-mu-plugin-index',
+    domain : 'test-mu-plugin',
+    path : basename(__DIR__) . '/test-mu-plugin/languages'
+  );
 });
 
 require_once __DIR__ . '/test-mu-plugin/inc/feature-1.php';

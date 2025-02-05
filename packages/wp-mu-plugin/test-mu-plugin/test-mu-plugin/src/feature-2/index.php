@@ -4,7 +4,8 @@ namespace ionos_wordpress\test_mu_plugin\feature_2;
 
 use const ionos_wordpress\test_mu_plugin\PLUGIN_FILE;
 
-function feature_2(): void {
+function feature_2(): void
+{
   // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log('hello from ionos_wordpress\test_mu_plugin\feature_2');
 }
