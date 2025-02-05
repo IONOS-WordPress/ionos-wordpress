@@ -3,7 +3,11 @@ node_modules
 /wp-env-home
 /packages/*/*/node_modules
 /packages/*/*/build
+# exclude wp-mu-plugin build dirs
+/packages/*/*/*/build
 /packages/*/*/dist
+# exclude wp-mu-plugin build dirs
+/packages/*/*/*/dist
 /packages/*/*/languages/*.json
 /packages/*/*/languages/*.mo
 /packages/*/*/languages/*.php
@@ -16,7 +20,9 @@ node_modules
 /.wp-env.override.json
 /bin/
 build-info
+build-info
 packages/*/*/webpack.config.js
+/build
 /build
 *storybook.log
 /playwright/.cache
