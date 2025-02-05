@@ -169,7 +169,7 @@ function ionos.wordpress.dennis() {
     ionos.wordpress.log_header "auto translating po files with missing translations using deepl ..."
 
     # loop over all po files and translate missing entries
-    for PO_FILE in $(find ./packages -maxdepth 4 -mindepth 4 -type f -path '*/languages/*.po'); do
+    for PO_FILE in $(find ./packages -maxdepth 5 -mindepth 4 -type f -path '*/languages/*.po'); do
       # extract target language from file name
       TARGET_LANGUAGE=$(basename "$PO_FILE" | sed -n 's/.*-\([a-zA-Z_]*\)\.po$/\1/p')
 
