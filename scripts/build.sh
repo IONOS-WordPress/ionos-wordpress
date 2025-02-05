@@ -217,37 +217,38 @@ const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 module.exports = {
     ...defaultConfig,
     entry: {
-        ...defaultConfig.entry(),
+      ...defaultConfig.entry(),
 $(
   # add recursively all {index,*-index}.js files in src directory to webpack entry
   # ignore files with block.json in the same directory
   for js_file in $(find $JS_SRC_PATH -type f \( -name 'index.js' -o -name '*-index.js' \) ! -execdir test -f block.json \; -print | xargs -I {} realpath --relative-to $JS_SRC_PATH {}); do
-    echo "        '${js_file%.*}': './src/$js_file',"
+    echo "        '${js_file%.*}': '.$($IS_MU_PLUGIN && echo "/$PLUGIN_NAME")/src/$js_file',"
   done
 )
     },
     output: {
       ...defaultConfig?.output,
-      clean: true,
-      path: "$path$($IS_MU_PLUGIN && echo "/$PLUGIN_NAME")/build"
+      clean: true
     }
 };
 EOF
 
     [[ "$VERBOSE" == 'yes' ]] && cat $path/webpack.config.js
 
+    local JS_BUILD_PATH=$path$($IS_MU_PLUGIN && echo "/$PLUGIN_NAME")/build
     # bundle js/css either in development or production mode depending on NODE_ENV
     pnpm \
       --filter "$PACKAGE_NAME" \
       exec wp-scripts \
       $([[ "${NODE_ENV}" == 'development' ]] && echo 'start --no-watch' || echo 'build') \
-      --webpack-copy-php
+      --webpack-src-dir="$(realpath --relative-to=$path $JS_SRC_PATH)" --output-path="$(realpath --relative-to=$path $JS_BUILD_PATH)"
 
-    exit 1
+    # additionally copy all php files from src to build
+    rsync --quiet -rv --include="*/" --include '*.php' --exclude="*" "$JS_SRC_PATH/" "$JS_BUILD_PATH/"
 
     # (see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#build-blocks-manifest)
     # if the plugin provides blocks => build also the blocks manifest
-    for blocks_dir in $(find "$path/build" -type d -name 'blocks'); do
+    for blocks_dir in $(find "$JS_BUILD_PATH" -type d -name 'blocks'); do
       pnpm exec wp-scripts build-blocks-manifest --input="$blocks_dir" --output="$blocks_dir/blocks-manifest.php"
     done
   else
@@ -256,16 +257,18 @@ EOF
 
   # build localisation if WP_CLI_I18N_LOCALES is declared and enabled
   if [[ "${WP_CLI_I18N_LOCALES:-}" != '' ]] && [[ "${USE[@]}" =~ all|wp-plugin:i18n ]]; then
-    # ensure directory 'languages' exists if WP_CLI_I18N_LOCALES is not empty
-    mkdir -p $path/languages
+    local LANGUAGES_DIR=.$($IS_MU_PLUGIN && echo "/$PLUGIN_NAME")/languages
 
     (
       # ionos.wordpress.build_workspace_package_wp_plugin.wp_cli assumes
       # that we stay in the the plugin directory
       cd $path
 
+      # ensure directory 'languages' exists if WP_CLI_I18N_LOCALES is not empty
+      mkdir -p $LANGUAGES_DIR
+
       # clean up previously built localization files
-      rm -f ./languages/*{.mo,.json,.php}
+      rm -f $LANGUAGES_DIR/*{.mo,.json,.php}
 
       # generate pot files for each plugin file in the plugin directory
       plugin_filenames=$(ionos.wordpress.get_plugin_filenames .)
@@ -277,34 +280,34 @@ EOF
           ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-pot \
             --domain=$text_domain  \
             --exclude=tests/,vendor/,package.json,node_modules/,src/ \
-            ./ ./languages/$text_domain.pot
+            ./ $LANGUAGES_DIR/$text_domain.pot
 
           # generate po files if WP_CLI_I18N_LOCALES is set
           if [[ "${WP_CLI_I18N_LOCALES:-}" != '' ]]; then
             # generate po files for each locale
             for locale in ${WP_CLI_I18N_LOCALES}; do
-              [[ -f "./languages/${text_domain}-${locale}.po" ]] && continue
-              msginit -i "./languages/${text_domain}.pot" -l ${locale} -o "./languages/${text_domain}-${locale}.po" --no-translator
+              [[ -f "$LANGUAGES_DIR/${text_domain}-${locale}.po" ]] && continue
+              msginit -i "$LANGUAGES_DIR/${text_domain}.pot" -l ${locale} -o "$LANGUAGES_DIR/${text_domain}-${locale}.po" --no-translator
             done
           fi
         done
       done
 
       # update po files
-      ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n update-po ./languages/*.pot
+      ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n update-po $LANGUAGES_DIR/*.pot
 
       # compile mo/json/php localization files
-      if compgen -G "./languages/*.po" > /dev/null; then
+      if compgen -G "./$LANGUAGES_DIR/*.po" > /dev/null; then
         # compile mo files
-        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-mo ./languages/
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-mo $LANGUAGES_DIR/
 
         # compile json files
-        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-json languages/ --no-purge --update-mo-files $([[ "$NODE_ENV" == 'development' ]] && echo '--pretty-print')
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-json $LANGUAGES_DIR --no-purge --update-mo-files $([[ "$NODE_ENV" == 'development' ]] && echo '--pretty-print')
 
         # compile php files
-        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-php languages/
+        ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-php $LANGUAGES_DIR
       else
-        ionos.wordpress.log_warn "no po files found : consider creating one using '\$(cd $path/languages && msginit -i [pot_file] -l [locale] -o [pot_file_basename]-[locale].po --no-translator)'
+        ionos.wordpress.log_warn "no po files found : consider creating one using '\$(cd $path/$LANGUAGES_DIR && msginit -i [pot_file] -l [locale] -o [pot_file_basename]-[locale].po --no-translator)'
         "
       fi
     )
@@ -316,7 +319,7 @@ EOF
     # solution:
     #   revert generated pot file to git version if only one line
     #   (the creation date) has changed
-    for po_file in $(find "packages/$1/" -name "*.po" -or -name "*.pot" -type f); do
+    for po_file in $(find "./packages/$1/" -name "*.po" -or -name "*.pot" -type f); do
       diff_error_code=0
       # strip creation date and generator lines and line numbers using sed
       cmp -s \
@@ -345,6 +348,7 @@ EOF
       --exclude=languages/*.pot \
       --exclude=tests/ \
       --exclude=src/ \
+      --exclude=$($IS_MU_PLUGIN && echo "$PLUGIN_NAME/")src/ \
       --exclude=composer.* \
       --exclude=vendor/ \
       --exclude=.env \

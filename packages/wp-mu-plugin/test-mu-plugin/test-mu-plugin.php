@@ -17,6 +17,8 @@ namespace ionos_wordpress\test_mu_plugin;
 
 defined('ABSPATH') || exit();
 
+const PLUGIN_FILE = __FILE__;
+
 \add_action('init', function (): void {
   \load_muplugin_textdomain(domain: 'test-mu-plugin', mu_plugin_rel_path: basename(__DIR__) . '/test-mu-plugin/languages/');
 
@@ -25,12 +27,10 @@ defined('ABSPATH') || exit();
   error_log($translated_text);
 });
 
-require_once __DIR__ . '/test-mu-plugin/test-mu-plugin/inc/feature-1.php';
-
 \add_action('admin_enqueue_scripts', function (): void {
-  $assets = include_once __DIR__ . '/build/test-mu-plugin/index.asset.php';
+  $assets = include_once __DIR__ . '/test-mu-plugin/build/index.asset.php';
   \wp_enqueue_script(
-    handle: 'test-plugin-index',
+    handle: 'test-mu-plugin-index',
     src: \plugins_url('/test-mu-plugin/build/index.js', __FILE__),
     deps: $assets['dependencies'],
     ver: $assets['version'],
@@ -38,7 +38,8 @@ require_once __DIR__ . '/test-mu-plugin/test-mu-plugin/inc/feature-1.php';
       'in_footer' => true,
     ],
   );
-  \wp_set_script_translations(handle : 'test-plugin-index', domain : 'test-mu-plugin', path : basename(__DIR__) . '/test-mu-plugin/languages');
+  \wp_set_script_translations(handle : 'test-test-mu-plugin-index', domain : 'test-mu-plugin', path : basename(__DIR__) . '/test-mu-plugin/languages');
 });
 
-# require_once __DIR__ . '/test-mu-plugin/test-mu-plugin/build/feature-2/index.php';
+require_once __DIR__ . '/test-mu-plugin/inc/feature-1.php';
+require_once __DIR__ . '/test-mu-plugin/build/feature-2/index.php';

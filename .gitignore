@@ -11,6 +11,10 @@ node_modules
 /packages/*/*/languages/*.json
 /packages/*/*/languages/*.mo
 /packages/*/*/languages/*.php
+# exclude wp-mu-plugin generated language files
+/packages/*/*/*/languages/*.json
+/packages/*/*/*/languages/*.mo
+/packages/*/*/*/languages/*.php
 /.vscode/settings.json
 /.vscode/launch.json
 /.secrets
