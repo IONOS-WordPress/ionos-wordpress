@@ -69,6 +69,10 @@ EOF
       USE_OPTIONS+=("php" "${2}")
       shift 2
       ;;
+    --e2e-opts)
+      USE_OPTIONS+=("e2e" "${2}")
+      shift 2
+      ;;
     -*|--*)
       echo "Unknown option $1"
       exit 1
@@ -112,8 +116,8 @@ if [[ "${USE[@]}" =~ all|react ]]; then
 
     # execute playwright tests. provide part specific options and all positional arguments that are jsx files
     pnpm exec playwright test -c ./playwright-ct.config.js \
-      "${USE_OPTIONS[react]}" \
-      $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.jsx ]] && printf "$file"; done)
+      "${USE_OPTIONS[react]:---quiet}" \
+      $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.jsx ]] && printf "$file "; done)
   )
 fi
 
@@ -130,16 +134,18 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
 fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
-  # start wp-env unit tests. provide part specific options and all positional arguments that are jsx files
-  pnpm run wp-env run tests-wordpress phpunit \
+  # start wp-env unit tests. provide part specific options and all positional arguments that are php files
+  pnpm -s run wp-env run tests-wordpress phpunit -- \
     "${USE_OPTIONS[php]}" \
-    $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.php ]] && printf "$file"; done)
+    $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.php ]] && printf -- "--filter '%s'" $(basename $file .php); done)
 fi
 
 if [[ "${USE[@]}" =~ all|e2e ]]; then
-  # start wp-env e2e tests
+  # start wp-env e2e tests. provide part specific options and all positional arguments that are php files
   (
     ionos.wordpress.prepare_playwright_environment
-    pnpm exec wp-scripts test-playwright -c ./playwright.config.js "${POSITIONAL_ARGS[@]}"
+    pnpm exec wp-scripts test-playwright -c ./playwright.config.js \
+      "${USE_OPTIONS[e2e]:---quiet}" \
+      $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.js ]] && printf "$file "; done)
   )
 fi

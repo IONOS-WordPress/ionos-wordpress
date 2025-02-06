@@ -23,6 +23,7 @@
     "test": "./scripts/test.sh",
     "test:react": "./scripts/test.sh --use react",
     "test:php": "./scripts/test.sh --use php",
+    "test:e2e": "./scripts/test.sh --use e2e",
     "gh-cli": "./scripts/gh-cli.sh",
     "go-waas": "./scripts/go-waas.sh",
     "playground": "./scripts/playground.sh",
