@@ -87,6 +87,8 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
 - run whenever you changed a file : `pnpm watch -- PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
 
+  - run a single e2e test without rebuilding and checking wp-env is alive in playwright debug mode : `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js --debug ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
+
 - vscode supports running e2e tests by clicking on the play button in the test file.
 
   - same same for debugging tests.
