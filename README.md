@@ -305,45 +305,19 @@ In the `frontmatter` section of this file will be noted which sub projects the t
 
 The changets file will be taken under version control as long as it takes to create a new release. After the release is created the changeset file will be merged into the affected changelog files and removed from the changeset directory.
 
-#### Create a release manually
-
-Using `changeset` to create a release
-
-- frees you from maintaining a changelogs manually
-
-- automates the semantic version for you based on the changeset files
-
-```bash
-  # so you've developed some features, bugfixes and so on.
-  # for every "change" that should be reflected into the changelog and/or the new version number you've created a  changeset file using `pnpm changeset add`
-  ...
-  # now you want to create a new release :
-  # - update semver versions
-  # - generate changelogs using changeset for all sub projects
-  pnpm changeset version
-
-  # review changes made by changeset
-
-  # all changeset markdown are now merged into the referenced monorepo packages and will be removed from the changeset directory
-  # version numbers are increased according to the proposed changes in the changeset files
-
-  # commit updated files
-  git add .
-  git commit -am "chore(release) : $(jq -r '.version | values' package.json) [skip release]"
-
-  # tag release
-  pnpm changeset tag
-
-  # push changes and tags
-  git push && git push --tags
-
-  # merge develop into main
-  git push origin develop:main
-```
-
 ### Git
 
-@TODO: Git Flow vs Git-Flow vs Trunk based development. we need a decision here.
+The project uses git hooks at various stages.
+
+For example the `pre-commit` hook will automatically lint-fix the code before committing and will abort the commit process if lint-fix was not successful (MUST BE enabled by environment variable `LINTFIX_ON_COMMIT`, see `./.env.local`).
+
+Git hooks are located in the `./.githooks` directory.
+
+The hooks are automatically installed by the `pnpm install` command.
+
+> [!TIP]
+> If you want to disable git hooks for some reason you can disable the git hooks by adding `--no-verify` to the git command.
+> Example : `git commit --no-verify`
 
 #### Workflows
 

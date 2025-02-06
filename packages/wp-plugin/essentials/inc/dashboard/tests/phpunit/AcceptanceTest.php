@@ -8,7 +8,7 @@ use const ionos_wordpress\essentials\PLUGIN_DIR;
  * @group dashboard
  * @group essentials
  */
-class AcceptanceTest extends WP_UnitTestCase {
+class AcceptanceTest extends \WP_UnitTestCase {
   public function setUp(): void {
     // ensure that post types and taxonomies are reset for each test.
     if (!defined('WP_RUN_CORE_TESTS')) {
@@ -24,7 +24,7 @@ class AcceptanceTest extends WP_UnitTestCase {
     // our dashboard blocks (aka expected)
     $declared_dashboard_block_names = array_map(
       fn($block) => $block['name'],
-      require(PLUGIN_DIR . '/build/dashboard/blocks/blocks-manifest.php'),
+      require PLUGIN_DIR . '/build/dashboard/blocks/blocks-manifest.php',
     );
 
     \do_action('init');
@@ -33,6 +33,6 @@ class AcceptanceTest extends WP_UnitTestCase {
     $registered_block_names = array_keys(\WP_Block_Type_Registry::get_instance()->get_all_registered());
     $registered_block_names = array_filter($registered_block_names, fn($_) => str_starts_with($_, 'ionos-dashboard-page/'));
 
-     $this->assertEqualsCanonicalizing($declared_dashboard_block_names, $registered_block_names, 'all dashboard blocks are registered.');
+    $this->assertEqualsCanonicalizing($declared_dashboard_block_names, $registered_block_names, 'all dashboard blocks are registered.');
   }
 }

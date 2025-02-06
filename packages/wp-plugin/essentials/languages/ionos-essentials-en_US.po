@@ -57,52 +57,52 @@ msgctxt "block description"
 msgid "Show links to the Control Panel of your provider."
 msgstr "Show links to the Control Panel of your provider."
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:6
+#: build/dashboard/blocks/deep-links/config/ionos.php:8
 msgid "Contracts & Subscriptions"
 msgstr "Contracts & Subscriptions"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:10
+#: build/dashboard/blocks/deep-links/config/ionos.php:12
 msgid "Login & Account security"
 msgstr "Login & Account security"
 
-#: build/dashboard/blocks/deep-links/view.php:3
+#: build/dashboard/blocks/deep-links/render.php:16
 msgid "Deep-Links"
 msgstr "Deep-Links"
 
-#: build/dashboard/blocks/deep-links/view.php:4
-#: build/dashboard/blocks/quick-links/view.php:4
+#: build/dashboard/blocks/deep-links/render.php:17
+#: build/dashboard/blocks/quick-links/render.php:11
 msgid "Use these links to get to your control panel."
 msgstr "Use these links to get to your control panel."
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:14
+#: build/dashboard/blocks/deep-links/config/ionos.php:16
 msgid "Invoices & Payment Details"
 msgstr "Invoices & Payment Details"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:18
+#: build/dashboard/blocks/deep-links/config/ionos.php:20
 msgid "Data Protection & Privacy Notice"
 msgstr "Data Protection & Privacy Notice"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:22
+#: build/dashboard/blocks/deep-links/config/ionos.php:24
 msgid "Contact Details"
 msgstr "Contact Details"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:26
+#: build/dashboard/blocks/deep-links/config/ionos.php:28
 msgid "Profile Details"
 msgstr "Profile Details"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:6
+#: build/dashboard/blocks/deep-links/config/strato.php:8
 msgid "Package overview"
 msgstr "Package overview"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:10
+#: build/dashboard/blocks/deep-links/config/strato.php:12
 msgid "Your invoices"
 msgstr "Your invoices"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:14
+#: build/dashboard/blocks/deep-links/config/strato.php:16
 msgid "Your contract"
 msgstr "Your contract"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:18
+#: build/dashboard/blocks/deep-links/config/strato.php:20
 msgid "Current offers"
 msgstr "Current offers"
 
@@ -116,29 +116,72 @@ msgctxt "block description"
 msgid "Show links to common tasks in the WordPress backend."
 msgstr "Show links to common tasks in the WordPress backend."
 
-#: build/dashboard/blocks/quick-links/view.php:3
+#: build/dashboard/blocks/quick-links/render.php:10
 msgid "Quick Links"
 msgstr "Quick Links"
 
-#: build/dashboard/blocks/quick-links/config.php:5
+#: build/dashboard/blocks/quick-links/config.php:7
 msgid "Add new page"
 msgstr "Add new page"
 
-#: build/dashboard/blocks/quick-links/config.php:6
+#: build/dashboard/blocks/quick-links/config.php:8
 msgid "Add new post"
 msgstr "Add new post"
 
-#: build/dashboard/blocks/quick-links/config.php:7
+#: build/dashboard/blocks/quick-links/config.php:9
 msgid "Discover plugins"
 msgstr "Discover plugins"
 
-#: build/dashboard/blocks/quick-links/config.php:8
+#: build/dashboard/blocks/quick-links/config.php:10
 msgid "Edit template"
 msgstr "Edit template"
 
-#: build/dashboard/blocks/quick-links/config.php:9
+#: build/dashboard/blocks/quick-links/config.php:11
 msgid "Edit navigation"
 msgstr "Edit navigation"
+
+#: build/dashboard/blocks/deep-links/config/arsys.php:8
+#: build/dashboard/blocks/deep-links/config/piensa.php:8
+msgid "My offers"
+msgstr "My offers"
+
+#: build/dashboard/blocks/deep-links/config/arsys.php:12
+msgid "My data"
+msgstr "My data"
+
+#: build/dashboard/blocks/deep-links/config/arsys.php:16
+msgid "My products"
+msgstr "My products"
+
+#: build/dashboard/blocks/deep-links/config/arsys.php:20
+msgid "My invoices"
+msgstr "My invoices"
+
+#: build/dashboard/blocks/deep-links/config/arsys.php:24
+#: build/dashboard/blocks/deep-links/config/fasthosts.php:8
+#: build/dashboard/blocks/deep-links/config/piensa.php:24
+msgid "Control Panel"
+msgstr "Control Panel"
+
+#: build/dashboard/blocks/deep-links/config/fasthosts.php:12
+msgid "My User"
+msgstr "My User"
+
+#: build/dashboard/blocks/deep-links/config/fasthosts.php:16
+msgid "WordPress Websites"
+msgstr "WordPress Websites"
+
+#: build/dashboard/blocks/deep-links/config/piensa.php:12
+msgid "Data of customer"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/config/piensa.php:16
+msgid "Services"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/config/piensa.php:20
+msgid "Invoices"
+msgstr ""
 
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block title"
