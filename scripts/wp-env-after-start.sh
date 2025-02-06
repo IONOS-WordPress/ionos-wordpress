@@ -213,7 +213,7 @@ for prefix in '' 'tests-' ; do
   pnpm exec wp-env run ${prefix}cli wp plugin activate --all
 
   # emulate ionos brand by default
-  pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand_name ionos
+  pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand ionos
 
   # fix permissions for mu-plugins folder if any
   # (leaving the permisions as-is will rsult in an error on destroy restart wp-env)
