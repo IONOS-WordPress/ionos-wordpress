@@ -33,12 +33,12 @@ $links = [
 // The first market is the default market
 $market_domains = [
   'de' => 'https://my.ionos.com/',
-  'uk' => 'my.ionos.co.uk',
-  'gb' => 'my.ionos.co.uk',
-  'ft' => 'my.ionos.fr',
-  'us' => 'my.ionos.com',
-  'es' => 'my.ionos.es',
-  'ca' => 'my.ionos.ca',
-  'it' => 'my.ionos.it',
-  'mx' => 'my.ionos.mx',
+  'uk' => 'https://my.ionos.co.uk/',
+  'gb' => 'https://my.ionos.co.uk/',
+  'ft' => 'https://my.ionos.fr/',
+  'us' => 'https://my.ionos.com/',
+  'es' => 'https://my.ionos.es/',
+  'ca' => 'https://my.ionos.ca/',
+  'it' => 'https://my.ionos.it/',
+  'mx' => 'https://my.ionos.mx/',
 ];

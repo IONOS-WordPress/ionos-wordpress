@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 
 namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
 
@@ -16,7 +17,6 @@ if ($tenant && file_exists($config_file)) {
   printf('<p>%s</p>', \esc_html__('Use these links to get to your control panel.', 'ionos-essentials'));
 
   echo '<ul class="wp-block-list">';
-  // PHPCS:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
   foreach ($links as $link) {
     printf(
       '<li><a href="%s" target="_blank">%s</a></li>',

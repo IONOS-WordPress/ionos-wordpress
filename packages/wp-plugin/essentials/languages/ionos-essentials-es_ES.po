@@ -1,184 +1,184 @@
-# Copyright (C) 2025 IONOS Group
-# This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-05T10:04:03+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"POT-Creation-Date: 2025-02-05T09:50:40+00:00\n"
+"PO-Revision-Date: 2025-02-05T09:50:40+00:00\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
+"X-Generator: WP-CLI 2.11.0\n"
 
 #. Plugin Name of the plugin
 #: essentials.php
 msgid "ionos-wordpress/essentials"
-msgstr ""
+msgstr "ionos-wordpress/esenciales"
 
 #. Plugin URI of the plugin
 #: essentials.php
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
-msgstr ""
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
 
 #. Description of the plugin
 #: essentials.php
 msgid "The essentials plugin provides IONOS hosting specific functionality."
-msgstr ""
+msgstr "El plugin essentials proporciona funcionalidades específicas para el alojamiento de IONOS."
 
 #. Author of the plugin
 #: essentials.php
 msgid "IONOS Group"
-msgstr ""
+msgstr "Grupo IONOS"
 
 #. Author URI of the plugin
 #: essentials.php
 msgid "https://www.ionos-group.com/brands.html"
-msgstr ""
+msgstr "https://www.ionos-group.com/brands.html"
 
 #: build/dashboard/blocks/deep-links/config/arsys.php:8
 #: build/dashboard/blocks/deep-links/config/piensa.php:8
 msgid "My offers"
-msgstr ""
+msgstr "Mis ofertas"
 
 #: build/dashboard/blocks/deep-links/config/arsys.php:12
 msgid "My data"
-msgstr ""
+msgstr "Mis datos"
 
 #: build/dashboard/blocks/deep-links/config/arsys.php:16
 msgid "My products"
-msgstr ""
+msgstr "Mis productos"
 
 #: build/dashboard/blocks/deep-links/config/arsys.php:20
 msgid "My invoices"
-msgstr ""
+msgstr "Mis facturas"
 
 #: build/dashboard/blocks/deep-links/config/arsys.php:24
 #: build/dashboard/blocks/deep-links/config/fasthosts.php:8
 #: build/dashboard/blocks/deep-links/config/piensa.php:24
 msgid "Control Panel"
-msgstr ""
+msgstr "Panel de control"
 
 #: build/dashboard/blocks/deep-links/config/fasthosts.php:12
 msgid "My User"
-msgstr ""
+msgstr "Mi usuario"
 
 #: build/dashboard/blocks/deep-links/config/fasthosts.php:16
 msgid "WordPress Websites"
-msgstr ""
+msgstr "Sitios web WordPress"
 
 #: build/dashboard/blocks/deep-links/config/ionos.php:8
 msgid "Contracts & Subscriptions"
-msgstr ""
+msgstr "Contratos y suscripciones"
 
 #: build/dashboard/blocks/deep-links/config/ionos.php:12
 msgid "Login & Account security"
-msgstr ""
+msgstr "Inicio de sesión y seguridad de la cuenta"
 
 #: build/dashboard/blocks/deep-links/config/ionos.php:16
 msgid "Invoices & Payment Details"
-msgstr ""
+msgstr "Facturas y datos de pago"
 
 #: build/dashboard/blocks/deep-links/config/ionos.php:20
 msgid "Data Protection & Privacy Notice"
-msgstr ""
+msgstr "Protección de datos y privacidad"
 
 #: build/dashboard/blocks/deep-links/config/ionos.php:24
 msgid "Contact Details"
-msgstr ""
+msgstr "Datos de contacto"
 
 #: build/dashboard/blocks/deep-links/config/ionos.php:28
 msgid "Profile Details"
-msgstr ""
-
-#: build/dashboard/blocks/deep-links/config/piensa.php:12
-msgid "Data of customer"
-msgstr ""
-
-#: build/dashboard/blocks/deep-links/config/piensa.php:16
-msgid "Services"
-msgstr ""
-
-#: build/dashboard/blocks/deep-links/config/piensa.php:20
-msgid "Invoices"
-msgstr ""
+msgstr "Detalles del perfil"
 
 #: build/dashboard/blocks/deep-links/config/strato.php:8
 msgid "Package overview"
-msgstr ""
+msgstr "Resumen del paquete"
 
 #: build/dashboard/blocks/deep-links/config/strato.php:12
 msgid "Your invoices"
-msgstr ""
+msgstr "Sus facturas"
 
 #: build/dashboard/blocks/deep-links/config/strato.php:16
 msgid "Your contract"
-msgstr ""
+msgstr "Su contrato"
 
 #: build/dashboard/blocks/deep-links/config/strato.php:20
 msgid "Current offers"
-msgstr ""
+msgstr "Ofertas actuales"
 
 #: build/dashboard/blocks/deep-links/render.php:16
 msgid "Deep-Links"
-msgstr ""
+msgstr "Enlaces profundos"
 
 #: build/dashboard/blocks/deep-links/render.php:17
 #: build/dashboard/blocks/quick-links/render.php:11
 msgid "Use these links to get to your control panel."
-msgstr ""
+msgstr "Utilice estos enlaces para acceder a su panel de control."
 
 #: build/dashboard/blocks/quick-links/config.php:7
 msgid "Add new page"
-msgstr ""
+msgstr "Añadir nueva página"
 
 #: build/dashboard/blocks/quick-links/config.php:8
 msgid "Add new post"
-msgstr ""
+msgstr "Añadir un nuevo mensaje"
 
 #: build/dashboard/blocks/quick-links/config.php:9
 msgid "Discover plugins"
-msgstr ""
+msgstr "Descubrir plugins"
 
 #: build/dashboard/blocks/quick-links/config.php:10
 msgid "Edit template"
-msgstr ""
+msgstr "Editar plantilla"
 
 #: build/dashboard/blocks/quick-links/config.php:11
 msgid "Edit navigation"
-msgstr ""
+msgstr "Editar navegación"
 
 #: build/dashboard/blocks/quick-links/render.php:10
 msgid "Quick Links"
-msgstr ""
+msgstr "Enlaces rápidos"
 
 #: essentials.php:31
 msgid "Hello World !"
-msgstr ""
+msgstr "Hola a todos."
 
 #: inc/dashboard/index.php:35
 msgid "IONOS Dashboard"
-msgstr ""
+msgstr "Cuadro de mandos de IONOS"
 
 #: build/dashboard/blocks/deep-links/block.json
 msgctxt "block title"
 msgid "Deep Links"
-msgstr ""
+msgstr "Enlaces profundos"
 
 #: build/dashboard/blocks/deep-links/block.json
 msgctxt "block description"
 msgid "Show links to the Control Panel of your provider."
-msgstr ""
+msgstr "Mostrar enlaces al Panel de Control de su proveedor."
 
 #: build/dashboard/blocks/quick-links/block.json
 msgctxt "block title"
 msgid "Quick Links"
-msgstr ""
+msgstr "Enlaces rápidos"
 
 #: build/dashboard/blocks/quick-links/block.json
 msgctxt "block description"
 msgid "Show links to common tasks in the WordPress backend."
-msgstr ""
+msgstr "Mostrar enlaces a tareas comunes en el backend de WordPress."
+
+#: build/dashboard/blocks/deep-links/config/piensa.php:12
+msgid "Data of customer"
+msgstr "Datos de cliente"
+
+#: build/dashboard/blocks/deep-links/config/piensa.php:16
+msgid "Services"
+msgstr "Servicios"
+
+#: build/dashboard/blocks/deep-links/config/piensa.php:20
+msgid "Invoices"
+msgstr "Facturas"
