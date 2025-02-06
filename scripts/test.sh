@@ -65,6 +65,10 @@ EOF
       USE_OPTIONS+=("react" "${2}")
       shift 2
       ;;
+    --php-opts)
+      USE_OPTIONS+=("php" "${2}")
+      shift 2
+      ;;
     -*|--*)
       echo "Unknown option $1"
       exit 1
@@ -106,7 +110,7 @@ if [[ "${USE[@]}" =~ all|react ]]; then
   (
     ionos.wordpress.prepare_playwright_environment
 
-    # execute playwright tests and provide part specific options and all positional arguments that are jsx files
+    # execute playwright tests. provide part specific options and all positional arguments that are jsx files
     pnpm exec playwright test -c ./playwright-ct.config.js \
       "${USE_OPTIONS[react]}" \
       $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.jsx ]] && printf "$file"; done)
@@ -126,8 +130,10 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
 fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
-  # start wp-env unit tests
-  pnpm phpunit:test -- "${POSITIONAL_ARGS[@]}"
+  # start wp-env unit tests. provide part specific options and all positional arguments that are jsx files
+  pnpm run wp-env run tests-wordpress phpunit \
+    "${USE_OPTIONS[php]}" \
+    $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.php ]] && printf "$file"; done)
 fi
 
 if [[ "${USE[@]}" =~ all|e2e ]]; then
