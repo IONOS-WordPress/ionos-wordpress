@@ -11,9 +11,14 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-ADDITIONAL_ARGS=()
+# test file arguments
+POSITIONAL_ARGS=()
 
+# array of flags indicating which kind of tests (react,php,...) to execute
 USE=()
+
+# options per kind of test
+declare -A USE_OPTIONS
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -56,14 +61,17 @@ EOF
       USE+=("${2,,}")
       shift 2
       ;;
-    --)
-      shift
-      ADDITIONAL_ARGS=("$@")
-      break
+    --react-opts)
+      USE_OPTIONS+=("react" "${2}")
+      shift 2
       ;;
     -*|--*)
       echo "Unknown option $1"
       exit 1
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1")
+      shift # past argument
       ;;
   esac
 done
@@ -98,8 +106,10 @@ if [[ "${USE[@]}" =~ all|react ]]; then
   (
     ionos.wordpress.prepare_playwright_environment
 
-    # execute playwright tests
-    pnpm exec playwright test -c ./playwright-ct.config.js "${ADDITIONAL_ARGS[@]}"
+    # execute playwright tests and provide part specific options and all positional arguments that are jsx files
+    pnpm exec playwright test -c ./playwright-ct.config.js \
+      "${USE_OPTIONS[react]}" \
+      $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.jsx ]] && printf "$file"; done)
   )
 fi
 
@@ -117,13 +127,13 @@ fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
   # start wp-env unit tests
-  pnpm phpunit:test -- "${ADDITIONAL_ARGS[@]}"
+  pnpm phpunit:test -- "${POSITIONAL_ARGS[@]}"
 fi
 
 if [[ "${USE[@]}" =~ all|e2e ]]; then
   # start wp-env e2e tests
   (
     ionos.wordpress.prepare_playwright_environment
-    pnpm exec wp-scripts test-playwright -c ./playwright.config.js "${ADDITIONAL_ARGS[@]}"
+    pnpm exec wp-scripts test-playwright -c ./playwright.config.js "${POSITIONAL_ARGS[@]}"
   )
 fi
