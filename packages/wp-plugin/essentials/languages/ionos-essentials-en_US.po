@@ -182,3 +182,25 @@ msgstr ""
 #: build/dashboard/blocks/deep-links/config/piensa.php:20
 msgid "Invoices"
 msgstr ""
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block title"
+msgid "Vulnerability"
+msgstr "Vulnerability"
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block description"
+msgid "Show wp scan data."
+msgstr "Show wp scan data."
+
+#: build/dashboard/blocks/vulnerability/class-wpscan.php:18
+msgid "Vulnerability Scan"
+msgstr "Vulnerability Scan"
+
+#: build/dashboard/blocks/vulnerability/render.php:37
+msgid "Please, install the IONOS Security Plugin"
+msgstr "Please, install the IONOS Security Plugin"
+
+#: build/dashboard/blocks/vulnerability/render.php:39
+msgid "Please, activate the IONOS Security Plugin"
+msgstr "Please, activate the IONOS Security Plugin"

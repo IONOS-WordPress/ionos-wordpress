@@ -155,6 +155,18 @@ msgstr ""
 msgid "Quick Links"
 msgstr ""
 
+#: build/dashboard/blocks/vulnerability/class-wpscan.php:18
+msgid "Vulnerability Scan"
+msgstr ""
+
+#: build/dashboard/blocks/vulnerability/render.php:37
+msgid "Please, install the IONOS Security Plugin"
+msgstr ""
+
+#: build/dashboard/blocks/vulnerability/render.php:39
+msgid "Please, activate the IONOS Security Plugin"
+msgstr ""
+
 #: essentials.php:31
 msgid "Hello World !"
 msgstr ""
@@ -181,4 +193,14 @@ msgstr ""
 #: build/dashboard/blocks/quick-links/block.json
 msgctxt "block description"
 msgid "Show links to common tasks in the WordPress backend."
+msgstr ""
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block title"
+msgid "Vulnerability"
+msgstr ""
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block description"
+msgid "Show wp scan data."
 msgstr ""

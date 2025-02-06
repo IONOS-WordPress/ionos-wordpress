@@ -40,6 +40,7 @@ if (is_file(__DIR__ . '/editor.php')) {
   );
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/deep-links');
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/quick-links');
+  \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/vulnerability');
 });
 
 // remove our blocks from all other post types

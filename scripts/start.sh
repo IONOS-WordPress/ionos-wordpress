@@ -54,9 +54,15 @@ pnpm build
     ],
     "env": {
       "development": {
+         "config": {
+          "IONOS_WP_ENV_MODE": "development"
+        },
         "phpmyadminPort": 9000
       },
       "tests": {
+        "config": {
+          "IONOS_WP_ENV_MODE": "test"
+        },
         "phpmyadminPort": 9001
       }
     },
