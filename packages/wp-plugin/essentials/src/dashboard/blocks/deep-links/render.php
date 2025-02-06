@@ -1,5 +1,4 @@
 <?php
-
 // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 
 namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
