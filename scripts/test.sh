@@ -157,7 +157,7 @@ Options:
 
                 Execute "pnpm run test:react --react-opts '--help'" to see all Playwright options
 
-  Usages:
+  Usage:
     Execute only react tests :
       'pnpm run test:react' or
       'pnpm run test --use react'
