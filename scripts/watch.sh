@@ -62,3 +62,5 @@ Usage :
 
   Whenever a file changed rebuilt the js/css part of the essentials workspace package :
   'pnpm watch -- pnpm build --filter '*/essentials' --use wp-plugin:wp-scripts'
+
+See ./docs/3-tools.md for more informations
