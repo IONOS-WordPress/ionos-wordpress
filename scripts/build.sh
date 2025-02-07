@@ -9,6 +9,57 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
+# MARK: parse arguments
+FORCE=no
+VERBOSE=no
+FILTER=()
+POSITIONAL_ARGS=()
+USE=()
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --help)
+       # print everythin in this script file after the '###help-message' marker
+      printf "$(sed -e '1,/^###help-message/d' "$0")\n"
+      exit
+      ;;
+    --force)
+      FORCE=yes
+      shift
+      ;;
+    --verbose)
+      VERBOSE=yes
+      shift
+      ;;
+    --filter)
+      FILTER+=("$2")
+      shift 2
+      ;;
+    --use)
+      # convert value to lowercase and append value to USE array
+      USE+=("${2,,}")
+      shift 2
+      ;;
+    -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1")
+      shift # past argument
+      ;;
+  esac
+done
+
+[[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=(".")
+
+FILTER="${FILTER[@]/#/--filter=}"
+
+# invoke all build steps by default
+[[ ${#USE[@]} -eq 0 ]] && USE=("all")
+# ENDMARK:
+
+
 # skip building if BUILD_UP_TO_DATE is set to 1
 if [[ "${BUILD_UP_TO_DATE:-}" == '1' ]]; then
   ionos.wordpress.log_warn "skip (re)building : BUILD_UP_TO_DATE=1"
@@ -16,7 +67,7 @@ if [[ "${BUILD_UP_TO_DATE:-}" == '1' ]]; then
 fi
 
 # quirks : when switch between devcontainer and local development
-# the noe deps are not identical for some reason. thats why we need to ensure
+# the node dependencies are not identical for some reason. thats why we need to ensure
 # that the dependencies are installed in the current environment before building
 # => because of pnpm's caching this is at no cost
 echo 'y' | pnpm install
@@ -507,22 +558,33 @@ function ionos.wordpress.get_workspace_package_dependency_order() {
   done | tsort | tac | grep -v '^0$'
 }
 
-# MARK: parse arguments
-FORCE=no
-VERBOSE=no
-FILTER=()
-POSITIONAL_ARGS=()
-USE=()
+# MARK: build all
+# get all workspace packages in topological order
+# each line contains [type][workspace-package] (example : wp-plugin/essentials)
+WORKSPACE_PACKAGES=$(pnpm -r $FILTER --sort exec realpath --relative-to=$(pwd)/packages . | grep --invert "No projects matched the filters" ||:)
 
-while [[ $# -gt 0 ]]; do
-  case $1 in
-    --help)
-      cat <<EOF
-Usage: $0 [options]"
+if [[ "$WORKSPACE_PACKAGES" == '' ]]; then
+  ionos.wordpress.log_warn "pnpm : filters (${FILTER:-*.*}) doesnt match a pnpm workspace package."
+  exit 1
+fi
 
-By default all packages/{npm,wp-plugin} workspace packages will be build.
+WORKSPACE_PACKAGES=$(ionos.wordpress.get_workspace_package_dependency_order $WORKSPACE_PACKAGES)
 
-packages/{docker} workspace packages will only be build if no matching (name,version) docker image exists locally
+# call build function for each workspace package
+while read -r path; do
+  ionos.wordpress.build_workspace_package $path
+  echo
+done <<< "$WORKSPACE_PACKAGES"
+# ENDMARK:
+
+exit
+
+###help-message
+Syntax: 'pnpm run build [options] [additional-args]'
+
+'packages/{npm,wp-plugin,wp-mu-plugin}' workspace packages will be build by default.
+
+'packages/{docker}' workspace packages will only be build on demand.
 
 Options:
   --help      Show this help message and exit
@@ -545,76 +607,18 @@ Options:
                 - wp-plugin:rector     execute rector on wordpress plugins
                 - wp-plugin:bundle     bundle wordpress plugins to zip archives
 
-              Example usage : do only wp-scripts transpilation and localization on wordpress plugins
+Usage:
+Do only wp-scripts transpilation and localization on wordpress plugins
+  'pnpm build --use wp-plugin:wp-scripts --use wp-plugin:i18n'
 
-                pnpm build --use wp-plugin:wp-scripts --use wp-plugin:i18n
+Do only wp-scripts transpilation and localization on wordpress plugin essentials
+  'pnpm build --use wp-plugin:wp-scripts --use wp-plugin:i18n --filter @ionos-wordpress/essentials'
 
-                  do only wp-scripts transpilation and localization on wordpress plugin essentials
+Build only the js/css and i18n part of workspace package '@ionos-wordpress/essentials'.
+  'pnpm build --use wp-plugin:wp-scripts --filter essentials'
 
-                pnpm build --use wp-plugin:wp-scripts --use wp-plugin:i18n --filter @ionos-wordpress/essentials
+  Build only the js/css part of every workspace package contain 'essentials' in the name.
 
-                  build only the js/css and i18n part of workspace package @ionos-wordpress/essentials.
+  We can even use wildcards in the filter option.
 
-                pnpm build --use wp-plugin:wp-scripts --filter essentials
-
-                  build only the js/css part of every workspace package containh 'essentials' in the name.
-                  We can even use wildcards in the filter option.
-EOF
-      exit
-      ;;
-    --force)
-      FORCE=yes
-      shift
-      ;;
-    --verbose)
-      VERBOSE=yes
-      shift
-      ;;
-    --filter)
-      FILTER+=("$2")
-      shift 2
-      ;;
-    --use)
-      # convert value to lowercase and append value to USE array
-      USE+=("${2,,}")
-      shift 2
-      ;;
-    -*|--*)
-      echo "Unknown option $1"
-      exit 1
-      ;;
-    *)
-      POSITIONAL_ARGS+=("$1")
-      shift # past argument
-      ;;
-  esac
-done
-
-[[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=(".")
-
-FILTER="${FILTER[@]/#/--filter=}"
-
-# invoke all build steps by default
-[[ ${#USE[@]} -eq 0 ]] && USE=("all")
-# ENDMARK:
-
-# MARK: build all
-# get all workspace packages in topological order
-# each line contains [type][workspace-package] (example : wp-plugin/essentials)
-WORKSPACE_PACKAGES=$(pnpm -r $FILTER --sort exec realpath --relative-to=$(pwd)/packages . | grep --invert "No projects matched the filters" ||:)
-
-if [[ "$WORKSPACE_PACKAGES" == '' ]]; then
-  ionos.wordpress.log_warn "pnpm : filters (${FILTER:-*.*}) doesnt match a pnpm workspace package."
-  exit 1
-fi
-
-WORKSPACE_PACKAGES=$(ionos.wordpress.get_workspace_package_dependency_order $WORKSPACE_PACKAGES)
-
-# call build function for each workspace package
-while read -r path; do
-  ionos.wordpress.build_workspace_package $path
-  echo
-done <<< "$WORKSPACE_PACKAGES"
-# ENDMARK:
-
-
+see ./docs/2-build.md for more informations
