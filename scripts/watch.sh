@@ -21,21 +21,8 @@ POSITIONAL_ARGS=()
 while [[ $# -gt 0 ]]; do
   case $1 in
     --help)
-      cat <<EOF
-Usage: $0 [options] -- command ..."
-
-Execute the given command on file changes.
-
-By default 'pnpm watch' will be executed on file changes.
-
-Options:
-
-  --help    Show this help message and exit
-
-  Example usage : whever a file changed rebuilt the js/css part of the essentials workspace package
-
-    pnpm watch -- pnpm build --filter '*/essentials' --use wp-plugin:wp-scripts
-EOF
+      # print everything in this script file after the '###help-message' marker
+      printf "$(sed -e '1,/^###help-message/d' "$0")\n"
       exit
       ;;
     --)
@@ -58,3 +45,20 @@ exec find ./packages -type f | \
   sed  's/::\s\+//g' | \
   entr "${POSITIONAL_ARGS[@]}"
 
+exit
+
+###help-message
+Syntax: 'pnpm run watch [options] -- command'
+
+Execute the given command on file changes.
+
+'pnpm watch' will execute the given command on every file change.
+
+Options:
+
+  --help    Show this help message and exit
+
+Usage :
+
+  Whenever a file changed rebuilt the js/css part of the essentials workspace package :
+  'pnpm watch -- pnpm build --filter '*/essentials' --use wp-plugin:wp-scripts'
