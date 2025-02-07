@@ -2,6 +2,7 @@
 
 #
 # this script is used to customize the created wp-env instance
+# it is not intended to be executed directly.
 #
 
 set -eo pipefail
