@@ -71,29 +71,8 @@ function ionos.wordpress.check_docker_version() {
 while [[ $# -gt 0 ]]; do
   case $1 in
     --help)
-      cat <<EOF
-Usage: $0 [options] ..."
-
-Check for updates of
-
-- package dependencies
-- nodejs version
-- pnpm version
-- docker version
-- updates in workspace packages of the 'docker' flavour
-
-Options:
-
-  --help                    Show this help message and exit
-
-  --pnpm-opts <pnpm-opts>   Pass additional options to pnpm command
-
-Example usage :
-
-  update package dependencies : pnpm update-dependencies
-
-  update package dependencies to latest version : pnpm update-dependencies --pnpm-opts '--latest'
-EOF
+      # print everythin in this script file after the '###help-message' marker
+      printf "$(sed -e '1,/^###help-message/d' "$0")\n"
       exit
       ;;
     --pnpm-opts)
@@ -121,3 +100,31 @@ for package_path in $(find packages -mindepth 2 -maxdepth 2 -type d); do
   fi
 done
 
+exit
+
+###help-message
+Syntax: 'pnpm run update-dependencies [options] [additional-args]'
+
+Checks for updates of
+
+- package dependencies
+- nodejs version
+- pnpm version
+- docker version
+- updates in workspace packages of the 'docker' flavour
+
+Options:
+
+  --help                    Show this help message and exit
+
+  --pnpm-opts '<pnpm-opts>'   Pass additional options to pnpm command
+
+Usage :
+
+  Update package dependencies
+  `pnpm update-dependencies'
+
+  Update package dependencies to latest version
+  'pnpm update-dependencies --pnpm-opts "--latest"'
+
+See ./docs/3-tools.md for more informations
