@@ -25,7 +25,7 @@ while [[ $# -gt 0 ]]; do
     --help)
       # print everythin in this script file after the '###help-message' marker
       printf "$(sed -e '1,/^###help-message/d' "$0")"
-      exit 0
+      exit
       ;;
     --use)
       # convert value to lowercase and append value to USE array
