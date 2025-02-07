@@ -23,37 +23,9 @@ declare -A USE_OPTIONS
 while [[ $# -gt 0 ]]; do
   case $1 in
     --help)
-      cat <<EOF
-Usage: $0 [options] [-- additional-args]"
-
-Executes tests.
-
-This action will start wp-env if it is not already running.
-
-Options:
-
-  --help    Show this help message and exit
-
-  --use     Specify which tests to execute (default: all)
-
-            Available options:
-              - php       execute PHPUnit tests
-              - e2e       execute E2E tests
-              - react     execute Storybook/React tests
-
-            This option can be used multiple times to specify multiple tests.
-
-  Example usage :
-    Execute only PHPUnit and E2e tests: 'pnpm run test --use e2e --use php'
-
-    Execute PHPUnit tests and provide additional args to PHPUnit :
-
-      'pnpm test --use php -- --filter test_my_test_method'
-
-      'pnpm test --use php -- --filter MyTestClass'
-
-      'pnpm run test --use php -- --group foo'
-EOF
+      # print everythin in this script file after the '###help-message' marker
+      printf "$(sed -e '1,/^###help-message/d' "$0")"
+      echo $0
       exit 0
       ;;
     --use)
@@ -135,6 +107,7 @@ fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
   # start wp-env unit tests. provide part specific options and all positional arguments that are php files
+  # (files will be converted to '--filter *TestCase' arguments to match PHPUNit expectations)
   pnpm -s run wp-env run tests-wordpress phpunit -- \
     "${USE_OPTIONS[php]}" \
     $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.php ]] && printf -- "--filter '%s'" $(basename $file .php); done)
@@ -149,3 +122,86 @@ if [[ "${USE[@]}" =~ all|e2e ]]; then
       $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.js ]] && printf "$file "; done)
   )
 fi
+
+exit
+
+###help-message
+Syntax: 'pnpm run test [options] [additional-args]'
+
+Executes tests.
+
+if PHPUnit or e2e tests will be runned, it will start wp-env if not already running.
+
+Options:
+
+  --help    Show this help message and exit
+
+  --use     Specify which tests to execute (default: all). Can be applied multiple times.
+
+            Available options:
+
+              - php       execute PHPUnit tests
+
+                --php-opts '<options>'  Additional options to pass to PHPUnit
+
+                Execute "pnpm run test:php --php-opts '--help'" to see all PHPUnit options
+
+              - e2e       execute E2E tests
+
+                --e2e-opts '<options>'  Additional options to pass to Playwright
+
+                Execute "pnpm run test:e2e --e2e-opts '--help'" to see all Playwright options
+
+              - react     execute Storybook/React tests
+
+                --react-opts '<options>'  Additional options to pass to Playwright
+
+                Execute "pnpm run test:react --react-opts '--help'" to see all Playwright options
+
+  Usages:
+    Execute only react tests :
+      'pnpm run test:react' or
+      'pnpm run test --use react'
+
+    Execute only a single react test file :
+      'pnpm run test:react MyButton.spec.jsx' (path can be left off for playwright) or
+      'pnpm run test:react packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/tests/MyButton.spec.jsx' or
+
+    Execute only a single react test file with playwright debugger :
+      'pnpm run test:react --react-opts '--debug' MyButton.spec.jsx' (path can be left off for playwright) or
+      'pnpm run test:react --react-opts '--debug' packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/tests/MyButton.spec.jsx' or
+
+    Execute only PHPUnit tests:
+      'pnpm run test:php' or
+      'pnpm run test --use php'
+
+    Execute all PHPUnit test case methods that contain 'test_login_admin' in their name:
+      'pnpm run test:php --php-opts "--filter test_login_admin"' or
+      'pnpm run test --use php --php-opts "--filter test_login_admin"'
+
+    Execute all PHPUnit test classes contain 'LoginTest' in their name:
+      'pnpm test:php --php-opts "--filter LoginTest"' or
+      'pnpm run test --use php --php-opts "--filter LoginTest"' or
+      'pnpm test -- --use php --php-opts "--filter LoginTest"'
+
+    Execute all PHPUnit tests that are part of the 'test-plugin' group:
+      'pnpm run test:php --php-opts '--group test-plugin' or
+      'pnpm run test --use php --php-opts '--group test-plugin'
+
+    Execute only e2e tests :
+      'pnpm run test:e2e' or
+      'pnpm run test --use e2e'
+
+    Execute only a single e2e test file :
+      'pnpm run test:e2e packages/wp-plugin/essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js' or
+      'pnpm run test:e2e deep-links-block.spec.js' (path can be left off for playwright)
+
+    Execute only a single e2e test file with playwright debugger :
+      'pnpm run test:e2e --e2e-opts '--debug' packages/wp-plugin/essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js' or
+      'pnpm run test:e2e --e2e-opts '--debug' deep-links-block.spec.js' (path can be left off for playwright)
+
+    Execute only PHPUnit and E2e tests:
+      'pnpm run test --use e2e --use php'
+
+see ./docs/5-test.md for more informations
+
