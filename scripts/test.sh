@@ -164,7 +164,7 @@ Options:
       'pnpm run test --use react'
 
     Execute only a single react test file :
-      'pnpm run test:react MyButton.spec.jsx' (path can be left off for playwright) or
+      'pnpm run test:react MyButton.spec.jsx' (path can be left off) or
       'pnpm run test:react packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/tests/MyButton.spec.jsx' or
 
     Execute only a single react test file with playwright debugger :
