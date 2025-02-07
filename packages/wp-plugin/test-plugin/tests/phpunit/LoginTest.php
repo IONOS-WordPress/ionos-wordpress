@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * covers the test-plugin features.
+ *
+ * @group test-plugin
+ * @group admin
+ */
 class LoginTest extends WP_UnitTestCase {
   const TEST_USER_NAME = 'test-admin';
 
