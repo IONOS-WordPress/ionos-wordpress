@@ -2,15 +2,17 @@
 
 run all tests (e2e, react/storybook, phpunit) : `pnpm test`
 
-- `pnpm test` will _by default_ rebuild the project and start wp-env if it is not already running.
+- in case `wp-env` is not running, it will be started automatically.
+
+  `pnpm test` will rebuild the project and start wp-env if it is not already running.
 
   You can skip rebuilding by setting the environment variable `BUILD_UP_TO_DATE=1` : `BUILD_UP_TO_DATE=1 pnpm test`
 
-- `pnpm test` will start `wp-env` for e2e and phpunit tests if not running.
+`pnpm test` has various configuration options to run only specific tests. Execute `pnpm run test --help` to see all options.
 
 ## react/storybook
 
-> react/storybook test are identified by file name convention (`*.spec.jsx`)
+react/storybook test are identified by file name convention (`*.spec.jsx`).
 
 Example: packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/tests/MyButton.spec.jsx
 
@@ -22,13 +24,13 @@ Example: packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/
 
   This will generate a static storybook that can be deployed to a static site hosting service.
 
-- run react tests written in Playwright : `pnpm run test --use react`
+- run react tests written in Playwright : `pnpm test:react`
 
   react/storybook tests utilize playwright to test the components in storybook.
 
   **For frontend testing we can use the same framework - playwright 🙌**
 
-  - Run tests continuously when files change : `pnpm watch -- pnpm run test --use react`
+  - Run tests continuously when files change : `pnpm watch -- pnpm test:react`
 
   - vscode supports running tests by clicking on the play button in the test file.
 
@@ -45,31 +47,17 @@ Example: packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/
 
 > phpunit test are identified by file name convention (`*Test.php`)
 
-Example: packages/wp-plugin/essentials/inc/dashboard/tests/phpunit/AcceptanceTest.php
+Example: `packages/wp-plugin/essentials/inc/dashboard/tests/phpunit/AcceptanceTest.php`
 
-- run phpunit tests : `pnpm run test --use phpunit`
+- run phpunit tests : `pnpm test:php`
 
-- (fester) run phpunit tests without rebuilding : `BUILD_UP_TO_DATE=1 pnpm run test --use phpunit`
-
-- (fastest) run phpunit tests without rebuilding and checking wp-env is alive : `pnpm wp-env run tests-wordpress phpunit`
-
-  - run whenever you changed a file : `pnpm watch -- pnpm wp-env run tests-wordpress phpunit`
-
-  - run tests continuously when files change : `pnpm watch -- pnpm run test --use phpunit`
+- run when ever you changed a file : `pnpm watch -- pnpm test:php`
 
 - debug phpunit tests :
 
-  - start wp-env launch configuration in vscode
+  - start `wp-env` launch configuration in vscode
 
-  - `pnpm wp-env run tests-wordpress phpunit`
-
-- run tests selectively :
-
-  - by test method name : `pnpm wp-env run tests-wordpress phpunit --filter test_dashboard_blocks_registered`
-
-  - by unit test class : `pnpm wp-env run tests-wordpress phpunit --filter AcceptanceTest`
-
-  - by test group : `pnpm wp-env run tests-wordpress phpunit --group essentials`
+  - start phpunit tests `pnpm test:php`
 
 # e2e tests
 
@@ -77,15 +65,13 @@ Example: packages/wp-plugin/essentials/inc/dashboard/tests/phpunit/AcceptanceTes
 
 Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
-- run e2e tests : `pnpm run test --use e2e`
+- run e2e tests : `pnpm test:e2e`
 
-  - run e2e tests without rebuilding : `BUILD_UP_TO_DATE=1 pnpm run test --use e2e`
+- (fastest) run a single e2e test : `pnpm run test:e2e ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
-  - (fastest) run e2e tests without rebuilding and checking wp-env is alive : `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
+  or even simpler `pnpm run test:e2e example.spec.js` (paths can be skipped ion Playwright)
 
-  - (fastest) run a single e2e test without rebuilding and checking wp-env is alive : `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
-
-- run whenever you changed a file : `pnpm watch -- PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js`
+- run whenever you changed a file : `pnpm watch -- pnpm test:e2e`
 
 - vscode supports running e2e tests by clicking on the play button in the test file.
 
@@ -100,9 +86,7 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
 # Linux bare metal testing (without being in devcontainer)
 
-everything works exactly as in devcontainer, but you need to have the requirements installed globally.
-
-## requirements
+Everything works exactly as in DevContainer, but you need to have the requirements installed globall :
 
 - matching pnpm version (grep for `PNPM_VERSION` to get current version used in project) installed globally
 
