@@ -17,32 +17,8 @@ USE=()
 while [[ $# -gt 0 ]]; do
   case $1 in
     --help)
-      cat <<EOF
-Usage: $0 [options] [file file ...]"
-
-By default every source file will be linted.
-
-Options:
-
-  --help    Show this help message and exit
-
-  --fix     Apply lint fixes where possible
-
-  --use     Specify which linters to use (default: all)
-
-            Available options:
-              - all      operate on all files
-              - php      operate on php files
-              - prettier operate html/yml/md/etc. files
-              - js       operate on js/jsx files
-              - css      operate on css/scss files
-              - pnpm     operate on pnpm lock file
-              - i18n     operate on po/pot files
-
-  Example usage : lint all files matching prettier and i18n, skip php files etc.
-
-    pnpm lint --use prettier -use i18n
-EOF
+      # print everythin in this script file after the '###help-message' marker
+      printf "$(sed -e '1,/^###help-message/d' "$0")\n"
       exit
       ;;
     --fix)
@@ -381,3 +357,38 @@ fi
 
 exit ${exit_code:-0}
 
+###help-message
+Syntax: 'pnpm run lint [options] [additional-args]'
+
+By default every source file will be linted.
+
+Options:
+
+  --help    Show this help message and exit
+
+  --fix     Apply lint fixes where possible
+
+  --use     Specify which linters to use (default: all)
+
+            Available options:
+              - all      operate on all files
+              - php      operate on php files
+              - prettier operate html/yml/md/etc. files
+              - js       operate on js/jsx files
+              - css      operate on css/scss files
+              - pnpm     operate on pnpm lock file
+              - i18n     operate on po/pot files
+
+              The i18n allows autonmatic translation of po files using deepl.com if 'DEEPL_API_KEY' is set in './.secrets'
+              See './.secret.example' for an example file.
+
+  Usage:
+
+    Lint all files matching prettier and i18n, skip php files etc.
+    'pnpm run lint --use prettier --use i18n'
+
+    Lint fix all files matching php and i18n
+    'pnpm run lint-fix --use prettier --use i18n' or
+    'pnpm run lint -fix --use prettier --use i18n'
+
+see ./docs/4-lint.md for more informations
