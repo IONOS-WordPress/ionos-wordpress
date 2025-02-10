@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en_US\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
+"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
-"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
-"Language: en_US\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.10.0\n"
 
@@ -173,15 +173,15 @@ msgstr "WordPress Websites"
 
 #: build/dashboard/blocks/deep-links/config/piensa.php:12
 msgid "Data of customer"
-msgstr ""
+msgstr "Data of customer"
 
 #: build/dashboard/blocks/deep-links/config/piensa.php:16
 msgid "Services"
-msgstr ""
+msgstr "Services"
 
 #: build/dashboard/blocks/deep-links/config/piensa.php:20
 msgid "Invoices"
-msgstr ""
+msgstr "Invoices"
 
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block title"
@@ -199,4 +199,4 @@ msgstr "Vulnerability Scan"
 
 #: build/dashboard/blocks/vulnerability/render.php:36
 msgid "IONOS Security Plugin not available"
-msgstr ""
+msgstr "IONOS Security Plugin not available"
