@@ -182,3 +182,21 @@ msgstr "Servicios"
 #: build/dashboard/blocks/deep-links/config/piensa.php:20
 msgid "Invoices"
 msgstr "Facturas"
+
+#: build/dashboard/blocks/vulnerability/class-wpscan.php:18
+msgid "Vulnerability Scan"
+msgstr ""
+
+#: build/dashboard/blocks/vulnerability/render.php:36
+msgid "IONOS Security Plugin not available"
+msgstr ""
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block title"
+msgid "Vulnerability"
+msgstr ""
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block description"
+msgid "Show wp scan data."
+msgstr ""
