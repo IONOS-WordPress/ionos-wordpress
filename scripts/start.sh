@@ -88,5 +88,21 @@ pnpm build
 EOF
 )
 
+(
+  # wp-env workaround: if wp-env was not able to start successfully
+  # it might happen that some mapped files within wp-env-home do not have the correct permissons
+  # and as a result a floolow up pnpm start will fail with EACCES : permission denied
+  # we can workaround that by deleting the mapped files and let wp-env recreate them
+  WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
+  # if at least a single WordPress installation exists in WP_ENV_HOME wp-env is not fully up and running
+  if [[ -d "$WPENV_INSTALLPATH/WordPress" ]] && [[ "$(docker ps -q --filter "name=$(basename $WPENV_INSTALLPATH)" | wc -l)" -lt '6' ]]; then
+    # for each wordpress installation in wp-env
+    for WORDPRESS_INSTALLATION in $(find $WPENV_INSTALLPATH -maxdepth 1 -mindepth 1 -type d -name "*WordPress*") ; do
+      # remove all files and directories that are not owned by the current user
+      find "$WORDPRESS_INSTALLATION" ! -user "$(whoami)" -exec rm -rf {} &>/dev/null \;
+    done
+  fi
+)
+
 # start wp-env with xdebug enabled by default
 pnpm exec wp-env start $([[ "${CI:-}" != "true" ]] && echo '--xdebug') ${WP_ENV_START_OPTS:-}
