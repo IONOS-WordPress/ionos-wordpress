@@ -9,5 +9,4 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-echo 'y' | pnpm exec wp-env destroy --debug
-
+echo 'y' | pnpm exec wp-env destroy || rm -rf "$WP_ENV_HOME"
