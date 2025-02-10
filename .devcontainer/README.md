@@ -58,9 +58,17 @@ setup using dev container :
 
 ## Codespaces
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=848691489&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestEurope)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/848691489&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestEurope)
 
 If you want to use Git hooks for your codespace, then you should set up hooks using the devcontainer.json lifecycle scripts, such as postCreateCommand
+
+## Open in Gitpod
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/IONOS-WordPress/ionos-wordpress/)
+
+## Open in Codeanywhere
+
+[![Open in Codeanywhere](https://codeanywhere.com/img/open-in-codeanywhere-btn.svg)](https://app.codeanywhere.com/#https://github.com/IONOS-WordPress/ionos-wordpress/)
 
 # GitLab CI
 
