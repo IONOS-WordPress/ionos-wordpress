@@ -197,10 +197,6 @@ msgstr "Show wp scan data."
 msgid "Vulnerability Scan"
 msgstr "Vulnerability Scan"
 
-#: build/dashboard/blocks/vulnerability/render.php:37
-msgid "Please, install the IONOS Security Plugin"
-msgstr "Please, install the IONOS Security Plugin"
-
-#: build/dashboard/blocks/vulnerability/render.php:39
-msgid "Please, activate the IONOS Security Plugin"
-msgstr "Please, activate the IONOS Security Plugin"
+#: build/dashboard/blocks/vulnerability/render.php:36
+msgid "IONOS Security Plugin not available"
+msgstr ""
