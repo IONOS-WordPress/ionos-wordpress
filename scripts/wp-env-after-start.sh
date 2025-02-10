@@ -203,21 +203,21 @@ for prefix in '' 'tests-' ; do
   pnpm exec wp-env run ${prefix}cli wp --quiet rewrite flush
 
   # Updates an option value for example the value of Simple page is id = 2
-  pnpm exec wp-env run ${prefix}cli wp option update page_on_front 2
+  pnpm exec wp-env run ${prefix}cli wp --quiet option update page_on_front 2
   # Update the page as front page by default.
-  pnpm exec wp-env run ${prefix}cli wp option update show_on_front page
+  pnpm exec wp-env run ${prefix}cli wp --quiet option update show_on_front page
 
   # activate twentytwenty-five theme in all wp-env instances (test and development)
-  pnpm exec wp-env run ${prefix}cli wp theme activate twentytwentyfive
+  pnpm exec wp-env run ${prefix}cli wp --quiet theme activate twentytwentyfive
 
   # activate all installed plugins in all wp-env instances (test and development)
-  pnpm exec wp-env run ${prefix}cli wp plugin activate --all
+  pnpm exec wp-env run ${prefix}cli wp --quiet plugin activate --all
 
   # emulate ionos brand by default
-  pnpm exec wp-env run ${prefix}cli wp option update ionos_group_brand ionos
+  pnpm exec wp-env run ${prefix}cli wp --quiet option update ionos_group_brand ionos
 
   # fix permissions for mu-plugins folder if any
-  # (leaving the permisions as-is will rsult in an error on destroy restart wp-env)
+  # (leaving the permisions as-is will result in an error on destroy restart wp-env)
   if find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' &>/dev/null; then
     pnpm exec wp-env run ${prefix}cli sh -c 'sudo chmod a+w -R /var/www/html/wp-content/mu-plugins' 2>/dev/null || true
   fi
