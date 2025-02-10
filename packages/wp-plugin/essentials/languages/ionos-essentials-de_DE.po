@@ -199,4 +199,4 @@ msgstr "Sicherheits-Scan"
 
 #: build/dashboard/blocks/vulnerability/render.php:36
 msgid "IONOS Security Plugin not available"
-msgstr ""
+msgstr "IONOS Security Plugin nicht verfügbar"
