@@ -6,7 +6,7 @@
 #
 # @see ./release.yaml for how it is used
 #
-name: Build DevContainer Image
+name: DevContainer
 on:
   workflow_call:
     # secrets:
