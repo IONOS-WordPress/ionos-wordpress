@@ -27,14 +27,14 @@ permissions:
   id-token: write
 
 jobs:
-  build_devcontainer_image:
+  devcontainer:
     uses: ./.github/workflows/build-devcontainer-image.yaml
     secrets: inherit
 
   test:
     runs-on: ubuntu-latest
     needs:
-      - build_devcontainer_image
+      - devcontainer
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v4
