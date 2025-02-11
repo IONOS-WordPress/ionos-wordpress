@@ -14,13 +14,6 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
     - uses: './.github/shared/actions/devcontainer-image-name'
       id: image_name
 
