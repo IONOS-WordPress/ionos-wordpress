@@ -46,10 +46,10 @@ jobs:
       - name: Build dev container and push to GitHub Container Registry
         uses: devcontainers/ci@v0.3
         with:
-          # push image only if the branch is main and the event is push
-          refFilterForPush: |
-            refs/heads/main
-            refs/heads/develop
+          # # push image only if the branch is main and the event is push
+          # refFilterForPush: |
+          #   refs/heads/main
+          #   refs/heads/develop
           eventFilterForPush: push
           imageName: ${{ steps.image_name.outputs.image_name }}
           runCmd: |
