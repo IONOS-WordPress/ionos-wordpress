@@ -27,6 +27,7 @@ jobs:
   build_devcontainer_image:
     uses: ./.github/workflows/build-devcontainer-image.yaml
     secrets: inherit
+    name: prepare DevContainer
 
   release:
     runs-on: ubuntu-latest
