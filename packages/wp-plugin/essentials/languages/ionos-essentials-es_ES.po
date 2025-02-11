@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: es\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-02-05T09:50:40+00:00\n"
-"POT-Creation-Date: 2025-02-05T09:50:40+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-05T09:50:40+00:00\n"
+"PO-Revision-Date: 2025-02-05T09:50:40+00:00\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
@@ -110,14 +110,9 @@ msgstr "Su contrato"
 msgid "Current offers"
 msgstr "Ofertas actuales"
 
-#: build/dashboard/blocks/deep-links/render.php:16
+#: build/dashboard/blocks/deep-links/render.php:17
 msgid "Deep-Links"
 msgstr "Enlaces profundos"
-
-#: build/dashboard/blocks/deep-links/render.php:17
-#: build/dashboard/blocks/quick-links/render.php:11
-msgid "Use these links to get to your control panel."
-msgstr "Utilice estos enlaces para acceder a su panel de control."
 
 #: build/dashboard/blocks/quick-links/config.php:7
 msgid "Add new page"
@@ -141,7 +136,7 @@ msgstr "Editar navegación"
 
 #: build/dashboard/blocks/quick-links/render.php:10
 msgid "Quick Links"
-msgstr "Enlaces rápidos"
+msgstr "Quick Links"
 
 #: essentials.php:31
 msgid "Hello World !"
@@ -154,7 +149,7 @@ msgstr "Cuadro de mandos de IONOS"
 #: build/dashboard/blocks/deep-links/block.json
 msgctxt "block title"
 msgid "Deep Links"
-msgstr "Enlaces profundos"
+msgstr "Deep Links"
 
 #: build/dashboard/blocks/deep-links/block.json
 msgctxt "block description"
