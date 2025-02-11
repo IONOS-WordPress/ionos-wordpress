@@ -9,7 +9,11 @@ A working fork can be created by following these steps:
 
 - go to https://github.com/lgersman/ionos-wordpress
 
-- press the "Fork" button and create a fork in your individual GitHub account
+- press the "Fork" button
+
+- at the "Create a new fork page" uncheck the "Copy the develop branch only" option - we need also branches `main` and `gh-pages` to be copied
+
+- and create a fork in your individual GitHub account
 
 There are a few manual steps to be done to have a complete setup copy of the original repository:
 
