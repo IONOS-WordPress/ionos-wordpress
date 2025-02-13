@@ -32,7 +32,7 @@ $actions = array(
 echo '<ul class="wp-block-list">';
 foreach ($actions as $action) {
   printf(
-    '<li><a href="%s">%s</a></li>',
+    '<li><a href="%s" target="_top">%s</a></li>',
     \esc_url($action->get_link()),
     \esc_html($action->get_title())
   );
