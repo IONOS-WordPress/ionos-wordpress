@@ -165,3 +165,13 @@ if (is_file(__DIR__ . '/editor.php')) {
 		EOF
   );
 });
+
+add_action('init', function () {
+  register_block_bindings_source('ionos-essentials/tenant-logo-src', [
+    'label' => __('Brand Logo', 'ionos-essentials'),
+    'get_value_callback' => function () {
+      $tenant = \get_option('ionos_group_brand', "ionos");
+      return "/wp-content/plugins/essentials/inc/dashboard/data/tenant-logos/{$tenant}.svg";
+    },
+  ]);
+});
