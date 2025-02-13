@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de-DE">
+<html lang="en-US">
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,7 +7,7 @@
 	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
 	<title>ionos &#8211; ionos-wordpress</title>
 <script>
-window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"wpemoji":"http:\/\/localhost:8888\/wp-includes\/js\/wp-emoji.js?ver=6.7.1","twemoji":"http:\/\/localhost:8888\/wp-includes\/js\/twemoji.js?ver=6.7.1"}};
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"wpemoji":"http:\/\/localhost:8888\/wp-includes\/js\/wp-emoji.js?ver=6.7.2","twemoji":"http:\/\/localhost:8888\/wp-includes\/js\/twemoji.js?ver=6.7.2"}};
 /**
  * @output wp-includes/js/wp-emoji-loader.js
  */
@@ -1240,25 +1240,47 @@ html :where(.is-position-sticky){
  * Core styles: block-supports
  */
 .wp-container-core-group-is-layout-1 {
-	flex-direction: column;
-	align-items: flex-start;
-}
-.wp-container-core-group-is-layout-2 {
-	flex-direction: column;
-	align-items: flex-start;
-}
-.wp-container-core-group-is-layout-3 {
 	flex-wrap: nowrap;
-	flex-direction: column;
-	align-items: stretch;
 }
-.wp-container-core-group-is-layout-4 {
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: flex-start;
+.wp-container-core-group-is-layout-2 > .alignfull {
+	margin-right: calc(0px * -1);
+	margin-left: calc(0px * -1);
+}
+.wp-elements-a7e2e73a110847390115e6b5d5d4c9f6 a:where(:not(.wp-element-button)) {
+	color: #001b41;
+}
+.wp-elements-90785ee36a3e114b30d73949a798ef57 a:where(:not(.wp-element-button)) {
+	color: #001b41;
 }
 .wp-container-core-buttons-is-layout-1 {
-	align-items: flex-end;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+}
+.wp-elements-c270b534a21d10f36a7cd52d673f4528 a:where(:not(.wp-element-button)) {
+	color: #001b41;
+}
+.wp-container-core-buttons-is-layout-2 {
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+}
+.wp-elements-edd09d5c8dd0662cc3c27f0c3bd0174c a:where(:not(.wp-element-button)) {
+	color: #001b41;
+}
+.wp-container-core-buttons-is-layout-3 {
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+}
+.wp-container-core-columns-is-layout-1 {
+	flex-wrap: nowrap;
+	gap: var(--wp--preset--spacing--70) var(--wp--preset--spacing--70);
+}
+.wp-container-core-group-is-layout-3 > * {
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
+.wp-container-core-group-is-layout-3 > * + * {
+	margin-block-start: var(--wp--preset--spacing--50);
+	margin-block-end: 0;
 }
 .wp-container-core-group-is-layout-5 {
 	flex-direction: column;
@@ -1274,7 +1296,7 @@ html :where(.is-position-sticky){
 	align-items: flex-start;
 	justify-content: flex-start;
 }
-.wp-container-core-buttons-is-layout-2 {
+.wp-container-core-buttons-is-layout-4 {
 	align-items: flex-end;
 }
 .wp-container-core-group-is-layout-8 {
@@ -1291,30 +1313,35 @@ html :where(.is-position-sticky){
 	align-items: flex-start;
 	justify-content: flex-start;
 }
-.wp-container-core-buttons-is-layout-3 {
+.wp-container-core-buttons-is-layout-5 {
 	align-items: flex-end;
 }
 .wp-container-core-group-is-layout-11 {
 	flex-direction: column;
 	align-items: flex-start;
 }
-.wp-container-core-columns-is-layout-1 {
+.wp-container-core-group-is-layout-12 {
 	flex-wrap: nowrap;
-}
-.wp-container-core-columns-is-layout-2 {
-	flex-wrap: nowrap;
+	flex-direction: column;
+	align-items: stretch;
 }
 .wp-container-core-group-is-layout-13 {
 	flex-direction: column;
 	align-items: flex-start;
+	justify-content: flex-start;
+}
+.wp-container-core-buttons-is-layout-6 {
+	align-items: flex-end;
 }
 .wp-container-core-group-is-layout-14 {
 	flex-direction: column;
 	align-items: flex-start;
 }
-.wp-container-core-group-is-layout-15 {
-	flex-direction: column;
-	align-items: flex-start;
+.wp-container-core-columns-is-layout-2 {
+	flex-wrap: nowrap;
+}
+.wp-container-core-columns-is-layout-3 {
+	flex-wrap: nowrap;
 }
 .wp-container-core-group-is-layout-16 {
 	flex-direction: column;
@@ -1328,8 +1355,9 @@ html :where(.is-position-sticky){
 	flex-direction: column;
 	align-items: flex-start;
 }
-.wp-container-core-columns-is-layout-3 {
-	flex-wrap: nowrap;
+.wp-container-core-group-is-layout-19 {
+	flex-direction: column;
+	align-items: flex-start;
 }
 .wp-container-core-group-is-layout-20 {
 	flex-direction: column;
@@ -1339,18 +1367,29 @@ html :where(.is-position-sticky){
 	flex-direction: column;
 	align-items: flex-start;
 }
-.wp-container-core-group-is-layout-22 {
-	flex-direction: column;
-	align-items: flex-start;
+.wp-container-core-columns-is-layout-4 {
+	flex-wrap: nowrap;
 }
 .wp-container-core-group-is-layout-23 {
 	flex-direction: column;
 	align-items: flex-start;
 }
-.wp-container-core-columns-is-layout-4 {
-	flex-wrap: nowrap;
+.wp-container-core-group-is-layout-24 {
+	flex-direction: column;
+	align-items: flex-start;
+}
+.wp-container-core-group-is-layout-25 {
+	flex-direction: column;
+	align-items: flex-start;
+}
+.wp-container-core-group-is-layout-26 {
+	flex-direction: column;
+	align-items: flex-start;
 }
 .wp-container-core-columns-is-layout-5 {
+	flex-wrap: nowrap;
+}
+.wp-container-core-columns-is-layout-6 {
 	flex-wrap: nowrap;
 }
 
@@ -1397,7 +1436,7 @@ Description: Twenty Twenty-Five emphasizes simplicity and adaptability. It offer
 Requires at least: 6.7
 Tested up to: 6.7
 Requires PHP: 7.2
-Version: 1.0
+Version: 1.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: twentytwentyfive
@@ -1450,14 +1489,17 @@ h1, h2, h3, h4, h5, h6, blockquote, caption, figcaption, p {
 	display: block;
 }
 
+.custom_dashboard-template {
+  background-color: #f4f7fa;
+}
 </style>
-<link rel="https://api.w.org/" href="http://localhost:8888/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="http://localhost:8888/wp-json/wp/v2/custom_dashboard/25" /><style class='wp-fonts-local'>
+<link rel="https://api.w.org/" href="http://localhost:8888/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="http://localhost:8888/wp-json/wp/v2/custom_dashboard/125" /><style class='wp-fonts-local'>
 @font-face{font-family:Manrope;font-style:normal;font-weight:200 800;font-display:fallback;src:url('http://localhost:8888/wp-content/themes/twentytwentyfive/assets/fonts/manrope/Manrope-VariableFont_wght.woff2') format('woff2');}
 @font-face{font-family:"Fira Code";font-style:normal;font-weight:300 700;font-display:fallback;src:url('http://localhost:8888/wp-content/themes/twentytwentyfive/assets/fonts/fira-code/FiraCode-VariableFont_wght.woff2') format('woff2');}
 </style>
 </head>
 
-<body class="custom_dashboard-template custom_dashboard-template-custom-dashboard-template single single-custom_dashboard postid-25 wp-embed-responsive">
+<body class="custom_dashboard-template custom_dashboard-template-custom-dashboard-template single single-custom_dashboard postid-125 wp-embed-responsive">
 
 <div class="wp-site-blocks"><div class="entry-content wp-block-post-content has-global-padding is-layout-constrained wp-block-post-content-is-layout-constrained">
 <!-- ionos-essentials-dashboard-start-content --><!-- ionos-essentials-dashboard-end-content -->
@@ -1501,7 +1543,7 @@ h1, h2, h3, h4, h5, h6, blockquote, caption, figcaption, p {
 		// Inject the skip link.
 		sibling.parentElement.insertBefore( skipLink, sibling );
 	}() );
-	
+
 </script>
 </body>
 </html>
