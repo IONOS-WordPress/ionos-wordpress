@@ -86,50 +86,53 @@ function ionos.wordpress.stylelint() {
 function ionos.wordpress.ecs() {
   ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") php files files with ecs ..."
 
+  # go interactively into the docker image :
+  # docker run -q --rm -ti --user 1000:1000 -v $(pwd):/project/ --entrypoint /bin/sh ionos-wordpress/ecs-php
+  # command : /composer/vendor/bin/ecs check --no-diffs --clear-cache --config ./packages/docker/ecs-php/ecs-config.php --no-progress-bar .
+
   # ecs-php
   docker run \
     $DOCKER_FLAGS \
     --rm \
     --user "$DOCKER_USER" \
     -v $(pwd):/project/ \
-    -v $(pwd)/ecs-config.php:/ecs-config.php \
-    -v $(pwd)/packages/docker/ecs-php/ruleset.xml:/ruleset.xml \
     ionos-wordpress/ecs-php \
     check \
       $([[ "$FIX" == 'yes' ]] && echo -n "--fix" ||:) \
-      --clear-cache --config /ecs-config.php --no-progress-bar \
+      --no-diffs --clear-cache --config ./packages/docker/ecs-php/ecs-config.php --no-progress-bar \
       ${POSITIONAL_ARGS[@]}
 }
 
-# checks wordpress coding standards using phpcs
-# @FIXME: actually this could be done also using ecs but as of now it's not implemented
-function ionos.wordpress.phpcs() {
-  ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") php files with PHP Codefixer ..."
+# kept for reference - not used anymore
+# # checks wordpress coding standards using phpcs
+# # @FIXME: actually this could be done also using ecs but as of now it's not implemented
+# function ionos.wordpress.phpcs() {
+#   ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") php files with PHP Codefixer ..."
 
-  # php-cs
-  cat <<EOF | docker run \
-    $DOCKER_FLAGS \
-    --rm \
-    -i \
-    --user "$DOCKER_USER" \
-    -v $(pwd):/project/ \
-    -v $(pwd)/ecs-config.php:/ecs-config.php \
-    -v $(pwd)/packages/docker/ecs-php/ruleset.xml:/ruleset.xml \
-    --entrypoint /bin/sh \
-    ionos-wordpress/ecs-php \
-    -
-      echo "Running $([[ "$FIX" == 'yes' ]] && echo -n "phpcs" || echo -n "phpcs" ) ..."
-      $([[ "$FIX" == 'yes' ]] && echo -n "phpcs" || echo -n "phpcs" ) \
-      -s --no-cache --standard=/ruleset.xml \
-      ${POSITIONAL_ARGS[@]}
-EOF
-# @FIXME: right now we only use phpcs
-# echo "Running $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) ..."
-# $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) \
-  if [[ $? -ne 0 ]]; then
-    return 1
-  fi
-}
+#   # php-cs
+#   cat <<EOF | docker run \
+#     $DOCKER_FLAGS \
+#     --rm \
+#     -i \
+#     --user "$DOCKER_USER" \
+#     -v $(pwd):/project/ \
+#     -v $(pwd)/ecs-config.php:/ecs-config.php \
+#     -v $(pwd)/packages/docker/ecs-php/ruleset.xml:/ruleset.xml \
+#     --entrypoint /bin/sh \
+#     ionos-wordpress/ecs-php \
+#     -
+#       echo "Running $([[ "$FIX" == 'yes' ]] && echo -n "phpcs" || echo -n "phpcs" ) ..."
+#       $([[ "$FIX" == 'yes' ]] && echo -n "phpcs" || echo -n "phpcs" ) \
+#       -s --no-cache --standard=/ruleset.xml \
+#       ${POSITIONAL_ARGS[@]}
+# EOF
+# # @FIXME: right now we only use phpcs
+# # echo "Running $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) ..."
+# # $([[ "$FIX" == 'yes' ]] && echo -n "phpcbf" || echo -n "phpcs" ) \
+#   if [[ $? -ne 0 ]]; then
+#     return 1
+#   fi
+# }
 
 # checks wordpress plugin translations using dennis (https://github.com/mozilla/dennis)
 # @FIXME: the image could made smaller using distroless base image
@@ -327,9 +330,9 @@ if [[ "${USE[@]}" =~ all|php|wp ]]; then
   ionos.wordpress.wordpress_plugin || exit_code=1
 fi
 
-if [[ "${USE[@]}" =~ all|php ]]; then
-  ionos.wordpress.phpcs || exit_code=1
-fi
+# if [[ "${USE[@]}" =~ all|php ]]; then
+#   ionos.wordpress.phpcs || exit_code=1
+# fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
   ionos.wordpress.ecs || exit_code=1
