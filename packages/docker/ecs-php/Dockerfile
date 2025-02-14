@@ -13,15 +13,20 @@ ARG WORDPRESS_CODING_STANDARDS_VERSION
 ENV COMPOSER_HOME=/composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true \
-  && composer global require --dev wp-coding-standards/wpcs:${WORDPRESS_CODING_STANDARDS_VERSION}
+RUN <<EOF
+  # install apk packages to create a user
+  # install i18n support into php
+  apk add --no-cache icu-dev shadow && docker-php-ext-install intl
 
-RUN composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer false \
-  && composer global require symplify/easy-coding-standard:${ECS_VERSION} --with-dependencies
+  composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+  composer global require --dev symplify/easy-coding-standard:${ECS_VERSION} --with-dependencies
+  composer global require --dev wp-coding-standards/wpcs:${WORDPRESS_CODING_STANDARDS_VERSION}
 
-# install apk packages to create a user
-# install i18n support into php
-RUN apk add --no-cache icu-dev shadow && docker-php-ext-install intl
+  # tell phpcs dependency of easy-coding-standard where to find the used standards
+  /composer/vendor/symplify/easy-coding-standard/vendor/squizlabs/php_codesniffer/bin/phpcs \
+    --config-set installed_paths \
+    "/composer/vendor/phpcsstandards/phpcsextra,/composer/vendor/phpcsstandards/phpcsutils,/composer/vendor/wp-coding-standards/wpcs"
+EOF
 
 COPY --chmod=755 <<EOF /usr/bin/entrypoint.sh
 #!/bin/sh
@@ -29,7 +34,7 @@ COPY --chmod=755 <<EOF /usr/bin/entrypoint.sh
 exec /composer/vendor/bin/ecs \$@
 EOF
 
-COPY packages/docker/ecs-php/ruleset.xml /ruleset.xml
+# COPY packages/docker/ecs-php/ruleset.xml /ruleset.xml
 
 # create user/group to run ecs as non-root
 RUN groupadd --gid 1000 php && useradd --uid 1000 --gid php --shell /bin/sh --create-home php
