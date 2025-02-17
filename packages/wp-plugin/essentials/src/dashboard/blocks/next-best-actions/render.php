@@ -21,25 +21,35 @@ $actions = array(
     title: 'Check Plugins Page',
     description: 'Check the plugins page for updates and security issues.',
     image: 'https://raw.githubusercontent.com/codeformm/mitaka-kichijoji-wapuu/main/mitaka-kichijoji-wapuu.png',
-    link: admin_url('plugins.php'),
-    callback: function() {
-      echo 'this is a test!';
-      return true;
-    }
-  )
+    callback: function($action) {
+      $action->__set('completed', true);
+      wp_safe_redirect(admin_url('plugins.php'));
+      exit;
+    },
+  ),
+  new NBA(
+    id: 'checkThemesPage',
+    title: 'Check Themes Page',
+    description: 'Check the themes page for updates and security issues.',
+    image: 'https://raw.githubusercontent.com/codeformm/mitaka-kichijoji-wapuu/main/mitaka-kichijoji-wapuu.png',
+    callback: function($action) {
+      $action->__set('completed', true);
+      wp_safe_redirect(admin_url('themes.php'));
+      exit;
+    },
+  ),
 );
 
 echo '<ul class="wp-block-list">';
 foreach ($actions as $action) {
   printf(
-    '<li><a href="%s" target="_top">%s</a></li>',
-    \esc_url($action->get_link()),
-    \esc_html($action->get_title())
+    '<li><a href="#" target="_top">%s</a></li>',
+    \esc_html($action->__get('title')) . ' -> ' . ($action->__get('completed') ? 'Completed' : 'Not completed')
   );
 }
 echo '</ul>';
 
-// debug callback on dashboard
+//debug callback on dashboard
 //echo '<pre>';
-//$actions[0]->get_callback();
+//$actions[0]->__set('completed', true);
 //wp_die();

@@ -8,127 +8,58 @@ namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model;
 /**
  * Class NBA
  */
-class NBA {
-    /**
-     * ID of the NBA
-     *
-     * @var string
-     */
-    private $id = '';
+final class NBA
+{
+  const WP_OPTION_NAME='NBA_OPTION';
 
-    /**
-     * Title of the NBA
-     *
-     * @var string
-     */
-    private $title = '';
+  static protected array $_wp_option;
 
-    /**
-     * Description of the NBA
-     *
-     * @var string
-     */
-    private $description = '';
+  function __construct(
+    readonly string $id,
+    readonly string $title,
+    readonly string $description,
+    readonly string $image,
+    readonly mixed $callback,
+    readonly bool $completed = false,
+    readonly bool $dismissed = false
+    )
+  {}
 
-    /**
-     * Image url of the NBA
-     *
-     * @var string
-     */
-    private $image = '';
+  function __set(string $optionName, mixed $value): void {
+    match ($optionName) {
+      'completed' => static::_setOption($this->id, 'completed', $value),
+      'dismissed' => static::_setOption($this->id, 'dismissed', $value),
+      default => throw new \InvalidArgumentException("Invalid property: $optionName"),
+    };
+  }
 
-    /**
-     * Link of the NBA
-     *
-     * @var string
-     */
-    private $link = '';
+  function __get(string $optionName): mixed {
+    return match ($optionName) {
+      'id' => $this->id,
+      'title' => $this->title,
+      'description' => $this->description,
+      'image' => $this->image,
+      'callback' => is_callable($this->callback) ? call_user_func($this->callback) : null,
+      'completed' => static::_getOption($this->id, 'completed'),
+      'dismissed' => static::_getOption($this->id, 'dismissed'),
+      default => throw new \InvalidArgumentException("Invalid property: $optionName"),
+    };
+  }
 
-    /**
-     * Callback function of the NBA
-     *
-     * @var string
-     */
-    private $callback = '';
+  protected static function _getWPOption() {
+      $option = \get_option(static::WP_OPTION_NAME);
+      return is_array( $option ) ? $option : [];
+  }
 
-    /**
-     * NBA constructor.
-     *
-     * @param string $id
-     * @param string $title
-     * @param string $description
-     * @param string $image
-     * @param string $link
-     * @param string $callback
-     */
-    public function __construct( $id, $title, $description, $image, $link, $callback ) {
-        $this->id           = $id;
-        $this->title        = $title;
-        $this->description  = $description;
-        $this->image        = $image;
-        $this->link         = $link;
-        $this->callback     = $callback;
-    }
 
-    /**
-     * Get ID.
-     *
-     * @return string
-     */
-    public function get_id() {
-        return $this->id;
-    }
+  protected static function _setOption(string $id, string $optionName, string $value) {
+    static::$_wp_option = static::_getWPOption();
+    static::$_wp_option[$id][$optionName] = $value;
+    \update_option(static::WP_OPTION_NAME, static::$_wp_option);
+  }
 
-    /**
-     * Get title.
-     *
-     * @return string
-     */
-    public function get_title() {
-        return $this->title;
-    }
-
-    /**
-     * Get description.
-     *
-     * @return string
-     */
-    public function get_description() {
-        return $this->description;
-    }
-
-    /**
-     * Get image.
-     *
-     * @return string
-     */
-    public function get_image() {
-        return $this->image;
-    }
-
-    /**
-     * Get link.
-     *
-     * @return string
-     */
-    public function get_link() {
-        return $this->link;
-    }
-
-    /**
-     * Get callback.
-     *
-     * @return string
-     */
-    public function get_callback() {
-      if ( is_callable( $this->callback ) ) {
-        $result = call_user_func( $this->callback );
-
-        if ( is_bool( $result ) ) {
-          return $result;
-        }
-      }
-
-      return false;
-    }
+  protected static function _getOption(string $id, string $optionName): mixed {
+    static::$_wp_option = static::_getWPOption();
+    return static::$_wp_option[$id][$optionName] ?? null;
+  }
 }
