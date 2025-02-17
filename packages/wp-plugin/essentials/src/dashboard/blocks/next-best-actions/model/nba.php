@@ -47,19 +47,22 @@ final class NBA
   }
 
   protected static function _getWPOption() {
+    if(!isset(static::$_wp_option)) {
       $option = \get_option(static::WP_OPTION_NAME);
-      return is_array( $option ) ? $option : [];
+      static::$_wp_option = is_array( $option ) ? $option : [];
+    }
+    return static::$_wp_option;
   }
 
 
   protected static function _setOption(string $id, string $optionName, string $value) {
-    static::$_wp_option = static::_getWPOption();
-    static::$_wp_option[$id][$optionName] = $value;
-    \update_option(static::WP_OPTION_NAME, static::$_wp_option);
+    $wp_option = static::_getWPOption();
+    $wp_option[$id][$optionName] = $value;
+    \update_option(static::WP_OPTION_NAME, $wp_option);
   }
 
   protected static function _getOption(string $id, string $optionName): mixed {
-    static::$_wp_option = static::_getWPOption();
-    return static::$_wp_option[$id][$optionName] ?? null;
+    $wp_option = static::_getWPOption();
+    return $wp_option[$id][$optionName] ?? null;
   }
 }
