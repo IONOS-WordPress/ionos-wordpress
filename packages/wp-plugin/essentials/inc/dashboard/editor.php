@@ -240,12 +240,13 @@ function _persist_dashboard(\WP_Post $post): void
   hook_name: 'wp_insert_post_data',
   callback: function ($data, $postarr, $unsanitized_postarr, $update) {
     if (file_exists(GLOBAL_STYLES_FILE) && 'wp_global_styles' === $data['post_type'] && ! $update) {
-      $post_content = json_decode($data['post_content'], true);
+      // post_content can be slashed and is expected slashed after the filter
+      $post_content = json_decode(wp_unslash($data['post_content']), true);
       $data_from_file = \wp_json_file_decode(GLOBAL_STYLES_FILE, [
         'associative' => true,
       ]);
       $new_data = array_merge($post_content, $data_from_file);
-      $data['post_content'] = \wp_json_encode($new_data);
+      $data['post_content'] = wp_slash(\wp_json_encode($new_data));
     }
     return $data;
   },
