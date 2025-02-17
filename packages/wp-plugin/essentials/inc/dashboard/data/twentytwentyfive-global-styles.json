@@ -29,22 +29,22 @@
                 },
                 "border": {
                     "top": {
-                        "color": "var:preset|color|base",
+                        "color": "var(--wp--preset--color--base)",
                         "style": "solid",
                         "width": "1px"
                     },
                     "right": {
-                        "color": "var:preset|color|base",
+                        "color": "var(--wp--preset--color--base)",
                         "style": "solid",
                         "width": "1px"
                     },
                     "bottom": {
-                        "color": "var:preset|color|base",
+                        "color": "var(--wp--preset--color--base)",
                         "style": "solid",
                         "width": "1px"
                     },
                     "left": {
-                        "color": "var:preset|color|base",
+                        "color": "var(--wp--preset--color--base)",
                         "style": "solid",
                         "width": "1px"
                     },
@@ -94,10 +94,10 @@
                 },
                 "spacing": {
                     "padding": {
-                        "top": "var:preset|spacing|40",
-                        "bottom": "var:preset|spacing|40",
-                        "left": "var:preset|spacing|40",
-                        "right": "var:preset|spacing|40"
+                        "top": "var(--wp--preset--spacing--40)",
+                        "bottom": "var(--wp--preset--spacing--40)",
+                        "left": "var(--wp--preset--spacing--40)",
+                        "right": "var(--wp--preset--spacing--40)"
                     }
                 }
             },
@@ -210,7 +210,7 @@
                             "fontWeight": "400",
                             "lineHeight": "1.7"
                         },
-                        "css": ".wp-block-button__link:not(.has-background):hover {background-color:color-mix(in srgb, var(--wp--preset--color--contrast) 5%, transparent);}\n:hover {\n  background-color: rgb(219, 237, 248) !important;\n  border-color: rgb(219, 237, 248) !important;\n}"
+                        "css": ":hover {\n  background-color: rgb(219, 237, 248) !important;\n  border-color: rgb(219, 237, 248) !important;\n}"
                     }
                 },
                 "spacing": {
@@ -264,7 +264,7 @@
                         }
                     }
                 },
-                "css": ":hover {\n  background-color: rgb(20, 116, 196) !important;\n  border-color: rgb(20, 116, 196) !important;\n}"
+                "css": ":hover {\n  background-color: rgb(20, 116, 196);\n  border-color: rgb(20, 116, 196);\n}"
             },
             "core\/post-content": {
                 "typography": {
