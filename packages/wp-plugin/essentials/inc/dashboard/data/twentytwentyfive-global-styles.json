@@ -145,7 +145,8 @@
                     "radius": "5px"
                 }
             }
-        }
+        },
+        "css": ".wp-block-column:empty{border:0;}"
     },
     "settings": {
         "layout": {
