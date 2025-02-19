@@ -1,7 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
-
 namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions;
 
 use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA;
@@ -16,15 +14,16 @@ require_once $model_path;
 
 printf('<h3>%s</h3>', \esc_html__('Next best actions ⚡', 'ionos-essentials'));
 
-$actions = [
-  new NBA(
-    id: 'checkPluginsPage',
-    title: 'Check Plugins Page',
-    link: admin_url('plugins.php'),
-    completed_callback: fn () => ! ! random_int(0, 1)
-  ),
-];
-$actions = array_merge($actions, $actions, $actions, $actions, $actions);
+$actions= [];
+for ($i = 1; $i <= 20; $i++) {
+  $actions[] =
+    new NBA(
+      id: 'checkPluginsPage' . $i,
+      title: 'NBA' . $i,
+      link: admin_url('plugins.php?complete_nba=checkPluginsPage' . $i),
+      completed_callback: fn () => !!random_int(0, 1)
+    );
+}
 
 echo '<ul class="wp-block-list">';
 foreach ($actions as $action) {
@@ -39,7 +38,3 @@ foreach ($actions as $action) {
 }
 echo '</ul>';
 
-// debug callback on dashboard
-//echo '<pre>';
-//$actions[0]->get_callback();
-//wp_die();

@@ -44,6 +44,15 @@ if (is_file(__DIR__ . '/editor.php')) {
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/next-best-actions');
 });
 
+\add_action('admin_init', function () {
+  if (isset($_GET['complete_nba'])) {
+    $nba_id = $_GET['complete_nba'];
+    require_once __DIR__ . '/blocks/nba/model.php';
+    \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::complete($nba_id);
+  }
+});
+
+
 // remove our blocks from all other post types
 \add_filter(
   hook_name: 'allowed_block_types_all',
