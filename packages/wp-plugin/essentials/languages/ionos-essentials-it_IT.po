@@ -1,0 +1,197 @@
+msgid ""
+msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: it\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"X-Domain: ionos-essentials\n"
+"X-Generator: WP-CLI 2.11.0\n"
+
+#. Plugin Name of the plugin
+#: essentials.php
+msgid "ionos-wordpress/essentials"
+msgstr "ionos-wordpress/essenziali"
+
+#. Plugin URI of the plugin
+#: essentials.php
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
+
+#. Description of the plugin
+#: essentials.php
+msgid "The essentials plugin provides IONOS hosting specific functionality."
+msgstr "Il plugin essentials fornisce funzionalità specifiche per l'hosting IONOS."
+
+#. Author of the plugin
+#: essentials.php
+msgid "IONOS Group"
+msgstr "Gruppo IONOS"
+
+#. Author URI of the plugin
+#: essentials.php
+msgid "https://www.ionos-group.com/brands.html"
+msgstr "https://www.ionos-group.com/brands.html"
+
+#: build/dashboard/blocks/deep-links/config/arsys.php:8
+#: build/dashboard/blocks/deep-links/config/piensa.php:8
+msgid "My offers"
+msgstr "Le mie offerte"
+
+#: build/dashboard/blocks/deep-links/config/arsys.php:12
+msgid "My data"
+msgstr "I miei dati"
+
+#: build/dashboard/blocks/deep-links/config/arsys.php:16
+msgid "My products"
+msgstr "I miei prodotti"
+
+#: build/dashboard/blocks/deep-links/config/arsys.php:20
+msgid "My invoices"
+msgstr "Le mie fatture"
+
+#: build/dashboard/blocks/deep-links/config/arsys.php:24
+#: build/dashboard/blocks/deep-links/config/fasthosts.php:8
+#: build/dashboard/blocks/deep-links/config/piensa.php:24
+msgid "Control Panel"
+msgstr "Pannello di controllo"
+
+#: build/dashboard/blocks/deep-links/config/fasthosts.php:12
+msgid "My User"
+msgstr "Il mio utente"
+
+#: build/dashboard/blocks/deep-links/config/fasthosts.php:16
+msgid "WordPress Websites"
+msgstr "Siti web WordPress"
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:8
+msgid "Contracts & Subscriptions"
+msgstr "Contratti e abbonamenti"
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:12
+msgid "Login & Account security"
+msgstr "Accesso e sicurezza dell'account"
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:16
+msgid "Invoices & Payment Details"
+msgstr "Fatture e dettagli di pagamento"
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:20
+msgid "Data Protection & Privacy Notice"
+msgstr "Informativa sulla protezione dei dati e sulla privacy"
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:24
+msgid "Contact Details"
+msgstr "Dettagli di contatto"
+
+#: build/dashboard/blocks/deep-links/config/ionos.php:28
+msgid "Profile Details"
+msgstr "Dettagli del profilo"
+
+#: build/dashboard/blocks/deep-links/config/piensa.php:12
+msgid "Data of customer"
+msgstr "Dati del cliente"
+
+#: build/dashboard/blocks/deep-links/config/piensa.php:16
+msgid "Services"
+msgstr "Servizi"
+
+#: build/dashboard/blocks/deep-links/config/piensa.php:20
+msgid "Invoices"
+msgstr "Fatture"
+
+#: build/dashboard/blocks/deep-links/config/strato.php:8
+msgid "Package overview"
+msgstr "Panoramica del pacchetto"
+
+#: build/dashboard/blocks/deep-links/config/strato.php:12
+msgid "Your invoices"
+msgstr "Le vostre fatture"
+
+#: build/dashboard/blocks/deep-links/config/strato.php:16
+msgid "Your contract"
+msgstr "Il vostro contratto"
+
+#: build/dashboard/blocks/deep-links/config/strato.php:20
+msgid "Current offers"
+msgstr "Offerte attuali"
+
+#: build/dashboard/blocks/deep-links/render.php:17
+msgid "Deep-Links"
+msgstr "Link profondi"
+
+#: build/dashboard/blocks/quick-links/config.php:7
+msgid "Add new page"
+msgstr "Aggiungi una nuova pagina"
+
+#: build/dashboard/blocks/quick-links/config.php:8
+msgid "Add new post"
+msgstr "Aggiungi un nuovo post"
+
+#: build/dashboard/blocks/quick-links/config.php:9
+msgid "Discover plugins"
+msgstr "Scoprire i plugin"
+
+#: build/dashboard/blocks/quick-links/config.php:10
+msgid "Edit template"
+msgstr "Modifica del modello"
+
+#: build/dashboard/blocks/quick-links/config.php:11
+msgid "Edit navigation"
+msgstr "Modifica della navigazione"
+
+#: build/dashboard/blocks/quick-links/render.php:10
+msgid "Quick Links"
+msgstr "Collegamenti rapidi"
+
+#: build/dashboard/blocks/vulnerability/class-wpscan.php:18
+msgid "Vulnerability Scan"
+msgstr "Scansione delle vulnerabilità"
+
+#: build/dashboard/blocks/vulnerability/render.php:36
+msgid "IONOS Security Plugin not available"
+msgstr "Plugin di sicurezza IONOS non disponibile"
+
+#: essentials.php:31
+msgid "Hello World !"
+msgstr "Ciao mondo!"
+
+#: inc/dashboard/index.php:35
+msgid "IONOS Dashboard"
+msgstr "Cruscotto IONOS"
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block title"
+msgid "Deep Links"
+msgstr "Collegamenti profondi"
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block description"
+msgid "Show links to the Control Panel of your provider."
+msgstr "Mostra i link al pannello di controllo del vostro provider."
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block title"
+msgid "Quick Links"
+msgstr "Collegamenti rapidi"
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block description"
+msgid "Show links to common tasks in the WordPress backend."
+msgstr "Mostra i link alle attività più comuni nel backend di WordPress."
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block title"
+msgid "Vulnerability"
+msgstr "Vulnerabilità"
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block description"
+msgid "Show wp scan data."
+msgstr "Mostra i dati della scansione wp."
