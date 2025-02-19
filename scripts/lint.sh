@@ -282,43 +282,43 @@ function ionos.wordpress.wordpress_plugin() {
       # test 'Description' field
       if ! grep -qoP "Description:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Description' is missing or empty"
-        exit_code=1
+        exit_code=2
       fi
 
       # test 'Requires at least' field
       if ! grep -qoP "Requires at least:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Requires at least' is missing or empty"
-        exit_code=1
+        exit_code=3
       fi
 
       # test 'Plugin URI' field
       if ! grep -qoP "Plugin URI:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Plugin URI' is missing or empty"
-        exit_code=1
+        exit_code=4
       fi
 
       # test 'Update URI' field
       if ! grep -qoP "Update URI:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Update URI' is missing or empty"
-        exit_code=1
+        exit_code=5
       fi
 
       # test 'Author' field
       if ! grep -qoP "Author:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Author' is missing or empty"
-        exit_code=1
+        exit_code=6
       fi
 
       # test 'Author URI' field
       if ! grep -qoP "Author URI:\s*.+$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Author URI' is missing or empty"
-        exit_code=1
+        exit_code=7
       fi
 
       # test 'Domain Path' field
       if ! grep -qoP "Domain Path:\s*/languages$" $dir/$plugin_file; then
         ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Domain Path: /languages' is missing or invalid"
-        exit_code=1
+        exit_code=8
       fi
     done
   done
@@ -327,7 +327,7 @@ function ionos.wordpress.wordpress_plugin() {
 }
 
 if [[ "${USE[@]}" =~ all|php|wp ]]; then
-  ionos.wordpress.wordpress_plugin || exit_code=1
+  ionos.wordpress.wordpress_plugin || exit_code=9
 fi
 
 # if [[ "${USE[@]}" =~ all|php ]]; then
@@ -335,27 +335,27 @@ fi
 # fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
-  ionos.wordpress.ecs || exit_code=1
+  ionos.wordpress.ecs || exit_code=10
 fi
 
 if [[ "${USE[@]}" =~ all|prettier ]]; then
-  ionos.wordpress.prettier || exit_code=1
+  ionos.wordpress.prettier || exit_code=11
 fi
 
 if [[ "${USE[@]}" =~ all|js ]]; then
-  ionos.wordpress.eslint || exit_code=1
+  ionos.wordpress.eslint || exit_code=12
 fi
 
 if [[ "${USE[@]}" =~ all|css ]]; then
-  ionos.wordpress.stylelint || exit_code=1
+  ionos.wordpress.stylelint || exit_code=13
 fi
 
 if [[ "${USE[@]}" =~ all|pnpm ]]; then
-  ionos.wordpress.pnpm || exit_code=1
+  ionos.wordpress.pnpm || exit_code=14
 fi
 
 if [[ " ${USE[@]} " =~ all|i18n ]]; then
-  ionos.wordpress.dennis || exit_code=1
+  ionos.wordpress.dennis || exit_code=15
 fi
 
 exit ${exit_code:-0}
