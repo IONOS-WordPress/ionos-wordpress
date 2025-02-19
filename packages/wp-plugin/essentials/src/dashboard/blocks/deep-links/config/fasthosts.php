@@ -4,15 +4,15 @@ namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
 
 $links = [
   [
-    'url' => '',
+    'url'    => '',
     'anchor' => __('Control Panel', 'ionos-essentials'),
   ],
   [
-    'url' => 'Profile',
+    'url'    => 'Profile',
     'anchor' => __('My User', 'ionos-essentials'),
   ],
   [
-    'url' => 'Hosting/Websites/WordPress',
+    'url'    => 'Hosting/Websites/WordPress',
     'anchor' => __('WordPress Websites', 'ionos-essentials'),
   ],
 ];

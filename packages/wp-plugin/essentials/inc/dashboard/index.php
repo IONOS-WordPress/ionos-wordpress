@@ -19,12 +19,12 @@ if (! defined('ABSPATH')) {
 
 const REQUIRED_USER_CAPABILITIES = 'read';
 
-const ADMIN_PAGE_SLUG = 'ionos-essentials-dashboard';
+const ADMIN_PAGE_SLUG               = 'ionos-essentials-dashboard';
 const HIDDEN_ADMIN_PAGE_IFRAME_SLUG = 'ionos-essentials-dashboard-hidden-admin-page-iframe';
-const ADMIN_PAGE_HOOK = 'toplevel_page_' . ADMIN_PAGE_SLUG;
+const ADMIN_PAGE_HOOK               = 'toplevel_page_' . ADMIN_PAGE_SLUG;
 
 const POST_TYPE_TEMPLATE_CONTENT_START_MARKER = '<!-- ionos-essentials-dashboard-start-content -->';
-const POST_TYPE_TEMPLATE_CONTENT_END_MARKER = '<!-- ionos-essentials-dashboard-end-content -->';
+const POST_TYPE_TEMPLATE_CONTENT_END_MARKER   = '<!-- ionos-essentials-dashboard-end-content -->';
 
 // if editor feature is available, include the editor file
 if (is_file(__DIR__ . '/editor.php')) {
@@ -92,10 +92,10 @@ if (is_file(__DIR__ . '/editor.php')) {
     callback   : function () {
       // the logic what dashboard is shown when (e.g. based on tenant) can be implemented here
       $dashboard_name = 'ionos';
-      $html = file_get_contents(__DIR__ . "/data/{$dashboard_name}/rendered-skeleton.html");
+      $html           = file_get_contents(__DIR__ . "/data/{$dashboard_name}/rendered-skeleton.html");
 
       $start_marker_pos = strpos($html, POST_TYPE_TEMPLATE_CONTENT_START_MARKER);
-      $end_marker_pos = strpos($html, POST_TYPE_TEMPLATE_CONTENT_END_MARKER, $start_marker_pos);
+      $end_marker_pos   = strpos($html, POST_TYPE_TEMPLATE_CONTENT_END_MARKER, $start_marker_pos);
 
       $post_content = file_get_contents(__DIR__ . "/data/{$dashboard_name}/post_content.html");
       $post_content = \do_blocks($post_content);
@@ -122,7 +122,7 @@ if (is_file(__DIR__ . '/editor.php')) {
 \add_action('load-index.php', function () {
   if (\current_user_can(REQUIRED_USER_CAPABILITIES)) {
     $current_url = \home_url($_SERVER['REQUEST_URI']);
-    $admin_url = \get_admin_url();
+    $admin_url   = \get_admin_url();
 
     if ($current_url !== $admin_url) { // only redirect if we are on empty /wp-admin/
       return;

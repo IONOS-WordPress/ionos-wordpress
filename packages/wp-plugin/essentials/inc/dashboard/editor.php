@@ -10,11 +10,11 @@ namespace ionos_wordpress\essentials\dashboard;
     Additionally, it removes unnecessary feed links from the custom post type page and converts enqueued style files into inline styles.
  */
 
-const POST_TYPE_SLUG = 'custom_dashboard';
+const POST_TYPE_SLUG          = 'custom_dashboard';
 const POST_TYPE_TEMPLATE_SLUG = 'custom-dashboard-template';
 
 const DASHBOARD_POST_TITLE = 'Custom IONOS Dashboard';
-const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
+const DASHBOARD_POST_SLUG  = 'custom-ionos-dashboard';
 
 // register our initial custom dashboard post type and register/assign the template with it
 \add_action('init', function () {
@@ -23,20 +23,20 @@ const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
     POST_TYPE_SLUG,
     [
       'labels' => [
-        'name' => 'IONOS Dashboards',
+        'name'          => 'IONOS Dashboards',
         'singular_name' => 'IONOS Dashboard',
       ],
-      'public' => true,
+      'public'             => true,
       'publicly_queryable' => true,
-      'show_in_menu' => 'options-general.php',
-      'show_in_admin_bar' => true,
-      'show_in_rest' => true,
-      'supports' => ['title', 'editor'],
+      'show_in_menu'       => 'options-general.php',
+      'show_in_admin_bar'  => true,
+      'show_in_rest'       => true,
+      'supports'           => ['title', 'editor'],
     ]
   );
 
   \register_block_template('ionos-dashboard-page//' . POST_TYPE_TEMPLATE_SLUG, [
-    'title' => POST_TYPE_TEMPLATE_SLUG,
+    'title'   => POST_TYPE_TEMPLATE_SLUG,
     'content' => (function () {
       ob_start();
       require_once(__DIR__ . '/data/block-template.php');
@@ -55,7 +55,7 @@ const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
   // create dashboard posts for all saved dashboards
   $custom_dashboard_names = array_column(
     \get_posts([
-      'post_type' => POST_TYPE_SLUG,
+      'post_type'      => POST_TYPE_SLUG,
       'posts_per_page' => -1,
     ]),
     'post_name'
@@ -68,12 +68,12 @@ const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
       continue;
     }
     \wp_insert_post([
-      'post_title' => $name,
-      'post_name' => $name,
+      'post_title'   => $name,
+      'post_name'    => $name,
       'post_content' => file_get_contents($dir . '/post_content.html'),
-      'post_status' => 'publish',
-      'post_author' => 1,
-      'post_type' => POST_TYPE_SLUG,
+      'post_status'  => 'publish',
+      'post_author'  => 1,
+      'post_type'    => POST_TYPE_SLUG,
       // 'page_template' => POST_TYPE_TEMPLATE_SLUG // templates registered by plugins are not supported yet (as of WP 6.7)
     ]);
   }
@@ -215,8 +215,8 @@ function _persist_dashboard(\WP_Post $post): void
     foreach ($queued_styles as $style) {
       $css_url = $style->src;
       if ($css_url) {
-        $style->src = false;
-        $css_file = \wp_parse_url($css_url, PHP_URL_PATH);
+        $style->src  = false;
+        $css_file    = \wp_parse_url($css_url, PHP_URL_PATH);
         $css_content = file_get_contents(\wp_normalize_path(ABSPATH . $css_file));
         \wp_add_inline_style($style->handle, $css_content);
       }
@@ -241,11 +241,11 @@ function _persist_dashboard(\WP_Post $post): void
   callback: function ($data, $postarr, $unsanitized_postarr, $update) {
     if (file_exists(GLOBAL_STYLES_FILE) && 'wp_global_styles' === $data['post_type'] && ! $update) {
       // post_content can be slashed and is expected slashed after the filter
-      $post_content = json_decode(wp_unslash($data['post_content']), true);
+      $post_content   = json_decode(wp_unslash($data['post_content']), true);
       $data_from_file = \wp_json_file_decode(GLOBAL_STYLES_FILE, [
         'associative' => true,
       ]);
-      $new_data = array_merge($post_content, $data_from_file);
+      $new_data             = array_merge($post_content, $data_from_file);
       $data['post_content'] = wp_slash(\wp_json_encode($new_data));
     }
     return $data;

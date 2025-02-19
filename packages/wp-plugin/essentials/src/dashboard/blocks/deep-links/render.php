@@ -15,7 +15,7 @@ if ($tenant && file_exists($config_file)) {
   $domain = $market_domains[$market] ?? reset($market_domains);
 
   printf('<h3>%s</h3>', \esc_html__('Deep-Links', 'ionos-essentials'));
- 
+
   echo '<ul class="wp-block-list">';
   foreach ($links as $link) {
     printf(
