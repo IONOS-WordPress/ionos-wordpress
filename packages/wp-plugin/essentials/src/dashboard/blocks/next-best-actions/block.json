@@ -13,5 +13,5 @@
   },
   "textdomain": "ionos-essentials",
   "editorScript": "file:./index.js",
-  "render": "file:./render.php"
+  "render": "file:../../../../inc/dashboard/blocks/nba/render.php"
 }
