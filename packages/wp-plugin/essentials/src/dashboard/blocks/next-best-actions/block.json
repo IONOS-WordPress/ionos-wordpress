@@ -13,5 +13,9 @@
   },
   "textdomain": "ionos-essentials",
   "editorScript": "file:./index.js",
+  "viewScript": [
+    "file:./view.js",
+    "wp-api-fetch"
+  ],
   "render": "file:../../../../inc/dashboard/blocks/nba/render.php"
 }

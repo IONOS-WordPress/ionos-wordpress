@@ -21,20 +21,21 @@ for ($i = 1; $i <= 20; $i++) {
       id: 'checkPluginsPage' . $i,
       title: 'NBA' . $i,
       link: admin_url('plugins.php?complete_nba=checkPluginsPage' . $i),
-      completed_callback: fn () => !!random_int(0, 1)
+      completed_callback: fn () => false && !!random_int(0, 1)
     );
 }
 
-echo '<ul class="wp-block-list">';
+echo '<div class="wp-block-list">';
 foreach ($actions as $action) {
   $completed = $action->completed;
   printf(
-    '<li>%s<a href="%s" target="_top">%s</a>%s</li>',
+    '<p>%s<a href="%s" target="_top">%s</a>%s</p>%s',
     $completed ? '<s>' : '',
     \esc_url($action->link),
     \esc_html($action->title),
-    $completed ? '</s>' : ''
+    $completed ? '</s>' : '',
+    $completed ? '' : "<button id='{$action->id}' class='dismiss-nba'>dismiss</button>",
   );
 }
-echo '</ul>';
+echo '</div>';
 

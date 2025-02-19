@@ -14,7 +14,7 @@ class NBA
   private static array $actions = [];
 
   public function __construct(
-    private readonly string $id,
+    readonly string $id,
     readonly string $title,
     readonly string $link,
     readonly mixed $completed_callback
@@ -48,7 +48,7 @@ class NBA
 
   private static function _set_option()
   {
-    \update_option(self::$option_name, self::$option_value);
+    return \update_option(self::$option_name, self::$option_value);
   }
 
   private function _get_status()
@@ -57,16 +57,15 @@ class NBA
     return $option[$this->id] ?? false;
   }
 
-  public static function complete($id)
-  {
+  public static function setStatus($id, $key, $value) {
     $option = self::_get_option();
     if (isset($option[$id])) {
-      $option[$id]["completed"] = true;
+      $option[$id][$key] = $value;
     } else {
-      $option[$id] = ["completed" => true];
+      $option[$id] = [$key => $value];
     };
     self::$option_value = $option;
-    self::_set_option();
+    return self::_set_option();
   }
 
   public static function getNBA($id)
