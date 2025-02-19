@@ -48,10 +48,28 @@ if (is_file(__DIR__ . '/editor.php')) {
   if (isset($_GET['complete_nba'])) {
     $nba_id = $_GET['complete_nba'];
     require_once __DIR__ . '/blocks/nba/model.php';
-    \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::complete($nba_id);
+    \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::setStatus($nba_id, "completed", true);
   }
 });
 
+\add_action('rest_api_init', function () {
+  \register_rest_route('ionos/v1', '/complete_nba/(?P<id>[a-zA-Z0-9-]+)', [
+    'methods' => 'GET',
+    'callback' => function ($request) {
+			$params = $request->get_params();
+			$nba_id = $params['id'];
+      require_once __DIR__ . '/blocks/nba/model.php';
+      $res = \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::setStatus($nba_id, "completed", true);
+      if ($res) {
+        return new \WP_REST_Response(['status' => 'success', 'res' => $res], 200);
+      }
+      return new \WP_REST_Response(['status' => 'error'], 500);
+    },
+    'permission_callback' => function () {
+      return true || \current_user_can('manage_options');
+    },
+  ]);
+});
 
 // remove our blocks from all other post types
 \add_filter(
