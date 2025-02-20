@@ -309,7 +309,7 @@ The changets file will be taken under version control as long as it takes to cre
 
 The project uses git hooks at various stages.
 
-For example the `pre-commit` hook will automatically lint-fix the code before committing and will abort the commit process if lint-fix was not successful (MUST BE enabled by environment variable `LINTFIX_ON_COMMIT`, see `./.env.local`).
+For example the `pre-push` hook will automatically lint the code before push and will abort the if lint was not successful (MUST BE enabled by environment variable `LINT_ON_PUSH`, see `./.env.local`).
 
 Git hooks are located in the `./.githooks` directory.
 
