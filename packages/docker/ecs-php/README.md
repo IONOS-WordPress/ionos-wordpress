@@ -8,6 +8,10 @@ I needed a way to provide [PHP easy-coding-standard](https://github.com/easy-cod
 
 => That's exactly what a Docker image can do :-)
 
+# Debugging
+
+Debugging into ecs can be done like here : https://github.com/lgersman/docker-ecs-xdebug
+
 # Usage
 
 @TODO: add usage documentation
