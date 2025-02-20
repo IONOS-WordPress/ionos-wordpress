@@ -377,6 +377,7 @@ Options:
               - all      operate on all files
               - php      operate on php files
               - prettier operate html/yml/md/etc. files
+              - wp       operate on wordpress plugin/theme entry files
               - js       operate on js/jsx files
               - css      operate on css/scss files
               - pnpm     operate on pnpm lock file
