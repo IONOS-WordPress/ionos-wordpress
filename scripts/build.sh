@@ -9,12 +9,6 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-# skip building if BUILD_UP_TO_DATE is set to 1
-if [[ "${BUILD_UP_TO_DATE:-}" == '1' ]]; then
-  ionos.wordpress.log_warn "skip (re)building : BUILD_UP_TO_DATE=1"
-  exit 0
-fi
-
 # MARK: parse arguments
 FORCE=no
 VERBOSE=no
