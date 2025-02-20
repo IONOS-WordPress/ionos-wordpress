@@ -10,7 +10,12 @@
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
 # (re)build the project
-pnpm build
+if [[ "${BUILD_UP_TO_DATE:-}" == '1' ]]; then
+  # skip building if BUILD_UP_TO_DATE is set to 1
+  ionos.wordpress.log_warn "skip (re)building : BUILD_UP_TO_DATE=1 detected"
+else
+  pnpm build
+fi
 
 # generate .wp-env.json
 (
