@@ -3,6 +3,7 @@
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 use PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer;
 use PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer;
+use WordPressCS\WordPress\Sniffs\WP\GlobalVariablesOverrideSniff;
 
 $codeSnifferConfig = new PHP_CodeSniffer\Config(["--standard=./packages/docker/ecs-php/ruleset.xml"]);
 PHP_CodeSniffer\Autoload::addSearchPath('/composer/vendor/wp-coding-standards/wpcs/WordPress', "WordPressCS\WordPress");
@@ -62,5 +63,8 @@ return $configure->withRules([
   // align assoc arrays
   ->withConfiguredRule(BinaryOperatorSpacesFixer::class, [
     'default' => 'align',
+  ])
+  ->withConfiguredRule(GlobalVariablesOverrideSniff::class, [
+    'treat_files_as_scoped' => true,
   ])
 ;
