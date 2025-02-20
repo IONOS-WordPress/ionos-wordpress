@@ -4,6 +4,7 @@ use Symplify\EasyCodingStandard\Config\ECSConfig;
 use PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer;
 use PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer;
 use WordPressCS\WordPress\Sniffs\WP\GlobalVariablesOverrideSniff;
+use WordPressCS\WordPress\Sniffs\Security\EscapeOutputSniff;
 
 $codeSnifferConfig = new PHP_CodeSniffer\Config(["--standard=./packages/docker/ecs-php/ruleset.xml"]);
 PHP_CodeSniffer\Autoload::addSearchPath('/composer/vendor/wp-coding-standards/wpcs/WordPress', "WordPressCS\WordPress");
@@ -14,9 +15,24 @@ $configure = ECSConfig::configure();
 
 $codeSnifferRuleset = new PHP_CodeSniffer\Ruleset($codeSnifferConfig);
 
+$sniffCodes = $codeSnifferRuleset->sniffCodes;
+unset( $sniffCodes['WordPress.Security.EscapeOutput']);
+
+if( !class_exists('WordPressSecurityEscapeOutputSniff') ) {
+  class WordPressSecurityEscapeOutputSniff extends EscapeOutputSniff {
+    public function getGroups() {
+      $groups = parent::getGroups();
+      // remove 'printf' from the list of printing functions so that we can use it without any errors
+      $groups['printing_functions']['functions'] = array_diff($groups['printing_functions']['functions'], ['printf', 'wp_die', 'error_log']);
+      return $groups;
+    }
+  }
+}
+
 return $configure->withRules([
     // import the rules from our loaded codesniffer config
-    ...array_values($codeSnifferRuleset->sniffCodes),
+    ...array_values($sniffCodes),
+    WordPressSecurityEscapeOutputSniff::class,
 ])
   ->withPaths(['.'])
   ->withRootFiles()
