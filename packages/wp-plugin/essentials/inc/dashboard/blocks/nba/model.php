@@ -84,14 +84,72 @@ class NBA
 
 }
 
-for ($i = 1; $i <= 20; $i++) {
-    NBA::register(
-      id: 'checkPluginsPage' . $i,
-      title: 'NBA' . $i,
-      description: 'Description of NBA' . $i,
-      link: admin_url('plugins.php?complete_nba=checkPluginsPage' . $i),
-      // completed: (function(){
-      //   return false;
-      // })()
-    );
-}
+NBA::register(
+  id: 'checkPluginsPage',
+  title: 'Check plugins page',
+  description: 'Ensure all your plugins are up-to-date and functioning correctly.',
+  link: admin_url('plugins.php?complete_nba=checkPluginsPage'),
+  // completed: (function(){
+  //   return false;
+  // })()
+);
+
+NBA::register(
+  id: 'checkThemesPage',
+  title: 'Check themes page',
+  description: 'Review and manage your installed themes for a fresh look.',
+  link: admin_url('themes.php?complete_nba=checkThemesPage'),
+  // completed: (function(){
+  //   return false;
+  // })()
+);
+
+NBA::register(
+  id: 'checkSettingsPage',
+  title: 'Check settings page',
+  description: 'Verify your site settings to ensure everything is configured properly.',
+  link: admin_url('options-general.php?complete_nba=checkSettingsPage'),
+  // completed: (function(){
+  //   return false;
+  // })()
+);
+
+NBA::register(
+  id: 'checkUpdatesPage',
+  title: 'Check updates page',
+  description: 'Stay secure by keeping your WordPress installation up-to-date.',
+  link: admin_url('update-core.php?complete_nba=checkUpdatesPage'),
+  // completed: (function(){
+  //   return false;
+  // })()
+);
+
+NBA::register(
+  id: 'checkCommentsPage',
+  title: 'Check comments page',
+  description: 'Moderate and manage comments to keep your community engaged.',
+  link: admin_url('edit-comments.php?complete_nba=checkCommentsPage'),
+  // completed: (function(){
+  //   return false;
+  // })()
+);
+
+NBA::register(
+  id: 'checkPostsPage',
+  title: 'Check posts page',
+  description: 'Review your posts to ensure they are up-to-date and relevant.',
+  link: admin_url('edit.php?post_type=post&complete_nba=checkPostsPage'),
+  // completed: (function(){
+  //   return false;
+  // })()
+);
+
+NBA::register(
+  id: 'checkUsersPage',
+  title: 'Check users page',
+  description: 'Manage user roles and permissions to maintain site security.',
+  link: admin_url('users.php?complete_nba=checkUsersPage'),
+  // completed: (function(){
+  //   return false;
+  // })()
+);
