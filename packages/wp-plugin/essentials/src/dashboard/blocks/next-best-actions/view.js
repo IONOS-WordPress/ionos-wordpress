@@ -6,7 +6,7 @@ document.querySelectorAll('.dismiss-nba').forEach((el) => {
     console.log(wp.ajax);
     // alert(`Dismiss NBA ${click.target.id}`);
     const res = apiFetch({
-      path: `ionos/v1/complete_nba/${click.target.id}`,
+      path: `ionos/v1/dismiss_nba/${click.target.id}`,
       method: 'GET',
     });
   });

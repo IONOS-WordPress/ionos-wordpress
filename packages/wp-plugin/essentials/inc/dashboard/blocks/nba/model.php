@@ -13,11 +13,12 @@ class NBA
   private static $option_value;
   private static array $actions = [];
 
-  public function __construct(
+  private function __construct(
     readonly string $id,
     readonly string $title,
+    readonly string $description,
     readonly string $link,
-    readonly mixed $completed_callback
+    readonly bool $completed
   ) {
     $a = "b";
     self::$actions[$this->id] = $this;
@@ -25,16 +26,16 @@ class NBA
 
   public function __get($property)
   {
-    if ('completed' === $property) {
-      if (is_bool($this->completed_callback)) {
-        return $this->completed_callback;
-      } else {
-        $status = $this->_get_status();
-        if (isset($status["completed"]) && $status["completed"]) {
-          return true;
-        }
+    if ('active' === $property) {
+      $status = $this->_get_status();
+      if (isset($status["completed"]) && $status["completed"] || isset($status["dismissed"]) && $status["dismissed"]) {
+        return false;
       }
-      return call_user_func($this->completed_callback);
+      // $status = (object) $this->_get_status();
+      // if ($status?->completed ?? false || $status?->dismissed ?? false) {
+      //   return false;
+      // }
+      return ! $this->completed;
     }
   }
 
@@ -76,18 +77,21 @@ class NBA
     return self::$actions;
   }
 
-  public static function create($id, $title, $link, $completed_callback)
+  public static function register($id, $title, $description, $link, $completed = false)
   {
-    return new NBA($id, $title, $link, $completed_callback);
+    new NBA($id, $title, $description, $link, $completed);
   }
 
 }
 
 for ($i = 1; $i <= 20; $i++) {
-    NBA::create(
+    NBA::register(
       id: 'checkPluginsPage' . $i,
       title: 'NBA' . $i,
+      description: 'Description of NBA' . $i,
       link: admin_url('plugins.php?complete_nba=checkPluginsPage' . $i),
-      completed_callback: fn () => false && !!random_int(0, 1)
+      // completed: (function(){
+      //   return false;
+      // })()
     );
 }
