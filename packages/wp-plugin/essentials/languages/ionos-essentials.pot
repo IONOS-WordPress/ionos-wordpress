@@ -186,7 +186,11 @@ msgstr ""
 msgid "Hello World !"
 msgstr ""
 
-#: inc/dashboard/index.php:35
+#: inc/dashboard/blocks/nba/render.php:9
+msgid "Next best actions ⚡"
+msgstr ""
+
+#: inc/dashboard/index.php:38
 msgid "IONOS Dashboard"
 msgstr ""
 
@@ -202,6 +206,16 @@ msgstr ""
 #: build/dashboard/blocks/deep-links/block.json
 msgctxt "block description"
 msgid "Show links to the Control Panel of your provider."
+msgstr ""
+
+#: build/dashboard/blocks/next-best-actions/block.json
+msgctxt "block title"
+msgid "NBA"
+msgstr ""
+
+#: build/dashboard/blocks/next-best-actions/block.json
+msgctxt "block description"
+msgid "Next Best Actions"
 msgstr ""
 
 #: build/dashboard/blocks/quick-links/block.json

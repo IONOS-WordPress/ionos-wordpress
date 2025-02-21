@@ -30,6 +30,9 @@ const POST_TYPE_TEMPLATE_CONTENT_END_MARKER = '<!-- ionos-essentials-dashboard-e
 if (is_file(__DIR__ . '/editor.php')) {
   require_once __DIR__ . '/editor.php';
 }
+if (is_file(__DIR__ . '/blocks/nba/index.php')) {
+  require_once __DIR__ . '/blocks/nba/index.php';
+}
 
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', __('IONOS Dashboard', 'ionos-essentials'));
@@ -41,34 +44,6 @@ if (is_file(__DIR__ . '/editor.php')) {
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/deep-links');
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/quick-links');
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/vulnerability');
-  \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/next-best-actions');
-});
-
-\add_action('admin_init', function () {
-  if (isset($_GET['complete_nba'])) {
-    $nba_id = $_GET['complete_nba'];
-    require_once __DIR__ . '/blocks/nba/model.php';
-    \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::setStatus($nba_id, "completed", true);
-  }
-});
-
-\add_action('rest_api_init', function () {
-  \register_rest_route('ionos/v1', '/complete_nba/(?P<id>[a-zA-Z0-9-]+)', [
-    'methods' => 'GET',
-    'callback' => function ($request) {
-			$params = $request->get_params();
-			$nba_id = $params['id'];
-      require_once __DIR__ . '/blocks/nba/model.php';
-      $res = \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::setStatus($nba_id, "completed", true);
-      if ($res) {
-        return new \WP_REST_Response(['status' => 'success', 'res' => $res], 200);
-      }
-      return new \WP_REST_Response(['status' => 'error'], 500);
-    },
-    'permission_callback' => function () {
-      return true || \current_user_can('manage_options');
-    },
-  ]);
 });
 
 // remove our blocks from all other post types

@@ -19,7 +19,7 @@ class NBA
     readonly string $link,
     readonly mixed $completed_callback
   ) {
-    $foo  = 'bar';
+    $a = "b";
     self::$actions[$this->id] = $this;
   }
 
@@ -30,7 +30,7 @@ class NBA
         return $this->completed_callback;
       } else {
         $status = $this->_get_status();
-        if ($status && $status["completed"]) {
+        if (isset($status["completed"]) && $status["completed"]) {
           return true;
         }
       }
@@ -46,30 +46,48 @@ class NBA
     return self::$option_value;
   }
 
-  private static function _set_option()
+  private static function _set_option(array $option)
   {
-    return \update_option(self::$option_name, self::$option_value);
+    return \update_option(self::$option_name, $option);
   }
 
   private function _get_status()
   {
     $option = $this->_get_option();
-    return $option[$this->id] ?? false;
+    return $option[$this->id] ?? [];
   }
 
-  public static function setStatus($id, $key, $value) {
+  function setStatus($key, $value) {
+    $id = $this->id;
     $option = self::_get_option();
-    if (isset($option[$id])) {
-      $option[$id][$key] = $value;
-    } else {
-      $option[$id] = [$key => $value];
-    };
-    self::$option_value = $option;
-    return self::_set_option();
+
+    $option[$id] ??= [];
+    $option[$id][$key] = $value;
+    return self::_set_option($option);
   }
 
   public static function getNBA($id)
   {
     return self::$actions[$id];
   }
+
+  public static function getActions()
+  {
+    return self::$actions;
+  }
+
+  public static function create($id, $title, $link, $completed_callback)
+  {
+    return new NBA($id, $title, $link, $completed_callback);
+  }
+
+}
+
+for ($i = 1; $i <= 20; $i++) {
+    NBA::create(
+      id: 'checkPluginsPage' . $i,
+      title: 'NBA' . $i,
+      link: admin_url('plugins.php?complete_nba=checkPluginsPage' . $i),
+      completed_callback: fn () => false && !!random_int(0, 1)
+    );
 }

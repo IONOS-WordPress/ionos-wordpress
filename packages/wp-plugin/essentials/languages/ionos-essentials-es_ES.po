@@ -142,7 +142,7 @@ msgstr "Quick Links"
 msgid "Hello World !"
 msgstr "Hola a todos."
 
-#: inc/dashboard/index.php:35
+#: inc/dashboard/index.php:38
 msgid "IONOS Dashboard"
 msgstr "Cuadro de mandos de IONOS"
 
