@@ -378,11 +378,14 @@ EOF
 
   pnpm --filter "$PACKAGE_NAME" --if-present run postbuild
 
-  plugin_name="$(basename $path)-$PACKAGE_VERSION"
+  # create a unique valid directory name for the plugin
+  # "@wordpress-ionos/essentials" => "wordpress-ionos-essentials"
+  plugin_name="${PACKAGE_NAME//@/}"
+  plugin_name="${plugin_name//\//-}"
 
   if [[ "${USE[@]}" =~ all|wp-plugin:rector|wp-plugin:bundle ]]; then
     # copy plugin code to dist/[plugin-name]
-    mkdir -p $path/dist/$plugin_name
+    mkdir -p $path/dist/$plugin_name-$PACKAGE_VERSION
     rsync -rupE --verbose \
       --exclude=node_modules/ \
       --exclude=package.json \
@@ -402,7 +405,7 @@ EOF
       --exclude=webpack.config.js \
       $(test -f $path/.distignore && echo "--exclude-from=$path/.distignore") \
       $path/ \
-      $path/dist/$plugin_name
+      $path/dist/$plugin_name-$PACKAGE_VERSION
   fi
 
   if [[ "${USE[@]}" =~ all|wp-plugin:rector ]]; then
@@ -415,8 +418,9 @@ EOF
       for RECTOR_CONFIG in ./rector-config-php*.php; do
         RECTOR_CONFIG=$(basename "$RECTOR_CONFIG" '.php')
         TARGET_PHP_VERSION="${RECTOR_CONFIG#*rector-config-php}"
-        TARGET_DIR="dist/${plugin_name}-php${TARGET_PHP_VERSION}"
-        rsync -a $path/dist/${plugin_name}/ $path/$TARGET_DIR
+        TARGET_DIR="dist/${plugin_name}-${PACKAGE_VERSION}-php${TARGET_PHP_VERSION}/${plugin_name}"
+        mkdir -p $path/$TARGET_DIR
+        rsync -a $path/dist/${plugin_name}-$PACKAGE_VERSION/ $path/$TARGET_DIR
         # call dockerized rector
         docker run \
           $DOCKER_FLAGS \
