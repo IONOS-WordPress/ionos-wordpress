@@ -3,12 +3,12 @@
  * This class represents the Next Best Action (NBA) model.
  */
 
-namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model;
+namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions;
 
 /**
  * Class NBA
  */
-final class NBA
+final class Model
 {
   const WP_OPTION_NAME='NBA_OPTION';
 
@@ -18,6 +18,8 @@ final class NBA
     readonly string $id,
     readonly string $title,
     readonly string $description,
+    readonly string $link,
+    readonly mixed $completeOnClickCallback,
     readonly string $image,
     readonly mixed $callback,
     readonly bool $completed = false,
@@ -38,8 +40,10 @@ final class NBA
       'id' => $this->id,
       'title' => $this->title,
       'description' => $this->description,
+      'link' => $this->link,
+      'completeOnClickCallback' => $this->completeOnClickCallback,
       'image' => $this->image,
-      'callback' => is_callable($this->callback) ? call_user_func($this->callback) : null,
+      'callback' => $this->callback,
       'completed' => static::_getOption($this->id, 'completed'),
       'dismissed' => static::_getOption($this->id, 'dismissed'),
       default => throw new \InvalidArgumentException("Invalid property: $optionName"),
@@ -63,6 +67,7 @@ final class NBA
 
   protected static function _getOption(string $id, string $optionName): mixed {
     $wp_option = static::_getWPOption();
-    return $wp_option[$id][$optionName] ?? null;
+    return $wp_option[$id][$optionName] ?? false;
   }
 }
+

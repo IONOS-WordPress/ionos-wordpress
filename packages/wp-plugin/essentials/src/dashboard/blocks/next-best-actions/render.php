@@ -6,50 +6,41 @@ namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions;
 
 use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA;
 
-$model_path = __DIR__ . '/model/nba.php';
+$nba_data = __DIR__ . '/data.php';
 
-if (! file_exists($model_path)) {
+if (! file_exists($nba_data)) {
+  return;
+}
+require_once $nba_data;
+
+$actions = getNBAData();
+if (! is_array($actions)) {
   return;
 }
 
-require_once $model_path;
 printf('<h3>%s</h3>', \esc_html__('Next best actions ⚡', 'ionos-essentials'));
-
-$actions = array(
-  new NBA(
-    id: 'checkPluginsPage',
-    title: 'Check Plugins Page',
-    description: 'Check the plugins page for updates and security issues.',
-    image: 'https://raw.githubusercontent.com/codeformm/mitaka-kichijoji-wapuu/main/mitaka-kichijoji-wapuu.png',
-    callback: function($action) {
-      $action->__set('completed', true);
-      wp_safe_redirect(admin_url('plugins.php'));
-      exit;
-    },
-  ),
-  new NBA(
-    id: 'checkThemesPage',
-    title: 'Check Themes Page',
-    description: 'Check the themes page for updates and security issues.',
-    image: 'https://raw.githubusercontent.com/codeformm/mitaka-kichijoji-wapuu/main/mitaka-kichijoji-wapuu.png',
-    callback: function($action) {
-      $action->__set('completed', true);
-      wp_safe_redirect(admin_url('themes.php'));
-      exit;
-    },
-  ),
-);
-
-echo '<ul class="wp-block-list">';
+echo '<ul class="wp-block-list ionos-dashboard-nba ">';
 foreach ($actions as $action) {
+  //$action->__set('dismissed', 0);
+  if ($action->__get('dismissed') === "1" || $action->__get('completed') === "1") {
+    continue;
+  }
+  printf('<div class="wp-block-button is-style-outline is-style-outline--2">
+    <a href="#" class="wp-block-button__link wp-element-button" callback-id="click-nba-dismiss" data-id="%s">%s</a>
+  </div>',
+  \esc_attr($action->__get('id')),
+  'Dismiss'
+  );
   printf(
-    '<li><a href="#" target="_top">%s</a></li>',
-    \esc_html($action->__get('title')) . ' -> ' . ($action->__get('completed') ? 'Completed' : 'Not completed')
+    '<a href="%s" class="ionos-dashboard nba-action-link %s" callback-id="click-nba-action" data-id="%s" />%s',
+    \esc_attr($action->__get('link')),
+    $action->__get('completed') ? 'completed' : '',
+    \esc_attr($action->__get('id')),
+    \esc_html($action->__get('title'))
   );
 }
-echo '</ul>';
+echo '</li></ul>';
 
-//debug callback on dashboard
-//echo '<pre>';
-//$actions[0]->__set('completed', true);
-//wp_die();
+add_action('wp_ajax_execute-nba-callback', function() {
+  \wp_send_json_error( new \WP_Error( 'geht_nicht', 'Test' ) );
+});

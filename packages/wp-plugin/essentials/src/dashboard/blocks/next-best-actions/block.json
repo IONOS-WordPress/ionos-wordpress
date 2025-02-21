@@ -13,5 +13,9 @@
   },
   "textdomain": "ionos-essentials",
   "editorScript": "file:./index.js",
+  "viewScript": [
+    "file:./view.js",
+    "wp-util"
+  ],
   "render": "file:./render.php"
 }
