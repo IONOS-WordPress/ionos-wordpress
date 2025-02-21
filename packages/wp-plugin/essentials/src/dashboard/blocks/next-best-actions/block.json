@@ -17,5 +17,6 @@
     "file:./view.js",
     "wp-api-fetch"
   ],
+  "viewStyle": "file:../../../../inc/dashboard/blocks/nba/style.css",
   "render": "file:../../../../inc/dashboard/blocks/nba/render.php"
 }
