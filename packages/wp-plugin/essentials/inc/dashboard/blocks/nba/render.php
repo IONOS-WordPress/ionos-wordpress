@@ -36,7 +36,7 @@ foreach ($actions as $action) {
   )
   . '<div class="wp-block-button is-style-outline is-style-outline--1">'
   . sprintf(
-    '<div class="wp-block-button"><a href="#" id="%s" class="wp-block-button__link wp-element-button dismiss-nba" target="_top">%s</a></div>',
+    '<div class="wp-block-button"><a id="%s" class="wp-block-button__link wp-element-button dismiss-nba" target="_top">%s</a></div>',
     $action->id,
     \esc_html("Dismiss", 'ionos-essentials')
   )
