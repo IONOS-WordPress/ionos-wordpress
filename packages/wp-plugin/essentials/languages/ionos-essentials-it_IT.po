@@ -154,7 +154,7 @@ msgstr "Collegamenti rapidi"
 msgid "Hello World !"
 msgstr "Ciao mondo!"
 
-#: inc/dashboard/index.php:35
+#: inc/dashboard/index.php:37
 msgid "IONOS Dashboard"
 msgstr "Cruscotto IONOS"
 

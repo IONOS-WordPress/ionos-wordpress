@@ -154,7 +154,7 @@ msgstr "Snelle links"
 msgid "Hello World !"
 msgstr "Hallo Wereld!"
 
-#: inc/dashboard/index.php:35
+#: inc/dashboard/index.php:37
 msgid "IONOS Dashboard"
 msgstr "IONOS-dashboard"
 

@@ -39,7 +39,7 @@ msgstr "IONOS-Gruppe"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: inc/dashboard/index.php:38
+#: inc/dashboard/index.php:37
 msgid "IONOS Dashboard"
 msgstr "IONOS Dashboard"
 
