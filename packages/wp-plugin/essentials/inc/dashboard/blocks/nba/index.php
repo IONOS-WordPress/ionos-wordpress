@@ -6,13 +6,14 @@ use const ionos_wordpress\essentials\PLUGIN_DIR;
 \add_action('init', function () {
   \register_block_type(
     PLUGIN_DIR . '/build/dashboard/blocks/next-best-actions',
-  );
-});
     // [
     //   'render_callback' => function ($attributes) {
     //     require_once __DIR__ . '/render.php';
     //   },
     // ]
+  );
+});
+
 \add_action('admin_init', function () {
   if (isset($_GET['complete_nba'])) {
     require_once __DIR__ . '/model.php';
