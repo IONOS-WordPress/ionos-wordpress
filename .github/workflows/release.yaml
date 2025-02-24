@@ -73,10 +73,13 @@ jobs:
           echo "GitHub SHA: $GITHUB_SHA"
 
       - name: post to google chat
+        if: ${{ github.event_name == 'push' }}
         run: |
+          echo "Posting to google chat"
+          echo "GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK: ${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}"
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d '{"text": "[TEST] xxx has rolled out the plugin yyy in version zzz using ionos-wordpress release pipeline"}' \
+            -d '{"text": "[TEST] ${{github.event.pusher.name}} has rolled out the plugin yyy in version zzz using ionos-wordpress release pipeline"}' \
             ${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}
 
       # - name: Login to GitHub Container Registry
