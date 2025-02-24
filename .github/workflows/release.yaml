@@ -76,7 +76,6 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         run: |
           echo "Posting to google chat"
-          echo "GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK: ${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}"
           curl -X POST \
             -H 'Content-Type: application/json' \
             -d '{"text": "[TEST] ${{ github.event.repository.name }} ${{ github.triggering_actor }} : ${{ github.event.pusher.name }} triggered a new release"}' \
