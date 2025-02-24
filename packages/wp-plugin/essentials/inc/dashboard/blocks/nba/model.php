@@ -83,6 +83,13 @@ class NBA
   }
 
 }
+NBA::register(
+  id: 'addPage',
+  title: 'Add a page',
+  description: 'Create some content for your website visitor.',
+  link: admin_url('post-new.php?post_type=page'),
+  completed: wp_count_posts('page')->publish > 0
+);
 
 NBA::register(
   id: 'checkPluginsPage',
