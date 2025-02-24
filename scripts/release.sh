@@ -77,6 +77,9 @@ pnpm install
 # build repository
 pnpm build
 
+# generate sbom file
+docker run -it --rm -v $(pwd):/project anchore/syft scan /project --source-name ionos-wordpress --select-catalogers "+javascript-package-cataloger,+github-actions-usage-cataloger,+php-composer-lock-cataloger" -o spdx-json=/project/ionos-wordpress.sbom.json.tmp && jq '.' ionos-wordpress.sbom.json.tmp > ionos-wordpress.sbom.syft.json && rm -f ionos-wordpress.sbom.json.tmp
+
 # add updated files to git
 git add -A .
 
@@ -90,7 +93,7 @@ git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
 # commit changes
 # no-verify will disable the pre-push hook since we wont automatically run lint
-git commit --no-verify -am "chore(release) : updated versions [skip release]"
+git commit --no-verify -am "chore(release) : updated versions and sbom information [skip release]"
 
 # tag release
 pnpm changeset tag
