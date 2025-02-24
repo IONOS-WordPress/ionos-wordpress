@@ -79,7 +79,7 @@ jobs:
           echo "GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK: ${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}"
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d '{"text": "[TEST] ${{ github.event.repository.name }} ${{ github.triggering_actor }} : ${{ github.event.pusher.name }} triggered a new release'}" \
+            -d '{"text": "[TEST] ${{ github.event.repository.name }} ${{ github.triggering_actor }} : ${{ github.event.pusher.name }} triggered a new release"}' \
             '${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}'
 
       # - name: Login to GitHub Container Registry
