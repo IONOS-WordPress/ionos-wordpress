@@ -72,6 +72,13 @@ jobs:
           echo "The GitHub Actor's username is: $GITHUB_ACTOR"
           echo "GitHub SHA: $GITHUB_SHA"
 
+      - name: post to google chat
+        run: |
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d '{"text": "[TEST] xxx has rolled out the plugin yyy in version zzz using ionos-wordpress release pipeline"}' \
+            ${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}
+
       # - name: Login to GitHub Container Registry
       #   uses: docker/login-action@v3
       #   with:

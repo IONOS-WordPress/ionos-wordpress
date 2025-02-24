@@ -12,7 +12,7 @@ on:
   # run on all branches
   push:
     branches:
-      - '**'
+      - 'triallalla'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
