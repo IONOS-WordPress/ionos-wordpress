@@ -77,8 +77,8 @@ jobs:
         run: |
           env | grep GITHUB
           cat $(printenv GITHUB_EVENT_PATH)
-          echo $(jq '.repository.name' $GITHUB_EVENT_PATH)
-          echo $(jq '.repository.html_url' $GITHUB_EVENT_PATH)
+          echo $(jq -r '.repository.name' $GITHUB_EVENT_PATH)
+          echo $(jq -r '.repository.html_url' $GITHUB_EVENT_PATH)
           echo "$GITHUB_TRIGGERING_ACTOR"
           # GITHUB_TRIGGERING_ACTOR = ${{ github.triggering_actor }}
           curl -X POST \
