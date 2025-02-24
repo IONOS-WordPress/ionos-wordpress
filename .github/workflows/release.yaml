@@ -75,6 +75,7 @@ jobs:
       - name: post to google chat
         if: ${{ github.event_name == 'push' }}
         run: |
+          env | grep GITHUB
           echo $(printenv GITHUB_CONTEXT | jq '.event.repository.name')
           curl -X POST \
             -H 'Content-Type: application/json' \
