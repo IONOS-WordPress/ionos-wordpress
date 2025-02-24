@@ -75,7 +75,7 @@ jobs:
       - name: post to google chat
         if: ${{ github.event_name == 'push' }}
         run: |
-          printenv GITHUB_CONTEXT | jq '.event.repository.name'
+          echo $(printenv GITHUB_CONTEXT | jq '.event.repository.name')
           curl -X POST \
             -H 'Content-Type: application/json' \
             -d '{"text": "[TEST] ${{ github.event.repository.name }} : ${{ github.triggering_actor }} created new releases - see ${{ github.event.repository.html_url }}/releases"}' \
