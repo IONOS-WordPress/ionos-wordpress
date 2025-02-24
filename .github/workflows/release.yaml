@@ -77,7 +77,7 @@ jobs:
         run: |
           env | grep GITHUB
           cat $(printenv GITHUB_EVENT_PATH)
-          echo jq '.event.repository.name' $GITHUB_EVENT_PATH
+          echo $(jq '.event.repository.name' $GITHUB_EVENT_PATH)
           curl -X POST \
             -H 'Content-Type: application/json' \
             -d '{"text": "[TEST] ${{ github.event.repository.name }} : ${{ github.triggering_actor }} created new releases - see ${{ github.event.repository.html_url }}/releases"}' \
