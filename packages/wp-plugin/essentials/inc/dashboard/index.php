@@ -2,6 +2,10 @@
 
 namespace ionos_wordpress\essentials\dashboard;
 
+use PhpParser\Node\Stmt\Global_;
+
+use function PHPUnit\Framework\callback;
+
 use const ionos_wordpress\essentials\PLUGIN_DIR;
 
 /*
@@ -174,4 +178,8 @@ add_action('init', function () {
       return "/wp-content/plugins/essentials/inc/dashboard/data/tenant-logos/{$tenant}.svg";
     },
   ]);
+});
+
+add_action('enqueue_block_assets', function () {
+  \wp_enqueue_style('ionos-essentials-dashboard', PLUGIN_DIR . '/build/dashboard/blocks/vulnerability/index.css');
 });
