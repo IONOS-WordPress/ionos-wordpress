@@ -78,7 +78,7 @@ jobs:
           echo "Posting to google chat"
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d '{"text": "[TEST] ${{ github.event.repository.name }} ${{ github.triggering_actor }} : ${{ github.event.pusher.name }} triggered a new release"}' \
+            -d '{"text": "[TEST] ${{ github.event.repository.name }} ${{ github.triggering_actor }} : ${{ github.event.pusher.name }} created new releases - see ${{ github.html_url }}/releases"}' \
             '${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}'
 
       # - name: Login to GitHub Container Registry
