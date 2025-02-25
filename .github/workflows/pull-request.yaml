@@ -14,47 +14,20 @@ on:
   - pull_request_review_comment
 
 jobs:
-  pr_created:
+  send_notification:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'skip release')"
+    name: Send message to gchat
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
 
-      - name: Show default environment variables
-        run: |
-          echo "The job_id is: $GITHUB_JOB"   # reference the default environment variables
-          echo "The id of this action is: $GITHUB_ACTION"   # reference the default environment variables
-          echo "The run id is: $GITHUB_RUN_ID"
-          echo "The GitHub Actor's username is: $GITHUB_ACTOR"
-          echo "GitHub SHA: $GITHUB_SHA"
-
-      - name: post to google chat
-        # if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          curl -X POST \
-            -H 'Content-Type: application/json' \
-            -d '{"text": "[TEST] ${{ github.event_name }} : ${{ github.triggering_actor }} did a pull request action"}' \
-            '${{ secrets.GOOGLECHAT_WPDEV_MERGE_REQUESTS_WEBHOOK }}'
+      - name: Hello world action step
+        id: hello
+        uses: DTherHtun/google-chat-action@v0.8
+        with:
+          webhook: ${{ secrets.GOOGLECHAT_WPDEV_MERGE_REQUESTS_WEBHOOK }}
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
