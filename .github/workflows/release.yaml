@@ -88,7 +88,8 @@ jobs:
 
 
           curl https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" PNPM_VERSION="9.15.4" SHELL="$(which bash)" bash -
-          source /home/runner/.bashrc
+          export PNPM_HOME /home/$USERNAME/.local/share/pnpm
+          export PATH $PNPM_HOME:$PATH
           pnpm install --frozen-lockfile
           pnpm changeset versions
 
