@@ -72,7 +72,7 @@ fi
 pnpm changeset version
 
 # update pnpm-lock.yaml
-pnpm install
+pnpm install --frozen-lockfile
 
 # build repository
 pnpm build
