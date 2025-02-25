@@ -56,5 +56,5 @@ jobs:
         run: |
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d '{"text": "[TEST] ${{ github.event_name }} : ${{ github.triggering_actor }} did a pull request action' \
+            -d '{"text": "[TEST] ${{ github.event_name }} : ${{ github.triggering_actor }} did a pull request action"}' \
             '${{ secrets.GOOGLECHAT_WPDEV_MERGE_REQUESTS_WEBHOOK }}'
