@@ -77,7 +77,7 @@ jobs:
         env:
           GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK: ${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}
         run: |
-          env | GOOGLECHAT
+          env | grep GOOGLECHAT
           env | grep GITHUB
           cat $(printenv GITHUB_EVENT_PATH)
           echo $(jq -r '.repository.name' $GITHUB_EVENT_PATH)
