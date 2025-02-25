@@ -14,7 +14,7 @@ on:
   - pull_request_review_comment
 
 jobs:
-  post-pr_created:
+  pr_created:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip release')"
     steps:
