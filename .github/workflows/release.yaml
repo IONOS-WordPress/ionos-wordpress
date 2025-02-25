@@ -86,16 +86,28 @@ jobs:
           #   -d '{"text": "[TEST] ${{ github.event.repository.name }} : ${{ github.triggering_actor }} created new releases - see ${{ github.event.repository.html_url }}/releases"}' \
           #   '${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}'
 
-          # use the triggering actor of the github event if available, otherwise use the git config user.name
-          TRIGGERING_ACTOR="${GITHUB_TRIGGERING_ACTOR:-$(git config user.name)}"
-          # use the repository name from the github event if available, otherwise use the repository name from the git config
-          REPOSITORY_NAME=$( [[ $GITHUB_EVENT_PATH != '' ]] && jq -r '.repository.name' $GITHUB_EVENT_PATH || basename $(realpath .))
-          # use the repository url from the github event if available, otherwise use the repository url from the git config
-          REPOSITORY_URL=$( [[ $GITHUB_EVENT_PATH != '' ]] && echo "$(jq -r '.repository.html_url' $GITHUB_EVENT_PATH)/releases" || git remote get-url --push origin)
-          echo curl -X POST \
-            -H 'Content-Type: application/json' \
-            -d "{\"text\": \"[TEST] ${REPOSITORY_NAME} : ${TRIGGERING_ACTOR} created new releases - see ${REPOSITORY_URL}\"}" \
-            '${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}'
+
+
+          pnpm install --frozen-lockfile
+          pnpm changeset versions
+
+          # compute changed packages
+          pnpm changeset status --verbose --output ./tmp/release/status.json
+
+          if [[ "${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}" != '' ]]; then
+            # use the triggering actor of the github event if available, otherwise use the git config user.name
+            TRIGGERING_ACTOR="${GITHUB_TRIGGERING_ACTOR:-$(git config user.name)}"
+            # use the repository name from the github event if available, otherwise use the repository name from the git config
+            REPOSITORY_NAME=$( [[ $GITHUB_EVENT_PATH != '' ]] && jq -r '.repository.name' $GITHUB_EVENT_PATH || basename $(realpath .))
+            # use the repository url from the github event if available, otherwise use the repository url from the git config
+            REPOSITORY_URL=$( [[ $GITHUB_EVENT_PATH != '' ]] && echo "$(jq -r '.repository.html_url' $GITHUB_EVENT_PATH)/releases" || git remote get-url --push origin)
+            echo curl -X POST \
+              -H 'Content-Type: application/json' \
+              -d "{\"text\": \"[TEST] ${REPOSITORY_NAME} : ${TRIGGERING_ACTOR} created new releases - see ${REPOSITORY_URL}\"}" \
+              '${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}'
+          else
+            echo "::warning::skip sending google chat release announcement message : secrets GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK is not defined"
+          fi
 
       # - name: Login to GitHub Container Registry
       #   uses: docker/login-action@v3
