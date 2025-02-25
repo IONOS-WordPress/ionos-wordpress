@@ -22,20 +22,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-      - name: Get commit hash
-        if: ${{ always() }}
-        run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
-        id: slug
       - name: Hello world action step
         if: ${{ always() }}
         id: hello
-        uses: DTherHtun/google-chat-action@v0.8
+        uses: MattNotarangelo/PR-review-google-chat-action@v0.0.1
         with:
-          project: ${{ github.repository }}
-          commit: ${{ steps.slug.outputs.sha8 }}
-          branch: ${{ github.ref }}
-          status: ${{ job.status }}
-          actionid: ${{ github.repository }}/runs/${{ github.run_id }}
           webhook: ${{ secrets.GOOGLECHAT_WPDEV_MERGE_REQUESTS_WEBHOOK }}
       # Use the output from the `hello` step
       - name: Get the output time
