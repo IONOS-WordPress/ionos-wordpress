@@ -22,8 +22,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-
+      - name: Get commit hash
+        if: ${{ always() }}
+        run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+        id: slug
       - name: Hello world action step
+        if: ${{ always() }}
         id: hello
         uses: DTherHtun/google-chat-action@v0.8
         with:
