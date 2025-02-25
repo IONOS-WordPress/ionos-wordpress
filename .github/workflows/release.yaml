@@ -95,6 +95,7 @@ jobs:
 
           # compute changed packages
           pnpm changeset status --verbose --output ./tmp/release/status.json
+          echo $(jq -r '.releases[] | "\(.name)(\(.oldVersion)->\(.newVersion))"' ./tmp/release/status.json | paste -sd, -)
 
           if [[ "${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}" != '' ]]; then
             # use the triggering actor of the github event if available, otherwise use the git config user.name
