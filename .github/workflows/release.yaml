@@ -96,7 +96,7 @@ jobs:
           mkdir -p ./tmp/release/
           pnpm changeset status --verbose --output ./tmp/release/status.json
 
-          if [[ "${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}" != '' ]]; then
+          if [[ "${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOsK }}" != '' ]]; then
             # use the triggering actor of the github event if available, otherwise use the git config user.name
             TRIGGERING_ACTOR="${GITHUB_TRIGGERING_ACTOR:-$(git config user.name)}"
             # use the repository name from the github event if available, otherwise use the repository name from the git config
