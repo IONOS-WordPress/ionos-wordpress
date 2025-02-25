@@ -87,7 +87,7 @@ jobs:
           #   '${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}'
 
 
-
+          curl https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" PNPM_VERSION="9.15.4" SHELL="$(which bash)" bash -
           pnpm install --frozen-lockfile
           pnpm changeset versions
 
