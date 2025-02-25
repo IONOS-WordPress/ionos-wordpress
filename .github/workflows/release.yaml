@@ -74,6 +74,8 @@ jobs:
 
       - name: post to google chat
         if: ${{ github.event_name == 'push' }}
+        env:
+          GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK: ${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}
         run: |
           env | grep GITHUB
           cat $(printenv GITHUB_EVENT_PATH)
@@ -96,7 +98,7 @@ jobs:
           mkdir -p ./tmp/release/
           pnpm changeset status --verbose --output ./tmp/release/status.json
 
-          if [[ "${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOsK }}" != '' ]]; then
+          if [[ "${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}" != '' ]]; then
             # use the triggering actor of the github event if available, otherwise use the git config user.name
             TRIGGERING_ACTOR="${GITHUB_TRIGGERING_ACTOR:-$(git config user.name)}"
             # use the repository name from the github event if available, otherwise use the repository name from the git config
@@ -108,9 +110,9 @@ jobs:
             curl -X POST \
               -H 'Content-Type: application/json' \
               -d "{\"text\": \"*${TRIGGERING_ACTOR}* released repository *${REPOSITORY_NAME}*.\nThe following packages would be released:\n\n${CHANGED_PACKAGES} \n\nSee ${REPOSITORY_URL}\"}" \
-              '${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}'
+              '${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}'
           else
-            echo "::warning::skip sending google chat release announcement message : secrets GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK is not defined"
+            echo "::warning::skip sending google chat release announcement message : secret GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK is not defined"
           fi
 
       # - name: Login to GitHub Container Registry
