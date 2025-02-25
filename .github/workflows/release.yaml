@@ -91,7 +91,7 @@ jobs:
           export PNPM_HOME=/home/runner/.local/share/pnpm
           export PATH=$PNPM_HOME:$PATH
           pnpm install --frozen-lockfile
-          pnpm changeset versions
+          pnpm changeset version
 
           # compute changed packages
           pnpm changeset status --verbose --output ./tmp/release/status.json
