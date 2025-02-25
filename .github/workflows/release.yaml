@@ -92,9 +92,9 @@ jobs:
           REPOSITORY_NAME=$( [[ $GITHUB_EVENT_PATH != '' ]] && jq -r '.repository.name' $GITHUB_EVENT_PATH || basename $(realpath .))
           # use the repository url from the github event if available, otherwise use the repository url from the git config
           REPOSITORY_URL=$( [[ $GITHUB_EVENT_PATH != '' ]] && echo "$(jq -r '.repository.html_url' $GITHUB_EVENT_PATH)/releases" || git remote get-url --push origin)
-          curl -X POST \
+          echo curl -X POST \
             -H 'Content-Type: application/json' \
-            -d '{"text": "[TEST] ${REPOSITORY_NAME} : ${TRIGGERING_ACTOR} created new releases - see ${REPOSITORY_URL}"}' \
+            -d "{\"text\": \"[TEST] ${REPOSITORY_NAME} : ${TRIGGERING_ACTOR} created new releases - see ${REPOSITORY_URL}\"}" \
             '${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}'
 
       # - name: Login to GitHub Container Registry
