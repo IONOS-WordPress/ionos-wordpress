@@ -1,4 +1,4 @@
-xxx
+xxx1
 
 ![Build workflow](https://github.com/IONOS-WordPress/ionos-wordpress/actions/workflows/release.yaml/badge.svg)
 
