@@ -107,7 +107,7 @@ jobs:
             CHANGED_PACKAGES=$(jq -r '.releases[] | "* \(.name)(\(.oldVersion)->\(.newVersion))"' ./tmp/release/status.json)
             curl -X POST \
               -H 'Content-Type: application/json' \
-              -d "{\"text\": \"*${TRIGGERING_ACTOR}* triggered new release(s) in repository *${REPOSITORY_NAME}* \n\n${CHANGED_PACKAGES} \n\nSee ${REPOSITORY_URL}\"}" \
+              -d "{\"text\": \"*${TRIGGERING_ACTOR}* triggered releasing repository *${REPOSITORY_NAME}*.\nhe following packages would be released:\n\n${CHANGED_PACKAGES} \n\nSee ${REPOSITORY_URL}\"}" \
               '${{ secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK }}'
           else
             echo "::warning::skip sending google chat release announcement message : secrets GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK is not defined"
