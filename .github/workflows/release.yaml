@@ -93,6 +93,7 @@ jobs:
           pnpm install --frozen-lockfile
 
           # compute changed packages
+          mkdir -p ./tmp/release/
           pnpm changeset status --verbose --output ./tmp/release/status.json
           echo $(jq -r '.releases[] | "\(.name)(\(.oldVersion)->\(.newVersion))"' ./tmp/release/status.json | paste -sd, -)
 
