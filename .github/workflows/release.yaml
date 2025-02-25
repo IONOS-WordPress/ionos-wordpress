@@ -104,7 +104,7 @@ jobs:
             # use the repository url from the github event if available, otherwise use the repository url from the git config
             REPOSITORY_URL=$( [[ $GITHUB_EVENT_PATH != '' ]] && echo "$(jq -r '.repository.html_url' $GITHUB_EVENT_PATH)/releases" || git remote get-url --push origin)
             # changed packages computed by changeset
-            CHANGED_PACKAGES=$(jq -r '.releases[] | "\(.name)(\(.oldVersion)->\(.newVersion))"' ./tmp/release/status.json)
+            CHANGED_PACKAGES=$(jq -r '.releases[] | "* \(.name)(\(.oldVersion)->\(.newVersion))"' ./tmp/release/status.json)
             curl -X POST \
               -H 'Content-Type: application/json' \
               -d "{\"text\": \"*${TRIGGERING_ACTOR}* triggered new release(s) in repository *${REPOSITORY_NAME}* \n\n ${CHANGED_PACKAGES} \n\n - see ${REPOSITORY_URL}\"}" \
