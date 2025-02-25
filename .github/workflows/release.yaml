@@ -111,7 +111,7 @@ jobs:
             curl -X POST \
               -H 'Content-Type: application/json' \
               -d "{\"text\": \"*${TRIGGERING_ACTOR}* released repository *${REPOSITORY_NAME}*.\nThe following packages would be released:\n\n${CHANGED_PACKAGES} \n\nSee ${REPOSITORY_URL}\"}" \
-              '${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}'
+              "${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}"
           else
             echo "::warning::skip sending google chat release announcement message : secret GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK is not defined"
           fi
