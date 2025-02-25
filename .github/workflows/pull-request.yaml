@@ -27,6 +27,11 @@ jobs:
         id: hello
         uses: DTherHtun/google-chat-action@v0.8
         with:
+          project: ${{ github.repository }}
+          commit: ${{ steps.slug.outputs.sha8 }}
+          branch: ${{ github.ref }}
+          status: ${{ job.status }}
+          actionid: ${{ github.repository }}/runs/${{ github.run_id }}
           webhook: ${{ secrets.GOOGLECHAT_WPDEV_MERGE_REQUESTS_WEBHOOK }}
       # Use the output from the `hello` step
       - name: Get the output time
