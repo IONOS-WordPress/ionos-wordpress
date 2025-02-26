@@ -9,6 +9,7 @@
 name: 'pull-request'
 
 on:
+  - pull_request
   - pull_request_target
   - pull_request_review
   - pull_request_review_comment
@@ -52,11 +53,11 @@ jobs:
         run: echo "GOOGLE_CHAT_THREAD_ID=$(echo '${{ github.event.pull_request.number }}' | jq -sRr @uri)" >> $GITHUB_OUTPUT
 
       - name: Send pull request created message
-        if: ${{ github.event_name == 'pull_request_target' }}
+        if: ${{ github.event_name == 'pull_request_target' || github.event_name == 'pull_request' }}
         run: |
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} pull request '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.pull_request.body || '' }}\n\n${{ github.event.pull_request._links.html.href }} \" }" \
+            -d "{\"text\": \"${{ github.event_name }} ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} pull request '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.pull_request.body || '' }}\n\n${{ github.event.pull_request._links.html.href }} \" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
 
       - name: send pull request review message
@@ -68,9 +69,9 @@ jobs:
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
 
       - name: send pull request review comments message
-        if: ${{ github.event_name == 'pull_request_review_comments' }}
+        if: ${{ github.event_name == 'pull_request_review_comment' }}
         run: |
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"pull_request_review_comments ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} \" }" \
+            -d "{\"text\": \"pull_request_review_comment ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.comment.body || '' }}\n\n${{ github.event.comment._links.html.href }} \" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
