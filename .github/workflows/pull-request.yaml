@@ -24,39 +24,41 @@ jobs:
           ref: ${{ github.ref }}
       - name: Dump GitHub context
         env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
+          CONTEXT: ${{ toJson(github) }}
           JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
           STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
           RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
           STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
-
-      - name: Show default environment variables
         run: |
-          echo "The job_id is: $GITHUB_JOB"   # reference the default environment variables
-          echo "The id of this action is: $GITHUB_ACTION"   # reference the default environment variables
-          echo "The run id is: $GITHUB_RUN_ID"
-          echo "The GitHub Actor's username is: $GITHUB_ACTOR"
-          echo "GitHub SHA: $GITHUB_SHA"
+          echo "####### 'github'"
+          echo $CONTEXT"
+          echo "####### 'job'"
+          echo "$JOB_CONTEXT"
+          echo "####### 'steps'"
+          echo "$STEPS_CONTEXT"
+          echo "####### 'runner'"
+          echo "$RUNNER_CONTEXT"
+          echo "####### 'strategy'"
+          echo "$STRATEGY_CONTEXT"
+          echo "####### 'matrix'"
+          echo "$MATRIX_CONTEXT"
+          echo "####### environment"
+          env | grep GITHUB
       - name: Send google chat message
         if: ${{ always() }} # Use always to ensure that the notification is also send on failure of former steps
-        uses: SimonScholz/google-chat-action@main
-        with:
-          webhookUrl: ${{ secrets.GOOGLECHAT_WPDEV_MERGE_REQUESTS_WEBHOOK }}
-          threadKey: ${{ github.event.number }}
+        run: |
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d "{\"text\": \"initial message\", \"threadKey\" : \"${{ github.payload.repository.name }}-${{ github.context.ref }}\"}" \
+            "${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}"
+
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d "{\"text\": \"threaded message\", \"threadKey\" : \"${{ github.payload.repository.name }}-${{ github.context.ref }}\"}" \
+            "${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}/"
+
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d "{\"text\": \"follow up message\", \"threadKey\" : \"${{ github.payload.repository.name }}-${{ github.context.ref }}\"}" \
+            "${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}"
