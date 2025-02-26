@@ -69,10 +69,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Send message to gchat
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
+      # - name: Checkout code
+      #   uses: actions/checkout@v2
+      #   with:
+      #     ref: ${{ github.ref }}
       - name: Dump GitHub context
         env:
           CONTEXT: ${{ toJson(github) }}
