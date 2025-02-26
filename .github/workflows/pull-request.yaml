@@ -12,7 +12,6 @@ on:
   - pull_request_target
   - pull_request_review
   - pull_request_review_comment
-  - pull_request_review_comment
 
 jobs:
   send_notification:
@@ -49,35 +48,35 @@ jobs:
           $(env | grep GITHUB)
           EOF
           export FOO="bar"
-      - name: dumpf foo
+      - name: dump foo
         run : echo "FOO=${FOO}"
 
-      - name: Send google chat message
+      - name: Send pull request created message
         if: ${{ github.event_name == 'pull_request_target' }}
         run: |
           THREAD_KEY=$(echo "${{ github.event.repository.name }}-${{ github.ref }}" | jq -sRr @uri)
           echo "thread_key=${THREAD_KEY}"
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} pull request '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }}\n\n${{ github.event.pull_request.body || '' }}\n\n${{ github.event.pull_request._links.html.href }} \" }" \
+            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} pull request '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }}\n\n${{ github.event.pull_request.body || '' }}\n\n${{ github.event.pull_request._links.html.href }} \" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
 
-      - name: Send google chat message
-        # if: ${{ github.event_name == 'pull_request_review' }}
+      - name: send pull request review message
+        if: ${{ github.event_name == 'pull_request_review' }}
         run: |
           THREAD_KEY=$(echo "${{ github.event.repository.name }}-${{ github.ref }}" | jq -sRr @uri)
           echo "thread_key=${THREAD_KEY}"
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} pull request '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} \" }" \
+            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} \" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
 
-          # curl -X POST \
-          #   -H 'Content-Type: application/json' \
-          #   -d "{\"text\": \"threaded message\" }" \
-          #   "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
-
-          # curl -X POST \
-          #   -H 'Content-Type: application/json' \
-          #   -d "{\"text\": \"follow up message\" }" \
-          #   "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
+      - name: send pull request review comments message
+        if: ${{ github.event_name == 'pull_request_review_comments' }}
+        run: |
+          THREAD_KEY=$(echo "${{ github.event.repository.name }}-${{ github.ref }}" | jq -sRr @uri)
+          echo "thread_key=${THREAD_KEY}"
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} pull request '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} \" }" \
+            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
