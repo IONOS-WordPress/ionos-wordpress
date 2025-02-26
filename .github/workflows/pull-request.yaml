@@ -118,7 +118,7 @@ jobs:
             -d "{\"text\": \"${{ github.event_name }} : ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.review.body || '' }}\n\n${{ github.event.review._links.html.href }} \" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
 
-      - name: send pull request review comments message
+      - name: send pull request review comment message
         if: ${{ github.event_name == 'pull_request_review_comment' }}
         run: |
           curl -X POST \
@@ -126,7 +126,7 @@ jobs:
             -d "{\"text\": \"${{ github.event_name }} ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.comment.body || '' }}\n\n${{ github.event.comment._links.html.href }} \" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
 
-      - name: send pull request comments message
+      - name: send pull request comment message
         if: ${{ github.event_name == 'issue_comment' && github.event.issue.pull_request }}
         run: |
           curl -X POST \
@@ -136,4 +136,4 @@ jobs:
 
       # variablen im curl json body müssen noch encoded werden (" -> \")
       # requested review und draft fehlt noch
-      # pr closed not triggered yet
+
