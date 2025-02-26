@@ -47,36 +47,30 @@ jobs:
           ###### environment #######
           $(env | grep GITHUB)
           EOF
-          export FOO="bar"
-      - name: dump foo
-        run : echo "FOO=${FOO}"
+      - name: generate google chat thread id
+        id: google_chat_thread_id
+        run: echo "GOOGLE_CHAT_THREAD_ID=$(echo '${{ github.event.pull_request.number }}' | jq -sRr @uri)" >> $GITHUB_OUTPUT
 
       - name: Send pull request created message
         if: ${{ github.event_name == 'pull_request_target' }}
         run: |
-          THREAD_KEY=$(echo "${{ github.event.repository.name }}-${{ github.ref }}" | jq -sRr @uri)
-          echo "thread_key=${THREAD_KEY}"
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} pull request '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }}\n\n${{ github.event.pull_request.body || '' }}\n\n${{ github.event.pull_request._links.html.href }} \" }" \
-            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
+            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} pull request '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.pull_request.body || '' }}\n\n${{ github.event.pull_request._links.html.href }} \" }" \
+            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
 
       - name: send pull request review message
         if: ${{ github.event_name == 'pull_request_review' }}
         run: |
-          THREAD_KEY=$(echo "${{ github.event.repository.name }}-${{ github.ref }}" | jq -sRr @uri)
-          echo "thread_key=${THREAD_KEY}"
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} \" }" \
-            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
+            -d "{\"text\": \"pull_request_review : ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} \" }" \
+            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
 
       - name: send pull request review comments message
         if: ${{ github.event_name == 'pull_request_review_comments' }}
         run: |
-          THREAD_KEY=$(echo "${{ github.event.repository.name }}-${{ github.ref }}" | jq -sRr @uri)
-          echo "thread_key=${THREAD_KEY}"
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} \" }" \
-            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
+            -d "{\"text\": \"pull_request_review_comments ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} \" }" \
+            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
