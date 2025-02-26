@@ -9,11 +9,61 @@
 name: 'pull-request'
 
 on:
-  - pull_request
-  - pull_request_target
-  - pull_request_review
-  - pull_request_review_comment
-
+  pull_request:
+    types:
+      - opened
+      - closed
+      - reopened
+      - ready_for_review
+      - review_requested
+      - review_request_removed
+      - labeled
+      - unlabeled
+      - synchronize
+      - assigned
+      - unassigned
+      - converted_to_draft
+      - ready_for_review
+      - review_requested
+      - review_request_removed
+      - auto_merge_disabled
+      - auto_merge_disabled
+      - edited
+  pull_request_target:
+    types:
+      - opened
+      - closed
+      - reopened
+      - ready_for_review
+      - review_requested
+      - review_request_removed
+      - labeled
+      - unlabeled
+      - synchronize
+      - assigned
+      - unassigned
+      - converted_to_draft
+      - ready_for_review
+      - review_requested
+      - review_request_removed
+      - auto_merge_disabled
+      - auto_merge_disabled
+      - edited
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+      - dismissed
+  pull_request_review_comment:
+    types:
+      - created
+      - edited
+      - deleted
+  issue_comment:  # not yet implemented
+    types:
+      - created
+      - edited
+      - deleted
 jobs:
   send_notification:
     runs-on: ubuntu-latest
@@ -65,7 +115,7 @@ jobs:
         run: |
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"pull_request_review : ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.review.body || '' }}\n\n${{ github.event.review._links.html.href }} \" }" \
+            -d "{\"text\": \"${{ github.event_name }} : ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.review.body || '' }}\n\n${{ github.event.review._links.html.href }} \" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
 
       - name: send pull request review comments message
@@ -73,8 +123,18 @@ jobs:
         run: |
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"pull_request_review_comment ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.comment.body || '' }}\n\n${{ github.event.comment._links.html.href }} \" }" \
+            -d "{\"text\": \"${{ github.event_name }} ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.comment.body || '' }}\n\n${{ github.event.comment._links.html.href }} \" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
 
+      - name: send pull request comments message
+        if: ${{ github.event_name == 'issue_comment' && github.event.issue.pull_request }}
+        run: |
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d "{\"text\": \"${{ github.event_name }} ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.comment.body || '' }}\n\n${{ github.event.comment._links.html.href }} \" }" \
+            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
+
+      # variablen im curl json body müssen noch encoded werden (" -> \")
       # issuecomment fehlt noch
       # requested review und draft fehlt noch
+      # pr closed not triggered yet
