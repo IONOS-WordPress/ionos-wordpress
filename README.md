@@ -1,5 +1,3 @@
-xxx1
-
 ![Build workflow](https://github.com/IONOS-WordPress/ionos-wordpress/actions/workflows/release.yaml/badge.svg)
 
 This monorepo contains all the code for the ionos-wordpress project.
