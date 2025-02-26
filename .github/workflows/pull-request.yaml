@@ -48,7 +48,7 @@ on:
       - review_request_removed
       # - auto_merge_disabled
       # - auto_merge_disabled
-      # - edited
+      - edited
   pull_request_review:
     types:
       - submitted
