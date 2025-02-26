@@ -47,7 +47,7 @@ jobs:
           ###### environment #######
           $(env | grep GITHUB)
           EOF
-          FOO="bar"
+          export FOO="bar"
       - name: Send google chat message
         if: ${{ github.event_name == 'pull_request_target' }}
         run: |
@@ -56,7 +56,7 @@ jobs:
           echo "thread_key=${THREAD_KEY}"
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} pull request '${{ github.head_ref }}' ${{ github.event.pull_request.draft && '(draft)' }} : (${{ github.event.pull_request.html.href }}) \" }" \
+            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} pull request '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : ${{ github.event.pull_request._links.html.href }} \" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
 
           # curl -X POST \
