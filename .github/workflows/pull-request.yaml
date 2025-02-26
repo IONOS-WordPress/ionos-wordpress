@@ -9,26 +9,26 @@
 name: 'pull-request'
 
 on:
-  pull_request:
-    types:
-      - opened
-      - closed
-      - reopened
-      - ready_for_review
-      - review_requested
-      - review_request_removed
-      - labeled
-      - unlabeled
-      - synchronize
-      - assigned
-      - unassigned
-      - converted_to_draft
-      - ready_for_review
-      - review_requested
-      - review_request_removed
-      - auto_merge_disabled
-      - auto_merge_disabled
-      - edited
+  # pull_request:
+  #   types:
+  #     - opened
+  #     - closed
+  #     - reopened
+  #     - ready_for_review
+  #     - review_requested
+  #     - review_request_removed
+  #     - labeled
+  #     - unlabeled
+  #     - synchronize
+  #     - assigned
+  #     - unassigned
+  #     - converted_to_draft
+  #     - ready_for_review
+  #     - review_requested
+  #     - review_request_removed
+  #     - auto_merge_disabled
+  #     - auto_merge_disabled
+  #     - edited
   pull_request_target:
     types:
       - opened
