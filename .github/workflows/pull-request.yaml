@@ -100,7 +100,7 @@ jobs:
           EOF
       - name: generate google chat thread id
         id: google_chat_thread_id
-        run: echo "GOOGLE_CHAT_THREAD_ID=$(echo '${{ github.event.pull_request.number }}' | jq -sRr @uri)" >> $GITHUB_OUTPUT
+        run: echo "GOOGLE_CHAT_THREAD_ID=$(echo '${{ github.event.pull_request.number || github.event.issue.number }}' | jq -sRr @uri)" >> $GITHUB_OUTPUT
 
       - name: Send pull request created message
         if: ${{ github.event_name == 'pull_request_target' || github.event_name == 'pull_request' }}
@@ -131,10 +131,9 @@ jobs:
         run: |
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"${{ github.event_name }} ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.comment.body || '' }}\n\n${{ github.event.comment._links.html.href }} \" }" \
+            -d "{\"text\": \"${{ github.event_name }} ${{ github.triggering_actor }} ${{ github.event.action }} : \n\n${{ github.event.comment.body || '' }}\n\n${{ github.event.comment.html_url }} \" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
 
       # variablen im curl json body müssen noch encoded werden (" -> \")
-      # issuecomment fehlt noch
       # requested review und draft fehlt noch
       # pr closed not triggered yet
