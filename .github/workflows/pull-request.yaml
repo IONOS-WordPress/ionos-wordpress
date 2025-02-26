@@ -51,14 +51,14 @@ jobs:
           curl -X POST \
             -H 'Content-Type: application/json' \
             -d "{\"text\": \"initial message\", \"threadKey\" : \"${{ github.payload.repository.name }}-${{ github.context.ref }}\"}" \
-            "${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}"
+            "${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD"
 
           curl -X POST \
             -H 'Content-Type: application/json' \
             -d "{\"text\": \"threaded message\", \"threadKey\" : \"${{ github.payload.repository.name }}-${{ github.context.ref }}\"}" \
-            "${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}/"
+            "${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD"
 
           curl -X POST \
             -H 'Content-Type: application/json' \
             -d "{\"text\": \"follow up message\", \"threadKey\" : \"${{ github.payload.repository.name }}-${{ github.context.ref }}\"}" \
-            "${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}"
+            "${GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD"
