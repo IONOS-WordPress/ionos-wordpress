@@ -115,7 +115,7 @@ jobs:
         run: |
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"${{ github.event_name }} : ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.review.body || '' }}\n\n${{ github.event.review._links.html.href }} \" }" \
+            -d "{\"text\": \"${{ github.event_name }} : ${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} <${{ github.event.review._links.html.href }}|${{ github.event.pull_request.title }}> ${{ github.event.pull_request.draft && '(draft)' || '' }} : \n\n${{ github.event.review.body || '' }}\" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${{ steps.google_chat_thread_id.outputs.GOOGLE_CHAT_THREAD_ID }}"
 
       - name: send pull request review comment message
