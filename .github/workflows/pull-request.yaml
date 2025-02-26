@@ -31,20 +31,22 @@ jobs:
           STRATEGY_CONTEXT: ${{ toJson(strategy) }}
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: |
-          echo "####### 'github'"
+          cat << EOF
+          ####### 'github' #######
           echo $CONTEXT"
-          echo "####### 'job'"
-          echo "$JOB_CONTEXT"
-          echo "####### 'steps'"
-          echo "$STEPS_CONTEXT"
-          echo "####### 'runner'"
-          echo "$RUNNER_CONTEXT"
-          echo "####### 'strategy'"
-          echo "$STRATEGY_CONTEXT"
-          echo "####### 'matrix'"
-          echo "$MATRIX_CONTEXT"
-          echo "####### environment"
-          env | grep GITHUB
+          ####### 'job' #######
+          $JOB_CONTEXT"
+          ###### 'steps' #######
+          $STEPS_CONTEXT
+          ###### 'runner' #######
+          $RUNNER_CONTEXT"
+          ###### 'strategy' #######
+          $STRATEGY_CONTEXT"
+          ###### 'matrix' #######
+          $MATRIX_CONTEXT"
+          ###### environment #######
+          $(env | grep GITHUB)
+          EOF
       - name: Send google chat message
         if: ${{ always() }} # Use always to ensure that the notification is also send on failure of former steps
         run: |
