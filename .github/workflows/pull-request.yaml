@@ -78,5 +78,5 @@ jobs:
           echo "thread_key=${THREAD_KEY}"
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} pull request '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} \" }" \
+            -d "{\"text\": \"${{ github.triggering_actor }} ${{ github.event.action }} / ${{ github.event.pull_request.state }} '${{ github.event.pull_request.title }}' ${{ github.event.pull_request.draft && '(draft)' || '' }} \" }" \
             "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
