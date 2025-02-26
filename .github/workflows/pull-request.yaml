@@ -50,17 +50,19 @@ jobs:
       - name: Send google chat message
         if: ${{ always() }} # Use always to ensure that the notification is also send on failure of former steps
         run: |
+          THREAD_KEY=$(echo "${{ github.payload.repository.name }}-${{ github.context.ref }}" | jq -sRr @uri)
+          echo "thread_key=${THREAD_KEY}"
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"initial message\", { \"thread\" : { \"threadKey\" : \"${{ github.payload.repository.name }}-${{ github.context.ref }}\" } }" \
-            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD"
+            -d "{\"text\": \"initial message\" }" \
+            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
 
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"threaded message\", { \"thread\" : { \"threadKey\" : \"${{ github.payload.repository.name }}-${{ github.context.ref }}\" } }" \
-            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD"
+            -d "{\"text\": \"threaded message\" }" \
+            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
 
           curl -X POST \
             -H 'Content-Type: application/json' \
-            -d "{\"text\": \"follow up message\", { \"thread\" : { \"threadKey\" : \"${{ github.payload.repository.name }}-${{ github.context.ref }}\" } }" \
-            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD"
+            -d "{\"text\": \"follow up message\" }" \
+            "${{secrets.GOOGLECHAT_PIPELINE_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=${THREAD_KEY}"
