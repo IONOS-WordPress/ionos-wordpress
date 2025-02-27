@@ -179,7 +179,3 @@ add_action('init', function () {
     },
   ]);
 });
-
-add_action('enqueue_block_assets', function () {
-  \wp_enqueue_style('ionos-essentials-dashboard', PLUGIN_DIR . '/build/dashboard/blocks/vulnerability/index.css');
-});
