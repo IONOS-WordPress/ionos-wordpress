@@ -2,10 +2,7 @@
 
 namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions;
 
-use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA;
-
-require_once __DIR__ . '/model.php';
-$actions = NBA::getActions();
+$actions = getNbaAll();
 if (empty($actions)) {
   return;
 }
