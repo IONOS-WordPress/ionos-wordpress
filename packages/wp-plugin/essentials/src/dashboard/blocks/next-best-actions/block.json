@@ -13,10 +13,7 @@
   },
   "textdomain": "ionos-essentials",
   "editorScript": "file:./index.js",
-  "viewScript": [
-    "file:./view.js",
-    "wp-api-fetch"
-  ],
+  "viewScript": ["file:./view.js", "wp-api-fetch"],
   "viewStyle": "file:../../../../inc/dashboard/blocks/nba/style.css",
-  "render": "file:../../../../inc/dashboard/blocks/nba/render.php"
+  "renderCallback": "ionos_wordpress\\essentials\\dashboard\\blocks\\next_best_actions\\render_callback"
 }

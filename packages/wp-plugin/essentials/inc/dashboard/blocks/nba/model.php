@@ -11,6 +11,7 @@ class NBA
   private static $option_name = 'ionos_nba_status';
 
   private static $option_value;
+
   private static array $actions = [];
 
   private function __construct(
@@ -20,7 +21,7 @@ class NBA
     readonly string $link,
     readonly bool $completed
   ) {
-    $a = "b";
+    $a                        = 'b';
     self::$actions[$this->id] = $this;
   }
 
@@ -28,7 +29,7 @@ class NBA
   {
     if ('active' === $property) {
       $status = $this->_get_status();
-      if (isset($status["completed"]) && $status["completed"] || isset($status["dismissed"]) && $status["dismissed"]) {
+      if (isset($status['completed']) && $status['completed'] || isset($status['dismissed']) && $status['dismissed']) {
         return false;
       }
       // $status = (object) $this->_get_status();
@@ -37,6 +38,31 @@ class NBA
       // }
       return ! $this->completed;
     }
+  }
+
+  public function setStatus($key, $value)
+  {
+    $id     = $this->id;
+    $option = self::_get_option();
+
+    $option[$id] ??= [];
+    $option[$id][$key] = $value;
+    return self::_set_option($option);
+  }
+
+  public static function getNBA($id)
+  {
+    return self::$actions[$id];
+  }
+
+  public static function getActions()
+  {
+    return self::$actions;
+  }
+
+  public static function register($id, $title, $description, $link, $completed = false)
+  {
+    new self($id, $title, $description, $link, $completed);
   }
 
   private static function _get_option()
@@ -57,38 +83,14 @@ class NBA
     $option = $this->_get_option();
     return $option[$this->id] ?? [];
   }
-
-  function setStatus($key, $value) {
-    $id = $this->id;
-    $option = self::_get_option();
-
-    $option[$id] ??= [];
-    $option[$id][$key] = $value;
-    return self::_set_option($option);
-  }
-
-  public static function getNBA($id)
-  {
-    return self::$actions[$id];
-  }
-
-  public static function getActions()
-  {
-    return self::$actions;
-  }
-
-  public static function register($id, $title, $description, $link, $completed = false)
-  {
-    new NBA($id, $title, $description, $link, $completed);
-  }
-
 }
 NBA::register(
   id: 'addPage',
   title: 'Add a page',
   description: 'Create some content for your website visitor.',
   link: admin_url('post-new.php?post_type=page'),
-  completed: wp_count_posts('page')->publish > 0
+  completed: 0 < wp_count_posts('page')
+    ->publish
 );
 
 NBA::register(
