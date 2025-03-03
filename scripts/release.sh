@@ -78,7 +78,12 @@ pnpm install
 pnpm build
 
 # generate sbom file
-docker run -it --rm -v $(pwd):/project anchore/syft scan /project --source-name ionos-wordpress --select-catalogers "+javascript-package-cataloger,+github-actions-usage-cataloger,+php-composer-lock-cataloger" -o spdx-json=/project/ionos-wordpress.sbom.json.tmp && jq '.' ionos-wordpress.sbom.json.tmp > ionos-wordpress.sbom.syft.json && rm -f ionos-wordpress.sbom.json.tmp
+docker run -it --rm -v $(pwd):/project anchore/syft \
+  scan /project \
+  --source-name ionos-wordpress \
+  --select-catalogers "+javascript-package-cataloger,+github-actions-usage-cataloger,+php-composer-lock-cataloger" \
+  -o spdx-json=/project/ionos-wordpress.sbom.json.tmp && \
+  jq '.' ionos-wordpress.sbom.json.tmp > ionos-wordpress.sbom.syft.json && rm -f ionos-wordpress.sbom.json.tmp
 
 # add updated files to git
 git add -A .
