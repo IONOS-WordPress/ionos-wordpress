@@ -61,7 +61,7 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "2.28.0",
-    "@chromatic-com/storybook": "^3.2.4",
+    "@chromatic-com/storybook": "^3.2.5",
     "@commitlint/cli": "19.7.1",
     "@commitlint/config-conventional": "19.7.1",
     "@devcontainers/cli": "^0.73.0",
