@@ -192,11 +192,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Pokaż dane skanowania wp."
 
-#: build/dashboard/blocks/vulnerability/render.php:4
-msgid "hello"
-msgstr ""
-
-#: build/dashboard/blocks/vulnerability/render.php:90
+#: build/dashboard/blocks/vulnerability/render.php:91
 msgid "WPScan not available"
 msgstr ""
 
@@ -204,32 +200,32 @@ msgstr ""
 msgid "Brand Logo"
 msgstr ""
 
-#: build/dashboard/blocks/vulnerability/render.php:82
+#: build/dashboard/blocks/vulnerability/render.php:83
 msgid "Show full scan report"
 msgstr ""
 
-#: build/dashboard/blocks/vulnerability/render.php:64
+#: build/dashboard/blocks/vulnerability/render.php:63
 msgid "Last scan"
 msgstr ""
 
-#: build/dashboard/blocks/vulnerability/render.php:67
+#: build/dashboard/blocks/vulnerability/render.php:66
 msgid "%s ago"
 msgstr ""
 
-#: build/dashboard/blocks/vulnerability/render.php:35
+#: build/dashboard/blocks/vulnerability/render.php:37
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: build/dashboard/blocks/vulnerability/render.php:48
+#: build/dashboard/blocks/vulnerability/render.php:47
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: build/dashboard/blocks/vulnerability/render.php:59
+#: build/dashboard/blocks/vulnerability/render.php:58
 msgid "issues found"
 msgstr ""
