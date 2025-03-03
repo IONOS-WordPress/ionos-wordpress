@@ -148,26 +148,23 @@
                 "variations": {
                     "outline": {
                         "border": {
-                            "color": null,
-                            "style": null,
-                            "width": null,
                             "top": {
-                                "color": "#FFFFFF",
+                                "color": "#f4f7fa",
                                 "style": "solid",
                                 "width": "2px"
                             },
                             "right": {
-                                "color": "#FFFFFF",
+                                "color": "#f4f7fa",
                                 "style": "solid",
                                 "width": "2px"
                             },
                             "bottom": {
-                                "color": "#FFFFFF",
+                                "color": "#f4f7fa",
                                 "style": "solid",
                                 "width": "2px"
                             },
                             "left": {
-                                "color": "#FFFFFF",
+                                "color": "#f4f7fa",
                                 "style": "solid",
                                 "width": "2px"
                             },
