@@ -80,7 +80,7 @@
     "@storybook/react": "^8.5.6",
     "@storybook/react-webpack5": "^8.5.6",
     "@storybook/test": "^8.5.6",
-    "@types/node": "22.13.4",
+    "@types/node": "22.13.8",
     "@wordpress/components": "catalog:",
     "@wordpress/e2e-test-utils-playwright": "^1.18.0",
     "@wordpress/env": "^10.18.0",
