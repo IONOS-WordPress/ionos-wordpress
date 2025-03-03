@@ -25,6 +25,8 @@ There are a few manual steps to be done to have a complete setup copy of the ori
 
 - (Optional) copy dependabot settings from original repository : go to `{fork_url}/settings/security-analysis` and configure dependabot alerts and security updates
 
+- (Optional) To get the google chat pull request notification working (see `./.github/workflows/gchat-notify-pull-request.yaml`) you need to setup GitHub secret `GCHAT_PR_ANNOUNCEMENTS_WEBHOOK`. This secret should point to the webhook for the desired google chat room. You can create a (private) webhook for testing by following the instructions at https://developers.google.com/chat/how-tos/webhooks
+
 - (Optional) to do almost everything `local first` (for example doing releases), you need to [create a fine-grained personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token)
 
   **Important** : You need to create a **New personal access token (classic)** (at https://github.com/settings/tokens) with the following scopes:
