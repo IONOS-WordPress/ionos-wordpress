@@ -61,6 +61,8 @@ mkdir -p ./tmp/release
 # see https://github.com/changesets/changesets/issues/1020
 # fetch changeset status into ./tmp/release/status.json
 pnpm changeset status --verbose --output ./tmp/release/status.json
+# read ./tmp/release/status.json into variable CHANGESET_STATUS_JSON
+CHANGESET_STATUS_JSON=$(cat ./tmp/release/status.json)
 # count changesets
 CHANGESETS_COUNT=$(jq '.changesets // [] | length' ./tmp/release/status.json)
 if [[ $CHANGESETS_COUNT -eq 0 ]]; then
@@ -190,7 +192,7 @@ if [[ "${GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK}" != '' ]]; then
   # use the repository url from the github event if available, otherwise use the repository url from the git config
   REPOSITORY_URL=$( [[ $GITHUB_EVENT_PATH != '' ]] && echo "$(jq -r '.repository.html_url' $GITHUB_EVENT_PATH)/releases" || git remote get-url --push origin)
   # changed packages computed by changeset
-  CHANGED_PACKAGES=$(jq -r '.releases[] | "* \(.name)(\(.oldVersion)->\(.newVersion))"' ./tmp/release/status.json)
+  CHANGED_PACKAGES=$(echo "$CHANGESET_STATUS_JSON" | jq -r '.releases[] | "* \(.name)(\(.oldVersion)->\(.newVersion))"')
   curl -X POST \
     -H 'Content-Type: application/json' \
     -d "{\"text\": \"*${TRIGGERING_ACTOR}* released repository *${REPOSITORY_NAME}*.\nThe following packages would be released:\n\n${CHANGED_PACKAGES} \n\nSee ${REPOSITORY_URL}\"}" \
