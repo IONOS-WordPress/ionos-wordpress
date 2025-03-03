@@ -180,3 +180,25 @@ git checkout develop
 git pull . main
 # push changes to remote develop branch
 git push -u origin develop
+
+# notify release to google chat room
+if [[ "${GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK}" != '' ]]; then
+  # use the triggering actor of the github event if available, otherwise use the git config user.name
+  TRIGGERING_ACTOR="${GITHUB_TRIGGERING_ACTOR:-$(git config user.name)}"
+  # use the repository name from the github event if available, otherwise use the repository name from the git config
+  REPOSITORY_NAME=$( [[ $GITHUB_EVENT_PATH != '' ]] && jq -r '.repository.name' $GITHUB_EVENT_PATH || basename $(realpath .))
+  # use the repository url from the github event if available, otherwise use the repository url from the git config
+  REPOSITORY_URL=$( [[ $GITHUB_EVENT_PATH != '' ]] && echo "$(jq -r '.repository.html_url' $GITHUB_EVENT_PATH)/releases" || git remote get-url --push origin)
+  # changed packages computed by changeset
+  CHANGED_PACKAGES=$(jq -r '.releases[] | "* \(.name)(\(.oldVersion)->\(.newVersion))"' ./tmp/release/status.json)
+  curl -X POST \
+    -H 'Content-Type: application/json' \
+    -d "{\"text\": \"*${TRIGGERING_ACTOR}* released repository *${REPOSITORY_NAME}*.\nThe following packages would be released:\n\n${CHANGED_PACKAGES} \n\nSee ${REPOSITORY_URL}\"}" \
+    "${GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK}"
+else
+  if [[ "${CI:-}" == "true" ]]; then
+    echo "::warning::skip sending google chat release announcement message : secret GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK is not defined"
+  else
+    ionos.wordpress.log_warn "CI environment detected - skip setting up git hooks"
+  fi
+fi
