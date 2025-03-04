@@ -181,7 +181,7 @@ msgstr "Rechnungen"
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block title"
 msgid "Vulnerability"
-msgstr "Sicherheits-Scan"
+msgstr "Schwachstelle"
 
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block description"
@@ -194,36 +194,36 @@ msgstr "Sicherheits-Scan"
 
 #: build/dashboard/blocks/vulnerability/render.php:91
 msgid "WPScan not available"
-msgstr ""
+msgstr "WPScan nicht erreichbar"
 
 #: inc/dashboard/index.php:175
 msgid "Brand Logo"
-msgstr ""
+msgstr "Brand Logo"
 
 #: build/dashboard/blocks/vulnerability/render.php:83
 msgid "Show full scan report"
-msgstr ""
+msgstr "Vollständigen Scanbericht anzeigen"
 
 #: build/dashboard/blocks/vulnerability/render.php:63
 msgid "Last scan"
-msgstr ""
+msgstr "Letzter Scan"
 
 #: build/dashboard/blocks/vulnerability/render.php:66
 msgid "%s ago"
-msgstr ""
+msgstr "vor %s"
 
 #: build/dashboard/blocks/vulnerability/render.php:37
 msgid "critical issue found"
 msgid_plural "critical issues found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Kritisches Problem gefunden"
+msgstr[1] "Kritische Probleme gefunden"
 
 #: build/dashboard/blocks/vulnerability/render.php:47
 msgid "warning found"
 msgid_plural "warnings found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Warnung gefunden"
+msgstr[1] "Warnungen gefunden"
 
 #: build/dashboard/blocks/vulnerability/render.php:58
 msgid "issues found"
-msgstr ""
+msgstr "Probleme gefunden"

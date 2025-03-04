@@ -194,36 +194,36 @@ msgstr "Mostrar datos de escaneo wp."
 
 #: build/dashboard/blocks/vulnerability/render.php:91
 msgid "WPScan not available"
-msgstr ""
+msgstr "WPScan no disponible"
 
 #: inc/dashboard/index.php:175
 msgid "Brand Logo"
-msgstr ""
+msgstr "Brand Logo"
 
 #: build/dashboard/blocks/vulnerability/render.php:83
 msgid "Show full scan report"
-msgstr ""
+msgstr "Mostrar informe completo del escaneo"
 
 #: build/dashboard/blocks/vulnerability/render.php:63
 msgid "Last scan"
-msgstr ""
+msgstr "Último escaneo"
 
 #: build/dashboard/blocks/vulnerability/render.php:66
 msgid "%s ago"
-msgstr ""
+msgstr "hace %s"
 
 #: build/dashboard/blocks/vulnerability/render.php:37
 msgid "critical issue found"
 msgid_plural "critical issues found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Problema crítico detectado"
+msgstr[1] "Problemas críticos detectados"
 
 #: build/dashboard/blocks/vulnerability/render.php:47
 msgid "warning found"
 msgid_plural "warnings found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Alerta detectada"
+msgstr[1] "Alertas detectadas"
 
 #: build/dashboard/blocks/vulnerability/render.php:58
 msgid "issues found"
-msgstr ""
+msgstr "Problemas detectados"
