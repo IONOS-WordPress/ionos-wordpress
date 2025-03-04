@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: en_US\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
-"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
+"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.10.0\n"
 
@@ -39,7 +39,7 @@ msgstr "IONOS Group"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: inc/dashboard/index.php:35
+#: inc/dashboard/index.php:39
 msgid "IONOS Dashboard"
 msgstr "IONOS Dashboard"
 
@@ -192,10 +192,38 @@ msgstr "Show wp scan data."
 msgid "Vulnerability Scan"
 msgstr "Vulnerability Scan"
 
-#: build/dashboard/blocks/vulnerability/render.php:36
-msgid "IONOS Security Plugin not available"
-msgstr "IONOS Security Plugin not available"
+#: build/dashboard/blocks/vulnerability/render.php:91
+msgid "WPScan not available"
+msgstr "WPScan not available"
 
-#: inc/dashboard/index.php:171
-msgid "Tenant Logo"
-msgstr "Tenant Logo"
+#: inc/dashboard/index.php:175
+msgid "Brand Logo"
+msgstr "Brand Logo"
+
+#: build/dashboard/blocks/vulnerability/render.php:83
+msgid "Show full scan report"
+msgstr "Show full scan report"
+
+#: build/dashboard/blocks/vulnerability/render.php:63
+msgid "Last scan"
+msgstr "Last scan"
+
+#: build/dashboard/blocks/vulnerability/render.php:66
+msgid "%s ago"
+msgstr "%s ago"
+
+#: build/dashboard/blocks/vulnerability/render.php:37
+msgid "critical issue found"
+msgid_plural "critical issues found"
+msgstr[0] "critical issue found"
+msgstr[1] "critical issues found"
+
+#: build/dashboard/blocks/vulnerability/render.php:47
+msgid "warning found"
+msgid_plural "warnings found"
+msgstr[0] "warning found"
+msgstr[1] "warnings found"
+
+#: build/dashboard/blocks/vulnerability/render.php:58
+msgid "issues found"
+msgstr "issues found"
