@@ -15,11 +15,11 @@ use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA;
 
 function render_callback () {
   require_once __DIR__ . '/model.php';
-
   $actions = NBA::getActions();
   if (empty($actions)) {
     return;
   }
+
   $template = '
   <div id="ionos-dashboard__essentials_nba" class="wp-block-group alignwide">
       <div class="wp-block-group is-vertical is-content-justification-left is-layout-flex wp-container-core-group-is-layout-2 wp-block-group-is-layout-flex">
@@ -67,7 +67,6 @@ function render_callback () {
 \add_action('admin_init', function () {
   if (isset($_GET['complete_nba'])) {
     require_once __DIR__ . '/model.php';
-
     $nba_id = $_GET['complete_nba'];
 
     $nba = \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::getNBA($nba_id);
@@ -80,9 +79,8 @@ function render_callback () {
     'methods' => 'GET',
     'callback' => function ($request) {
       require_once __DIR__ . '/model.php';
-
-      $params = $request->get_params();
-      $nba_id = $params['id'];
+			$params = $request->get_params();
+			$nba_id = $params['id'];
 
       $nba = \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::getNBA($nba_id);
       $res = $nba->setStatus( "dismissed", true);
