@@ -16,6 +16,27 @@ require_once $model_path;
   );
 });
 
+\add_action('post_updated', function ($post_id, $post_after, $post_before) {
+  if ($post_before->post_status !== 'publish') {
+    return;
+  }
+
+  switch ($post_after->post_type) {
+    case 'post':
+      $nba = getNbaById('editPost');
+      break;
+    case 'page':
+      $nba = getNbaById('editPage');
+      break;
+    default:
+      return;
+  }
+
+  if ($nba) {
+    $nba->setStatus("completed", true);
+  }
+}, 10, 3);
+
 \add_action('admin_init', function () {
   if (isset($_GET['complete_nba'])) {
     $nba_id = $_GET['complete_nba'];
@@ -70,34 +91,41 @@ function getNbaAll() {
       'title' => \esc_html__('Add a page', 'ionos-essentials'),
       'description' => \esc_html__('Create some content for your website visitor.', 'ionos-essentials'),
       'link' => admin_url('post-new.php?post_type=page'),
-      'completed' => wp_count_posts('page')->publish > 2
+      'completed' => wp_count_posts('page')->publish > 1
     ),
     array(
       'id' => 'addPost',
       'title' => \esc_html__('Add a post', 'ionos-essentials'),
       'description' => \esc_html__('Share your thoughts with your audience.', 'ionos-essentials'),
-      'link' => admin_url('plugins.php?complete_nba=checkPluginsPage'),
-      'completed' => wp_count_posts('post')->publish > 2
+      'link' => admin_url('edit.php?post_type=post'),
+      'completed' => wp_count_posts('post')->publish > 1
     ),
     array(
       'id' => 'editPost',
       'title' => \esc_html__('Edit a post', 'ionos-essentials'),
       'description' => \esc_html__('Update your content to keep it fresh.', 'ionos-essentials'),
-      'link' => admin_url('options-general.php?complete_nba=checkSettingsPage'),
+      'link' => admin_url('edit.php?post_type=post'),
+      'completed' => false
+    ),
+    array(
+      'id' => 'editPage',
+      'title' => \esc_html__('Edit a page', 'ionos-essentials'),
+      'description' => \esc_html__('Update your content to keep it fresh.', 'ionos-essentials'),
+      'link' => admin_url('edit.php?post_type=page'),
       'completed' => false
     ),
     array(
       'id' => 'addSiteDescription',
       'title' => \esc_html__('Add a site description', 'ionos-essentials'),
       'description' => \esc_html__('Tell your visitors what your website is about.', 'ionos-essentials'),
-      'link' => admin_url('options-general.php?complete_nba=addSiteDescription'),
+      'link' => admin_url('options-general.php'),
       'completed' => get_option('blogdescription') !== '' && __('Just another WordPress site') !== get_option('blogdescription')
     ),
     array(
       'id' => 'uploadALogo',
       'title' => \esc_html__('Upload a logo', 'ionos-essentials'),
       'description' => \esc_html__('Make your website more recognizable.', 'ionos-essentials'),
-      'link' => admin_url('options-general.php?complete_nba=uploadALogo'),
+      'link' => admin_url('options-general.php'),
       'completed' => \intval(get_option('site_icon', 0)) > 0
     ),
   );
