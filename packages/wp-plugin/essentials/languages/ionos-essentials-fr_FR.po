@@ -194,36 +194,36 @@ msgstr "Afficher les données de balayage wp."
 
 #: build/dashboard/blocks/vulnerability/render.php:91
 msgid "WPScan not available"
-msgstr ""
+msgstr "WPScan non disponible"
 
 #: inc/dashboard/index.php:175
 msgid "Brand Logo"
-msgstr ""
+msgstr "Brand Logo"
 
 #: build/dashboard/blocks/vulnerability/render.php:83
 msgid "Show full scan report"
-msgstr ""
+msgstr "Afficher le rapport d'analyse complet"
 
 #: build/dashboard/blocks/vulnerability/render.php:63
 msgid "Last scan"
-msgstr ""
+msgstr "Dernière analyse"
 
 #: build/dashboard/blocks/vulnerability/render.php:66
 msgid "%s ago"
-msgstr ""
+msgstr "il y a %s"
 
 #: build/dashboard/blocks/vulnerability/render.php:37
 msgid "critical issue found"
 msgid_plural "critical issues found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Problème critique détecté"
+msgstr[1] "Problèmes critiques détectés"
 
 #: build/dashboard/blocks/vulnerability/render.php:47
 msgid "warning found"
 msgid_plural "warnings found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Alerte détectée"
+msgstr[1] "Alertes détectées"
 
 #: build/dashboard/blocks/vulnerability/render.php:58
 msgid "issues found"
-msgstr ""
+msgstr "Problèmes trouvés"
