@@ -10,26 +10,6 @@
 name: 'gchat-notify-pull-request'
 
 on:
-  # pull_request:
-  #   types:
-  #     - opened
-  #     - closed
-  #     - reopened
-  #     - ready_for_review
-  #     - review_requested
-  #     - review_request_removed
-  #     - labeled
-  #     - unlabeled
-  #     - synchronize
-  #     - assigned
-  #     - unassigned
-  #     - converted_to_draft
-  #     - ready_for_review
-  #     - review_requested
-  #     - review_request_removed
-  #     - auto_merge_disabled
-  #     - auto_merge_disabled
-  #     - edited
   pull_request_target:
     types:
       - opened
@@ -38,17 +18,10 @@ on:
       - ready_for_review
       - review_requested
       - review_request_removed
-      # - labeled
-      # - unlabeled
-      # - synchronize
-      # - assigned
-      # - unassigned
       - converted_to_draft
       - ready_for_review
       - review_requested
       - review_request_removed
-      # - auto_merge_disabled
-      # - auto_merge_disabled
       - edited
   pull_request_review:
     types:
@@ -60,7 +33,7 @@ on:
       - created
       - edited
       - deleted
-  issue_comment:  # not yet implemented
+  issue_comment:
     types:
       - created
       - edited
@@ -146,5 +119,3 @@ jobs:
             -H 'Content-Type: application/json' \
             -d "{\"text\": $TEXT }" \
             '${{ steps.gchat_url.outputs.GCHAT_URL }}'
-
-
