@@ -45,7 +45,7 @@ jobs:
     steps:
       - id: gchat_url
         run: |
-          if [[ -z "${{ secrets.GCHAT_PR_ANNOUNCEMENTS_WEBHOOK }}" ]]; then
+          if [[ -z "${{secrets.GCHAT_PR_ANNOUNCEMENTS_WEBHOOK}}" ]]; then
             echo "::warning::skip sending google chat pull request message : secret GCHAT_PR_ANNOUNCEMENTS_WEBHOOK is not defined"
           else
             # compute google chat url
