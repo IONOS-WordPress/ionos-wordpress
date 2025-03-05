@@ -45,23 +45,23 @@ jobs:
     steps:
       - id: gchat_url
         run: |
-          if [[ -z "${{secrets.GCHAT_PR_ANNOUNCEMENTS_WEBHOOK }}" ]]; then
+          if [[ -z "${{ secrets.GCHAT_PR_ANNOUNCEMENTS_WEBHOOK }}" ]]; then
             echo "::warning::skip sending google chat pull request message : secret GCHAT_PR_ANNOUNCEMENTS_WEBHOOK is not defined"
           else
             # compute google chat url
             THREAD_KEY=$(echo '${{ github.event.pull_request.number || github.event.issue.number }}' | jq -sRr @uri)
-            echo "GCHAT_URL=${{secrets.GCHAT_PR_ANNOUNCEMENTS_WEBHOOK}}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=$THREAD_KEY" \
+            echo "GCHAT_URL=${{ secrets.GCHAT_PR_ANNOUNCEMENTS_WEBHOOK }}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=$THREAD_KEY" \
               >> $GITHUB_OUTPUT
           fi
       - name: send pr open/close/edit message
-        if: ${{github.event_name == 'pull_request_target' && steps.gchat_url.outputs.GCHAT_URL}}
+        if: ${{ github.event_name == 'pull_request_target' && steps.gchat_url.outputs.GCHAT_URL }}
         run: |
           TEXT=$(cat -s <<'X!X' | jq -Rsr @json
-          ${{github.triggering_actor}} ${{github.event.action}} pull request *'${{github.event.pull_request.title}} ${{github.event.pull_request.draft && '(draft)' || ''}}'*
+          ${{ github.triggering_actor}} ${{ github.event.action}} pull request *'${{ github.event.pull_request.title }} ${{ github.event.pull_request.draft && '(draft)' || '' }}'*
 
-          ${{(github.event.action=='opened' || github.event.action=='edited') && github.event.pull_request.body || ''}}
+          ${{ (github.event.action=='opened' || github.event.action=='edited') && github.event.pull_request.body || '' }}
 
-          ${{github.event.pull_request._links.html.href}}
+          ${{ github.event.pull_request._links.html.href }}
           X!X
           )
           curl -X POST \
@@ -71,14 +71,14 @@ jobs:
 
       - name: send pr review comment
         # this step will send a message if a review comment is made on a pull request review
-        if: ${{github.event_name == 'pull_request_review' && steps.gchat_url.outputs.GCHAT_URL}}
+        if: ${{ github.event_name == 'pull_request_review' && steps.gchat_url.outputs.GCHAT_URL }}
         run: |
           TEXT=$(cat -s <<'X!X' | jq -Rsr @json
-          ${{github.triggering_actor}} ${{github.event.action}} a review comment
+          ${{ github.triggering_actor }} ${{ github.event.action }} a review comment
 
-          {{github.event.review.body || ''}}
+          {{ github.event.review.body || '' }}
 
-          ${{github.event.review._links.html.href}}
+          ${{ github.event.review._links.html.href }}
           X!X
           )
           curl -X POST \
@@ -88,14 +88,14 @@ jobs:
 
       - name: send pr review comment
         # this step will send a message if a comment is made on a pull request review
-        if: ${{github.event_name == 'pull_request_review_comment' && steps.gchat_url.outputs.GCHAT_URL}}
+        if: ${{ github.event_name == 'pull_request_review_comment' && steps.gchat_url.outputs.GCHAT_URL }}
         run: |
           TEXT=$(cat -s <<'X!X' | jq -Rsr @json
-          ${{github.triggering_actor}} ${{github.event.action}} a review comment
+          ${{ github.triggering_actor }} ${{github.event.action }} a review comment
 
-          {{github.event.comment.body || ''}}
+          {{ github.event.comment.body || '' }}
 
-          ${{github.event.comment._links.html.href}}
+          ${{ github.event.comment._links.html.href }}
           X!X
           )
           curl -X POST \
@@ -105,14 +105,14 @@ jobs:
 
       - name: send pr comment message
         # this step will send a message if a comment is made on a pull request review
-        if: ${{github.event_name == 'issue_comment' && github.event.issue.pull_request && steps.gchat_url.outputs.GCHAT_URL}}
+        if: ${{ github.event_name == 'issue_comment' && github.event.issue.pull_request && steps.gchat_url.outputs.GCHAT_URL }}
         run: |
           TEXT=$(cat -s <<'X!X' | jq -Rsr @json
-          ${{github.triggering_actor}} ${{github.event.action}} a pr comment
+          ${{ github.triggering_actor }} ${{ github.event.action }} a pr comment
 
-          ${{github.event.comment.body || ''}}
+          ${{ github.event.comment.body || ''}}
 
-          ${{github.event.comment.html_url}}
+          ${{ github.event.comment.html_url }}
           X!X
           )
           curl -X POST \
