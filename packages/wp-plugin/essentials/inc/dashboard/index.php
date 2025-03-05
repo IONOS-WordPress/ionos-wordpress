@@ -2,10 +2,6 @@
 
 namespace ionos_wordpress\essentials\dashboard;
 
-use PhpParser\Node\Stmt\Global_;
-
-use function PHPUnit\Framework\callback;
-
 use const ionos_wordpress\essentials\PLUGIN_DIR;
 
 /*
