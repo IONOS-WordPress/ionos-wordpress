@@ -13,5 +13,5 @@
   },
   "textdomain": "ionos-essentials",
   "editorScript": "file:./index.js",
-  "render": "file:./render.php"
+  "renderCallback": "ionos_wordpress\\essentials\\dashboard\\blocks\\deep_links\\render_callback"
 }
