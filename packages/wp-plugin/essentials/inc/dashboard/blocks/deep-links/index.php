@@ -40,7 +40,7 @@ function render_callback() {
         <h3>%s</h3>
         <ul class="wp-block-list">%s</ul>';
 
-    $headline = \esc_html__('Deep Links', 'ionos-essentials');
+    $headline = \esc_html__('Deep-Links', 'ionos-essentials');
 
     $body = '';
     foreach ($data['links'] as $link) {
