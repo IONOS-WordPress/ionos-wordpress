@@ -161,25 +161,6 @@ importers:
         specifier: 'catalog:'
         version: 29.3.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@19.0.0(react@18.3.1))(react@18.3.1)
 
-  packages/wp-mu-plugin/test-mu-plugin:
-    dependencies:
-      '@ionos-wordpress/test-lib':
-        specifier: workspace:*
-        version: link:../../npm/test-lib
-    devDependencies:
-      '@ionos-wordpress/dennis-i18n':
-        specifier: workspace:*
-        version: link:../../docker/dennis-i18n
-      '@ionos-wordpress/ecs-php':
-        specifier: workspace:*
-        version: link:../../docker/ecs-php
-      '@ionos-wordpress/rector-php':
-        specifier: workspace:*
-        version: link:../../docker/rector-php
-      '@wordpress/components':
-        specifier: 'catalog:'
-        version: 29.3.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-
   packages/wp-plugin/essentials:
     devDependencies:
       '@ionos-wordpress/dennis-i18n':
@@ -191,25 +172,6 @@ importers:
       '@ionos-wordpress/rector-php':
         specifier: workspace:*
         version: link:../../docker/rector-php
-
-  packages/wp-plugin/test-plugin:
-    dependencies:
-      '@ionos-wordpress/test-lib':
-        specifier: workspace:*
-        version: link:../../npm/test-lib
-    devDependencies:
-      '@ionos-wordpress/dennis-i18n':
-        specifier: workspace:*
-        version: link:../../docker/dennis-i18n
-      '@ionos-wordpress/ecs-php':
-        specifier: workspace:*
-        version: link:../../docker/ecs-php
-      '@ionos-wordpress/rector-php':
-        specifier: workspace:*
-        version: link:../../docker/rector-php
-      '@wordpress/components':
-        specifier: 'catalog:'
-        version: 29.3.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
 packages:
 
