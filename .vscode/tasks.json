@@ -6,7 +6,7 @@
   "tasks": [
     {
       "label": "lint:php",
-      "detail": "Lint PHP files",
+      "detail": "Lint PHP",
       "type": "shell",
       "command": "pnpm -s lint:php", // ${input:file}
       "problemMatcher": [
@@ -54,7 +54,7 @@
     },
     {
       "label": "lint-fix:php",
-      "detail": "Lint fix PHP files",
+      "detail": "Lint fix PHP",
       "type": "shell",
       "command": "pnpm -s lint-fix:php ", // ${input:file}
       "problemMatcher": [
@@ -102,7 +102,7 @@
     },
     {
       "label": "lint:js",
-      "detail": "Lint Javascript files",
+      "detail": "Lint Javascript",
       "type": "shell",
       "command": "pnpm -s lint:js", // ${input:file}
       "problemMatcher": ["$eslint-stylish"],
