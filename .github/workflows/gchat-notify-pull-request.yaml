@@ -15,9 +15,6 @@ on:
       - opened
       - closed
       - reopened
-      - ready_for_review
-      - review_requested
-      - review_request_removed
       - converted_to_draft
       - ready_for_review
       - review_requested
