@@ -99,6 +99,34 @@
         "showReuseMessage": false,
         "revealProblems": "onProblem"
       }
+    },
+    {
+      "label": "lint:js",
+      "detail": "Lint Javascript files",
+      "type": "shell",
+      "command": "pnpm -s lint:js", // ${input:file}
+      "problemMatcher": ["$eslint-stylish"],
+      "presentation": {
+        "echo": false,
+        "reveal": "never",
+        "clear": true,
+        "showReuseMessage": false,
+        "revealProblems": "onProblem"
+      }
+    },
+    {
+      "label": "lint-fix:js",
+      "detail": "Lint fix Javascript files",
+      "type": "shell",
+      "command": "pnpm -s lint-fix:js", // ${input:file}
+      "problemMatcher": ["$eslint-stylish"],
+      "presentation": {
+        "echo": false,
+        "reveal": "never",
+        "clear": true,
+        "showReuseMessage": false,
+        "revealProblems": "onProblem"
+      }
     }
   ],
   "inputs": [
