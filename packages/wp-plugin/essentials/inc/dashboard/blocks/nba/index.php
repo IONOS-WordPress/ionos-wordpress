@@ -20,43 +20,47 @@ function render_callback () {
     return;
   }
 
+  $template = '
+  <div id="ionos-dashboard__essentials_nba" class="wp-block-group alignwide">
+      <div class="wp-block-group is-vertical is-content-justification-left is-layout-flex wp-container-core-group-is-layout-2 wp-block-group-is-layout-flex">
+          <h2 class="wp-block-heading">%s</h2>
+          <p>%s</p>
+      </div>
+      <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-1 wp-block-columns-is-layout-flex">
+          %s
+      </div>
+  </div>';
 
-$body = '';
-foreach ($actions as $action) {
-  $active = $action->active;
-  if (! $active) {
-    continue;
+  $header = \esc_html__('Next best actions ⚡', 'ionos-essentials');
+  $description = \esc_html__('Description of this block', 'ionos-essentials');
+
+  $body = '';
+  foreach ($actions as $action) {
+    if (!$action->active) {
+      continue;
+    }
+
+    $target = strpos(\esc_url($action->link), home_url()) === false ? '_blank' : '_top';
+    $body .= '
+      <div class="wp-block-column is-style-default has-border-color is-layout-flow wp-block-column-is-layout-flow">
+          <h2 class="wp-block-heading">' . \esc_html($action->title, 'ionos-essentials') . '</h2>
+          <p>' . \esc_html($action->description, 'ionos-essentials') . '</p>
+          <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
+              <div class="wp-block-button">
+                  <a href="' . \esc_url($action->link) . '" class="wp-block-button__link wp-element-button" target="' . $target . '">' . \esc_html("Primary button", 'ionos-essentials') . '</a>
+              </div>
+              <div class="wp-block-button is-style-outline is-style-outline--1">
+                  <a id="' . $action->id . '" class="wp-block-button__link wp-element-button dismiss-nba" target="_top">' . \esc_html("Dismiss", 'ionos-essentials') . '</a>
+              </div>
+          </div>
+      </div>';
   }
-  $body .= '<div class="wp-block-column is-style-default has-border-color is-layout-flow wp-block-column-is-layout-flow">'
-  . sprintf('<h2 class="wp-block-heading">%s</h2>', \esc_html($action->title, 'ionos-essentials'))
-  . sprintf('<p>%s</p>', \esc_html($action->description, 'ionos-essentials'))
-  . '<div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">'
-  . sprintf(
-    '<div class="wp-block-button"><a href="%s" class="wp-block-button__link wp-element-button" target="_top">%s</a></div>',
-    \esc_url($action->link),
-    \esc_html("Primary button", 'ionos-essentials'),
-  )
-  . '<div class="wp-block-button is-style-outline is-style-outline--1">'
-  . sprintf(
-    '<div class="wp-block-button"><a id="%s" class="wp-block-button__link wp-element-button dismiss-nba" target="_top">%s</a></div>',
-    $action->id,
-    \esc_html("Dismiss", 'ionos-essentials')
-  )
-  . '</div></div></div>';
-}
 
   if (empty($body)) {
     return;
   }
 
-return '<div id="ionos-dashboard__essentials_nba" class="wp-block-group alignwide">'
-. '<div class="wp-block-group is-vertical is-content-justification-left is-layout-flex wp-container-core-group-is-layout-2 wp-block-group-is-layout-flex">'
-. sprintf('<h2 class="wp-block-heading">%s</h2>', \esc_html__('Next best actions ⚡', 'ionos-essentials'))
-. sprintf('<p>%s</p>', \esc_html__('Description of this block', 'ionos-essentials'))
-. '</div>'
-. '<div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-1 wp-block-columns-is-layout-flex">'
-. $body
-. '</div></div>';
+  return \sprintf($template, $header, $description, $body);
 
 };
 
@@ -91,4 +95,81 @@ return '<div id="ionos-dashboard__essentials_nba" class="wp-block-group alignwid
   ]);
 });
 
+\add_action('post_updated', function ($post_id, $post_after, $post_before) {
+  if ($post_before->post_status !== 'publish') {
+    return;
+  }
 
+  require_once __DIR__ . '/model.php';
+  switch ($post_after->post_type) {
+    case 'post':
+      $nba = \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::getNBA('editPost');
+      break;
+    case 'page':
+      $nba = \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::getNBA('editPage');
+      break;
+    default:
+      return;
+  }
+
+  if ($nba) {
+    $nba->setStatus("completed", true);
+  }
+}, 10, 3);
+
+\add_action( 'ionos_dashboard__register_nba_element', function () {
+  $actions = [
+    [
+      'id' => 'addPage',
+      'title' => \esc_html__('Add a page', 'ionos-essentials'),
+      'description' => \esc_html__('Create some content for your website visitor.', 'ionos-essentials'),
+      'link' => \admin_url('post-new.php?post_type=page'),
+      'completed' => \wp_count_posts('page')->publish > 1
+    ],
+    [
+      'id' => 'addPost',
+      'title' => \esc_html__('Add a post', 'ionos-essentials'),
+      'description' => \esc_html__('Share your thoughts with your audience.', 'ionos-essentials'),
+      'link' => \admin_url('edit.php?post_type=post'),
+      'completed' => \wp_count_posts('post')->publish > 1
+    ],
+    [
+      'id' => 'editPost',
+      'title' => \esc_html__('Edit a post', 'ionos-essentials'),
+      'description' => \esc_html__('Update your content to keep it fresh.', 'ionos-essentials'),
+      'link' => \admin_url('edit.php?post_type=post'),
+      'completed' => false
+    ],
+    [
+      'id' => 'editPage',
+      'title' => \esc_html__('Edit a page', 'ionos-essentials'),
+      'description' => \esc_html__('Update your content to keep it fresh.', 'ionos-essentials'),
+      'link' => \admin_url('edit.php?post_type=page'),
+      'completed' => false
+    ],
+    [
+      'id' => 'addSiteDescription',
+      'title' => \esc_html__('Add a site description', 'ionos-essentials'),
+      'description' => \esc_html__('Tell your visitors what your website is about.', 'ionos-essentials'),
+      'link' => \admin_url('options-general.php'),
+      'completed' => \get_option('blogdescription') !== '' && __('Just another WordPress site') !== \get_option('blogdescription')
+    ],
+    [
+      'id' => 'uploadALogo',
+      'title' => \esc_html__('Upload a logo', 'ionos-essentials'),
+      'description' => \esc_html__('Make your website more recognizable.', 'ionos-essentials'),
+      'link' => \admin_url('options-general.php'),
+      'completed' => \intval(\get_option('site_icon', 0)) > 0
+    ],
+  ];
+
+  foreach ($actions as $action) {
+    NBA::register(
+      id: $action['id'],
+      title: $action['title'],
+      description: $action['description'],
+      link: $action['link'],
+      completed: $action['completed']
+    );
+  }
+});
