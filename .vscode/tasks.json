@@ -116,7 +116,7 @@
     },
     {
       "label": "lint-fix:js",
-      "detail": "Lint fix Javascript files",
+      "detail": "Lint fix Javascript",
       "type": "shell",
       "command": "pnpm -s lint-fix:js", // ${input:file}
       "problemMatcher": ["$eslint-stylish"],
