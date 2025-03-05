@@ -150,15 +150,11 @@ msgstr "Redigera navigering"
 msgid "Quick Links"
 msgstr "Snabblänkar"
 
-#: build/dashboard/blocks/vulnerability/class-wpscan.php:18
-msgid "Vulnerability Scan"
-msgstr "Sårbarhetsskanning"
-
 #: essentials.php:31
 msgid "Hello World !"
 msgstr "Hej världen!"
 
-#: inc/dashboard/index.php:39
+#: inc/dashboard/index.php:35
 msgid "IONOS Dashboard"
 msgstr "IONOS instrumentpanel"
 
@@ -192,38 +188,38 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Visa wp-skanningsdata."
 
-#: build/dashboard/blocks/vulnerability/render.php:91
+#: build/dashboard/blocks/vulnerability/render.php:90
 msgid "WPScan not available"
 msgstr "WPScan inte tillgänglig"
 
-#: inc/dashboard/index.php:175
+#: inc/dashboard/index.php:171
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: build/dashboard/blocks/vulnerability/render.php:83
+#: build/dashboard/blocks/vulnerability/render.php:82
 msgid "Show full scan report"
 msgstr "Visa fullständig felsökning"
 
-#: build/dashboard/blocks/vulnerability/render.php:63
+#: build/dashboard/blocks/vulnerability/render.php:62
 msgid "Last scan"
 msgstr "Senaste felsökning"
 
-#: build/dashboard/blocks/vulnerability/render.php:66
+#: build/dashboard/blocks/vulnerability/render.php:65
 msgid "%s ago"
 msgstr "för %s sedan"
 
-#: build/dashboard/blocks/vulnerability/render.php:37
+#: build/dashboard/blocks/vulnerability/render.php:36
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiskt fel hittades"
 msgstr[1] "kritiska fel hittades"
 
-#: build/dashboard/blocks/vulnerability/render.php:47
+#: build/dashboard/blocks/vulnerability/render.php:46
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "varning hittad"
 msgstr[1] "varningar hittade"
 
-#: build/dashboard/blocks/vulnerability/render.php:58
+#: build/dashboard/blocks/vulnerability/render.php:57
 msgid "issues found"
 msgstr "fel hittade"

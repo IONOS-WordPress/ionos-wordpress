@@ -93,7 +93,7 @@ if [[ "${USE[@]}" =~ all|react ]]; then
     ionos.wordpress.prepare_playwright_environment
 
     # execute playwright tests. provide part specific options and all positional arguments that are jsx files
-    pnpm exec playwright test -c ./playwright-ct.config.js \
+    pnpm exec playwright test --pass-with-no-tests -c ./playwright-ct.config.js \
       "${USE_OPTIONS[react]:---quiet}" \
       $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.jsx ]] && printf "$file "; done)
   )
@@ -123,7 +123,7 @@ if [[ "${USE[@]}" =~ all|e2e ]]; then
   # start wp-env e2e tests. provide part specific options and all positional arguments that are php files
   (
     ionos.wordpress.prepare_playwright_environment
-    pnpm exec wp-scripts test-playwright -c ./playwright.config.js \
+    pnpm exec wp-scripts test-playwright --pass-with-no-tests -c ./playwright.config.js \
       "${USE_OPTIONS[e2e]:---quiet}" \
       $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.js ]] && printf "$file "; done)
   )

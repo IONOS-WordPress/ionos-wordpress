@@ -150,15 +150,11 @@ msgstr "Modifica della navigazione"
 msgid "Quick Links"
 msgstr "Collegamenti rapidi"
 
-#: build/dashboard/blocks/vulnerability/class-wpscan.php:18
-msgid "Vulnerability Scan"
-msgstr "Scansione delle vulnerabilità"
-
 #: essentials.php:31
 msgid "Hello World !"
 msgstr "Ciao mondo!"
 
-#: inc/dashboard/index.php:39
+#: inc/dashboard/index.php:35
 msgid "IONOS Dashboard"
 msgstr "Cruscotto IONOS"
 
@@ -192,38 +188,38 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Mostra i dati della scansione wp."
 
-#: build/dashboard/blocks/vulnerability/render.php:91
+#: build/dashboard/blocks/vulnerability/render.php:90
 msgid "WPScan not available"
 msgstr "WPScan non disponibile"
 
-#: inc/dashboard/index.php:175
+#: inc/dashboard/index.php:171
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: build/dashboard/blocks/vulnerability/render.php:83
+#: build/dashboard/blocks/vulnerability/render.php:82
 msgid "Show full scan report"
 msgstr "Mostra report completo della scansione"
 
-#: build/dashboard/blocks/vulnerability/render.php:63
+#: build/dashboard/blocks/vulnerability/render.php:62
 msgid "Last scan"
 msgstr "Ultima scansione"
 
-#: build/dashboard/blocks/vulnerability/render.php:66
+#: build/dashboard/blocks/vulnerability/render.php:65
 msgid "%s ago"
 msgstr "%s fa"
 
-#: build/dashboard/blocks/vulnerability/render.php:37
+#: build/dashboard/blocks/vulnerability/render.php:36
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problema critico rilevato"
 msgstr[1] "Problemi critici rilevati"
 
-#: build/dashboard/blocks/vulnerability/render.php:47
+#: build/dashboard/blocks/vulnerability/render.php:46
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "Allarme rilevato"
 msgstr[1] "Allarmi rilevati"
 
-#: build/dashboard/blocks/vulnerability/render.php:58
+#: build/dashboard/blocks/vulnerability/render.php:57
 msgid "issues found"
 msgstr "Problemi rilevati"

@@ -5,8 +5,8 @@ import { defineConfig, devices } from '@playwright/experimental-ct-react';
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  testMatch: '*.spec.jsx',
-  testDir: '.',
+  testMatch: '**/*.spec.jsx',
+  testDir: './packages',
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
   snapshotDir: './playwright/storybook/__snapshots__',
   /* Maximum time one test can run for. */

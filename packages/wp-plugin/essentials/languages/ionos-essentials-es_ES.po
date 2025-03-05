@@ -142,7 +142,7 @@ msgstr "Quick Links"
 msgid "Hello World !"
 msgstr "Hola a todos."
 
-#: inc/dashboard/index.php:39
+#: inc/dashboard/index.php:35
 msgid "IONOS Dashboard"
 msgstr "Cuadro de mandos de IONOS"
 
@@ -178,10 +178,6 @@ msgstr "Servicios"
 msgid "Invoices"
 msgstr "Facturas"
 
-#: build/dashboard/blocks/vulnerability/class-wpscan.php:18
-msgid "Vulnerability Scan"
-msgstr "Exploración de vulnerabilidades"
-
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block title"
 msgid "Vulnerability"
@@ -192,38 +188,38 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Mostrar datos de escaneo wp."
 
-#: build/dashboard/blocks/vulnerability/render.php:91
+#: build/dashboard/blocks/vulnerability/render.php:90
 msgid "WPScan not available"
 msgstr "WPScan no disponible"
 
-#: inc/dashboard/index.php:175
+#: inc/dashboard/index.php:171
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: build/dashboard/blocks/vulnerability/render.php:83
+#: build/dashboard/blocks/vulnerability/render.php:82
 msgid "Show full scan report"
 msgstr "Mostrar informe completo del escaneo"
 
-#: build/dashboard/blocks/vulnerability/render.php:63
+#: build/dashboard/blocks/vulnerability/render.php:62
 msgid "Last scan"
 msgstr "Último escaneo"
 
-#: build/dashboard/blocks/vulnerability/render.php:66
+#: build/dashboard/blocks/vulnerability/render.php:65
 msgid "%s ago"
 msgstr "hace %s"
 
-#: build/dashboard/blocks/vulnerability/render.php:37
+#: build/dashboard/blocks/vulnerability/render.php:36
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problema crítico detectado"
 msgstr[1] "Problemas críticos detectados"
 
-#: build/dashboard/blocks/vulnerability/render.php:47
+#: build/dashboard/blocks/vulnerability/render.php:46
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "Alerta detectada"
 msgstr[1] "Alertas detectadas"
 
-#: build/dashboard/blocks/vulnerability/render.php:58
+#: build/dashboard/blocks/vulnerability/render.php:57
 msgid "issues found"
 msgstr "Problemas detectados"

@@ -47,6 +47,7 @@ return $configure->withRules([
       '*/wp-env-home/*',
       '*/.git/*',
       '/tmp/*',
+      '*/docs/packages/*',
       '**/ecs-config.php',
       'rector-config-php7.4.php',
     ]
