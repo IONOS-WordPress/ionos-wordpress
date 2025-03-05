@@ -52,7 +52,7 @@ When viewing a dashboard, the two parts can be put together like this:
 
 This allows the user to have any theme active and customize it without having an effect on the look of the dashboard.
 
-## dashboard dev snippets
+## development snippets
 
 some interesting commands / instructions useful for development can be found here.
 
@@ -62,9 +62,12 @@ deleting the dashboard post in `/wp-admin/edit.php?post_type=custom_dashboard` w
 
 ### load dashboard global styles from global-styles.json
 
-! make sure changes done locally in site-editor are saved to file !
+[!WARNING]
+make sure changes done locally in site-editor are saved to file !
 
-`pnpm wp-env run cli wp post delete $(wp post list --post_type=wp_global_styles --format=ids) --force`
+`pnpm wp-env run cli bash`
+then
+`wp post delete $(wp post list --post_type=wp_global_styles --format=ids) --force`
 
 afterwards reload any wp-admin page
 
