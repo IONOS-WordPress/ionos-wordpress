@@ -78,6 +78,7 @@ function ionos.wordpress.stylelint() {
     --ignore-pattern '!**/*.css' \
     --ignore-pattern '!**/*.scss' \
     --allow-empty-input \
+    --formatter=compact \
     --no-cache \
     $([[ "$FIX" == 'yes' ]] && echo -n '--fix strict' ||:) \
     ${POSITIONAL_ARGS[@]}

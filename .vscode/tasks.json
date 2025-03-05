@@ -127,6 +127,64 @@
         "showReuseMessage": false,
         "revealProblems": "onProblem"
       }
+    },
+    {
+      "label": "lint:css",
+      "detail": "Lint CSS/SCSS",
+      "type": "shell",
+      "command": "pnpm -s lint:css", // ${input:file}
+      "problemMatcher": [
+        {
+          "source": "lint:css",
+          "owner": "lint:css",
+          "fileLocation": "absolute",
+          "pattern": {
+            "regexp": "^(.+): line (\\d+), col (\\d+), (\\w+) - (.+)( \\((.+)\\))?$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5,
+            "code": 6
+          }
+        }
+      ],
+      "presentation": {
+        "echo": false,
+        "reveal": "never",
+        "clear": true,
+        "showReuseMessage": false,
+        "revealProblems": "onProblem"
+      }
+    },
+    {
+      "label": "lint-fix:css",
+      "detail": "Lint fix CSS/SCSS",
+      "type": "shell",
+      "command": "pnpm -s lint-fix:css", // ${input:file}
+      "problemMatcher": [
+        {
+          "source": "lint:css",
+          "owner": "lint:css",
+          "fileLocation": "absolute",
+          "pattern": {
+            "regexp": "^(.+): line (\\d+), col (\\d+), (\\w+) - (.+)( \\((.+)\\))?$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5,
+            "code": 6
+          }
+        }
+      ],
+      "presentation": {
+        "echo": false,
+        "reveal": "never",
+        "clear": true,
+        "showReuseMessage": false,
+        "revealProblems": "onProblem"
+      }
     }
   ],
   "inputs": [
