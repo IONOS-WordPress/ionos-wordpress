@@ -80,7 +80,7 @@ jobs:
               >> $GITHUB_OUTPUT
           fi
       - name: send pr open/close/edit message
-        if: ${{ github.event_name == 'pull_request_target' && steps.gchat_url.outputs.GCHAT_URL }}
+        if: ${{ github.event_name == 'pull_request' && steps.gchat_url.outputs.GCHAT_URL }}
         run: |
           TEXT=$(cat -s <<'X!X' | jq -Rsr @json
           ${{ github.triggering_actor}} ${{ github.event.action}} pull request *'${{ github.event.pull_request.title }} ${{ github.event.pull_request.draft && '(draft)' || '' }}'*
