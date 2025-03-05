@@ -31,10 +31,7 @@ on:
       - edited
       - deleted
   issue_comment:
-    types:
-      - created
-      - edited
-      - deleted
+
 
 jobs:
   send_notification:
