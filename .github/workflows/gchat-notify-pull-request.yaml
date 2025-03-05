@@ -100,7 +100,7 @@ jobs:
 
       - name: send pr comment message
         # this step will send a message if a comment is made on a pull request review
-        # if: ${{ github.event_name == 'issue_comment' && github.event.issue.pull_request && steps.gchat_url.outputs.GCHAT_URL }}
+        if: ${{ github.event_name == 'issue_comment' && github.event.issue.pull_request && steps.gchat_url.outputs.GCHAT_URL }}
         run: |
           TEXT=$(cat -s <<'X!X' | jq -Rsr @json
           ${{ github.triggering_actor }} ${{ github.event.action }} a pr comment
