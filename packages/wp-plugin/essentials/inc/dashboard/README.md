@@ -52,6 +52,22 @@ When viewing a dashboard, the two parts can be put together like this:
 
 This allows the user to have any theme active and customize it without having an effect on the look of the dashboard.
 
-### example dynamic block
+## dashboard dev snippets
 
-As a proof of the concept, a simple "clock-block" is used on the dashboard to show that the server side rendering works.
+some interesting commands / instructions useful for development can be found here.
+
+### load dashboard post from file
+
+deleting the dashboard post in `/wp-admin/edit.php?post_type=custom_dashboard` will immediately recreate the dashboard with content loaded from file
+
+### load dashboard global styles from global-styles.json
+
+! make sure changes done locally in site-editor are saved to file !
+
+`pnpm wp-env run cli wp post delete $(wp post list --post_type=wp_global_styles --format=ids) --force`
+
+afterwards reload any wp-admin page
+
+### reset nba actions
+
+`pnpm wp-env run cli wp option delete ionos_nba_status`
