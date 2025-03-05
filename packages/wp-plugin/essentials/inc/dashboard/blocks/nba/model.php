@@ -84,3 +84,5 @@ class NBA
     return $option[$this->id] ?? [];
   }
 }
+
+do_action('ionos_dashboard__register_nba_element');

@@ -117,9 +117,7 @@ function render_callback () {
   }
 }, 10, 3);
 
-\add_filter( 'ionos_dashboard_filter__nba', function () {
-  require_once __DIR__ . '/model.php';
-
+\add_action( 'ionos_dashboard__register_nba_element', function () {
   $actions = [
     [
       'id' => 'addPage',
@@ -166,7 +164,7 @@ function render_callback () {
   ];
 
   foreach ($actions as $action) {
-    \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::register(
+    NBA::register(
       id: $action['id'],
       title: $action['title'],
       description: $action['description'],
@@ -175,4 +173,3 @@ function render_callback () {
     );
   }
 });
-\apply_filters( 'ionos_dashboard_filter__nba', null );
