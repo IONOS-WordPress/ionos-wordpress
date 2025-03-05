@@ -216,7 +216,13 @@ function ionos.wordpress.dennis() {
   )
 
   # map file path references from within docker container to host paths
-  echo "$OUTPUT" | sed 's|Working on: /project/|Working on: ./|ig'
+  # and filter out unwanted lines (everything except untranslated string messages)
+  echo "$OUTPUT" | \
+    grep -vE '^\s|^Metadata|Statistics|Untranslated\sstrings' | \
+    grep -vE '^[0-9]+:#' | \
+    grep -vE '^[0-9]+:msgstr ""' | \
+    grep -v '^$' | \
+    sed 's|Working on: /project/|Working on: ./|ig'
 
   # abort with error if there were untranslated strings
   if echo "$OUTPUT" | grep -q 'Untranslated:\s*[1-9]'; then
