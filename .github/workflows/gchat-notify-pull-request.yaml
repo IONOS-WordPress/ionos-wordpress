@@ -21,23 +21,39 @@ on:
       - review_request_removed
       - edited
   pull_request_review:
-    types:
-      - submitted
-      - edited
-      - dismissed
   pull_request_review_comment:
-    types:
-      - created
-      - edited
-      - deleted
   issue_comment:
-
 
 jobs:
   send_notification:
     runs-on: ubuntu-latest
     name: Send message to gchat
     steps:
+      - name: Dump GitHub context
+        env:
+          CONTEXT: ${{ toJson(github) }}
+          JOB_CONTEXT: ${{ toJson(job) }}
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: |
+          cat << EOF
+          ####### 'github' #######
+          echo $CONTEXT"
+          ####### 'job' #######
+          $JOB_CONTEXT"
+          ###### 'steps' #######
+          $STEPS_CONTEXT
+          ###### 'runner' #######
+          $RUNNER_CONTEXT"
+          ###### 'strategy' #######
+          $STRATEGY_CONTEXT"
+          ###### 'matrix' #######
+          $MATRIX_CONTEXT"
+          ###### environment #######
+          $(env | grep GITHUB)
+          EOF
       - id: gchat_url
         run: |
           if [[ -z "${{ secrets.GCHAT_PR_ANNOUNCEMENTS_WEBHOOK }}" ]]; then
@@ -56,7 +72,7 @@ jobs:
 
           ${{ (github.event.action=='opened' || github.event.action=='edited') && github.event.pull_request.body || '' }}
 
-          ${{ github.event.pull_request._links.html.href }}
+          ${{ github.event.action=='opened' && github.event.pull_request._links.html.href || ''}}
           X!X
           )
           curl -X POST \
@@ -64,14 +80,14 @@ jobs:
             -d "{\"text\": $TEXT }" \
             '${{ steps.gchat_url.outputs.GCHAT_URL }}'
 
-      - name: send pr review comment
+      - name: send pr review
         # this step will send a message if a review comment is made on a pull request review
         if: ${{ github.event_name == 'pull_request_review' && steps.gchat_url.outputs.GCHAT_URL }}
         run: |
           TEXT=$(cat -s <<'X!X' | jq -Rsr @json
-          ${{ github.triggering_actor }} ${{ github.event.action }} a review comment
+          ${{ github.triggering_actor }} ${{ github.event.action }} a review action
 
-          ${{ github.event.review.body || github.event.comment.body || '' }}
+          ${{ github.event.review.state }}
 
           ${{ github.event.review._links.html.href }}
           X!X
@@ -87,10 +103,6 @@ jobs:
         run: |
           TEXT=$(cat -s <<'X!X' | jq -Rsr @json
           ${{ github.triggering_actor }} ${{github.event.action }} a review comment
-
-          ${{ github.event.review.body || github.event.comment.body || '' }}
-
-          ${{ github.event.comment._links.html.href }}
           X!X
           )
           curl -X POST \
@@ -104,10 +116,6 @@ jobs:
         run: |
           TEXT=$(cat -s <<'X!X' | jq -Rsr @json
           ${{ github.triggering_actor }} ${{ github.event.action }} a pr comment
-
-          ${{ github.event.comment.body || ''}}
-
-          ${{ github.event.comment.html_url }}
           X!X
           )
           curl -X POST \
