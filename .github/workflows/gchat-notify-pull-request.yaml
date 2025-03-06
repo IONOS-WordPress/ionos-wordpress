@@ -20,7 +20,11 @@ on:
       - review_requested
       - review_request_removed
       - edited
-  pull_request_review:
+  # pull_request_review:
+  #   types:
+  #     - submitted
+  #     - edited
+  #     - dismissed
   pull_request_review_comment:
     types:
       - created
@@ -92,8 +96,6 @@ jobs:
           ${{ github.triggering_actor }} ${{ github.event.action }} a review action
 
           ${{ github.event.review.state }}
-
-          ${{ github.event.review._links.html.href }}
           X!X
           )
           curl -X POST \
