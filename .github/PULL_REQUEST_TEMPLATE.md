@@ -31,9 +31,8 @@
 ## PR Tasks
 
 - [ ] I already linted the sources
-
+- [ ] I have updated/added tests
 - [ ] I have runned successfully the tests locally
-
 - [ ] I have updated the documentation if nessessary
 
 ## QA Instructions, Screenshots, Recordings
@@ -43,14 +42,5 @@ on the devices and browsers this has been tested on, as well as any relevant
 images for UI changes._
 
 _If the ui was changed by PR please provide a before and after screenshot_
-
-## Added/updated tests?
-
-_We encourage you to keep the code coverage percentage at 80% and above._
-
-- [ ] Yes
-- [ ] No, and this is why: _please replace this line with details on why tests
-      have not been included_
-- [ ] I need help with writing tests
 
 ## [optional] Are there any post deployment tasks we need to perform?
