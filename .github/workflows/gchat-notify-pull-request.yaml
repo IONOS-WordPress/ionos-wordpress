@@ -25,6 +25,8 @@ on:
     types:
       - created
   issue_comment:
+    types:
+      - created
 
 jobs:
   send_notification:
