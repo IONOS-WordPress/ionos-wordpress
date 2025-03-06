@@ -4,9 +4,6 @@
 # this workflow requires a secret "GCHAT_PR_ANNOUNCEMENTS_WEBHOOK" to point to the google chat room
 # if not declared his workflow will set a warning and will exit gracefully (=> without an error)
 #
-# TODO: we cannot react to single review comments in github pipelines as of now
-#   See "Add events for pull request review comment resolved/unresolved" https://github.com/orgs/community/discussions/12811
-#
 name: 'gchat-notify-pull-request'
 
 on:
