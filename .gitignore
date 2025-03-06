@@ -36,4 +36,4 @@ packages/*/*/webpack.config.js
 /tmp
 /wp-playground-blueprint.json
 /wp-playground-blueprint.local.json
-packages/*/*/*/*/*/.DS_Store
+.DS_Store
