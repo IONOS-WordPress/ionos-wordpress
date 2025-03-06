@@ -12,7 +12,7 @@ document.querySelectorAll('.dismiss-nba').forEach((el) => {
     });
     if (res.status === 'success') {
       const TRANSITION_DURATION = 300;
-      const element = click.target.parentElement.parentElement.parentElement.parentElement;
+      const element = click.target.closest('.wp-block-column');
       element.style.transition = `opacity ${TRANSITION_DURATION}ms, transform ${TRANSITION_DURATION}ms`;
       element.style.opacity = '0';
       element.style.transform = 'translateY(-10px)';
