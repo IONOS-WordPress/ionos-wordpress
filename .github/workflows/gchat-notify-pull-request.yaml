@@ -22,6 +22,8 @@ on:
       - edited
   pull_request_review:
   pull_request_review_comment:
+    types:
+      - created
   issue_comment:
 
 jobs:
