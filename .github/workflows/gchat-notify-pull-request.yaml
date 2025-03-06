@@ -25,9 +25,6 @@ on:
       - submitted
       - edited
       - dismissed
-  pull_request_review_comment:
-    types:
-      - created
   issue_comment:
     types:
       - created
@@ -89,26 +86,11 @@ jobs:
             '${{ steps.gchat_url.outputs.GCHAT_URL }}'
 
       - name: send pr review
-        # this step will send a message if a review comment is made on a pull request review
+        # this step will send a message if a review on a pull request is submitted
         if: ${{ github.event_name == 'pull_request_review' && steps.gchat_url.outputs.GCHAT_URL }}
         run: |
           TEXT=$(cat -s <<'X!X' | jq -Rsr @json
-          ${{ github.triggering_actor }} ${{ github.event.action }} a review action
-
-          ${{ github.event.review.state }}
-          X!X
-          )
-          curl -X POST \
-            -H 'Content-Type: application/json' \
-            -d "{\"text\": $TEXT }" \
-            '${{ steps.gchat_url.outputs.GCHAT_URL }}'
-
-      - name: send pr review comment
-        # this step will send a message if a comment is made on a pull request review
-        if: ${{ github.event_name == 'pull_request_review_comment' && steps.gchat_url.outputs.GCHAT_URL }}
-        run: |
-          TEXT=$(cat -s <<'X!X' | jq -Rsr @json
-          ${{ github.triggering_actor }} ${{github.event.action }} a review comment
+          ${{ github.triggering_actor }} ${{ github.event.action }} a review: ${{ github.event.review.state }}
           X!X
           )
           curl -X POST \
