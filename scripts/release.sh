@@ -61,6 +61,8 @@ mkdir -p ./tmp/release
 # see https://github.com/changesets/changesets/issues/1020
 # fetch changeset status into ./tmp/release/status.json
 pnpm changeset status --verbose --output ./tmp/release/status.json
+# read ./tmp/release/status.json into variable CHANGESET_STATUS_JSON
+CHANGESET_STATUS_JSON=$(cat ./tmp/release/status.json)
 # count changesets
 CHANGESETS_COUNT=$(jq '.changesets // [] | length' ./tmp/release/status.json)
 if [[ $CHANGESETS_COUNT -eq 0 ]]; then
@@ -78,7 +80,12 @@ pnpm install
 pnpm build
 
 # generate sbom file
-docker run -it --rm -v $(pwd):/project anchore/syft scan /project --source-name ionos-wordpress --select-catalogers "+javascript-package-cataloger,+github-actions-usage-cataloger,+php-composer-lock-cataloger" -o spdx-json=/project/ionos-wordpress.sbom.json.tmp && jq '.' ionos-wordpress.sbom.json.tmp > ionos-wordpress.sbom.syft.json && rm -f ionos-wordpress.sbom.json.tmp
+docker run -it --rm -v $(pwd):/project anchore/syft \
+  scan /project \
+  --source-name ionos-wordpress \
+  --select-catalogers "+javascript-package-cataloger,+github-actions-usage-cataloger,+php-composer-lock-cataloger" \
+  -o spdx-json=/project/ionos-wordpress.sbom.json.tmp && \
+  jq '.' ionos-wordpress.sbom.json.tmp > ionos-wordpress.sbom.syft.json && rm -f ionos-wordpress.sbom.json.tmp
 
 # add updated files to git
 git add -A .
@@ -175,3 +182,25 @@ git checkout develop
 git pull . main
 # push changes to remote develop branch
 git push -u origin develop
+
+# notify release to google chat room
+if [[ "${GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK}" != '' ]]; then
+  # use the triggering actor of the github event if available, otherwise use the git config user.name
+  TRIGGERING_ACTOR="${GITHUB_TRIGGERING_ACTOR:-$(git config user.name)}"
+  # use the repository name from the github event if available, otherwise use the repository name from the git config
+  REPOSITORY_NAME=$( [[ $GITHUB_EVENT_PATH != '' ]] && jq -r '.repository.name' $GITHUB_EVENT_PATH || basename $(realpath .))
+  # use the repository url from the github event if available, otherwise use the repository url from the git config
+  REPOSITORY_URL=$( [[ $GITHUB_EVENT_PATH != '' ]] && echo "$(jq -r '.repository.html_url' $GITHUB_EVENT_PATH)/releases" || git remote get-url --push origin)
+  # changed packages computed by changeset
+  CHANGED_PACKAGES=$(echo "$CHANGESET_STATUS_JSON" | jq -r '.releases[] | "* \(.name)(\(.oldVersion)->\(.newVersion))"')
+  curl -X POST \
+    -H 'Content-Type: application/json' \
+    -d "{\"text\": \"*${TRIGGERING_ACTOR}* released repository *${REPOSITORY_NAME}*.\nThe following packages would be released:\n\n${CHANGED_PACKAGES} \n\nSee ${REPOSITORY_URL}\"}" \
+    "${GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK}"
+else
+  if [[ "${CI:-}" == "true" ]]; then
+    echo "::warning::skip sending google chat release announcement message : secret GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK is not defined"
+  else
+    ionos.wordpress.log_warn "CI environment detected - skip setting up git hooks"
+  fi
+fi
