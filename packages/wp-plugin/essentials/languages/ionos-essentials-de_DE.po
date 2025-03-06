@@ -65,7 +65,7 @@ msgstr "Verträge & Abonnements"
 msgid "Login & Account security"
 msgstr "Login & Kontosicherheit"
 
-#: build/dashboard/blocks/deep-links/render.php:17
+#: build/dashboard/blocks/deep-links/render.php:33
 msgid "Deep-Links"
 msgstr "Deep-Links"
 

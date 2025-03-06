@@ -122,7 +122,7 @@ msgstr "Il vostro contratto"
 msgid "Current offers"
 msgstr "Offerte attuali"
 
-#: build/dashboard/blocks/deep-links/render.php:17
+#: build/dashboard/blocks/deep-links/render.php:33
 msgid "Deep-Links"
 msgstr "Link profondi"
 

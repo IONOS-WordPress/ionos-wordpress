@@ -122,7 +122,7 @@ msgstr "Ditt avtal"
 msgid "Current offers"
 msgstr "Aktuella erbjudanden"
 
-#: build/dashboard/blocks/deep-links/render.php:17
+#: build/dashboard/blocks/deep-links/render.php:33
 msgid "Deep-Links"
 msgstr "Djupa länkar"
 
