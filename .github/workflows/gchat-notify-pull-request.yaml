@@ -20,11 +20,11 @@ on:
       - review_requested
       - review_request_removed
       - edited
-  # pull_request_review:
-  #   types:
-  #     - submitted
-  #     - edited
-  #     - dismissed
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+      - dismissed
   pull_request_review_comment:
     types:
       - created
