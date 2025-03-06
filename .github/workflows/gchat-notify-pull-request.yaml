@@ -22,7 +22,7 @@ on:
       - edited
   pull_request_review:
     types:
-#     - submitted
+      - submitted
       - edited
       - dismissed
   pull_request_review_comment:
