@@ -63,11 +63,9 @@ deleting the dashboard post in `/wp-admin/edit.php?post_type=custom_dashboard` w
 ### load dashboard global styles from global-styles.json
 
 > [!WARNING]
-> make sure changes done locally in site-editor are saved to file !
+> make sure the changes you did locally in the site-editor are saved to file !
 
-`pnpm wp-env run cli bash`
-then
-`wp post delete $(wp post list --post_type=wp_global_styles --format=ids) --force`
+`pnpm wp-env run cli wp post delete $(pnpm -s wp-env run cli wp post list --post_type=wp_global_styles --format=ids) --force`
 
 afterwards reload any wp-admin page
 
