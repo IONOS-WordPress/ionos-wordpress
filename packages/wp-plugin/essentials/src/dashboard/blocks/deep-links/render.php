@@ -15,7 +15,7 @@ if ($tenant && file_exists($config_file)) {
   $domain = $market_domains[$market] ?? reset($market_domains);
 
   echo '
-    <div class="wp-block-column deep-links">
+    <div class="wp-block-column deep-links" style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
       <div class="wp-block-group" style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">';
         printf('<h3 class="wp-block-heading">%s</h3>', \esc_html__('Deep-Links', 'ionos-essentials'));
         printf('<p>%s</p>', \esc_html__('Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color.', 'ionos-essentials'));
