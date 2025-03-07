@@ -64,11 +64,12 @@ function ionos.wordpress.prepare_playwright_environment() {
 
     ionos.wordpress.log_warn "Multiple or no Playwright chromium paths found (check 'find ~/.cache/ms-playwright -path "*/chrome-linux/chrome"')."
 
-#     if [[ "${CI:-}" == "true" ]]; then
-      ionos.wordpress.log_warn 'find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" : ' $(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome")
-#    else
+    if [[ "${CI:-}" == "true" ]] && [[ "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)" -eq 0 ]]; then
+      # try to install the browser in CI environment aautomatically if not already installed
+      PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium
+    else
       ionos.wordpress.log_warn "Please install it manually by running 'PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium'"
-#    fi
+    fi
 
     exit 1;
   fi
