@@ -265,7 +265,7 @@
       "command": "pnpm -s lint:pnpm", // ${input:file}
       "problemMatcher": [
         /*#
-pnpm validation failed : pnpm-lock.yaml:1 : not found
+pnpm-lock.yaml:1 : pnpm-lock.yaml not found
         */
         {
           "source": "lint:pnpm",
