@@ -18,7 +18,9 @@ if ($tenant && file_exists($config_file)) {
     <div class="wp-block-column deep-links">
       <div class="wp-block-group" style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">';
         printf('<h3 class="wp-block-heading">%s</h3>', \esc_html__('Deep-Links', 'ionos-essentials'));
-        echo '<p>Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color.</p>
+        printf('<p>%s</p>', \esc_html__('Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color.', 'ionos-essentials'));
+
+        echo '
       </div>
       <div class="wp-block-group" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:0.8rem;min-height:0px;margin-top:var(--wp--preset--spacing--20);margin-bottom:0;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
       ';

@@ -122,7 +122,7 @@ msgstr "Ihr Vertrag"
 msgid "Current offers"
 msgstr "Aktuelle Angebote"
 
-#: build/dashboard/blocks/deep-links/render.php:33
+#: build/dashboard/blocks/deep-links/render.php:20
 msgid "Deep-Links"
 msgstr "Deep-Links"
 
@@ -223,3 +223,7 @@ msgstr[1] "Warnungen gefunden"
 #: build/dashboard/blocks/vulnerability/render.php:57
 msgid "issues found"
 msgstr "Probleme gefunden"
+
+#: build/dashboard/blocks/deep-links/render.php:21
+msgid "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
+msgstr "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."

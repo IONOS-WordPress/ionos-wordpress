@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-06T15:04:38+00:00\n"
+"POT-Creation-Date: 2025-03-07T00:30:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -122,8 +122,12 @@ msgstr ""
 msgid "Current offers"
 msgstr ""
 
-#: build/dashboard/blocks/deep-links/render.php:33
+#: build/dashboard/blocks/deep-links/render.php:20
 msgid "Deep-Links"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/render.php:21
+msgid "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
 msgstr ""
 
 #: build/dashboard/blocks/quick-links/config.php:7
