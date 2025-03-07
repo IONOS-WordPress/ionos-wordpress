@@ -62,10 +62,8 @@ function ionos.wordpress.prepare_playwright_environment() {
   # Check if the find command returns exactly the one chromium installation we expect
   if [[ "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)" -ne 1 ]]; then
 
-    cat >>EOF | xargs -n 1 ionos.wordpress.log_warn
-      Multiple or no Playwright chromium paths found (check 'find ~/.cache/ms-playwright -path "*/chrome-linux/chrome"')
-      count of found installations = $(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)
-EOF
+    ionos.wordpress.log_warn "Multiple or no Playwright chromium paths found (check 'find ~/.cache/ms-playwright -path \"*/chrome-linux/chrome\"')"
+    ionos.wordpress.log_warn "count of found installations = $(find ~/.cache/ms-playwright -path \"*/chrome-linux/chrome\" 2>/dev/null | wc -l)"
 
     if [[ "${CI:-}" == "true" ]]; then
       if [[ "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)" -eq 0 ]]; then
