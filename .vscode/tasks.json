@@ -259,8 +259,8 @@
       }
     },
     {
-      "label": "lint",
-      "detail": "Lint",
+      "label": "lint pnpm",
+      "detail": "Lint pnpm",
       "type": "shell",
       "command": "pnpm -s lint:pnpm", // ${input:file}
       "problemMatcher": [
