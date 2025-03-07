@@ -270,7 +270,8 @@ pnpm-lock.yaml:1 : pnpm-lock.yaml not found
         {
           "source": "lint:pnpm",
           "owner": "lint:pnpm",
-          "fileLocation": "absolute",
+          "applyTo": "allDocuments",
+          "fileLocation": ["relative", "${workspaceFolder}"],
           "pattern": {
             "regexp": "(.+):(\\d) : (.*)$",
             "file": 1,
