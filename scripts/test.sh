@@ -67,13 +67,13 @@ function ionos.wordpress.prepare_playwright_environment() {
       "count of found installations = $(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)" 
 
     if [[ "${CI:-}" == "true" ]] && [[ "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)" -eq 0 ]]; then
+      ionos.wordpress.log_warn "Try to (re)install it by running 'PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium'"
       # try to install the browser in CI environment automatically if not already installed
       PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium
     else
       ionos.wordpress.log_warn "Please install it manually by running 'PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium'"
+      exit 1;
     fi
-
-    exit 1;
   fi
 
     # used to prevent wp-scripts test-playwright command from downloading browsers
