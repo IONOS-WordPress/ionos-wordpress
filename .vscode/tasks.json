@@ -259,10 +259,40 @@
       }
     },
     {
-      "label": "lint pnpm",
+      "label": "lint:pnpm",
       "detail": "Lint pnpm",
       "type": "shell",
       "command": "pnpm -s lint:pnpm", // ${input:file}
+      "problemMatcher": [
+        /*#
+pnpm-lock.yaml:1 : pnpm-lock.yaml not found
+        */
+        {
+          "source": "lint:pnpm",
+          "owner": "lint:pnpm",
+          "applyTo": "allDocuments",
+          "fileLocation": ["relative", "${workspaceFolder}"],
+          "pattern": {
+            "regexp": "(.+):(\\d) : (.*)$",
+            "file": 1,
+            "line": 2,
+            "message": 3
+          }
+        }
+      ],
+      "presentation": {
+        "echo": false,
+        "reveal": "never",
+        "clear": true,
+        "showReuseMessage": false,
+        "revealProblems": "onProblem"
+      }
+    },
+    {
+      "label": "lint:wp",
+      "detail": "Lint WordPress",
+      "type": "shell",
+      "command": "pnpm -s lint:wp", // ${input:file}
       "problemMatcher": [
         /*#
 pnpm-lock.yaml:1 : pnpm-lock.yaml not found
