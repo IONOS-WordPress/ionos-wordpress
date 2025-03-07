@@ -107,7 +107,7 @@ function ionos.wordpress.log_header() {
   # see https://unix.stackexchange.com/a/269085/564826
   echo -e "\e[1m$1\e[0m"
 }
-export -f ionos.wordpress.log_warn
+export -f ionos.wordpress.log_header
 
 # list all wordpress plugin files in the plugin directory
 # there can be multiple plugin files in a plugin directory
