@@ -257,6 +257,35 @@
         "showReuseMessage": false,
         "revealProblems": "onProblem"
       }
+    },
+    {
+      "label": "lint",
+      "detail": "Lint",
+      "type": "shell",
+      "command": "pnpm -s lint:pnpm", // ${input:file}
+      "problemMatcher": [
+        /*#
+pnpm validation failed : pnpm-lock.yaml:1 : not found
+        */
+        {
+          "source": "lint:pnpm",
+          "owner": "lint:pnpm",
+          "fileLocation": "absolute",
+          "pattern": {
+            "regexp": "(.+):(\\d) : (.*)$",
+            "file": 1,
+            "line": 2,
+            "message": 3
+          }
+        }
+      ],
+      "presentation": {
+        "echo": false,
+        "reveal": "never",
+        "clear": true,
+        "showReuseMessage": false,
+        "revealProblems": "onProblem"
+      }
     }
   ],
   "inputs": [

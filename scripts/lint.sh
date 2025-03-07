@@ -243,7 +243,8 @@ function ionos.wordpress.pnpm() {
   ionos.wordpress.log_header "lint pnpm lock file ..."
 
   if [[ ! -f ./pnpm-lock.yaml ]]; then
-    ionos.wordpress.error_log "pnpm validation failed : ./pnpm-lock.yaml not found"
+    # the filename:line notation is required for vscode tasks to jump to the correct file
+    ionos.wordpress.log_error "pnpm-lock.yaml:1 : pnpm-lock.yaml not found"
     exit 1
   fi
 
@@ -252,7 +253,8 @@ function ionos.wordpress.pnpm() {
 
   # validate lock file is valid
   if ! pnpm -s install --lockfile-only; then
-    ionos.wordpress.error_log "pnpm validation failed : pnpm lock file is outdated - please update it using 'pnpm install'"
+    # the filename:line notation is required for vscode tasks to jump to the correct file
+    ionos.wordpress.log_error "pnpm-lock.yaml:1 : pnpm-lock.yaml outdated - please update it using 'pnpm install'"
     exit 1
   fi
 
