@@ -298,8 +298,8 @@ pnpm-lock.yaml:1 : pnpm-lock.yaml not found
 pnpm-lock.yaml:1 : pnpm-lock.yaml not found
         */
         {
-          "source": "lint:pnpm",
-          "owner": "lint:pnpm",
+          "source": "lint:wp",
+          "owner": "lint:wp",
           "applyTo": "allDocuments",
           "fileLocation": ["relative", "${workspaceFolder}"],
           "pattern": {
