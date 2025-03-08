@@ -31,7 +31,7 @@ if (is_file(__DIR__ . '/editor.php')) {
   require_once __DIR__ . '/editor.php';
 }
 
-require_once __DIR__ . '/blocks/nba/index.php';
+require_once __DIR__ . '/blocks/next-best-actions/index.php';
 
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', __('IONOS Dashboard', 'ionos-essentials'));

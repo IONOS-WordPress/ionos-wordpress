@@ -32,4 +32,11 @@
   margin-left: 0;
 }
 
+#ionos-dashboard__essentials_nba .dismissed {
+  transition: opacity 300ms, transform 300ms;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+
 
