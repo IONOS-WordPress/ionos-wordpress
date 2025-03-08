@@ -1003,6 +1003,51 @@ p.has-text-align-left[style*="writing-mode:vertical-lr"],p.has-text-align-right[
   width:100%;
 }
 </style>
+<style id='ionos-dashboard-page-next-best-actions-style-inline-css'>
+#ionos-dashboard__essentials_nba {
+  min-height:0px;
+}
+
+#ionos-dashboard__essentials_nba > .wp-block-group {
+  margin-top:0px;
+  margin-bottom:15px;
+  padding-top:0;
+  padding-right:0;
+  padding-bottom:0;
+  padding-left:0
+}
+
+#ionos-dashboard__essentials_nba > .wp-block-columns {
+  border-style:none;
+  border-width:0px;
+  display: flex;
+  flex-wrap: wrap !important;
+}
+
+#ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column {
+  border-color:#bcc8d4;
+  border-width:1px;
+  border-radius:24px;
+  flex: 1 1 calc(33.333% - 14px);
+  max-width: calc(33.333% - 14px);
+  box-sizing: border-box;
+}
+
+/* Ensure the last columns do not stretch */
+#ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column:nth-child(3n+1) {
+  margin-left: 0;
+}
+
+#ionos-dashboard__essentials_nba .dismissed {
+  transition: opacity 300ms, transform 300ms;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+
+
+
+</style>
 <style id='wp-block-list-inline-css'>
 ol,ul{
   box-sizing:border-box;
@@ -1617,13 +1662,29 @@ h1, h2, h3, h4, h5, h6, blockquote, caption, figcaption, p {
 }
 
 </style>
-<link rel="https://api.w.org/" href="http://localhost:8888/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="http://localhost:8888/wp-json/wp/v2/custom_dashboard/331" /><style class='wp-fonts-local'>
+<script src="http://localhost:8888/wp-includes/js/dist/hooks.js?ver=5b4ec27a7b82f601224a" id="wp-hooks-js"></script>
+<script src="http://localhost:8888/wp-includes/js/dist/i18n.js?ver=2aff907006e2aa00e26e" id="wp-i18n-js"></script>
+<script id="wp-i18n-js-after">
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+</script>
+<script src="http://localhost:8888/wp-includes/js/dist/vendor/wp-polyfill.js?ver=3.15.0" id="wp-polyfill-js"></script>
+<script src="http://localhost:8888/wp-includes/js/dist/url.js?ver=d62dba05ffc50c672f4a" id="wp-url-js"></script>
+<script src="http://localhost:8888/wp-includes/js/dist/api-fetch.js?ver=c7fab2b80f62e49268dd" id="wp-api-fetch-js"></script>
+<script id="wp-api-fetch-js-after">
+wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( "http://localhost:8888/wp-json/" ) );
+wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "24f2daa72b" );
+wp.apiFetch.use( wp.apiFetch.nonceMiddleware );
+wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );
+wp.apiFetch.nonceEndpoint = "http://localhost:8888/wp-admin/admin-ajax.php?action=rest-nonce";
+</script>
+<script src="http://localhost:8888/wp-content/plugins/essentials/build/dashboard/blocks/next-best-actions/view.js?ver=1ed73255b304d6e9553f" id="ionos-dashboard-page-next-best-actions-view-script-js" defer data-wp-strategy="defer"></script>
+<link rel="https://api.w.org/" href="http://localhost:8888/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="http://localhost:8888/wp-json/wp/v2/custom_dashboard/5" /><style class='wp-fonts-local'>
 @font-face{font-family:Manrope;font-style:normal;font-weight:200 800;font-display:fallback;src:url('http://localhost:8888/wp-content/themes/twentytwentyfive/assets/fonts/manrope/Manrope-VariableFont_wght.woff2') format('woff2');}
 @font-face{font-family:"Fira Code";font-style:normal;font-weight:300 700;font-display:fallback;src:url('http://localhost:8888/wp-content/themes/twentytwentyfive/assets/fonts/fira-code/FiraCode-VariableFont_wght.woff2') format('woff2');}
 </style>
 </head>
 
-<body class="custom_dashboard-template custom_dashboard-template-custom-dashboard-template single single-custom_dashboard postid-331 wp-embed-responsive">
+<body class="custom_dashboard-template custom_dashboard-template-custom-dashboard-template single single-custom_dashboard postid-5 wp-embed-responsive">
 
 <div class="wp-site-blocks"><div class="entry-content wp-block-post-content has-global-padding is-layout-constrained wp-block-post-content-is-layout-constrained">
 <!-- ionos-essentials-dashboard-start-content --><!-- ionos-essentials-dashboard-end-content -->
@@ -1667,7 +1728,7 @@ h1, h2, h3, h4, h5, h6, blockquote, caption, figcaption, p {
 		// Inject the skip link.
 		sibling.parentElement.insertBefore( skipLink, sibling );
 	}() );
-
+	
 </script>
 </body>
 </html>
