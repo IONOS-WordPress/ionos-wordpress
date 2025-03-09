@@ -78,4 +78,4 @@ ENV PNPM_HOME /home/$USERNAME/.local/share/pnpm
 ENV PATH $PNPM_HOME:$PATH
 RUN pnpm env use --global $PNPM_NODEJS_VERSION
 RUN pnpm config set store-dir home/$USERNAME/.pnpm-store
-RUN bash -c "pnpm exec playwright install-deps"
+RUN bash -c "pnpx playwright install-deps"
