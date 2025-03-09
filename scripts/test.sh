@@ -60,7 +60,7 @@ done
 
 # ensure the playwright cache is generated in the same environment (devcontainer or local) as the tests are executed
 # (this is necessary because the cache is not portable between environments)
-if [[ "${USE[@]}" =~ e2e|react ]]; then
+if [[ "${USE[@]}" =~ e2e|react|all ]]; then
   ionos.wordpress.log_info "found playwight installations : $(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)"
   ionos.wordpress.log_info "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null)"
 
