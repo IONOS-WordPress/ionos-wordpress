@@ -73,7 +73,7 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
 - run whenever you changed a file : `pnpm watch -- pnpm test:e2e`
 
-  - run a single e2e test without rebuilding and checking wp-env is alive in playwright debug mode : `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome") pnpm exec wp-scripts test-playwright -c ./playwright.config.js --debug ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
+  - run a single e2e test without rebuilding and checking wp-env is alive in playwright debug mode : `pnpm exec playwright test-playwright -c ./playwright.config.js --debug ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
 - vscode supports running e2e tests by clicking on the play button in the test file.
 
@@ -92,7 +92,7 @@ Everything works exactly as in DevContainer, but you need to have the requiremen
 
 - matching pnpm version (grep for `PNPM_VERSION` to get current version used in project) installed globally
 
-- playwright dependencies installed globally (see `.devcontainer/Dockerfile`) : `pnpx playwright install --with-deps chromium`
+- playwright dependencies installed globally (see `.devcontainer/Dockerfile`) : `sudo pnpx playwright install-deps`
 
 # links
 
