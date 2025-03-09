@@ -59,50 +59,22 @@ done
 [[ ${#USE[@]} -eq 0 ]] && USE=("all")
 
 function ionos.wordpress.prepare_playwright_environment() {
-  # Check if the find command returns exactly the one chromium installation we expect
-  if [[ "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)" -ne 1 ]]; then
-
-    ionos.wordpress.log_warn "Multiple or no Playwright chromium paths found (check 'find ~/.cache/ms-playwright -path \"*/chrome-linux/chrome\"')"
-    ionos.wordpress.log_warn "count of found installations = $(find ~/.cache/ms-playwright -path \"*/chrome-linux/chrome\" 2>/dev/null | wc -l)"
-
-    if [[ "${CI:-}" == "true" ]]; then
-      if [[ "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)" -eq 0 ]]; then
-        ionos.wordpress.log_warn "Try to (re)install it by running 'PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium'"
-        # try to install the browser in CI environment automatically if not already installed
-        PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium
-      else
-        ionos.wordpress.log_warn "Give up - cannot find a single Playwright chromium installation"
-        exit 1;
-      fi
-    else
-      ionos.wordpress.log_warn "Please install it manually by running 'PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium'"
-      exit 1;
-    fi
-  fi
-
-    # used to prevent wp-scripts test-playwright command from downloading browsers
-  export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-  # we need to inject the path to the installed chrome binary
-  # via PLAYWRIGHT_CHROME_PATH
-  export PLAYWRIGHT_CHROME_PATH=$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null)
-
-  if [[ "$PLAYWRIGHT_CHROME_PATH" == '' ]]; then
-    ionos.wordpress.log_error 'Playwright chromium path not found (test: find ~/.cache/ms-playwright -path "*/chrome-linux/chrome").'
-    ionos.wordpress.log_error 'Please install it manually by running "PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium"'
-    exit 1
-  fi
+  ionos.wordpress.log_info "found playwight installations : $(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)"
+  ionos.wordpress.log_info "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null)"
 }
 
-if [[ "${USE[@]}" =~ all|react ]]; then
-  # MARK: ensure the playwright cache is generated in the same environment (devcontainer or local) as the tests are executed
-  # (this is necessary because the cache is not portable between environments)
+# ensure the playwright cache is generated in the same environment (devcontainer or local) as the tests are executed
+# (this is necessary because the cache is not portable between environments)
+if [[ "${USE[@]}" =~ e2e|react ]]; then
   PLAYWRIGHT_DIR=$(realpath ./playwright)
   if [[ -f "$PLAYWRIGHT_DIR/.cache/metainfo.json" ]] && ! grep "$PLAYWRIGHT_DIR" ./playwright/.cache/metainfo.json > /dev/null; then
     # ./playwright/.cache/metainfo.json contains not the absolute path to the cache directory of the current environment
     rm -rf "$PLAYWRIGHT_DIR/.cache"
   fi
-  # ENDMARK
+fi
 
+
+if [[ "${USE[@]}" =~ all|react ]]; then
   (
     ionos.wordpress.prepare_playwright_environment
 
@@ -137,7 +109,8 @@ if [[ "${USE[@]}" =~ all|e2e ]]; then
   # start wp-env e2e tests. provide part specific options and all positional arguments that are php files
   (
     ionos.wordpress.prepare_playwright_environment
-    pnpm exec wp-scripts test-playwright --pass-with-no-tests -c ./playwright.config.js \
+    # pnpm exec wp-scripts test-playwright --pass-with-no-tests -c ./playwright.config.js \
+    pnpm exec playwright test --pass-with-no-tests -c ./playwright.config.js \
       "${USE_OPTIONS[e2e]:---quiet}" \
       $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.js ]] && printf "$file "; done)
   )
