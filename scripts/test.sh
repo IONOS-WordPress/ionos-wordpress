@@ -69,6 +69,11 @@ if [[ "${USE[@]}" =~ e2e|react ]]; then
     # ./playwright/.cache/metainfo.json contains not the absolute path to the cache directory of the current environment
     rm -rf "$PLAYWRIGHT_DIR/.cache"
   fi
+
+  # execute playwright browser installation if not already done
+  if ! find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null; then
+    pnpm exec playwright install chromium
+  fi
 fi
 
 
