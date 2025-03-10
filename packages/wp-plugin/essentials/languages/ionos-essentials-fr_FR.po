@@ -146,8 +146,7 @@ msgstr "Modifier le modèle"
 msgid "Edit navigation"
 msgstr "Modifier la navigation"
 
-#: build/dashboard/blocks/quick-links/render.php:10
-#: build/dashboard/blocks/quick-links/render.php:26
+#: build/dashboard/blocks/quick-links/render.php:13
 msgid "Quick Links"
 msgstr "Liens rapides"
 
@@ -225,7 +224,7 @@ msgstr[1] "Alertes détectées"
 msgid "issues found"
 msgstr "Problèmes trouvés"
 
-#: build/dashboard/blocks/quick-links/render.php:27
+#: build/dashboard/blocks/quick-links/render.php:14
 msgid "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
 msgstr "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
 
