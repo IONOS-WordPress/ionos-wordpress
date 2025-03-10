@@ -284,49 +284,49 @@ function ionos.wordpress.wordpress_plugin() {
       PLUGIN_VERSION=$(grep -oP "Version:\s*\K[0-9.]*" $dir/$plugin_file)
       PACKAGE_VERSION=$(jq -r '.version' $dir/package.json)
       if [[ "$PLUGIN_VERSION" != "$PACKAGE_VERSION" ]]; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin version(=$PLUGIN_VERSION) does not match package.json version(=$PACKAGE_VERSION)"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin version(=$PLUGIN_VERSION) does not match package.json version(=$PACKAGE_VERSION)"
         exit_code=1
       fi
 
       # test 'Description' field
       if ! grep -qoP "Description:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Description' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Description' is missing or empty"
         exit_code=1
       fi
 
       # test 'Requires at least' field
       if ! grep -qoP "Requires at least:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Requires at least' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Requires at least' is missing or empty"
         exit_code=1
       fi
 
       # test 'Plugin URI' field
       if ! grep -qoP "Plugin URI:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Plugin URI' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Plugin URI' is missing or empty"
         exit_code=1
       fi
 
       # test 'Update URI' field
       if ! grep -qoP "Update URI:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Update URI' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Update URI' is missing or empty"
         exit_code=1
       fi
 
       # test 'Author' field
       if ! grep -qoP "Author:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Author' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Author' is missing or empty"
         exit_code=1
       fi
 
       # test 'Author URI' field
       if ! grep -qoP "Author URI:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Author URI' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Author URI' is missing or empty"
         exit_code=1
       fi
 
       # test 'Domain Path' field
       if ! grep -qoP "Domain Path:\s*/languages$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Domain Path: /languages' is missing or invalid"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Domain Path: /languages' is missing or invalid"
         exit_code=1
       fi
     done
