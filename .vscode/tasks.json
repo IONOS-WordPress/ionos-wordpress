@@ -8,7 +8,7 @@
       "label": "lint:php",
       "detail": "Lint PHP",
       "type": "shell",
-      "command": "pnpm -s lint:php", // ${input:file}
+      "command": "pnpm -s lint:php",
       "problemMatcher": [
         {
           "owner": "lint:php",
@@ -56,7 +56,7 @@
       "label": "lint-fix:php",
       "detail": "Lint fix PHP",
       "type": "shell",
-      "command": "pnpm -s lint-fix:php ", // ${input:file}
+      "command": "pnpm -s lint-fix:php ",
       "problemMatcher": [
         {
           "owner": "lint:php",
@@ -104,7 +104,7 @@
       "label": "lint:js",
       "detail": "Lint Javascript",
       "type": "shell",
-      "command": "pnpm -s lint:js", // ${input:file}
+      "command": "pnpm -s lint:js",
       "problemMatcher": ["$eslint-stylish"],
       "presentation": {
         "echo": false,
@@ -118,7 +118,7 @@
       "label": "lint-fix:js",
       "detail": "Lint fix Javascript",
       "type": "shell",
-      "command": "pnpm -s lint-fix:js", // ${input:file}
+      "command": "pnpm -s lint-fix:js",
       "problemMatcher": ["$eslint-stylish"],
       "presentation": {
         "echo": false,
@@ -132,7 +132,7 @@
       "label": "lint:css",
       "detail": "Lint CSS/SCSS",
       "type": "shell",
-      "command": "pnpm -s lint:css", // ${input:file}
+      "command": "pnpm -s lint:css",
       "problemMatcher": [
         {
           "source": "lint:css",
@@ -161,7 +161,7 @@
       "label": "lint-fix:css",
       "detail": "Lint fix CSS/SCSS",
       "type": "shell",
-      "command": "pnpm -s lint-fix:css", // ${input:file}
+      "command": "pnpm -s lint-fix:css",
       "problemMatcher": [
         {
           "source": "lint:css",
@@ -190,7 +190,7 @@
       "label": "lint:i18n",
       "detail": "Lint i18n",
       "type": "shell",
-      "command": "pnpm -s lint:i18n", // ${input:file}
+      "command": "pnpm -s lint:i18n",
       "problemMatcher": [
         {
           "source": "lint:i18n",
@@ -226,7 +226,7 @@
       "label": "lint-fix:i18n",
       "detail": "Lint fix i18n",
       "type": "shell",
-      "command": "pnpm -s lint-fix:i18n", // ${input:file}
+      "command": "pnpm -s lint-fix:i18n",
       "problemMatcher": [
         {
           "source": "lint:i18n",
@@ -259,27 +259,29 @@
       }
     },
     {
-      "label": "lint:pnpm",
-      "detail": "Lint pnpm",
+      "label": "lint",
+      "detail": "Lint",
       "type": "shell",
-      "command": "pnpm -s lint:pnpm", // ${input:file}
+      "command": "pnpm -s lint --use pnpm --use wp",
       "problemMatcher": [
         /*#
-pnpm-lock.yaml:1 : pnpm-lock.yaml not found
+ionos.wordpress.pnpm:257 : pnpm-lock.yaml:1 : pnpm-lock.yaml outdated - please update it using 'pnpm install'
+ionos.wordpress.wordpress_plugin:293 : ./packages/wp-plugin/essentials/essentials.php:1 : plugin header 'Description' is missing or empty
         */
         {
-          "source": "lint:pnpm",
-          "owner": "lint:pnpm",
+          "source": "lint:pnpm+wp",
+          "owner": "lint:pnpm+wp",
           "applyTo": "allDocuments",
           "fileLocation": ["relative", "${workspaceFolder}"],
           "pattern": {
-            "regexp": "(.+):(\\d) : (.*)$",
+            "regexp": "^[^ ]+ : (.+):(\\d+) : (.*)$",
             "file": 1,
             "line": 2,
             "message": 3
           }
         }
       ],
+      "dependsOn": ["lint:php", "lint:js", "lint:css", "lint:i18n"],
       "presentation": {
         "echo": false,
         "reveal": "never",
@@ -289,27 +291,29 @@ pnpm-lock.yaml:1 : pnpm-lock.yaml not found
       }
     },
     {
-      "label": "lint:wp",
-      "detail": "Lint WordPress",
+      "label": "lint",
+      "detail": "Lint",
       "type": "shell",
-      "command": "pnpm -s lint:wp", // ${input:file}
+      "command": "pnpm -s lint --use pnpm --use wp",
       "problemMatcher": [
         /*#
-pnpm-lock.yaml:1 : pnpm-lock.yaml not found
+ionos.wordpress.pnpm:257 : pnpm-lock.yaml:1 : pnpm-lock.yaml outdated - please update it using 'pnpm install'
+ionos.wordpress.wordpress_plugin:293 : ./packages/wp-plugin/essentials/essentials.php:1 : plugin header 'Description' is missing or empty
         */
         {
-          "source": "lint:wp",
-          "owner": "lint:wp",
+          "source": "lint:pnpm+wp",
+          "owner": "lint:pnpm+wp",
           "applyTo": "allDocuments",
           "fileLocation": ["relative", "${workspaceFolder}"],
           "pattern": {
-            "regexp": "(.+):(\\d) : (.*)$",
+            "regexp": "^[^ ]+ : (.+):(\\d+) : (.*)$",
             "file": 1,
             "line": 2,
             "message": 3
           }
         }
       ],
+      "dependsOn": ["lint:php", "lint:js", "lint:css", "lint:i18n"],
       "presentation": {
         "echo": false,
         "reveal": "never",
@@ -317,14 +321,6 @@ pnpm-lock.yaml:1 : pnpm-lock.yaml not found
         "showReuseMessage": false,
         "revealProblems": "onProblem"
       }
-    }
-  ],
-  "inputs": [
-    {
-      "id": "file",
-      "type": "promptString",
-      "default": "${relativeFile}",
-      "description": "file name"
     }
   ]
 }
