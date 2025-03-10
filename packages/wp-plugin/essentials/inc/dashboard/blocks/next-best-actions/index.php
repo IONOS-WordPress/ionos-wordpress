@@ -22,7 +22,7 @@ function render_callback () {
 
   $template = '
   <div id="ionos-dashboard__essentials_nba" class="wp-block-group alignwide">
-      <div class="wp-block-group is-vertical is-content-justification-left is-layout-flex wp-container-core-group-is-layout-2 wp-block-group-is-layout-flex">
+      <div class="wp-block-group" style="margin-top:0px;margin-bottom:15px;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
           <h2 class="wp-block-heading">%s</h2>
           <p>%s</p>
       </div>
@@ -42,7 +42,7 @@ function render_callback () {
 
     $target = strpos(\esc_url($action->link), home_url()) === false ? '_blank' : '_top';
     $body .= '
-      <div class="wp-block-column is-style-default has-border-color is-layout-flow wp-block-column-is-layout-flow">
+      <div class="wp-block-column is-style-default has-background" style="border-radius:24px;background-color:#f4f7fa">
           <h2 class="wp-block-heading">' . \esc_html($action->title, 'ionos-essentials') . '</h2>
           <p>' . \esc_html($action->description, 'ionos-essentials') . '</p>
           <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
