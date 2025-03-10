@@ -67,7 +67,7 @@
     "@devcontainers/cli": "^0.74.0",
     "@eslint/compat": "1.2.7",
     "@eslint/eslintrc": "3.3.0",
-    "@eslint/js": "9.21.0",
+    "@eslint/js": "9.22.0",
     "@playwright/browser-chromium": "^1.51.0",
     "@playwright/experimental-ct-react": "^1.51.0",
     "@playwright/test": "1.51.0",
