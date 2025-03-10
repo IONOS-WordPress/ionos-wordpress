@@ -146,7 +146,7 @@ msgstr "Edytuj szablon"
 msgid "Edit navigation"
 msgstr "Edytuj nawigację"
 
-#: build/dashboard/blocks/quick-links/render.php:10
+#: build/dashboard/blocks/quick-links/render.php:13
 msgid "Quick Links"
 msgstr "Szybkie łącza"
 
@@ -225,6 +225,10 @@ msgstr[2] ""
 #: build/dashboard/blocks/vulnerability/render.php:57
 msgid "issues found"
 msgstr "znalezione problemy"
+
+#: build/dashboard/blocks/quick-links/render.php:14
+msgid "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
+msgstr "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
 
 #: build/dashboard/blocks/deep-links/render.php:21
 msgid "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
