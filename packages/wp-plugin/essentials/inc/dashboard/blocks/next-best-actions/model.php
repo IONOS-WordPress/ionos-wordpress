@@ -50,17 +50,17 @@ class NBA
     return self::_set_option($option);
   }
 
-  public static function getNBA($id)
+  public static function getNBA($id) : NBA|null
   {
     return self::$actions[$id];
   }
 
-  public static function getActions()
+  public static function getActions() : array
   {
     return self::$actions;
   }
 
-  public static function register($id, $title, $description, $link, $completed = false)
+  public static function register($id, $title, $description, $link, $completed = false) : void
   {
     new self($id, $title, $description, $link, $completed);
   }
@@ -75,6 +75,7 @@ class NBA
 
   private static function _set_option(array $option)
   {
+    self::$option_value = $option;
     return \update_option(self::$option_name, $option);
   }
 
