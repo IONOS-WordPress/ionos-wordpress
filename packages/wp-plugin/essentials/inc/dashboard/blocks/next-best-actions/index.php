@@ -69,7 +69,7 @@ function render_callback () {
     require_once __DIR__ . '/model.php';
     $nba_id = $_GET['complete_nba'];
 
-    $nba = \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::getNBA($nba_id);
+    $nba = NBA::getNBA($nba_id);
     $nba->setStatus( "completed", true);
   }
 });
@@ -82,7 +82,7 @@ function render_callback () {
 			$params = $request->get_params();
 			$nba_id = $params['id'];
 
-      $nba = \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::getNBA($nba_id);
+      $nba = NBA::getNBA($nba_id);
       $res = $nba->setStatus( "dismissed", true);
       if ($res) {
         return new \WP_REST_Response(['status' => 'success', 'res' => $res], 200);
@@ -103,10 +103,10 @@ function render_callback () {
   require_once __DIR__ . '/model.php';
   switch ($post_after->post_type) {
     case 'post':
-      $nba = \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::getNBA('editPost');
+      $nba = NBA::getNBA('editPost');
       break;
     case 'page':
-      $nba = \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA::getNBA('editPage');
+      $nba = NBA::getNBA('editPage');
       break;
     default:
       return;
