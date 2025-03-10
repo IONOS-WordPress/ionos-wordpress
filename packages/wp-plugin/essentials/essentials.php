@@ -192,6 +192,10 @@ if (is_file(__DIR__ . '/inc/dashboard/index.php')) {
   require_once __DIR__ . '/inc/dashboard/index.php';
 }
 
+if (is_file(__DIR__ . '/inc/switch-page/index.php')) {
+  require_once __DIR__ . '/inc/switch-page/index.php';
+}
+
 /*
 [
   'name' => 'cm4all-wp-impex',
