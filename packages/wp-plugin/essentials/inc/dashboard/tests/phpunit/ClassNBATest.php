@@ -34,7 +34,7 @@ class ClassNBATest extends \WP_UnitTestCase {
 
   function test_nba_action() : void {
     $this->assertNotNull(NBA::getActions());
-    $this->assertNotEmpty(NBA::getActions());
+    $this->assertNotEmpty(NBA::getActions(), sprintf("NBA actions should not be empty (%s)", print_r(NBA::getActions(), true) ));
     $nba_count = count(NBA::getActions());
 
     $ID = 'my-test-action';
