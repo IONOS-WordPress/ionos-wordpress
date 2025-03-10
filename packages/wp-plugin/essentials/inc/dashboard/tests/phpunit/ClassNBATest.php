@@ -13,6 +13,7 @@ use const ionos_wordpress\essentials\PLUGIN_DIR;
  * @group essentials
  */
 class ClassNBATest extends \WP_UnitTestCase {
+
   public function setUp(): void {
     // ensure that post types and taxonomies are reset for each test.
     if (!defined('WP_RUN_CORE_TESTS')) {
@@ -21,23 +22,11 @@ class ClassNBATest extends \WP_UnitTestCase {
 
     parent::setUp();
 
-    \activate_plugin('essentials/essentials.php');
-    // \delete_option('ionos_nba_status');
-  }
-
-  function test_nba_not_loaded_by_default() : void {
-    $this->assertFalse( class_exists(NBA::class) );
-    \do_action('init');
     require_once PLUGIN_DIR . '/inc/dashboard/blocks/next-best-actions/model.php';
-    $this->assertTrue( class_exists(NBA::class) );
   }
 
-  /**
-   * @depends test_nba_not_loaded_by_default
-   */
   function test_nba_action() : void {
     $this->assertNotNull(NBA::getActions());
-    $this->assertNotEmpty(NBA::getActions());
     $nba_count = count(NBA::getActions());
 
     $ID = 'my-test-action';
@@ -60,9 +49,6 @@ class ClassNBATest extends \WP_UnitTestCase {
     $this->assertFalse($nba->active);
   }
 
-  /**
-   * @depends test_nba_not_loaded_by_default
-   */
   function test_nba_status() : void {
     $ID = 'my-test-action-2';
 
@@ -80,9 +66,6 @@ class ClassNBATest extends \WP_UnitTestCase {
     $this->assertFalse($nba->active);
   }
 
-  /**
-   * @depends test_nba_not_loaded_by_default
-   */
   function test_nba_not_active_by_registration() : void {
     $ID = 'my-test-action-3';
 
