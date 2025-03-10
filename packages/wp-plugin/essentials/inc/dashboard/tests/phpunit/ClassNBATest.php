@@ -22,13 +22,13 @@ class ClassNBATest extends \WP_UnitTestCase {
     parent::setUp();
 
     \activate_plugin('essentials/essentials.php');
+    \do_action('init');
     // \delete_option('ionos_nba_status');
   }
 
   function test_nba_not_loaded_by_default() : void {
     $this->assertFalse( class_exists(NBA::class) );
 
-    require_once PLUGIN_DIR . '/inc/dashboard/blocks/next-best-actions/index.php';
     require_once PLUGIN_DIR . '/inc/dashboard/blocks/next-best-actions/model.php';
     $this->assertTrue( class_exists(NBA::class) );
   }
