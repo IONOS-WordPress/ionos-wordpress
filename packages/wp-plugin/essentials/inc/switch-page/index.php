@@ -50,8 +50,21 @@ function get_brand_lowercase() {
   function ( $location ) {
     if ( $location === \admin_url() . 'admin.php?page=extendify-launch' ) {
       return \admin_url() . 'admin.php?page=' . get_brand_lowercase() . '-onboarding';
+    } else if ( $location === \admin_url() . 'admin.php?page=extendify-assist' ) {
+      return \admin_url() . 'admin.php?page=' . get_brand_lowercase() . '-essentials-dashboard';
     }
+
     return $location;
+  }, 10000, 1
+);
+
+add_action(
+  'load-toplevel_page_extendify-assist',
+  function () {
+    if ( isset( $_GET['extendify-launch-successs'] )) {
+      \wp_safe_redirect( \admin_url() . 'admin.php?page=' . get_brand_lowercase() . '-essentials-dashboard' );
+      exit;
+    }
   }
 );
 

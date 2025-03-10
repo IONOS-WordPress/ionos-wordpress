@@ -54,7 +54,7 @@ $config = $configs[$tenant] ?? reset($configs)
           </a>
         </div>
         <div class="option">
-          <a href="<?php echo esc_attr( \admin_url() . 'admin.php?page=extendify-assist#dashboard' ); ?>" class="link-btn">
+          <a href="<?php echo esc_attr( \admin_url() . 'admin.php?page=ionos-essentials-dashboard' ); ?>" class="link-btn">
             <div class="option-content">
               <img src="<?php echo esc_url( \plugins_url( 'assets/user-interface.png', __FILE__ ) ); ?>"
                    alt="User Interface Illustration"/>
