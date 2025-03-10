@@ -4,11 +4,11 @@
  * This class represents the Next Best Action (NBA) model.
  */
 
-namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model;
+namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions;
 
 class NBA
 {
-  private static $option_name = 'ionos_nba_status';
+  private const OPTION_NAME = 'ionos_nba_status';
 
   private static $option_value;
 
@@ -21,7 +21,6 @@ class NBA
     readonly string $link,
     readonly bool $completed
   ) {
-    $a                        = 'b';
     self::$actions[$this->id] = $this;
   }
 
@@ -68,7 +67,7 @@ class NBA
   private static function _get_option()
   {
     if (! isset(self::$option_value)) {
-      self::$option_value = \get_option(self::$option_name, []);
+      self::$option_value = \get_option(self::OPTION_NAME, []);
     }
     return self::$option_value;
   }
@@ -76,7 +75,7 @@ class NBA
   private static function _set_option(array $option)
   {
     self::$option_value = $option;
-    return \update_option(self::$option_name, $option);
+    return \update_option(self::OPTION_NAME, $option);
   }
 
   private function _get_status()

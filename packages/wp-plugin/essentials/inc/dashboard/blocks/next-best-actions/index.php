@@ -2,7 +2,7 @@
 
 namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions;
 use const ionos_wordpress\essentials\PLUGIN_DIR;
-use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA;
+use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\NBA;
 
 \add_action('init', function () {
   \register_block_type(
@@ -14,7 +14,7 @@ use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA;
 });
 
 function render_callback () {
-  require_once __DIR__ . '/model.php';
+  require_once __DIR__ . '/class-nba.php';
   $actions = NBA::getActions();
   if (empty($actions)) {
     return;
@@ -66,7 +66,7 @@ function render_callback () {
 
 \add_action('admin_init', function () {
   if (isset($_GET['complete_nba'])) {
-    require_once __DIR__ . '/model.php';
+    require_once __DIR__ . '/class-nba.php';
     $nba_id = $_GET['complete_nba'];
 
     $nba = NBA::getNBA($nba_id);
@@ -78,7 +78,7 @@ function render_callback () {
   \register_rest_route('ionos/v1', '/dismiss_nba/(?P<id>[a-zA-Z0-9-]+)', [
     'methods' => 'GET',
     'callback' => function ($request) {
-      require_once __DIR__ . '/model.php';
+      require_once __DIR__ . '/class-nba.php';
 			$params = $request->get_params();
 			$nba_id = $params['id'];
 
@@ -100,7 +100,7 @@ function render_callback () {
     return;
   }
 
-  require_once __DIR__ . '/model.php';
+  require_once __DIR__ . '/class-nba.php';
   switch ($post_after->post_type) {
     case 'post':
       $nba = NBA::getNBA('editPost');

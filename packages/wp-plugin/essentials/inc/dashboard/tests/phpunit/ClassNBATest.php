@@ -1,6 +1,6 @@
 <?php
 
-use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA;
+use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\NBA;
 
 use const ionos_wordpress\essentials\PLUGIN_DIR;
 
