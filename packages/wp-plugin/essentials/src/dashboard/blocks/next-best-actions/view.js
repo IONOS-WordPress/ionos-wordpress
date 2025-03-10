@@ -5,7 +5,7 @@ document.querySelectorAll('.dismiss-nba').forEach((el) => {
   el.addEventListener('click', async (click) => {
     click.preventDefault();
     const res = await apiFetch({
-      path: `ionos/v1/dismiss_nba/${click.target.id}`,
+      path: `ionos/v1/dismiss_nba/${click.target.dataset.nbaId}`,
       method: 'GET',
     });
     if (res.status === 'success') {

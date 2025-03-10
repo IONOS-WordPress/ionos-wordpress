@@ -50,7 +50,7 @@ function render_callback () {
                   <a href="' . \esc_url($action->link) . '" class="wp-block-button__link wp-element-button" target="' . $target . '">' . \esc_html("Primary button", 'ionos-essentials') . '</a>
               </div>
               <div class="wp-block-button is-style-outline is-style-outline--1">
-                  <a id="' . $action->id . '" class="wp-block-button__link wp-element-button dismiss-nba" target="_top">' . \esc_html("Dismiss", 'ionos-essentials') . '</a>
+                  <a data-nba-id="' . $action->id . '" class="wp-block-button__link wp-element-button dismiss-nba" target="_top">' . \esc_html("Dismiss", 'ionos-essentials') . '</a>
               </div>
           </div>
       </div>';
