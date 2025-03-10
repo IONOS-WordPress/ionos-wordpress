@@ -1,4 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
+import './style.css';
 
 document.querySelectorAll('.dismiss-nba').forEach((el) => {
   el.addEventListener('click', async (click) => {

@@ -14,5 +14,5 @@
   "textdomain": "ionos-essentials",
   "editorScript": "file:./index.js",
   "viewScript": "file:./view.js",
-  "style": "file:../../../../inc/dashboard/blocks/next-best-actions/style.css"
+  "style": "file:./style-view.css"
 }
