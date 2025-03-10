@@ -291,10 +291,10 @@ ionos.wordpress.wordpress_plugin:293 : ./packages/wp-plugin/essentials/essential
       }
     },
     {
-      "label": "lint",
-      "detail": "Lint",
+      "label": "lint:fix",
+      "detail": "Lint fix",
       "type": "shell",
-      "command": "pnpm -s lint --use pnpm --use wp",
+      "command": "pnpm -s lint-fix --use pnpm --use wp",
       "problemMatcher": [
         /*#
 ionos.wordpress.pnpm:257 : pnpm-lock.yaml:1 : pnpm-lock.yaml outdated - please update it using 'pnpm install'
@@ -313,7 +313,7 @@ ionos.wordpress.wordpress_plugin:293 : ./packages/wp-plugin/essentials/essential
           }
         }
       ],
-      "dependsOn": ["lint:php", "lint:js", "lint:css", "lint:i18n"],
+      "dependsOn": ["lint-fix:php", "lint-fix:js", "lint-fix:css", "lint-fix:i18n"],
       "presentation": {
         "echo": false,
         "reveal": "never",
