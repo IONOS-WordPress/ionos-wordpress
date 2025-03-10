@@ -5,7 +5,7 @@ use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\model\NBA;
 use const ionos_wordpress\essentials\PLUGIN_DIR;
 
 /**
- * covers the acceptance tests for the NBA class.
+ * covers the tests for the NBA class.
  *
  * run only this test using 'pnpm test:php --php-opts "--filter ClassNBATest"'
  *
