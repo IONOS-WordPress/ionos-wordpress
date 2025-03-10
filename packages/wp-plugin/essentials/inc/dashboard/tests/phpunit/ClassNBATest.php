@@ -22,7 +22,7 @@ class ClassNBATest extends \WP_UnitTestCase {
 
     parent::setUp();
 
-    require_once PLUGIN_DIR . '/inc/dashboard/blocks/next-best-actions/model.php';
+    require_once PLUGIN_DIR . '/inc/dashboard/blocks/next-best-actions/nba-class.php';
   }
 
   function test_nba_action() : void {
