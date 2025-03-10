@@ -32,9 +32,12 @@ class ClassNBATest extends \WP_UnitTestCase {
     $this->assertTrue( class_exists(NBA::class) );
   }
 
+  /**
+   * @depends test_nba_not_loaded_by_default
+   */
   function test_nba_action() : void {
     $this->assertNotNull(NBA::getActions());
-    $this->assertNotEmpty(NBA::getActions(), sprintf("NBA actions should not be empty (%s)", print_r(NBA::getActions(), true) ));
+    $this->assertNotEmpty(NBA::getActions());
     $nba_count = count(NBA::getActions());
 
     $ID = 'my-test-action';
@@ -57,6 +60,9 @@ class ClassNBATest extends \WP_UnitTestCase {
     $this->assertFalse($nba->active);
   }
 
+  /**
+   * @depends test_nba_action
+   */
   function test_nba_status() : void {
     $ID = 'my-test-action-2';
 
@@ -74,6 +80,9 @@ class ClassNBATest extends \WP_UnitTestCase {
     $this->assertFalse($nba->active);
   }
 
+  /**
+   * @depends test_nba_status
+   */
   function test_nba_not_active_by_registration() : void {
     $ID = 'my-test-action-3';
 
