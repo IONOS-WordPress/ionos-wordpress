@@ -61,9 +61,23 @@ done
 function ionos.wordpress.prepare_playwright_environment() {
   # Check if the find command returns exactly the one chromium installation we expect
   if [[ "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)" -ne 1 ]]; then
-    ionos.wordpress.log_warn "Multiple or no Playwright chromium paths found (check 'find ~/.cache/ms-playwright -path "*/chrome-linux/chrome"')."
-    ionos.wordpress.log_warn "Please install it manually by running 'PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium'"
-    exit 1;
+
+    ionos.wordpress.log_warn "Multiple or no Playwright chromium paths found (check 'find ~/.cache/ms-playwright -path \"*/chrome-linux/chrome\"')"
+    ionos.wordpress.log_warn "count of found installations = $(find ~/.cache/ms-playwright -path \"*/chrome-linux/chrome\" 2>/dev/null | wc -l)"
+
+    if [[ "${CI:-}" == "true" ]]; then
+      if [[ "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)" -eq 0 ]]; then
+        ionos.wordpress.log_warn "Try to (re)install it by running 'PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium'"
+        # try to install the browser in CI environment automatically if not already installed
+        PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium
+      else
+        ionos.wordpress.log_warn "Give up - cannot find a single Playwright chromium installation"
+        exit 1;
+      fi
+    else
+      ionos.wordpress.log_warn "Please install it manually by running 'PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT=10000 pnpx playwright install --with-deps chromium'"
+      exit 1;
+    fi
   fi
 
     # used to prevent wp-scripts test-playwright command from downloading browsers

@@ -267,7 +267,7 @@ function ionos.wordpress.wordpress_plugin() {
   exit_code=0
 
   # loop over all plugin directories
-  for dir in $(find ./packages/wp-plugin -maxdepth 1 -mindepth 1 -type d); do
+  for dir in $(find ./packages/wp-plugin $([[ -d ./packages/wp-mu-plugin ]] && ./packages/wp-mu-plugin) -maxdepth 1 -mindepth 1 -type d); do
     for plugin_file in $(ionos.wordpress.get_plugin_filenames $dir); do
       echo "checking $dir/$plugin_file"
 
