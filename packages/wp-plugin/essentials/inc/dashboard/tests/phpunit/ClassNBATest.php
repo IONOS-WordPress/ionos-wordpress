@@ -28,6 +28,7 @@ class ClassNBATest extends \WP_UnitTestCase {
   function test_nba_not_loaded_by_default() : void {
     $this->assertFalse( class_exists(NBA::class) );
 
+    require_once PLUGIN_DIR . '/inc/dashboard/blocks/next-best-actions/index.php';
     require_once PLUGIN_DIR . '/inc/dashboard/blocks/next-best-actions/model.php';
     $this->assertTrue( class_exists(NBA::class) );
   }
@@ -61,7 +62,7 @@ class ClassNBATest extends \WP_UnitTestCase {
   }
 
   /**
-   * @depends test_nba_action
+   * @depends test_nba_not_loaded_by_default
    */
   function test_nba_status() : void {
     $ID = 'my-test-action-2';
@@ -81,7 +82,7 @@ class ClassNBATest extends \WP_UnitTestCase {
   }
 
   /**
-   * @depends test_nba_status
+   * @depends test_nba_not_loaded_by_default
    */
   function test_nba_not_active_by_registration() : void {
     $ID = 'my-test-action-3';
