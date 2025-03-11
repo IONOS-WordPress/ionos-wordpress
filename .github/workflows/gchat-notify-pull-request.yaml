@@ -57,29 +57,3 @@ jobs:
             -d "{\"text\": $TEXT }" \
             '${{ steps.gchat_url.outputs.GCHAT_URL }}'
 
-      - name: send pr review
-        # this step will send a message if a review on a pull request is submitted
-        if: ${{ github.event_name == 'pull_request_review' && steps.gchat_url.outputs.GCHAT_URL }}
-        run: |
-          TEXT=$(cat -s <<'X!X' | jq -Rsr @json
-          ${{ github.triggering_actor }} ${{ github.event.action }} a review: ${{ github.event.review.state }}
-          X!X
-          )
-          curl -X POST \
-            -H 'Content-Type: application/json' \
-            -d "{\"text\": $TEXT }" \
-            '${{ steps.gchat_url.outputs.GCHAT_URL }}'
-
-      - name: send pr comment message
-        # this step will send a message if a comment is made on a pull request review
-        # @TODO: seems not to work for now
-        if: ${{ github.event_name == 'issue_comment' && github.event.issue.pull_request && steps.gchat_url.outputs.GCHAT_URL }}
-        run: |
-          TEXT=$(cat -s <<'X!X' | jq -Rsr @json
-          ${{ github.triggering_actor }} ${{ github.event.action }} a pr comment
-          X!X
-          )
-          curl -X POST \
-            -H 'Content-Type: application/json' \
-            -d "{\"text\": $TEXT }" \
-            '${{ steps.gchat_url.outputs.GCHAT_URL }}'
