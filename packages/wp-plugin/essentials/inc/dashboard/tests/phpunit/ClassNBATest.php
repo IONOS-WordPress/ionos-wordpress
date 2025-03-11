@@ -53,7 +53,7 @@ class ClassNBATest extends \WP_UnitTestCase {
   function test_nba_status() : void {
     $ID = 'my-test-action-2';
 
-    $nba = NBA::register(
+    NBA::register(
       id: $ID,
       title: 'Test title 2',
       description: 'Test description 2',
@@ -70,7 +70,7 @@ class ClassNBATest extends \WP_UnitTestCase {
   function test_nba_not_active_by_registration() : void {
     $ID = 'my-test-action-3';
 
-    $nba = NBA::register(
+    NBA::register(
       id: $ID,
       title: 'Test title 3',
       description: 'Test description 3',
