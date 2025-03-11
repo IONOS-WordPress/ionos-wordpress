@@ -116,10 +116,10 @@ function render_callback()
   require_once __DIR__ . '/class-nba.php';
   switch ($post_after->post_type) {
     case 'post':
-      $nba = NBA::getNBA('editPost');
+      $nba = NBA::getNBA('edit-post');
       break;
     case 'page':
-      $nba = NBA::getNBA('editPage');
+      $nba = NBA::getNBA('edit-page');
       break;
     default:
       return;
