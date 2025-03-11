@@ -66,7 +66,7 @@ function get_brand_lowercase()
   'load-toplevel_page_extendify-assist',
   function () {
     if (isset($_GET['extendify-launch-success'])) {
-      \wp_safe_redirect(\admin_url() . 'admin.php?page=' . get_brand_lowercase() . '-essentials-dashboard');
+      \wp_safe_redirect(\admin_url( 'admin.php?page=' . get_brand_lowercase() . '-essentials-dashboard' ) );
       exit;
     }
   }
