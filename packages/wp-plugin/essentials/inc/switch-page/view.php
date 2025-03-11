@@ -35,7 +35,7 @@ $config = $configs[$tenant] ?? reset($configs)
       <div class="options">
         <div class="option"
              style=":hover{border-color: <?php echo esc_attr( ( $config['color'] ) ); ?>;}">
-          <a href="<?php echo esc_attr( \admin_url() . 'admin.php?page=extendify-launch' ); ?>" class="link-btn">
+          <a href="<?php echo esc_attr( \admin_url( 'admin.php?page=extendify-launch' ) ); ?>" class="link-btn">
             <div class="option-content">
 						<span class="info-text"
                   style="background-color: <?php echo esc_attr( ( $config['color'] ) ); ?>;"><?php esc_html_e( 'Online in a few minutes', 'ionos-assistant' ); ?></span>
@@ -54,7 +54,7 @@ $config = $configs[$tenant] ?? reset($configs)
           </a>
         </div>
         <div class="option">
-          <a href="<?php echo esc_attr( \admin_url() . 'admin.php?page=ionos-essentials-dashboard' ); ?>" class="link-btn">
+          <a href="<?php echo esc_attr( \admin_url( 'admin.php?page=ionos-essentials-dashboard' ) ); ?>" class="link-btn">
             <div class="option-content">
               <img src="<?php echo esc_url( \plugins_url( 'assets/user-interface.png', __FILE__ ) ); ?>"
                    alt="User Interface Illustration"/>
