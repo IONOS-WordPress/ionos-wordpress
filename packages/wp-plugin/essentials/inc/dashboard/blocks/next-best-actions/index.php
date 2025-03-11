@@ -84,7 +84,7 @@ function render_callback()
 
 \add_action('rest_api_init', function () {
   \register_rest_route('ionos/v1', '/dismiss_nba/(?P<id>[a-zA-Z0-9-]+)', [
-    'methods'  => 'GET',
+    'methods'  => 'POST',
     'callback' => function ($request) {
       require_once __DIR__ . '/class-nba.php';
       $params = $request->get_params();

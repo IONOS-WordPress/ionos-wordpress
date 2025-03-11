@@ -6,7 +6,7 @@ document.querySelectorAll('.dismiss-nba').forEach((el) => {
     click.preventDefault();
     const res = await apiFetch({
       path: `ionos/v1/dismiss_nba/${click.target.dataset.nbaId}`,
-      method: 'GET',
+      method: 'POST',
     });
     if (res.status === 'success') {
       const element = click.target.closest('.wp-block-column');
