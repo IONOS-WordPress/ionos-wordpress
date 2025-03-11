@@ -103,7 +103,7 @@ function render_callback()
       ], 500);
     },
     'permission_callback' => function () {
-      return true || \current_user_can('manage_options');
+      return \current_user_can('manage_options');
     },
   ]);
 });
