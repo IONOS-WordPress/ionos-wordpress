@@ -2,21 +2,19 @@
 
 /**
  * This class represents the Next Best Action (NBA) model.
- *
- *
- *
  */
 
 namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions;
 
-enum ActionStatus {
+enum ActionStatus
+{
   case completed;
   case dismissed;
 }
 
 class NBA
 {
-  const OPTION_NAME = 'ionos_nba_status';
+  public const OPTION_NAME = 'ionos_nba_status';
 
   private static $option_value;
 
@@ -54,17 +52,17 @@ class NBA
     return self::_set_option($option);
   }
 
-  public static function getNBA($id) : NBA|null
+  public static function getNBA($id): self|null
   {
     return self::$actions[$id];
   }
 
-  public static function getActions() : array
+  public static function getActions(): array
   {
     return self::$actions;
   }
 
-  public static function register($id, $title, $description, $link, $completed = false) : void
+  public static function register($id, $title, $description, $link, $completed = false): void
   {
     new self($id, $title, $description, $link, $completed);
   }
@@ -95,14 +93,16 @@ NBA::register(
   title: \esc_html__('Add a page', 'ionos-essentials'),
   description: \esc_html__('Create some content for your website visitor.', 'ionos-essentials'),
   link: \admin_url('post-new.php?post_type=page'),
-  completed: \wp_count_posts('page')->publish > 1
+  completed: 1 < \wp_count_posts('page')
+    ->publish
 );
 NBA::register(
   id: 'add-post',
   title: \esc_html__('Add a post', 'ionos-essentials'),
   description: \esc_html__('Share your thoughts with your audience.', 'ionos-essentials'),
   link: \admin_url('edit.php?post_type=post'),
-  completed: \wp_count_posts('post')->publish > 1
+  completed: 1 < \wp_count_posts('post')
+    ->publish
 );
 NBA::register(
   id: 'edit-post',
@@ -123,14 +123,16 @@ NBA::register(
   description: \esc_html__('Tell your visitors what your website is about.', 'ionos-essentials'),
   title: \esc_html__('Add a site description', 'ionos-essentials'),
   link: \admin_url('options-general.php'),
-  completed: \get_option('blogdescription') !== '' && __('Just another WordPress site') !== \get_option('blogdescription')
+  completed: '' !== \get_option('blogdescription') && __('Just another WordPress site') !== \get_option(
+    'blogdescription'
+  )
 );
 NBA::register(
   id: 'upload-logo',
   title: \esc_html__('Upload a logo', 'ionos-essentials'),
   description: \esc_html__('Make your website more recognizable.', 'ionos-essentials'),
   link: \admin_url('options-general.php'),
-  completed: intval(\get_option('site_icon', 0)) > 0
+  completed: 0 < intval(\get_option('site_icon', 0))
 );
 
 \do_action('ionos_dashboard__register_nba_element');

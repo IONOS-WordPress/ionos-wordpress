@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: sv\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
-"Language: sv\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
@@ -226,63 +226,63 @@ msgstr "fel hittade"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:34
 msgid "Next best actions ⚡"
-msgstr ""
+msgstr "Näst bästa åtgärder ⚡"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Description of this block"
-msgstr ""
+msgstr "Beskrivning av detta block"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:124
 msgid "Add a page"
-msgstr ""
+msgstr "Lägg till en sida"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:125
 msgid "Create some content for your website visitor."
-msgstr ""
+msgstr "Skapa innehåll för besökarna på din webbplats."
 
 #: inc/dashboard/blocks/next-best-actions/index.php:131
 msgid "Add a post"
-msgstr ""
+msgstr "Lägg till ett inlägg"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:132
 msgid "Share your thoughts with your audience."
-msgstr ""
+msgstr "Dela med dig av dina tankar till din publik."
 
 #: inc/dashboard/blocks/next-best-actions/index.php:138
 msgid "Edit a post"
-msgstr ""
+msgstr "Redigera ett inlägg"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:139
 #: inc/dashboard/blocks/next-best-actions/index.php:146
 msgid "Update your content to keep it fresh."
-msgstr ""
+msgstr "Uppdatera ditt innehåll för att hålla det fräscht."
 
 #: inc/dashboard/blocks/next-best-actions/index.php:145
 msgid "Edit a page"
-msgstr ""
+msgstr "Redigera en sida"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:152
 msgid "Add a site description"
-msgstr ""
+msgstr "Lägg till en beskrivning av webbplatsen"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:153
 msgid "Tell your visitors what your website is about."
-msgstr ""
+msgstr "Berätta för dina besökare vad din webbplats handlar om."
 
 #: inc/dashboard/blocks/next-best-actions/index.php:159
 msgid "Upload a logo"
-msgstr ""
+msgstr "Ladda upp en logotyp"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:160
 msgid "Make your website more recognizable."
-msgstr ""
+msgstr "Gör din webbplats mer igenkännlig."
 
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
 msgid "NBA"
-msgstr ""
+msgstr "NBA"
 
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block description"
 msgid "Next Best Actions"
-msgstr ""
+msgstr "Nästa bästa åtgärder"
