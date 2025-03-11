@@ -109,6 +109,21 @@ require_once __DIR__ . '/blocks/next-best-actions/index.php';
         $end_marker_pos + strlen(POST_TYPE_TEMPLATE_CONTENT_END_MARKER) - $start_marker_pos
       );
 
+      /*
+        replace <script id="wp-api-fetch-js-after">...</script>
+        with the installation configured settings for api fetch
+
+        this configuration is used when dashboard blocks uses rest calls
+       */
+      global $wp_scripts;
+      $wp_api_fetch_after = $wp_scripts->registered['wp-api-fetch']?->extra['after'] ?? [];
+      $wp_api_fetch_after = implode("\n", $wp_api_fetch_after);
+      $html = preg_replace(
+        '/(<script id="wp-api-fetch-js-after">).*?(<\/script>)/s',
+        '$1' . $wp_api_fetch_after . '$2',
+        $html
+      );
+
       // replace our wp-env url with the actual host url
       $html = str_replace('http://localhost:8888', \get_site_url(), $html);
 
