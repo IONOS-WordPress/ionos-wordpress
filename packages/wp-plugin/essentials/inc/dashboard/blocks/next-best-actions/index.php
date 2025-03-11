@@ -3,6 +3,7 @@
 namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions;
 use const ionos_wordpress\essentials\PLUGIN_DIR;
 use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\NBA;
+use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\ActionStatus;
 
 \add_action('init', function () {
   \register_block_type(
@@ -70,7 +71,7 @@ function render_callback () {
     $nba_id = $_GET['complete_nba'];
 
     $nba = NBA::getNBA($nba_id);
-    $nba->setStatus( "completed", true);
+    $nba->setStatus( ActionStatus::completed, true);
   }
 });
 
@@ -83,7 +84,7 @@ function render_callback () {
 			$nba_id = $params['id'];
 
       $nba = NBA::getNBA($nba_id);
-      $res = $nba->setStatus( "dismissed", true);
+      $res = $nba->setStatus( ActionStatus::dismissed, true);
       if ($res) {
         return new \WP_REST_Response(['status' => 'success', 'res' => $res], 200);
       }
@@ -96,7 +97,7 @@ function render_callback () {
 });
 
 \add_action('post_updated', function ($post_id, $post_after, $post_before) {
-  if ($post_before->post_status !== 'publish') {
+  if ($post_before->post_status !== 'publish' || ($post_after->post_status !== 'publish' && $post_after->post_status !== 'draft')) {
     return;
   }
 
@@ -113,63 +114,6 @@ function render_callback () {
   }
 
   if ($nba) {
-    $nba->setStatus("completed", true);
+    $nba->setStatus( ActionStatus::completed, true);
   }
 }, 10, 3);
-
-\add_action( 'ionos_dashboard__register_nba_element', function () {
-  $actions = [
-    [
-      'id' => 'addPage',
-      'title' => \esc_html__('Add a page', 'ionos-essentials'),
-      'description' => \esc_html__('Create some content for your website visitor.', 'ionos-essentials'),
-      'link' => \admin_url('post-new.php?post_type=page'),
-      'completed' => \wp_count_posts('page')->publish > 1
-    ],
-    [
-      'id' => 'addPost',
-      'title' => \esc_html__('Add a post', 'ionos-essentials'),
-      'description' => \esc_html__('Share your thoughts with your audience.', 'ionos-essentials'),
-      'link' => \admin_url('edit.php?post_type=post'),
-      'completed' => \wp_count_posts('post')->publish > 1
-    ],
-    [
-      'id' => 'editPost',
-      'title' => \esc_html__('Edit a post', 'ionos-essentials'),
-      'description' => \esc_html__('Update your content to keep it fresh.', 'ionos-essentials'),
-      'link' => \admin_url('edit.php?post_type=post'),
-      'completed' => false
-    ],
-    [
-      'id' => 'editPage',
-      'title' => \esc_html__('Edit a page', 'ionos-essentials'),
-      'description' => \esc_html__('Update your content to keep it fresh.', 'ionos-essentials'),
-      'link' => \admin_url('edit.php?post_type=page'),
-      'completed' => false
-    ],
-    [
-      'id' => 'addSiteDescription',
-      'title' => \esc_html__('Add a site description', 'ionos-essentials'),
-      'description' => \esc_html__('Tell your visitors what your website is about.', 'ionos-essentials'),
-      'link' => \admin_url('options-general.php'),
-      'completed' => \get_option('blogdescription') !== '' && __('Just another WordPress site') !== \get_option('blogdescription')
-    ],
-    [
-      'id' => 'uploadALogo',
-      'title' => \esc_html__('Upload a logo', 'ionos-essentials'),
-      'description' => \esc_html__('Make your website more recognizable.', 'ionos-essentials'),
-      'link' => \admin_url('options-general.php'),
-      'completed' => \intval(\get_option('site_icon', 0)) > 0
-    ],
-  ];
-
-  foreach ($actions as $action) {
-    NBA::register(
-      id: $action['id'],
-      title: $action['title'],
-      description: $action['description'],
-      link: $action['link'],
-      completed: $action['completed']
-    );
-  }
-});
