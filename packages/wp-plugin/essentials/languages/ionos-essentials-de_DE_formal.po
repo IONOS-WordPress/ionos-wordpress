@@ -188,7 +188,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "WPScan-Daten anzeigen."
 
-#: build/dashboard/blocks/vulnerability/render.php:90
+#: build/dashboard/blocks/vulnerability/render.php:77
 msgid "WPScan not available"
 msgstr "WPScan nicht erreichbar"
 
@@ -196,84 +196,76 @@ msgstr "WPScan nicht erreichbar"
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: build/dashboard/blocks/vulnerability/render.php:82
+#: build/dashboard/blocks/vulnerability/render.php:69
 msgid "Show full scan report"
 msgstr "Vollständigen Scanbericht anzeigen"
 
-#: build/dashboard/blocks/vulnerability/render.php:62
+#: build/dashboard/blocks/vulnerability/render.php:52
 msgid "Last scan"
 msgstr "Letzter Scan"
 
-#: build/dashboard/blocks/vulnerability/render.php:65
+#: build/dashboard/blocks/vulnerability/render.php:54
 msgid "%s ago"
 msgstr "vor %s"
 
-#: build/dashboard/blocks/vulnerability/render.php:36
+#: build/dashboard/blocks/vulnerability/render.php:33
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Kritisches Problem gefunden"
 msgstr[1] "Kritische Probleme gefunden"
 
-#: build/dashboard/blocks/vulnerability/render.php:46
+#: build/dashboard/blocks/vulnerability/render.php:40
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "Warnung gefunden"
 msgstr[1] "Warnungen gefunden"
 
-#: build/dashboard/blocks/vulnerability/render.php:57
+#: build/dashboard/blocks/vulnerability/render.php:47
 msgid "issues found"
 msgstr "Probleme gefunden"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:34
-msgid "Next best actions ⚡"
-msgstr "Nächstbeste Aktionen ⚡"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:35
-msgid "Description of this block"
-msgstr "Beschreibung dieses Blocks"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:124
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:93
 msgid "Add a page"
 msgstr "Eine Seite hinzufügen"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:125
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:94
 msgid "Create some content for your website visitor."
 msgstr "Erstellen Sie einige Inhalte für Ihre Website-Besucher."
 
-#: inc/dashboard/blocks/next-best-actions/index.php:131
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:101
 msgid "Add a post"
 msgstr "Einen Beitrag hinzufügen"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:132
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:102
 msgid "Share your thoughts with your audience."
 msgstr "Teilen Sie Ihre Gedanken mit Ihrem Publikum."
 
-#: inc/dashboard/blocks/next-best-actions/index.php:138
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:109
 msgid "Edit a post"
 msgstr "Einen Beitrag bearbeiten"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:139
-#: inc/dashboard/blocks/next-best-actions/index.php:146
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:110
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:117
 msgid "Update your content to keep it fresh."
 msgstr "Aktualisieren Sie Ihre Inhalte, um sie frisch zu halten."
 
-#: inc/dashboard/blocks/next-best-actions/index.php:145
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:116
 msgid "Edit a page"
 msgstr "Eine Seite bearbeiten"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:152
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:124
 msgid "Add a site description"
 msgstr "Seitenbeschreibung hinzufügen"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:153
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:123
 msgid "Tell your visitors what your website is about."
 msgstr "Sagen Sie Ihren Besuchern, worum es auf Ihrer Website geht."
 
-#: inc/dashboard/blocks/next-best-actions/index.php:159
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:132
 msgid "Upload a logo"
 msgstr "Ein Logo hochladen"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:160
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:133
 msgid "Make your website more recognizable."
 msgstr "Erhöhen Sie den Wiedererkennungswert Ihrer Website."
 
@@ -286,3 +278,11 @@ msgstr "NBA"
 msgctxt "block description"
 msgid "Next Best Actions"
 msgstr "Nächstbeste Aktionen"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Next best actions"
+msgstr "Nächstbeste Aktionen"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Not sure what to do now? We have some recommendations for you."
+msgstr "Sie wissen nicht, was Sie jetzt tun sollen? Wir haben einige Empfehlungen für Sie."

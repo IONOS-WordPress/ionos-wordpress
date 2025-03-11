@@ -32,8 +32,8 @@ function render_callback()
       </div>
   </div>';
 
-  $header      = \esc_html__('Next best actions ⚡', 'ionos-essentials');
-  $description = \esc_html__('Description of this block', 'ionos-essentials');
+  $header      = \esc_html__('Next best actions', 'ionos-essentials');
+  $description = \esc_html__('Not sure what to do now? We have some recommendations for you.', 'ionos-essentials');
 
   $body = '';
   foreach ($actions as $action) {
@@ -51,7 +51,7 @@ function render_callback()
                   <a href="' . \esc_url(
       $action->link
     ) . '" class="wp-block-button__link wp-element-button" target="' . $target . '">' . \esc_html(
-      'Primary button',
+      $action->title,
       'ionos-essentials'
     ) . '</a>
               </div>

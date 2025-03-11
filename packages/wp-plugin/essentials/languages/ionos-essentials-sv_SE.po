@@ -188,7 +188,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Visa wp-skanningsdata."
 
-#: build/dashboard/blocks/vulnerability/render.php:90
+#: build/dashboard/blocks/vulnerability/render.php:77
 msgid "WPScan not available"
 msgstr "WPScan inte tillgänglig"
 
@@ -196,84 +196,76 @@ msgstr "WPScan inte tillgänglig"
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: build/dashboard/blocks/vulnerability/render.php:82
+#: build/dashboard/blocks/vulnerability/render.php:69
 msgid "Show full scan report"
 msgstr "Visa fullständig felsökning"
 
-#: build/dashboard/blocks/vulnerability/render.php:62
+#: build/dashboard/blocks/vulnerability/render.php:52
 msgid "Last scan"
 msgstr "Senaste felsökning"
 
-#: build/dashboard/blocks/vulnerability/render.php:65
+#: build/dashboard/blocks/vulnerability/render.php:54
 msgid "%s ago"
 msgstr "för %s sedan"
 
-#: build/dashboard/blocks/vulnerability/render.php:36
+#: build/dashboard/blocks/vulnerability/render.php:33
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiskt fel hittades"
 msgstr[1] "kritiska fel hittades"
 
-#: build/dashboard/blocks/vulnerability/render.php:46
+#: build/dashboard/blocks/vulnerability/render.php:40
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "varning hittad"
 msgstr[1] "varningar hittade"
 
-#: build/dashboard/blocks/vulnerability/render.php:57
+#: build/dashboard/blocks/vulnerability/render.php:47
 msgid "issues found"
 msgstr "fel hittade"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:34
-msgid "Next best actions ⚡"
-msgstr "Näst bästa åtgärder ⚡"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:35
-msgid "Description of this block"
-msgstr "Beskrivning av detta block"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:124
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:93
 msgid "Add a page"
 msgstr "Lägg till en sida"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:125
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:94
 msgid "Create some content for your website visitor."
 msgstr "Skapa innehåll för besökarna på din webbplats."
 
-#: inc/dashboard/blocks/next-best-actions/index.php:131
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:101
 msgid "Add a post"
 msgstr "Lägg till ett inlägg"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:132
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:102
 msgid "Share your thoughts with your audience."
 msgstr "Dela med dig av dina tankar till din publik."
 
-#: inc/dashboard/blocks/next-best-actions/index.php:138
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:109
 msgid "Edit a post"
 msgstr "Redigera ett inlägg"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:139
-#: inc/dashboard/blocks/next-best-actions/index.php:146
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:110
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:117
 msgid "Update your content to keep it fresh."
 msgstr "Uppdatera ditt innehåll för att hålla det fräscht."
 
-#: inc/dashboard/blocks/next-best-actions/index.php:145
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:116
 msgid "Edit a page"
 msgstr "Redigera en sida"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:152
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:124
 msgid "Add a site description"
 msgstr "Lägg till en beskrivning av webbplatsen"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:153
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:123
 msgid "Tell your visitors what your website is about."
 msgstr "Berätta för dina besökare vad din webbplats handlar om."
 
-#: inc/dashboard/blocks/next-best-actions/index.php:159
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:132
 msgid "Upload a logo"
 msgstr "Ladda upp en logotyp"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:160
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:133
 msgid "Make your website more recognizable."
 msgstr "Gör din webbplats mer igenkännlig."
 
@@ -286,3 +278,11 @@ msgstr "NBA"
 msgctxt "block description"
 msgid "Next Best Actions"
 msgstr "Nästa bästa åtgärder"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Next best actions"
+msgstr "Nästa bästa åtgärder"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Not sure what to do now? We have some recommendations for you."
+msgstr "Är du inte säker på vad du ska göra nu? Vi har några rekommendationer till dig."
