@@ -34,7 +34,7 @@ function get_brand_lowercase()
   function () {
     // submenu_page parent dashboard.
     \add_submenu_page(
-      null, //for test 'ionos-essentials-dashboard',
+      false, //for test 'ionos-essentials-dashboard',
       'Assistant',
       'Assistant',
       'manage_options',
@@ -68,12 +68,7 @@ function get_brand_lowercase()
 
 \add_action(
   'load-toplevel_page_extendify-assist',
-  function () {
-    if (isset($_GET['extendify-launch-success'])) {
-      \wp_safe_redirect(\admin_url('admin.php?page=' . get_brand_lowercase() . '-essentials-dashboard') );
-      exit;
-    }
-  }
+  fn () => \wp_safe_redirect(\admin_url('admin.php?page=' . get_brand_lowercase() . '-essentials-dashboard'))
 );
 
 \add_filter(
