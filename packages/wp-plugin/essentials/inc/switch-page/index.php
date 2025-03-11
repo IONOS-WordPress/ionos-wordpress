@@ -58,7 +58,7 @@ function get_brand_lowercase() {
   }, 10000, 1
 );
 
-add_action(
+\add_action(
   'load-toplevel_page_extendify-assist',
   function () {
     if ( isset( $_GET['extendify-launch-successs'] )) {
