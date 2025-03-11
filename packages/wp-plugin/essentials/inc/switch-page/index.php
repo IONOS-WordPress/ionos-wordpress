@@ -31,16 +31,20 @@ function get_brand_lowercase()
  */
 \add_action(
   'admin_menu',
-  fn () =>
+  function () {
     // submenu_page parent dashboard.
-  \add_submenu_page(
-    null, //for test 'ionos-essentials-dashboard',
-    'Assistant',
-    'Assistant',
-    'manage_options',
-    get_brand_lowercase() . '-onboarding',
-    fn () => \load_template(__DIR__ . '/view.php')
-  )
+    \add_submenu_page(
+      null, //for test 'ionos-essentials-dashboard',
+      'Assistant',
+      'Assistant',
+      'manage_options',
+      get_brand_lowercase() . '-onboarding',
+      fn () => \load_template(__DIR__ . '/view.php')
+    );
+    \remove_menu_page('extendify-assist');
+  },
+  100,
+  1
 );
 
 /**
