@@ -50,7 +50,7 @@ function ionos.wordpress.log_warn() {
   [[ "${#BASH_SOURCE[@]}" -eq 2 ]] && SOURCE="${BASH_SOURCE[1]}" || SOURCE="${FUNCNAME[1]}"
   SOURCE="${SOURCE}:${BASH_LINENO[$i]}"
 
-  echo -e "\e[33m${SOURCE} : $1\e[0m"  >&2
+  echo -e "\e[33m${SOURCE} : $1\e[0m" >&2
 }
 export -f ionos.wordpress.log_warn
 
