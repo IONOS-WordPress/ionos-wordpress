@@ -150,11 +150,7 @@ msgstr "Navigatie bewerken"
 msgid "Quick Links"
 msgstr "Snelle links"
 
-#: essentials.php:31
-msgid "Hello World !"
-msgstr "Hallo Wereld!"
-
-#: inc/dashboard/index.php:37
+#: inc/dashboard/index.php:35
 msgid "IONOS Dashboard"
 msgstr "IONOS-dashboard"
 

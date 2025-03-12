@@ -138,11 +138,7 @@ msgstr "Editar navegación"
 msgid "Quick Links"
 msgstr "Quick Links"
 
-#: essentials.php:31
-msgid "Hello World !"
-msgstr "Hola a todos."
-
-#: inc/dashboard/index.php:37
+#: inc/dashboard/index.php:35
 msgid "IONOS Dashboard"
 msgstr "Cuadro de mandos de IONOS"
 

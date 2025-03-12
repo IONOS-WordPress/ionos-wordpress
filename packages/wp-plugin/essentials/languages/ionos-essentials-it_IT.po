@@ -150,11 +150,7 @@ msgstr "Modifica della navigazione"
 msgid "Quick Links"
 msgstr "Collegamenti rapidi"
 
-#: essentials.php:31
-msgid "Hello World !"
-msgstr "Ciao mondo!"
-
-#: inc/dashboard/index.php:37
+#: inc/dashboard/index.php:35
 msgid "IONOS Dashboard"
 msgstr "Cruscotto IONOS"
 

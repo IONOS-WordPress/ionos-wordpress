@@ -190,10 +190,6 @@ msgstr ""
 msgid "WPScan not available"
 msgstr ""
 
-#: essentials.php:31
-msgid "Hello World !"
-msgstr ""
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:93
 msgid "Add a page"
 msgstr ""
