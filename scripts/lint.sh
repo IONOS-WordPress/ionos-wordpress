@@ -227,7 +227,7 @@ function ionos.wordpress.dennis() {
   # abort with error if there were untranslated strings
   if echo "$OUTPUT" | grep -q 'Untranslated:\s*[1-9]'; then
     ionos.wordpress.log_error "dennis validation failed : some strings are untranslated"
-    exit 1
+    return 1
   fi
 }
 
@@ -245,7 +245,7 @@ function ionos.wordpress.pnpm() {
   if [[ ! -f ./pnpm-lock.yaml ]]; then
     # the filename:line notation is required for vscode tasks to jump to the correct file
     ionos.wordpress.log_error "pnpm-lock.yaml:1 : pnpm-lock.yaml not found"
-    exit 1
+    return 1
   fi
 
   # backup lock file
@@ -255,7 +255,7 @@ function ionos.wordpress.pnpm() {
   if ! pnpm -s install --lockfile-only; then
     # the filename:line notation is required for vscode tasks to jump to the correct file
     ionos.wordpress.log_error "pnpm-lock.yaml:1 : pnpm-lock.yaml outdated - please update it using 'pnpm install'"
-    exit 1
+    return 1
   fi
 
   # restore lock file
@@ -335,8 +335,16 @@ function ionos.wordpress.wordpress_plugin() {
   return $exit_code
 }
 
+declare -A summaries=()
+
 if [[ "${USE[@]}" =~ all|php|wp ]]; then
   ionos.wordpress.wordpress_plugin || exit_code=1
+
+  if [[ "$exit_code" -eq 0 ]]; then
+    summaries["wp"]="WordPress $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    summaries["wp"]="WordPress $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 # if [[ "${USE[@]}" =~ all|php ]]; then
@@ -345,28 +353,85 @@ fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
   ionos.wordpress.ecs || exit_code=1
+
+ if [[ "$exit_code" -eq 0 ]]; then
+    summaries["php"]="PHP $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    summaries["php"]="PHP $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 if [[ "${USE[@]}" =~ all|prettier ]]; then
   ionos.wordpress.prettier || exit_code=1
+
+  if [[ "$exit_code" -eq 0 ]]; then
+    summaries["prettier"]="Prettier $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    summaries["prettier"]="Prettier $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 if [[ "${USE[@]}" =~ all|js ]]; then
   ionos.wordpress.eslint || exit_code=1
+
+  if [[ "$exit_code" -eq 0 ]]; then
+    summaries["js"]="Javascript $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    summaries["js"]="Javascript $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 if [[ "${USE[@]}" =~ all|css ]]; then
   ionos.wordpress.stylelint || exit_code=1
+
+  if [[ "$exit_code" -eq 0 ]]; then
+    summaries["css"]="CSS $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    summaries["css"]="CSS $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 if [[ "${USE[@]}" =~ all|pnpm ]]; then
   ionos.wordpress.pnpm || exit_code=1
+
+  if [[ "$exit_code" -eq 0 ]]; then
+    summaries["pnpm"]="PNPM $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    summaries["pnpm"]="PNPM $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 if [[ " ${USE[@]} " =~ all|i18n ]]; then
   ionos.wordpress.dennis || exit_code=1
+
+  if [[ "$exit_code" -eq 0 ]]; then
+    summaries["i18n"]="Localisation $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    summaries["i18n"]="Localisation $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
+echo ''
+
+error_count=0
+for key in "${!summaries[@]}"; do
+  message="${summaries[$key]}"
+
+  if [[ "$message" =~ errors ]]; then
+    error_count=$(( $error_count + 1 ))
+    echo -e "\e[31m$message\e[0m"
+  else
+    echo "$message"
+  fi
+done
+
+echo ''
+
+if [[ $error_count -gt 10 ]]; then
+  echo -e "\e[31m$error_count linter(s) reported errors.\e[0m"
+else
+  echo "All linters passed successfully."
+fi
 exit ${exit_code:-0}
 
 ###help-message
