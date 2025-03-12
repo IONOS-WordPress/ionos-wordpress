@@ -159,11 +159,6 @@ EOF
     "**/build/**",
   ],
   "search.exclude": {
-    "**/node_modules/**": true,
-    "**/build/**" : true,
-    "**/dist/**" : true,
-    "**/wp-env-home/**" : true,
-    "**/build-module/**" : true,
     // Avoid polluting search results with lockfile content
     "pnpm-lock.yaml": true,
   },
