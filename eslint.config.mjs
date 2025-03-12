@@ -77,6 +77,7 @@ export default [
             '@wordpress/hooks',
             '@wordpress/block-editor',
             '@wordpress/blocks',
+            '@wordpress/api-fetch',
             '@wordpress/server-side-render',
             '@wordpress/e2e-test-utils-playwright',
             '@playwright/test',

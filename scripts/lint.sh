@@ -50,7 +50,7 @@ function ionos.wordpress.prettier() {
   ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") html/yml/md/etc. files with prettier ..."
 
   # prettier
-  pnpm exec prettier --config ./.prettierrc.js --ignore-path ./.gitignore --ignore-path ./.lintignore --check --ignore-unknown --log-level log \
+  pnpm exec prettier --config ./.prettierrc.js --ignore-path ./.prettierignore --ignore-path ./.gitignore --ignore-path ./.lintignore --check --ignore-unknown --log-level log \
     $([[ "$FIX" == 'yes' ]] && echo -n "--write" ||:) \
     ${POSITIONAL_ARGS[@]}
 }
@@ -78,6 +78,7 @@ function ionos.wordpress.stylelint() {
     --ignore-pattern '!**/*.css' \
     --ignore-pattern '!**/*.scss' \
     --allow-empty-input \
+    --formatter=compact \
     --no-cache \
     $([[ "$FIX" == 'yes' ]] && echo -n '--fix strict' ||:) \
     ${POSITIONAL_ARGS[@]}
@@ -215,12 +216,18 @@ function ionos.wordpress.dennis() {
   )
 
   # map file path references from within docker container to host paths
-  echo "$OUTPUT" | sed 's|Working on: /project/|Working on: ./|ig'
+  # and filter out unwanted lines (everything except untranslated string messages)
+  echo "$OUTPUT" | \
+    grep -vE '^\s|^Metadata|Statistics|Untranslated\sstrings' | \
+    grep -vE '^[0-9]+:#' | \
+    grep -vE '^[0-9]+:msgstr ""' | \
+    grep -v '^$' | \
+    sed 's|Working on: /project/|Working on: ./|ig'
 
   # abort with error if there were untranslated strings
   if echo "$OUTPUT" | grep -q 'Untranslated:\s*[1-9]'; then
     ionos.wordpress.log_error "dennis validation failed : some strings are untranslated"
-    exit 1
+    return 1
   fi
 }
 
@@ -236,8 +243,9 @@ function ionos.wordpress.pnpm() {
   ionos.wordpress.log_header "lint pnpm lock file ..."
 
   if [[ ! -f ./pnpm-lock.yaml ]]; then
-    ionos.wordpress.error_log "pnpm validation failed : ./pnpm-lock.yaml not found"
-    exit 1
+    # the filename:line notation is required for vscode tasks to jump to the correct file
+    ionos.wordpress.log_error "pnpm-lock.yaml:1 : pnpm-lock.yaml not found"
+    return 1
   fi
 
   # backup lock file
@@ -245,8 +253,9 @@ function ionos.wordpress.pnpm() {
 
   # validate lock file is valid
   if ! pnpm -s install --lockfile-only; then
-    ionos.wordpress.error_log "pnpm validation failed : pnpm lock file is outdated - please update it using 'pnpm install'"
-    exit 1
+    # the filename:line notation is required for vscode tasks to jump to the correct file
+    ionos.wordpress.log_error "pnpm-lock.yaml:1 : pnpm-lock.yaml outdated - please update it using 'pnpm install'"
+    return 1
   fi
 
   # restore lock file
@@ -275,49 +284,49 @@ function ionos.wordpress.wordpress_plugin() {
       PLUGIN_VERSION=$(grep -oP "Version:\s*\K[0-9.]*" $dir/$plugin_file)
       PACKAGE_VERSION=$(jq -r '.version' $dir/package.json)
       if [[ "$PLUGIN_VERSION" != "$PACKAGE_VERSION" ]]; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin version(=$PLUGIN_VERSION) does not match package.json version(=$PACKAGE_VERSION)"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin version(=$PLUGIN_VERSION) does not match package.json version(=$PACKAGE_VERSION)"
         exit_code=1
       fi
 
       # test 'Description' field
       if ! grep -qoP "Description:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Description' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Description' is missing or empty"
         exit_code=1
       fi
 
       # test 'Requires at least' field
       if ! grep -qoP "Requires at least:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Requires at least' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Requires at least' is missing or empty"
         exit_code=1
       fi
 
       # test 'Plugin URI' field
       if ! grep -qoP "Plugin URI:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Plugin URI' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Plugin URI' is missing or empty"
         exit_code=1
       fi
 
       # test 'Update URI' field
       if ! grep -qoP "Update URI:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Update URI' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Update URI' is missing or empty"
         exit_code=1
       fi
 
       # test 'Author' field
       if ! grep -qoP "Author:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Author' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Author' is missing or empty"
         exit_code=1
       fi
 
       # test 'Author URI' field
       if ! grep -qoP "Author URI:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Author URI' is missing or empty"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Author URI' is missing or empty"
         exit_code=1
       fi
 
       # test 'Domain Path' field
       if ! grep -qoP "Domain Path:\s*/languages$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file : plugin header 'Domain Path: /languages' is missing or invalid"
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Domain Path: /languages' is missing or invalid"
         exit_code=1
       fi
     done
@@ -326,8 +335,16 @@ function ionos.wordpress.wordpress_plugin() {
   return $exit_code
 }
 
+declare -A summaries=()
+
+set +e
 if [[ "${USE[@]}" =~ all|php|wp ]]; then
-  ionos.wordpress.wordpress_plugin || exit_code=1
+  if ionos.wordpress.wordpress_plugin; then
+    summaries["wp"]="WordPress $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    exit_code=1
+    summaries["wp"]="WordPress $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 # if [[ "${USE[@]}" =~ all|php ]]; then
@@ -335,27 +352,79 @@ fi
 # fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
-  ionos.wordpress.ecs || exit_code=1
+ if ionos.wordpress.ecs; then
+    summaries["php"]="PHP $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    exit_code=1
+    summaries["php"]="PHP $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 if [[ "${USE[@]}" =~ all|prettier ]]; then
-  ionos.wordpress.prettier || exit_code=1
+  if ionos.wordpress.prettier; then
+    summaries["prettier"]="Prettier $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    exit_code=1
+    summaries["prettier"]="Prettier $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 if [[ "${USE[@]}" =~ all|js ]]; then
-  ionos.wordpress.eslint || exit_code=1
+  if ionos.wordpress.eslint; then
+    summaries["js"]="Javascript $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    exit_code=1
+    summaries["js"]="Javascript $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 if [[ "${USE[@]}" =~ all|css ]]; then
-  ionos.wordpress.stylelint || exit_code=1
+  if ionos.wordpress.stylelint; then
+    summaries["css"]="CSS $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    exit_code=1
+    summaries["css"]="CSS $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 if [[ "${USE[@]}" =~ all|pnpm ]]; then
-  ionos.wordpress.pnpm || exit_code=1
+  if ionos.wordpress.pnpm; then
+    summaries["pnpm"]="PNPM $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    exit_code=1
+    summaries["pnpm"]="PNPM $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
 fi
 
 if [[ " ${USE[@]} " =~ all|i18n ]]; then
-  ionos.wordpress.dennis || exit_code=1
+  if ionos.wordpress.dennis; then
+    summaries["i18n"]="i18n $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
+  else
+    exit_code=1
+    summaries["i18n"]="i18n $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
+  fi
+fi
+
+echo ''
+
+error_count=0
+for key in "${!summaries[@]}"; do
+  message="${summaries[$key]}"
+
+  if [[ "$message" =~ errors ]]; then
+    error_count=$(( $error_count + 1 ))
+    echo -e "\e[31m$message\e[0m"
+  else
+    echo "$message"
+  fi
+done
+
+echo ''
+
+if [[ $error_count -gt 0 ]]; then
+  echo -e "\e[31m$error_count linter(s) reported errors.\e[0m"
+else
+  echo "Linting passed successfully."
 fi
 
 exit ${exit_code:-0}
