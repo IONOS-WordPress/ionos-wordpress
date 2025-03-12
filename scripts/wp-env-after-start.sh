@@ -156,13 +156,15 @@ EOF
     "**/.history/**",
     "**/vendor/**/vendor/**",
     "**/dist/**",
-    "**/buid/**",
+    "**/build/**",
   ],
   "search.exclude": {
-    "**/node_modules": true,
-    "**/build/**" : true,
-    "**/build-module/**" : true
+    // Avoid polluting search results with lockfile content
+    "pnpm-lock.yaml": true,
   },
+  // Ensure VSCode uses pnpm instead of npm
+  "npm.packageManager": "pnpm",
+
   "intelephense.environment.phpVersion": "8.3",
   "intelephense.environment.includePaths": [
     "${WPENV_INSTALLPATH}/WordPress",
