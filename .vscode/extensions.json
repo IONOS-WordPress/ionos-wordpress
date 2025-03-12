@@ -12,6 +12,7 @@
     "bmewburn.vscode-intelephense-client",
     "ms-playwright.playwright",
     "Gruntfuggly.todo-tree",
-    "xdebug.php-debug"
+    "xdebug.php-debug",
+    "batyan-soft.fast-tasks"
   ]
 }
