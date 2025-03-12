@@ -732,14 +732,6 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
   }
 }
 </style>
-<style id='wp-block-heading-inline-css'>
-h1.has-background,h2.has-background,h3.has-background,h4.has-background,h5.has-background,h6.has-background{
-  padding:1.25em 2.375em;
-}
-h1.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h1.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h2.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h2.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h3.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h3.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h4.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h4.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h5.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h5.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h6.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h6.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]){
-  rotate:180deg;
-}
-</style>
 <style id='wp-block-group-inline-css'>
 .wp-block-group{
   box-sizing:border-box;
@@ -883,6 +875,14 @@ h1.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h1.has-t
 #ionos-dashboard__essentials_nba{min-height:0}#ionos-dashboard__essentials_nba>.wp-block-group{margin-bottom:15px;margin-top:0;padding:0}#ionos-dashboard__essentials_nba>.wp-block-columns{border-style:none;border-width:0;display:flex;flex-wrap:wrap!important}#ionos-dashboard__essentials_nba>.wp-block-columns>.wp-block-column{border-color:#bcc8d4;border-radius:24px;border-width:1px;box-sizing:border-box;flex:1 1 calc(33.333% - 14px);max-width:calc(33.333% - 14px)}#ionos-dashboard__essentials_nba>.wp-block-columns>.wp-block-column:nth-child(3n+1){margin-left:0}#ionos-dashboard__essentials_nba .dismissed{opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s}
 
 </style>
+<style id='wp-block-heading-inline-css'>
+h1.has-background,h2.has-background,h3.has-background,h4.has-background,h5.has-background,h6.has-background{
+  padding:1.25em 2.375em;
+}
+h1.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h1.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h2.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h2.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h3.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h3.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h4.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h4.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h5.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h5.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]),h6.has-text-align-left[style*=writing-mode]:where([style*=vertical-lr]),h6.has-text-align-right[style*=writing-mode]:where([style*=vertical-rl]){
+  rotate:180deg;
+}
+</style>
 <style id='wp-block-paragraph-inline-css'>
 .is-small-text{
   font-size:.875em;
@@ -947,6 +947,10 @@ ol,ul{
 				ul.is-style-checkmark-list li {
 					padding-inline-start: 1ch;
 				}
+</style>
+<style id='ionos-dashboard-page-deep-links-style-inline-css'>
+.deep-links .element:hover{background-color:#dbedf8!important}
+
 </style>
 <style id='wp-block-columns-inline-css'>
 .wp-block-columns{
@@ -1280,6 +1284,9 @@ html :where(.is-position-sticky){
 	flex-wrap: nowrap;
 	justify-content: space-between;
 }
+.wp-container-core-columns-is-layout-1 {
+	flex-wrap: nowrap;
+}
 .wp-container-core-group-is-layout-4 {
 	flex-direction: column;
 	align-items: flex-start;
@@ -1293,10 +1300,6 @@ html :where(.is-position-sticky){
 		grid-column: 1/-1;
 	}
 }
-.wp-container-core-group-is-layout-5 {
-	flex-wrap: nowrap;
-	justify-content: center;
-}
 .wp-container-content-2 {
 	grid-column: span 1;
 	grid-row: span 1;
@@ -1306,20 +1309,11 @@ html :where(.is-position-sticky){
 		grid-column: 1/-1;
 	}
 }
-.wp-container-core-group-is-layout-6 {
-	flex-wrap: nowrap;
-	justify-content: center;
-}
 .wp-container-content-3 {
 	grid-column: span 1;
 	grid-row: span 1;
 }
-@container (max-width: 12rem ) {
-	.wp-container-content-3 {
-		grid-column: 1/-1;
-	}
-}
-.wp-container-core-group-is-layout-7 {
+.wp-container-core-group-is-layout-5 {
 	flex-wrap: nowrap;
 	justify-content: flex-start;
 }
@@ -1332,10 +1326,6 @@ html :where(.is-position-sticky){
 		grid-column: 1/-1;
 	}
 }
-.wp-container-core-group-is-layout-8 {
-	flex-wrap: nowrap;
-	justify-content: center;
-}
 .wp-container-content-5 {
 	grid-column: span 1;
 	grid-row: span 1;
@@ -1345,33 +1335,12 @@ html :where(.is-position-sticky){
 		grid-column: 1/-1;
 	}
 }
-.wp-container-core-group-is-layout-9 {
-	flex-wrap: nowrap;
-	justify-content: center;
-}
 .wp-container-content-6 {
 	grid-column: span 1;
 	grid-row: span 1;
 }
-@container (max-width: 12rem ) {
-	.wp-container-content-6 {
-		grid-column: 1/-1;
-	}
-}
-.wp-container-core-group-is-layout-10 {
+.wp-container-core-group-is-layout-6 {
 	flex-wrap: nowrap;
-	justify-content: center;
-}
-.wp-container-core-group-is-layout-11 {
-	grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
-	container-type: inline-size;
-}
-.wp-container-core-columns-is-layout-1 {
-	flex-wrap: nowrap;
-}
-.wp-container-core-group-is-layout-12 {
-	flex-direction: column;
-	align-items: flex-start;
 }
 .wp-container-content-7 {
 	grid-column: span 1;
@@ -1395,7 +1364,7 @@ html :where(.is-position-sticky){
 	grid-column: span 1;
 	grid-row: span 1;
 }
-.wp-container-core-group-is-layout-13 {
+.wp-container-core-group-is-layout-7 {
 	flex-wrap: nowrap;
 }
 .wp-container-content-10 {
@@ -1420,7 +1389,7 @@ html :where(.is-position-sticky){
 	grid-column: span 1;
 	grid-row: span 1;
 }
-.wp-container-core-group-is-layout-14 {
+.wp-container-core-group-is-layout-8 {
 	flex-wrap: nowrap;
 }
 .wp-container-content-13 {
@@ -1436,66 +1405,13 @@ html :where(.is-position-sticky){
 	grid-column: span 1;
 	grid-row: span 1;
 }
-@container (max-width: 12rem ) {
-	.wp-container-content-14 {
-		grid-column: 1/-1;
-	}
-}
-.wp-container-content-15 {
-	grid-column: span 1;
-	grid-row: span 1;
-}
-.wp-container-core-group-is-layout-15 {
+.wp-container-core-group-is-layout-9 {
 	flex-wrap: nowrap;
 }
-.wp-container-content-16 {
-	grid-column: span 1;
-	grid-row: span 1;
-}
-@container (max-width: 12rem ) {
-	.wp-container-content-16 {
-		grid-column: 1/-1;
-	}
-}
-.wp-container-content-17 {
-	grid-column: span 1;
-	grid-row: span 1;
-}
-@container (max-width: 12rem ) {
-	.wp-container-content-17 {
-		grid-column: 1/-1;
-	}
-}
-.wp-container-content-18 {
-	grid-column: span 1;
-	grid-row: span 1;
-}
-.wp-container-core-group-is-layout-16 {
-	flex-wrap: nowrap;
-}
-.wp-container-content-19 {
-	grid-column: span 1;
-	grid-row: span 1;
-}
-@container (max-width: 12rem ) {
-	.wp-container-content-19 {
-		grid-column: 1/-1;
-	}
-}
-.wp-container-content-20 {
-	grid-column: span 1;
-	grid-row: span 1;
-}
-.wp-container-core-group-is-layout-17 {
-	flex-wrap: nowrap;
-}
-.wp-container-core-group-is-layout-18 {
+.wp-container-core-group-is-layout-10 {
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .wp-container-core-columns-is-layout-2 {
-	flex-wrap: nowrap;
-}
-.wp-container-core-columns-is-layout-3 {
 	flex-wrap: nowrap;
 }
 
@@ -1606,19 +1522,19 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 <script src="http://localhost:8888/wp-includes/js/dist/api-fetch.js?ver=c7fab2b80f62e49268dd" id="wp-api-fetch-js"></script>
 <script id="wp-api-fetch-js-after">
 wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( "http://localhost:8888/wp-json/" ) );
-wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "b7155e702c" );
+wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "6a3fa0c431" );
 wp.apiFetch.use( wp.apiFetch.nonceMiddleware );
 wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );
 wp.apiFetch.nonceEndpoint = "http://localhost:8888/wp-admin/admin-ajax.php?action=rest-nonce";
 </script>
-<script src="http://localhost:8888/wp-content/plugins/essentials/build/dashboard/blocks/next-best-actions/view.js?ver=8cf7c37c24e87d232188" id="ionos-dashboard-page-next-best-actions-view-script-js" defer data-wp-strategy="defer"></script>
-<link rel="https://api.w.org/" href="http://localhost:8888/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="http://localhost:8888/wp-json/wp/v2/custom_dashboard/10" /><style class='wp-fonts-local'>
+<script src="http://localhost:8888/wp-content/plugins/essentials/build/dashboard/blocks/next-best-actions/view.js?ver=44780f80f31246a8f0c7" id="ionos-dashboard-page-next-best-actions-view-script-js" defer data-wp-strategy="defer"></script>
+<link rel="https://api.w.org/" href="http://localhost:8888/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="http://localhost:8888/wp-json/wp/v2/ionos_dashboard/7" /><style class='wp-fonts-local'>
 @font-face{font-family:Manrope;font-style:normal;font-weight:200 800;font-display:fallback;src:url('http://localhost:8888/wp-content/themes/twentytwentyfive/assets/fonts/manrope/Manrope-VariableFont_wght.woff2') format('woff2');}
 @font-face{font-family:"Fira Code";font-style:normal;font-weight:300 700;font-display:fallback;src:url('http://localhost:8888/wp-content/themes/twentytwentyfive/assets/fonts/fira-code/FiraCode-VariableFont_wght.woff2') format('woff2');}
 </style>
 </head>
 
-<body class="custom_dashboard-template custom_dashboard-template-custom-dashboard-template single single-custom_dashboard postid-10 wp-embed-responsive">
+<body class="ionos_dashboard-template ionos_dashboard-template-custom-dashboard-template single single-ionos_dashboard postid-7 wp-embed-responsive">
 
 <div class="wp-site-blocks"><div class="entry-content wp-block-post-content has-global-padding is-layout-constrained wp-block-post-content-is-layout-constrained">
 <!-- ionos-essentials-dashboard-start-content --><!-- ionos-essentials-dashboard-end-content -->
@@ -1662,7 +1578,7 @@ wp.apiFetch.nonceEndpoint = "http://localhost:8888/wp-admin/admin-ajax.php?actio
 		// Inject the skip link.
 		sibling.parentElement.insertBefore( skipLink, sibling );
 	}() );
-
+	
 </script>
 </body>
 </html>
