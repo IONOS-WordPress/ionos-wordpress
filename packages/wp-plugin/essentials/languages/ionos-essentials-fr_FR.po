@@ -122,7 +122,7 @@ msgstr "Votre contrat"
 msgid "Current offers"
 msgstr "Offres actuelles"
 
-#: build/dashboard/blocks/deep-links/render.php:17
+#: build/dashboard/blocks/deep-links/render.php:20
 msgid "Deep-Links"
 msgstr "Liens profonds"
 
@@ -146,7 +146,7 @@ msgstr "Modifier le modèle"
 msgid "Edit navigation"
 msgstr "Modifier la navigation"
 
-#: build/dashboard/blocks/quick-links/render.php:10
+#: build/dashboard/blocks/quick-links/render.php:13
 msgid "Quick Links"
 msgstr "Liens rapides"
 
@@ -224,65 +224,10 @@ msgstr[1] "Alertes détectées"
 msgid "issues found"
 msgstr "Problèmes trouvés"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:93
-msgid "Add a page"
-msgstr "Ajouter une page"
+#: build/dashboard/blocks/quick-links/render.php:14
+msgid "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
+msgstr "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:94
-msgid "Create some content for your website visitor."
-msgstr "Créez du contenu pour les visiteurs de votre site web."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:101
-msgid "Add a post"
-msgstr "Ajouter un message"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:102
-msgid "Share your thoughts with your audience."
-msgstr "Partagez vos réflexions avec votre public."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:109
-msgid "Edit a post"
-msgstr "Modifier un message"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:110
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:117
-msgid "Update your content to keep it fresh."
-msgstr "Mettez votre contenu à jour pour qu'il reste frais."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:116
-msgid "Edit a page"
-msgstr "Modifier une page"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:124
-msgid "Add a site description"
-msgstr "Ajouter une description du site"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:123
-msgid "Tell your visitors what your website is about."
-msgstr "Indiquez à vos visiteurs l'objet de votre site web."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:132
-msgid "Upload a logo"
-msgstr "Télécharger un logo"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:133
-msgid "Make your website more recognizable."
-msgstr "Rendez votre site web plus reconnaissable."
-
-#: build/dashboard/blocks/next-best-actions/block.json
-msgctxt "block title"
-msgid "NBA"
-msgstr "NBA"
-
-#: build/dashboard/blocks/next-best-actions/block.json
-msgctxt "block description"
-msgid "Next Best Actions"
-msgstr "Prochaines actions Best"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:35
-msgid "Next best actions"
-msgstr "Prochaines meilleures actions"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:36
-msgid "Not sure what to do now? We have some recommendations for you."
-msgstr "Vous ne savez pas quoi faire maintenant ? Nous avons quelques recommandations pour vous."
+#: build/dashboard/blocks/deep-links/render.php:21
+msgid "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
+msgstr "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."

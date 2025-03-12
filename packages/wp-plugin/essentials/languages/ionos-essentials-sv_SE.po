@@ -122,7 +122,7 @@ msgstr "Ditt avtal"
 msgid "Current offers"
 msgstr "Aktuella erbjudanden"
 
-#: build/dashboard/blocks/deep-links/render.php:17
+#: build/dashboard/blocks/deep-links/render.php:20
 msgid "Deep-Links"
 msgstr "Djupa länkar"
 
@@ -146,7 +146,7 @@ msgstr "Redigera mall"
 msgid "Edit navigation"
 msgstr "Redigera navigering"
 
-#: build/dashboard/blocks/quick-links/render.php:10
+#: build/dashboard/blocks/quick-links/render.php:13
 msgid "Quick Links"
 msgstr "Snabblänkar"
 
@@ -224,65 +224,10 @@ msgstr[1] "varningar hittade"
 msgid "issues found"
 msgstr "fel hittade"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:93
-msgid "Add a page"
-msgstr "Lägg till en sida"
+#: build/dashboard/blocks/quick-links/render.php:14
+msgid "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
+msgstr "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:94
-msgid "Create some content for your website visitor."
-msgstr "Skapa innehåll för besökarna på din webbplats."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:101
-msgid "Add a post"
-msgstr "Lägg till ett inlägg"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:102
-msgid "Share your thoughts with your audience."
-msgstr "Dela med dig av dina tankar till din publik."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:109
-msgid "Edit a post"
-msgstr "Redigera ett inlägg"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:110
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:117
-msgid "Update your content to keep it fresh."
-msgstr "Uppdatera ditt innehåll för att hålla det fräscht."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:116
-msgid "Edit a page"
-msgstr "Redigera en sida"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:124
-msgid "Add a site description"
-msgstr "Lägg till en beskrivning av webbplatsen"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:123
-msgid "Tell your visitors what your website is about."
-msgstr "Berätta för dina besökare vad din webbplats handlar om."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:132
-msgid "Upload a logo"
-msgstr "Ladda upp en logotyp"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:133
-msgid "Make your website more recognizable."
-msgstr "Gör din webbplats mer igenkännlig."
-
-#: build/dashboard/blocks/next-best-actions/block.json
-msgctxt "block title"
-msgid "NBA"
-msgstr "NBA"
-
-#: build/dashboard/blocks/next-best-actions/block.json
-msgctxt "block description"
-msgid "Next Best Actions"
-msgstr "Nästa bästa åtgärder"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:35
-msgid "Next best actions"
-msgstr "Nästa bästa åtgärder"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:36
-msgid "Not sure what to do now? We have some recommendations for you."
-msgstr "Är du inte säker på vad du ska göra nu? Vi har några rekommendationer till dig."
+#: build/dashboard/blocks/deep-links/render.php:21
+msgid "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
+msgstr "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."

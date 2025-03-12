@@ -4,7 +4,7 @@ import { defineConfig, devices } from '@playwright/experimental-ct-react';
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
-module.exports = defineConfig({
+const config = defineConfig({
   testMatch: '**/*.spec.jsx',
   testDir: './packages',
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
@@ -54,3 +54,5 @@ module.exports = defineConfig({
     },
   ],
 });
+
+export default config;
