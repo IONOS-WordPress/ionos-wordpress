@@ -12,16 +12,11 @@ on:
       - opened
       - closed
       - reopened
-      - converted_to_draft
       - ready_for_review
       - review_requested
-      - review_request_removed
-      - edited
   pull_request_review:
     types:
       - submitted
-      - edited
-      - dismissed
   issue_comment:
     types:
       - created
@@ -41,11 +36,11 @@ jobs:
             echo "GCHAT_URL=${{ secrets.GCHAT_PR_ANNOUNCEMENTS_WEBHOOK }}&messageReplyOption=REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD&thread_key=$THREAD_KEY" \
               >> $GITHUB_OUTPUT
           fi
-      - name: send pr open/close/edit message
+      - name: send pr open/close message
         if: ${{ github.event_name == 'pull_request' && steps.gchat_url.outputs.GCHAT_URL }}
         run: |
           TEXT=$(cat -s <<'X!X' | jq -Rsr @json
-          ${{ github.triggering_actor}} ${{ github.event.action}} pull request *'${{ github.event.pull_request.title }} ${{ github.event.pull_request.draft && '(draft)' || '' }}'*
+          ${{ github.triggering_actor}} ${{ github.event.pull_request.merged == true && 'merged' || github.event.action}} pull request *'${{ github.event.pull_request.title }} ${{ github.event.pull_request.draft && '(draft)' || '' }}'*
 
           ${{ (github.event.action=='opened' || github.event.action=='edited') && github.event.pull_request.body || '' }}
 
@@ -56,4 +51,14 @@ jobs:
             -H 'Content-Type: application/json' \
             -d "{\"text\": $TEXT }" \
             '${{ steps.gchat_url.outputs.GCHAT_URL }}'
-
+      - name: send pr review
+        if: ${{ github.event_name == 'pull_request_review' && steps.gchat_url.outputs.GCHAT_URL && (github.event.review.state == 'approved' || github.event.review.state == 'changes_requested') }}
+        run: |
+          TEXT=$(cat -s <<'X!X' | jq -Rsr @json
+          ${{ github.triggering_actor }} ${{ github.event.action }} a review: ${{ github.event.review.state }}
+          X!X
+          )
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d "{\"text\": $TEXT }" \
+            '${{ steps.gchat_url.outputs.GCHAT_URL }}'
