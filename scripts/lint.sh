@@ -427,7 +427,7 @@ done
 
 echo ''
 
-if [[ $error_count -gt 10 ]]; then
+if [[ $error_count -gt 0 ]]; then
   echo -e "\e[31m$error_count linter(s) reported errors.\e[0m"
 else
   echo "All linters passed successfully."
