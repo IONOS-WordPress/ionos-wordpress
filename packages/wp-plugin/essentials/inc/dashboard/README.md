@@ -10,7 +10,6 @@ http://localhost:8888/wp-admin/admin.php?page=custom-page
 ### edit dashboard
 
 http://localhost:8888/wp-admin/edit.php?post_type=custom_dashboard
-custom-ionos-dashboard -> edit
 
 ## concepts
 
