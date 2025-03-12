@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: nl\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
@@ -188,39 +188,39 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Wp-scangegevens weergeven."
 
-#: build/dashboard/blocks/vulnerability/render.php:77
+#: build/dashboard/blocks/vulnerability/render.php:90
 msgid "WPScan not available"
 msgstr "WPScan niet beschikbaar"
 
-#: inc/dashboard/index.php:173
+#: inc/dashboard/index.php:188
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: build/dashboard/blocks/vulnerability/render.php:69
+#: build/dashboard/blocks/vulnerability/render.php:82
 msgid "Show full scan report"
 msgstr "Volledig scanrapport tonen"
 
-#: build/dashboard/blocks/vulnerability/render.php:52
+#: build/dashboard/blocks/vulnerability/render.php:62
 msgid "Last scan"
 msgstr "Laatste scan"
 
-#: build/dashboard/blocks/vulnerability/render.php:54
+#: build/dashboard/blocks/vulnerability/render.php:65
 msgid "%s ago"
 msgstr "%s geleden"
 
-#: build/dashboard/blocks/vulnerability/render.php:33
+#: build/dashboard/blocks/vulnerability/render.php:36
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiek probleem gevonden"
 msgstr[1] "kritieke problemen gevonden"
 
-#: build/dashboard/blocks/vulnerability/render.php:40
+#: build/dashboard/blocks/vulnerability/render.php:46
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "waarschuwing gevonden"
 msgstr[1] "waarschuwingen gevonden"
 
-#: build/dashboard/blocks/vulnerability/render.php:47
+#: build/dashboard/blocks/vulnerability/render.php:57
 msgid "issues found"
 msgstr "problemen gevonden"
 
@@ -231,3 +231,66 @@ msgstr "Description of this block which is two column wide. This block shows som
 #: build/dashboard/blocks/deep-links/render.php:21
 msgid "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
 msgstr "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:93
+msgid "Add a page"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:94
+msgid "Create some content for your website visitor."
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:101
+msgid "Add a post"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:102
+msgid "Share your thoughts with your audience."
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:109
+msgid "Edit a post"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:110
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:117
+msgid "Update your content to keep it fresh."
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:116
+msgid "Edit a page"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:123
+msgid "Tell your visitors what your website is about."
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:124
+msgid "Add a site description"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:132
+msgid "Upload a logo"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:133
+msgid "Make your website more recognizable."
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Next best actions"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Not sure what to do now? We have some recommendations for you."
+msgstr ""
+
+#: build/dashboard/blocks/next-best-actions/block.json
+msgctxt "block title"
+msgid "NBA"
+msgstr ""
+
+#: build/dashboard/blocks/next-best-actions/block.json
+msgctxt "block description"
+msgid "Next Best Actions"
+msgstr ""
