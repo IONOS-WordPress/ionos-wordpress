@@ -50,7 +50,7 @@ function ionos.wordpress.prettier() {
   ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") html/yml/md/etc. files with prettier ..."
 
   # prettier
-  pnpm exec prettier --config ./.prettierrc.js --ignore-path ./.gitignore --ignore-path ./.lintignore --check --ignore-unknown --log-level log \
+  pnpm exec prettier --config ./.prettierrc.js --ignore-path ./.prettierignore --ignore-path ./.gitignore --ignore-path ./.lintignore --check --ignore-unknown --log-level log \
     $([[ "$FIX" == 'yes' ]] && echo -n "--write" ||:) \
     ${POSITIONAL_ARGS[@]}
 }
