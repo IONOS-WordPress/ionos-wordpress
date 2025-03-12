@@ -171,7 +171,7 @@ add_action('init', function () {
     'label' => __('Brand Logo', 'ionos-essentials'),
     'get_value_callback' => function () {
       $tenant = \get_option('ionos_group_brand', "ionos");
-      return "/wp-content/plugins/essentials/inc/dashboard/data/tenant-logos/{$tenant}.svg";
+      return plugin_dir_url( __FILE__ ). "data/tenant-logos/{$tenant}.svg";
     },
   ]);
 });
