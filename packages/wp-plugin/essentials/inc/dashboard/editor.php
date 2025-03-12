@@ -14,7 +14,6 @@ const POST_TYPE_SLUG = 'custom_dashboard';
 const POST_TYPE_TEMPLATE_SLUG = 'custom-dashboard-template';
 
 const DASHBOARD_POST_TITLE = 'Custom IONOS Dashboard';
-const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
 
 // register our initial custom dashboard post type and register/assign the template with it
 \add_action('init', function () {
