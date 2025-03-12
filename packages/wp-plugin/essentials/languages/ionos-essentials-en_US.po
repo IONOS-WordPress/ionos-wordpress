@@ -43,10 +43,6 @@ msgstr "https://www.ionos-group.com/brands.html"
 msgid "IONOS Dashboard"
 msgstr "IONOS Dashboard"
 
-#: essentials.php:31
-msgid "Hello World !"
-msgstr "Hello World !"
-
 #: build/dashboard/blocks/deep-links/block.json
 msgctxt "block title"
 msgid "Deep Links"
