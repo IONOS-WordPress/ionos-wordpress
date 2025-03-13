@@ -18,6 +18,10 @@
 
 namespace ionos_wordpress\essentials;
 
+use stdClass;
+use WP_Upgrader;
+
+const PLUGIN_FILE = __FILE__;
 const PLUGIN_DIR = __DIR__;
 
 defined('ABSPATH') || exit();
@@ -182,11 +186,12 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   return $result;
 }, 10, 3);
 
+// features
+require_once __DIR__ . '/inc/switch-page/index.php';
 require_once __DIR__ . '/inc/dashboard/index.php';
 
-if (is_file(__DIR__ . '/inc/switch-page/index.php')) {
-  require_once __DIR__ . '/inc/switch-page/index.php';
-}
+// soc plugin components
+require_once __DIR__ . '/inc/migration/index.php';
 
 /*
 [
