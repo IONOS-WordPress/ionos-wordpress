@@ -4,23 +4,23 @@ namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
 
 $links = [
   [
-    'url' => 'catalogue',
+    'url'    => 'catalogue',
     'anchor' => __('My offers', 'ionos-essentials'),
   ],
   [
-    'url' => 'clients/data',
+    'url'    => 'clients/data',
     'anchor' => __('Data of customer', 'ionos-essentials'),
   ],
   [
-    'url' => '',
+    'url'    => '',
     'anchor' => __('Services', 'ionos-essentials'),
   ],
   [
-    'url' => '/invoices/list',
+    'url'    => '/invoices/list',
     'anchor' => __('Invoices', 'ionos-essentials'),
   ],
   [
-    'url' => 'container',
+    'url'    => 'container',
     'anchor' => __('Control Panel', 'ionos-essentials'),
   ],
 ];
