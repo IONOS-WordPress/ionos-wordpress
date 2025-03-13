@@ -27,7 +27,7 @@ if ($tenant && file_exists($config_file)) {
 
       foreach ($links as $link) {
         printf(
-          '<div class="wp-block-group has-background element" style="display:flex;justify-content:center;align-items:center;border-radius:24px;background-color:#f4f7fa;min-height:100px;margin-top:0;margin-bottom:0;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0;cursor:pointer">
+          '<div class="wp-block-group has-background element" style="display:flex;justify-content:center;align-items:center;min-height:100px;margin-top:0;margin-bottom:0;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0;cursor:pointer">
             <a class="element-link" href="%s" target="_blank" style="display:flex;%sjustify-content:center;align-items:center;text-decoration:none">
               <p class="has-text-align-center has-small-font-size" style="width:120px;margin-top:0;font-style:normal;font-weight:500">%s</p>
             </a>
