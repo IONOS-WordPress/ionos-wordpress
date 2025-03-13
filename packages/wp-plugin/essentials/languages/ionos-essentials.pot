@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-12T08:01:25+00:00\n"
+"POT-Creation-Date: 2025-03-13T15:50:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -130,66 +130,6 @@ msgstr ""
 msgid "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
 msgstr ""
 
-#: build/dashboard/blocks/quick-links/config.php:7
-msgid "Add new page"
-msgstr ""
-
-#: build/dashboard/blocks/quick-links/config.php:8
-msgid "Add new post"
-msgstr ""
-
-#: build/dashboard/blocks/quick-links/config.php:9
-msgid "Discover plugins"
-msgstr ""
-
-#: build/dashboard/blocks/quick-links/config.php:10
-msgid "Edit template"
-msgstr ""
-
-#: build/dashboard/blocks/quick-links/config.php:11
-msgid "Edit navigation"
-msgstr ""
-
-#: build/dashboard/blocks/quick-links/render.php:13
-msgid "Quick Links"
-msgstr ""
-
-#: build/dashboard/blocks/quick-links/render.php:14
-msgid "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
-msgstr ""
-
-#: build/dashboard/blocks/vulnerability/render.php:36
-msgid "critical issue found"
-msgid_plural "critical issues found"
-msgstr[0] ""
-msgstr[1] ""
-
-#: build/dashboard/blocks/vulnerability/render.php:46
-msgid "warning found"
-msgid_plural "warnings found"
-msgstr[0] ""
-msgstr[1] ""
-
-#: build/dashboard/blocks/vulnerability/render.php:57
-msgid "issues found"
-msgstr ""
-
-#: build/dashboard/blocks/vulnerability/render.php:62
-msgid "Last scan"
-msgstr ""
-
-#: build/dashboard/blocks/vulnerability/render.php:65
-msgid "%s ago"
-msgstr ""
-
-#: build/dashboard/blocks/vulnerability/render.php:82
-msgid "Show full scan report"
-msgstr ""
-
-#: build/dashboard/blocks/vulnerability/render.php:90
-msgid "WPScan not available"
-msgstr ""
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:93
 msgid "Add a page"
 msgstr ""
@@ -241,6 +181,66 @@ msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/index.php:36
 msgid "Not sure what to do now? We have some recommendations for you."
+msgstr ""
+
+#: inc/dashboard/blocks/quick-links/config.php:7
+msgid "Add new page"
+msgstr ""
+
+#: inc/dashboard/blocks/quick-links/config.php:8
+msgid "Add new post"
+msgstr ""
+
+#: inc/dashboard/blocks/quick-links/config.php:9
+msgid "Discover plugins"
+msgstr ""
+
+#: inc/dashboard/blocks/quick-links/config.php:10
+msgid "Edit template"
+msgstr ""
+
+#: inc/dashboard/blocks/quick-links/config.php:11
+msgid "Edit navigation"
+msgstr ""
+
+#: inc/dashboard/blocks/quick-links/render.php:13
+msgid "Quick Links"
+msgstr ""
+
+#: inc/dashboard/blocks/quick-links/render.php:14
+msgid "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/render.php:36
+msgid "critical issue found"
+msgid_plural "critical issues found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/dashboard/blocks/vulnerability/render.php:46
+msgid "warning found"
+msgid_plural "warnings found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/dashboard/blocks/vulnerability/render.php:57
+msgid "issues found"
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/render.php:62
+msgid "Last scan"
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/render.php:65
+msgid "%s ago"
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/render.php:82
+msgid "Show full scan report"
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/render.php:90
+msgid "WPScan not available"
 msgstr ""
 
 #: inc/dashboard/index.php:37

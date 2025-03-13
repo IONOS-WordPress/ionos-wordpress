@@ -107,27 +107,27 @@ msgctxt "block description"
 msgid "Show links to common tasks in the WordPress backend."
 msgstr "Show links to common tasks in the WordPress backend."
 
-#: build/dashboard/blocks/quick-links/render.php:13
+#: inc/dashboard/blocks/quick-links/render.php:13
 msgid "Quick Links"
 msgstr "Quick Links"
 
-#: build/dashboard/blocks/quick-links/config.php:7
+#: inc/dashboard/blocks/quick-links/config.php:7
 msgid "Add new page"
 msgstr "Add new page"
 
-#: build/dashboard/blocks/quick-links/config.php:8
+#: inc/dashboard/blocks/quick-links/config.php:8
 msgid "Add new post"
 msgstr "Add new post"
 
-#: build/dashboard/blocks/quick-links/config.php:9
+#: inc/dashboard/blocks/quick-links/config.php:9
 msgid "Discover plugins"
 msgstr "Discover plugins"
 
-#: build/dashboard/blocks/quick-links/config.php:10
+#: inc/dashboard/blocks/quick-links/config.php:10
 msgid "Edit template"
 msgstr "Edit template"
 
-#: build/dashboard/blocks/quick-links/config.php:11
+#: inc/dashboard/blocks/quick-links/config.php:11
 msgid "Edit navigation"
 msgstr "Edit navigation"
 
@@ -184,7 +184,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Show wp scan data."
 
-#: build/dashboard/blocks/vulnerability/render.php:90
+#: inc/dashboard/blocks/vulnerability/render.php:90
 msgid "WPScan not available"
 msgstr "WPScan not available"
 
@@ -192,35 +192,35 @@ msgstr "WPScan not available"
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: build/dashboard/blocks/vulnerability/render.php:82
+#: inc/dashboard/blocks/vulnerability/render.php:82
 msgid "Show full scan report"
 msgstr "Show full scan report"
 
-#: build/dashboard/blocks/vulnerability/render.php:62
+#: inc/dashboard/blocks/vulnerability/render.php:62
 msgid "Last scan"
 msgstr "Last scan"
 
-#: build/dashboard/blocks/vulnerability/render.php:65
+#: inc/dashboard/blocks/vulnerability/render.php:65
 msgid "%s ago"
 msgstr "%s ago"
 
-#: build/dashboard/blocks/vulnerability/render.php:36
+#: inc/dashboard/blocks/vulnerability/render.php:36
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "critical issue found"
 msgstr[1] "critical issues found"
 
-#: build/dashboard/blocks/vulnerability/render.php:46
+#: inc/dashboard/blocks/vulnerability/render.php:46
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "warning found"
 msgstr[1] "warnings found"
 
-#: build/dashboard/blocks/vulnerability/render.php:57
+#: inc/dashboard/blocks/vulnerability/render.php:57
 msgid "issues found"
 msgstr "issues found"
 
-#: build/dashboard/blocks/quick-links/render.php:14
+#: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
 msgstr "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
 
