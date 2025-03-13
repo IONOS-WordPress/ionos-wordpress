@@ -31,6 +31,8 @@ if (is_file(__DIR__ . '/editor.php')) {
   require_once __DIR__ . '/editor.php';
 }
 
+require_once __DIR__ . '/blocks/next-best-actions/index.php';
+
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', __('IONOS Dashboard', 'ionos-essentials'));
 
@@ -107,6 +109,21 @@ if (is_file(__DIR__ . '/editor.php')) {
         $end_marker_pos + strlen(POST_TYPE_TEMPLATE_CONTENT_END_MARKER) - $start_marker_pos
       );
 
+      /*
+        replace <script id="wp-api-fetch-js-after">...</script>
+        with the installation configured settings for api fetch
+
+        this configuration is used when dashboard blocks uses rest calls
+       */
+      global $wp_scripts;
+      $wp_api_fetch_after = $wp_scripts->registered['wp-api-fetch']?->extra['after'] ?? [];
+      $wp_api_fetch_after = implode("\n", $wp_api_fetch_after);
+      $html = preg_replace(
+        '/(<script id="wp-api-fetch-js-after">).*?(<\/script>)/s',
+        '$1' . $wp_api_fetch_after . '$2',
+        $html
+      );
+
       // replace our wp-env url with the actual host url
       $html = str_replace('http://localhost:8888', \get_site_url(), $html);
 
@@ -171,7 +188,7 @@ add_action('init', function () {
     'label' => __('Brand Logo', 'ionos-essentials'),
     'get_value_callback' => function () {
       $tenant = \get_option('ionos_group_brand', "ionos");
-      return "/wp-content/plugins/essentials/inc/dashboard/data/tenant-logos/{$tenant}.svg";
+      return plugin_dir_url( __FILE__ ). "data/tenant-logos/{$tenant}.svg";
     },
   ]);
 });

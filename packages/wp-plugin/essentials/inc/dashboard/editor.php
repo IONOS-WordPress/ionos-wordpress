@@ -10,11 +10,10 @@ namespace ionos_wordpress\essentials\dashboard;
     Additionally, it removes unnecessary feed links from the custom post type page and converts enqueued style files into inline styles.
  */
 
-const POST_TYPE_SLUG = 'custom_dashboard';
+const POST_TYPE_SLUG = 'ionos_dashboard';
 const POST_TYPE_TEMPLATE_SLUG = 'custom-dashboard-template';
 
 const DASHBOARD_POST_TITLE = 'Custom IONOS Dashboard';
-const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
 
 // register our initial custom dashboard post type and register/assign the template with it
 \add_action('init', function () {
@@ -53,7 +52,7 @@ const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
     return;
   }
   // create dashboard posts for all saved dashboards
-  $custom_dashboard_names = array_column(
+  $ionos_dashboard_names = array_column(
     \get_posts([
       'post_type' => POST_TYPE_SLUG,
       'posts_per_page' => -1,
@@ -64,7 +63,7 @@ const DASHBOARD_POST_SLUG = 'custom-ionos-dashboard';
   $dashboard_dirs = array_filter($dashboard_dirs, fn ($dir) => is_file($dir . '/post_content.html'));
   foreach ($dashboard_dirs as $dir) {
     $name = basename($dir);
-    if (in_array($name, $custom_dashboard_names, true)) {
+    if (in_array($name, $ionos_dashboard_names, true)) {
       continue;
     }
     \wp_insert_post([

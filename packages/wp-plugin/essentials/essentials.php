@@ -27,12 +27,6 @@ defined('ABSPATH') || exit();
   fn () => \load_plugin_textdomain(domain: 'ionos-essentials', plugin_rel_path: basename(__DIR__) . '/languages/')
 );
 
-\add_action('init', function (): void {
-  $translated_text = \__('Hello World !', 'ionos-essentials');
-  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-  error_log($translated_text);
-});
-
 /*
 // @DEBUG: ENABLE ONLY WHEN DEBUGGING PLUGIN UPDATE CHECKS
 if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false) {
@@ -188,8 +182,10 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   return $result;
 }, 10, 3);
 
-if (is_file(__DIR__ . '/inc/dashboard/index.php')) {
-  require_once __DIR__ . '/inc/dashboard/index.php';
+require_once __DIR__ . '/inc/dashboard/index.php';
+
+if (is_file(__DIR__ . '/inc/switch-page/index.php')) {
+  require_once __DIR__ . '/inc/switch-page/index.php';
 }
 
 /*
