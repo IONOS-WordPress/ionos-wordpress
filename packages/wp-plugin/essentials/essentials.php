@@ -6,7 +6,7 @@
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
- * Version:           0.0.4
+ * Version:           3.0.4
  * Update URI:        https://api.github.com/repos/IONOS-WordPress/ionos-wordpress/releases
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials
  * License:           GPL-2.0-or-later
@@ -18,6 +18,10 @@
 
 namespace ionos_wordpress\essentials;
 
+use stdClass;
+use WP_Upgrader;
+
+const PLUGIN_FILE = __FILE__;
 const PLUGIN_DIR = __DIR__;
 
 defined('ABSPATH') || exit();
@@ -182,11 +186,12 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   return $result;
 }, 10, 3);
 
+// features
+require_once __DIR__ . '/inc/switch-page/index.php';
 require_once __DIR__ . '/inc/dashboard/index.php';
 
-if (is_file(__DIR__ . '/inc/switch-page/index.php')) {
-  require_once __DIR__ . '/inc/switch-page/index.php';
-}
+// soc plugin components
+require_once __DIR__ . '/inc/migration/index.php';
 
 /*
 [
