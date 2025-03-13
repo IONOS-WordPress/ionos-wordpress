@@ -1,4 +1,5 @@
-<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
+<div class="wp-block-group"><!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
 <div class="wp-block-group"><!-- wp:image {"width":"237px","height":"auto","sizeSlug":"large","metadata":{"bindings":{"url":{"source":"ionos-essentials/tenant-logo-src"}}}} -->
 <figure class="wp-block-image size-large is-resized"><img src="https://www.ionos-group.com/fileadmin/brands/logos-centered/ionos.svg" alt="" style="width:237px;height:auto"/></figure>
 <!-- /wp:image -->
@@ -6,6 +7,17 @@
 <!-- wp:heading {"level":1} -->
 <h1 class="wp-block-heading">Dashboard</h1>
 <!-- /wp:heading --></div>
+<!-- /wp:group -->
+
+<!-- wp:buttons {"fontSize":"large","layout":{"type":"flex","justifyContent":"right","orientation":"horizontal","verticalAlignment":"center","flexWrap":"wrap"}} -->
+<div class="wp-block-buttons has-custom-font-size has-large-font-size"><!-- wp:button {"textAlign":"center","width":75} -->
+<div class="wp-block-button has-custom-width wp-block-button__width-75"><a class="wp-block-button__link has-text-align-center wp-element-button"><img class="wp-image-308" style="width: 18px;" src="http://localhost:8888/wp-content/uploads/2025/03/icons8-wordpress-48.png" alt="">   View Site</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"textAlign":"center","width":75} -->
+<div class="wp-block-button has-custom-width wp-block-button__width-75"><a class="wp-block-button__link has-text-align-center wp-element-button"><img class="wp-image-308" style="width: 18px;" src="http://localhost:8888/wp-content/uploads/2025/03/icons8-wordpress-48.png" alt=""> Start AI Stup</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
 <!-- /wp:group -->
 
 <!-- wp:group {"align":"wide","style":{"spacing":{"blockGap":"0"},"dimensions":{"minHeight":"0px"}},"layout":{"type":"constrained","contentSize":"","wideSize":"","justifyContent":"center"}} -->
@@ -20,8 +32,8 @@
 <!-- /wp:group -->
 
 <!-- wp:columns {"style":{"border":{"width":"0px","style":"none"}}} -->
-<div class="wp-block-columns" style="border-style:none;border-width:0px"><!-- wp:column {"className":"is-style-default","style":{"border":{"radius":"24px","color":"#bcc8d4","width":"1px"}}} -->
-<div class="wp-block-column is-style-default has-border-color" style="border-color:#bcc8d4;border-width:1px;border-radius:24px"><!-- wp:heading -->
+<div class="wp-block-columns" style="border-style:none;border-width:0px"><!-- wp:column {"className":"is-style-default","style":{"border":{"radius":"24px"},"color":{"background":"#f4f7fa"}}} -->
+<div class="wp-block-column is-style-default has-background" style="border-radius:24px;background-color:#f4f7fa"><!-- wp:heading -->
 <h2 class="wp-block-heading">Next best action 1</h2>
 <!-- /wp:heading -->
 
@@ -40,8 +52,8 @@
 <!-- /wp:buttons --></div>
 <!-- /wp:column -->
 
-<!-- wp:column {"className":"is-style-default","style":{"border":{"radius":"24px","color":"#bcc8d4","width":"1px"}}} -->
-<div class="wp-block-column is-style-default has-border-color" style="border-color:#bcc8d4;border-width:1px;border-radius:24px"><!-- wp:heading -->
+<!-- wp:column {"className":"is-style-default","style":{"border":{"radius":"24px"},"color":{"background":"#f4f7fa"}}} -->
+<div class="wp-block-column is-style-default has-background" style="border-radius:24px;background-color:#f4f7fa"><!-- wp:heading -->
 <h2 class="wp-block-heading">Next best action 1</h2>
 <!-- /wp:heading -->
 
@@ -60,8 +72,8 @@
 <!-- /wp:buttons --></div>
 <!-- /wp:column -->
 
-<!-- wp:column {"className":"is-style-default","style":{"border":{"radius":"24px","color":"#bcc8d4","width":"1px"}}} -->
-<div class="wp-block-column is-style-default has-border-color" style="border-color:#bcc8d4;border-width:1px;border-radius:24px"><!-- wp:heading -->
+<!-- wp:column {"className":"is-style-default","style":{"border":{"radius":"24px"},"color":{"background":"#f4f7fa"}}} -->
+<div class="wp-block-column is-style-default has-background" style="border-radius:24px;background-color:#f4f7fa"><!-- wp:heading -->
 <h2 class="wp-block-heading">Next best action 1</h2>
 <!-- /wp:heading -->
 
@@ -84,49 +96,47 @@
 
 <!-- wp:columns -->
 <div class="wp-block-columns"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">1 Column wide block</h3>
+<div class="wp-block-column"><!-- wp:heading -->
+<h2 class="wp-block-heading">What's new block</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Description of this one column wide block, which is smaller than two columns.</p>
+<p>The new update brought some new blocks into the dashboard:</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">A nice button</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons --></div>
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"},"margin":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
+<div class="wp-block-group" style="margin-top:var(--wp--preset--spacing--30);margin-bottom:var(--wp--preset--spacing--30);padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><!-- wp:list -->
+<ul class="wp-block-list"><!-- wp:list-item {"fontSize":"small"} -->
+<li class="has-small-font-size">Feature A</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item {"fontSize":"small"} -->
+<li class="has-small-font-size">Feature B</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item {"fontSize":"small"} -->
+<li class="has-small-font-size">Feature C</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:image {"width":"100px","sizeSlug":"large"} -->
+<figure class="wp-block-image size-large is-resized"><img src="https://img.icons8.com/?size=100&amp;id=12023&amp;format=png&amp;color=000000" alt="" style="width:100px"/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:group --></div>
 <!-- /wp:column -->
 
 <!-- wp:column {"width":"62%"} -->
-<div class="wp-block-column" style="flex-basis:62%"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">A block which is 2 columns wide</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Description of this block with a lot of space to provoct some spacing in the other boxes so we can adjust the height.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Button</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons --></div>
+<div class="wp-block-column" style="flex-basis:62%"><!-- wp:ionos-dashboard-page/deep-links /--></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
 
 <!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:ionos-dashboard-page/deep-links /--></div>
+<div class="wp-block-columns"><!-- wp:column {"width":"62%"} -->
+<div class="wp-block-column" style="flex-basis:62%"><!-- wp:ionos-dashboard-page/quick-links /--></div>
 <!-- /wp:column -->
 
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:ionos-dashboard-page/quick-links /--></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:ionos-dashboard-page/vulnerability /--></div>
+<!-- wp:column {"style":{"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"}}}} -->
+<div class="wp-block-column" style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><!-- wp:ionos-dashboard-page/vulnerability /--></div>
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
 

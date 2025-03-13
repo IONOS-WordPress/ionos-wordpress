@@ -9,8 +9,7 @@ http://localhost:8888/wp-admin/admin.php?page=custom-page
 
 ### edit dashboard
 
-http://localhost:8888/wp-admin/edit.php?post_type=custom_dashboard
-custom-ionos-dashboard -> edit
+http://localhost:8888/wp-admin/edit.php?post_type=ionos_dashboard
 
 ## concepts
 
@@ -27,11 +26,11 @@ For simply being able to view the dashboard (our MVP customer use case), the mai
 ### custom post type
 
 When editing a dashboard, it is a post of a custom post type and can be edited with any _block theme_ active.
-To get a clean dashboard with just the content, our own Template is used: "custom_dashboard/"block-template.php".
+To get a clean dashboard with just the content, our own Template is used: `packages/wp-plugin/essentials/inc/dashboard/data/block-template.php`.
 
 ### dashboard files
 
-The dashboards can be found in the "custom_dashboard/" dir in which there will be one dir for each dashboard. They are initially read from here and also saved to the dir.
+The dashboards can be found in the `packages/wp-plugin/essentials/inc/dashboard/data/` dir in which there will be one dir for each dashboard. They are initially read from here and also saved to the dir.
 
 Every dashboard consists of at least two files:
 
@@ -52,6 +51,23 @@ When viewing a dashboard, the two parts can be put together like this:
 
 This allows the user to have any theme active and customize it without having an effect on the look of the dashboard.
 
-### example dynamic block
+## development snippets
 
-As a proof of the concept, a simple "clock-block" is used on the dashboard to show that the server side rendering works.
+some interesting commands / instructions useful for development can be found here.
+
+### load dashboard post from file
+
+deleting the dashboard post in `/wp-admin/edit.php?post_type=ionos_dashboard` will immediately recreate the dashboard with content loaded from file
+
+### load dashboard global styles from global-styles.json
+
+> [!WARNING]
+> make sure the changes you did locally in the site-editor are saved to file !
+
+`pnpm wp-env run cli wp post delete $(pnpm -s wp-env run cli wp post list --post_type=wp_global_styles --format=ids) --force`
+
+afterwards reload any wp-admin page
+
+### reset nba actions
+
+`pnpm wp-env run cli wp option delete ionos_nba_status`

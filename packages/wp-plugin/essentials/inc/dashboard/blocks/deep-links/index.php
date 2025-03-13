@@ -37,25 +37,42 @@ function render_callback() {
 
   if ($data) {
     $template = '
-        <h3>%s</h3>
-        <ul class="wp-block-list">%s</ul>';
+    <div class="wp-block-column deep-links">
+        <h3 class="wp-block-heading">%s</h3>
+        <p>%s</p>
+      <div class="wp-block-group">
+      %s
+      </div>
+    </div>';
 
     $headline = \esc_html__('Deep-Links', 'ionos-essentials');
+    $description =  \esc_html__('Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color.', 'ionos-essentials');
 
     $body = '';
     foreach ($data['links'] as $link) {
       $body .= sprintf(
-        '<li><a href="%s" target="_blank">%s</a></li>',
+        '<div class="wp-block-group has-background element">
+          <a class="element-link" href="%s" target="_blank">
+            <p class="has-text-align-center has-small-font-size">%s</p>
+          </a>
+        </div>',
         \esc_url($data['domain'] . $link['url']),
         \esc_html($link['anchor'])
       );
     }
 
     if (!empty($body)) {
-      return sprintf($template, $headline, $body);
+      return sprintf(
+        $template,
+        $headline,
+        $description,
+        $body
+      );
     }
   }
 }
+
+
 
 \add_action('ionos_dashboard__register_nba_element', function () {
   $data = get_deep_links_data();
@@ -71,3 +88,4 @@ function render_callback() {
     completed: strpos(home_url(), 'live-website.com') === false && strpos(home_url(), 'localhost') === false,
   );
 });
+
