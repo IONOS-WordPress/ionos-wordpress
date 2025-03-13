@@ -126,31 +126,31 @@ msgstr "Aktuella erbjudanden"
 msgid "Deep-Links"
 msgstr "Djupa länkar"
 
-#: build/dashboard/blocks/quick-links/config.php:7
+#: inc/dashboard/blocks/quick-links/config.php:7
 msgid "Add new page"
 msgstr "Lägg till ny sida"
 
-#: build/dashboard/blocks/quick-links/config.php:8
+#: inc/dashboard/blocks/quick-links/config.php:8
 msgid "Add new post"
 msgstr "Lägg till nytt inlägg"
 
-#: build/dashboard/blocks/quick-links/config.php:9
+#: inc/dashboard/blocks/quick-links/config.php:9
 msgid "Discover plugins"
 msgstr "Upptäck plugins"
 
-#: build/dashboard/blocks/quick-links/config.php:10
+#: inc/dashboard/blocks/quick-links/config.php:10
 msgid "Edit template"
 msgstr "Redigera mall"
 
-#: build/dashboard/blocks/quick-links/config.php:11
+#: inc/dashboard/blocks/quick-links/config.php:11
 msgid "Edit navigation"
 msgstr "Redigera navigering"
 
-#: build/dashboard/blocks/quick-links/render.php:13
+#: inc/dashboard/blocks/quick-links/render.php:13
 msgid "Quick Links"
 msgstr "Snabblänkar"
 
-#: inc/dashboard/index.php:35
+#: inc/dashboard/index.php:37
 msgid "IONOS Dashboard"
 msgstr "IONOS instrumentpanel"
 
@@ -184,7 +184,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Visa wp-skanningsdata."
 
-#: build/dashboard/blocks/vulnerability/render.php:90
+#: inc/dashboard/blocks/vulnerability/render.php:90
 msgid "WPScan not available"
 msgstr "WPScan inte tillgänglig"
 
@@ -192,35 +192,35 @@ msgstr "WPScan inte tillgänglig"
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: build/dashboard/blocks/vulnerability/render.php:82
+#: inc/dashboard/blocks/vulnerability/render.php:82
 msgid "Show full scan report"
 msgstr "Visa fullständig felsökning"
 
-#: build/dashboard/blocks/vulnerability/render.php:62
+#: inc/dashboard/blocks/vulnerability/render.php:62
 msgid "Last scan"
 msgstr "Senaste felsökning"
 
-#: build/dashboard/blocks/vulnerability/render.php:65
+#: inc/dashboard/blocks/vulnerability/render.php:65
 msgid "%s ago"
 msgstr "för %s sedan"
 
-#: build/dashboard/blocks/vulnerability/render.php:36
+#: inc/dashboard/blocks/vulnerability/render.php:36
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiskt fel hittades"
 msgstr[1] "kritiska fel hittades"
 
-#: build/dashboard/blocks/vulnerability/render.php:46
+#: inc/dashboard/blocks/vulnerability/render.php:46
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "varning hittad"
 msgstr[1] "varningar hittade"
 
-#: build/dashboard/blocks/vulnerability/render.php:57
+#: inc/dashboard/blocks/vulnerability/render.php:57
 msgid "issues found"
 msgstr "fel hittade"
 
-#: build/dashboard/blocks/quick-links/render.php:14
+#: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
 msgstr "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
 

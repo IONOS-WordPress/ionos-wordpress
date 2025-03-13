@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos_wordpress\essentials\dashboard\blocks\quick_links;
+namespace ionos_wordpress\essentials\inc\dashboard\blocks\quick_links;
 
 $blog_url = \get_bloginfo('url');
 $links = [
