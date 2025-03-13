@@ -4,3 +4,4 @@ inc/dashboard/editor.php
 inc/dashboard/block-template.php
 inc/dashboard/global-styles.json
 inc/dashboard/README.md
+inc/migration/README.md
