@@ -32,6 +32,8 @@ if (is_file(__DIR__ . '/editor.php')) {
 }
 
 require_once __DIR__ . '/blocks/next-best-actions/index.php';
+require_once __DIR__ . '/blocks/deep-links/index.php';
+
 
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', __('IONOS Dashboard', 'ionos-essentials'));
@@ -40,7 +42,6 @@ require_once __DIR__ . '/blocks/next-best-actions/index.php';
     PLUGIN_DIR . '/build/dashboard/blocks',
     PLUGIN_DIR . '/build/dashboard/blocks/blocks-manifest.php'
   );
-  \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/deep-links');
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/quick-links');
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/vulnerability');
 });

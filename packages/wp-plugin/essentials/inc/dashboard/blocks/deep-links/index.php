@@ -1,0 +1,91 @@
+<?php
+
+namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
+
+use const ionos_wordpress\essentials\PLUGIN_DIR;
+
+\add_action('init', function () {
+  \register_block_type(
+    PLUGIN_DIR . '/build/dashboard/blocks/deep-links',
+    [
+      'render_callback' => 'ionos_wordpress\essentials\dashboard\blocks\deep_links\render_callback'
+    ]
+  );
+});
+
+function get_deep_links_data() {
+  $tenant = strtolower(\get_option('ionos_group_brand', false));
+  $config_file = __DIR__ . '/config/' . $tenant . '.php';
+
+  if (! $tenant || ! file_exists($config_file)) {
+    return null;
+  }
+
+  require $config_file;
+
+  $market = strtolower(\get_option($tenant . '_market', 'de'));
+  $domain = $market_domains[$market] ?? reset($market_domains);
+
+  return [
+    'links' => $links,
+    'domain' => $domain,
+  ];
+}
+
+function render_callback() {
+  $data = get_deep_links_data();
+
+  if ($data) {
+    $template = '
+    <div class="wp-block-column deep-links">
+        <h3 class="wp-block-heading">%s</h3>
+        <p>%s</p>
+      <div class="wp-block-group">
+      %s
+      </div>
+    </div>';
+
+    $headline = \esc_html__('Deep-Links', 'ionos-essentials');
+    $description =  \esc_html__('Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color.', 'ionos-essentials');
+
+    $body = '';
+    foreach ($data['links'] as $link) {
+      $body .= sprintf(
+        '<div class="wp-block-group has-background element">
+          <a class="element-link" href="%s" target="_blank">
+            <p class="has-text-align-center has-small-font-size">%s</p>
+          </a>
+        </div>',
+        \esc_url($data['domain'] . $link['url']),
+        \esc_html($link['anchor'])
+      );
+    }
+
+    if (!empty($body)) {
+      return sprintf(
+        $template,
+        $headline,
+        $description,
+        $body
+      );
+    }
+  }
+}
+
+
+
+\add_action('ionos_dashboard__register_nba_element', function () {
+  $data = get_deep_links_data();
+
+  if (! $data) {
+    return null;
+  }
+  \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\NBA::register(
+    id: 'connectYourDomain',
+    title: \esc_html__('Connect your domain', 'ionos-essentials'),
+    description: \esc_html__('Connect your domain to your website to make it accessible to your visitors.', 'ionos-essentials'),
+    link: \esc_url($data['domain']),
+    completed: strpos(home_url(), 'live-website.com') === false && strpos(home_url(), 'localhost') === false,
+  );
+});
+
