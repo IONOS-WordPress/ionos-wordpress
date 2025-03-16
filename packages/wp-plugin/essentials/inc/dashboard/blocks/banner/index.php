@@ -19,7 +19,7 @@ function render_callback()
   <div id="ionos-dashboard__essentials_banner" class="wp-block-group is-content-justification-space-between is-nowrap is-layout-flex wp-container-core-group-is-layout-2 wp-block-group-is-layout-flex">
     <div class="wp-block-group is-nowrap is-layout-flex wp-container-core-group-is-layout-1 wp-block-group-is-layout-flex">
     <figure class="wp-block-image size-large is-resized">
-        <img src="http://localhost:8888/wp-content/plugins/essentials/inc/dashboard/data/tenant-logos/%s" alt="" style="width:237px;height:auto">
+        <img src="%s" alt="" style="width:237px;height:auto">
     </figure>
     </div>
     <div class="wp-block-buttons has-custom-font-size has-large-font-size is-horizontal is-content-justification-right is-layout-flex wp-container-core-buttons-is-layout-1 wp-block-buttons-is-layout-flex">
@@ -45,9 +45,16 @@ function render_callback()
         <img class="wp-image-308" style="width: 18px;" src="http://localhost:8888/wp-content/uploads/2025/03/icons8-wordpress-48.png" alt="">
         Launch Again
       </a>
-    </div>' : '';
+    </div>' :
+    '';
 
-  return \sprintf($template, 'ionos.svg', $re_launch);
+  return \sprintf($template, getLogo(), $re_launch);
+}
+
+function getLogo()
+{
+  $tenant = \get_option('ionos_group_brand', "ionos");
+  return \plugin_dir_url( PLUGIN_DIR . "/inc/dashboard/data/tenant-logos/rubbeldiekatz/" ) . "{$tenant}.svg";
 }
 
 function canRunLaunchAgain()
