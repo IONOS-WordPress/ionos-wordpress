@@ -41,7 +41,9 @@ function render_callback()
 
   $re_launch = canRunLaunchAgain() ? '
     <div class="wp-block-button has-custom-width wp-block-button__width-75">
-      <a href="' . \admin_url( "admin.php?page=extendify-launch" ) . '" class="wp-block-button__link has-text-align-center wp-element-button">
+      <a href="' . \admin_url(
+    'admin.php?page=extendify-launch'
+  ) . '" class="wp-block-button__link has-text-align-center wp-element-button">
         <img class="wp-image-308" style="width: 18px;" src="http://localhost:8888/wp-content/uploads/2025/03/icons8-wordpress-48.png" alt="">
         Launch Again
       </a>
@@ -53,25 +55,25 @@ function render_callback()
 
 function getLogo()
 {
-  $tenant = \get_option('ionos_group_brand', "ionos");
-  return \plugin_dir_url( PLUGIN_DIR . "/inc/dashboard/data/tenant-logos/rubbeldiekatz/" ) . "{$tenant}.svg";
+  $tenant = \get_option('ionos_group_brand', 'ionos');
+  return \plugin_dir_url(PLUGIN_DIR . '/inc/dashboard/data/tenant-logos/rubbeldiekatz/') . "{$tenant}.svg";
 }
 
 function canRunLaunchAgain()
 {
-  if (\get_option('stylesheet') !== 'extendable') {
+  if ('extendable' !== \get_option('stylesheet')) {
     return false;
   }
 
   $launchCompleted = \get_option('extendify_onboarding_completed', false);
-  if (!$launchCompleted) {
+  if (! $launchCompleted) {
     return false;
   }
 
   try {
     $datetime1 = new \DateTime($launchCompleted);
-    $interval = $datetime1->diff(new \DateTime());
-    return $interval->format('%d') <= 2;
+    $interval  = $datetime1->diff(new \DateTime());
+    return 2 >= $interval->format('%d');
   } catch (\Exception $exception) {
     return false;
   }
