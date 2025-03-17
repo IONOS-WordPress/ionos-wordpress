@@ -1,13 +1,3 @@
-## Introduction
-
-I had no chance to test the setup on MacOS yet.
-
-**But:** I have tested the setup on 2 Linux machines - my developer machine and a Laptop from 2012 with 8GB RAM.
-
-Works
-
-![ionos-wordpress in action on a 2012 Laptop](./8gb-laptop-20212-ionos-wordpress.gif)
-
 ## Clone repository
 
 `git clone git@github.com:IONOS-WordPress/ionos-wordpress.git`
