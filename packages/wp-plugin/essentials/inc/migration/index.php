@@ -63,7 +63,11 @@ function _install() {
 
     // first time activation
     case false:
-      // @TODO: on first essential request (from "" to "1.0.0" or later) remove loop, journey & navigation if installed
+
+    case version_compare($last_installed_version, '1.0.0', '<'):
+      \uninstall_plugin('ionos-loop/ionos-loop.php');
+      \uninstall_plugin('ionos-journey/ionos-journey.php');
+      \uninstall_plugin('ionos-navigation/ionos-navigation.php');
 
     //   /*
     //     example migration cases:
