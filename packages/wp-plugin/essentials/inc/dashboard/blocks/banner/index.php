@@ -24,9 +24,10 @@ const MAIN_TEMPLATE = '<div class="wp-block-buttons has-custom-font-size has-lar
 function render_callback()
 {
   $button_list = [
-    ['link' => '#', 'target' => '_top', 'text' => \esc_html__('Start AI Sitebuilder', 'ionos-essentials')],
-    ['link' => '#', 'target' => '_top', 'text' => \esc_html__('Manage Hosting', 'ionos-essentials')],
+    ['link' => \home_url(), 'target' => '_top', 'text' => \__('View Site', 'ionos-essentials')],
   ];
+
+  $button_list = \apply_filters( 'ionos_dashboard_banner__register_button', $button_list );
 
   $button_list = \array_merge($button_list, get_ai_button());
   $button_html = \implode('', \array_map(__NAMESPACE__ . '\format_button', $button_list));
@@ -47,7 +48,7 @@ function format_button($button)
     BUTTON_TEMPLATE,
     \esc_url($button['link']),
     $button['target'],
-    \esc_html($button['text'], 'ionos-essentials')
+    \esc_html($button['text'])
   );
 }
 
@@ -64,7 +65,7 @@ function get_ai_button()
 
   $launchCompleted = \get_option('extendify_onboarding_completed', false);
   if ($launchCompleted === false) {
-    return [['link' => \admin_url('admin.php?page=extendify-launch'), 'target' => '_top', 'text' => \esc_html__('Start AI Sitebuilder', 'ionos-essentials')]];
+    return [['link' => \admin_url('admin.php?page=extendify-launch'), 'target' => '_top', 'text' => \__('Start AI Sitebuilder', 'ionos-essentials')]];
   }
 
   try {
@@ -72,7 +73,7 @@ function get_ai_button()
     $interval = $datetime1->diff(new \DateTime());
 
     if ($interval->days <= 2) {
-      return [['link' => \admin_url('admin.php?page=extendify-launch'), 'target' => '_top', 'text' => \esc_html__('Retry AI', 'ionos-essentials')]];
+      return [['link' => \admin_url('admin.php?page=extendify-launch'), 'target' => '_top', 'text' => \__('Retry AI', 'ionos-essentials')]];
     }
   } catch (\Exception $exception) {
     // Handle exception if needed
