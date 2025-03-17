@@ -13,6 +13,11 @@ use const ionos_wordpress\essentials\PLUGIN_DIR;
   );
 });
 
+/**
+ * Get the data for the current tenant.
+ *
+ * @return array|null
+ */
 function get_deep_links_data()
 {
   $tenant      = strtolower(\get_option('ionos_group_brand', false));
@@ -37,38 +42,40 @@ function render_callback()
 {
   $data = get_deep_links_data();
 
-  if ($data) {
-    $template = '
-    <div class="wp-block-column deep-links">
-        <h3 class="wp-block-heading">%s</h3>
-        <p>%s</p>
-      <div class="wp-block-group">
-      %s
-      </div>
-    </div>';
+  if (null === $data) {
+    return null;
+  }
 
-    $headline    = \esc_html__('Deep-Links', 'ionos-essentials');
-    $description = \esc_html__(
-      'Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color.',
-      'ionos-essentials'
+  $template = '
+  <div class="wp-block-column deep-links">
+      <h3 class="wp-block-heading">%s</h3>
+      <p>%s</p>
+    <div class="wp-block-group">
+    %s
+    </div>
+  </div>';
+
+  $headline    = \esc_html__('Deep-Links', 'ionos-essentials');
+  $description = \esc_html__(
+    'Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color.',
+    'ionos-essentials'
+  );
+
+  $body = '';
+  foreach ($data['links'] as $link) {
+    $body .= sprintf(
+      '<div class="wp-block-group has-background element">
+        <a class="element-link" href="%s" target="_blank">
+          <p class="has-text-align-center has-small-font-size">%s</p>
+        </a>
+      </div>',
+      \esc_url($data['domain'] . $link['url']),
+      \esc_html($link['anchor'])
     );
+  }
 
-    $body = '';
-    foreach ($data['links'] as $link) {
-      $body .= sprintf(
-        '<div class="wp-block-group has-background element">
-          <a class="element-link" href="%s" target="_blank">
-            <p class="has-text-align-center has-small-font-size">%s</p>
-          </a>
-        </div>',
-        \esc_url($data['domain'] . $link['url']),
-        \esc_html($link['anchor'])
-      );
-    }
-
-    if (! empty($body)) {
-      return sprintf($template, $headline, $description, $body);
-    }
+  if (! empty($body)) {
+    return sprintf($template, $headline, $description, $body);
   }
 }
 
