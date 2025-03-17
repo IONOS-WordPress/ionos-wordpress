@@ -4,27 +4,27 @@ namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
 
 $links = [
   [
-    'url' => 'subscriptions?filter.contract=any&filter.type=any',
+    'url'    => 'subscriptions?filter.contract=any&filter.type=any',
     'anchor' => __('Contracts & Subscriptions', 'ionos-essentials'),
   ],
   [
-    'url' => 'account-security',
+    'url'    => 'account-security',
     'anchor' => __('Login & Account security', 'ionos-essentials'),
   ],
   [
-    'url' => 'invoices',
+    'url'    => 'invoices',
     'anchor' => __('Invoices & Payment Details', 'ionos-essentials'),
   ],
   [
-    'url' => 'privacy-overview',
+    'url'    => 'privacy-overview',
     'anchor' => __('Data Protection & Privacy Notice', 'ionos-essentials'),
   ],
   [
-    'url' => 'address',
+    'url'    => 'address',
     'anchor' => __('Contact Details', 'ionos-essentials'),
   ],
   [
-    'url' => 'account/edit-customerprofile',
+    'url'    => 'account/edit-customerprofile',
     'anchor' => __('Profile Details', 'ionos-essentials'),
   ],
 ];
