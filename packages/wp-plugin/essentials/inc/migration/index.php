@@ -91,6 +91,7 @@ function _install() {
     \update_option(
       option : WP_OPTION_LAST_INSTALL_DATA,
       value: $current_install_data,
-      autoload: true);
+      autoload: true
+    );
   }
 }
