@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos_wordpress\essentials\inc\dashboard\blocks\quick_links;
+namespace ionos_wordpress\essentials\dashboard\blocks\quick_links;
 
 $config_file = __DIR__ . '/config.php';
 
