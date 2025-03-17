@@ -11,5 +11,5 @@ based on the last installed version it can then run the necessary migration step
 to test the migration, you can reset the current installed version using
 
 ```sh
-pnpm wp-env run cli wp option delete ionos-essentials-last-installed-version`
+pnpm wp-env run cli wp option delete ionos-essentials-last-install-data
 ```
