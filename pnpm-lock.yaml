@@ -135,17 +135,17 @@ importers:
         specifier: ^8.6.4
         version: 8.6.4(prettier@3.5.3)
       stylelint:
-        specifier: ^16.15.0
-        version: 16.15.0(typescript@5.6.2)
+        specifier: ^16.16.0
+        version: 16.16.0(typescript@5.6.2)
       stylelint-config-recommended-scss:
         specifier: ^14.1.0
-        version: 14.1.0(postcss@8.5.3)(stylelint@16.15.0(typescript@5.6.2))
+        version: 14.1.0(postcss@8.5.3)(stylelint@16.16.0(typescript@5.6.2))
       stylelint-prettier:
         specifier: ^5.0.3
-        version: 5.0.3(prettier@3.5.3)(stylelint@16.15.0(typescript@5.6.2))
+        version: 5.0.3(prettier@3.5.3)(stylelint@16.16.0(typescript@5.6.2))
       stylelint-scss:
         specifier: ^6.11.1
-        version: 6.11.1(stylelint@16.15.0(typescript@5.6.2))
+        version: 6.11.1(stylelint@16.16.0(typescript@5.6.2))
 
   packages/docker/dennis-i18n: {}
 
@@ -2473,9 +2473,6 @@ packages:
 
   '@types/node@22.13.10':
     resolution: {integrity: sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw==}
-
-  '@types/node@22.13.9':
-    resolution: {integrity: sha512-acBjXdRJ3A6Pb3tqnw9HZmyR3Fiol3aGxRCK1x3d+6CDAMjl7I649wpSd+yNURCjbOUGu9tqtLKnTGxmK6CyGw==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -5041,8 +5038,8 @@ packages:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}
     engines: {node: '>=0.10.0'}
 
-  hookified@1.7.1:
-    resolution: {integrity: sha512-OXcdHsXeOiD7OJ5zvWj8Oy/6RCdLwntAX+wUrfemNcMGn6sux4xbEHi2QXwqePYhjQ/yvxxq2MvCRirdlHscBw==}
+  hookified@1.8.1:
+    resolution: {integrity: sha512-GrO2l93P8xCWBSTBX9l2BxI78VU/MAAYag+pG8curS3aBGy0++ZlxrQ7PdUOUVMbn5BwkGb6+eRrnf43ipnFEA==}
 
   hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
@@ -5770,8 +5767,8 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
-  keyv@5.3.1:
-    resolution: {integrity: sha512-13hQT2q2VIwOoaJdJa7nY3J8UVbYtMTJFHnwm9LI+SaQRfUiM6Em9KZeOVTCKbMnGcRIL3NSUFpAdjZCq24nLQ==}
+  keyv@5.3.2:
+    resolution: {integrity: sha512-Lji2XRxqqa5Wg+CHLVfFKBImfJZ4pCSccu9eVWK6w4c2SDFLd8JAn1zqTuSFnsxb7ope6rMsnIHfp+eBbRBRZQ==}
 
   kind-of@2.0.1:
     resolution: {integrity: sha512-0u8i1NZ/mg0b+W3MGGw5I7+6Eib2nx72S/QvXa0hYjEkjTknYmEYQJwGu3mLC0BrhtJjtQafTkyRUQ75Kx0LVg==}
@@ -6207,8 +6204,8 @@ packages:
     resolution: {integrity: sha512-WWdIxpyjEn+FhQJQQv9aQAYlHoNVdzIzUySNV1gHUPDSdZJ3yZn7pAAbQcV7B56Mvu881q9FZV+0Vx2xC44VWA==}
     engines: {node: ^18.17.0 || >=20.5.0}
 
-  nanoid@3.3.9:
-    resolution: {integrity: sha512-SppoicMGpZvbF1l3z4x7No3OlIjP7QJvC9XR7AhZr1kL133KHnKPztkKDc+Ir4aJ/1VhTySrtKhrsycmrMQfvg==}
+  nanoid@3.3.10:
+    resolution: {integrity: sha512-vSJJTG+t/dIKAUhUDw/dLdZ9s//5OxcHqLaDWWrW4Cdq7o6tdLIczUkMXt2MBNmk6sJRZBZRXVixs7URY1CmIg==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
@@ -7615,8 +7612,8 @@ packages:
     peerDependencies:
       stylelint: ^16.0.2
 
-  stylelint@16.15.0:
-    resolution: {integrity: sha512-OK6Rs7EPdcdmjqiDycadZY4fw3f5/TC1X6/tGjnF3OosbwCeNs7nG+79MCAtjEg7ckwqTJTsku08e0Rmaz5nUw==}
+  stylelint@16.16.0:
+    resolution: {integrity: sha512-40X5UOb/0CEFnZVEHyN260HlSSUxPES+arrUphOumGWgXERHfwCD0kNBVILgQSij8iliYVwlc0V7M5bcLP9vPg==}
     engines: {node: '>=18.12.0'}
     hasBin: true
 
@@ -10952,7 +10949,7 @@ snapshots:
     dependencies:
       storybook: 8.6.4(prettier@3.5.3)
 
-  '@stylistic/stylelint-plugin@3.1.2(stylelint@16.15.0(typescript@5.6.2))':
+  '@stylistic/stylelint-plugin@3.1.2(stylelint@16.16.0(typescript@5.6.2))':
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.4(@csstools/css-tokenizer@3.0.3)
       '@csstools/css-tokenizer': 3.0.3
@@ -10961,7 +10958,7 @@ snapshots:
       postcss-selector-parser: 6.1.2
       postcss-value-parser: 4.2.0
       style-search: 0.1.0
-      stylelint: 16.15.0(typescript@5.6.2)
+      stylelint: 16.16.0(typescript@5.6.2)
 
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0(@babel/core@7.25.7)':
     dependencies:
@@ -11310,11 +11307,6 @@ snapshots:
     dependencies:
       undici-types: 6.20.0
 
-  '@types/node@22.13.9':
-    dependencies:
-      undici-types: 6.20.0
-    optional: true
-
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/parse-json@4.0.2': {}
@@ -11394,7 +11386,7 @@ snapshots:
 
   '@types/webpack@5.28.5(@swc/core@1.11.8)(esbuild@0.25.1)(webpack-cli@5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.98.0))':
     dependencies:
-      '@types/node': 22.13.9
+      '@types/node': 22.13.10
       tapable: 2.2.1
       webpack: 5.98.0(@swc/core@1.11.8)(esbuild@0.25.1)(webpack-cli@5.1.4)
     transitivePeerDependencies:
@@ -12067,7 +12059,7 @@ snapshots:
       '@wordpress/npm-package-json-lint-config': 5.19.0(npm-package-json-lint@6.4.0(typescript@5.6.2))
       '@wordpress/postcss-plugins-preset': 5.19.0(postcss@8.5.3)
       '@wordpress/prettier-config': 4.19.0(wp-prettier@3.0.3)
-      '@wordpress/stylelint-config': 23.11.0(postcss@8.5.3)(stylelint@16.15.0(typescript@5.6.2))
+      '@wordpress/stylelint-config': 23.11.0(postcss@8.5.3)(stylelint@16.16.0(typescript@5.6.2))
       adm-zip: 0.5.16
       babel-jest: 29.7.0(@babel/core@7.25.7)
       babel-loader: 9.2.1(@babel/core@7.25.7)(webpack@5.98.0)
@@ -12110,7 +12102,7 @@ snapshots:
       sass-loader: 16.0.5(sass@1.85.1)(webpack@5.98.0)
       schema-utils: 4.3.0
       source-map-loader: 3.0.2(webpack@5.98.0)
-      stylelint: 16.15.0(typescript@5.6.2)
+      stylelint: 16.16.0(typescript@5.6.2)
       terser-webpack-plugin: 5.3.14(@swc/core@1.11.8)(esbuild@0.25.1)(webpack@5.98.0)
       url-loader: 4.1.1(webpack@5.98.0)
       webpack: 5.98.0(@swc/core@1.11.8)(esbuild@0.25.1)(webpack-cli@5.1.4)
@@ -12146,12 +12138,12 @@ snapshots:
       - webpack-hot-middleware
       - webpack-plugin-serve
 
-  '@wordpress/stylelint-config@23.11.0(postcss@8.5.3)(stylelint@16.15.0(typescript@5.6.2))':
+  '@wordpress/stylelint-config@23.11.0(postcss@8.5.3)(stylelint@16.16.0(typescript@5.6.2))':
     dependencies:
-      '@stylistic/stylelint-plugin': 3.1.2(stylelint@16.15.0(typescript@5.6.2))
-      stylelint: 16.15.0(typescript@5.6.2)
-      stylelint-config-recommended: 14.0.1(stylelint@16.15.0(typescript@5.6.2))
-      stylelint-config-recommended-scss: 14.1.0(postcss@8.5.3)(stylelint@16.15.0(typescript@5.6.2))
+      '@stylistic/stylelint-plugin': 3.1.2(stylelint@16.16.0(typescript@5.6.2))
+      stylelint: 16.16.0(typescript@5.6.2)
+      stylelint-config-recommended: 14.0.1(stylelint@16.16.0(typescript@5.6.2))
+      stylelint-config-recommended-scss: 14.1.0(postcss@8.5.3)(stylelint@16.16.0(typescript@5.6.2))
     transitivePeerDependencies:
       - postcss
 
@@ -12692,8 +12684,8 @@ snapshots:
 
   cacheable@1.8.9:
     dependencies:
-      hookified: 1.7.1
-      keyv: 5.3.1
+      hookified: 1.8.1
+      keyv: 5.3.2
 
   call-bind-apply-helpers@1.0.2:
     dependencies:
@@ -14340,7 +14332,7 @@ snapshots:
     dependencies:
       cacheable: 1.8.9
       flatted: 3.3.3
-      hookified: 1.7.1
+      hookified: 1.8.1
 
   flat@5.0.2: {}
 
@@ -14696,7 +14688,7 @@ snapshots:
     dependencies:
       parse-passwd: 1.0.0
 
-  hookified@1.7.1: {}
+  hookified@1.8.1: {}
 
   hosted-git-info@2.8.9: {}
 
@@ -15620,7 +15612,7 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  keyv@5.3.1:
+  keyv@5.3.2:
     dependencies:
       '@keyv/serialize': 1.0.3
 
@@ -16029,7 +16021,7 @@ snapshots:
 
   mute-stream@2.0.0: {}
 
-  nanoid@3.3.9: {}
+  nanoid@3.3.10: {}
 
   natural-compare@1.4.0: {}
 
@@ -16598,7 +16590,7 @@ snapshots:
 
   postcss@8.5.3:
     dependencies:
-      nanoid: 3.3.9
+      nanoid: 3.3.10
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -17558,26 +17550,26 @@ snapshots:
       postcss: 8.5.3
       postcss-selector-parser: 6.1.2
 
-  stylelint-config-recommended-scss@14.1.0(postcss@8.5.3)(stylelint@16.15.0(typescript@5.6.2)):
+  stylelint-config-recommended-scss@14.1.0(postcss@8.5.3)(stylelint@16.16.0(typescript@5.6.2)):
     dependencies:
       postcss-scss: 4.0.9(postcss@8.5.3)
-      stylelint: 16.15.0(typescript@5.6.2)
-      stylelint-config-recommended: 14.0.1(stylelint@16.15.0(typescript@5.6.2))
-      stylelint-scss: 6.11.1(stylelint@16.15.0(typescript@5.6.2))
+      stylelint: 16.16.0(typescript@5.6.2)
+      stylelint-config-recommended: 14.0.1(stylelint@16.16.0(typescript@5.6.2))
+      stylelint-scss: 6.11.1(stylelint@16.16.0(typescript@5.6.2))
     optionalDependencies:
       postcss: 8.5.3
 
-  stylelint-config-recommended@14.0.1(stylelint@16.15.0(typescript@5.6.2)):
+  stylelint-config-recommended@14.0.1(stylelint@16.16.0(typescript@5.6.2)):
     dependencies:
-      stylelint: 16.15.0(typescript@5.6.2)
+      stylelint: 16.16.0(typescript@5.6.2)
 
-  stylelint-prettier@5.0.3(prettier@3.5.3)(stylelint@16.15.0(typescript@5.6.2)):
+  stylelint-prettier@5.0.3(prettier@3.5.3)(stylelint@16.16.0(typescript@5.6.2)):
     dependencies:
       prettier: 3.5.3
       prettier-linter-helpers: 1.0.0
-      stylelint: 16.15.0(typescript@5.6.2)
+      stylelint: 16.16.0(typescript@5.6.2)
 
-  stylelint-scss@6.11.1(stylelint@16.15.0(typescript@5.6.2)):
+  stylelint-scss@6.11.1(stylelint@16.16.0(typescript@5.6.2)):
     dependencies:
       css-tree: 3.1.0
       is-plain-object: 5.0.0
@@ -17587,9 +17579,9 @@ snapshots:
       postcss-resolve-nested-selector: 0.1.6
       postcss-selector-parser: 7.1.0
       postcss-value-parser: 4.2.0
-      stylelint: 16.15.0(typescript@5.6.2)
+      stylelint: 16.16.0(typescript@5.6.2)
 
-  stylelint@16.15.0(typescript@5.6.2):
+  stylelint@16.16.0(typescript@5.6.2):
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.4(@csstools/css-tokenizer@3.0.3)
       '@csstools/css-tokenizer': 3.0.3
