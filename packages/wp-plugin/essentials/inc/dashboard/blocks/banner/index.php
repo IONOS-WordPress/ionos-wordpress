@@ -52,7 +52,7 @@ function render_callback()
 
   $re_launch = canRunLaunchAgain() ? sprintf(<<<HTML
         <div class="wp-block-button has-custom-width wp-block-button__width-75">
-            <a href="%s" class="wp-block-button__link has-text-align-center wp-element-button">
+            <a href="%s" target="_top" class="wp-block-button__link has-text-align-center wp-element-button">
                 <img class="wp-image-308" style="width: %dpx;" src="http://localhost:8888/wp-content/uploads/2025/03/icons8-wordpress-48.png" alt="">
                 Launch Again
             </a>
@@ -81,14 +81,22 @@ function getLogo()
  */
 function canRunLaunchAgain()
 {
+  // Check if the current theme is Extendable.
   if ('extendable' !== \get_option('stylesheet')) {
     return false;
   }
-
-  $launchCompleted = \get_option('extendify_onboarding_completed', false);
-  if (! $launchCompleted) {
+  // Check if the Extendify plugin is active.
+  if (! \is_plugin_active('extendify/extendify.php')) {
     return false;
   }
+
+
+  // Check if the launch was completed within the last 2 days.
+  $launchCompleted = \get_option('extendify_onboarding_completed', false);
+  if (! $launchCompleted) {
+    return true;
+  }
+
 
   try {
     $datetime1 = new \DateTime($launchCompleted);
