@@ -4,10 +4,8 @@ namespace ionos_wordpress\essentials\dashboard\blocks\banner;
 
 use const ionos_wordpress\essentials\PLUGIN_DIR;
 
-const LOGO_PATH      = '/essentials/inc/dashboard/data/tenant-logos/';
-const DEFAULT_TENANT = 'ionos';
-const IMAGE_WIDTH    = 237;
-const ICON_SIZE      = 18;
+const BUTTON_TEMPLATE = '<div class="wp-block-button has-custom-width wp-block-button__width-75"><a href="%s" target="%s" class="wp-block-button__link has-text-align-center wp-element-button">%s</a></div>';
+const MAIN_TEMPLATE = '<div class="wp-block-buttons has-custom-font-size has-large-font-size is-horizontal is-content-justification-right is-layout-flex wp-container-core-buttons-is-layout-1 wp-block-buttons-is-layout-flex">%s</div>';
 
 \add_action('init', function () {
   \register_block_type(
@@ -25,84 +23,80 @@ const ICON_SIZE      = 18;
  */
 function render_callback()
 {
-  $template = <<<HTML
-    <div id="ionos-dashboard__essentials_banner" class="wp-block-group is-content-justification-space-between is-nowrap is-layout-flex wp-container-core-group-is-layout-2 wp-block-group-is-layout-flex">
-        <div class="wp-block-group is-nowrap is-layout-flex wp-container-core-group-is-layout-1 wp-block-group-is-layout-flex">
-            <figure class="wp-block-image size-large is-resized">
-                <img src="%s" alt="" style="width:%dpx;height:auto">
-            </figure>
-        </div>
-        <div class="wp-block-buttons has-custom-font-size has-large-font-size is-horizontal is-content-justification-right is-layout-flex wp-container-core-buttons-is-layout-1 wp-block-buttons-is-layout-flex">
-            %s
-            <div class="wp-block-button has-custom-width wp-block-button__width-75">
-                <a class="wp-block-button__link has-text-align-center wp-element-button">
-                    <img class="wp-image-308" style="width: %dpx;" src="http://localhost:8888/wp-content/uploads/2025/03/icons8-wordpress-48.png" alt="">
-                    View Site
-                </a>
-            </div>
-            <div class="wp-block-button has-custom-width wp-block-button__width-75">
-                <a class="wp-block-button__link has-text-align-center wp-element-button">
-                    <img class="wp-image-308" style="width: %dpx;" src="http://localhost:8888/wp-content/uploads/2025/03/icons8-wordpress-48.png" alt="">
-                    Start AI Setup
-                </a>
-            </div>
-        </div>
-    </div>
-    HTML;
+  $button_list = [
+    ['link' => '#', 'target' => '_top', 'text' => \esc_html__('Start AI Sitebuilder', 'ionos-essentials')],
+    ['link' => '#', 'target' => '_top', 'text' => \esc_html__('Manage Hosting', 'ionos-essentials')],
+  ];
 
-  $re_launch = canRunLaunchAgain() ? sprintf(<<<HTML
-        <div class="wp-block-button has-custom-width wp-block-button__width-75">
-            <a href="%s" target="_top" class="wp-block-button__link has-text-align-center wp-element-button">
-                <img class="wp-image-308" style="width: %dpx;" src="http://localhost:8888/wp-content/uploads/2025/03/icons8-wordpress-48.png" alt="">
-                Launch Again
-            </a>
-        </div>
-        HTML
-    , \admin_url('admin.php?page=extendify-launch'), ICON_SIZE) : '';
+  $button_list = \array_merge($button_list, get_ai_button());
+  $button_html = \implode('', \array_map(__NAMESPACE__ . '\format_button', $button_list));
 
-  return sprintf($template, getLogo(), IMAGE_WIDTH, $re_launch, ICON_SIZE, ICON_SIZE);
+  return \sprintf(MAIN_TEMPLATE, $button_html);
 }
 
 /**
- * Get the logo URL based on the tenant.
+ * Format a button array into HTML.
+ * Used in array_map.
  *
+ * @param array $button
  * @return string
  */
-function getLogo()
+function format_button($button)
 {
-  $tenant = \get_option('ionos_group_brand', DEFAULT_TENANT);
-  return \plugin_dir_url(PLUGIN_DIR) . LOGO_PATH . $tenant . '.svg';
+  return \sprintf(
+    BUTTON_TEMPLATE,
+    \esc_url($button['link']),
+    $button['target'],
+    \esc_html($button['text'], 'ionos-essentials')
+  );
 }
 
 /**
- * Check if the launch can be run again.
+ * Get AI button based on conditions.
  *
- * @return bool
+ * @return array
  */
-function canRunLaunchAgain()
+function get_ai_button()
 {
-  // Check if the current theme is Extendable.
-  if ('extendable' !== \get_option('stylesheet')) {
-    return false;
-  }
-  // Check if the Extendify plugin is active.
-  if (! \is_plugin_active('extendify/extendify.php')) {
-    return false;
+  if (!is_extendable_theme() || !is_extendify_plugin_active()) {
+    return [];
   }
 
-
-  // Check if the launch was completed within the last 2 days.
   $launchCompleted = \get_option('extendify_onboarding_completed', false);
-  if (! $launchCompleted) {
-    return true;
+  if ($launchCompleted === false) {
+    return [['link' => \admin_url('admin.php?page=extendify-launch'), 'target' => '_top', 'text' => \esc_html__('Start AI Sitebuilder', 'ionos-essentials')]];
   }
-
 
   try {
     $datetime1 = new \DateTime($launchCompleted);
-    $interval  = $datetime1->diff(new \DateTime());
-    return 2 >= $interval->days;
+    $interval = $datetime1->diff(new \DateTime());
+
+    if ($interval->days <= 2) {
+      return [['link' => \admin_url('admin.php?page=extendify-launch'), 'target' => '_top', 'text' => \esc_html__('Retry AI', 'ionos-essentials')]];
+    }
   } catch (\Exception $exception) {
-    return false;
+    // Handle exception if needed
   }
+
+  return [];
+}
+
+/**
+ * Check if the current theme is Extendable.
+ *
+ * @return bool
+ */
+function is_extendable_theme()
+{
+  return 'extendable' === \get_option('stylesheet');
+}
+
+/**
+ * Check if the Extendify plugin is active.
+ *
+ * @return bool
+ */
+function is_extendify_plugin_active()
+{
+  return \is_plugin_active('extendify/extendify.php');
 }
