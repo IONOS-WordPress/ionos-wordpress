@@ -20,6 +20,12 @@ use const ionos_wordpress\essentials\PLUGIN_DIR;
  */
 function get_deep_links_data()
 {
+  static $data = null;
+
+  if ($data !== null) {
+    return $data;
+  }
+
   $tenant      = strtolower(\get_option('ionos_group_brand', false));
   $config_file = __DIR__ . '/config/' . $tenant . '.php';
 
@@ -32,10 +38,12 @@ function get_deep_links_data()
   $market = strtolower(\get_option($tenant . '_market', 'de'));
   $domain = $market_domains[$market] ?? reset($market_domains);
 
-  return [
+  $data = [
     'links'  => $links,
     'domain' => $domain,
   ];
+
+  return $data;
 }
 
 function render_callback()
@@ -78,6 +86,17 @@ function render_callback()
     return sprintf($template, $headline, $description, $body);
   }
 }
+
+\add_filter( 'ionos_dashboard_banner__register_button', function ( $button_list ) {
+  $data = get_deep_links_data();
+
+  $button_list[] = [
+    'link' => $data['domain'],
+    'target' => '_top',
+    'text' => \esc_html__('Manage Hosting', 'ionos-essentials'),
+  ];
+  return $button_list;
+});
 
 \add_action('ionos_dashboard__register_nba_element', function () {
   $data = get_deep_links_data();
