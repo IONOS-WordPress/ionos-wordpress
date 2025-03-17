@@ -19,7 +19,6 @@
 namespace ionos_wordpress\essentials;
 
 use stdClass;
-use WP_Upgrader;
 
 const PLUGIN_FILE = __FILE__;
 const PLUGIN_DIR = __DIR__;

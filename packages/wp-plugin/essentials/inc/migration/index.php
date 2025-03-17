@@ -1,6 +1,8 @@
 <?php
 
-namespace ionos_wordpress\essentials;
+namespace ionos_wordpress\essentials\migration;
+
+use const ionos_wordpress\essentials\PLUGIN_FILE;
 
 /*
  * the migration logic uses an auto loaded option to store the last installed version data
@@ -28,7 +30,7 @@ enum INSTALL_DATA_KEYS: string {
  * we hook our migration into admin-init to check if we were installed/updated
  * and if so, we run the migration.
  *
- * if our plugin once will take effect in published posts, we should hook into
+ * Attention: if our plugin once will take effect in published posts, we should hook into
  * 'init' instead of 'admin-init' to make sure the migration runs always.
  */
 \add_action('admin_init', __NAMESPACE__ . '\_install');
@@ -45,8 +47,8 @@ function _uninstall() {
 }
 
 function _install() {
-  $last_install_data = \get_option(WP_OPTION_LAST_INSTALL_DATA, []);
-  $last_installed_version = $last_install_data[INSTALL_DATA_KEYS::PLUGIN_VERSION->value] ?: false;
+  $last_install_data = \get_option(WP_OPTION_LAST_INSTALL_DATA, false);
+  $last_installed_version = $last_install_data[INSTALL_DATA_KEYS::PLUGIN_VERSION->value] ?? false;
   $current_version = \get_plugin_data(PLUGIN_FILE)['Version'];
 
   $current_install_data = [
@@ -54,27 +56,29 @@ function _install() {
   ];
 
   switch ($last_installed_version) {
-    case false:
-      // first time activation
-      // @TODO: on first essential request (from "" to "1.0.0" or later) remove loop, journey & navigation if installed
-      break;
+    // plugin data match current version
     case $current_version:
       // nothing to do
       break;
 
-      /*
-        example migration cases:
-      */
+    // first time activation
+    case false:
+      // @TODO: on first essential request (from "" to "1.0.0" or later) remove loop, journey & navigation if installed
 
-    case version_compare($last_installed_version, '1.1.0', '<'):
-      // do migration from version $last_installed_version -> 1.1.0
-    case version_compare($last_installed_version, '1.2.0', '<'):
-      // do migration from version 1.1.0 -> 1.2.0
-    case version_compare($last_installed_version, '3.0.0', '<'):
-      // do migration from version 1.2.0 -> 3.0.0
+    //   /*
+    //     example migration cases:
+    //   */
+
+    // case version_compare($last_installed_version, '1.1.0', '<'):
+    //   // do migration from version $last_installed_version -> 1.1.0
+    // case version_compare($last_installed_version, '1.2.0', '<'):
+    //   // do migration from version 1.1.0 -> 1.2.0
+    // case version_compare($last_installed_version, '3.0.0', '<'):
+    //   // do migration from version 1.2.0 -> 3.0.0
+
+    //   /* -- */
+
       break;
-
-      /* -- */
 
     default:
       // handle a unknown version or a version that does not need migration
