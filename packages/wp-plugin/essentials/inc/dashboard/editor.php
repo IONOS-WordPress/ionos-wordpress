@@ -10,7 +10,6 @@ namespace ionos_wordpress\essentials\dashboard;
     Additionally, it removes unnecessary feed links from the custom post type page and converts enqueued style files into inline styles.
  */
 
-const POST_TYPE_SLUG = 'ionos_dashboard';
 const POST_TYPE_TEMPLATE_SLUG = 'custom-dashboard-template';
 
 const DASHBOARD_POST_TITLE = 'Custom IONOS Dashboard';
