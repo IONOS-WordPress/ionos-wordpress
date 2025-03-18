@@ -12,6 +12,5 @@
     "html": false
   },
   "textdomain": "ionos-essentials",
-  "editorScript": "file:./index.js",
-  "style": "file:./style-view.css"
+  "editorScript": "file:./index.js"
 }
