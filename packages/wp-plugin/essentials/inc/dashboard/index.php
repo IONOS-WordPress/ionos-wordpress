@@ -22,6 +22,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 const ADMIN_PAGE_SLUG = 'ionos-essentials-dashboard';
 const HIDDEN_ADMIN_PAGE_IFRAME_SLUG = 'ionos-essentials-dashboard-hidden-admin-page-iframe';
 const ADMIN_PAGE_HOOK = 'toplevel_page_' . ADMIN_PAGE_SLUG;
+const POST_TYPE_SLUG = 'ionos_dashboard';
 
 const POST_TYPE_TEMPLATE_CONTENT_START_MARKER = '<!-- ionos-essentials-dashboard-start-content -->';
 const POST_TYPE_TEMPLATE_CONTENT_END_MARKER = '<!-- ionos-essentials-dashboard-end-content -->';
