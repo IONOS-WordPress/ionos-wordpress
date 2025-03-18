@@ -92,7 +92,7 @@ function render_callback()
 
   $button_list[] = [
     'link'   => $data['domain'],
-    'target' => '_top',
+    'target' => '_blank',
     'text'   => \esc_html__('Manage Hosting', 'ionos-essentials'),
   ];
   return $button_list;
