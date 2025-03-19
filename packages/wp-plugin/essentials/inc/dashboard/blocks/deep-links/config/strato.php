@@ -4,19 +4,19 @@ namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
 
 $links = [
   [
-    'url'    => 'https://www.strato.de/apps/CustomerService?dlink=kds_CustomerEntryPage',
+    'url'    => 'apps/CustomerService?dlink=kds_CustomerEntryPage',
     'anchor' => __('Package overview', 'ionos-essentials'),
   ],
   [
-    'url'    => 'https://www.strato.de/apps/CustomerService?dlink=OnlineInvoice',
+    'url'    => 'apps/CustomerService?dlink=OnlineInvoice',
     'anchor' => __('Your invoices', 'ionos-essentials'),
   ],
   [
-    'url'    => 'https://www.strato.de/apps/CustomerService?dlink=kds_Vertragsbetreuung_2',
+    'url'    => 'apps/CustomerService?dlink=kds_Vertragsbetreuung_2',
     'anchor' => __('Your contract', 'ionos-essentials'),
   ],
   [
-    'url'    => 'https://www.strato.de/apps/CustomerService?dlink=Offers_EntryPage',
+    'url'    => 'apps/CustomerService?dlink=Offers_EntryPage',
     'anchor' => __('Current offers', 'ionos-essentials'),
   ],
 ];
