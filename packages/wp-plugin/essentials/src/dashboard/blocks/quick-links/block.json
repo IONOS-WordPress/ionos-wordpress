@@ -13,6 +13,6 @@
   },
   "textdomain": "ionos-essentials",
   "editorScript": "file:./index.js",
-  "render": "file:./render.php",
+  "render": "file:../../../../inc/dashboard/blocks/quick-links/render.php",
   "style": "file:./index.css"
 }
