@@ -13,7 +13,6 @@ on:
       - closed
       - reopened
       - ready_for_review
-      - review_requested
   pull_request_review:
     types:
       - submitted

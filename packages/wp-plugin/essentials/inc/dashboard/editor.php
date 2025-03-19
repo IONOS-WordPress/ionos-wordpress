@@ -82,7 +82,7 @@ const DASHBOARD_POST_TITLE = 'Custom IONOS Dashboard';
 \add_action(
   hook_name: 'wp_after_insert_post',
   callback: function (int $post_id, \WP_Post $post, bool $update): void {
-    if (POST_TYPE_SLUG !== $post->post_type || ! $update) {
+    if (POST_TYPE_SLUG !== $post->post_type) {
       return;
     }
 
@@ -92,7 +92,7 @@ const DASHBOARD_POST_TITLE = 'Custom IONOS Dashboard';
     }
 
     // only prerender if the post is published
-    if ('publish' === $post->post_status) {
+    if ('publish' === $post->post_status && $update) {
       _persist_dashboard($post);
     }
   },

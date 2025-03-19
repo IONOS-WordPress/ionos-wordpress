@@ -39,118 +39,118 @@ msgstr "Gruppo IONOS"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: build/dashboard/blocks/deep-links/config/arsys.php:8
-#: build/dashboard/blocks/deep-links/config/piensa.php:8
+#: inc/dashboard/blocks/deep-links/config/arsys.php:8
+#: inc/dashboard/blocks/deep-links/config/piensa.php:8
 msgid "My offers"
 msgstr "Le mie offerte"
 
-#: build/dashboard/blocks/deep-links/config/arsys.php:12
+#: inc/dashboard/blocks/deep-links/config/arsys.php:12
 msgid "My data"
 msgstr "I miei dati"
 
-#: build/dashboard/blocks/deep-links/config/arsys.php:16
+#: inc/dashboard/blocks/deep-links/config/arsys.php:16
 msgid "My products"
 msgstr "I miei prodotti"
 
-#: build/dashboard/blocks/deep-links/config/arsys.php:20
+#: inc/dashboard/blocks/deep-links/config/arsys.php:20
 msgid "My invoices"
 msgstr "Le mie fatture"
 
-#: build/dashboard/blocks/deep-links/config/arsys.php:24
-#: build/dashboard/blocks/deep-links/config/fasthosts.php:8
-#: build/dashboard/blocks/deep-links/config/piensa.php:24
+#: inc/dashboard/blocks/deep-links/config/arsys.php:24
+#: inc/dashboard/blocks/deep-links/config/fasthosts.php:8
+#: inc/dashboard/blocks/deep-links/config/piensa.php:24
 msgid "Control Panel"
 msgstr "Pannello di controllo"
 
-#: build/dashboard/blocks/deep-links/config/fasthosts.php:12
+#: inc/dashboard/blocks/deep-links/config/fasthosts.php:12
 msgid "My User"
 msgstr "Il mio utente"
 
-#: build/dashboard/blocks/deep-links/config/fasthosts.php:16
+#: inc/dashboard/blocks/deep-links/config/fasthosts.php:16
 msgid "WordPress Websites"
 msgstr "Siti web WordPress"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:8
+#: inc/dashboard/blocks/deep-links/config/ionos.php:8
 msgid "Contracts & Subscriptions"
 msgstr "Contratti e abbonamenti"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:12
+#: inc/dashboard/blocks/deep-links/config/ionos.php:12
 msgid "Login & Account security"
 msgstr "Accesso e sicurezza dell'account"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:16
+#: inc/dashboard/blocks/deep-links/config/ionos.php:16
 msgid "Invoices & Payment Details"
 msgstr "Fatture e dettagli di pagamento"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:20
+#: inc/dashboard/blocks/deep-links/config/ionos.php:20
 msgid "Data Protection & Privacy Notice"
 msgstr "Informativa sulla protezione dei dati e sulla privacy"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:24
+#: inc/dashboard/blocks/deep-links/config/ionos.php:24
 msgid "Contact Details"
 msgstr "Dettagli di contatto"
 
-#: build/dashboard/blocks/deep-links/config/ionos.php:28
+#: inc/dashboard/blocks/deep-links/config/ionos.php:28
 msgid "Profile Details"
 msgstr "Dettagli del profilo"
 
-#: build/dashboard/blocks/deep-links/config/piensa.php:12
+#: inc/dashboard/blocks/deep-links/config/piensa.php:12
 msgid "Data of customer"
 msgstr "Dati del cliente"
 
-#: build/dashboard/blocks/deep-links/config/piensa.php:16
+#: inc/dashboard/blocks/deep-links/config/piensa.php:16
 msgid "Services"
 msgstr "Servizi"
 
-#: build/dashboard/blocks/deep-links/config/piensa.php:20
+#: inc/dashboard/blocks/deep-links/config/piensa.php:20
 msgid "Invoices"
 msgstr "Fatture"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:8
+#: inc/dashboard/blocks/deep-links/config/strato.php:8
 msgid "Package overview"
 msgstr "Panoramica del pacchetto"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:12
+#: inc/dashboard/blocks/deep-links/config/strato.php:12
 msgid "Your invoices"
 msgstr "Le vostre fatture"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:16
+#: inc/dashboard/blocks/deep-links/config/strato.php:16
 msgid "Your contract"
 msgstr "Il vostro contratto"
 
-#: build/dashboard/blocks/deep-links/config/strato.php:20
+#: inc/dashboard/blocks/deep-links/config/strato.php:20
 msgid "Current offers"
 msgstr "Offerte attuali"
 
-#: build/dashboard/blocks/deep-links/render.php:20
+#: inc/dashboard/blocks/deep-links/index.php:66
 msgid "Deep-Links"
 msgstr "Link profondi"
 
-#: build/dashboard/blocks/quick-links/config.php:7
+#: inc/dashboard/blocks/quick-links/config.php:7
 msgid "Add new page"
 msgstr "Aggiungi una nuova pagina"
 
-#: build/dashboard/blocks/quick-links/config.php:8
+#: inc/dashboard/blocks/quick-links/config.php:8
 msgid "Add new post"
 msgstr "Aggiungi un nuovo post"
 
-#: build/dashboard/blocks/quick-links/config.php:9
+#: inc/dashboard/blocks/quick-links/config.php:9
 msgid "Discover plugins"
 msgstr "Scoprire i plugin"
 
-#: build/dashboard/blocks/quick-links/config.php:10
+#: inc/dashboard/blocks/quick-links/config.php:10
 msgid "Edit template"
 msgstr "Modifica del modello"
 
-#: build/dashboard/blocks/quick-links/config.php:11
+#: inc/dashboard/blocks/quick-links/config.php:11
 msgid "Edit navigation"
 msgstr "Modifica della navigazione"
 
-#: build/dashboard/blocks/quick-links/render.php:13
+#: inc/dashboard/blocks/quick-links/render.php:13
 msgid "Quick Links"
 msgstr "Collegamenti rapidi"
 
-#: inc/dashboard/index.php:35
+#: inc/dashboard/index.php:39
 msgid "IONOS Dashboard"
 msgstr "Cruscotto IONOS"
 
@@ -184,47 +184,48 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Mostra i dati della scansione wp."
 
-#: build/dashboard/blocks/vulnerability/render.php:90
+#: inc/dashboard/blocks/vulnerability/render.php:91
 msgid "WPScan not available"
 msgstr "WPScan non disponibile"
 
-#: inc/dashboard/index.php:188
+#: inc/dashboard/index.php:189
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: build/dashboard/blocks/vulnerability/render.php:82
+#: inc/dashboard/blocks/vulnerability/render.php:83
 msgid "Show full scan report"
 msgstr "Mostra report completo della scansione"
 
-#: build/dashboard/blocks/vulnerability/render.php:62
+#: inc/dashboard/blocks/vulnerability/render.php:62
 msgid "Last scan"
 msgstr "Ultima scansione"
 
-#: build/dashboard/blocks/vulnerability/render.php:65
+#. translators: %s is replaced with the time since the last scan
+#: inc/dashboard/blocks/vulnerability/render.php:66
 msgid "%s ago"
 msgstr "%s fa"
 
-#: build/dashboard/blocks/vulnerability/render.php:36
+#: inc/dashboard/blocks/vulnerability/render.php:36
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problema critico rilevato"
 msgstr[1] "Problemi critici rilevati"
 
-#: build/dashboard/blocks/vulnerability/render.php:46
+#: inc/dashboard/blocks/vulnerability/render.php:46
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "Allarme rilevato"
 msgstr[1] "Allarmi rilevati"
 
-#: build/dashboard/blocks/vulnerability/render.php:57
+#: inc/dashboard/blocks/vulnerability/render.php:57
 msgid "issues found"
 msgstr "Problemi rilevati"
 
-#: build/dashboard/blocks/quick-links/render.php:14
+#: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
 msgstr "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
 
-#: build/dashboard/blocks/deep-links/render.php:21
+#: inc/dashboard/blocks/deep-links/index.php:67
 msgid "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
 msgstr "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
 
@@ -289,4 +290,38 @@ msgstr ""
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block description"
 msgid "Next Best Actions"
+msgstr ""
+
+#: inc/dashboard/blocks/banner/index.php:23
+msgid "View Site"
+msgstr ""
+
+#: inc/dashboard/blocks/banner/index.php:51
+msgid "Start AI Sitebuilder"
+msgstr ""
+
+#: inc/dashboard/blocks/banner/index.php:59
+msgid "Retry AI"
+msgstr ""
+
+#: inc/dashboard/blocks/deep-links/index.php:96
+msgid "Manage Hosting"
+msgstr ""
+
+#: inc/dashboard/blocks/deep-links/index.php:109
+msgid "Connect your domain"
+msgstr ""
+
+#: inc/dashboard/blocks/deep-links/index.php:110
+msgid "Connect your domain to your website to make it accessible to your visitors."
+msgstr ""
+
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block title"
+msgid "Banner"
+msgstr ""
+
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block description"
+msgid "Banner"
 msgstr ""
