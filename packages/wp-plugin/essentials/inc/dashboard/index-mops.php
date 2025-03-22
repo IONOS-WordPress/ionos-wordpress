@@ -22,7 +22,6 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 const ADMIN_PAGE_SLUG = 'ionos-essentials-dashboard';
 const HIDDEN_ADMIN_PAGE_IFRAME_SLUG = 'ionos-essentials-dashboard-hidden-admin-page-iframe';
 const ADMIN_PAGE_HOOK = 'toplevel_page_' . ADMIN_PAGE_SLUG;
-const POST_TYPE_SLUG = 'ionos_dashboard';
 
 const POST_TYPE_TEMPLATE_CONTENT_START_MARKER = '<!-- ionos-essentials-dashboard-start-content -->';
 const POST_TYPE_TEMPLATE_CONTENT_END_MARKER = '<!-- ionos-essentials-dashboard-end-content -->';
@@ -73,6 +72,7 @@ require_once __DIR__ . '/blocks/banner/index.php';
 
 \add_action('admin_menu', function () {
   $tenant_name = \strtolower( \get_option('ionos_group_brand', 'ionos') );
+  $tenant_lable = \get_option('ionos_group_brand_menu', 'IONOS');
   $tenant_icon = '';
 
   // überprüfe ob die datei data/tenant-icons/$tenant_name.svg existiert
@@ -94,8 +94,8 @@ require_once __DIR__ . '/blocks/banner/index.php';
       );
     },
     icon_url   : $tenant_icon,
-    position: 1,
-  );
+    position   : 1,
+    );
 
   // create a sub page rendering the contents of the iframe
   \add_submenu_page(
