@@ -1,0 +1,13 @@
+.banner-buttons {
+  display: flex;
+  justify-content: space-between;;
+  .button {
+    width: 200px !important;
+
+    margin: 0 10px;
+
+    a {
+      width:100% !important;
+    }
+  }
+}

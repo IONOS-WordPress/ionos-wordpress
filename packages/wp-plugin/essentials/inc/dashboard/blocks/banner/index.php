@@ -13,8 +13,8 @@ use const ionos_wordpress\essentials\PLUGIN_DIR;
   );
 });
 
-const MAIN_TEMPLATE   = '<div class="wp-block-buttons has-custom-font-size has-large-font-size is-horizontal is-content-justification-right is-layout-flex wp-container-core-buttons-is-layout-1 wp-block-buttons-is-layout-flex">%s</div>';
-const BUTTON_TEMPLATE = '<div class="wp-block-button has-custom-width wp-block-button__width-75"><a href="%s" target="%s" class="wp-block-button__link has-text-align-center wp-element-button">%s</a></div>';
+const MAIN_TEMPLATE   = '<div class="wp-block-buttons banner-buttons">%s</div>';
+const BUTTON_TEMPLATE = '<div class="wp-block-button button"><a href="%s" target="%s" class="wp-block-button__link has-text-align-center wp-element-button">%s</a></div>';
 function render_callback(): string
 {
   $button_list = [
@@ -39,6 +39,13 @@ function render_callback(): string
 
 function get_ai_button(): array
 {
+
+  return [
+    [
+      'link' => \admin_url('admin.php?page=extendify-launch'),
+      'text' => \__('Start AI Sitebuilder', 'ionos-essentials'),
+    ], ];
+
   if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
     return [];
   }
