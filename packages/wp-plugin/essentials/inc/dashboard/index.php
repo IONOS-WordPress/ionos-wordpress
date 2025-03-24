@@ -19,9 +19,7 @@ if (! defined('ABSPATH')) {
 
 const REQUIRED_USER_CAPABILITIES = 'read';
 
-const ADMIN_PAGE_SLUG = 'ionos-essentials-dashboard';
 const HIDDEN_ADMIN_PAGE_IFRAME_SLUG = 'ionos-essentials-dashboard-hidden-admin-page-iframe';
-const ADMIN_PAGE_HOOK = 'toplevel_page_' . ADMIN_PAGE_SLUG;
 const POST_TYPE_SLUG = 'ionos_dashboard';
 
 const POST_TYPE_TEMPLATE_CONTENT_START_MARKER = '<!-- ionos-essentials-dashboard-start-content -->';
@@ -37,7 +35,31 @@ require_once __DIR__ . '/blocks/deep-links/index.php';
 require_once __DIR__ . '/blocks/banner/index.php';
 
 \add_action('init', function () {
-  define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', __('IONOS Dashboard', 'ionos-essentials'));
+  define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', \get_option('ionos_group_brand_menu', 'IONOS'));
+  define('ADMIN_PAGE_SLUG',  \get_option('ionos_group_brand', 'IONOS'));
+  define('ADMIN_PAGE_HOOK', 'toplevel_page_' . ADMIN_PAGE_SLUG);
+
+  \add_action('load-' . ADMIN_PAGE_HOOK, function () {
+  // inject css into our admin page to make the iframe fullscreen
+  \wp_add_inline_style(
+    'admin-bar',
+    <<<EOF
+    #wpbody {
+        height: calc(100vh - var(--wp-admin--admin-bar--height, '0'));
+        overflow: hidden;
+    }
+    #wpbody-content {
+      height: 100%
+    }
+    #wpfooter {
+      display: none
+    }
+    #wpwrap #wpcontent {
+      margin-left: 140px;
+    }
+    EOF
+  );
+});
 
   \wp_register_block_metadata_collection(
     PLUGIN_DIR . '/build/dashboard/blocks',
@@ -72,9 +94,32 @@ require_once __DIR__ . '/blocks/banner/index.php';
 );
 
 \add_action('admin_menu', function () {
+  $tenant_name = \strtolower(\get_option('ionos_group_brand', 'ionos'));
+  $tenant_icon = '';
+
+  // überprüfe ob die datei data/tenant-icons/$tenant_name.svg existiert
+  $file_path = __DIR__ . "/data/tenant-icons/{$tenant_name}.svg";
+  if (file_exists($file_path)) {
+    $svg         = file_get_contents($file_path);
+    $tenant_icon = 'data:image/svg+xml;base64,' . base64_encode($svg);
+  }
+
+
   \add_menu_page(
     page_title : IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE,
     menu_title : IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE,
+    capability : REQUIRED_USER_CAPABILITIES,
+    menu_slug  : ADMIN_PAGE_SLUG,
+    icon_url   : $tenant_icon,
+    position: 1,
+    // no callback because submenu page renders content
+  );
+
+  // add submenu with same menu_slug as parent so that title of sub is different
+  \add_submenu_page(
+    parent_slug: ADMIN_PAGE_SLUG,
+    page_title : __('Overview', 'ionos-essentials'),
+    menu_title : __('Overview', 'ionos-essentials'),
     capability : REQUIRED_USER_CAPABILITIES,
     menu_slug  : ADMIN_PAGE_SLUG,
     callback   : function () {
@@ -83,8 +128,19 @@ require_once __DIR__ . '/blocks/banner/index.php';
         \esc_attr(\menu_page_url(HIDDEN_ADMIN_PAGE_IFRAME_SLUG, false))
       );
     },
-    position: 1,
   );
+
+  // we stop ionos-library from removing our submenu item
+  add_action( 'admin_menu', function() {
+    global $wp_filter;
+    if (isset($wp_filter['admin_menu']->callbacks[999])) {
+      foreach ($wp_filter['admin_menu']->callbacks[999] as $callback) {
+        if (is_array($callback['function']) && $callback['function'][1] === 'remove_unwanted_submenu_item') {
+          remove_action('admin_menu', $callback['function'], 999);
+        }
+      }
+    }
+  });
 
   // create a sub page rendering the contents of the iframe
   \add_submenu_page(
@@ -134,7 +190,7 @@ require_once __DIR__ . '/blocks/banner/index.php';
       exit();
     }
   );
-});
+}, 1);
 
 // we want to be presented as "default page" in wp-admin
 // redirect to our custom dashboard page if /wp-admin/ is requested
@@ -162,28 +218,6 @@ require_once __DIR__ . '/blocks/banner/index.php';
   },
   accepted_args : 2
 );
-
-\add_action('load-' . ADMIN_PAGE_HOOK, function () {
-  // inject css into our admin page to make the iframe fullscreen
-  \wp_add_inline_style(
-    'admin-bar',
-    <<<EOF
-		#wpbody {
-				height: calc(100vh - var(--wp-admin--admin-bar--height, '0'));
-				overflow: hidden;
-		}
-		#wpbody-content {
-			height: 100%
-		}
-		#wpfooter {
-			display: none
-		}
-		#wpwrap #wpcontent {
-			margin-left: 140px;
-		}
-		EOF
-  );
-});
 
 add_action('init', function () {
   register_block_bindings_source('ionos-essentials/tenant-logo-src', [
