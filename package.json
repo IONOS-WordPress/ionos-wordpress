@@ -14,6 +14,7 @@
     "distclean": "./scripts/distclean.sh",
     "changeset": "./scripts/changeset.sh",
     "release": "./scripts/release.sh",
+    "rector-fix-types": "./scripts/rector-fix-types.sh",
     "lint": "./scripts/lint.sh",
     "lint:php": "./scripts/lint.sh --use php",
     "lint:prettier": "./scripts/lint.sh --use prettier",
