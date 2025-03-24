@@ -94,6 +94,7 @@ function render_callback()
     'link'   => $data['domain'],
     'target' => '_blank',
     'text'   => \esc_html__('Manage Hosting', 'ionos-essentials'),
+    'css-attributes' => 'deeplink',
   ];
   return $button_list;
 });

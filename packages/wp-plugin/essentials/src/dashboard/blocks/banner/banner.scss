@@ -1,13 +1,42 @@
 .banner-buttons {
   display: flex;
-  justify-content: space-between;;
+  justify-content: space-between;
+  margin-top: 0 !important;
+
   .button {
     width: 200px !important;
 
-    margin: 0 10px;
+    margin: 0 10px !important;
 
     a {
       width:100% !important;
+    }
+
+    .viewsite {
+
+    }
+
+    .startai, .retryai {
+      color: #e480f8;
+      border-color: #e480f8 !important;
+      background-color: #fff;
+
+      &:hover {
+        color: #fff !important;
+        border-color: #f0b7fb !important;
+        background-color: #f0b7fb !important;
+      }
+    }
+
+    .deeplink {
+      background-color: #fff;
+      color: #0b2a63;
+
+      &:hover {
+        background-color: #0b2a63 !important;
+        border-color: #0b2a63 !important;
+        color: #fff !important;
+      }
     }
   }
 }
