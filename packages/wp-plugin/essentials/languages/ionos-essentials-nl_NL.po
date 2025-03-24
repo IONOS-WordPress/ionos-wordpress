@@ -122,30 +122,6 @@ msgstr "Uw contract"
 msgid "Current offers"
 msgstr "Huidige aanbiedingen"
 
-#: inc/dashboard/blocks/deep-links/index.php:66
-msgid "Deep-Links"
-msgstr "Dieplinks"
-
-#: inc/dashboard/blocks/quick-links/config.php:7
-msgid "Add new page"
-msgstr "Nieuwe pagina toevoegen"
-
-#: inc/dashboard/blocks/quick-links/config.php:8
-msgid "Add new post"
-msgstr "Nieuwe post toevoegen"
-
-#: inc/dashboard/blocks/quick-links/config.php:9
-msgid "Discover plugins"
-msgstr "Plugins ontdekken"
-
-#: inc/dashboard/blocks/quick-links/config.php:10
-msgid "Edit template"
-msgstr "Sjabloon bewerken"
-
-#: inc/dashboard/blocks/quick-links/config.php:11
-msgid "Edit navigation"
-msgstr "Navigatie bewerken"
-
 #: inc/dashboard/blocks/quick-links/render.php:13
 msgid "Quick Links"
 msgstr "Snelle links"
@@ -221,14 +197,6 @@ msgstr[1] "waarschuwingen gevonden"
 msgid "issues found"
 msgstr "problemen gevonden"
 
-#: inc/dashboard/blocks/quick-links/render.php:14
-msgid "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
-msgstr "Description of this block which is two column wide. This block shows some quick links with a great icon before the text. This text gives information about the links purpose."
-
-#: inc/dashboard/blocks/deep-links/index.php:67
-msgid "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
-msgstr "Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color."
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:93
 msgid "Add a page"
 msgstr ""
@@ -296,11 +264,12 @@ msgstr ""
 msgid "View Site"
 msgstr ""
 
-#: inc/dashboard/blocks/banner/index.php:51
+#: inc/dashboard/blocks/banner/index.php:46
+#: inc/dashboard/blocks/banner/index.php:58
 msgid "Start AI Sitebuilder"
 msgstr ""
 
-#: inc/dashboard/blocks/banner/index.php:59
+#: inc/dashboard/blocks/banner/index.php:66
 msgid "Retry AI"
 msgstr ""
 
@@ -324,4 +293,16 @@ msgstr ""
 #: build/dashboard/blocks/banner/block.json
 msgctxt "block description"
 msgid "Banner"
+msgstr ""
+
+#: inc/dashboard/blocks/deep-links/index.php:66
+msgid "Account Management"
+msgstr ""
+
+#: inc/dashboard/blocks/deep-links/index.php:67
+msgid "One-click access to your customer account, login security and subscriptions"
+msgstr ""
+
+#: inc/dashboard/blocks/quick-links/render.php:14
+msgid "Easily navigate to frequently used features and tools"
 msgstr ""
