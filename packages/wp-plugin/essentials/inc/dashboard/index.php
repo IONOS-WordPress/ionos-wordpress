@@ -21,11 +21,12 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 
 const ADMIN_PAGE_SLUG = 'ionos-essentials-dashboard';
 const HIDDEN_ADMIN_PAGE_IFRAME_SLUG = 'ionos-essentials-dashboard-hidden-admin-page-iframe';
-const ADMIN_PAGE_HOOK = 'toplevel_page_' . ADMIN_PAGE_SLUG;
 const POST_TYPE_SLUG = 'ionos_dashboard';
 
 const POST_TYPE_TEMPLATE_CONTENT_START_MARKER = '<!-- ionos-essentials-dashboard-start-content -->';
 const POST_TYPE_TEMPLATE_CONTENT_END_MARKER = '<!-- ionos-essentials-dashboard-end-content -->';
+
+define('ADMIN_PAGE_HOOK',  strtolower( \get_option('ionos_group_brand', 'ionos') ) . '_page_ionos-essentials-dashboard' );
 
 // if editor feature is available, include the editor file
 if (is_file(__DIR__ . '/editor.php')) {
@@ -37,7 +38,7 @@ require_once __DIR__ . '/blocks/deep-links/index.php';
 require_once __DIR__ . '/blocks/banner/index.php';
 
 \add_action('init', function () {
-  define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', __('IONOS Dashboard', 'ionos-essentials'));
+  define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE',  \get_option('ionos_group_brand_menu', 'IONOS') );
 
   \wp_register_block_metadata_collection(
     PLUGIN_DIR . '/build/dashboard/blocks',
@@ -72,9 +73,35 @@ require_once __DIR__ . '/blocks/banner/index.php';
 );
 
 \add_action('admin_menu', function () {
+  $tenant_name = \strtolower( \get_option('ionos_group_brand', 'ionos') );
+  $tenant_icon = '';
+
+  // überprüfe ob die datei data/tenant-icons/$tenant_name.svg existiert
+  $file_path = __DIR__ . "/data/tenant-icons/{$tenant_name}.svg";
+  if ( file_exists($file_path) ) {
+    $svg = file_get_contents($file_path);
+    $tenant_icon = 'data:image/svg+xml;base64,' . base64_encode($svg );
+  }
+
   \add_menu_page(
     page_title : IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE,
     menu_title : IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE,
+    capability : REQUIRED_USER_CAPABILITIES,
+    menu_slug  : $tenant_name,
+    callback   : function () {
+      printf(
+        '<iframe src="%s&noheader=1" style="width: 100%%; height: 100%%;"></iframe>',
+        \esc_attr(\menu_page_url(HIDDEN_ADMIN_PAGE_IFRAME_SLUG, false))
+      );
+    },
+    icon_url   : $tenant_icon,
+    position: 1,
+  );
+
+  \add_submenu_page(
+    parent_slug: $tenant_name,
+    page_title : __('Dashboard', 'ionos-essentials'),
+    menu_title : __('Dashboard', 'ionos-essentials'),
     capability : REQUIRED_USER_CAPABILITIES,
     menu_slug  : ADMIN_PAGE_SLUG,
     callback   : function () {
@@ -85,6 +112,7 @@ require_once __DIR__ . '/blocks/banner/index.php';
     },
     position: 1,
   );
+
 
   // create a sub page rendering the contents of the iframe
   \add_submenu_page(
