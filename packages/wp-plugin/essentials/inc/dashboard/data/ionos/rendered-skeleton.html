@@ -742,8 +742,84 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 }
 </style>
 <style id='ionos-dashboard-page-next-best-actions-style-inline-css'>
-#ionos-dashboard__essentials_nba{min-height:0}#ionos-dashboard__essentials_nba>.wp-block-group{margin-bottom:15px;margin-top:0;padding:0}#ionos-dashboard__essentials_nba>.wp-block-columns{border-style:none;border-width:0;display:flex;flex-wrap:wrap!important}#ionos-dashboard__essentials_nba>.wp-block-columns>.wp-block-column{border-color:#bcc8d4;border-radius:24px;border-width:1px;box-sizing:border-box;flex:1 1 calc(33.333% - 14px);max-width:calc(33.333% - 14px)}#ionos-dashboard__essentials_nba>.wp-block-columns>.wp-block-column:nth-child(3n+1){margin-left:0}#ionos-dashboard__essentials_nba .dismissed{opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s}
+#ionos-dashboard__essentials_nba{min-height:0;padding:0}#ionos-dashboard__essentials_nba>.wp-block-group{margin-bottom:15px;margin-top:0;padding:0}#ionos-dashboard__essentials_nba>.wp-block-columns{border-style:none;border-width:0;display:flex;flex-wrap:wrap!important;margin-bottom:0!important}#ionos-dashboard__essentials_nba>.wp-block-columns>.wp-block-column{border-color:#bcc8d4;border-radius:24px;border-width:1px;box-sizing:border-box;flex:1 1 calc(33.333% - 14px);max-width:calc(33.333% - 14px)}#ionos-dashboard__essentials_nba>.wp-block-columns>.wp-block-column:nth-child(3n+1){margin-left:0}#ionos-dashboard__essentials_nba .dismissed{opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s}
 
+</style>
+<style id='wp-block-columns-inline-css'>
+.wp-block-columns{
+  align-items:normal !important;
+  box-sizing:border-box;
+  display:flex;
+  flex-wrap:wrap !important;
+}
+@media (min-width:782px){
+  .wp-block-columns{
+    flex-wrap:nowrap !important;
+  }
+}
+.wp-block-columns.are-vertically-aligned-top{
+  align-items:flex-start;
+}
+.wp-block-columns.are-vertically-aligned-center{
+  align-items:center;
+}
+.wp-block-columns.are-vertically-aligned-bottom{
+  align-items:flex-end;
+}
+@media (max-width:781px){
+  .wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column{
+    flex-basis:100% !important;
+  }
+}
+@media (min-width:782px){
+  .wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column{
+    flex-basis:0;
+    flex-grow:1;
+  }
+  .wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column[style*=flex-basis]{
+    flex-grow:0;
+  }
+}
+.wp-block-columns.is-not-stacked-on-mobile{
+  flex-wrap:nowrap !important;
+}
+.wp-block-columns.is-not-stacked-on-mobile>.wp-block-column{
+  flex-basis:0;
+  flex-grow:1;
+}
+.wp-block-columns.is-not-stacked-on-mobile>.wp-block-column[style*=flex-basis]{
+  flex-grow:0;
+}
+
+:where(.wp-block-columns){
+  margin-bottom:1.75em;
+}
+
+:where(.wp-block-columns.has-background){
+  padding:1.25em 2.375em;
+}
+
+.wp-block-column{
+  flex-grow:1;
+  min-width:0;
+  overflow-wrap:break-word;
+  word-break:break-word;
+}
+.wp-block-column.is-vertically-aligned-top{
+  align-self:flex-start;
+}
+.wp-block-column.is-vertically-aligned-center{
+  align-self:center;
+}
+.wp-block-column.is-vertically-aligned-bottom{
+  align-self:flex-end;
+}
+.wp-block-column.is-vertically-aligned-stretch{
+  align-self:stretch;
+}
+.wp-block-column.is-vertically-aligned-bottom,.wp-block-column.is-vertically-aligned-center,.wp-block-column.is-vertically-aligned-top{
+  width:100%;
+}
 </style>
 <style id='ionos-dashboard-page-deep-links-style-inline-css'>
 .wp-block-column.deep-links{padding:0}.wp-block-column.deep-links .wp-block-group{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));margin-bottom:0;margin-top:var(--wp--preset--spacing--20);min-height:0;padding:0}.wp-block-column.deep-links .wp-block-group .element{align-items:center;background-color:#f4f7fa;border-radius:24px;cursor:pointer;display:flex;justify-content:center;margin-bottom:0;margin-top:0;min-height:100px;padding:0}.wp-block-column.deep-links .wp-block-group .element a{align-items:center;display:flex;height:100%;justify-content:center;text-decoration:none;width:100%}.wp-block-column.deep-links .wp-block-group .element a p{font-style:normal;font-weight:500;margin-top:0;width:120px}.wp-block-column.deep-links .wp-block-group .element:hover{background-color:#dbedf8!important}
@@ -821,82 +897,6 @@ ol,ul{
 				ul.is-style-checkmark-list li {
 					padding-inline-start: 1ch;
 				}
-</style>
-<style id='wp-block-columns-inline-css'>
-.wp-block-columns{
-  align-items:normal !important;
-  box-sizing:border-box;
-  display:flex;
-  flex-wrap:wrap !important;
-}
-@media (min-width:782px){
-  .wp-block-columns{
-    flex-wrap:nowrap !important;
-  }
-}
-.wp-block-columns.are-vertically-aligned-top{
-  align-items:flex-start;
-}
-.wp-block-columns.are-vertically-aligned-center{
-  align-items:center;
-}
-.wp-block-columns.are-vertically-aligned-bottom{
-  align-items:flex-end;
-}
-@media (max-width:781px){
-  .wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column{
-    flex-basis:100% !important;
-  }
-}
-@media (min-width:782px){
-  .wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column{
-    flex-basis:0;
-    flex-grow:1;
-  }
-  .wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column[style*=flex-basis]{
-    flex-grow:0;
-  }
-}
-.wp-block-columns.is-not-stacked-on-mobile{
-  flex-wrap:nowrap !important;
-}
-.wp-block-columns.is-not-stacked-on-mobile>.wp-block-column{
-  flex-basis:0;
-  flex-grow:1;
-}
-.wp-block-columns.is-not-stacked-on-mobile>.wp-block-column[style*=flex-basis]{
-  flex-grow:0;
-}
-
-:where(.wp-block-columns){
-  margin-bottom:1.75em;
-}
-
-:where(.wp-block-columns.has-background){
-  padding:1.25em 2.375em;
-}
-
-.wp-block-column{
-  flex-grow:1;
-  min-width:0;
-  overflow-wrap:break-word;
-  word-break:break-word;
-}
-.wp-block-column.is-vertically-aligned-top{
-  align-self:flex-start;
-}
-.wp-block-column.is-vertically-aligned-center{
-  align-self:center;
-}
-.wp-block-column.is-vertically-aligned-bottom{
-  align-self:flex-end;
-}
-.wp-block-column.is-vertically-aligned-stretch{
-  align-self:stretch;
-}
-.wp-block-column.is-vertically-aligned-bottom,.wp-block-column.is-vertically-aligned-center,.wp-block-column.is-vertically-aligned-top{
-  width:100%;
-}
 </style>
 <style id='ionos-dashboard-page-vulnerability-style-inline-css'>
 .vulnerability-block.none,.wp-block-column.none,.wp-block-group.none,.wp-block-image.none{background-color:#edfaef!important;border-color:#edfaef!important}.vulnerability-block.high,.wp-block-column.high,.wp-block-group.high,.wp-block-image.high{background-color:#fcf0f1!important;border-color:#fcf0f1!important}.vulnerability-block.medium,.wp-block-column.medium,.wp-block-group.medium,.wp-block-image.medium{background-color:#fcf9e8!important;border-color:#fcf9e8!important}.vulnerability-block h3,.wp-block-column h3,.wp-block-group h3,.wp-block-image h3{margin-top:0}.vulnerability-block .issue-row,.wp-block-column .issue-row,.wp-block-group .issue-row,.wp-block-image .issue-row{align-items:center;display:flex;font-weight:700;margin-bottom:12px}.vulnerability-block .issue-row .dot,.wp-block-column .issue-row .dot,.wp-block-group .issue-row .dot,.wp-block-image .issue-row .dot{align-items:center;border-radius:50%;display:flex;height:1.5em;justify-content:center;margin-right:12px;width:1.5em}.vulnerability-block .issue-row.high .dot,.wp-block-column .issue-row.high .dot,.wp-block-group .issue-row.high .dot,.wp-block-image .issue-row.high .dot{background-color:#cc1818;color:#fff}.vulnerability-block .issue-row.medium .dot,.wp-block-column .issue-row.medium .dot,.wp-block-group .issue-row.medium .dot,.wp-block-image .issue-row.medium .dot{background-color:#f0b849;color:#757575}.vulnerability-block .issue-row.none .dot,.wp-block-column .issue-row.none .dot,.wp-block-group .issue-row.none .dot,.wp-block-image .issue-row.none .dot{background-color:#4ab866}.vulnerability-block .issue-rows,.wp-block-column .issue-rows,.wp-block-group .issue-rows,.wp-block-image .issue-rows{margin-bottom:24px}.vulnerability-block .issue-rows .last-scan,.wp-block-column .issue-rows .last-scan,.wp-block-group .issue-rows .last-scan,.wp-block-image .issue-rows .last-scan{color:#757575}.vulnerability-block .content,.wp-block-column .content,.wp-block-group .content,.wp-block-image .content{display:flex;justify-content:space-between;margin-top:24px}.vulnerability-block .wp-block-buttons,.wp-block-column .wp-block-buttons,.wp-block-group .wp-block-buttons,.wp-block-image .wp-block-buttons{margin-top:36px}
@@ -1284,17 +1284,20 @@ html :where(.is-position-sticky){
 	flex-wrap: nowrap;
 	justify-content: space-between;
 }
+.wp-container-core-columns-is-layout-1 {
+	flex-wrap: nowrap;
+}
 .wp-container-core-group-is-layout-3 {
 	flex-wrap: nowrap;
 	justify-content: space-between;
-}
-.wp-container-core-columns-is-layout-1 {
-	flex-wrap: nowrap;
 }
 .wp-container-core-columns-is-layout-2 {
 	flex-wrap: nowrap;
 }
 .wp-container-core-columns-is-layout-3 {
+	flex-wrap: nowrap;
+}
+.wp-container-core-columns-is-layout-4 {
 	flex-wrap: nowrap;
 }
 
@@ -1411,13 +1414,13 @@ wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );
 wp.apiFetch.nonceEndpoint = "http://localhost:8888/wp-admin/admin-ajax.php?action=rest-nonce";
 </script>
 <script src="http://localhost:8888/wp-content/plugins/essentials/build/dashboard/blocks/next-best-actions/view.js?ver=44780f80f31246a8f0c7" id="ionos-dashboard-page-next-best-actions-view-script-js" defer data-wp-strategy="defer"></script>
-<link rel="https://api.w.org/" href="http://localhost:8888/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="http://localhost:8888/wp-json/wp/v2/ionos_dashboard/99" /><style class='wp-fonts-local'>
+<link rel="https://api.w.org/" href="http://localhost:8888/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="http://localhost:8888/wp-json/wp/v2/ionos_dashboard/108" /><style class='wp-fonts-local'>
 @font-face{font-family:Manrope;font-style:normal;font-weight:200 800;font-display:fallback;src:url('http://localhost:8888/wp-content/themes/twentytwentyfive/assets/fonts/manrope/Manrope-VariableFont_wght.woff2') format('woff2');}
 @font-face{font-family:"Fira Code";font-style:normal;font-weight:300 700;font-display:fallback;src:url('http://localhost:8888/wp-content/themes/twentytwentyfive/assets/fonts/fira-code/FiraCode-VariableFont_wght.woff2') format('woff2');}
 </style>
 </head>
 
-<body class="ionos_dashboard-template ionos_dashboard-template-custom-dashboard-template single single-ionos_dashboard postid-99 wp-embed-responsive">
+<body class="ionos_dashboard-template ionos_dashboard-template-custom-dashboard-template single single-ionos_dashboard postid-108 wp-embed-responsive">
 
 <div class="wp-site-blocks"><div class="entry-content wp-block-post-content has-global-padding is-layout-constrained wp-block-post-content-is-layout-constrained">
 <!-- ionos-essentials-dashboard-start-content --><!-- ionos-essentials-dashboard-end-content -->
