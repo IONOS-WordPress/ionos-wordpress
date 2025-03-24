@@ -1,5 +1,6 @@
 #ionos-dashboard__essentials_nba {
   min-height: 0px;
+  padding: 0;
 }
 
 #ionos-dashboard__essentials_nba > .wp-block-group {
@@ -16,6 +17,7 @@
   border-width: 0px;
   display: flex;
   flex-wrap: wrap !important;
+  margin-bottom: 0 !important;
 }
 
 #ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column {
