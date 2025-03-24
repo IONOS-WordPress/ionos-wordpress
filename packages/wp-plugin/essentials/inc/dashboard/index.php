@@ -36,14 +36,14 @@ require_once __DIR__ . '/blocks/banner/index.php';
 
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', \get_option('ionos_group_brand_menu', 'IONOS'));
-  define('ADMIN_PAGE_SLUG',  \get_option('ionos_group_brand', 'IONOS'));
+  define('ADMIN_PAGE_SLUG', \get_option('ionos_group_brand', 'IONOS'));
   define('ADMIN_PAGE_HOOK', 'toplevel_page_' . ADMIN_PAGE_SLUG);
 
   \add_action('load-' . ADMIN_PAGE_HOOK, function () {
-  // inject css into our admin page to make the iframe fullscreen
-  \wp_add_inline_style(
-    'admin-bar',
-    <<<EOF
+    // inject css into our admin page to make the iframe fullscreen
+    \wp_add_inline_style(
+      'admin-bar',
+      <<<EOF
     #wpbody {
         height: calc(100vh - var(--wp-admin--admin-bar--height, '0'));
         overflow: hidden;
@@ -58,8 +58,8 @@ require_once __DIR__ . '/blocks/banner/index.php';
       margin-left: 140px;
     }
     EOF
-  );
-});
+    );
+  });
 
   \wp_register_block_metadata_collection(
     PLUGIN_DIR . '/build/dashboard/blocks',
@@ -104,7 +104,6 @@ require_once __DIR__ . '/blocks/banner/index.php';
     $tenant_icon = 'data:image/svg+xml;base64,' . base64_encode($svg);
   }
 
-
   \add_menu_page(
     page_title : IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE,
     menu_title : IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE,
@@ -131,11 +130,11 @@ require_once __DIR__ . '/blocks/banner/index.php';
   );
 
   // we stop ionos-library from removing our submenu item
-  add_action( 'admin_menu', function() {
+  add_action('admin_menu', function () {
     global $wp_filter;
     if (isset($wp_filter['admin_menu']->callbacks[999])) {
       foreach ($wp_filter['admin_menu']->callbacks[999] as $callback) {
-        if (is_array($callback['function']) && $callback['function'][1] === 'remove_unwanted_submenu_item') {
+        if (is_array($callback['function']) && 'remove_unwanted_submenu_item' === $callback['function'][1]) {
           remove_action('admin_menu', $callback['function'], 999);
         }
       }
