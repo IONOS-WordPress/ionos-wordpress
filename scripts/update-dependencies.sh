@@ -52,7 +52,7 @@ function ionos.wordpress.check_pnpm_version() {
   if [[ "$CURRENT_PNPM_VERSION" != "$LATEST_PNPM_VERSION" ]]; then
     ionos.wordpress.log_warn "pnpm version can be updated ($CURRENT_PNPM_VERSION => $LATEST_PNPM_VERSION) manually."
     echo "GIT managed files potentially referencing the current pnpm version '$CURRENT_PNPM_VERSION' are :"
-    git grep -w "${CURRENT_PNPM_VERSION}"
+    git grep -w "${CURRENT_PNPM_VERSION}" || echo "No matches found - your current pnpm version is different from desired version $CURRENT_PNPM_VERSION."
   fi
 }
 
