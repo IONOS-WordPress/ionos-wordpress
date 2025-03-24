@@ -36,7 +36,7 @@ require_once __DIR__ . '/blocks/banner/index.php';
 
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', \get_option('ionos_group_brand_menu', 'IONOS'));
-  define('ADMIN_PAGE_SLUG', \get_option('ionos_group_brand', 'IONOS'));
+  define('ADMIN_PAGE_SLUG', \get_option('ionos_group_brand', 'ionos'));
   define('ADMIN_PAGE_HOOK', 'toplevel_page_' . ADMIN_PAGE_SLUG);
 
   \add_action('load-' . ADMIN_PAGE_HOOK, function () {
@@ -222,7 +222,7 @@ add_action('init', function () {
   register_block_bindings_source('ionos-essentials/tenant-logo-src', [
     'label' => __('Brand Logo', 'ionos-essentials'),
     'get_value_callback' => function () {
-      $tenant = \get_option('ionos_group_brand', "ionos");
+      $tenant = \get_option('ionos_group_brand', 'ionos');
       return plugin_dir_url( __FILE__ ). "data/tenant-logos/{$tenant}.svg";
     },
   ]);
