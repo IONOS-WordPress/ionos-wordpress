@@ -94,7 +94,7 @@ require_once __DIR__ . '/blocks/banner/index.php';
 );
 
 \add_action('admin_menu', function () {
-  $tenant_name = \strtolower(\get_option('ionos_group_brand', 'ionos'));
+  $tenant_name = \get_option('ionos_group_brand', 'ionos');
   $tenant_icon = '';
 
   // überprüfe ob die datei data/tenant-icons/$tenant_name.svg existiert
