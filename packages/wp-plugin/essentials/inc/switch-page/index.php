@@ -57,7 +57,7 @@ function get_brand_lowercase()
     if ($location === \admin_url('admin.php?page=extendify-launch')) {
       return \admin_url('admin.php?page=' . get_brand_lowercase() . '-onboarding');
     } elseif ($location === \admin_url('admin.php?page=extendify-assist')) {
-      return \admin_url('admin.php?page=' . get_brand_lowercase() . '-essentials-dashboard');
+      return \admin_url('admin.php?page=' . strtolower(\get_option('ionos_group_brand_menu', 'ionos')));
     }
 
     return $location;
@@ -68,7 +68,7 @@ function get_brand_lowercase()
 
 \add_action(
   'load-toplevel_page_extendify-assist',
-  fn () => \wp_safe_redirect(\admin_url('admin.php?page=' . get_brand_lowercase() . '-essentials-dashboard'))
+  fn () => \wp_safe_redirect(\admin_url('admin.php?page=' . strtolower(\get_option('ionos_group_brand_menu', 'ionos'))))
 );
 
 \add_filter(
