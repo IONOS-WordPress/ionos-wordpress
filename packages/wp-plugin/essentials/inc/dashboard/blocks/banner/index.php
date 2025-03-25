@@ -44,14 +44,6 @@ function render_callback(): string
 
 function get_ai_button(): array
 {
-
-  return [
-    [
-      'link' => \admin_url('admin.php?page=extendify-launch'),
-      'text' => \__('Start AI Sitebuilder', 'ionos-essentials'),
-      'css-attributes' => 'startai',
-    ], ];
-
   if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
     return [];
   }
