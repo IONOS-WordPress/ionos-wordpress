@@ -415,7 +415,7 @@ EOF
       shopt -s nullglob
 
       # process plugin using rector
-      for RECTOR_CONFIG in ./rector-config-php*.php; do
+      for RECTOR_CONFIG in ./packages/docker/rector-php/rector-config-php*.php; do
         RECTOR_CONFIG=$(basename "$RECTOR_CONFIG" '.php')
         TARGET_PHP_VERSION="${RECTOR_CONFIG#*rector-config-php}"
         TARGET_DIR="dist/${plugin_name}-${PACKAGE_VERSION}-php${TARGET_PHP_VERSION}/${plugin_name}"
@@ -427,7 +427,7 @@ EOF
           --rm \
           --user "$DOCKER_USER" \
           -v $path/$TARGET_DIR:/project/dist \
-          -v $(pwd)/${RECTOR_CONFIG}.php:/project/${RECTOR_CONFIG}.php \
+          -v $(pwd)/packages/docker/rector-php/${RECTOR_CONFIG}.php:/project/${RECTOR_CONFIG}.php \
           ionos-wordpress/rector-php \
           --clear-cache \
           --config "${RECTOR_CONFIG}.php" \

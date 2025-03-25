@@ -63,9 +63,9 @@ function render_callback()
     </div>
   </div>';
 
-  $headline    = \esc_html__('Deep-Links', 'ionos-essentials');
+  $headline    = \esc_html__('Account Management', 'ionos-essentials');
   $description = \esc_html__(
-    'Description of this block which is two column wide. This block shows some deep links inside a box with soft borders and a background color.',
+    'One-click access to your customer account, login security and subscriptions',
     'ionos-essentials'
   );
 
@@ -94,6 +94,7 @@ function render_callback()
     'link'   => $data['domain'],
     'target' => '_blank',
     'text'   => \esc_html__('Manage Hosting', 'ionos-essentials'),
+    'css-attributes' => 'deeplink',
   ];
   return $button_list;
 });

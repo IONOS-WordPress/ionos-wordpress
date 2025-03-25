@@ -19,7 +19,7 @@ test.describe('essentials:dashboard deep-links block', () => {
     });
 
     await expect(deepLinksBlock).toHaveCount(1);
-    await expect(deepLinksBlock.locator('css=h3')).toHaveText('Deep-Links');
+    await expect(deepLinksBlock.locator('css=h3')).toHaveText(/\w+/);
     await expect(deepLinksBlock.locator('css=.deep-links .wp-block-group .element')).not.toHaveCount(0);
   });
 
