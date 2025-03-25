@@ -23,7 +23,7 @@ if (file_exists($config_file)) {
           <p>%s</p>
         </a></div>',
         \esc_url($url),
-        \esc_url(\home_url($_SERVER) . '/wp-content/plugins/essentials/assets/img/' . $anchor['icon']),
+        \esc_url(\plugins_url('assets/img/' . $anchor['icon'], \dirname(__DIR__, 3))),
         \esc_html($anchor['text'])
 
         );
