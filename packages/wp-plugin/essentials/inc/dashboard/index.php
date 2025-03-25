@@ -20,10 +20,10 @@ if (! defined('ABSPATH')) {
 const REQUIRED_USER_CAPABILITIES = 'read';
 
 const HIDDEN_ADMIN_PAGE_IFRAME_SLUG = 'ionos-essentials-dashboard-hidden-admin-page-iframe';
-const POST_TYPE_SLUG = 'ionos_dashboard';
+const POST_TYPE_SLUG                = 'ionos_dashboard';
 
 const POST_TYPE_TEMPLATE_CONTENT_START_MARKER = '<!-- ionos-essentials-dashboard-start-content -->';
-const POST_TYPE_TEMPLATE_CONTENT_END_MARKER = '<!-- ionos-essentials-dashboard-end-content -->';
+const POST_TYPE_TEMPLATE_CONTENT_END_MARKER   = '<!-- ionos-essentials-dashboard-end-content -->';
 
 // if editor feature is available, include the editor file
 if (is_file(__DIR__ . '/editor.php')) {
@@ -36,7 +36,7 @@ require_once __DIR__ . '/blocks/banner/index.php';
 
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', \get_option('ionos_group_brand_menu', 'IONOS'));
-  define('ADMIN_PAGE_SLUG', \get_option('ionos_group_brand', 'ionos'));
+  define('ADMIN_PAGE_SLUG', strtolower(\get_option('ionos_group_brand_menu', 'IONOS')));
   define('ADMIN_PAGE_HOOK', 'toplevel_page_' . ADMIN_PAGE_SLUG);
 
   \add_action('load-' . ADMIN_PAGE_HOOK, function () {
@@ -44,20 +44,20 @@ require_once __DIR__ . '/blocks/banner/index.php';
     \wp_add_inline_style(
       'admin-bar',
       <<<EOF
-    #wpbody {
-        height: calc(100vh - var(--wp-admin--admin-bar--height, '0'));
-        overflow: hidden;
-    }
-    #wpbody-content {
-      height: 100%
-    }
-    #wpfooter {
-      display: none
-    }
-    #wpwrap #wpcontent {
-      margin-left: 140px;
-    }
-    EOF
+        #wpbody {
+            height: calc(100vh - var(--wp-admin--admin-bar--height, '0'));
+            overflow: hidden;
+        }
+        #wpbody-content {
+          height: 100%
+        }
+        #wpfooter {
+          display: none
+        }
+        #wpwrap #wpcontent {
+          margin-left: 140px;
+        }
+        EOF
     );
   });
 
@@ -97,7 +97,6 @@ require_once __DIR__ . '/blocks/banner/index.php';
   $tenant_name = \get_option('ionos_group_brand', 'ionos');
   $tenant_icon = '';
 
-  // überprüfe ob die datei data/tenant-icons/$tenant_name.svg existiert
   $file_path = __DIR__ . "/data/tenant-icons/{$tenant_name}.svg";
   if (file_exists($file_path)) {
     $svg         = file_get_contents($file_path);
@@ -132,6 +131,7 @@ require_once __DIR__ . '/blocks/banner/index.php';
   // we stop ionos-library from removing our submenu item
   add_action('admin_menu', function () {
     global $wp_filter;
+    // ionos-library uses a priority of 999 to remove the submenu item
     if (isset($wp_filter['admin_menu']->callbacks[999])) {
       foreach ($wp_filter['admin_menu']->callbacks[999] as $callback) {
         if (is_array($callback['function']) && 'remove_unwanted_submenu_item' === $callback['function'][1]) {
@@ -151,10 +151,10 @@ require_once __DIR__ . '/blocks/banner/index.php';
     callback   : function () {
       // the logic what dashboard is shown when (e.g. based on tenant) can be implemented here
       $dashboard_name = 'ionos';
-      $html = file_get_contents(__DIR__ . "/data/{$dashboard_name}/rendered-skeleton.html");
+      $html           = file_get_contents(__DIR__ . "/data/{$dashboard_name}/rendered-skeleton.html");
 
       $start_marker_pos = strpos($html, POST_TYPE_TEMPLATE_CONTENT_START_MARKER);
-      $end_marker_pos = strpos($html, POST_TYPE_TEMPLATE_CONTENT_END_MARKER, $start_marker_pos);
+      $end_marker_pos   = strpos($html, POST_TYPE_TEMPLATE_CONTENT_END_MARKER, $start_marker_pos);
 
       $post_content = file_get_contents(__DIR__ . "/data/{$dashboard_name}/post_content.html");
       $post_content = \do_blocks($post_content);
@@ -169,13 +169,12 @@ require_once __DIR__ . '/blocks/banner/index.php';
       /*
         replace <script id="wp-api-fetch-js-after">...</script>
         with the installation configured settings for api fetch
-
         this configuration is used when dashboard blocks uses rest calls
        */
       global $wp_scripts;
       $wp_api_fetch_after = $wp_scripts->registered['wp-api-fetch']?->extra['after'] ?? [];
       $wp_api_fetch_after = implode("\n", $wp_api_fetch_after);
-      $html = preg_replace(
+      $html               = preg_replace(
         '/(<script id="wp-api-fetch-js-after">).*?(<\/script>)/s',
         '$1' . $wp_api_fetch_after . '$2',
         $html
@@ -196,7 +195,7 @@ require_once __DIR__ . '/blocks/banner/index.php';
 \add_action('load-index.php', function () {
   if (\current_user_can(REQUIRED_USER_CAPABILITIES)) {
     $current_url = \home_url($_SERVER['REQUEST_URI']);
-    $admin_url = \get_admin_url();
+    $admin_url   = \get_admin_url();
 
     if ($current_url !== $admin_url) { // only redirect if we are on empty /wp-admin/
       return;
@@ -220,10 +219,10 @@ require_once __DIR__ . '/blocks/banner/index.php';
 
 add_action('init', function () {
   register_block_bindings_source('ionos-essentials/tenant-logo-src', [
-    'label' => __('Brand Logo', 'ionos-essentials'),
+    'label'              => __('Brand Logo', 'ionos-essentials'),
     'get_value_callback' => function () {
       $tenant = \get_option('ionos_group_brand', 'ionos');
-      return plugin_dir_url( __FILE__ ). "data/tenant-logos/{$tenant}.svg";
+      return plugin_dir_url(__FILE__) . "data/tenant-logos/{$tenant}.svg";
     },
   ]);
 });
