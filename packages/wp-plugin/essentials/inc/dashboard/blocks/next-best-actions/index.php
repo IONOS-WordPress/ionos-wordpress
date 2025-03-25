@@ -23,8 +23,8 @@ function render_callback()
 
   $template = '
   <div id="ionos-dashboard__essentials_nba" class="wp-block-group alignwide">
-      <div class="wp-block-group" style="margin-top:0px;margin-bottom:15px;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
-          <h2 class="wp-block-heading">%s</h2>
+      <div class="wp-block-group is-layout-flow" style="margin-top:0px;margin-bottom:15px;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
+          <h3 class="wp-block-heading">%s</h3>
           <p>%s</p>
       </div>
       <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-1 wp-block-columns-is-layout-flex">
@@ -43,8 +43,8 @@ function render_callback()
 
     $target = false === strpos(\esc_url($action->link), home_url()) ? '_blank' : '_top';
     $body .= '
-      <div class="wp-block-column is-style-default has-background" style="border-radius:24px;background-color:#f4f7fa">
-          <h2 class="wp-block-heading">' . \esc_html($action->title, 'ionos-essentials') . '</h2>
+      <div class="wp-block-column is-style-default has-background is-layout-flow" style="border-radius:24px;background-color:#f4f7fa">
+          <h3 class="wp-block-heading">' . \esc_html($action->title, 'ionos-essentials') . '</h3>
           <p>' . \esc_html($action->description, 'ionos-essentials') . '</p>
           <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
               <div class="wp-block-button">
