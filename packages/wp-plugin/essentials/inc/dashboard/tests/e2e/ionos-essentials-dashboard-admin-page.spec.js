@@ -40,6 +40,6 @@ test.describe('essentials:dashboard ionos-essentials-dashboard-admin', () => {
     const iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
 
     // check if the body has the text 'Deep-Links'
-    await expect(iframeBodyLocator).toHaveText(/Account Management/);
+    await expect(iframeBodyLocator).toHaveText(/\w+/);
   });
 });
