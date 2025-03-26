@@ -18,10 +18,8 @@
 
 namespace ionos_wordpress\essentials;
 
-use stdClass;
-
 const PLUGIN_FILE = __FILE__;
-const PLUGIN_DIR = __DIR__;
+const PLUGIN_DIR  = __DIR__;
 
 defined('ABSPATH') || exit();
 
@@ -96,12 +94,12 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   $latest_release_name = end($release_names);
 
   // extract version from release name
-  $_ = explode('@', $latest_release_name);
-  $version = end($_);
+  $_              = explode('@', $latest_release_name);
+  $version        = end($_);
   $latest_release = $releases[$latest_release_name];
 
   // example : '/essentials-0\.\0\.4-php.*\.zip/'
-  $_ = explode('/', $plugin_data['Name']);
+  $_                 = explode('/', $plugin_data['Name']);
   $asset_name_regexp = '/'
     . preg_quote(end($_), '/') // 'ionos-wordpress/essentials' => 'essentials'
     . '-' . preg_quote($version, '/') // '0\.0\.4'
@@ -137,9 +135,9 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   $plugin_data = \get_plugin_data(ABSPATH . 'wp-content/plugins/' . $args->slug, false, false);
 
   $result = (object) [
-    'name' => $plugin_data['Name'],
-    'version' => $plugin_data['Version'],
-    'slug' => $args->slug,
+    'name'     => $plugin_data['Name'],
+    'version'  => $plugin_data['Version'],
+    'slug'     => $args->slug,
     'sections' => [
       'changelog' => '',  // will be filled later
     ],
@@ -163,9 +161,9 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
   }
 
   // extract changelog from response
-  $body = $res['body'];
+  $body  = $res['body'];
   $start = strpos($body, '<article');
-  $end = strpos($body, '</article>', $start);
+  $end   = strpos($body, '</article>', $start);
   if (false === $start || false === $end) {
     // abort gracefully
     // show error message including link in the changelog section
@@ -178,8 +176,8 @@ if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false)
     return $result;
   }
 
-  $article_html = substr($body, $start, $end - $start + strlen('</article>'));
-  $article_html = str_replace('@' . $result->name, $result->name, $article_html);
+  $article_html                  = substr($body, $start, $end - $start + strlen('</article>'));
+  $article_html                  = str_replace('@' . $result->name, $result->name, $article_html);
   $result->sections['changelog'] = $article_html;
 
   return $result;

@@ -19,10 +19,12 @@ use const ionos_wordpress\essentials\PLUGIN_FILE;
  * the value is a associative array with keys from INSTALL_DATA_KEYS
  * we use a array to be able to store multiple values in the future
  */
+
 const WP_OPTION_LAST_INSTALL_DATA = 'ionos-essentials-last-install-data';
 
 // all valid keys for the installation data array
-enum INSTALL_DATA_KEYS: string {
+enum INSTALL_DATA_KEYS: string
+{
   case PLUGIN_VERSION = 'plugin-version';
 }
 
@@ -36,9 +38,10 @@ enum INSTALL_DATA_KEYS: string {
 \add_action('admin_init', __NAMESPACE__ . '\_install');
 
 // can be left off if no uninstall logic is needed
-\register_uninstall_hook(__FILE__,__NAMESPACE__ . '\_uninstall');
+\register_uninstall_hook(__FILE__, __NAMESPACE__ . '\_uninstall');
 
-function _uninstall() {
+function _uninstall()
+{
   // if you want to keep it, you can remove the following line
   // keeping it will bloat the wordpress installation load time even if the plugin is not installed anymore
   \delete_option(WP_OPTION_LAST_INSTALL_DATA);
@@ -46,13 +49,14 @@ function _uninstall() {
   // do whatever is needed to cleanup data of this plugin when it gets uninstalled
 }
 
-function _install() {
-  $last_install_data = \get_option(WP_OPTION_LAST_INSTALL_DATA, false);
+function _install()
+{
+  $last_install_data      = \get_option(WP_OPTION_LAST_INSTALL_DATA, false);
   $last_installed_version = $last_install_data[INSTALL_DATA_KEYS::PLUGIN_VERSION->value] ?? false;
-  $current_version = \get_plugin_data(PLUGIN_FILE)['Version'];
+  $current_version        = \get_plugin_data(PLUGIN_FILE)['Version'];
 
   $current_install_data = [
-    INSTALL_DATA_KEYS::PLUGIN_VERSION->value => $current_version
+    INSTALL_DATA_KEYS::PLUGIN_VERSION->value => $current_version,
   ];
 
   switch ($last_installed_version) {
@@ -61,26 +65,25 @@ function _install() {
       // nothing to do
       break;
 
-    // first time activation
+      // first time activation
     case false:
-
     case version_compare($last_installed_version, '1.0.0', '<'):
       \uninstall_plugin('ionos-loop/ionos-loop.php');
       \uninstall_plugin('ionos-journey/ionos-journey.php');
       \uninstall_plugin('ionos-navigation/ionos-navigation.php');
 
-    //   /*
-    //     example migration cases:
-    //   */
+      //   /*
+      //     example migration cases:
+      //   */
 
-    // case version_compare($last_installed_version, '1.1.0', '<'):
-    //   // do migration from version $last_installed_version -> 1.1.0
-    // case version_compare($last_installed_version, '1.2.0', '<'):
-    //   // do migration from version 1.1.0 -> 1.2.0
-    // case version_compare($last_installed_version, '3.0.0', '<'):
-    //   // do migration from version 1.2.0 -> 3.0.0
+      // case version_compare($last_installed_version, '1.1.0', '<'):
+      //   // do migration from version $last_installed_version -> 1.1.0
+      // case version_compare($last_installed_version, '1.2.0', '<'):
+      //   // do migration from version 1.1.0 -> 1.2.0
+      // case version_compare($last_installed_version, '3.0.0', '<'):
+      //   // do migration from version 1.2.0 -> 3.0.0
 
-    //   /* -- */
+      //   /* -- */
 
       break;
 
@@ -89,17 +92,9 @@ function _install() {
       break;
   }
 
-  if ($last_installed_version === false) {
-    \add_option(
-      option : WP_OPTION_LAST_INSTALL_DATA,
-      value : $current_install_data,
-      autoload: true
-    );
-  } else if($last_installed_version !== $current_version ) {
-    \update_option(
-      option : WP_OPTION_LAST_INSTALL_DATA,
-      value: $current_install_data,
-      autoload: true
-    );
+  if (false === $last_installed_version) {
+    \add_option(option : WP_OPTION_LAST_INSTALL_DATA, value : $current_install_data, autoload: true);
+  } elseif ($last_installed_version !== $current_version) {
+    \update_option(option : WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
   }
 }

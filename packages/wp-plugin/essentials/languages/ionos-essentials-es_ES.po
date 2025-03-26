@@ -114,10 +114,6 @@ msgstr "Ofertas actuales"
 msgid "Quick Links"
 msgstr "Quick Links"
 
-#: inc/dashboard/index.php:39
-msgid "IONOS Dashboard"
-msgstr "Cuadro de mandos de IONOS"
-
 #: build/dashboard/blocks/deep-links/block.json
 msgctxt "block title"
 msgid "Deep Links"
@@ -160,149 +156,153 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Mostrar datos de escaneo wp."
 
-#: inc/dashboard/blocks/vulnerability/render.php:91
+#: inc/dashboard/blocks/vulnerability/render.php:81
 msgid "WPScan not available"
 msgstr "WPScan no disponible"
 
-#: inc/dashboard/index.php:189
+#: inc/dashboard/index.php:222
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: inc/dashboard/blocks/vulnerability/render.php:83
+#: inc/dashboard/blocks/vulnerability/render.php:73
 msgid "Show full scan report"
 msgstr "Mostrar informe completo del escaneo"
 
-#: inc/dashboard/blocks/vulnerability/render.php:62
+#: inc/dashboard/blocks/vulnerability/render.php:52
 msgid "Last scan"
 msgstr "Último escaneo"
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/render.php:66
+#: inc/dashboard/blocks/vulnerability/render.php:56
 msgid "%s ago"
 msgstr "hace %s"
 
-#: inc/dashboard/blocks/vulnerability/render.php:36
+#: inc/dashboard/blocks/vulnerability/render.php:33
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problema crítico detectado"
 msgstr[1] "Problemas críticos detectados"
 
-#: inc/dashboard/blocks/vulnerability/render.php:46
+#: inc/dashboard/blocks/vulnerability/render.php:40
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "Alerta detectada"
 msgstr[1] "Alertas detectadas"
 
-#: inc/dashboard/blocks/vulnerability/render.php:57
+#: inc/dashboard/blocks/vulnerability/render.php:47
 msgid "issues found"
 msgstr "Problemas detectados"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:93
 msgid "Add a page"
-msgstr ""
+msgstr "Añadir una página"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:94
 msgid "Create some content for your website visitor."
-msgstr ""
+msgstr "Cree contenido para el visitante de su sitio web."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:101
 msgid "Add a post"
-msgstr ""
+msgstr "Añadir un puesto"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:102
 msgid "Share your thoughts with your audience."
-msgstr ""
+msgstr "Comparta sus ideas con su público."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:109
 msgid "Edit a post"
-msgstr ""
+msgstr "Editar un mensaje"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:110
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:117
 msgid "Update your content to keep it fresh."
-msgstr ""
+msgstr "Actualice su contenido para mantenerlo fresco."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:116
 msgid "Edit a page"
-msgstr ""
+msgstr "Editar una página"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:123
 msgid "Tell your visitors what your website is about."
-msgstr ""
+msgstr "Explique a sus visitantes de qué trata su sitio web."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:124
 msgid "Add a site description"
-msgstr ""
+msgstr "Añadir una descripción del sitio"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:132
 msgid "Upload a logo"
-msgstr ""
+msgstr "Cargar un logotipo"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:133
 msgid "Make your website more recognizable."
-msgstr ""
+msgstr "Haga que su sitio web sea más reconocible."
 
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Next best actions"
-msgstr ""
+msgstr "Próximas mejores acciones"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:36
 msgid "Not sure what to do now? We have some recommendations for you."
-msgstr ""
+msgstr "¿No sabe qué hacer ahora? Tenemos algunas recomendaciones para usted."
 
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
 msgid "NBA"
-msgstr ""
+msgstr "NBA"
 
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block description"
 msgid "Next Best Actions"
-msgstr ""
+msgstr "Próximas mejores acciones"
 
-#: inc/dashboard/blocks/banner/index.php:23
+#: inc/dashboard/blocks/banner/index.php:25
 msgid "View Site"
-msgstr ""
+msgstr "Ver el sitio"
 
-#: inc/dashboard/blocks/banner/index.php:46
-#: inc/dashboard/blocks/banner/index.php:58
+#: inc/dashboard/blocks/banner/index.php:56
 msgid "Start AI Sitebuilder"
-msgstr ""
+msgstr "Iniciar AI Sitebuilder"
 
-#: inc/dashboard/blocks/banner/index.php:66
+#: inc/dashboard/blocks/banner/index.php:65
 msgid "Retry AI"
-msgstr ""
+msgstr "Reintentar IA"
 
 #: inc/dashboard/blocks/deep-links/index.php:96
 msgid "Manage Hosting"
-msgstr ""
-
-#: inc/dashboard/blocks/deep-links/index.php:109
-msgid "Connect your domain"
-msgstr ""
+msgstr "Gestionar el alojamiento"
 
 #: inc/dashboard/blocks/deep-links/index.php:110
+msgid "Connect your domain"
+msgstr "Conecte su dominio"
+
+#: inc/dashboard/blocks/deep-links/index.php:111
 msgid "Connect your domain to your website to make it accessible to your visitors."
-msgstr ""
+msgstr "Conecte su dominio a su sitio web para hacerlo accesible a sus visitantes."
 
 #: build/dashboard/blocks/banner/block.json
 msgctxt "block title"
 msgid "Banner"
-msgstr ""
+msgstr "Banner"
 
 #: build/dashboard/blocks/banner/block.json
 msgctxt "block description"
 msgid "Banner"
-msgstr ""
+msgstr "Banner"
 
 #: inc/dashboard/blocks/deep-links/index.php:66
 msgid "Account Management"
-msgstr ""
+msgstr "Gestión de cuentas"
 
 #: inc/dashboard/blocks/deep-links/index.php:67
 msgid "One-click access to your customer account, login security and subscriptions"
-msgstr ""
+msgstr "Acceso con un solo clic a su cuenta de cliente, seguridad de inicio de sesión y suscripciones"
 
 #: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Easily navigate to frequently used features and tools"
+msgstr "Navegue fácilmente a las funciones y herramientas más utilizadas"
+
+#: inc/dashboard/index.php:119
+#: inc/dashboard/index.php:120
+msgid "Overview"
 msgstr ""

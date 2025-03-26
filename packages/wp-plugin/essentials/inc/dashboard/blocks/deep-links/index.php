@@ -91,9 +91,9 @@ function render_callback()
   $data = get_deep_links_data();
 
   $button_list[] = [
-    'link'   => $data['domain'],
-    'target' => '_blank',
-    'text'   => \esc_html__('Manage Hosting', 'ionos-essentials'),
+    'link'           => $data['domain'],
+    'target'         => '_blank',
+    'text'           => \esc_html__('Manage Hosting', 'ionos-essentials'),
     'css-attributes' => 'deeplink',
   ];
   return $button_list;

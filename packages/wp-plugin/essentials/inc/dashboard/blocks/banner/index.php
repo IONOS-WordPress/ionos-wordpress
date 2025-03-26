@@ -21,10 +21,10 @@ function render_callback(): string
 
   $view_site = [
     [
-      'link' => \home_url(),
-      'text' => \__('View Site', 'ionos-essentials'),
+      'link'           => \home_url(),
+      'text'           => \__('View Site', 'ionos-essentials'),
       'css-attributes' => 'viewsite',
-    ]
+    ],
   ];
 
   $button_list = \array_merge($button_list, get_ai_button());
@@ -34,7 +34,7 @@ function render_callback(): string
   $button_html = \implode('', \array_map(fn (array $button): string => \sprintf(
     BUTTON_TEMPLATE,
     \esc_url($button['link'] ?? '#'),
-    $button['target'] ?? '_top',
+    $button['target']         ?? '_top',
     $button['css-attributes'] ?? '',
     \esc_html($button['text'] ?? '')
   ), $button_list));
@@ -52,8 +52,8 @@ function get_ai_button(): array
   if (false === $launchCompleted) {
     return [
       [
-        'link' => \admin_url('admin.php?page=extendify-launch'),
-        'text' => \__('Start AI Sitebuilder', 'ionos-essentials'),
+        'link'           => \admin_url('admin.php?page=extendify-launch'),
+        'text'           => \__('Start AI Sitebuilder', 'ionos-essentials'),
         'css-attributes' => 'startai',
       ], ];
   }
@@ -61,8 +61,8 @@ function get_ai_button(): array
   if (strtotime($launchCompleted) > time() - (3 * 24 * 60 * 60)) {
     return [
       [
-        'link' => \admin_url('admin.php?page=extendify-launch'),
-        'text' => \__('Retry AI', 'ionos-essentials'),
+        'link'           => \admin_url('admin.php?page=extendify-launch'),
+        'text'           => \__('Retry AI', 'ionos-essentials'),
         'css-attributes' => 'retryai',
       ], ];
   }
