@@ -1,0 +1,15 @@
+#essentials-welcome_block {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: red;
+  .card__content {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    display: flex;
+    flex-flow: column nowrap;
+    flex-grow: 1;
+  }
+}
