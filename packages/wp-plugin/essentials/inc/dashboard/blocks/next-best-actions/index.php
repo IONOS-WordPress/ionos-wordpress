@@ -51,7 +51,7 @@ function render_callback()
                   <a href="' . \esc_url(
       $action->link
     ) . '" class="wp-block-button__link wp-element-button" target="' . $target . '">' . \esc_html(
-      $action->title,
+      $action->anchor,
       'ionos-essentials'
     ) . '</a>
               </div>
