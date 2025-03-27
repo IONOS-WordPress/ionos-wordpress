@@ -24,6 +24,7 @@ class NBA
     readonly string $id,
     readonly string $title,
     readonly string $description,
+    readonly string $anchor,
     readonly string $link,
     private readonly bool $completed
   ) {
@@ -62,9 +63,9 @@ class NBA
     return self::$actions;
   }
 
-  public static function register($id, $title, $description, $link, $completed = false): void
+  public static function register($id, $title, $description, $anchor, $link, $completed = false): void
   {
-    new self($id, $title, $description, $link, $completed);
+    new self($id, $title, $description, $anchor, $link, $completed);
   }
 
   private static function _get_option()
