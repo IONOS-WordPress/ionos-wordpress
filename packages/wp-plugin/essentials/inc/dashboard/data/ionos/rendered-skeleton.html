@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="de">
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -477,6 +477,10 @@ p.has-drop-cap.has-background{
 p.has-text-align-left[style*="writing-mode:vertical-lr"],p.has-text-align-right[style*="writing-mode:vertical-rl"]{
   rotate:180deg;
 }
+</style>
+<style id='ionos-dashboard-page-welcome-style-inline-css'>
+#essentials-welcome_block{background-color:red;bottom:0;left:0;position:fixed;right:0;top:0}#essentials-welcome_block .card__content{border-bottom-left-radius:16px;border-bottom-right-radius:16px;display:flex;flex-flow:column nowrap;flex-grow:1}
+
 </style>
 <style id='wp-block-image-inline-css'>
 .wp-block-image a{
@@ -1401,6 +1405,7 @@ h1, h2, h3, h4, h5, h6, blockquote, caption, figcaption, p {
 }
 
 </style>
+<script src="http://localhost:8888/wp-content/plugins/essentials/build/dashboard/blocks/welcome/view.js?ver=ce9a5b74875987ff3c8d" id="ionos-dashboard-page-welcome-view-script-js" defer data-wp-strategy="defer"></script>
 <script src="http://localhost:8888/wp-includes/js/dist/hooks.js?ver=5b4ec27a7b82f601224a" id="wp-hooks-js"></script>
 <script src="http://localhost:8888/wp-includes/js/dist/i18n.js?ver=2aff907006e2aa00e26e" id="wp-i18n-js"></script>
 <script id="wp-i18n-js-after">
@@ -1408,22 +1413,29 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 </script>
 <script src="http://localhost:8888/wp-includes/js/dist/vendor/wp-polyfill.js?ver=3.15.0" id="wp-polyfill-js"></script>
 <script src="http://localhost:8888/wp-includes/js/dist/url.js?ver=d62dba05ffc50c672f4a" id="wp-url-js"></script>
+<script id="wp-api-fetch-js-translations">
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", {"translation-revision-date":"2025-02-11 18:37:44+0000","generator":"GlotPress\/4.0.1","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"de"},"You are probably offline.":["Du bist wahrscheinlich offline."],"Media upload failed. If this is a photo or a large image, please scale it down and try again.":["Das Hochladen der Mediendatei ist fehlgeschlagen. Wenn es sich um ein Foto oder ein gro\u00dfes Bild handelt, verkleinere es bitte und versuche es erneut."],"The response is not a valid JSON response.":["Die Antwort ist keine g\u00fcltige JSON-Antwort."],"An unknown error occurred.":["Ein unbekannter Fehler ist aufgetreten."]}},"comment":{"reference":"wp-includes\/js\/dist\/api-fetch.js"}} );
+</script>
 <script src="http://localhost:8888/wp-includes/js/dist/api-fetch.js?ver=c7fab2b80f62e49268dd" id="wp-api-fetch-js"></script>
 <script id="wp-api-fetch-js-after">
 wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( "http://localhost:8888/wp-json/" ) );
-wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "3200c7b1ea" );
+wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "95f50a14bb" );
 wp.apiFetch.use( wp.apiFetch.nonceMiddleware );
 wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );
 wp.apiFetch.nonceEndpoint = "http://localhost:8888/wp-admin/admin-ajax.php?action=rest-nonce";
 </script>
 <script src="http://localhost:8888/wp-content/plugins/essentials/build/dashboard/blocks/next-best-actions/view.js?ver=44780f80f31246a8f0c7" id="ionos-dashboard-page-next-best-actions-view-script-js" defer data-wp-strategy="defer"></script>
-<link rel="https://api.w.org/" href="http://localhost:8888/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="http://localhost:8888/wp-json/wp/v2/ionos_dashboard/117" /><style class='wp-fonts-local'>
+<link rel="https://api.w.org/" href="http://localhost:8888/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="http://localhost:8888/wp-json/wp/v2/ionos_dashboard/7" /><style class='wp-fonts-local'>
 @font-face{font-family:Manrope;font-style:normal;font-weight:200 800;font-display:fallback;src:url('http://localhost:8888/wp-content/themes/twentytwentyfive/assets/fonts/manrope/Manrope-VariableFont_wght.woff2') format('woff2');}
 @font-face{font-family:"Fira Code";font-style:normal;font-weight:300 700;font-display:fallback;src:url('http://localhost:8888/wp-content/themes/twentytwentyfive/assets/fonts/fira-code/FiraCode-VariableFont_wght.woff2') format('woff2');}
 </style>
 </head>
 
-<body class="ionos_dashboard-template ionos_dashboard-template-custom-dashboard-template single single-ionos_dashboard postid-117 wp-embed-responsive">
+<body class="ionos_dashboard-template ionos_dashboard-template-custom-dashboard-template single single-ionos_dashboard postid-7 wp-embed-responsive">
 
 <div class="wp-site-blocks"><div class="entry-content wp-block-post-content has-global-padding is-layout-constrained wp-block-post-content-is-layout-constrained">
 <!-- ionos-essentials-dashboard-start-content --><!-- ionos-essentials-dashboard-end-content -->
@@ -1462,7 +1474,7 @@ wp.apiFetch.nonceEndpoint = "http://localhost:8888/wp-admin/admin-ajax.php?actio
 		skipLink = document.createElement( 'a' );
 		skipLink.classList.add( 'skip-link', 'screen-reader-text' );
 		skipLink.href = '#' + skipLinkTargetID;
-		skipLink.innerHTML = 'Skip to content';
+		skipLink.innerHTML = 'Direkt zum Inhalt wechseln';
 
 		// Inject the skip link.
 		sibling.parentElement.insertBefore( skipLink, sibling );
