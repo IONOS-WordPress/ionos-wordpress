@@ -16,17 +16,14 @@ use const ionos_wordpress\essentials\PLUGIN_FILE;
 
 /**
  * wp option where the installation data is stored
- * the value is a associative array with keys from INSTALL_DATA_KEYS
+ * the value is a associative array with keys from WP_OPTION_LAST_INSTALL_DATA_KEY_* constants
  * we use a array to be able to store multiple values in the future
  */
 
 const WP_OPTION_LAST_INSTALL_DATA = 'ionos-essentials-last-install-data';
 
-// all valid keys for the installation data array
-enum INSTALL_DATA_KEYS: string
-{
-  case PLUGIN_VERSION = 'plugin-version';
-}
+// key to store the plugin version in the installation data
+const WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION = 'plugin-version';
 
 /*
  * we hook our migration into admin-init to check if we were installed/updated
@@ -52,11 +49,11 @@ function _uninstall()
 function _install()
 {
   $last_install_data      = \get_option(WP_OPTION_LAST_INSTALL_DATA, false);
-  $last_installed_version = $last_install_data[INSTALL_DATA_KEYS::PLUGIN_VERSION->value] ?? false;
+  $last_installed_version = $last_install_data[WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION] ?? false;
   $current_version        = \get_plugin_data(PLUGIN_FILE)['Version'];
 
   $current_install_data = [
-    INSTALL_DATA_KEYS::PLUGIN_VERSION->value => $current_version,
+    WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION => $current_version,
   ];
 
   switch ($last_installed_version) {
