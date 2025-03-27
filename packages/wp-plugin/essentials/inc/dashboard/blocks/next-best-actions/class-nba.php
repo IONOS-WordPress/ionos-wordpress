@@ -119,7 +119,7 @@ NBA::register(
   title: \esc_html__('Edit a page', 'ionos-essentials'),
   description: \esc_html__('Update your content to keep it fresh.', 'ionos-essentials'),
   link: \admin_url('edit.php?post_type=page'),
-  anchor: \esc_html__('CrEdit a page', 'ionos-essentials'),
+  anchor: \esc_html__('Edit a page', 'ionos-essentials'),
   completed: false
 );
 NBA::register(
