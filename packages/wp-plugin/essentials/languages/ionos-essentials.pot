@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-27T08:58:49+00:00\n"
+"POT-Creation-Date: 2025-03-27T09:29:29+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -163,6 +163,7 @@ msgid " Create and publish a page and share your story with the world."
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:96
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:209
 msgid "Create Page"
 msgstr ""
 
@@ -186,11 +187,8 @@ msgid "Update your content to keep it fresh."
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:119
-msgid "Edit a page"
-msgstr ""
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:122
-msgid "CrEdit a page"
+msgid "Edit a page"
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:127
@@ -280,9 +278,11 @@ msgid "Start Setup"
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:206
+msgid "Create a Page"
+msgstr ""
+
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:207
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:209
-msgid "Create a New Page with AI"
+msgid "reate and publish a page and share your story with the world."
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:214
@@ -362,6 +362,34 @@ msgstr ""
 
 #: inc/dashboard/index.php:222
 msgid "Brand Logo"
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:5
+msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:9
+msgid "Stay tuned for exciting new features and updates to come!"
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:10
+msgid "Close"
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:12
+msgid "Welcome to your %s Hub"
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:14
+msgid "Recommendations for next steps"
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:15
+msgid "Helpful links and shortcuts"
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:16
+msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr ""
 
 #: build/dashboard/blocks/banner/block.json

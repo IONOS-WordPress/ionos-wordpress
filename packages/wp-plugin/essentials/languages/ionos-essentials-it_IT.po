@@ -213,6 +213,7 @@ msgid "Update your content to keep it fresh."
 msgstr "Aggiornate i vostri contenuti per mantenerli freschi."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:119
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:122
 msgid "Edit a page"
 msgstr "Modifica di una pagina"
 
@@ -303,12 +304,9 @@ msgid " Create and publish a page and share your story with the world."
 msgstr " Create e pubblicate una pagina e condividete la vostra storia con il mondo."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:96
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:209
 msgid "Create Page"
 msgstr "Crea pagina"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:122
-msgid "CrEdit a page"
-msgstr "CrModificare una pagina"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:137
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:143
@@ -389,12 +387,6 @@ msgstr "Lanciate subito il vostro negozio online con una procedura guidata di co
 msgid "Start Setup"
 msgstr "Impostazione iniziale"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:207
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:209
-msgid "Create a New Page with AI"
-msgstr "Creare una nuova pagina con AI"
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:214
 msgid "Social Media Setup"
 msgstr "Impostazione dei social media"
@@ -415,3 +407,39 @@ msgstr "Aggiungi Favicon"
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:226
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Aggiungete una favicon (icona del sito web) al vostro sito web per migliorare il riconoscimento e la visibilità del marchio."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
+msgid "Create a Page"
+msgstr "Creare una pagina"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:207
+msgid "reate and publish a page and share your story with the world."
+msgstr "rea e pubblicare una pagina e condividere la propria storia con il mondo."
+
+#: PREPARE_LANG_WELCOME.php:5
+msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
+msgstr "Questa panoramica è la porta d'accesso per sbloccare il pieno potenziale del vostro sito web WordPress."
+
+#: PREPARE_LANG_WELCOME.php:9
+msgid "Stay tuned for exciting new features and updates to come!"
+msgstr "Rimanete sintonizzati per le nuove funzionalità e gli aggiornamenti in arrivo!"
+
+#: PREPARE_LANG_WELCOME.php:10
+msgid "Close"
+msgstr "Chiudere"
+
+#: PREPARE_LANG_WELCOME.php:12
+msgid "Welcome to your %s Hub"
+msgstr "Benvenuti nel vostro Hub %s"
+
+#: PREPARE_LANG_WELCOME.php:14
+msgid "Recommendations for next steps"
+msgstr "Raccomandazioni per i prossimi passi"
+
+#: PREPARE_LANG_WELCOME.php:15
+msgid "Helpful links and shortcuts"
+msgstr "Link utili e scorciatoie"
+
+#: PREPARE_LANG_WELCOME.php:16
+msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
+msgstr "Sezione di aiuto completa, che include: Assistenza via chat con l'intelligenza artificiale, tour guidati e un ampio database di conoscenze."

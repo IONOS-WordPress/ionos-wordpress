@@ -213,6 +213,7 @@ msgid "Update your content to keep it fresh."
 msgstr "Update your content to keep it fresh."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:119
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:122
 msgid "Edit a page"
 msgstr "Edit a page"
 
@@ -303,12 +304,9 @@ msgid " Create and publish a page and share your story with the world."
 msgstr " Create and publish a page and share your story with the world."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:96
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:209
 msgid "Create Page"
 msgstr "Create Page"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:122
-msgid "CrEdit a page"
-msgstr "CrEdit a page"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:137
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:143
@@ -389,12 +387,6 @@ msgstr "Launch your online store now with a guided setup wizard."
 msgid "Start Setup"
 msgstr "Start Setup"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:207
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:209
-msgid "Create a New Page with AI"
-msgstr "Create a New Page with AI"
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:214
 msgid "Social Media Setup"
 msgstr "Social Media Setup"
@@ -415,3 +407,39 @@ msgstr "Add Favicon"
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:226
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
+msgid "Create a Page"
+msgstr "Create a Page"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:207
+msgid "reate and publish a page and share your story with the world."
+msgstr "reate and publish a page and share your story with the world."
+
+#: PREPARE_LANG_WELCOME.php:5
+msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
+msgstr "This overview is your gateway to unlocking the full potential of your WordPress website."
+
+#: PREPARE_LANG_WELCOME.php:9
+msgid "Stay tuned for exciting new features and updates to come!"
+msgstr "Stay tuned for exciting new features and updates to come!"
+
+#: PREPARE_LANG_WELCOME.php:10
+msgid "Close"
+msgstr "Close"
+
+#: PREPARE_LANG_WELCOME.php:12
+msgid "Welcome to your %s Hub"
+msgstr "Welcome to your %s Hub"
+
+#: PREPARE_LANG_WELCOME.php:14
+msgid "Recommendations for next steps"
+msgstr "Recommendations for next steps"
+
+#: PREPARE_LANG_WELCOME.php:15
+msgid "Helpful links and shortcuts"
+msgstr "Helpful links and shortcuts"
+
+#: PREPARE_LANG_WELCOME.php:16
+msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
+msgstr "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"

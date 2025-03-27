@@ -202,11 +202,11 @@ NBA::register(
   completed: true
 );
 NBA::register(
-  id: 'ai',
-  title: \esc_html__('Create a New Page with AI', 'ionos-essentials'),
-  description: \esc_html__('Create a New Page with AI', 'ionos-essentials'),
+  id: 'create-page',
+  title: \esc_html__('Create a Page', 'ionos-essentials'),
+  description: \esc_html__('Create and publish a page and share your story with the world.', 'ionos-essentials'),
   link: '#',
-  anchor: \esc_html__('Create a New Page with AI', 'ionos-essentials'),
+  anchor: \esc_html__('Create Page', 'ionos-essentials'),
   completed: true
 );
 NBA::register(
