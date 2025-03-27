@@ -24,8 +24,8 @@ class NBA
     readonly string $id,
     readonly string $title,
     readonly string $description,
-    readonly string $anchor,
     readonly string $link,
+    readonly string $anchor,
     private readonly bool $completed
   ) {
     self::$actions[$this->id] = $this;
@@ -63,9 +63,9 @@ class NBA
     return self::$actions;
   }
 
-  public static function register($id, $title, $description, $anchor, $link, $completed = false): void
+  public static function register($id, $title, $description, $link, $anchor, $completed = false): void
   {
-    new self($id, $title, $description, $anchor, $link, $completed);
+    new self($id, $title, $description, $link, $anchor, $completed);
   }
 
   private static function _get_option()
@@ -89,49 +89,70 @@ class NBA
   }
 }
 
+$data = \ionos_wordpress\essentials\dashboard\blocks\deep_links\get_deep_links_data();
+
+if (null !== $data) {
+  NBA::register(
+    id: 'connect-domain',
+    title: \esc_html__('Connect a Domain', 'ionos-essentials'),
+    description: \esc_html__(
+      'Connect your domain to your website to increase visibility and attract more visitors.',
+      'ionos-essentials'
+    ),
+    link: \esc_url($data['domain']),
+    anchor: \esc_html__('Connect Domain', 'ionos-essentials'),
+    completed: false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost'),
+  );
+}
+
 NBA::register(
-  id: 'add-page',
-  title: \esc_html__('Create a page', 'ionos-essentials'),
-  description: \esc_html__(' Create and publish a page and share your story with the world.', 'ionos-essentials'),
-  link: \admin_url('post-new.php?post_type=page'),
-  anchor: \esc_html__('Create Page', 'ionos-essentials'),
-  completed: 1 < \wp_count_posts('page')
-    ->publish
-);
-NBA::register(
-  id: 'add-post',
-  title: \esc_html__('Add a post', 'ionos-essentials'),
-  description: \esc_html__('Share your thoughts with your audience.', 'ionos-essentials'),
-  link: \admin_url('edit.php?post_type=post'),
-  anchor: \esc_html__('Add a post', 'ionos-essentials'),
-  completed: 1 < \wp_count_posts('post')
-    ->publish
-);
-NBA::register(
-  id: 'edit-post',
-  title: \esc_html__('Edit a post', 'ionos-essentials'),
-  description: \esc_html__('Update your content to keep it fresh.', 'ionos-essentials'),
-  link: \admin_url('edit.php?post_type=post'),
-  anchor: \esc_html__('Edit a post', 'ionos-essentials'),
+  id: 'edit-and-complete',
+  title: \esc_html__('Edit & Complete Your Website', 'ionos-essentials'),
+  description: \esc_html__(
+    'Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts',
+    'ionos-essentials'
+  ),
+  link: '#',
+  anchor: \esc_html__('Edit Website', 'ionos-essentials'),
   completed: false
 );
 NBA::register(
-  id: 'edit-page',
-  title: \esc_html__('Edit a page', 'ionos-essentials'),
-  description: \esc_html__('Update your content to keep it fresh.', 'ionos-essentials'),
-  link: \admin_url('edit.php?post_type=page'),
-  anchor: \esc_html__('Edit a page', 'ionos-essentials'),
+  id: 'help-center',
+  title: \esc_html__('Discover Help Center', 'ionos-essentials'),
+  description: \esc_html__(
+    'Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours.',
+    'ionos-essentials'
+  ),
+  link: '#',
+  anchor: \esc_html__('Open Help Center', 'ionos-essentials'),
   completed: false
 );
 NBA::register(
-  id: 'add-site-description',
-  description: \esc_html__('Tell your visitors what your website is about.', 'ionos-essentials'),
-  title: \esc_html__('Add a site description', 'ionos-essentials'),
-  link: \admin_url('options-general.php'),
-  anchor: \esc_html__('Add a site description', 'ionos-essentials'),
-  completed: '' !== \get_option('blogdescription') && __('Just another WordPress site') !== \get_option(
-    'blogdescription'
-  )
+  id: 'email-account',
+  title: \esc_html__('Set Up Email', 'ionos-essentials'),
+  description: \esc_html__(
+    'Set up your included email account and integrate it with your website.',
+    'ionos-essentials'
+  ),
+  link: '#',
+  anchor: \esc_html__('Set Up Email', 'ionos-essentials'),
+  completed: false
+);
+NBA::register(
+  id: 'contact-form',
+  title: \esc_html__('Set Up Contact Form', 'ionos-essentials'),
+  description: \esc_html__('Create a contact form to stay connected with your visitors.', 'ionos-essentials'),
+  link: '#',
+  anchor: \esc_html__('Set Up Contact Form', 'ionos-essentials'),
+  completed: false
+);
+NBA::register(
+  id: 'woocommerce',
+  title: \esc_html__('Set Up Your WooCommerce Store', 'ionos-essentials'),
+  description: \esc_html__('Launch your online store now with a guided setup wizard.', 'ionos-essentials'),
+  link: '#',
+  anchor: \esc_html__('Start Setup', 'ionos-essentials'),
+  completed: false
 );
 NBA::register(
   id: 'upload-logo',
@@ -145,70 +166,12 @@ NBA::register(
   completed: 0 < intval(\get_option('site_icon', 0))
 );
 NBA::register(
-  id: 'connect-domain',
-  title: \esc_html__('Conect a Domain', 'ionos-essentials'),
-  description: \esc_html__('Connect your domain to your website to increase visibility and attract more visitors.
-', 'ionos-essentials'),
-  link: '#',
-  anchor: \esc_html__('Connect Domain', 'ionos-essentials'),
-  completed: true
-);
-NBA::register(
-  id: 'edit-and-complete',
-  title: \esc_html__('Edit & Complete Your Website', 'ionos-essentials'),
-  description: \esc_html__(
-    'Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts',
-    'ionos-essentials'
-  ),
-  link: '#',
-  anchor: \esc_html__('Edit Website', 'ionos-essentials'),
-  completed: true
-);
-NBA::register(
-  id: 'help-center',
-  title: \esc_html__('Discover Help Center', 'ionos-essentials'),
-  description: \esc_html__(
-    'Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours.',
-    'ionos-essentials'
-  ),
-  link: '#',
-  anchor: \esc_html__('Open Help Center', 'ionos-essentials'),
-  completed: true
-);
-NBA::register(
-  id: 'email-account',
-  title: \esc_html__('Set Up Email', 'ionos-essentials'),
-  description: \esc_html__(
-    'Set up your included email account and integrate it with your website.',
-    'ionos-essentials'
-  ),
-  link: '#',
-  anchor: \esc_html__('Set Up Email', 'ionos-essentials'),
-  completed: true
-);
-NBA::register(
-  id: 'contact-form',
-  title: \esc_html__('Set Up Contact Form', 'ionos-essentials'),
-  description: \esc_html__('Create a contact form to stay connected with your visitors.', 'ionos-essentials'),
-  link: '#',
-  anchor: \esc_html__('Set Up Contact Form', 'ionos-essentials'),
-  completed: true
-);
-NBA::register(
-  id: 'woocommerce',
-  title: \esc_html__('Set Up Your WooCommerce Store', 'ionos-essentials'),
-  description: \esc_html__('Launch your online store now with a guided setup wizard.', 'ionos-essentials'),
-  link: '#',
-  anchor: \esc_html__('Start Setup', 'ionos-essentials'),
-  completed: true
-);
-NBA::register(
   id: 'create-page',
   title: \esc_html__('Create a Page', 'ionos-essentials'),
   description: \esc_html__('Create and publish a page and share your story with the world.', 'ionos-essentials'),
   link: '#',
   anchor: \esc_html__('Create Page', 'ionos-essentials'),
-  completed: true
+  completed: false
 );
 NBA::register(
   id: 'social-media',
@@ -219,7 +182,7 @@ NBA::register(
   ),
   link: '#',
   anchor: \esc_html__('Connect Social Media', 'ionos-essentials'),
-  completed: true
+  completed: false
 );
 NBA::register(
   id: 'favicon',
@@ -230,7 +193,7 @@ NBA::register(
   ),
   link: '#',
   anchor: \esc_html__('Add Favicon', 'ionos-essentials'),
-  completed: true
+  completed: false
 );
 
 \do_action('ionos_dashboard__register_nba_element');

@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: sv\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
@@ -39,86 +39,86 @@ msgstr "IONOS-koncernen"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: inc/dashboard/blocks/deep-links/config/arsys.php:8
-#: inc/dashboard/blocks/deep-links/config/piensa.php:8
+#: inc/tenants/config/arsys.php:8
+#: inc/tenants/config/piensa.php:8
 msgid "My offers"
 msgstr "Mina erbjudanden"
 
-#: inc/dashboard/blocks/deep-links/config/arsys.php:12
+#: inc/tenants/config/arsys.php:12
 msgid "My data"
 msgstr "Mina uppgifter"
 
-#: inc/dashboard/blocks/deep-links/config/arsys.php:16
+#: inc/tenants/config/arsys.php:16
 msgid "My products"
 msgstr "Mina produkter"
 
-#: inc/dashboard/blocks/deep-links/config/arsys.php:20
+#: inc/tenants/config/arsys.php:20
 msgid "My invoices"
 msgstr "Mina fakturor"
 
-#: inc/dashboard/blocks/deep-links/config/arsys.php:24
-#: inc/dashboard/blocks/deep-links/config/fasthosts.php:8
-#: inc/dashboard/blocks/deep-links/config/piensa.php:24
+#: inc/tenants/config/arsys.php:24
+#: inc/tenants/config/fasthosts.php:8
+#: inc/tenants/config/piensa.php:24
 msgid "Control Panel"
 msgstr "Kontrollpanelen"
 
-#: inc/dashboard/blocks/deep-links/config/fasthosts.php:12
+#: inc/tenants/config/fasthosts.php:12
 msgid "My User"
 msgstr "Min användare"
 
-#: inc/dashboard/blocks/deep-links/config/fasthosts.php:16
+#: inc/tenants/config/fasthosts.php:16
 msgid "WordPress Websites"
 msgstr "WordPress Webbplatser"
 
-#: inc/dashboard/blocks/deep-links/config/ionos.php:8
+#: inc/tenants/config/ionos.php:8
 msgid "Contracts & Subscriptions"
 msgstr "Avtal och prenumerationer"
 
-#: inc/dashboard/blocks/deep-links/config/ionos.php:12
+#: inc/tenants/config/ionos.php:12
 msgid "Login & Account security"
 msgstr "Säkerhet för inloggning och konto"
 
-#: inc/dashboard/blocks/deep-links/config/ionos.php:16
+#: inc/tenants/config/ionos.php:16
 msgid "Invoices & Payment Details"
 msgstr "Fakturor och betalningsinformation"
 
-#: inc/dashboard/blocks/deep-links/config/ionos.php:20
+#: inc/tenants/config/ionos.php:20
 msgid "Data Protection & Privacy Notice"
 msgstr "Dataskydd och integritet"
 
-#: inc/dashboard/blocks/deep-links/config/ionos.php:24
+#: inc/tenants/config/ionos.php:24
 msgid "Contact Details"
 msgstr "Kontaktuppgifter"
 
-#: inc/dashboard/blocks/deep-links/config/ionos.php:28
+#: inc/tenants/config/ionos.php:28
 msgid "Profile Details"
 msgstr "Detaljer om profilen"
 
-#: inc/dashboard/blocks/deep-links/config/piensa.php:12
+#: inc/tenants/config/piensa.php:12
 msgid "Data of customer"
 msgstr "Uppgifter om kunden"
 
-#: inc/dashboard/blocks/deep-links/config/piensa.php:16
+#: inc/tenants/config/piensa.php:16
 msgid "Services"
 msgstr "Tjänster"
 
-#: inc/dashboard/blocks/deep-links/config/piensa.php:20
+#: inc/tenants/config/piensa.php:20
 msgid "Invoices"
 msgstr "Fakturor"
 
-#: inc/dashboard/blocks/deep-links/config/strato.php:8
+#: inc/tenants/config/strato.php:8
 msgid "Package overview"
 msgstr "Översikt över paketet"
 
-#: inc/dashboard/blocks/deep-links/config/strato.php:12
+#: inc/tenants/config/strato.php:12
 msgid "Your invoices"
 msgstr "Dina fakturor"
 
-#: inc/dashboard/blocks/deep-links/config/strato.php:16
+#: inc/tenants/config/strato.php:16
 msgid "Your contract"
 msgstr "Ditt avtal"
 
-#: inc/dashboard/blocks/deep-links/config/strato.php:20
+#: inc/tenants/config/strato.php:20
 msgid "Current offers"
 msgstr "Aktuella erbjudanden"
 
@@ -193,39 +193,6 @@ msgstr[1] "varningar hittade"
 msgid "issues found"
 msgstr "fel hittade"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:102
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:105
-msgid "Add a post"
-msgstr "Lägg till ett inlägg"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:103
-msgid "Share your thoughts with your audience."
-msgstr "Dela med dig av dina tankar till din publik."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:111
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:114
-msgid "Edit a post"
-msgstr "Redigera ett inlägg"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:112
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:120
-msgid "Update your content to keep it fresh."
-msgstr "Uppdatera ditt innehåll för att hålla det fräscht."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:119
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:122
-msgid "Edit a page"
-msgstr "Redigera en sida"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:127
-msgid "Tell your visitors what your website is about."
-msgstr "Berätta för dina besökare vad din webbplats handlar om."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:128
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:130
-msgid "Add a site description"
-msgstr "Lägg till en beskrivning av webbplatsen"
-
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Next best actions"
 msgstr "Nästa bästa åtgärder"
@@ -260,14 +227,6 @@ msgstr "Försök igen AI"
 msgid "Manage Hosting"
 msgstr "Hantera hosting"
 
-#: inc/dashboard/blocks/deep-links/index.php:110
-msgid "Connect your domain"
-msgstr "Anslut din domän"
-
-#: inc/dashboard/blocks/deep-links/index.php:111
-msgid "Connect your domain to your website to make it accessible to your visitors."
-msgstr "Koppla din domän till din webbplats för att göra den tillgänglig för dina besökare."
-
 #: build/dashboard/blocks/banner/block.json
 msgctxt "block title"
 msgid "Banner"
@@ -295,126 +254,101 @@ msgstr "Enkel navigering till funktioner och verktyg som används ofta"
 msgid "Overview"
 msgstr "Översikt"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:93
-msgid "Create a page"
-msgstr "Skapa en sida"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:94
-msgid " Create and publish a page and share your story with the world."
-msgstr " Skapa och publicera en sida och dela med dig av din historia till hela världen."
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:96
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:209
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:170
 msgid "Create Page"
 msgstr "Skapa sida"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:137
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:143
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:156
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:162
 msgid "Add Logo"
 msgstr "Lägg till logotyp"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:138
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:157
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Se till att din webbplats är märkt med din unika logotyp för att få ett professionellt utseende."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:148
-msgid "Conect a Domain"
-msgstr "Konektera en domän"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:149
-msgid ""
-"Connect your domain to your website to increase visibility and attract more visitors.\n"
-""
-msgstr ""
-"Koppla din domän till din webbplats för att öka synligheten och locka fler besökare.\n"
-""
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:152
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:100
 msgid "Connect Domain"
 msgstr "Anslut domän"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:157
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:107
 msgid "Edit & Complete Your Website"
 msgstr "Redigera och komplettera din webbplats"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:158
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:108
 msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
 msgstr "Lägg till sidor, text och bilder, finjustera din webbplats med AI-drivna verktyg eller justera färger och teckensnitt"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:163
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:113
 msgid "Edit Website"
 msgstr "Redigera webbplats"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:168
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:118
 msgid "Discover Help Center"
 msgstr "Discover Hjälpcenter"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:169
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:119
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
 msgstr "Få omedelbar support med Co-Pilot AI, utforska vår kunskapsbas eller gå på guidade turer."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:174
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:124
 msgid "Open Help Center"
 msgstr "Öppna hjälpcenter"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:179
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:185
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:129
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:135
 msgid "Set Up Email"
 msgstr "Konfigurera e-post"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:180
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:130
 msgid "Set up your included email account and integrate it with your website."
 msgstr "Skapa ett e-postkonto som ingår och integrera det med din webbplats."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:190
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:193
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:140
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:143
 msgid "Set Up Contact Form"
 msgstr "Konfigurera kontaktformulär"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:191
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:141
 msgid "Create a contact form to stay connected with your visitors."
 msgstr "Skapa ett kontaktformulär för att hålla kontakten med dina besökare."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:198
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:148
 msgid "Set Up Your WooCommerce Store"
 msgstr "Konfigurera din WooCommerce-butik"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:199
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:149
 msgid "Launch your online store now with a guided setup wizard."
 msgstr "Starta din onlinebutik nu med en guidad installationsguide."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:201
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:151
 msgid "Start Setup"
 msgstr "Starta installationen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:214
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:175
 msgid "Social Media Setup"
 msgstr "Inställning av sociala medier"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:215
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:176
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Koppla dina sociala medieprofiler till din webbplats och utöka din närvaro på nätet."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:220
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:181
 msgid "Connect Social Media"
 msgstr "Anslut sociala medier"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:225
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:231
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:186
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:192
 msgid "Add Favicon"
 msgstr "Lägg till favicon"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:226
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:187
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Lägg till en favicon (webbplats-ikon) på din webbplats för att öka varumärkets igenkänning och synlighet."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:167
 msgid "Create a Page"
 msgstr "Skapa en sida"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:207
-msgid "reate and publish a page and share your story with the world."
-msgstr "skapa och publicera en sida och dela din berättelse med världen."
 
 #: PREPARE_LANG_WELCOME.php:5
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
@@ -443,3 +377,15 @@ msgstr "Användbara länkar och genvägar"
 #: PREPARE_LANG_WELCOME.php:16
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Omfattande hjälpavsnitt, inklusive: AI-chatsupport, guidade turer och en omfattande kunskapsdatabas"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:168
+msgid "Create and publish a page and share your story with the world."
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:98
+msgid "Connect your domain to your website to increase visibility and attract more visitors."
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:97
+msgid "Connect a Domain"
+msgstr ""
