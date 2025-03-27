@@ -37,6 +37,7 @@ class ClassNBATest extends \WP_UnitTestCase {
       title: 'Test title',
       description: 'Test description',
       link: 'https://example.com',
+      anchor: 'Test CTA',
       completed : false,
     );
 
@@ -58,6 +59,7 @@ class ClassNBATest extends \WP_UnitTestCase {
       title: 'Test title 2',
       description: 'Test description 2',
       link: 'https://example.com',
+      anchor: 'Test CTA 2',
       completed : false,
     );
 
@@ -75,6 +77,7 @@ class ClassNBATest extends \WP_UnitTestCase {
       title: 'Test title 3',
       description: 'Test description 3',
       link: 'https://example.com',
+      anchor: 'Test CTA 3',
       completed : true,
     );
 

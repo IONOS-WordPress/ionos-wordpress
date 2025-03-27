@@ -9,7 +9,7 @@ test.describe('essentials:dashboard next-best-actions block', () => {
   });
 
   test('test dismissing an option ', async ({ admin, page }) => {
-    // show dashboard and click on dismiss button of "add-site-description" action
+    // show dashboard and click on dismiss button of "create-page" action
     await admin.visitAdminPage('/');
 
     // get the iframe element
@@ -17,15 +17,15 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     // get the iframe's body element
     let iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
     // get dismiss anchor element
-    let dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="add-site-description"]');
+    let dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="create-page"]');
     await expect(dismissAncor).toHaveCount(1);
     await dismissAncor.click();
 
-    // show dashboard and ensure "add-site-description" action is not more available
+    // show dashboard and ensure "create-page" action is not more available
     await admin.visitAdminPage('/');
     iframeLocator = await page.locator('iframe');
     iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
-    dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="add-site-description"]');
+    dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="create-page"]');
     await expect(dismissAncor).toHaveCount(0);
   });
 });

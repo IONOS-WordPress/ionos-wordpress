@@ -27,7 +27,7 @@ function get_deep_links_data()
   }
 
   $tenant      = strtolower(\get_option('ionos_group_brand', false));
-  $config_file = __DIR__ . '/config/' . $tenant . '.php';
+  $config_file = PLUGIN_DIR . '/inc/tenants/config/' . $tenant . '.php';
 
   if (! $tenant || ! file_exists($config_file)) {
     return null;
@@ -97,22 +97,4 @@ function render_callback()
     'css-attributes' => 'deeplink',
   ];
   return $button_list;
-});
-
-\add_action('ionos_dashboard__register_nba_element', function () {
-  $data = get_deep_links_data();
-
-  if (! $data) {
-    return null;
-  }
-  \ionos_wordpress\essentials\dashboard\blocks\next_best_actions\NBA::register(
-    id: 'connectYourDomain',
-    title: \esc_html__('Connect your domain', 'ionos-essentials'),
-    description: \esc_html__(
-      'Connect your domain to your website to make it accessible to your visitors.',
-      'ionos-essentials'
-    ),
-    link: \esc_url($data['domain']),
-    completed: false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost'),
-  );
 });
