@@ -350,38 +350,31 @@ msgstr "Lägg till en favicon (webbplats-ikon) på din webbplats för att öka v
 msgid "Create a Page"
 msgstr "Skapa en sida"
 
-#: inc/dashboard/blocks/welcome/index.php:48
-#: PREPARE_LANG_WELCOME.php:5
+#: inc/dashboard/blocks/welcome/index.php:26
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
 msgstr "Denna översikt är din inkörsport till att frigöra den fulla potentialen hos din WordPress-webbplats."
 
-#: inc/dashboard/blocks/welcome/index.php:59
-#: PREPARE_LANG_WELCOME.php:9
+#: inc/dashboard/blocks/welcome/index.php:34
 msgid "Stay tuned for exciting new features and updates to come!"
 msgstr "Håll ögonen öppna för spännande nya funktioner och uppdateringar framöver!"
 
-#: inc/dashboard/blocks/welcome/index.php:62
-#: PREPARE_LANG_WELCOME.php:10
+#: inc/dashboard/blocks/welcome/index.php:39
 msgid "Close"
 msgstr "Nära"
 
-#: inc/dashboard/blocks/welcome/index.php:47
-#: PREPARE_LANG_WELCOME.php:12
+#: inc/dashboard/blocks/welcome/index.php:25
 msgid "Welcome to your %s Hub"
 msgstr "Välkommen till din %s Hub"
 
-#: inc/dashboard/blocks/welcome/index.php:53
-#: PREPARE_LANG_WELCOME.php:14
+#: inc/dashboard/blocks/welcome/index.php:30
 msgid "Recommendations for next steps"
 msgstr "Rekommendationer för nästa steg"
 
-#: inc/dashboard/blocks/welcome/index.php:54
-#: PREPARE_LANG_WELCOME.php:15
+#: inc/dashboard/blocks/welcome/index.php:31
 msgid "Helpful links and shortcuts"
 msgstr "Användbara länkar och genvägar"
 
-#: inc/dashboard/blocks/welcome/index.php:55
-#: PREPARE_LANG_WELCOME.php:16
+#: inc/dashboard/blocks/welcome/index.php:32
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Omfattande hjälpavsnitt, inklusive: AI-chatsupport, guidade turer och en omfattande kunskapsdatabas"
 
