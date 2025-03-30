@@ -42,7 +42,7 @@ function render_callback(): string
       </div>
     </div>
         <footer class='horizontal-card__footer horizontal-card__footer--small-align-center'>
-          <button class='button button--primary' data-version='{$message_version}' autofocus >" . \__('Close', 'ionos-essentials') . '</button>
+          <button id='essentials-welcome_block_close' class='button button--primary' data-version='{$message_version}' autofocus >" . \__('Close', 'ionos-essentials') . '</button>
         </footer>
   </dialog>';
 }

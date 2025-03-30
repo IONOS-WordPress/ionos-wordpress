@@ -11,11 +11,17 @@ test.describe('essentials:dashboard next-best-actions block', () => {
   test('test dismissing an option ', async ({ admin, page }) => {
     // show dashboard and click on dismiss button of "create-page" action
     await admin.visitAdminPage('/');
-
     // get the iframe element
     let iframeLocator = await page.locator('iframe');
     // get the iframe's body element
     let iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
+
+    // close welcome message if it is open
+    const closeDialogButton = await iframeBodyLocator.locator('#essentials-welcome_block_close');
+    if (await closeDialogButton.count()) {
+      await closeDialogButton.click();
+    }
+
     // get dismiss anchor element
     let dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="create-page"]');
     await expect(dismissAncor).toHaveCount(1);
