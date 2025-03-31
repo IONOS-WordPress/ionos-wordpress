@@ -41,3 +41,7 @@
   opacity: 0;
   transform: translateY(-10px);
 }
+
+#ionos-dashboard__essentials_nba .hiddenaction {
+  display: none;
+}
