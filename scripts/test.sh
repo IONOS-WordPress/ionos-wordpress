@@ -99,6 +99,13 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
 fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
+  WORDPRESS_TEST_CONTAINER=$(docker ps -q --filter "name=tests-wordpress")
+  docker cp "$WORDPRESS_TEST_CONTAINER:/home/$USER/.composer/vendor/" "$(pwd)/phpunit/"
+
+  # copy our phpunit config and bootstrap file to the wp-env wordpress test instance instead of mapping them in wp-env.json
+  docker cp "$(pwd)/phpunit/phpunit.xml" "$WORDPRESS_TEST_CONTAINER:/var/www/html/"
+  docker cp "$(pwd)/phpunit/bootstrap.php" "$WORDPRESS_TEST_CONTAINER:/var/www/html/"
+
   # start wp-env unit tests. provide part specific options and all positional arguments that are php files
   # (files will be converted to '--filter *TestCase' arguments to match PHPUNit expectations)
   pnpm -s run wp-env run tests-wordpress phpunit -- \
