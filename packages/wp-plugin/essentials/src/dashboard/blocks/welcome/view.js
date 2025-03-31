@@ -1,10 +1,14 @@
+import apiFetch from '@wordpress/api-fetch';
+
 const dialog = document.querySelector('dialog');
-const closeButton = document.querySelector('dialog button');
+const closeButton = document.querySelector('dialog#essentials-welcome_block button');
 
 dialog.showModal();
 
 // "Close" button closes the dialog
-closeButton.addEventListener('click', () => {
+closeButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  persistDialog(event.target?.getAttribute('nonce'));
   dialog.close();
 });
 
@@ -19,3 +23,15 @@ dialog.addEventListener('click', function (event) {
     dialog.close();
   }
 });
+
+const persistDialog = ($nonce = 'mops') => {
+  apiFetch({
+    path: 'ionos/essentials/dashboard/welcome/v1/closer',
+    method: 'POST',
+    data: {
+      nonce: $nonce,
+    },
+  }).then((response) => {
+    console.log('Dialog closed:', response);
+  });
+};

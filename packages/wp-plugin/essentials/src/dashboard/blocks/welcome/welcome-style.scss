@@ -43,7 +43,6 @@
   }
 
   .horizontal-card__footer {
-    margin-bottom: 10px;
     text-align: center;
     display: block;
 
@@ -54,7 +53,6 @@
       box-sizing: border-box;
       color: var(--secondary-button-text-color, #0b2a63);
       display: inline-block;
-      font-family: var(--button-font-family, "OpenSansSemibold", arial, sans-serif);
       font-size: var(--button-font-size, 14px);
       line-height: 24px;
       margin-right: 12px;
@@ -126,12 +124,10 @@
     line-height: var(--default-text-line-height, 20px);
     color: var(--default-text-color, #001b41);
     display: block;
-    font-family: var(--default-font-regular, "OpenSansRegular", arial, arial narrow, sans-serif);
     margin-bottom: 12px;
   }
   .horizontal-card__subheadline {
     color: var(--default-text-color, #001b41);
-    font-family: var(--third-level-headline-family, "OpenSansSemibold", arial, sans-serif);
     font-size: var(--third-level-headline-size, 16px);
     line-height: var(--third-level-headline-line-height, 24px);
     margin-bottom: 6px;
