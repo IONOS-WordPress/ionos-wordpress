@@ -15,7 +15,6 @@ use const ionos_wordpress\essentials\PLUGIN_DIR;
 
 function render_callback(): string
 {
-  $message_version = '1.0.0';
   return "<dialog id='essentials-welcome_block'>
     <div class='horizontal-card'>
       <header class='horizontal-card__header'>
@@ -42,7 +41,7 @@ function render_callback(): string
       </div>
     </div>
         <footer class='horizontal-card__footer horizontal-card__footer--small-align-center'>
-          <button id='essentials-welcome_block_close' class='button button--primary' data-version='{$message_version}' autofocus >" . \__('Close', 'ionos-essentials') . '</button>
+          <button id='essentials-welcome_block_close' class='button button--primary' autofocus >" . \__('Close', 'ionos-essentials') . '</button>
         </footer>
   </dialog>';
 }
