@@ -14,10 +14,18 @@ WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-pa
 # @TODO: dont know why this is not automatically installed by wp-env, investigate into issue and fix it in wp-env
 pnpm wp-env run tests-wordpress composer global require yoast/phpunit-polyfills:"^3.0" -W --dev
 
+# copy phpunit files from wp-env container to phpunit-wordpress
+WORDPRESS_TEST_CONTAINER=$(docker ps -q --filter "name=tests-wordpress")
+docker cp "$WORDPRESS_TEST_CONTAINER:/home/$USER/.composer/vendor/" "$(pwd)/phpunit/"
+
+# copy our phpunit config and bootstrap file to the wp-env wordpress test instance instead of mapping them in wp-env.json
+docker cp "$(pwd)/phpunit/phpunit.xml" "$WORDPRESS_TEST_CONTAINER:/var/www/html/"
+docker cp "$(pwd)/phpunit/bootstrap.php" "$WORDPRESS_TEST_CONTAINER:/var/www/html/"
+
+
 # execute only when NOT in CI environment
 # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
 if [[ "${CI:-}" != "true" ]]; then
-
   # MARK: supress xdebug warnings if vscode is not running in local development mode
   (
     prefix=$(basename "$(pnpm wp-env install-path)")
@@ -176,7 +184,6 @@ EOF
 }
 EOF
   # ENDMARK
-
 fi
 
 # remove dolly demo plugin
