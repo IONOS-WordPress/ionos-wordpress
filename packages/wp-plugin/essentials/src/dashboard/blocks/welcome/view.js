@@ -3,8 +3,6 @@
     return;
   }
   dialog.showModal();
-  // "Close" button closes the dialog
-  console.log('neuer');
   dialog.querySelector('button').onclick = () => dialog.close();
   dialog.onclick = (event) => {
     const rect = dialog.getBoundingClientRect();
