@@ -4,10 +4,11 @@
   }
   dialog.showModal();
   // "Close" button closes the dialog
-  dialog.querySelector('button').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', function (event) {
-    var rect = dialog.getBoundingClientRect();
-    var isInDialog =
+  console.log('neuer');
+  dialog.querySelector('button').onclick = () => dialog.close();
+  dialog.onclick = (event) => {
+    const rect = dialog.getBoundingClientRect();
+    const isInDialog =
       rect.top <= event.clientY &&
       event.clientY <= rect.top + rect.height &&
       rect.left <= event.clientX &&
@@ -15,5 +16,5 @@
     if (!isInDialog) {
       dialog.close();
     }
-  });
+  };
 })(document.querySelector('dialog'));
