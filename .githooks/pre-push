@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#
+# script implements the prepush hook for automatically run lint on "git push"
+#
+# this feature is a opt-in - it will only be executed if the LINT_ON_PUSH is set to true in the .env file
+#
+# this script is executed by the pre-push hook in .git/hooks and will automatically lint everything before pushing
+# in case anything could not be fixed, the push will be aborted
+#
+# If you want to disable git hooks for some reason you can disable the git hooks by adding `--no-verify` to the git command.
+# Example : `git push --no-verify`
+#
+
+# bootstrap the environment
+source "./scripts/includes/bootstrap.sh"
+
+if [[ "$LINT_ON_PUSH" == 'true' ]]; then
+  pnpm lint
+  # pnpm lint-fix && git add -u $(git diff --cached --name-only --diff-filter=ACMRT)
+fi

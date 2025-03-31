@@ -1,17 +1,18 @@
-const { defineConfig, devices } = require('@playwright/experimental-ct-react');
+// playwright config for storybook and react component testing
+import { defineConfig, devices } from '@playwright/experimental-ct-react';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
-module.exports = defineConfig({
-  testMatch: '*.spec.jsx',
-  testDir: '.',
+const config = defineConfig({
+  testMatch: '**/*.spec.jsx',
+  testDir: './packages',
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
-  snapshotDir: './playwright/__snapshots__',
+  snapshotDir: './playwright/storybook/__snapshots__',
   /* Maximum time one test can run for. */
   timeout: 10 * 1000,
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
@@ -21,7 +22,8 @@ module.exports = defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     process.env.CI ? ['dot'] : ['list', { printSteps: true }],
-    ['html', { outputFolder: './playwright/.playwright-report' }],
+    ['html', { outputFolder: './playwright/storybook/.playwright-report', open: 'never' }],
+    ['line'],
   ],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -41,5 +43,16 @@ module.exports = defineConfig({
       slowMo: 50,
     },
   },
-  outputDir: './playwright/.test-results',
+  outputDir: './playwright/storybook/.test-results',
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chromium',
+      },
+    },
+  ],
 });
+
+export default config;

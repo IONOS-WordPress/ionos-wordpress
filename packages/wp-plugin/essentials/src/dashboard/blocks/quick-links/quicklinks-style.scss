@@ -1,0 +1,48 @@
+.quick-links {
+  padding: 0 !important;
+
+  div {
+    padding: 0;
+  }
+
+  .elements{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:0.8rem;
+    min-height:0px;
+    margin-top:var(--wp--preset--spacing--40);
+    margin-bottom:0;
+    padding: 0;
+  }
+
+  .element {
+    display:flex;
+    min-height:50px;
+    margin-top:0;
+    margin-bottom:0;
+    padding:0 0 0 20px;
+    border-radius:24px;
+    background-color:#f4f7fa;
+
+    &:hover {
+      background-color: #dbedf8 !important;
+    }
+
+    a {
+      display:flex;
+      align-items:center;
+      text-decoration:none;
+
+      .icon {
+        aspect-ratio:1;
+        width:20px;
+        height:auto;
+      }
+
+      p {
+        margin-top:0;
+        margin-left:10px;
+      }
+    }
+  }
+}

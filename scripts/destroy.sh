@@ -9,5 +9,9 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-echo 'y' | pnpm exec wp-env destroy --debug
+if find "$WP_ENV_HOME" -name "docker-compose.yml" 2>/dev/null | grep -q .; then
+  echo 'y' | pnpm exec wp-env destroy
+fi
 
+# ensure wp-env-home is also removed, even in case wp-env was unable to remove it
+rm -rf "$WP_ENV_HOME"

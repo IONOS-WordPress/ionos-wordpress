@@ -3,10 +3,18 @@ node_modules
 /wp-env-home
 /packages/*/*/node_modules
 /packages/*/*/build
+# exclude wp-mu-plugin build dirs
+/packages/*/*/*/build
 /packages/*/*/dist
+# exclude wp-mu-plugin build dirs
+/packages/*/*/*/dist
 /packages/*/*/languages/*.json
 /packages/*/*/languages/*.mo
 /packages/*/*/languages/*.php
+# exclude wp-mu-plugin generated language files
+/packages/*/*/*/languages/*.json
+/packages/*/*/*/languages/*.mo
+/packages/*/*/*/languages/*.php
 /.vscode/settings.json
 /.vscode/launch.json
 /.secrets
@@ -14,11 +22,18 @@ node_modules
 /bin/act
 /.wp-env.json
 /.wp-env.override.json
-/bin/act
+/bin/
+build-info
 build-info
 packages/*/*/webpack.config.js
 /build
+/build
 *storybook.log
-/playwright/.*/
+/playwright/.cache
+/playwright/storybook/.*
+/playwright/e2e/.*
 /phpunit/vendor/
 /tmp
+/wp-playground-blueprint.json
+/wp-playground-blueprint.local.json
+.DS_Store

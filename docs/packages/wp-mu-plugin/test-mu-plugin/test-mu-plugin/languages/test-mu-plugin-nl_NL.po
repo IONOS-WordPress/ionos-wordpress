@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: nl\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-02-19T08:22:35+00:00\n"
+"POT-Creation-Date: 2025-02-19T08:22:35+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ionos-wordpress/test-mu-plugin 0.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"X-Domain: test-mu-plugin\n"
+"X-Generator: WP-CLI 2.11.0\n"
+
+#. Plugin Name of the plugin
+#: test-mu-plugin.php
+msgid "ionos-wordpress/test-mu-plugin"
+msgstr "ionos-wordpress/test-mu-plugin"
+
+#. Description of the plugin
+#: test-mu-plugin.php
+msgid "a test mu plugin"
+msgstr "een mu test plugin"
+
+#. Author of the plugin
+#: test-mu-plugin.php
+msgid "IONOS Group"
+msgstr "IONOS Groep"
+
+#. Author URI of the plugin
+#: test-mu-plugin.php
+msgid "https://www.ionos-group.com/brands.html"
+msgstr "https://www.ionos-group.com/brands.html"
+
+#: test-mu-plugin.php:28
+msgid "hello.world"
+msgstr "hallo.wereld"
+
+#: test-mu-plugin/build/feature-2/index.js:1
+msgid "hello from packages/wp-mu-plugin/test-mu-plugin/src/feature-2/index.js"
+msgstr "hallo van packages/wp-mu-plugin/test-mu-plugin/src/feature-2/index.js"
+
+#: test-mu-plugin/build/index.js:1
+msgid "hello from packages/wp-mu-plugin/test-mu-plugin/src/index.js"
+msgstr "hallo van packages/wp-mu-plugin/test-mu-plugin/src/index.js"

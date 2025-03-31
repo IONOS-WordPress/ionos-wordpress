@@ -18,14 +18,11 @@
     }
   },
 
-  // doesnt work anymore as of 2024-10-29
-  // // Dev container build failed: Legacy feature 'mounts' not supported. Please check https://containers.dev/features for replacements
-  // //
-  // // enable persisted bash completion
-  // // https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
-  // "mounts": [
-  //   "source=projectname-bashhistory,target=/commandhistory,type=volume"
-  // ],
+  // Dev container build failed: Legacy feature 'mounts' not supported. Please check https://containers.dev/features for replacements
+  //
+  // enable persisted bash completion
+  // https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
+  "mounts": ["source=projectname-bashhistory,target=/commandhistory,type=volume"],
 
   "customizations": {
     "vscode": {
@@ -47,6 +44,12 @@
     },
     "8889": {
       "label": "wp-env test instance"
+    },
+    "9000": {
+      "label": "wp-env phpmyadmin"
+    },
+    "9001": {
+      "label": "wp-env test phpmyadmin"
     },
     "6006": {
       "label": "storybook dev server"

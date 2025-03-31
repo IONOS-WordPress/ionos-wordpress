@@ -28,8 +28,10 @@ function ionos.wordpress.get_workflow_artifacts() {
   local PACKAGE_PATH PACKAGE_NAME FLAVOUR ARTIFACTS=()
 
   # add plawright test results if any
-  test -d ./playwright/.playwright-report/ && ARTIFACTS+=(./playwright/.playwright-report/)
-  test -d ./playwright/.test-results/ && ARTIFACTS+=(./playwright/.test-results/)
+  test -d ./playwright/storybook/.playwright-report/ && ARTIFACTS+=(./playwright/storybook/.playwright-report/)
+  test -d ./playwright/storybook/.test-results/ && ARTIFACTS+=(./playwright/storybook/.test-results/)
+  test -d ./playwright/e2e/.playwright-report/ && ARTIFACTS+=(./playwright/e2e/.playwright-report/)
+  test -d ./playwright/e2e/.test-results/ && ARTIFACTS+=(./playwright/e2e/.test-results/)
 
   # loop over workspace packages and grab flavor specific artifacts
   for PACKAGE_PATH in $(find ./packages -mindepth 2 -maxdepth 2 -type d | sort); do

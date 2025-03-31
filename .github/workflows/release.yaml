@@ -1,6 +1,9 @@
 #
 # this is the release workflow that is triggered by a push to the main branch
 #
+# this workflow requires a secret "GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK" to point to the google chat room
+# if not declared his workflow will set a warning and will exit gracefully (=> without an error)
+#
 # it will
 # - update the versions of all packages
 # - build the project
@@ -24,20 +27,27 @@ permissions:
   id-token: write
 
 jobs:
-  build_devcontainer_image:
+  devcontainer:
     uses: ./.github/workflows/build-devcontainer-image.yaml
     secrets: inherit
 
   release:
     runs-on: ubuntu-latest
     needs:
-      - build_devcontainer_image
+      - devcontainer
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     if: "!contains(github.event.head_commit.message, 'skip release')"
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: build_project
@@ -46,7 +56,7 @@ jobs:
             pnpm install --frozen-lockfile
 
             export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
-            # export GITHUB_REPOSITORY="${{ github.repository }}"
+            export GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK="${{ secrets.GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK }}"
 
             pnpm release
 

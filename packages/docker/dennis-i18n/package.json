@@ -1,6 +1,6 @@
 {
   "name": "@ionos-wordpress/dennis-i18n",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This image provides the most recent [dennis](https://github.com/mozilla/dennis) pot/po linter in a docker image.",
   "private": true,
   "keywords": [
@@ -12,5 +12,8 @@
     "lint",
     "po",
     "pot"
-  ]
+  ],
+  "scripts": {
+    "update-dependencies": "./scripts/update-dependencies.sh"
+  }
 }

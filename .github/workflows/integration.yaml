@@ -9,14 +9,14 @@
 name: 'integration'
 
 on:
-  # rebuild any PRs and main branch changes
-  pull_request:
-
+  # run on all branches
   push:
     branches:
-      - develop
-      - feature/*
-      - bugfix/*
+      - '**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   # write-all is too much, but we need to write to packages
@@ -27,33 +27,40 @@ permissions:
   id-token: write
 
 jobs:
-  build_devcontainer_image:
+  devcontainer:
     uses: ./.github/workflows/build-devcontainer-image.yaml
     secrets: inherit
 
-  build:
+  test:
     runs-on: ubuntu-latest
     needs:
-      - build_devcontainer_image
+      - devcontainer
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v4
 
-      - name: display output name
-        run: echo "image_name=${{ needs.build_devcontainer_image.outputs.image_name }}"
+      # - name: display output name
+      #   run: echo "image_name=${{ needs.build_devcontainer_image.outputs.image_name }}"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: build_project
         with:
           runCmd: |
             pnpm install --frozen-lockfile
+            pnpm build
 
-            # build will already be called by the test command
-            # pnpm build
-            # # mark project already built for the next commands
-            # export BUILD_UP_TO_DATE=1
-
-            pnpm test
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: test_project
+        with:
+          runCmd: |
+            BUILD_UP_TO_DATE=1 pnpm test
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts
@@ -75,3 +82,24 @@ jobs:
       #       stdout was=
       #       ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
       #     EOF
+
+  # # automatically approve and merge dependabot PRs
+  # dependabot:
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - test
+  #   permissions:
+  #     pull-requests: write
+  #     contents: write
+  #   if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}}
+  #   steps:
+  #     - id: metadata
+  #       uses: dependabot/fetch-metadata@v2
+  #       with:
+  #         github-token: '${{ secrets.GITHUB_TOKEN }}'
+  #     - run: |
+  #         gh pr review --approve "$PR_URL"
+  #         gh pr merge --squash --auto "$PR_URL"
+  #       env:
+  #         PR_URL: ${{github.event.pull_request.html_url}}
+  #         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

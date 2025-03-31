@@ -107,7 +107,23 @@ function ionos.wordpress.log_header() {
   # see https://unix.stackexchange.com/a/269085/564826
   echo -e "\e[1m$1\e[0m"
 }
-export -f ionos.wordpress.log_warn
+export -f ionos.wordpress.log_header
+
+# list all wordpress plugin files in the plugin directory
+# there can be multiple plugin files in a plugin directory
+# (see https://wordpress.stackexchange.com/a/102097)
+#
+# a plugin file is identified by
+#   - file suffix ".php"
+#   - the presence of a "Plugin Name: " header
+#
+# @param $1 path to plugin directory
+#
+function ionos.wordpress.get_plugin_filenames() {
+  local path="$1"
+  grep -l "Plugin Name: " $path/*.php | xargs -n1 basename
+}
+export -f ionos.wordpress.get_plugin_filenames
 
 export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)
 

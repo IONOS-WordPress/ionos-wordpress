@@ -1,0 +1,17 @@
+{
+  "name": "@ionos-wordpress/potrans",
+  "description": "Docker image providing the most recent potrans (https://github.com/OzzyCzech/potrans) composer image in a docker image",
+  "version": "1.0.2",
+  "private": true,
+  "keywords": [
+    "php",
+    "po",
+    "pot",
+    "deepl",
+    "translation",
+    "gettext"
+  ],
+  "scripts": {
+    "update-dependencies": "./scripts/update-dependencies.sh"
+  }
+}

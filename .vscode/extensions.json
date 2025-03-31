@@ -11,6 +11,8 @@
     "johnbillion.vscode-wordpress-hooks",
     "bmewburn.vscode-intelephense-client",
     "ms-playwright.playwright",
-    "Gruntfuggly.todo-tree"
+    "Gruntfuggly.todo-tree",
+    "xdebug.php-debug",
+    "batyan-soft.fast-tasks"
   ]
 }

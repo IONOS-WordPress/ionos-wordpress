@@ -1,0 +1,393 @@
+msgid ""
+msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pl\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"X-Domain: ionos-essentials\n"
+"X-Generator: WP-CLI 2.11.0\n"
+
+#. Plugin Name of the plugin
+#: essentials.php
+msgid "ionos-wordpress/essentials"
+msgstr "ionos-wordpress/essentials"
+
+#. Plugin URI of the plugin
+#: essentials.php
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
+
+#. Description of the plugin
+#: essentials.php
+msgid "The essentials plugin provides IONOS hosting specific functionality."
+msgstr "Wtyczka essentials zapewnia funkcjonalność specyficzną dla hostingu IONOS."
+
+#. Author of the plugin
+#: essentials.php
+msgid "IONOS Group"
+msgstr "Grupa IONOS"
+
+#. Author URI of the plugin
+#: essentials.php
+msgid "https://www.ionos-group.com/brands.html"
+msgstr "https://www.ionos-group.com/brands.html"
+
+#: inc/tenants/config/arsys.php:8
+#: inc/tenants/config/piensa.php:8
+msgid "My offers"
+msgstr "Moje oferty"
+
+#: inc/tenants/config/arsys.php:12
+msgid "My data"
+msgstr "Moje dane"
+
+#: inc/tenants/config/arsys.php:16
+msgid "My products"
+msgstr "Moje produkty"
+
+#: inc/tenants/config/arsys.php:20
+msgid "My invoices"
+msgstr "Moje faktury"
+
+#: inc/tenants/config/arsys.php:24
+#: inc/tenants/config/fasthosts.php:8
+#: inc/tenants/config/piensa.php:24
+msgid "Control Panel"
+msgstr "Panel sterowania"
+
+#: inc/tenants/config/fasthosts.php:12
+msgid "My User"
+msgstr "Mój użytkownik"
+
+#: inc/tenants/config/fasthosts.php:16
+msgid "WordPress Websites"
+msgstr "Strony internetowe WordPress"
+
+#: inc/tenants/config/ionos.php:8
+msgid "Contracts & Subscriptions"
+msgstr "Umowy i subskrypcje"
+
+#: inc/tenants/config/ionos.php:12
+msgid "Login & Account security"
+msgstr "Bezpieczeństwo logowania i konta"
+
+#: inc/tenants/config/ionos.php:16
+msgid "Invoices & Payment Details"
+msgstr "Faktury i szczegóły płatności"
+
+#: inc/tenants/config/ionos.php:20
+msgid "Data Protection & Privacy Notice"
+msgstr "Informacja o ochronie danych i prywatności"
+
+#: inc/tenants/config/ionos.php:24
+msgid "Contact Details"
+msgstr "Dane kontaktowe"
+
+#: inc/tenants/config/ionos.php:28
+msgid "Profile Details"
+msgstr "Szczegóły profilu"
+
+#: inc/tenants/config/piensa.php:12
+msgid "Data of customer"
+msgstr "Dane klienta"
+
+#: inc/tenants/config/piensa.php:16
+msgid "Services"
+msgstr "Usługi"
+
+#: inc/tenants/config/piensa.php:20
+msgid "Invoices"
+msgstr "Faktury"
+
+#: inc/tenants/config/strato.php:8
+msgid "Package overview"
+msgstr "Przegląd pakietów"
+
+#: inc/tenants/config/strato.php:12
+msgid "Your invoices"
+msgstr "Twoje faktury"
+
+#: inc/tenants/config/strato.php:16
+msgid "Your contract"
+msgstr "Twoja umowa"
+
+#: inc/tenants/config/strato.php:20
+msgid "Current offers"
+msgstr "Aktualne oferty"
+
+#: inc/dashboard/blocks/quick-links/render.php:13
+msgid "Quick Links"
+msgstr "Szybkie łącza"
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block title"
+msgid "Deep Links"
+msgstr "Głębokie linki"
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block description"
+msgid "Show links to the Control Panel of your provider."
+msgstr "Wyświetla łącza do Panelu sterowania dostawcy."
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block title"
+msgid "Quick Links"
+msgstr "Szybkie łącza"
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block description"
+msgid "Show links to common tasks in the WordPress backend."
+msgstr "Wyświetlanie linków do typowych zadań w zapleczu WordPress."
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block title"
+msgid "Vulnerability"
+msgstr "Podatność"
+
+#: build/dashboard/blocks/vulnerability/block.json
+msgctxt "block description"
+msgid "Show wp scan data."
+msgstr "Pokaż dane skanowania wp."
+
+#: inc/dashboard/blocks/vulnerability/render.php:82
+msgid "WPScan not available"
+msgstr "WPScan niedostępny"
+
+#: inc/dashboard/index.php:222
+msgid "Brand Logo"
+msgstr "Logo marki"
+
+#: inc/dashboard/blocks/vulnerability/render.php:74
+msgid "Show full scan report"
+msgstr "Pokaż pełny raport skanowania"
+
+#: inc/dashboard/blocks/vulnerability/render.php:53
+msgid "Last scan"
+msgstr "Ostatnie skanowanie"
+
+#. translators: %s is replaced with the time since the last scan
+#: inc/dashboard/blocks/vulnerability/render.php:57
+msgid "%s ago"
+msgstr "%s temu"
+
+#: inc/dashboard/blocks/vulnerability/render.php:34
+msgid "critical issue found"
+msgid_plural "critical issues found"
+msgstr[0] "znaleziony krytyczny problem"
+msgstr[1] "znalezione krytyczne problemy"
+msgstr[2] ""
+
+#: inc/dashboard/blocks/vulnerability/render.php:41
+msgid "warning found"
+msgid_plural "warnings found"
+msgstr[0] "znalezione ostrzeżenie"
+msgstr[1] "znalezione ostrzeżenia"
+msgstr[2] ""
+
+#: inc/dashboard/blocks/vulnerability/render.php:48
+msgid "issues found"
+msgstr "znalezione problemy"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Next best actions"
+msgstr "Następne najlepsze działania"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Not sure what to do now? We have some recommendations for you."
+msgstr "Nie wiesz, co teraz zrobić? Mamy dla ciebie kilka rekomendacji."
+
+#: build/dashboard/blocks/next-best-actions/block.json
+msgctxt "block title"
+msgid "NBA"
+msgstr "NBA"
+
+#: build/dashboard/blocks/next-best-actions/block.json
+msgctxt "block description"
+msgid "Next Best Actions"
+msgstr "Następne najlepsze działania"
+
+#: inc/dashboard/blocks/banner/index.php:25
+msgid "View Site"
+msgstr "Wyświetl stronę"
+
+#: inc/dashboard/blocks/banner/index.php:56
+msgid "Start AI Sitebuilder"
+msgstr "Uruchom AI Sitebuilder"
+
+#: inc/dashboard/blocks/banner/index.php:65
+msgid "Retry AI"
+msgstr "Retry AI"
+
+#: inc/dashboard/blocks/deep-links/index.php:96
+msgid "Manage Hosting"
+msgstr "Zarządzanie hostingiem"
+
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block title"
+msgid "Banner"
+msgstr "Baner"
+
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block description"
+msgid "Banner"
+msgstr "Baner"
+
+#: inc/dashboard/blocks/deep-links/index.php:66
+msgid "Account Management"
+msgstr "Zarządzanie kontem"
+
+#: inc/dashboard/blocks/deep-links/index.php:67
+msgid "One-click access to your customer account, login security and subscriptions"
+msgstr "Dostęp do konta klienta, zabezpieczeń logowania i subskrypcji jednym kliknięciem"
+
+#: inc/dashboard/blocks/quick-links/render.php:14
+msgid "Easily navigate to frequently used features and tools"
+msgstr "Łatwa nawigacja do często używanych funkcji i narzędzi"
+
+#: inc/dashboard/index.php:119
+#: inc/dashboard/index.php:120
+msgid "Overview"
+msgstr "Przegląd"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:170
+msgid "Create Page"
+msgstr "Utwórz stronę"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:156
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:162
+msgid "Add Logo"
+msgstr "Dodaj logo"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:157
+msgid "Ensure your website is branded with your unique logo for a professional look."
+msgstr "Upewnij się, że Twoja witryna jest oznaczona unikalnym logo, aby uzyskać profesjonalny wygląd."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:100
+msgid "Connect Domain"
+msgstr "Połącz domenę"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:107
+msgid "Edit & Complete Your Website"
+msgstr "Edytuj i uzupełnij swoją witrynę"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:108
+msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
+msgstr "Dodawaj strony, tekst i obrazy, dostosuj swoją witrynę za pomocą narzędzi opartych na sztucznej inteligencji lub dostosuj kolory i czcionki."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:113
+msgid "Edit Website"
+msgstr "Edytuj stronę"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:118
+msgid "Discover Help Center"
+msgstr "Centrum pomocy Discover"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:119
+msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
+msgstr "Uzyskaj natychmiastowe wsparcie dzięki Co-Pilot AI, zapoznaj się z naszą bazą wiedzy lub skorzystaj z wycieczek z przewodnikiem."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:124
+msgid "Open Help Center"
+msgstr "Otwórz Centrum pomocy"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:129
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:135
+msgid "Set Up Email"
+msgstr "Konfiguracja poczty e-mail"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:130
+msgid "Set up your included email account and integrate it with your website."
+msgstr "Skonfiguruj dołączone konto e-mail i zintegruj je ze swoją witryną."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:140
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:143
+msgid "Set Up Contact Form"
+msgstr "Konfiguracja formularza kontaktowego"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:141
+msgid "Create a contact form to stay connected with your visitors."
+msgstr "Utwórz formularz kontaktowy, aby pozostać w kontakcie z odwiedzającymi."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:148
+msgid "Set Up Your WooCommerce Store"
+msgstr "Konfiguracja sklepu WooCommerce"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:149
+msgid "Launch your online store now with a guided setup wizard."
+msgstr "Uruchom swój sklep internetowy już teraz dzięki kreatorowi konfiguracji z przewodnikiem."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:151
+msgid "Start Setup"
+msgstr "Konfiguracja początkowa"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:175
+msgid "Social Media Setup"
+msgstr "Konfiguracja mediów społecznościowych"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:176
+msgid "Connect your social media profiles to your website and expand your online presence."
+msgstr "Połącz swoje profile w mediach społecznościowych z witryną i zwiększ swoją obecność online."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:181
+msgid "Connect Social Media"
+msgstr "Połącz media społecznościowe"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:186
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:192
+msgid "Add Favicon"
+msgstr "Dodaj Favicon"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:187
+msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
+msgstr "Dodaj favicon (ikonę witryny) do swojej witryny, aby zwiększyć rozpoznawalność i widoczność marki."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:167
+msgid "Create a Page"
+msgstr "Utwórz stronę"
+
+#: PREPARE_LANG_WELCOME.php:5
+msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
+msgstr "Ten przegląd jest bramą do odblokowania pełnego potencjału witryny WordPress."
+
+#: PREPARE_LANG_WELCOME.php:9
+msgid "Stay tuned for exciting new features and updates to come!"
+msgstr "Bądź na bieżąco z nowymi funkcjami i aktualizacjami!"
+
+#: PREPARE_LANG_WELCOME.php:10
+msgid "Close"
+msgstr "Zamknij"
+
+#: PREPARE_LANG_WELCOME.php:12
+msgid "Welcome to your %s Hub"
+msgstr "Witamy w %s Hub"
+
+#: PREPARE_LANG_WELCOME.php:14
+msgid "Recommendations for next steps"
+msgstr "Zalecenia dotyczące kolejnych kroków"
+
+#: PREPARE_LANG_WELCOME.php:15
+msgid "Helpful links and shortcuts"
+msgstr "Pomocne łącza i skróty"
+
+#: PREPARE_LANG_WELCOME.php:16
+msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
+msgstr "Kompleksowa sekcja pomocy, w tym: Wsparcie czatu AI, Wycieczki z przewodnikiem i obszerną bazę wiedzy"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:168
+msgid "Create and publish a page and share your story with the world."
+msgstr "Utwórz i opublikuj stronę i podziel się swoją historią ze światem."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:98
+msgid "Connect your domain to your website to increase visibility and attract more visitors."
+msgstr "Połącz swoją domenę z witryną, aby zwiększyć widoczność i przyciągnąć więcej odwiedzających."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:97
+msgid "Connect a Domain"
+msgstr "Podłącz domenę"
