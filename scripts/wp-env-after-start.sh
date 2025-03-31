@@ -40,6 +40,9 @@ EOF
   docker cp "$(pwd)/phpunit/phpunit.xml" "$WORDPRESS_TEST_CONTAINER:/var/www/html"
   docker cp "$(pwd)/phpunit/bootstrap.php" "$WORDPRESS_TEST_CONTAINER:/var/www/html"
 
+  # List files in the /var/www/html directory of the WordPress test container
+  docker exec "$WORDPRESS_TEST_CONTAINER" ls -la /var/www/html
+
   # ENDMARK
 
   # MARK: vscode configurations generation
