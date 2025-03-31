@@ -31,20 +31,6 @@ EOF
   )
   # ENDMARK
 
-  # MARK: copy PHPUNIT
-  # copy phpunit files from wp-env container to phpunit-wordpress
-  WORDPRESS_TEST_CONTAINER=$(docker ps -q --filter "name=tests-wordpress")
-  docker cp "$WORDPRESS_TEST_CONTAINER:/home/$USER/.composer/vendor/" "$(pwd)/phpunit/"
-
-  # copy our phpunit config and bootstrap file to the wp-env wordpress test instance instead of mapping them in wp-env.json
-  docker cp "$(pwd)/phpunit/phpunit.xml" "$WORDPRESS_TEST_CONTAINER:/var/www/html/"
-  docker cp "$(pwd)/phpunit/bootstrap.php" "$WORDPRESS_TEST_CONTAINER:/var/www/html/"
-
-  # List files in the /var/www/html directory of the WordPress test container
-  docker exec "$WORDPRESS_TEST_CONTAINER" ls -la /var/www/html
-
-  # ENDMARK
-
   # MARK: vscode configurations generation
   # generate .vscode/launch.json
   (
