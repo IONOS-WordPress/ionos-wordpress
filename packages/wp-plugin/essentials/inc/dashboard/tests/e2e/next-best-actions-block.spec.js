@@ -17,7 +17,7 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     // get the iframe's body element
     let iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
     // get dismiss anchor element
-    let dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="create-page"]');
+    let dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="help-center"]');
     await expect(dismissAncor).toHaveCount(1);
     await dismissAncor.click();
 
@@ -25,7 +25,7 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     await admin.visitAdminPage('/');
     iframeLocator = await page.locator('iframe');
     iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
-    dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="create-page"]');
+    dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="help-center"]');
     await expect(dismissAncor).toHaveCount(0);
   });
 });
