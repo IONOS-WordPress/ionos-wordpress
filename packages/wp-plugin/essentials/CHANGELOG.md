@@ -1,5 +1,13 @@
 # @ionos-wordpress/essentials
 
+## 0.1.0
+
+### Minor Changes
+
+- 25fa7fe: ## dashboard
+
+  @TODO : add overview over dashboard feature
+
 ## 0.0.4
 
 ### Patch Changes
