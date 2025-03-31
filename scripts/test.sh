@@ -99,6 +99,29 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
 fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
+  # test distributable plugin code is correctly transformed by rector
+  # by testing its syntax againts the transpiler target language
+  if [[ ${#POSITIONAL_ARGS[@]} -eq 0 ]]; then
+    # for each wp-plugin and wp-mu-plugin in the packages directory
+    for transpiled_plugin_dir in $(find packages -path '*/wp-plugin/*/dist/*-?.?.?-php?.?' -o -path '*/wp-mu-plugin/*/dist/*-?.?.?-php?.?' -type d -name '*-?.?.?-php?.?'); do
+      # get the target php version from the directory name
+      TARGET_PHP_VERSION=$(echo "${transpiled_plugin_dir#*php}" | grep -oE '^[0-9.]+')
+
+      ionos.wordpress.log_header "checking compatibility for target php version $TARGET_PHP_VERSION in plugin $transpiled_plugin_dir"
+      # check if the transpiled plugin code is valid for the desired php version
+      ! cat <<EOL | docker run -i --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:${TARGET_PHP_VERSION}-cli /bin/bash - | grep -v '^No syntax errors'
+find packages/wp-plugin/essentials/dist/ionos-wordpress-essentials-0.0.4-php7.4 -name "*.php" -print0 | xargs -0L1 php -l
+exit $?
+EOL
+
+      if [[ $? -ne 0 ]]; then
+        exit 1
+      fi
+    done
+  else
+    ionos.wordpress.log_info "skipped target php version syntax checks since individual PHPUnit test files are provided as commandline arguments"
+  fi
+
   # start wp-env unit tests. provide part specific options and all positional arguments that are php files
   # (files will be converted to '--filter *TestCase' arguments to match PHPUNit expectations)
   pnpm -s run wp-env run tests-wordpress phpunit -- \
