@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: de\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
+"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
-"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.10.0\n"
 
@@ -386,17 +386,17 @@ msgstr "Eine Domäne verbinden"
 #: build/dashboard/blocks/welcome/block.json
 msgctxt "block title"
 msgid "Welcome"
-msgstr ""
+msgstr "Willkommen"
 
 #: build/dashboard/blocks/welcome/block.json
 msgctxt "block description"
 msgid "Welcome"
-msgstr ""
+msgstr "Willkommen"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Unlock Your Website's Potential"
-msgstr ""
+msgstr "Erschließen Sie das Potenzial Ihrer Website"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:36
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-msgstr ""
+msgstr "Ihre Website ist jetzt online, aber Ihre Reise hat gerade erst begonnen. Entdecken Sie die empfohlenen nächsten Schritte, um das Wachstum zu fördern, die Leistung zu verbessern und Ihre Online-Ziele zu erreichen."

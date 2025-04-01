@@ -33,7 +33,10 @@ function render_callback()
   </div>';
 
   $header      = \esc_html__("Unlock Your Website's Potential", 'ionos-essentials');
-  $description = \esc_html__('Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.', 'ionos-essentials');
+  $description = \esc_html__(
+    'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
+    'ionos-essentials'
+  );
 
   $body = '';
   foreach ($actions as $action) {
