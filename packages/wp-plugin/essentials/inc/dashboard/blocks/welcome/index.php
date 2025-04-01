@@ -24,7 +24,7 @@ function render_callback(): string
   }
 
   $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
-  $welcome_banner_url = \plugins_url('data/tenant-logos/welcome-banner.png', \dirname(__DIR__));
+  $welcome_banner_url = \plugins_url('data/tenant-logos/welcome-banner.png', dirname(__DIR__));
 
   return '
 <dialog id="essentials-welcome_block">

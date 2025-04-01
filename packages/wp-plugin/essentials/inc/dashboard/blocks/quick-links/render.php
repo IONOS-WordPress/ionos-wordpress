@@ -23,7 +23,7 @@ if (file_exists($config_file)) {
           <p>%s</p>
         </a></div>',
       \esc_url($link['url']),
-      \esc_url(\plugins_url('assets/img/' . $link['icon'], \dirname(__DIR__, 3))),
+      \esc_url(\plugins_url('assets/img/' . $link['icon'], dirname(__DIR__, 3))),
       \esc_html($link['text'])
     );
   }
