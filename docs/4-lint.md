@@ -16,7 +16,7 @@ Both linting commands are implemented in `./scripts/lint.sh`.
 
   - WordPress specific [WordPress Coding Standard rules](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/) rules are not yet integrated in the `easy-coding-standard` configuration but it's planned for the future. That's why the `./scripts/lint.sh` script also runs `phpcs` directly.
 
-  - Plugin entry files (like `./packages/wp-plugin/essentials/essentials.php`) are also linted to contain the required WordPress plugin metadata using `./scripts/lint.sh`.
+  - Plugin entry files (like `./packages/wp-plugin/ionos-essentials/ionos-essentials.php`) are also linted to contain the required WordPress plugin metadata using `./scripts/lint.sh`.
 
 - Javascript and JSX is linted using [eslint](https://eslint.org/). It's configuration is tailored to fit especially the needs of the WordPress React libraries (`@wordpress\*` aka Gutenberg).
 

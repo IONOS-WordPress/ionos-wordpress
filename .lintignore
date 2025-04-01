@@ -3,6 +3,6 @@
 
 pnpm-lock.yaml
 docs/packages/
-packages/wp-plugin/essentials/inc/dashboard/data/ionos
-packages/wp-plugin/essentials/inc/dashboard/data/twentytwentyfive-global-styles.json
+packages/wp-plugin/ionos-essentials/inc/dashboard/data/ionos
+packages/wp-plugin/ionos-essentials/inc/dashboard/data/twentytwentyfive-global-styles.json
 *.sbom.syft.json
