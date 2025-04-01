@@ -1,8 +1,9 @@
 import apiFetch from '@wordpress/api-fetch';
+import domReady from '@wordpress/dom-ready';
 import './style.css';
 
 
-document.addEventListener('DOMContentLoaded', () => {
+domReady(() => {
   const container = document.getElementById("actions");
 
   if (container) {
