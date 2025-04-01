@@ -193,14 +193,6 @@ msgstr[1] "Alertas detectadas"
 msgid "issues found"
 msgstr "Problemas detectados"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:35
-msgid "Next best actions"
-msgstr "Próximas mejores acciones"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:36
-msgid "Not sure what to do now? We have some recommendations for you."
-msgstr "¿No sabe qué hacer ahora? Tenemos algunas recomendaciones para usted."
-
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
 msgid "NBA"
@@ -350,31 +342,32 @@ msgstr "Añada un favicon (icono de sitio web) a su sitio web para mejorar el re
 msgid "Create a Page"
 msgstr "Crear una página"
 
-#: PREPARE_LANG_WELCOME.php:5
+#: inc/dashboard/blocks/welcome/index.php:44
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
 msgstr "Esta visión general es su puerta de entrada para liberar todo el potencial de su sitio web WordPress."
 
-#: PREPARE_LANG_WELCOME.php:9
+#: inc/dashboard/blocks/welcome/index.php:56
 msgid "Stay tuned for exciting new features and updates to come!"
 msgstr "Esté atento a las próximas novedades y actualizaciones."
 
-#: PREPARE_LANG_WELCOME.php:10
+#: inc/dashboard/blocks/welcome/index.php:63
 msgid "Close"
 msgstr "Cerrar"
 
-#: PREPARE_LANG_WELCOME.php:12
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php:41
 msgid "Welcome to your %s Hub"
 msgstr "Bienvenido a su %s Hub"
 
-#: PREPARE_LANG_WELCOME.php:14
+#: inc/dashboard/blocks/welcome/index.php:49
 msgid "Recommendations for next steps"
 msgstr "Recomendaciones para los próximos pasos"
 
-#: PREPARE_LANG_WELCOME.php:15
+#: inc/dashboard/blocks/welcome/index.php:50
 msgid "Helpful links and shortcuts"
 msgstr "Enlaces y atajos útiles"
 
-#: PREPARE_LANG_WELCOME.php:16
+#: inc/dashboard/blocks/welcome/index.php:51
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Amplia sección de ayuda, que incluye: Asistencia por chat con IA, visitas guiadas y una amplia base de datos de conocimientos."
 
@@ -390,12 +383,20 @@ msgstr "Conecte su dominio a su sitio web para aumentar la visibilidad y atraer 
 msgid "Connect a Domain"
 msgstr "Conectar un dominio"
 
-#: build/dashboard/blocks/whats-new/block.json
+#: build/dashboard/blocks/welcome/block.json
 msgctxt "block title"
-msgid "What's New"
-msgstr "Novedades"
+msgid "Welcome"
+msgstr "Bienvenido"
 
-#: build/dashboard/blocks/whats-new/block.json
+#: build/dashboard/blocks/welcome/block.json
 msgctxt "block description"
-msgid "What's New"
-msgstr "Novedades"
+msgid "Welcome"
+msgstr "Bienvenido"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Unlock Your Website's Potential"
+msgstr "Libere el potencial de su sitio web"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
+msgstr "Su sitio web está activo, pero su viaje no ha hecho más que empezar. Explore las próximas acciones recomendadas para impulsar el crecimiento, mejorar el rendimiento y alcanzar sus objetivos en línea."
