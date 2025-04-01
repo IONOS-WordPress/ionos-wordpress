@@ -160,7 +160,7 @@ msgstr "Wp-scangegevens weergeven."
 msgid "WPScan not available"
 msgstr "WPScan niet beschikbaar"
 
-#: inc/dashboard/index.php:222
+#: inc/dashboard/index.php:223
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -249,104 +249,104 @@ msgstr "Met één klik toegang tot je klantenaccount, inlogbeveiliging en abonne
 msgid "Easily navigate to frequently used features and tools"
 msgstr "Eenvoudig navigeren naar veelgebruikte functies en tools"
 
-#: inc/dashboard/index.php:119
 #: inc/dashboard/index.php:120
+#: inc/dashboard/index.php:121
 msgid "Overview"
 msgstr "Overzicht"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:170
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:173
 msgid "Create Page"
 msgstr "Pagina maken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:156
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:162
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:159
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:165
 msgid "Add Logo"
 msgstr "Logo toevoegen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:157
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:160
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Zorg ervoor dat je website is voorzien van je unieke logo voor een professionele uitstraling."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:100
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:103
 msgid "Connect Domain"
 msgstr "Domein verbinden"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:107
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:110
 msgid "Edit & Complete Your Website"
 msgstr "Uw website bewerken en voltooien"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:108
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:111
 msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
 msgstr "Voeg pagina's, tekst en afbeeldingen toe, verfijn je website met AI-tools of pas kleuren en lettertypen aan"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:113
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:116
 msgid "Edit Website"
 msgstr "Website bewerken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:118
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:121
 msgid "Discover Help Center"
 msgstr "Ontdek Helpcentrum"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:119
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:122
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
 msgstr "Krijg direct ondersteuning met Co-Pilot AI, verken onze Kennisbank of volg rondleidingen."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:124
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:127
 msgid "Open Help Center"
 msgstr "Helpcentrum openen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:129
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:135
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:132
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:138
 msgid "Set Up Email"
 msgstr "E-mail instellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:130
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:133
 msgid "Set up your included email account and integrate it with your website."
 msgstr "Stel je eigen e-mailaccount in en integreer deze met je website."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:140
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:143
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:146
 msgid "Set Up Contact Form"
 msgstr "Contactformulier instellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:141
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:144
 msgid "Create a contact form to stay connected with your visitors."
 msgstr "Maak een contactformulier om in contact te blijven met je bezoekers."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:148
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:151
 msgid "Set Up Your WooCommerce Store"
 msgstr "Je WooCommerce-winkel instellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:149
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:152
 msgid "Launch your online store now with a guided setup wizard."
 msgstr "Start nu je online winkel met een begeleide installatiewizard."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:151
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:154
 msgid "Start Setup"
 msgstr "Start instellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:175
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:178
 msgid "Social Media Setup"
 msgstr "Sociale media instellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:176
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:179
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Koppel uw sociale-mediaprofielen aan uw website en breid uw online aanwezigheid uit."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:181
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:184
 msgid "Connect Social Media"
 msgstr "Sociale media aansluiten"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:186
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:192
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:195
 msgid "Add Favicon"
 msgstr "Favicon toevoegen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:187
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:190
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Voeg een favicon (websitepictogram) toe aan je website om de merkherkenning en zichtbaarheid te verbeteren."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:167
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:170
 msgid "Create a Page"
 msgstr "Een pagina maken"
 
@@ -378,7 +378,7 @@ msgstr "Handige links en snelkoppelingen"
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Uitgebreide helpsectie, inclusief: AI-chatondersteuning, Rondleidingen en een uitgebreide kennisdatabase"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:168
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:171
 msgid "Create and publish a page and share your story with the world."
 msgstr "Maak en publiceer een pagina en deel je verhaal met de wereld."
 
@@ -389,3 +389,13 @@ msgstr "Koppel je domein aan je website om de zichtbaarheid te vergroten en meer
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:97
 msgid "Connect a Domain"
 msgstr "Een domein verbinden"
+
+#: build/dashboard/blocks/whats-new/block.json
+msgctxt "block title"
+msgid "What's New"
+msgstr "Nieuw"
+
+#: build/dashboard/blocks/whats-new/block.json
+msgctxt "block description"
+msgid "What's New"
+msgstr "Nieuw"
