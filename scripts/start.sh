@@ -85,8 +85,6 @@ fi
       "afterDestroy": "./scripts/wp-env-after-destroy.sh"
     },
     "mappings": {
-      "phpunit.xml": "./phpunit/phpunit.xml",
-      "bootstrap.php": "./phpunit/bootstrap.php"
       $(mu_plugins | sed '$ s/,$//')
     }
   }
