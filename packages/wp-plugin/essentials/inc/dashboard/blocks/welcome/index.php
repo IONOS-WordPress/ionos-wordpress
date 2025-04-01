@@ -36,29 +36,31 @@ function render_callback(): string
         <div class="horizontal-card__content">
             <section class="horizontal-card__section">
                 <h2 class="horizontal-card__headline">
-                    ' . sprintf( \__('Welcome to your %s Hub', 'ionos-essentials'), $brand_name ) . '
+                    ' .
+                    // translators: %s: Brand name
+                    sprintf( \esc_html__('Welcome to your %s Hub', 'ionos-essentials'), $brand_name ) . '
                 </h2>
                 <p class="paragraph">
-                    ' . \__('This overview is your gateway to unlocking the full potential of your WordPress website.', 'ionos-essentials') . '
+                    ' . \esc_html__('This overview is your gateway to unlocking the full potential of your WordPress website.', 'ionos-essentials') . '
                 </p>
             </section>
             <section class="horizontal-card__section">
                 <ul class="check-list">
-                    <li>' . \__('Recommendations for next steps', 'ionos-essentials') . '</li>
-                    <li>' . \__('Helpful links and shortcuts', 'ionos-essentials') . '</li>
-                    <li>' . \__('Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database', 'ionos-essentials') . '</li>
+                    <li>' . \esc_html__('Recommendations for next steps', 'ionos-essentials') . '</li>
+                    <li>' . \esc_html__('Helpful links and shortcuts', 'ionos-essentials') . '</li>
+                    <li>' . \esc_html__('Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database', 'ionos-essentials') . '</li>
                 </ul>
             </section>
             <section class="horizontal-card__section">
                 <div class="paragraph">
-                    ' . \__('Stay tuned for exciting new features and updates to come!', 'ionos-essentials') . '
+                    ' . \esc_html__('Stay tuned for exciting new features and updates to come!', 'ionos-essentials') . '
                 </div>
             </section>
         </div>
     </div>
     <footer class="horizontal-card__footer horizontal-card__footer--small-align-center">
         <button class="button button--primary" nonce="' . esc_html($nonce) . '" autofocus>
-            ' . \__('Close', 'ionos-essentials') . '
+            ' . \esc_html__('Close', 'ionos-essentials') . '
         </button>
     </footer>
 </dialog>';

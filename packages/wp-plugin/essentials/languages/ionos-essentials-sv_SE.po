@@ -350,31 +350,32 @@ msgstr "Lägg till en favicon (webbplats-ikon) på din webbplats för att öka v
 msgid "Create a Page"
 msgstr "Skapa en sida"
 
-#: inc/dashboard/blocks/welcome/index.php:26
+#: inc/dashboard/blocks/welcome/index.php:44
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
 msgstr "Denna översikt är din inkörsport till att frigöra den fulla potentialen hos din WordPress-webbplats."
 
-#: inc/dashboard/blocks/welcome/index.php:34
+#: inc/dashboard/blocks/welcome/index.php:56
 msgid "Stay tuned for exciting new features and updates to come!"
 msgstr "Håll ögonen öppna för spännande nya funktioner och uppdateringar framöver!"
 
-#: inc/dashboard/blocks/welcome/index.php:39
+#: inc/dashboard/blocks/welcome/index.php:63
 msgid "Close"
 msgstr "Nära"
 
-#: inc/dashboard/blocks/welcome/index.php:25
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php:41
 msgid "Welcome to your %s Hub"
 msgstr "Välkommen till din %s Hub"
 
-#: inc/dashboard/blocks/welcome/index.php:30
+#: inc/dashboard/blocks/welcome/index.php:49
 msgid "Recommendations for next steps"
 msgstr "Rekommendationer för nästa steg"
 
-#: inc/dashboard/blocks/welcome/index.php:31
+#: inc/dashboard/blocks/welcome/index.php:50
 msgid "Helpful links and shortcuts"
 msgstr "Användbara länkar och genvägar"
 
-#: inc/dashboard/blocks/welcome/index.php:32
+#: inc/dashboard/blocks/welcome/index.php:51
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Omfattande hjälpavsnitt, inklusive: AI-chatsupport, guidade turer och en omfattande kunskapsdatabas"
 
