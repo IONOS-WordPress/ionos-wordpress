@@ -14,7 +14,7 @@ use const ionos_wordpress\essentials\PLUGIN_DIR;
 });
 
 const NONCE         = 'ionos_essentials_welcome_nonce';
-const USER_META_KEY = 'ionos_essentials_welcome_4';
+const USER_META_KEY = 'ionos_essentials_welcome';
 function render_callback(): string
 {
   $user_meta = \get_user_meta(user_id: \get_current_user_id(), key: USER_META_KEY, single: true);

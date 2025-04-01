@@ -6,6 +6,7 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     await execSync('pnpm -s wp-env run tests-cli wp option delete ionos_nba_status');
     // @FIXME: we need to run the rewrite structure command to avoid 404 error because phpunit will reset rewrite structure for some reason
     await execSync('pnpm -s wp-env run tests-cli wp rewrite structure /%postname% --hard');
+    await execSync('pnpm -s wp-env run tests-cli wp user meta update 1 ionos_essentials_welcome true');
   });
 
   test('test dismissing an option ', async ({ admin, page }) => {
@@ -15,12 +16,6 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     let iframeLocator = await page.locator('iframe');
     // get the iframe's body element
     let iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
-
-    // close welcome message if it is open
-    const closeDialogButton = await iframeBodyLocator.locator('#essentials-welcome_block_close');
-    if (await closeDialogButton.count()) {
-      await closeDialogButton.click();
-    }
 
     // get dismiss anchor element
     let dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="create-page"]');
