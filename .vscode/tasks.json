@@ -266,7 +266,7 @@
       "problemMatcher": [
         /*#
 ionos.wordpress.pnpm:257 : pnpm-lock.yaml:1 : pnpm-lock.yaml outdated - please update it using 'pnpm install'
-ionos.wordpress.wordpress_plugin:293 : ./packages/wp-plugin/essentials/essentials.php:1 : plugin header 'Description' is missing or empty
+ionos.wordpress.wordpress_plugin:293 : ./packages/wp-plugin/ionos-essentials/ionos-essentials.php:1 : plugin header 'Description' is missing or empty
         */
         {
           "source": "lint:pnpm+wp",
@@ -298,7 +298,7 @@ ionos.wordpress.wordpress_plugin:293 : ./packages/wp-plugin/essentials/essential
       "problemMatcher": [
         /*#
 ionos.wordpress.pnpm:257 : pnpm-lock.yaml:1 : pnpm-lock.yaml outdated - please update it using 'pnpm install'
-ionos.wordpress.wordpress_plugin:293 : ./packages/wp-plugin/essentials/essentials.php:1 : plugin header 'Description' is missing or empty
+ionos.wordpress.wordpress_plugin:293 : ./packages/wp-plugin/ionos-essentials/ionos-essentials.php:1 : plugin header 'Description' is missing or empty
         */
         {
           "source": "lint:pnpm+wp",

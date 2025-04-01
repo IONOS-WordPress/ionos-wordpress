@@ -22,7 +22,7 @@ packages/{docker} workspace packages will only be build if no matching (name,ver
 
   Examples:
 
-  `pnpm build --filter '@ionos-wordpress/essentials'`
+  `pnpm build --filter '@ionos-wordpress/ionos-essentials'`
   `pnpm build --filter '_/test_' --filter '\*/essentials'`
 
 - `--use` Specify which operations to use (default: all)

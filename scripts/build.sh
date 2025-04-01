@@ -378,10 +378,8 @@ EOF
 
   pnpm --filter "$PACKAGE_NAME" --if-present run postbuild
 
-  # create a unique valid directory name for the plugin
-  # "@wordpress-ionos/essentials" => "wordpress-ionos-essentials"
-  plugin_name="${PACKAGE_NAME//@/}"
-  plugin_name="${plugin_name//\//-}"
+  # take plugin directory name as plugin name
+  plugin_name="$(basename $path)"
 
   if [[ "${USE[@]}" =~ all|wp-plugin:rector|wp-plugin:bundle ]]; then
     # copy plugin code to dist/[plugin-name]
@@ -480,7 +478,7 @@ function ionos.wordpress.build_workspace_package() {
   ionos.wordpress.log_header "building workspace package ./packages/$path"
   echo
 
-  # (example : [curent-dir]/packages/wp-plugin/essentials/package.json)
+  # (example : [current-dir]/packages/wp-plugin/ionos-essentials/package.json)
   package_json="$package_path/package.json"
 
   (

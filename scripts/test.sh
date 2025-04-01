@@ -209,11 +209,11 @@ Options:
       'pnpm run test --use e2e'
 
     Execute only a single e2e test file :
-      'pnpm run test:e2e packages/wp-plugin/essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js' or
+      'pnpm run test:e2e packages/wp-plugin/ionos-essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js' or
       'pnpm run test:e2e deep-links-block.spec.js' (path can be left off for playwright)
 
     Execute only a single e2e test file with playwright debugger :
-      'pnpm run test:e2e --e2e-opts '--debug' packages/wp-plugin/essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js' or
+      'pnpm run test:e2e --e2e-opts '--debug' packages/wp-plugin/ionos-essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js' or
       'pnpm run test:e2e --e2e-opts '--debug' deep-links-block.spec.js' (path can be left off for playwright)
 
     Execute only PHPUnit and E2e tests:
