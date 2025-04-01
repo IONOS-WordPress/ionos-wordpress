@@ -7,9 +7,9 @@ import apiFetch from '@wordpress/api-fetch';
   dialog.showModal();
   dialog.querySelector('button').onclick = (event) => {
     event.preventDefault();
-    persistDialog(event.target?.getAttribute('nonce'));
+    persistDialog();
     dialog.close();
-  }
+  };
   dialog.onclick = (event) => {
     const rect = dialog.getBoundingClientRect();
     const isInDialog =
@@ -18,20 +18,15 @@ import apiFetch from '@wordpress/api-fetch';
       rect.left <= event.clientX &&
       event.clientX <= rect.left + rect.width;
     if (!isInDialog) {
+      persistDialog();
       dialog.close();
     }
   };
 
-  const persistDialog = ($nonce = 'mops') => {
+  const persistDialog = () => {
     apiFetch({
       path: 'ionos/essentials/dashboard/welcome/v1/closer',
       method: 'POST',
-      data: {
-        nonce: $nonce,
-      },
-    }).then((response) => {
-      console.log('Dialog closed:', response);
     });
   };
-
 })(document.querySelector('dialog'));

@@ -13,8 +13,8 @@ use const ionos_wordpress\essentials\PLUGIN_DIR;
   );
 });
 
-const NONCE         = 'ionos_essentials_welcome_nonce';
 const USER_META_KEY = 'ionos_essentials_welcome';
+
 function render_callback(): string
 {
   $user_meta = \get_user_meta(user_id: \get_current_user_id(), key: USER_META_KEY, single: true);
@@ -24,8 +24,7 @@ function render_callback(): string
   }
 
   $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
-  $welcome_banner_url = \plugins_url('data/tenant-logos/welcome-banner.png', \dirname(__DIR__, 1));
-  $nonce              = \wp_create_nonce(NONCE);
+  $welcome_banner_url = \plugins_url('data/tenant-logos/welcome-banner.png', \dirname(__DIR__));
 
   return '
 <dialog id="essentials-welcome_block">
@@ -66,7 +65,7 @@ function render_callback(): string
                 </div>
             </section>
             <footer class="horizontal-card__footer horizontal-card__footer--small-align-center">
-                <button class="button button--primary" nonce="' . esc_html($nonce) . '" autofocus>
+                <button class="button button--primary" autofocus>
                     ' . \esc_html__('Close', 'ionos-essentials') . '
                 </button>
             </footer>
@@ -80,22 +79,8 @@ function render_callback(): string
     '/closer',
     [
       'methods'             => 'POST',
-      'permission_callback' => fn () => \current_user_can('manage_options'),
-      'callback'            => function (\WP_REST_Request $req) {
-        $body = \json_decode($req->get_body());
-
-        if (empty($body->nonce)) {
-          return rest_ensure_response(new \WP_REST_Response([
-            'error' => 'nonce not set',
-          ], 400));
-        }
-
-        if (! \wp_verify_nonce($body->nonce, NONCE)) {
-          return rest_ensure_response(new \WP_REST_Response([
-            'error' => 'nonce not valid',
-          ], 400));
-        }
-
+      'permission_callback' => fn () => \get_current_user_id() !== 0,
+      'callback'            => function () {
         $meta = \update_user_meta(\get_current_user_id(), USER_META_KEY, true);
 
         if (false === $meta) {
