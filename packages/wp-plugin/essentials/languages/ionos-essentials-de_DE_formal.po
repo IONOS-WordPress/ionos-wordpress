@@ -193,14 +193,6 @@ msgstr[1] "Warnungen gefunden"
 msgid "issues found"
 msgstr "Probleme gefunden"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:35
-msgid "Next best actions"
-msgstr "Nächstbeste Aktionen"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:36
-msgid "Not sure what to do now? We have some recommendations for you."
-msgstr "Sie wissen nicht, was Sie jetzt tun sollen? Wir haben einige Empfehlungen für Sie."
-
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
 msgid "NBA"
@@ -399,4 +391,12 @@ msgstr ""
 #: build/dashboard/blocks/welcome/block.json
 msgctxt "block description"
 msgid "Welcome"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Unlock Your Website's Potential"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr ""
