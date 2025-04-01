@@ -24,7 +24,7 @@ function render_callback(): string
   }
 
   $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
-  $welcome_banner_url = \plugins_url('data/tenant-logos/welcome-banner.jpg', \dirname(__DIR__, 1));
+  $welcome_banner_url = \plugins_url('data/tenant-logos/welcome-banner.png', \dirname(__DIR__, 1));
   $nonce              = \wp_create_nonce(NONCE);
 
   return '
@@ -65,13 +65,13 @@ function render_callback(): string
                     ) . '
                 </div>
             </section>
+            <footer class="horizontal-card__footer horizontal-card__footer--small-align-center">
+                <button class="button button--primary" nonce="' . esc_html($nonce) . '" autofocus>
+                    ' . \esc_html__('Close', 'ionos-essentials') . '
+                </button>
+            </footer>
         </div>
     </div>
-    <footer class="horizontal-card__footer horizontal-card__footer--small-align-center">
-        <button class="button button--primary" nonce="' . esc_html($nonce) . '" autofocus>
-            ' . \esc_html__('Close', 'ionos-essentials') . '
-        </button>
-    </footer>
 </dialog>';
 }
 \add_action('rest_api_init', function () {

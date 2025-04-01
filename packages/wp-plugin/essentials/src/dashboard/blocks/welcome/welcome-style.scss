@@ -43,7 +43,7 @@
   }
 
   .horizontal-card__footer {
-    text-align: center;
+    margin-left: 24px;
     display: block;
 
     .button {
@@ -90,7 +90,7 @@
     .horizontal-card__visual {
       border-radius: calc(var(--default-border-radius, 16px) - 1px) 0 0 calc(var(--default-border-radius, 16px) - 1px);
       margin: auto;
-      padding-top: 100px;
+      padding-top: 40px;
       height: auto;
       object-fit: cover;
       position: inherit;
