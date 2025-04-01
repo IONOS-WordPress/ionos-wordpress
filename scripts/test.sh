@@ -110,7 +110,7 @@ if [[ "${USE[@]}" =~ all|php ]]; then
       ionos.wordpress.log_header "checking compatibility for target php version $TARGET_PHP_VERSION in plugin $transpiled_plugin_dir"
       # check if the transpiled plugin code is valid for the desired php version
       ! cat <<EOL | docker run -i --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:${TARGET_PHP_VERSION}-cli /bin/bash - | grep -v '^No syntax errors'
-find packages/wp-plugin/essentials/dist/ionos-wordpress-essentials-0.0.4-php7.4 -name "*.php" -print0 | xargs -0L1 php -l
+find "$transpiled_plugin_dir" -name "*.php" -print0 | xargs -0L1 php -l
 exit $?
 EOL
 
