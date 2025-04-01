@@ -58,6 +58,9 @@ require_once __DIR__ . '/blocks/banner/index.php';
         #wpwrap #wpcontent {
           margin-left: 140px;
         }
+        .folded #wpwrap #wpcontent {
+          margin-left: 16px;
+        }
         EOF
     );
   });
