@@ -34,6 +34,7 @@ require_once __DIR__ . '/blocks/welcome/index.php';
 require_once __DIR__ . '/blocks/next-best-actions/index.php';
 require_once __DIR__ . '/blocks/deep-links/index.php';
 require_once __DIR__ . '/blocks/banner/index.php';
+require_once __DIR__ . '/blocks/whats-new/index.php';
 
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', \get_option('ionos_group_brand_menu', 'IONOS'));

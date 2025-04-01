@@ -2,9 +2,7 @@
 
 use const ionos_wordpress\essentials\migration\WP_OPTION_LAST_INSTALL_DATA;
 use const ionos_wordpress\essentials\PLUGIN_FILE;
-
-use ionos_wordpress\essentials\migration\INSTALL_DATA_KEYS;
-use ionos_wordpress\essentials\migration\_install;
+use const ionos_wordpress\essentials\migration\WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION;
 
 use function ionos_wordpress\essentials\migration\_install;
 
@@ -33,8 +31,8 @@ class MigrationTest extends \WP_UnitTestCase {
     $install_data = \get_option(WP_OPTION_LAST_INSTALL_DATA);
     $this->assertIsArray($install_data, 'option install data should be an array');
 
-    $this->assertArrayHasKey(INSTALL_DATA_KEYS::PLUGIN_VERSION->value, $install_data, 'plugin version should be set');
+    $this->assertArrayHasKey(WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION, $install_data, 'plugin version should be set');
 
-    $this->assertEquals(\get_plugin_data(PLUGIN_FILE)['Version'], $install_data[INSTALL_DATA_KEYS::PLUGIN_VERSION->value], 'plugin version should match');
+    $this->assertEquals(\get_plugin_data(PLUGIN_FILE)['Version'], $install_data[WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION], 'plugin version should match');
   }
 }
