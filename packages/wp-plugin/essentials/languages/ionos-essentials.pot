@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-02T12:53:11+00:00\n"
+"POT-Creation-Date: 2025-04-02T20:14:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -117,57 +117,57 @@ msgstr ""
 msgid "Create a contact form to stay connected with your visitors."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:184
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:173
 msgid "Set Up Your WooCommerce Store"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:185
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:174
 msgid "Launch your online store now with a guided setup wizard."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:187
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:176
 msgid "Start Setup"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:195
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:201
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:184
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:190
 msgid "Add Logo"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:196
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:185
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:208
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:197
 msgid "Create a Page"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:209
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:198
 msgid "Create and publish a page and share your story with the world."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:211
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:200
 msgid "Create Page"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:219
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:208
 msgid "Social Media Setup"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:220
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:209
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:216
 msgid "Connect Social Media"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:235
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:241
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:224
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:230
 msgid "Add Favicon"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:236
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:225
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr ""
 
@@ -399,16 +399,6 @@ msgstr ""
 #: build/dashboard/blocks/welcome/block.json
 msgctxt "block description"
 msgid "Welcome"
-msgstr ""
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block title"
-msgid "What's New"
-msgstr ""
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block description"
-msgid "What's New"
 msgstr ""
 
 #: build/dashboard/blocks/whats-new/block.json
