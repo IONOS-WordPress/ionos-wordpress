@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: nl\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
-"Language: nl\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
@@ -192,14 +192,6 @@ msgstr[1] "waarschuwingen gevonden"
 #: inc/dashboard/blocks/vulnerability/render.php:48
 msgid "issues found"
 msgstr "problemen gevonden"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:35
-msgid "Next best actions"
-msgstr "Volgende beste acties"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:36
-msgid "Not sure what to do now? We have some recommendations for you."
-msgstr "Weet je niet zeker wat je nu moet doen? We hebben een aantal aanbevelingen voor je."
 
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
@@ -390,6 +382,24 @@ msgstr "Koppel je domein aan je website om de zichtbaarheid te vergroten en meer
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:97
 msgid "Connect a Domain"
 msgstr "Een domein verbinden"
+
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block title"
+msgid "Welcome"
+msgstr "Welkom"
+
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block description"
+msgid "Welcome"
+msgstr "Welkom"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Unlock Your Website's Potential"
+msgstr "Ontsluit het potentieel van uw website"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
+msgstr "Uw website is live, maar uw reis is nog maar net begonnen. Bekijk de aanbevolen volgende acties om groei te stimuleren, prestaties te verbeteren en uw online doelen te bereiken."
 
 #: build/dashboard/blocks/whats-new/block.json
 msgctxt "block title"
