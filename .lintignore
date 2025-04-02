@@ -5,4 +5,4 @@ pnpm-lock.yaml
 docs/packages/
 packages/wp-plugin/essentials/inc/dashboard/data/ionos
 packages/wp-plugin/essentials/inc/dashboard/data/twentytwentyfive-global-styles.json
-ionos-wordpress.sbom.syft.json
+*.sbom.syft.json
