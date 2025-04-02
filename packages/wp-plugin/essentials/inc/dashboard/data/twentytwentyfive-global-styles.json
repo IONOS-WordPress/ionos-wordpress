@@ -264,9 +264,17 @@
             }
         },
         "color": {
-            "background": "#f4f7fa"
+            "background": "#f4f7fa",
+            "text": "#001b41"
         },
-        "css": ".hiddenelement {\ndisplay: none;\n}"
+        "css": ".hiddenelement {\ndisplay: none;\n}",
+        "elements": {
+            "heading": {
+                "color": {
+                    "text": "#001b41"
+                }
+            }
+        }
     },
     "settings": {
         "layout": {
