@@ -27,9 +27,14 @@
   flex: 1 1 calc(33.333% - 14px);
   max-width: calc(33.333% - 14px);
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Ensure the last columns do not stretch */
+#ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column > p {
+  flex-grow: 1;
+}
+
 #ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column:nth-child(3n + 1) {
   margin-left: 0;
 }
@@ -40,4 +45,18 @@
     transform 300ms;
   opacity: 0;
   transform: translateY(-10px);
+}
+
+@media only screen and (min-width: 667px) and (max-width: 992px) {
+  #ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column {
+    flex: 1 1 calc(50% - 14px);
+    max-width: calc(50% - 14px);
+  }
+}
+
+@media only screen and (max-width: 666px) {
+  #ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
 }
