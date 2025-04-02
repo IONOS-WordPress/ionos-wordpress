@@ -193,6 +193,14 @@ msgstr[1] "varningar hittade"
 msgid "issues found"
 msgstr "fel hittade"
 
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Next best actions"
+msgstr "Nästa bästa åtgärder"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Not sure what to do now? We have some recommendations for you."
+msgstr "Är du inte säker på vad du ska göra nu? Vi har några rekommendationer till dig."
+
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
 msgid "NBA"
@@ -383,15 +391,10 @@ msgstr "Koppla din domän till din webbplats för att öka synligheten och locka
 msgid "Connect a Domain"
 msgstr "Anslut en domän"
 
-#: build/dashboard/blocks/welcome/block.json
+#: build/dashboard/blocks/whats-new/block.json
 msgctxt "block title"
-msgid "Welcome"
-msgstr "Välkommen"
-
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block description"
-msgid "Welcome"
-msgstr "Välkommen"
+msgid "What's New"
+msgstr "Vad är nytt"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Unlock Your Website's Potential"
@@ -402,11 +405,6 @@ msgid "Your website is live, but your journey is just beginning. Explore the rec
 msgstr "Din webbplats är live, men din resa har bara börjat. Utforska de rekommenderade nästa åtgärderna för att driva tillväxt, förbättra prestanda och uppnå dina onlinemål."
 
 #: build/dashboard/blocks/whats-new/block.json
-msgctxt "block title"
-msgid "What's New"
-msgstr ""
-
-#: build/dashboard/blocks/whats-new/block.json
 msgctxt "block description"
 msgid "What's New"
-msgstr ""
+msgstr "Vad är nytt"

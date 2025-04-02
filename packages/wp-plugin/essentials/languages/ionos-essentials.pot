@@ -172,11 +172,11 @@ msgid "Add a favicon (website icon) to your website to enhance brand recognition
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/index.php:35
-msgid "Unlock Your Website's Potential"
+msgid "Next best actions"
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/index.php:36
-msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
+msgid "Not sure what to do now? We have some recommendations for you."
 msgstr ""
 
 #: inc/dashboard/blocks/quick-links/render.php:13
@@ -341,6 +341,34 @@ msgstr ""
 msgid "Current offers"
 msgstr ""
 
+#: PREPARE_LANG_WELCOME.php:5
+msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:9
+msgid "Stay tuned for exciting new features and updates to come!"
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:10
+msgid "Close"
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:12
+msgid "Welcome to your %s Hub"
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:14
+msgid "Recommendations for next steps"
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:15
+msgid "Helpful links and shortcuts"
+msgstr ""
+
+#: PREPARE_LANG_WELCOME.php:16
+msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
+msgstr ""
+
 #: build/dashboard/blocks/banner/block.json
 msgctxt "block title"
 msgid "Banner"
@@ -391,14 +419,14 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr ""
 
-#: build/dashboard/blocks/welcome/block.json
+#: build/dashboard/blocks/whats-new/block.json
 msgctxt "block title"
-msgid "Welcome"
+msgid "What's New"
 msgstr ""
 
-#: build/dashboard/blocks/welcome/block.json
+#: build/dashboard/blocks/whats-new/block.json
 msgctxt "block description"
-msgid "Welcome"
+msgid "What's New"
 msgstr ""
 
 #: build/dashboard/blocks/whats-new/block.json

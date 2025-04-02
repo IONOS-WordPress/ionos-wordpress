@@ -193,6 +193,14 @@ msgstr[1] "waarschuwingen gevonden"
 msgid "issues found"
 msgstr "problemen gevonden"
 
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Next best actions"
+msgstr "Volgende beste acties"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Not sure what to do now? We have some recommendations for you."
+msgstr "Weet je niet zeker wat je nu moet doen? We hebben een aantal aanbevelingen voor je."
+
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
 msgid "NBA"
@@ -383,15 +391,10 @@ msgstr "Koppel je domein aan je website om de zichtbaarheid te vergroten en meer
 msgid "Connect a Domain"
 msgstr "Een domein verbinden"
 
-#: build/dashboard/blocks/welcome/block.json
+#: build/dashboard/blocks/whats-new/block.json
 msgctxt "block title"
-msgid "Welcome"
-msgstr "Welkom"
-
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block description"
-msgid "Welcome"
-msgstr "Welkom"
+msgid "What's New"
+msgstr "Nieuw"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Unlock Your Website's Potential"
@@ -402,11 +405,6 @@ msgid "Your website is live, but your journey is just beginning. Explore the rec
 msgstr "Uw website is live, maar uw reis is nog maar net begonnen. Bekijk de aanbevolen volgende acties om groei te stimuleren, prestaties te verbeteren en uw online doelen te bereiken."
 
 #: build/dashboard/blocks/whats-new/block.json
-msgctxt "block title"
-msgid "What's New"
-msgstr ""
-
-#: build/dashboard/blocks/whats-new/block.json
 msgctxt "block description"
 msgid "What's New"
-msgstr ""
+msgstr "Nieuw"

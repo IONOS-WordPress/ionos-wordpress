@@ -193,6 +193,14 @@ msgstr[1] "Allarmi rilevati"
 msgid "issues found"
 msgstr "Problemi rilevati"
 
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Next best actions"
+msgstr "Le prossime azioni migliori"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Not sure what to do now? We have some recommendations for you."
+msgstr "Non sapete cosa fare ora? Abbiamo alcuni consigli per voi."
+
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
 msgid "NBA"
@@ -383,15 +391,10 @@ msgstr "Collegate il vostro dominio al vostro sito web per aumentare la visibili
 msgid "Connect a Domain"
 msgstr "Collegare un dominio"
 
-#: build/dashboard/blocks/welcome/block.json
+#: build/dashboard/blocks/whats-new/block.json
 msgctxt "block title"
-msgid "Welcome"
-msgstr "Benvenuti"
-
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block description"
-msgid "Welcome"
-msgstr "Benvenuti"
+msgid "What's New"
+msgstr "Cosa c'è di nuovo"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Unlock Your Website's Potential"
@@ -402,11 +405,6 @@ msgid "Your website is live, but your journey is just beginning. Explore the rec
 msgstr "Il vostro sito web è attivo, ma il vostro viaggio è appena iniziato. Esplorate le prossime azioni consigliate per stimolare la crescita, migliorare le prestazioni e raggiungere i vostri obiettivi online."
 
 #: build/dashboard/blocks/whats-new/block.json
-msgctxt "block title"
-msgid "What's New"
-msgstr ""
-
-#: build/dashboard/blocks/whats-new/block.json
 msgctxt "block description"
 msgid "What's New"
-msgstr ""
+msgstr "Cosa c'è di nuovo"
