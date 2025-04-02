@@ -163,17 +163,6 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
     completed: false,
   );
 }
-function count_published_cf7_forms()
-{
-  // Query for published Contact Form 7 forms
-  $cf7_form_count = count(get_posts([
-    'post_type'   => 'wpcf7_contact_form',  // Contact Form 7 post type
-    'post_status' => 'publish',             // Only published forms
-    'numberposts' => -1,                     // Retrieve all published forms
-  ]));
-
-  return $cf7_form_count;
-}
 
 // DONE
 if (is_plugin_active('woocommerce/woocommerce.php')) {
