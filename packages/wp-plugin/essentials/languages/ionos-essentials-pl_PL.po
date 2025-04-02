@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: pl\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
@@ -195,6 +195,14 @@ msgstr[2] ""
 msgid "issues found"
 msgstr "znalezione problemy"
 
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Next best actions"
+msgstr "Następne najlepsze działania"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Not sure what to do now? We have some recommendations for you."
+msgstr "Nie wiesz, co teraz zrobić? Mamy dla ciebie kilka rekomendacji."
+
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
 msgid "NBA"
@@ -248,16 +256,16 @@ msgstr "Łatwa nawigacja do często używanych funkcji i narzędzi"
 msgid "Overview"
 msgstr "Przegląd"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:173
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:172
 msgid "Create Page"
 msgstr "Utwórz stronę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:159
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:165
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:158
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:164
 msgid "Add Logo"
 msgstr "Dodaj logo"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:160
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:159
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Upewnij się, że Twoja witryna jest oznaczona unikalnym logo, aby uzyskać profesjonalny wygląd."
 
@@ -265,115 +273,114 @@ msgstr "Upewnij się, że Twoja witryna jest oznaczona unikalnym logo, aby uzysk
 msgid "Connect Domain"
 msgstr "Połącz domenę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:110
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:109
 msgid "Edit & Complete Your Website"
 msgstr "Edytuj i uzupełnij swoją witrynę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:111
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:110
 msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
 msgstr "Dodawaj strony, tekst i obrazy, dostosuj swoją witrynę za pomocą narzędzi opartych na sztucznej inteligencji lub dostosuj kolory i czcionki."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:116
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:115
 msgid "Edit Website"
 msgstr "Edytuj stronę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:121
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:120
 msgid "Discover Help Center"
 msgstr "Centrum pomocy Discover"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:122
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:121
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
 msgstr "Uzyskaj natychmiastowe wsparcie dzięki Co-Pilot AI, zapoznaj się z naszą bazą wiedzy lub skorzystaj z wycieczek z przewodnikiem."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:127
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:126
 msgid "Open Help Center"
 msgstr "Otwórz Centrum pomocy"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:132
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:138
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:131
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:137
 msgid "Set Up Email"
 msgstr "Konfiguracja poczty e-mail"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:133
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:132
 msgid "Set up your included email account and integrate it with your website."
 msgstr "Skonfiguruj dołączone konto e-mail i zintegruj je ze swoją witryną."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:143
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:146
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:142
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:145
 msgid "Set Up Contact Form"
 msgstr "Konfiguracja formularza kontaktowego"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:144
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:143
 msgid "Create a contact form to stay connected with your visitors."
 msgstr "Utwórz formularz kontaktowy, aby pozostać w kontakcie z odwiedzającymi."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:151
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:150
 msgid "Set Up Your WooCommerce Store"
 msgstr "Konfiguracja sklepu WooCommerce"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:152
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:151
 msgid "Launch your online store now with a guided setup wizard."
 msgstr "Uruchom swój sklep internetowy już teraz dzięki kreatorowi konfiguracji z przewodnikiem."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:154
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:153
 msgid "Start Setup"
 msgstr "Konfiguracja początkowa"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:178
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:177
 msgid "Social Media Setup"
 msgstr "Konfiguracja mediów społecznościowych"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:179
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:178
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Połącz swoje profile w mediach społecznościowych z witryną i zwiększ swoją obecność online."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:184
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:183
 msgid "Connect Social Media"
 msgstr "Połącz media społecznościowe"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:195
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:188
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:194
 msgid "Add Favicon"
 msgstr "Dodaj Favicon"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:190
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Dodaj favicon (ikonę witryny) do swojej witryny, aby zwiększyć rozpoznawalność i widoczność marki."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:170
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:169
 msgid "Create a Page"
 msgstr "Utwórz stronę"
 
-#: inc/dashboard/blocks/welcome/index.php:44
+#: PREPARE_LANG_WELCOME.php:5
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
 msgstr "Ten przegląd jest bramą do odblokowania pełnego potencjału witryny WordPress."
 
-#: inc/dashboard/blocks/welcome/index.php:56
+#: PREPARE_LANG_WELCOME.php:9
 msgid "Stay tuned for exciting new features and updates to come!"
 msgstr "Bądź na bieżąco z nowymi funkcjami i aktualizacjami!"
 
-#: inc/dashboard/blocks/welcome/index.php:63
+#: PREPARE_LANG_WELCOME.php:10
 msgid "Close"
 msgstr "Zamknij"
 
-#. translators: %s: Brand name
-#: inc/dashboard/blocks/welcome/index.php:41
+#: PREPARE_LANG_WELCOME.php:12
 msgid "Welcome to your %s Hub"
 msgstr "Witamy w %s Hub"
 
-#: inc/dashboard/blocks/welcome/index.php:49
+#: PREPARE_LANG_WELCOME.php:14
 msgid "Recommendations for next steps"
 msgstr "Zalecenia dotyczące kolejnych kroków"
 
-#: inc/dashboard/blocks/welcome/index.php:50
+#: PREPARE_LANG_WELCOME.php:15
 msgid "Helpful links and shortcuts"
 msgstr "Pomocne łącza i skróty"
 
-#: inc/dashboard/blocks/welcome/index.php:51
+#: PREPARE_LANG_WELCOME.php:16
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Kompleksowa sekcja pomocy, w tym: Wsparcie czatu AI, Wycieczki z przewodnikiem i obszerną bazę wiedzy"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:171
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:170
 msgid "Create and publish a page and share your story with the world."
 msgstr "Utwórz i opublikuj stronę i podziel się swoją historią ze światem."
 
@@ -385,20 +392,12 @@ msgstr "Połącz swoją domenę z witryną, aby zwiększyć widoczność i przyc
 msgid "Connect a Domain"
 msgstr "Podłącz domenę"
 
-#: build/dashboard/blocks/welcome/block.json
+#: build/dashboard/blocks/whats-new/block.json
 msgctxt "block title"
-msgid "Welcome"
-msgstr "Witamy"
+msgid "What's New"
+msgstr "Co nowego"
 
-#: build/dashboard/blocks/welcome/block.json
+#: build/dashboard/blocks/whats-new/block.json
 msgctxt "block description"
-msgid "Welcome"
-msgstr "Witamy"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:35
-msgid "Unlock Your Website's Potential"
-msgstr "Uwolnij potencjał swojej strony internetowej"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:36
-msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-msgstr "Twoja witryna już działa, ale Twoja podróż dopiero się zaczyna. Zapoznaj się z zalecanymi kolejnymi działaniami, aby przyspieszyć rozwój, poprawić wydajność i osiągnąć swoje cele online."
+msgid "What's New"
+msgstr "Co nowego"
