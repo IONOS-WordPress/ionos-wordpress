@@ -47,4 +47,8 @@ domReady(() => {
       });
     });
   }
+
+  document.querySelector('a.nba-link[data-nba-id="help-center"]').onclick = () => {
+    window.parent.document.querySelector('.extendify-help-center button').click();
+  };
 });

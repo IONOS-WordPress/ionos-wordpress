@@ -42,15 +42,18 @@ function render_callback()
     }
 
     $target = false === strpos(\esc_url($action->link), home_url()) ? '_blank' : '_top';
+    if ( $action->link === '#') {
+      $target = '';
+    }
     $body .= '
       <div class="wp-block-column is-style-default has-background is-layout-flow action" style="border-radius:24px;background-color:#f4f7fa">
           <h3 class="wp-block-heading">' . \esc_html($action->title, 'ionos-essentials') . '</h3>
           <p>' . \esc_html($action->description, 'ionos-essentials') . '</p>
           <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
               <div class="wp-block-button">
-                  <a href="' . \esc_url(
+                  <a data-nba-id="' . $action->id . '" href="' . \esc_url(
       $action->link
-    ) . '" class="wp-block-button__link wp-element-button" target="' . $target . '">' . \esc_html(
+    ) . '" class="wp-block-button__link wp-element-button nba-link" target="' . $target . '">' . \esc_html(
       $action->anchor,
       'ionos-essentials'
     ) . '</a>
