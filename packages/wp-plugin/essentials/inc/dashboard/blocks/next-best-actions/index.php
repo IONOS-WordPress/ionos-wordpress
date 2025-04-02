@@ -27,16 +27,13 @@ function render_callback()
           <h3 class="wp-block-heading">%s</h3>
           <p>%s</p>
       </div>
-      <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-1 wp-block-columns-is-layout-flex">
+      <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-1 wp-block-columns-is-layout-flex" id="actions">
           %s
       </div>
   </div>';
 
-  $header      = \esc_html__("Unlock Your Website's Potential", 'ionos-essentials');
-  $description = \esc_html__(
-    'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
-    'ionos-essentials'
-  );
+  $header      = \esc_html__('Next best actions', 'ionos-essentials');
+  $description = \esc_html__('Not sure what to do now? We have some recommendations for you.', 'ionos-essentials');
 
   $body = '';
   foreach ($actions as $action) {
@@ -46,7 +43,7 @@ function render_callback()
 
     $target = false === strpos(\esc_url($action->link), home_url()) ? '_blank' : '_top';
     $body .= '
-      <div class="wp-block-column is-style-default has-background is-layout-flow" style="border-radius:24px;background-color:#f4f7fa">
+      <div class="wp-block-column is-style-default has-background is-layout-flow action" style="border-radius:24px;background-color:#f4f7fa">
           <h3 class="wp-block-heading">' . \esc_html($action->title, 'ionos-essentials') . '</h3>
           <p>' . \esc_html($action->description, 'ionos-essentials') . '</p>
           <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">

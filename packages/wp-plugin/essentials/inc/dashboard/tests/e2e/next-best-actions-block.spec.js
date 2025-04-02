@@ -6,19 +6,18 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     await execSync('pnpm -s wp-env run tests-cli wp option delete ionos_nba_status');
     // @FIXME: we need to run the rewrite structure command to avoid 404 error because phpunit will reset rewrite structure for some reason
     await execSync('pnpm -s wp-env run tests-cli wp rewrite structure /%postname% --hard');
-    await execSync('pnpm -s wp-env run tests-cli wp user meta update 1 ionos_essentials_welcome true');
   });
 
   test('test dismissing an option ', async ({ admin, page }) => {
     // show dashboard and click on dismiss button of "create-page" action
     await admin.visitAdminPage('/');
+
     // get the iframe element
     let iframeLocator = await page.locator('iframe');
     // get the iframe's body element
     let iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
-
     // get dismiss anchor element
-    let dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="create-page"]');
+    let dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="help-center"]');
     await expect(dismissAncor).toHaveCount(1);
     await dismissAncor.click();
 
@@ -26,7 +25,7 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     await admin.visitAdminPage('/');
     iframeLocator = await page.locator('iframe');
     iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
-    dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="create-page"]');
+    dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="help-center"]');
     await expect(dismissAncor).toHaveCount(0);
   });
 });

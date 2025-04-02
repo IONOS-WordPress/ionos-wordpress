@@ -104,7 +104,6 @@ if (null !== $data) {
     completed: false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost'),
   );
 }
-
 NBA::register(
   id: 'edit-and-complete',
   title: \esc_html__('Edit & Complete Your Website', 'ionos-essentials'),
@@ -195,5 +194,3 @@ NBA::register(
   anchor: \esc_html__('Add Favicon', 'ionos-essentials'),
   completed: false
 );
-
-\do_action('ionos_dashboard__register_nba_element');

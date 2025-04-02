@@ -15,16 +15,16 @@ if (file_exists($config_file)) {
   echo '</div>
       <div class="wp-block-group elements">
       ';
-  foreach ($links as $link) {
+  foreach ($links as $url => $anchor) {
     printf(
       '<div class="wp-block-group element">
         <a href="%s" target="_blank">
           <img class="wp-block-image size-large is-resized icon" src="%s" alt=""/>
           <p>%s</p>
         </a></div>',
-      \esc_url($link['url']),
-      \esc_url(\plugins_url('assets/img/' . $link['icon'], dirname(__DIR__, 3))),
-      \esc_html($link['text'])
+      \esc_url($url),
+      \esc_url(\plugins_url('assets/img/' . $anchor['icon'], \dirname(__DIR__, 3))),
+      \esc_html($anchor['text'])
     );
   }
   echo '
