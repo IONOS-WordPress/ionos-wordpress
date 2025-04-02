@@ -63,6 +63,12 @@
       outline-width: 0;
     }
 
+    .button--primary {
+      background-color: var(--primary-button-background-color, #0b2a63);
+      border: var(--button-border-width, 2px) solid var(--primary-button-border-color, #0b2a63);
+      color: var(--primary-button-text-color, #fff);
+    }
+
     .button--primary:hover:not(.button--disabled) {
       background-color: var(--hovered-primary-button-background-color, #1474c4);
       border: var(--button-border-width, 2px) solid var(--hovered-primary-button-border-color, #1474c4);
@@ -71,11 +77,6 @@
       outline: none;
     }
 
-    .button--primary {
-      background-color: var(--primary-button-background-color, #0b2a63);
-      border: var(--button-border-width, 2px) solid var(--primary-button-border-color, #0b2a63);
-      color: var(--primary-button-text-color, #fff);
-    }
   }
 
   .horizontal-card__header {
