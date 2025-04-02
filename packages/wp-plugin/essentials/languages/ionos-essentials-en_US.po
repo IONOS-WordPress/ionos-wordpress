@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en_US\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
+"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
-"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
-"Language: en_US\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.10.0\n"
 
@@ -160,7 +160,7 @@ msgstr "Show wp scan data."
 msgid "WPScan not available"
 msgstr "WPScan not available"
 
-#: inc/dashboard/index.php:223
+#: inc/dashboard/index.php:227
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -192,14 +192,6 @@ msgstr[1] "warnings found"
 #: inc/dashboard/blocks/vulnerability/render.php:48
 msgid "issues found"
 msgstr "issues found"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:35
-msgid "Next best actions"
-msgstr "Next best actions"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:36
-msgid "Not sure what to do now? We have some recommendations for you."
-msgstr "Not sure what to do now? We have some recommendations for you."
 
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
@@ -249,8 +241,8 @@ msgstr "One-click access to your customer account, login security and subscripti
 msgid "Easily navigate to frequently used features and tools"
 msgstr "Easily navigate to frequently used features and tools"
 
-#: inc/dashboard/index.php:120
-#: inc/dashboard/index.php:121
+#: inc/dashboard/index.php:124
+#: inc/dashboard/index.php:125
 msgid "Overview"
 msgstr "Overview"
 
@@ -350,31 +342,32 @@ msgstr "Add a favicon (website icon) to your website to enhance brand recognitio
 msgid "Create a Page"
 msgstr "Create a Page"
 
-#: PREPARE_LANG_WELCOME.php:5
+#: inc/dashboard/blocks/welcome/index.php:43
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
 msgstr "This overview is your gateway to unlocking the full potential of your WordPress website."
 
-#: PREPARE_LANG_WELCOME.php:9
+#: inc/dashboard/blocks/welcome/index.php:61
 msgid "Stay tuned for exciting new features and updates to come!"
 msgstr "Stay tuned for exciting new features and updates to come!"
 
-#: PREPARE_LANG_WELCOME.php:10
+#: inc/dashboard/blocks/welcome/index.php:69
 msgid "Close"
 msgstr "Close"
 
-#: PREPARE_LANG_WELCOME.php:12
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php:40
 msgid "Welcome to your %s Hub"
 msgstr "Welcome to your %s Hub"
 
-#: PREPARE_LANG_WELCOME.php:14
+#: inc/dashboard/blocks/welcome/index.php:51
 msgid "Recommendations for next steps"
 msgstr "Recommendations for next steps"
 
-#: PREPARE_LANG_WELCOME.php:15
+#: inc/dashboard/blocks/welcome/index.php:52
 msgid "Helpful links and shortcuts"
 msgstr "Helpful links and shortcuts"
 
-#: PREPARE_LANG_WELCOME.php:16
+#: inc/dashboard/blocks/welcome/index.php:53
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 
@@ -389,6 +382,24 @@ msgstr "Connect your domain to your website to increase visibility and attract m
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:97
 msgid "Connect a Domain"
 msgstr "Connect a Domain"
+
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block title"
+msgid "Welcome"
+msgstr "Welcome"
+
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block description"
+msgid "Welcome"
+msgstr "Welcome"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Unlock Your Website's Potential"
+msgstr "Unlock Your Website's Potential"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
+msgstr "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 
 #: build/dashboard/blocks/whats-new/block.json
 msgctxt "block title"
