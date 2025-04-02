@@ -79,7 +79,7 @@ function render_callback(): string
     '/closer',
     [
       'methods'             => 'POST',
-      'permission_callback' => fn () => \get_current_user_id() !== 0,
+      'permission_callback' => fn () => 0 !== \get_current_user_id(),
       'callback'            => function () {
         $meta = \update_user_meta(\get_current_user_id(), USER_META_KEY, true);
 

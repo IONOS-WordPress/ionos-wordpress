@@ -45,7 +45,7 @@ function render_callback()
     }
 
     $target = false === strpos(\esc_url($action->link), home_url()) ? '_blank' : '_top';
-    if ( $action->link === '#') {
+    if ('#' === $action->link) {
       $target = '';
     }
     $body .= '

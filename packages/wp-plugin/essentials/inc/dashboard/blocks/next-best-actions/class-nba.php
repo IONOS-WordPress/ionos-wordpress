@@ -115,7 +115,8 @@ NBA::register(
   ),
   link: \admin_url('post-new.php?post_type=page&ext-close'), //  /wp-admin/post-new.php?post_type=page&ext-close
   anchor: \esc_html__('Edit Website', 'ionos-essentials'),
-  completed: 1 < \wp_count_posts('page')->publish
+  completed: 1 < \wp_count_posts('page')
+    ->publish
 );
 
 // DONE
@@ -132,27 +133,27 @@ NBA::register(
 );
 
 // TODO show when domain-action is connected/done ( it is Tenant specific )
-if(false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost')) {
+if (false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost')) {
   NBA::register(
-  id: 'email-account',
-  title: \esc_html__('Set Up Email', 'ionos-essentials'),
-  description: \esc_html__(
-    'Set up your included email account and integrate it with your website.',
-    'ionos-essentials'
-  ),
-  link: '#',
-  anchor: \esc_html__('Set Up Email', 'ionos-essentials'),
-  completed: false // done when cta is clicked
-);
+    id: 'email-account',
+    title: \esc_html__('Set Up Email', 'ionos-essentials'),
+    description: \esc_html__(
+      'Set up your included email account and integrate it with your website.',
+      'ionos-essentials'
+    ),
+    link: '#',
+    anchor: \esc_html__('Set Up Email', 'ionos-essentials'),
+    completed: false // done when cta is clicked
+  );
 }
 
-if ( ! function_exists( 'is_plugin_active' ) ) {
-  include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+if (! function_exists('is_plugin_active')) {
+  include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 }
 
 // DONE
 // show when contactform7 is installed and active
-if ( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
+if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
   NBA::register(
     id: 'contact-form',
     title: \esc_html__('Set Up Contact Form', 'ionos-essentials'),
@@ -162,19 +163,20 @@ if ( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
     completed: false,
   );
 }
-function count_published_cf7_forms() {
+function count_published_cf7_forms()
+{
   // Query for published Contact Form 7 forms
-  $cf7_form_count = count(get_posts(array(
-      'post_type'   => 'wpcf7_contact_form',  // Contact Form 7 post type
-      'post_status' => 'publish',             // Only published forms
-      'numberposts' => -1                     // Retrieve all published forms
-  )));
+  $cf7_form_count = count(get_posts([
+    'post_type'   => 'wpcf7_contact_form',  // Contact Form 7 post type
+    'post_status' => 'publish',             // Only published forms
+    'numberposts' => -1,                     // Retrieve all published forms
+  ]));
 
   return $cf7_form_count;
 }
 
 // DONE
-if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+if (is_plugin_active('woocommerce/woocommerce.php')) {
   $woo_onboarding_status = get_option('woocommerce_onboarding_profile');
 
   NBA::register(
@@ -211,7 +213,7 @@ NBA::register(
 );
 
 // DONE
-if (get_stylesheet() === 'extendable') {
+if ('extendable' === get_stylesheet()) {
   NBA::register(
     id: 'social-media',
     title: \esc_html__('Social Media Setup', 'ionos-essentials'),
@@ -219,7 +221,9 @@ if (get_stylesheet() === 'extendable') {
       'Connect your social media profiles to your website and expand your online presence.',
       'ionos-essentials'
     ),
-    link: \admin_url('site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit'),
+    link: \admin_url(
+      'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit'
+    ),
     anchor: \esc_html__('Connect Social Media', 'ionos-essentials'),
     completed: false
   );
