@@ -1,18 +1,5 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
-"Language: de_DE_formal\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Domain: ionos-essentials\n"
-"X-Generator: WP-CLI 2.11.0\n"
 
 #. Plugin Name of the plugin
 #: essentials.php
@@ -38,6 +25,70 @@ msgstr "IONOS-Gruppe"
 #: essentials.php
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block title"
+msgid "Deep Links"
+msgstr "Deep Links"
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block description"
+msgid "Show links to the Control Panel of your provider."
+msgstr "Links zum Control Panel Ihres Providers anzeigen."
+
+#: inc/tenants/config/ionos.php:8
+msgid "Contracts & Subscriptions"
+msgstr "Verträge & Abonnements"
+
+#: inc/tenants/config/ionos.php:12
+msgid "Login & Account security"
+msgstr "Login & Kontosicherheit"
+
+#: inc/tenants/config/ionos.php:16
+msgid "Invoices & Payment Details"
+msgstr "Rechnungen & Zahlungsdetails"
+
+#: inc/tenants/config/ionos.php:20
+msgid "Data Protection & Privacy Notice"
+msgstr "Hinweis zum Datenschutz und zur Privatsphäre"
+
+#: inc/tenants/config/ionos.php:24
+msgid "Contact Details"
+msgstr "Kontakt Details"
+
+#: inc/tenants/config/ionos.php:28
+msgid "Profile Details"
+msgstr "Profil-Details"
+
+#: inc/tenants/config/strato.php:8
+msgid "Package overview"
+msgstr "Übersicht über das Paket"
+
+#: inc/tenants/config/strato.php:12
+msgid "Your invoices"
+msgstr "Ihre Rechnungen"
+
+#: inc/tenants/config/strato.php:16
+msgid "Your contract"
+msgstr "Ihr Vertrag"
+
+#: inc/tenants/config/strato.php:20
+msgid "Current offers"
+msgstr "Aktuelle Angebote"
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block title"
+msgid "Quick Links"
+msgstr "Quick Links"
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block description"
+msgid "Show links to common tasks in the WordPress backend."
+msgstr "Zeigen Sie Links zu allgemeinen Aufgaben im WordPress-Backend an."
+
+#: inc/dashboard/blocks/quick-links/render.php:13
+msgid "Quick Links"
+msgstr "Quick Links"
 
 #: inc/tenants/config/arsys.php:8
 #: inc/tenants/config/piensa.php:8
@@ -70,30 +121,6 @@ msgstr "Mein Benutzer"
 msgid "WordPress Websites"
 msgstr "WordPress-Websites"
 
-#: inc/tenants/config/ionos.php:8
-msgid "Contracts & Subscriptions"
-msgstr "Verträge & Abonnements"
-
-#: inc/tenants/config/ionos.php:12
-msgid "Login & Account security"
-msgstr "Login & Kontosicherheit"
-
-#: inc/tenants/config/ionos.php:16
-msgid "Invoices & Payment Details"
-msgstr "Rechnungen & Zahlungsdetails"
-
-#: inc/tenants/config/ionos.php:20
-msgid "Data Protection & Privacy Notice"
-msgstr "Hinweis zum Datenschutz und zur Privatsphäre"
-
-#: inc/tenants/config/ionos.php:24
-msgid "Contact Details"
-msgstr "Kontakt Details"
-
-#: inc/tenants/config/ionos.php:28
-msgid "Profile Details"
-msgstr "Profil-Details"
-
 #: inc/tenants/config/piensa.php:12
 msgid "Data of customer"
 msgstr "Daten des Kunden"
@@ -106,46 +133,6 @@ msgstr "Dienstleistungen"
 msgid "Invoices"
 msgstr "Rechnungen"
 
-#: inc/tenants/config/strato.php:8
-msgid "Package overview"
-msgstr "Übersicht über das Paket"
-
-#: inc/tenants/config/strato.php:12
-msgid "Your invoices"
-msgstr "Ihre Rechnungen"
-
-#: inc/tenants/config/strato.php:16
-msgid "Your contract"
-msgstr "Ihr Vertrag"
-
-#: inc/tenants/config/strato.php:20
-msgid "Current offers"
-msgstr "Aktuelle Angebote"
-
-#: inc/dashboard/blocks/quick-links/render.php:13
-msgid "Quick Links"
-msgstr "Schnelle Links"
-
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block title"
-msgid "Deep Links"
-msgstr "Tiefe Links"
-
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block description"
-msgid "Show links to the Control Panel of your provider."
-msgstr "Links zum Control Panel Ihres Providers anzeigen."
-
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block title"
-msgid "Quick Links"
-msgstr "Schnelle Links"
-
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block description"
-msgid "Show links to common tasks in the WordPress backend."
-msgstr "Zeigen Sie Links zu allgemeinen Aufgaben im WordPress-Backend an."
-
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block title"
 msgid "Vulnerability"
@@ -154,7 +141,7 @@ msgstr "Schwachstelle"
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block description"
 msgid "Show wp scan data."
-msgstr "WPScan-Daten anzeigen."
+msgstr "Zeige wp scan Daten"
 
 #: inc/dashboard/blocks/vulnerability/render.php:82
 msgid "WPScan not available"
@@ -192,14 +179,6 @@ msgstr[1] "Warnungen gefunden"
 #: inc/dashboard/blocks/vulnerability/render.php:48
 msgid "issues found"
 msgstr "Probleme gefunden"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:35
-msgid "Next best actions"
-msgstr "Nächstbeste Aktionen"
-
-#: inc/dashboard/blocks/next-best-actions/index.php:36
-msgid "Not sure what to do now? We have some recommendations for you."
-msgstr "Sie wissen nicht, was Sie jetzt tun sollen? Wir haben einige Empfehlungen für Sie."
 
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
@@ -350,31 +329,32 @@ msgstr "Fügen Sie Ihrer Website ein Favicon (Website-Symbol) hinzu, um die Wied
 msgid "Create a Page"
 msgstr "Eine Seite erstellen"
 
-#: PREPARE_LANG_WELCOME.php:5
+#: inc/dashboard/blocks/welcome/index.php:44
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
 msgstr "Diese Übersicht ist Ihr Einstieg, um das volle Potenzial Ihrer WordPress-Website zu erschließen."
 
-#: PREPARE_LANG_WELCOME.php:9
+#: inc/dashboard/blocks/welcome/index.php:56
 msgid "Stay tuned for exciting new features and updates to come!"
 msgstr "Bleiben Sie dran, denn es kommen spannende neue Funktionen und Updates auf Sie zu!"
 
-#: PREPARE_LANG_WELCOME.php:10
+#: inc/dashboard/blocks/welcome/index.php:63
 msgid "Close"
 msgstr "Schließen Sie"
 
-#: PREPARE_LANG_WELCOME.php:12
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php:41
 msgid "Welcome to your %s Hub"
 msgstr "Willkommen in Ihrem %s Hub"
 
-#: PREPARE_LANG_WELCOME.php:14
+#: inc/dashboard/blocks/welcome/index.php:49
 msgid "Recommendations for next steps"
 msgstr "Empfehlungen für die nächsten Schritte"
 
-#: PREPARE_LANG_WELCOME.php:15
+#: inc/dashboard/blocks/welcome/index.php:50
 msgid "Helpful links and shortcuts"
 msgstr "Hilfreiche Links und Abkürzungen"
 
-#: PREPARE_LANG_WELCOME.php:16
+#: inc/dashboard/blocks/welcome/index.php:51
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Umfassender Hilfebereich, einschließlich: KI-Chat-Support, geführte Touren und eine umfangreiche Wissensdatenbank"
 
@@ -390,12 +370,20 @@ msgstr "Verbinden Sie Ihre Domain mit Ihrer Website, um die Sichtbarkeit zu erh�
 msgid "Connect a Domain"
 msgstr "Eine Domäne verbinden"
 
-#: build/dashboard/blocks/whats-new/block.json
+#: build/dashboard/blocks/welcome/block.json
 msgctxt "block title"
-msgid "What's New"
-msgstr "Was gibt's Neues?"
+msgid "Welcome"
+msgstr "Willkommen"
 
-#: build/dashboard/blocks/whats-new/block.json
+#: build/dashboard/blocks/welcome/block.json
 msgctxt "block description"
-msgid "What's New"
-msgstr "Was gibt's Neues?"
+msgid "Welcome"
+msgstr "Willkommen"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:35
+msgid "Unlock Your Website's Potential"
+msgstr "Erschließen Sie das Potenzial Ihrer Website"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:36
+msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
+msgstr "Ihre Website ist jetzt online, aber Ihre Reise hat gerade erst begonnen. Entdecken Sie die empfohlenen nächsten Schritte, um das Wachstum zu fördern, die Leistung zu verbessern und Ihre Online-Ziele zu erreichen."
