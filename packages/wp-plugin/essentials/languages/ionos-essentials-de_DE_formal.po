@@ -10,7 +10,7 @@ msgstr ""
 "POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
 "PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
 "Language: de_DE_formal\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
