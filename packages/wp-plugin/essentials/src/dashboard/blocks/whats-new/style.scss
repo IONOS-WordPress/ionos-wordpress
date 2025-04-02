@@ -1,0 +1,20 @@
+/* WHATS NEW SECTION */
+.whats-new{
+  img {
+    max-width: 100px;
+    height: auto;
+  }
+  header {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    h3 {
+      margin: 0;
+    }
+  }
+  content {
+       li {
+      margin-bottom: .5rem;
+    }
+  };
+}
