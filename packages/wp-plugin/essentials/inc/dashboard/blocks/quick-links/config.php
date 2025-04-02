@@ -18,7 +18,7 @@ $links = [
     'icon' => 'digitalisation-48.svg',
   ],
   ['url' => $blog_url . '/wp-admin/site-editor.php?path=%2Fwp_global_styles',
-    'text' => __('Change styles, colours and font', 'essentials'),
+    'text' => __('Change styles', 'essentials'),
     'icon' => 'favstar-16.svg',
   ],
   ['url' => $blog_url . '/wp-admin/site-editor.php',
