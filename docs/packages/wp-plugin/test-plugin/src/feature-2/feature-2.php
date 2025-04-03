@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos_wordpress\test_plugin\feature_2;
+namespace ionos\test_plugin\feature_2;
 
 function hello(): void
 {

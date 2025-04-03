@@ -1,10 +1,10 @@
 <?php
 
-use const ionos_wordpress\essentials\migration\WP_OPTION_LAST_INSTALL_DATA;
-use const ionos_wordpress\essentials\PLUGIN_FILE;
-use const ionos_wordpress\essentials\migration\WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION;
+use const ionos\essentials\migration\WP_OPTION_LAST_INSTALL_DATA;
+use const ionos\essentials\PLUGIN_FILE;
+use const ionos\essentials\migration\WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION;
 
-use function ionos_wordpress\essentials\migration\_install;
+use function ionos\essentials\migration\_install;
 
 /**
  * covers the migration tests.

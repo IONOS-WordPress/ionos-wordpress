@@ -15,7 +15,7 @@
  * Domain Path:       /languages
  */
 
-namespace ionos_wordpress\test_plugin;
+namespace ionos\test_plugin;
 
 defined('ABSPATH') || exit();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos_wordpress\essentials\switch_page;
+namespace ionos\essentials\switch_page;
 
 if (! defined('ABSPATH')) {
   exit;

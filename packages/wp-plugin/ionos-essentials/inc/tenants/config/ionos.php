@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
+namespace ionos\essentials\dashboard\blocks\deep_links;
 
 $links = [
   [

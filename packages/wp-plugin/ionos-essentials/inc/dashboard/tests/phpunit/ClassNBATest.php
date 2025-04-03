@@ -1,9 +1,9 @@
 <?php
 
-use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\NBA;
-use ionos_wordpress\essentials\dashboard\blocks\next_best_actions\ActionStatus;
+use ionos\essentials\dashboard\blocks\next_best_actions\NBA;
+use ionos\essentials\dashboard\blocks\next_best_actions\ActionStatus;
 
-use const ionos_wordpress\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_DIR;
 
 /**
  * covers the tests for the NBA class.

@@ -1,14 +1,14 @@
 <?php
 
-namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions;
+namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
-use const ionos_wordpress\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_DIR;
 
 \add_action('init', function () {
   \register_block_type(
     PLUGIN_DIR . '/build/dashboard/blocks/next-best-actions',
     [
-      'render_callback' => 'ionos_wordpress\essentials\dashboard\blocks\next_best_actions\render_callback',
+      'render_callback' => 'ionos\essentials\dashboard\blocks\next_best_actions\render_callback',
     ]
   );
 });

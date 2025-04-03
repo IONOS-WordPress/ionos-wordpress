@@ -1,8 +1,8 @@
 <?php
 
-namespace ionos_wordpress\essentials\migration;
+namespace ionos\essentials\migration;
 
-use const ionos_wordpress\essentials\PLUGIN_FILE;
+use const ionos\essentials\PLUGIN_FILE;
 
 /*
  * the migration logic uses an auto loaded option to store the last installed version data

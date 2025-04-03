@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos_wordpress\test_plugin\feature_1\blocks\block_2;
+namespace ionos\test_plugin\feature_1\blocks\block_2;
 
 ?>
 <p <?php echo \wp_kses_data(\get_block_wrapper_attributes()); ?>>
