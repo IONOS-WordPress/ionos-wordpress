@@ -360,53 +360,114 @@ msgstr "Ihre Website ist jetzt online, aber Ihre Reise hat gerade erst begonnen.
 #. Plugin Name of the plugin
 #: ionos-essentials.php
 msgid "ionos-essentials"
-msgstr ""
+msgstr "ionos-essentials"
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php:40
 msgid "Welcome to your %s Hub"
-msgstr ""
+msgstr "Willkommen in Ihrem %s Hub"
 
 #: inc/dashboard/blocks/welcome/index.php:43
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr ""
+msgstr "Diese Übersicht ist Ihr Einstieg, um das volle Potenzial Ihrer WordPress-Website zu erschließen."
 
 #: inc/dashboard/blocks/welcome/index.php:51
 msgid "Recommendations for next steps"
-msgstr ""
+msgstr "Empfehlungen für die nächsten Schritte"
 
 #: inc/dashboard/blocks/welcome/index.php:52
 msgid "Helpful links and shortcuts"
-msgstr ""
+msgstr "Hilfreiche Links und Abkürzungen"
 
 #: inc/dashboard/blocks/welcome/index.php:53
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr ""
+msgstr "Umfassender Hilfebereich, einschließlich: KI-Chat-Support, geführte Touren und eine umfangreiche Wissensdatenbank"
 
 #: inc/dashboard/blocks/welcome/index.php:61
 msgid "Stay tuned for exciting new features and updates to come!"
-msgstr ""
+msgstr "Bleiben Sie dran, denn es kommen spannende neue Funktionen und Updates auf Sie zu!"
 
 #: inc/dashboard/blocks/welcome/index.php:69
 msgid "Close"
-msgstr ""
+msgstr "Schließen Sie"
 
 #: build/dashboard/blocks/welcome/block.json
 msgctxt "block title"
 msgid "Welcome"
-msgstr ""
+msgstr "Willkommen"
 
 #: build/dashboard/blocks/welcome/block.json
 msgctxt "block description"
 msgid "Welcome"
-msgstr ""
+msgstr "Willkommen"
 
 #: build/dashboard/blocks/whats-new/block.json
 msgctxt "block title"
 msgid "What's New"
-msgstr ""
+msgstr "Was gibt's Neues?"
 
 #: build/dashboard/blocks/whats-new/block.json
 msgctxt "block description"
 msgid "What's New"
-msgstr ""
+msgstr "Was gibt's Neues?"
+
+#: inc/dashboard/blocks/whats-new/index.php:25
+msgid "What’s New"
+msgstr "Was gibt's Neues?"
+
+#: inc/dashboard/blocks/whats-new/index.php:29
+msgid "Discover new features and get an overview of the latest updates and enhancements of your WordPress Hub"
+msgstr "Entdecken Sie neue Funktionen und verschaffen Sie sich einen Überblick über die neuesten Updates und Erweiterungen Ihres WordPress-Hubs"
+
+#: inc/dashboard/blocks/whats-new/index.php:36
+msgid "Introducing the new WordPress Hub"
+msgstr "Einführung des neuen WordPress-Hubs"
+
+#: inc/dashboard/blocks/whats-new/index.php:37
+msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
+msgstr "Mit einem völlig neuen Design und einer verbesserten Benutzerfreundlichkeit wird die Verwaltung Ihrer Website einfacher denn je."
+
+#: inc/dashboard/blocks/whats-new/index.php:43
+msgid "Vulnerability Scan Results"
+msgstr "Ergebnisse des Schwachstellen-Scans"
+
+#: inc/dashboard/blocks/whats-new/index.php:44
+msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
+msgstr "Wir haben die Scanergebnisse direkt in Ihr Dashboard eingefügt, so dass Sie sofort einen Überblick über potenzielle Sicherheitsrisiken erhalten."
+
+#: inc/dashboard/blocks/quick-links/config.php:10
+msgid "Add new page"
+msgstr "Neue Seite hinzufügen"
+
+#: inc/dashboard/blocks/quick-links/config.php:18
+msgid "Add new post"
+msgstr "Neuen Beitrag hinzufügen"
+
+#: inc/dashboard/blocks/quick-links/config.php:23
+msgid "Edit site navigation"
+msgstr "Website-Navigation bearbeiten"
+
+#: inc/dashboard/blocks/quick-links/config.php:31
+msgid "Change styles"
+msgstr "Stile ändern"
+
+#: inc/dashboard/blocks/quick-links/config.php:39
+msgid "Edit Header"
+msgstr "Kopfzeile bearbeiten"
+
+#: inc/dashboard/blocks/quick-links/config.php:44
+msgid "Edit Footer"
+msgstr "Fußzeile bearbeiten"
+
+#: inc/dashboard/blocks/quick-links/config.php:52
+msgid "Add plugins"
+msgstr "Plugins hinzufügen"
+
+#: inc/dashboard/blocks/quick-links/config.php:60
+msgid "Upload media files"
+msgstr "Hochladen von Mediendateien"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:40
+#: inc/dashboard/blocks/next-best-actions/index.php:66
+msgid "Dismiss"
+msgstr "Ablehnen"

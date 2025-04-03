@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: es\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-02-05T09:50:40+00:00\n"
-"POT-Creation-Date: 2025-02-05T09:50:40+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-05T09:50:40+00:00\n"
+"PO-Revision-Date: 2025-02-05T09:50:40+00:00\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
@@ -410,3 +410,64 @@ msgstr "Novedades"
 msgctxt "block description"
 msgid "What's New"
 msgstr "Novedades"
+
+#: inc/dashboard/blocks/whats-new/index.php:25
+msgid "What’s New"
+msgstr "Novedades"
+
+#: inc/dashboard/blocks/whats-new/index.php:29
+msgid "Discover new features and get an overview of the latest updates and enhancements of your WordPress Hub"
+msgstr "Descubre nuevas funciones y obtén una visión general de las últimas actualizaciones y mejoras de tu Hub de WordPress"
+
+#: inc/dashboard/blocks/whats-new/index.php:36
+msgid "Introducing the new WordPress Hub"
+msgstr "Presentación del nuevo Hub de WordPress"
+
+#: inc/dashboard/blocks/whats-new/index.php:37
+msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
+msgstr "Con un diseño completamente nuevo y una experiencia de usuario mejorada, la gestión de su sitio web será más fácil que nunca."
+
+#: inc/dashboard/blocks/whats-new/index.php:43
+msgid "Vulnerability Scan Results"
+msgstr "Resultados de la exploración de vulnerabilidades"
+
+#: inc/dashboard/blocks/whats-new/index.php:44
+msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
+msgstr "Hemos añadido los resultados de los análisis directamente a su panel de control, lo que le ofrece una visibilidad instantánea de los posibles riesgos para la seguridad."
+
+#: inc/dashboard/blocks/quick-links/config.php:10
+msgid "Add new page"
+msgstr "Añadir nueva página"
+
+#: inc/dashboard/blocks/quick-links/config.php:18
+msgid "Add new post"
+msgstr "Añadir un nuevo mensaje"
+
+#: inc/dashboard/blocks/quick-links/config.php:23
+msgid "Edit site navigation"
+msgstr "Editar la navegación del sitio"
+
+#: inc/dashboard/blocks/quick-links/config.php:31
+msgid "Change styles"
+msgstr "Cambiar estilos"
+
+#: inc/dashboard/blocks/quick-links/config.php:39
+msgid "Edit Header"
+msgstr "Editar cabecera"
+
+#: inc/dashboard/blocks/quick-links/config.php:44
+msgid "Edit Footer"
+msgstr "Editar pie de página"
+
+#: inc/dashboard/blocks/quick-links/config.php:52
+msgid "Add plugins"
+msgstr "Añadir plugins"
+
+#: inc/dashboard/blocks/quick-links/config.php:60
+msgid "Upload media files"
+msgstr "Cargar archivos multimedia"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:40
+#: inc/dashboard/blocks/next-best-actions/index.php:66
+msgid "Dismiss"
+msgstr "Desestimar"
