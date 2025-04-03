@@ -27,8 +27,13 @@
   flex: 1 1 calc(33.333% - 14px);
   max-width: calc(33.333% - 14px);
   box-sizing: border-box;
+}
+
+#ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column > .action-content {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 #ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column > p {
