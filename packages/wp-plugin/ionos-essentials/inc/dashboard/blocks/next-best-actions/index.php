@@ -37,8 +37,6 @@ function render_callback()
     'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
     'ionos-essentials'
   );
-  $foo = __("Dismiss", "ionos-essentials");
-
   $body = '';
   foreach ($actions as $action) {
     if (! $action->active) {
