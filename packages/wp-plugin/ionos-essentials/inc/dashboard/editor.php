@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos_wordpress\essentials\dashboard;
+namespace ionos\essentials\dashboard;
 
 /*
     This file features the editing part of the ionos dashboard features.

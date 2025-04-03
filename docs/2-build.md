@@ -84,7 +84,7 @@
     * Domain Path:       /languages
     */
 
-    namespace ionos_wordpress\foo;
+    namespace ionos\foo;
 
     defined('ABSPATH') || exit();
 
@@ -181,17 +181,17 @@ Place your shared PHP Code in the `./shared/` top level folder.
   ```php
   <?PHP
 
-  namespace ionos_wordpress\shared\nuts;
+  namespace ionos\shared\nuts;
 
   // ensure that function gets not redeclared
-  if (!function_exists('ionos_wordpress\shared\nuts\eat')) {
+  if (!function_exists('ionos\shared\nuts\eat')) {
     function eat(): void {
       // smack smack smack ...
     }
   }
 
   // ensure that function gets not redeclared
-  if (!function_exists('ionos_wordpress\shared\nuts\snack')) {
+  if (!function_exists('ionos\shared\nuts\snack')) {
     function snack(): void {
       // smack smack smack ...
     }
@@ -204,8 +204,8 @@ Place your shared PHP Code in the `./shared/` top level folder.
   <?PHP
 
   // ensure that function gets not redeclared
-  if (!function_exists('ionos_wordpress\shared\nuts\peanuts\eat')) {
-    namespace ionos_wordpress\shared\nuts\peanuts;
+  if (!function_exists('ionos\shared\nuts\peanuts\eat')) {
+    namespace ionos\shared\nuts\peanuts;
 
     function eat(): void {
       // smack smack smack ...

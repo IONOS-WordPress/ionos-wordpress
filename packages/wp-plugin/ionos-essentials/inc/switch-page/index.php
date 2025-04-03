@@ -1,8 +1,8 @@
 <?php
 
-namespace ionos_wordpress\essentials\switch_page;
+namespace ionos\essentials\switch_page;
 
-use const ionos_wordpress\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_DIR;
 
 // exit if accessed directly
 if (! defined('ABSPATH')) {

@@ -16,7 +16,7 @@
  * Text Domain:       ionos-essentials
  */
 
-namespace ionos_wordpress\essentials;
+namespace ionos\essentials;
 
 const PLUGIN_FILE = __FILE__;
 const PLUGIN_DIR  = __DIR__;

@@ -1,8 +1,8 @@
 <?php
 
-namespace ionos_wordpress\essentials\dashboard\blocks\whatsnew;
+namespace ionos\essentials\dashboard\blocks\whatsnew;
 
-use const ionos_wordpress\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_DIR;
 
 \add_action('init', function () {
   \register_block_type(

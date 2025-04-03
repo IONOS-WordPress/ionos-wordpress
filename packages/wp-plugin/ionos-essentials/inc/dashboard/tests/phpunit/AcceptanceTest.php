@@ -1,6 +1,6 @@
 <?php
 
-use const ionos_wordpress\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_DIR;
 
 /**
  * covers the acceptance tests for the essentials dashboard features.

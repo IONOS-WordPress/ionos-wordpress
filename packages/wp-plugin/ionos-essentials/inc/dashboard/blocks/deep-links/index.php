@@ -1,14 +1,14 @@
 <?php
 
-namespace ionos_wordpress\essentials\dashboard\blocks\deep_links;
+namespace ionos\essentials\dashboard\blocks\deep_links;
 
-use const ionos_wordpress\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_DIR;
 
 \add_action('init', function () {
   \register_block_type(
     PLUGIN_DIR . '/build/dashboard/blocks/deep-links',
     [
-      'render_callback' => 'ionos_wordpress\essentials\dashboard\blocks\deep_links\render_callback',
+      'render_callback' => 'ionos\essentials\dashboard\blocks\deep_links\render_callback',
     ]
   );
 });

@@ -1,8 +1,8 @@
 <?php
 
-namespace ionos_wordpress\essentials\dashboard;
+namespace ionos\essentials\dashboard;
 
-use const ionos_wordpress\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_DIR;
 
 /*
    this file features an admin page that renders a dashboard.

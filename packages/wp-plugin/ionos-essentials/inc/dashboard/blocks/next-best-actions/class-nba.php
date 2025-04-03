@@ -4,7 +4,7 @@
  * This class represents the Next Best Action (NBA) model.
  */
 
-namespace ionos_wordpress\essentials\dashboard\blocks\next_best_actions;
+namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
 enum ActionStatus
 {
@@ -89,8 +89,9 @@ class NBA
   }
 }
 
-// DONE
-$data = \ionos_wordpress\essentials\dashboard\blocks\deep_links\get_deep_links_data();
+
+$data = \ionos\essentials\dashboard\blocks\deep_links\get_deep_links_data();
+
 if (null !== $data) {
   NBA::register(
     id: 'connect-domain',
