@@ -6,7 +6,7 @@
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
- * Version:           0.1.0
+ * Version:           0.1.1
  * Update URI:        https://api.github.com/repos/IONOS-WordPress/ionos-wordpress/releases
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials
  * License:           GPL-2.0-or-later
