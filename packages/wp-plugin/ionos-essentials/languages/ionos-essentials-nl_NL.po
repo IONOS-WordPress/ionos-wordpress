@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: nl\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
@@ -410,3 +410,64 @@ msgstr "Nieuw"
 msgctxt "block description"
 msgid "What's New"
 msgstr "Nieuw"
+
+#: inc/dashboard/blocks/whats-new/index.php:25
+msgid "What’s New"
+msgstr "Nieuw"
+
+#: inc/dashboard/blocks/whats-new/index.php:29
+msgid "Discover new features and get an overview of the latest updates and enhancements of your WordPress Hub"
+msgstr "Ontdek nieuwe functies en krijg een overzicht van de nieuwste updates en verbeteringen van je WordPress Hub"
+
+#: inc/dashboard/blocks/whats-new/index.php:36
+msgid "Introducing the new WordPress Hub"
+msgstr "Maak kennis met de nieuwe WordPress Hub"
+
+#: inc/dashboard/blocks/whats-new/index.php:37
+msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
+msgstr "Met een compleet nieuw ontwerp en een verbeterde gebruikerservaring, waardoor het beheren van je website eenvoudiger is dan ooit."
+
+#: inc/dashboard/blocks/whats-new/index.php:43
+msgid "Vulnerability Scan Results"
+msgstr "Resultaten kwetsbaarheden scannen"
+
+#: inc/dashboard/blocks/whats-new/index.php:44
+msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
+msgstr "We hebben scanresultaten direct aan je dashboard toegevoegd, zodat je direct inzicht hebt in potentiële beveiligingsrisico's."
+
+#: inc/dashboard/blocks/quick-links/config.php:10
+msgid "Add new page"
+msgstr "Nieuwe pagina toevoegen"
+
+#: inc/dashboard/blocks/quick-links/config.php:18
+msgid "Add new post"
+msgstr "Nieuwe post toevoegen"
+
+#: inc/dashboard/blocks/quick-links/config.php:23
+msgid "Edit site navigation"
+msgstr "Sitenavigatie bewerken"
+
+#: inc/dashboard/blocks/quick-links/config.php:31
+msgid "Change styles"
+msgstr "Stijlen veranderen"
+
+#: inc/dashboard/blocks/quick-links/config.php:39
+msgid "Edit Header"
+msgstr "Koptekst bewerken"
+
+#: inc/dashboard/blocks/quick-links/config.php:44
+msgid "Edit Footer"
+msgstr "Voettekst bewerken"
+
+#: inc/dashboard/blocks/quick-links/config.php:52
+msgid "Add plugins"
+msgstr "Plugins toevoegen"
+
+#: inc/dashboard/blocks/quick-links/config.php:60
+msgid "Upload media files"
+msgstr "Mediabestanden uploaden"
+
+#: inc/dashboard/blocks/next-best-actions/index.php:40
+#: inc/dashboard/blocks/next-best-actions/index.php:66
+msgid "Dismiss"
+msgstr "Ontsla"

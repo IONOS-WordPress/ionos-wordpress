@@ -22,25 +22,28 @@ function render_callback()
     'What’s New'
   ) . '" class="wp-block-image" />
 <h3 class="wp-block-heading">' .
-  \esc_html__('What’s New') .
+  \esc_html__('What’s New', 'ionos-essentials') .
 '</h3>
 </header>
 <content>
 <p>' . \esc_html__(
-  'Discover new features and get an overview of the latest updates and enhancements of your WordPress Hub'
+  'Discover new features and get an overview of the latest updates and enhancements of your WordPress Hub',
+  'ionos-essentials'
 ) .
 '</p>
 <ul class="wp-block-list">
 <li class="has-small-font-size">
-  <b>' . \esc_html__('Introducing the new WordPress Hub') . '</b>
+  <b>' . \esc_html__('Introducing the new WordPress Hub', 'ionos-essentials') . '</b>
   <br>' . \esc_html__(
-  'Featuring a completely new design and an improved user experience, making managing your website easier than ever.'
+  'Featuring a completely new design and an improved user experience, making managing your website easier than ever.',
+  'ionos-essentials'
 ) . '
 </li>
 <li class="has-small-font-size">
-  <b>' . \esc_html__('Vulnerability Scan Results') . '</b>
+  <b>' . \esc_html__('Vulnerability Scan Results', 'ionos-essentials') . '</b>
   <br>' . \esc_html__(
-  "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
+  "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks.",
+  'ionos-essentials'
 ) . '
 </li>
 </ul>

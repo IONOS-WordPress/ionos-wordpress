@@ -37,6 +37,7 @@ function render_callback()
     'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
     'ionos-essentials'
   );
+  $foo = __("Dismiss", "ionos-essentials");
 
   $body = '';
   foreach ($actions as $action) {
@@ -51,19 +52,18 @@ function render_callback()
     $body .= '
       <div class="wp-block-column is-style-default has-background is-layout-flow action" style="border-radius:24px;background-color:#f4f7fa">
         <div class="action-content">
-          <h3 class="wp-block-heading">' . \esc_html($action->title, 'ionos-essentials') . '</h3>
-          <p>' . \esc_html($action->description, 'ionos-essentials') . '</p>
+          <h3 class="wp-block-heading">' . \esc_html($action->title) . '</h3>
+          <p>' . \esc_html($action->description) . '</p>
           <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
               <div class="wp-block-button">
                   <a data-nba-id="' . $action->id . '" href="' . \esc_url(
       $action->link
     ) . '" class="wp-block-button__link wp-element-button nba-link" target="' . $target . '">' . \esc_html(
-      $action->anchor,
-      'ionos-essentials'
+      $action->anchor
     ) . '</a>
               </div>
               <div class="wp-block-button is-style-outline is-style-outline--1">
-                  <a data-nba-id="' . $action->id . '" class="wp-block-button__link wp-element-button dismiss-nba" target="_top">' . \esc_html(
+                  <a data-nba-id="' . $action->id . '" class="wp-block-button__link wp-element-button dismiss-nba" target="_top">' . \esc_html__(
       'Dismiss',
       'ionos-essentials'
     ) . '</a>
