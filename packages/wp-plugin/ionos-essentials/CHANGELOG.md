@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 0.1.2
+
+### Patch Changes
+
+- 8155984: i18n fixes
+
 ## 0.1.1
 
 ### Patch Changes
