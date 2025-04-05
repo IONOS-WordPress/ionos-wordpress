@@ -1,6 +1,6 @@
 ## Description
 
-...
+add something here if branch name + PR title are not self-explanatory
 
 ## PR checklist
 
