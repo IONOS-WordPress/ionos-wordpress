@@ -11,7 +11,7 @@
 #   - semantic versions in assets will be renamed to 'latest'
 #       (example: ionos-essentials-0.1.1-php7.4.zip => ionos-essentials-latest-php7.4.zip)
 #   - release note will be set to the 'pre-release' release url and title to make it easier to find the origin release
-# - remove the 'pre-release' flag from the release used to populate the 'latest' release
+# - remove the 'pre-release' flag from the release used to populate the 'latest' release and flag it 'latest'
 #
 # afterwards the 'latest' release will contain the same assets as the 'pre-release' release
 # except that semantic version numbers in asstes filenames are replaced with 'latest'
