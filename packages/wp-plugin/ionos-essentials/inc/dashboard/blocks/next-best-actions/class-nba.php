@@ -184,7 +184,8 @@ NBA::register(
     'Ensure your website is branded with your unique logo for a professional look.',
     'ionos-essentials'
   ),
-  link: '#', // open upload file dialog
+  link: \admin_url(
+    'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit'),
   anchor: \__('Add Logo', 'ionos-essentials'),
   completed: false // done when logo is changed
 );

@@ -135,3 +135,41 @@ function render_callback()
     $nba->setStatus(ActionStatus::completed, true);
   }
 }, 10, 3);
+
+\add_action( 'enqueue_block_editor_assets', function () {
+  //überpfüe ob essentials-nba in $_GEt ist
+  if ( ! isset($_GET['essentials-nba'])) {
+    return;
+  }
+  \add_action( 'admin_footer', function () {
+    echo "<script>
+      function waitForElement(selector, callback, context = document) {
+        const observer = new MutationObserver((mutations, obs) => {
+          const element = context.querySelector(selector);
+          if (element) {
+            callback(element);
+            obs.disconnect();
+          }
+        });
+
+        observer.observe(context, {
+          childList: true,
+          subtree: true
+        });
+      }
+
+      waitForElement('iframe', function(iframe) {
+        iframe.addEventListener('load', function( event ) {
+          console.log('loading');
+          const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+          waitForElement('div.wp-block-site-logo button', function(button) {
+            console.log('Button gefunden:', button);
+            button.click();
+          }, iframeDocument);
+        });
+      });
+    </script>";
+  } );
+} );
+
+
