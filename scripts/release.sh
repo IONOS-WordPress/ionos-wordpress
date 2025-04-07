@@ -80,7 +80,7 @@ gh release edit "$LATEST_RELEASE_TAG" \
   --target $PRE_RELEASE_COMMIT_HASH \
   --notes "latest release is [$PRE_RELEASE]($PRE_RELEASE_URL)" \
   --tag $LATEST_RELEASE_TAG \
-  --latest=true \
+  --latest=false \
   --draft=false \
   --prerelease=false \
   1>/dev/null
@@ -101,7 +101,7 @@ for ASSET in $ASSETS; do
 done
 
 # Remove the 'pre-release' flag from the PRE_RELEASE
-gh release edit "$PRE_RELEASE" --prerelease=false --draft=false --latest=false 1>/dev/null
+gh release edit "$PRE_RELEASE" --prerelease=false --draft=false --latest=true 1>/dev/null
 
 ionos.wordpress.log_info "Removed 'pre-release' flag from release '$PRE_RELEASE'"
 
