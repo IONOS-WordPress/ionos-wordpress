@@ -13,29 +13,8 @@
     }
   }
   content {
-
-    li {
-        list-style-type: none;
-        padding-right: 24px;
-        position: relative;
-        line-height: 1.5em;
-        margin-bottom: 8px;
-      font-size: 14px;
+       li {
+      margin-bottom: .5rem;
     }
-    li:before {
-      background: var(--check-list-icon-background-color, #95caeb);
-      border-radius: 50%;
-      color: var(--check-list-icon-color, #003d8f);
-      content: "";
-      font-family: exos-icon-font, sans-serif;
-      font-size: var(--default-text-size, 14px);
-      height: 20px;
-      line-height: 20px;
-      margin-left: -28px;
-      margin-top: 1px;
-      position: absolute;
-      text-align: center;
-      width: 20px;
-    }
-  }
+  };
 }
