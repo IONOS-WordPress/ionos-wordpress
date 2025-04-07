@@ -36,11 +36,17 @@ function get_deep_links_data()
   require $config_file;
 
   $market = strtolower(\get_option($tenant . '_market', 'de'));
+  $webmail_links = '';
+  if ( $tenant === 'ionos' ) {
+    $webmail_links = $webmailloginlinks[$market] ?? reset($webmailloginlinks['de']);
+  }
+
   $domain = $market_domains[$market] ?? reset($market_domains);
 
   $data = [
     'links'  => $links,
     'domain' => $domain,
+    'webmail' => $webmail_links,
   ];
 
   return $data;
@@ -79,6 +85,17 @@ function render_callback()
       </div>',
       \esc_url($data['domain'] . $link['url']),
       \esc_html($link['anchor'])
+    );
+  }
+  if ( ! empty( $data['webmail'] ) ) {
+    $body .= sprintf(
+      '<div class="wp-block-group has-background element">
+        <a class="element-link" href="%s" target="_blank">
+          <p class="has-text-align-center has-small-font-size">%s</p>
+        </a>
+      </div>',
+      \esc_url($data['webmail']['url']),
+      \esc_html($data['webmail']['anchor'])
     );
   }
 
