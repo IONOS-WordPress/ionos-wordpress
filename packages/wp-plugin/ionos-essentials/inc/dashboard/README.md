@@ -71,3 +71,7 @@ afterwards reload any wp-admin page
 ### reset nba actions
 
 `pnpm wp-env run cli wp option delete ionos_nba_status`
+
+### set wpscan token
+
+`pnpm wp-env run cli wp option update ionos_security_wpscan_token random_invalid_token123 --allow-root`
