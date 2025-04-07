@@ -33,15 +33,10 @@ jobs:
     uses: ./.github/workflows/build-devcontainer-image.yaml
     secrets: inherit
 
-  # integration:
-  #   uses: ./.github/workflows/integration.yaml
-  #   secrets: inherit
-
   pre-release:
     runs-on: ubuntu-latest
     needs:
       - devcontainer
-      # - integration
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     if: "!contains(github.event.head_commit.message, 'skip release')"
@@ -65,18 +60,3 @@ jobs:
 
             pnpm install --frozen-lockfile
             pnpm pre-release
-
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        id: gather_workflow_artifacts
-        name: gather_workflow_artifacts
-        with:
-          runCmd: |
-            pnpm exec ./scripts/_get-workflow-artefacts.sh
-
-      - name: attach workflow artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          # see https://github.com/actions/upload-artifact/issues/424
-          path: |-
-            ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
-          # overwrite: true
