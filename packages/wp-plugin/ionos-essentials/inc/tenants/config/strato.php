@@ -27,3 +27,8 @@ $market_domains = [
   'se' => 'https://strato.se/',
   'nl' => 'https://strato.nl/',
 ];
+
+$nba_link = [
+  'connectdomain' => 'apps/CustomerService?dlink=DomainOverview',
+  'connectmail'   => 'apps/CustomerService?dlink=EMailManagement',
+];
