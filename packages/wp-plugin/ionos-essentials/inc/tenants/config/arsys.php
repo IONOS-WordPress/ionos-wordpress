@@ -30,3 +30,8 @@ $links = [
 $market_domains = [
   'es' => 'https://secure.arsys.es/',
 ];
+
+$nba_link = [
+  'connectdomain' => 'catalogue?data={"sections":[{"name":"domains","open":true}]}',
+  'connectmail'   => 'catalogue?data={"sections":[{"name":"mail","open":true}]}',
+];
