@@ -2,18 +2,18 @@
 
 namespace ionos\essentials;
 
-use const ionos\essentials\PLUGIN_FILE;
-
 /**
  * implements plugin update mechanism
  */
 
+ /*
 // @DEBUG: ENABLE ONLY WHEN DEBUGGING PLUGIN UPDATE CHECKS
-if (array_search(\wp_get_development_mode(), ['all', 'plugin'], true) !== false) {
+if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true)) {
   // if wordpress is in development mode (https://developer.wordpress.org/reference/functions/wp_get_development_mode/)
   // force plugin update checks / disable transient caching
   \add_action('plugins_loaded', fn () => \delete_site_transient('update_plugins'));
 }
+*/
 
 \add_filter('update_plugins_api.github.com', function (
   array|false $update,

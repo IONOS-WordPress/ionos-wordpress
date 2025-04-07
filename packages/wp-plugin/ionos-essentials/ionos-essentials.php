@@ -36,4 +36,3 @@ require_once __DIR__ . '/inc/dashboard/index.php';
 
 // soc plugin components
 require_once __DIR__ . '/inc/migration/index.php';
-
