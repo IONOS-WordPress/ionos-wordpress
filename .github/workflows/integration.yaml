@@ -9,10 +9,6 @@
 name: 'integration'
 
 on:
-  # can be called from other workflows
-  workflow_call:
-
-  # run on all branches
   push:
     # run for all branches except main (because testing is also done in pre-release workflow)
     branches-ignore:
@@ -45,9 +41,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: display output name
-      #   run: echo "image_name=${{ needs.build_devcontainer_image.outputs.image_name }}"
-
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -75,13 +68,6 @@ jobs:
           # see https://github.com/actions/upload-artifact/issues/424
           path: |-
             ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
-
-      # - name: print build directories
-      #   run: |
-      #     cat <<EOF
-      #       stdout was=
-      #       ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
-      #     EOF
 
       # # automatically approve and merge dependabot PRs
       # dependabot:
