@@ -9,10 +9,14 @@
 name: 'integration'
 
 on:
+  # can be called from other workflows
+  workflow_call:
+
   # run on all branches
   push:
-    branches:
-      - '**'
+    # run for all branches except main (because testing is also done in pre-release workflow)
+    branches-ignore:
+      - 'main'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -38,6 +42,8 @@ jobs:
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # - name: display output name
       #   run: echo "image_name=${{ needs.build_devcontainer_image.outputs.image_name }}"
@@ -54,13 +60,7 @@ jobs:
         with:
           runCmd: |
             pnpm install --frozen-lockfile
-            pnpm build
-
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: test_project
-        with:
-          runCmd: |
-            BUILD_UP_TO_DATE=1 pnpm test
+            pnpm test
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts
@@ -83,23 +83,23 @@ jobs:
       #       ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
       #     EOF
 
-  # # automatically approve and merge dependabot PRs
-  # dependabot:
-  #   runs-on: ubuntu-latest
-  #   needs:
-  #     - test
-  #   permissions:
-  #     pull-requests: write
-  #     contents: write
-  #   if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}}
-  #   steps:
-  #     - id: metadata
-  #       uses: dependabot/fetch-metadata@v2
-  #       with:
-  #         github-token: '${{ secrets.GITHUB_TOKEN }}'
-  #     - run: |
-  #         gh pr review --approve "$PR_URL"
-  #         gh pr merge --squash --auto "$PR_URL"
-  #       env:
-  #         PR_URL: ${{github.event.pull_request.html_url}}
-  #         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # # automatically approve and merge dependabot PRs
+      # dependabot:
+      #   runs-on: ubuntu-latest
+      #   needs:
+      #     - test
+      #   permissions:
+      #     pull-requests: write
+      #     contents: write
+      #   if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}}
+      #   steps:
+      #     - id: metadata
+      #       uses: dependabot/fetch-metadata@v2
+      #       with:
+      #         github-token: '${{ secrets.GITHUB_TOKEN }}'
+      #     - run: |
+      #         gh pr review --approve "$PR_URL"
+      #         gh pr merge --squash --auto "$PR_URL"
+      #       env:
+      #         PR_URL: ${{github.event.pull_request.html_url}}
+      #         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

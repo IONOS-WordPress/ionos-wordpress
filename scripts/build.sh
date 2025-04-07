@@ -156,6 +156,15 @@ function ionos.wordpress.build_workspace_package_docker() {
     return
   fi
 
+  # # CI performance optimisation : get cached docker image from ghcr.io if it exists
+  # if [[ -n "$CI" ]]; then
+  #   if docker manifest inspect ghcr.io/$GITHUB_REPOSITORY_OWNER/$DOCKER_IMAGE_NAME:$PACKAGE_VERSION &>/dev/null; then
+  #     docker pull ghcr.io/$GITHUB_REPOSITORY_OWNER/$DOCKER_IMAGE_NAME:$PACKAGE_VERSION
+  #     ionos.wordpress.log_info "skip building docker image $DOCKER_IMAGE_NAME:$PACKAGE_VERSION : pulled available docker image from ghcr.io"
+  #     return
+  #   fi
+  # fi
+
   rm -rf $path/{dist,build,build-info}
 
   pnpm --filter "$PACKAGE_NAME" --if-present run prebuild
@@ -186,6 +195,13 @@ $(echo -n "---")
 
 $(docker image ls --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedAt}}\t{{.Size}}" $DOCKER_IMAGE_NAME:latest)
 EOF
+
+  # # CI performance optimisation : push built docker image to ghcr.io image registry if updated/not-available
+  # if [[ -n "$CI" ]]; then
+  #   docker tag $DOCKER_IMAGE_NAME:$PACKAGE_VERSION ghcr.io/$GITHUB_REPOSITORY_OWNER/$DOCKER_IMAGE_NAME:$PACKAGE_VERSION
+  #   docker push ghcr.io/$GITHUB_REPOSITORY_OWNER/$DOCKER_IMAGE_NAME:$PACKAGE_VERSION
+  #   ionos.wordpress.log_info "pushed builded docker image $DOCKER_IMAGE_NAME:$PACKAGE_VERSION to ghcr.io"
+  # fi
 }
 
 # get the textdomains of a wordpress plugin
@@ -377,6 +393,11 @@ EOF
   fi
 
   pnpm --filter "$PACKAGE_NAME" --if-present run postbuild
+
+  # # create a unique valid directory name for the plugin
+  # # "@wordpress-ionos/essentials" => "wordpress-ionos-essentials"
+  # plugin_name="${PACKAGE_NAME//@/}"
+  # plugin_name="${plugin_name//\//-}"
 
   # take plugin directory name as plugin name
   plugin_name="$(basename $path)"

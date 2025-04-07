@@ -3,118 +3,34 @@
 #
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
-# this script is used to create a github release.
-# only packages not marked as private will be released
+# the workflow in detail:
+# - check if a release with flag "pre-release" exists
+# - check if a 'latest' release exists
+#   - if not, create a 'latest' release
+# - take over commit hash, and assets from the 'pre-release' to the 'latest' release
+#   - semantic versions in assets will be renamed to 'latest'
+#       (example: ionos-essentials-0.1.1-php7.4.zip => ionos-essentials-latest-php7.4.zip)
+#   - release note will be set to the 'pre-release' release url and title to make it easier to find the origin release
+# - remove the 'pre-release' flag from the release used to populate the 'latest' release
 #
-# workflow:
-# - features (including changesets) will be developed on feature branches and merged into the develop branch
-# - releasing means merging the develop branch into the main branch. the github workflow will automatically create the release and the artifacts
-# - after creating the releases the release changes will be merged back into the maiin and develop branch
+# afterwards the 'latest' release will contain the same assets as the 'pre-release' release
+# except that semantic version numbers in asstes filenames are replaced with 'latest'
 #
-# the script will abort
-# - if the current branch is not the main branch
-# - if the working directory is not clean
-# - (local) if the GITHUB_TOKEN environment variable is not set
-# - if no changesets proposing version changes were found
-#
-# local usage:
-# - ensure branches develop and main are up to date : `git fetch -all`
-# - switch to local develop branch and ensure it's clean (i.e no uncommit changes): `git switch develop && git status`
-# - go to branch main and pull changes from local develop branch : `git switch main && git pull . develop`
-# - execute the release script : `pnpm release`
-#
-# remote usage:
-# - switch to develop branch: `git switch develop`
-# - ensure remote branches develop and main are up to date : `git push origin develop && git push origin main`
-# - push changes on develop branch to remote branch main : `git push origin develop:main`
-# - wait for the github workflow to finish
-# - merge changes back to develop branch : `git switch develop && git merge main && git push origin develop`
-
 
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-# abort if we are not on the "main" branch
-if [[ "$(git rev-parse --abbrev-ref HEAD)" != 'main' ]]; then
-  ionos.wordpress.log_error "You can only release from the main branch"
-  exit 1
-fi
-
-# abort if the working directory is not clean
-if [[ -n "$(git status --porcelain)" ]]; then
-  ionos.wordpress.log_error "You have uncommitted changes. Please commit or stash them before releasing."
-  exit 1
-fi
-
 # ensure we have a GITHUB_TOKEN
 if [[ -z "${GITHUB_TOKEN}" ]]; then
-  ionos.wordpress.log_error "GITHUB_TOKEN environment variable is not set. Please set it before releasing."
+  ionos.wordpress.log_error "GITHUB_TOKEN environment variable is not set."
   exit 1
 fi
-
-# ensure ./tmp/release is a fresh empty directory
-rm -rf ./tmp/release
-mkdir -p ./tmp/release
-
-# abort if no changesets proposing version changes were found
-# changeset does not support --format option as of now so we need to use the --output option
-# see https://github.com/changesets/changesets/issues/1020
-# fetch changeset status into ./tmp/release/status.json
-pnpm changeset status --verbose --output ./tmp/release/status.json
-# read ./tmp/release/status.json into variable CHANGESET_STATUS_JSON
-CHANGESET_STATUS_JSON=$(cat ./tmp/release/status.json)
-# count changesets
-CHANGESETS_COUNT=$(jq '.changesets // [] | length' ./tmp/release/status.json)
-if [[ $CHANGESETS_COUNT -eq 0 ]]; then
-  ionos.wordpress.log_warn "Nothing to release - no changesets found."
-  exit 0
-fi
-
-# update versions and create changelog files from changesets
-pnpm changeset version
-
-# update pnpm-lock.yaml
-pnpm install
-
-# build repository
-pnpm build
-
-# generate sbom file
-docker run -it --rm -v $(pwd):/project anchore/syft \
-  scan /project \
-  --source-name ionos-wordpress \
-  --select-catalogers "+javascript-package-cataloger,+github-actions-usage-cataloger,+php-composer-lock-cataloger" \
-  -o spdx-json=/project/ionos-wordpress.sbom.json.tmp && \
-  jq '.' ionos-wordpress.sbom.json.tmp > ionos-wordpress.sbom.syft.json && rm -f ionos-wordpress.sbom.json.tmp
-
-# add updated files to git
-git add -A .
-
-# set git user to the user who made the last commit
-# (aka the user who triggered the release)
-# git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
-# git config user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
-# see https://github.com/actions/checkout/pull/1184#issue-1595060720
-git config user.name "github-actions[bot]"
-git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-# commit changes
-# no-verify will disable the pre-push hook since we wont automatically run lint
-git commit --no-verify -am "chore(release) : updated versions and sbom information [skip release]"
-
-# tag release
-pnpm changeset tag
-
-# push changes and tags
-git push && git push --tags
-
-# ensure ./tmp/release is a fresh empty directory
-rm -rf ./tmp/release
-mkdir -p ./tmp/release
 
 # set GH_TOKEN to GITHUB_TOKEN if not set
 # this is needed for gh cli to work
 export GH_TOKEN=${GH_TOKEN:-$GITHUB_TOKEN}
+
+readonly LATEST_RELEASE_TAG="@ionos-wordpress/latest"
 
 # do explicitly ONLY when running locally (=> not in CI)
 if [[ "${CI}" == '' ]]; then
@@ -123,65 +39,76 @@ if [[ "${CI}" == '' ]]; then
   pnpm gh repo set-default $(git remote get-url origin | sed -E 's/.*[:\/]([^\/]+\/[^\/]+)\.git/\1/')
 fi
 
-# loop over all package.json files changed by changeset version command
-for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'package.json'); do
-  PACKAGE_VERSION=$(jq -r '.version' $PACKAGE_JSON)
-  PACKAGE_NAME=$(jq -r '.name' $PACKAGE_JSON)
-  PACKAGE_PATH=$(dirname $PACKAGE_JSON)
+# get pre-release flagged release
+PRE_RELEASE=$(gh release list --json name,isPrerelease | jq -r '.[] | select(.isPrerelease == true) | .name')
+if [[ -z "$PRE_RELEASE" || $(echo "$PRE_RELEASE" | wc -l) -ne 1 ]]; then
+  error_message="skip releasing - expected exactly one release flagged as 'pre-release' but found $([[ -z "$PRE_RELEASE" ]] && echo '0' || echo "$PRE_RELEASE" | wc -l)"
+  [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+  ionos.wordpress.log_error "$error_message\n$PRE_RELEASE"
+  exit 1
+else
+  PRE_RELEASE=$(echo "$PRE_RELEASE" | head -n 1)
+  ionos.wordpress.log_header "Releasing $PRE_RELEASE"
+fi
 
-  # skip packages with private flag
-  if [[ "$(jq -r '.private // false' $PACKAGE_JSON)" == "true" ]]; then
-    ionos.wordpress.log_warn "skipping release package $PACKAGE_NAME - it is marked as private"
-    continue
+# get or create the release titled 'latest'
+readonly LATEST_RELEASE=$(gh release list --json tagName,isLatest | jq -r '.[] | select(.isLatest == true) | .tagName')
+if [[ "$LATEST_RELEASE" != "$LATEST_RELEASE_TAG" ]]; then
+  ionos.wordpress.log_info "did not found a release named/tagged '$LATEST_RELEASE_TAG'"
+
+  # ensure there is no tag named "$LATEST_RELEASE_TAG"
+  git tag -d "$LATEST_RELEASE_TAG" 2>/dev/null ||:
+  git push origin --delete "$LATEST_RELEASE_TAG" 2>/dev/null ||:
+
+  # create release
+  gh release create "$LATEST_RELEASE_TAG" \
+    --notes '' \
+    --title "$LATEST_RELEASE_TAG" \
+    --latest=true \
+    2>/dev/null
+
+  echo "created release '$LATEST_RELEASE_TAG'"
+fi
+
+# Get the commit hash of the tag associated with the pre-release
+readonly PRE_RELEASE_COMMIT_HASH=$(git rev-list -n 1 "$PRE_RELEASE")
+
+# update 'latest' release data
+readonly PRE_RELEASE_URL="https://github.com/lgersman/ionos-wordpress/releases/tag/$(printf $PRE_RELEASE | jq -Rrs '@uri')"
+gh release edit "$LATEST_RELEASE_TAG" \
+  --title "$LATEST_RELEASE_TAG" \
+  --target $PRE_RELEASE_COMMIT_HASH \
+  --notes "latest release is [$PRE_RELEASE]($PRE_RELEASE_URL)" \
+  --tag $LATEST_RELEASE_TAG \
+  --latest=true \
+  --draft=false \
+  --prerelease=false \
+  1>/dev/null
+
+# update latest release assets
+ASSETS=$(gh release view $PRE_RELEASE --json assets --jq '.assets[] | .name')
+for ASSET in $ASSETS; do
+  TARGET_ASSET_FILENAME=$(echo $ASSET | sed -E 's/[0-9]+\.[0-9]+\.[0-9]+/latest/g')
+  rm -f $TARGET_ASSET_FILENAME
+  echo "upload release '$PRE_RELEASE' asset '$ASSET' as '$TARGET_ASSET_FILENAME' to release '$LATEST_RELEASE_TAG'"
+  gh release download $PRE_RELEASE --pattern $ASSET -O $TARGET_ASSET_FILENAME
+  if ! gh release upload $LATEST_RELEASE_TAG $TARGET_ASSET_FILENAME --clobber; then
+    $error_message="Failed to upload asset $TARGET_ASSET_FILENAME"
+    [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+    echo "Error: $error_message"
   fi
-
-  ionos.wordpress.log_header "creating release for package $PACKAGE_NAME (version=$PACKAGE_VERSION)"
-
-  PACKAGE_RELEASENOTES_FILE="./tmp/release/${PACKAGE_NAME//\//-}.md"
-  # write changes extracted from changelog file from last commit
-  # and write it to a file
-  git --no-pager diff --unified=0 HEAD~1 HEAD $PACKAGE_PATH/CHANGELOG.md | grep --color=never -P '(?<=^\+)(?!\+\+).*' | sed 's/^+//' > "$PACKAGE_RELEASENOTES_FILE"
-
-  PACKAGE_ARTIFACTS=()
-  # PACKAGE_FLAVOUR is the name of the parent directory of the package (i.e. wp-plugin|npm|docker|...)
-  PACKAGE_FLAVOUR=$(basename $(dirname $PACKAGE_PATH))
-
-  if [[ "$PACKAGE_FLAVOUR" == "." ]]; then
-    # if root package is being released, collect all artifacts
-    ARTIFACTS=($(find ./packages -mindepth 4 -maxdepth 4 -type f -name '*.zip ' -or -name "*.tgz"))
-  else
-    case "$PACKAGE_FLAVOUR" in
-      docker)
-        ionos.wordpress.log_warn "skipping $PACKAGE_FLAVOUR package $PACKAGE_NAME - docker packages are not distributable"
-        ;;
-      npm)
-        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.tgz')")
-        ;;
-      wp-plugin|wp-theme)
-        ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip')")
-        ;;
-      *)
-        ionos.wordpress.log_error "don't know how to handle workspace package flavor '$PACKAGE_FLAVOUR' (extracted from path=$PACKAGE_PATH)"
-        exit 1
-        ;;
-    esac
-  fi
-
-  RELEASE_TITLE=$([[ "$PACKAGE_FLAVOUR" == "." ]] && echo "$PACKAGE_VERSION" || echo "$PACKAGE_NAME@$PACKAGE_VERSION")
-
-  if [[ ${#ARTIFACTS[@]} -eq 0 ]]; then
-    ionos.wordpress.log_warn "no artifacts found for package $PACKAGE_NAME"
-    continue
-  fi
-  pnpm gh release create "$PACKAGE_NAME@$PACKAGE_VERSION" "${ARTIFACTS[@]}" --title "$RELEASE_TITLE" --notes-file "$PACKAGE_RELEASENOTES_FILE"
+  rm -f $TARGET_ASSET_FILENAME
 done
 
-# merge changes back to develop branch
-git checkout develop
-# pull changes from main branch instead of merging to avoid merge commits
-git pull . main
-# push changes to remote develop branch
-git push -u origin develop
+# Remove the 'pre-release' flag from the PRE_RELEASE
+gh release edit "$PRE_RELEASE" --prerelease=false --draft=false --latest=false 1>/dev/null
+
+ionos.wordpress.log_info "Removed 'pre-release' flag from release '$PRE_RELEASE'"
+
+readonly success_message="Successfully updated release '$LATEST_RELEASE_TAG' (https://github.com/lgersman/ionos-wordpress/releases/tag/%40ionos-wordpress%2Flatest) to point to release '${PRE_RELEASE}' ($PRE_RELEASE_URL)"
+# @TODO: success message can be markdown containing links
+[[ "${CI:-}" == "true" ]] && echo "$success_message" >> $GITHUB_STEP_SUMMARY
+echo "$success_message"
 
 # notify release to google chat room
 if [[ "${GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK}" != '' ]]; then
@@ -195,7 +122,7 @@ if [[ "${GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK}" != '' ]]; then
   CHANGED_PACKAGES=$(echo "$CHANGESET_STATUS_JSON" | jq -r '.releases[] | "* \(.name)(\(.oldVersion)->\(.newVersion))"')
   curl -X POST \
     -H 'Content-Type: application/json' \
-    -d "{\"text\": \"*${TRIGGERING_ACTOR}* released repository *${REPOSITORY_NAME}*.\nThe following packages would be released:\n\n${CHANGED_PACKAGES} \n\nSee ${REPOSITORY_URL}\"}" \
+    -d "{\"text\": \"*${TRIGGERING_ACTOR}* created a new release from repository *${REPOSITORY_NAME}*.\n\n$success_message\n\nSee ${REPOSITORY_URL}\"}" \
     "${GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK}"
 else
   if [[ "${CI:-}" == "true" ]]; then
@@ -204,3 +131,5 @@ else
     ionos.wordpress.log_warn "CI environment detected - skip setting up git hooks"
   fi
 fi
+
+
