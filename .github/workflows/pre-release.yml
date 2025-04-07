@@ -52,7 +52,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: prerelease_project
+        name: prerelease
         with:
           runCmd: |
             export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
