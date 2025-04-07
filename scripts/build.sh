@@ -394,11 +394,6 @@ EOF
 
   pnpm --filter "$PACKAGE_NAME" --if-present run postbuild
 
-  # # create a unique valid directory name for the plugin
-  # # "@wordpress-ionos/essentials" => "wordpress-ionos-essentials"
-  # plugin_name="${PACKAGE_NAME//@/}"
-  # plugin_name="${plugin_name//\//-}"
-
   # take plugin directory name as plugin name
   plugin_name="$(basename $path)"
 
