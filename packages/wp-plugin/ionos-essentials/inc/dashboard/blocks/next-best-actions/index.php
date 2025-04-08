@@ -135,3 +135,31 @@ function render_callback()
     $nba->setStatus(ActionStatus::completed, true);
   }
 }, 10, 3);
+
+\add_action( 'enqueue_block_editor_assets', function () {
+  if ( ! isset($_GET['essentials-nba'])) {
+    return;
+  }
+  \add_action( 'admin_footer', function () {
+    echo "<script>
+      const observer = new MutationObserver((mutations, obs) => {
+        const iframe = document.querySelector('iframe');
+        if (iframe) {
+          iframe.addEventListener('load', function(event) {
+            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+            const uploadButton = iframeDocument.querySelector('.wp-block-site-logo .components-placeholder__fieldset > button');
+            if (uploadButton) {
+              uploadButton.click();
+            }
+          });
+          obs.disconnect();
+        }
+      });
+
+      observer.observe(document, {
+        childList: true,
+        subtree: true
+      });
+    </script>";
+  } );
+} );
