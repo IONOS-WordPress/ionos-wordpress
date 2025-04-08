@@ -75,7 +75,7 @@ function render_callback()
     return;
   }
 
-  return \sprintf($template, $header, $description, $body);
+  return sprintf($template, $header, $description, $body);
 }
 
 \add_action('admin_init', function () {
