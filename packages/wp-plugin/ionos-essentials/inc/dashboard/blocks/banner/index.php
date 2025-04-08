@@ -48,8 +48,8 @@ function get_ai_button(): array
     return [];
   }
 
-  $launchCompleted = \get_option('extendify_onboarding_completed', false);
-  if (false === $launchCompleted) {
+  $launch_completed = \get_option('extendify_onboarding_completed', false);
+  if (false === $launch_completed) {
     return [
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),
@@ -58,7 +58,7 @@ function get_ai_button(): array
       ], ];
   }
 
-  if (strtotime($launchCompleted) > time() - (3 * 24 * 60 * 60)) {
+  if (strtotime($launch_completed) > time() - (3 * 24 * 60 * 60)) {
     return [
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),
