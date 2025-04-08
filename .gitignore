@@ -22,6 +22,7 @@ node_modules
 /bin/act
 /.wp-env.json
 /.wp-env.override.json
+/artifacts/storage-states
 /bin/
 build-info
 build-info
