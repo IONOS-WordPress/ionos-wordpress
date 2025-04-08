@@ -35,7 +35,6 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
   if ((200 !== \wp_remote_retrieve_response_code($res)) || ('' === \wp_remote_retrieve_body($res))) {
     if ('' !== \wp_remote_retrieve_response_code($res)) {
       // may happen for rate limit exceeded
-      // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
       error_log(
         sprintf(
           'Failed to fetch latest update information from "%s"(http-status=%s) : %s',
@@ -45,7 +44,6 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
         )
       );
     } else {
-      // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
       error_log(sprintf('Failed to download update information from "%s"', $plugin_data['UpdateURI']));
     }
     return $update;
