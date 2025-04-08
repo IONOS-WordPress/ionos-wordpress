@@ -21,7 +21,7 @@ $links = [
   [
     'url'  => $blog_url . '/wp-admin/site-editor.php?postType=wp_navigation',
     'text' => __(
-      'Edit site navigation',
+      'Edit site Navigation',
       'ionos-essentials'
     ),
     'icon' => 'digitalisation-48.svg',
@@ -29,7 +29,7 @@ $links = [
   [
     'url'  => $blog_url . '/wp-admin/site-editor.php?path=%2Fwp_global_styles',
     'text' => __(
-      'Change styles',
+      'Change Styles',
       'ionos-essentials'
     ),
     'icon' => 'favstar-16.svg',
@@ -50,14 +50,14 @@ $links = [
   [
     'url'  => $blog_url . '/wp-admin/plugin-install.php',
     'text' => __(
-      'Add plugins',
+      'Add Plugins',
       'ionos-essentials'
     ),
     'icon' => 'plus-16.svg',
   ],
   [
     'url'  => $blog_url . '/wp-admin/upload.php',
-    'text' => __('Upload media files', 'ionos-essentials'),
+    'text' => __('Upload Media files', 'ionos-essentials'),
     'icon' => 'upload-16.svg',
   ],
 ];

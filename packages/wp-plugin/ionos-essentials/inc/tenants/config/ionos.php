@@ -9,7 +9,7 @@ $links = [
   ],
   [
     'url'    => 'account-security',
-    'anchor' => __('Login & Account security', 'ionos-essentials'),
+    'anchor' => __('Login & Account Security', 'ionos-essentials'),
   ],
   [
     'url'    => 'invoices',
