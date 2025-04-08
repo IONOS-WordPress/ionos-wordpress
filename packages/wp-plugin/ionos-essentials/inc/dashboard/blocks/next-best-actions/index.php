@@ -158,18 +158,20 @@ function render_callback()
         });
       }
 
+      document.querySelector('body').addEventListener( 'click', function( event ) {
+        console.log( event.target );
+      })
+
       waitForElement('iframe', function(iframe) {
         iframe.addEventListener('load', function( event ) {
           console.log('loading');
           const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
           waitForElement('div.wp-block-site-logo button', function(button) {
             console.log('Button gefunden:', button);
-            button.click();
+              button.click();
           }, iframeDocument);
         });
       });
     </script>";
   } );
 } );
-
-

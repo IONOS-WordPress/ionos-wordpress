@@ -185,7 +185,7 @@ NBA::register(
     'ionos-essentials'
   ),
   link: \admin_url(
-    'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit'),
+    'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'),
   anchor: \__('Add Logo', 'ionos-essentials'),
   completed: false // done when logo is changed
 );
