@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 0.2.0
+
+### Minor Changes
+
+- e5ab0a5: demo release
+
 ## 0.1.3
 
 ### Patch Changes
