@@ -27,8 +27,8 @@ class ClassNBATest extends \WP_UnitTestCase {
   }
 
   function test_nba_action() : void {
-    $this->assertNotNull(NBA::getActions());
-    $nba_count = count(NBA::getActions());
+    $this->assertNotNull(NBA::get_actions());
+    $nba_count = count(NBA::get_actions());
 
     $ID = 'my-test-action';
 
@@ -41,13 +41,13 @@ class ClassNBATest extends \WP_UnitTestCase {
       completed : false,
     );
 
-    $new_nba_count = count(NBA::getActions());
+    $new_nba_count = count(NBA::get_actions());
     $this->assertEquals($nba_count + 1, $new_nba_count, 'registered nbas should contain our newly radded nba');
 
-    $nba = NBA::getNBA($ID);
+    $nba = NBA::get_nba($ID);
     $this->assertTrue($nba->active);
 
-    $nba->setStatus(ActionStatus::completed, true);
+    $nba->set_status(ActionStatus::completed, true);
     $this->assertFalse($nba->active);
   }
 
@@ -63,9 +63,9 @@ class ClassNBATest extends \WP_UnitTestCase {
       completed : false,
     );
 
-    $nba = NBA::getNBA($ID);
+    $nba = NBA::get_nba($ID);
     $this->assertTrue($nba->active);
-    $nba->setStatus(ActionStatus::dismissed, true);
+    $nba->set_status(ActionStatus::dismissed, true);
     $this->assertFalse($nba->active);
   }
 
@@ -81,7 +81,7 @@ class ClassNBATest extends \WP_UnitTestCase {
       completed : true,
     );
 
-    $nba = NBA::getNBA($ID);
+    $nba = NBA::get_nba($ID);
     $this->assertFalse($nba->active);
   }
 }
