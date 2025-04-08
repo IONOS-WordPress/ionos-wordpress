@@ -73,7 +73,7 @@ fi
 # Get the commit hash of the tag associated with the pre-release
 readonly PRE_RELEASE_COMMIT_HASH=$(git rev-list -n 1 "$PRE_RELEASE")
 
-// example value : IONOS-WordPress/ionos-wordpress
+# example value : IONOS-WordPress/ionos-wordpress
 readonly GITHUB_OWNER_REPO=$(git remote get-url origin | sed -E 's|.*[:/]([^/]+)/([^/.]+)(\.git)?$|\1/\2|')
 
 # update 'latest' release data
