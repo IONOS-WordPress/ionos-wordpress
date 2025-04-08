@@ -54,9 +54,9 @@ function get_brand_lowercase()
 \add_filter(
   'wp_redirect',
   function ($location) {
-    if ($location === \admin_url('admin.php?page=extendify-launch')) {
+    if (\admin_url('admin.php?page=extendify-launch') === $location) {
       return \admin_url('admin.php?page=' . get_brand_lowercase() . '-onboarding');
-    } elseif ($location === \admin_url('admin.php?page=extendify-assist')) {
+    } elseif (\admin_url('admin.php?page=extendify-assist') === $location) {
       return \admin_url('admin.php?page=' . strtolower(\get_option('ionos_group_brand_menu', 'ionos')));
     }
 
@@ -74,7 +74,7 @@ function get_brand_lowercase()
 \add_filter(
   'admin_title',
   function ($title) {
-    if (isset($_GET['page']) && $_GET['page'] === get_brand_lowercase() . '-onboarding') {
+    if (isset($_GET['page']) && get_brand_lowercase() . '-onboarding' === $_GET['page']) {
       return get_brand_menu() . ' ' . __('Onboarding', 'ionos-assistant');
     }
     return $title;
