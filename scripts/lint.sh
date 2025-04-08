@@ -396,15 +396,6 @@ if [[ "${USE[@]}" =~ all|pnpm ]]; then
   fi
 fi
 
-if [[ " ${USE[@]} " =~ all|i18n ]]; then
-  if ionos.wordpress.dennis; then
-    summaries["i18n"]="i18n $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
-  else
-    exit_code=1
-    summaries["i18n"]="i18n $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') reported errors."
-  fi
-fi
-
 echo ''
 
 error_count=0
