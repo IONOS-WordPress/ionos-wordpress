@@ -137,7 +137,6 @@ function render_callback()
 }, 10, 3);
 
 \add_action( 'enqueue_block_editor_assets', function () {
-  //überpfüe ob essentials-nba in $_GEt ist
   if ( ! isset($_GET['essentials-nba'])) {
     return;
   }
