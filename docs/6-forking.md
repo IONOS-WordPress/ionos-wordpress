@@ -7,7 +7,7 @@ Especially when working on GitHub pipelines, it is useful to fork the repository
 
 A working fork can be created by following these steps:
 
-- go to https://github.com/lgersman/ionos-wordpress
+- go to https://github.com/<your-github-name>/ionos-wordpress
 
 - press the "Fork" button
 
