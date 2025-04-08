@@ -151,7 +151,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Show wp scan data."
 
-#: inc/dashboard/blocks/vulnerability/render.php:82
+#: inc/dashboard/blocks/vulnerability/render.php:84
 msgid "WPScan not available"
 msgstr "WPScan not available"
 
@@ -159,32 +159,32 @@ msgstr "WPScan not available"
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: inc/dashboard/blocks/vulnerability/render.php:74
+#: inc/dashboard/blocks/vulnerability/render.php:76
 msgid "Show full scan report"
 msgstr "Show full scan report"
 
-#: inc/dashboard/blocks/vulnerability/render.php:53
+#: inc/dashboard/blocks/vulnerability/render.php:55
 msgid "Last scan"
 msgstr "Last scan"
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/render.php:57
+#: inc/dashboard/blocks/vulnerability/render.php:59
 msgid "%s ago"
 msgstr "%s ago"
 
-#: inc/dashboard/blocks/vulnerability/render.php:34
+#: inc/dashboard/blocks/vulnerability/render.php:36
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "critical issue found"
 msgstr[1] "critical issues found"
 
-#: inc/dashboard/blocks/vulnerability/render.php:41
+#: inc/dashboard/blocks/vulnerability/render.php:43
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "warning found"
 msgstr[1] "warnings found"
 
-#: inc/dashboard/blocks/vulnerability/render.php:48
+#: inc/dashboard/blocks/vulnerability/render.php:50
 msgid "issues found"
 msgstr "issues found"
 
@@ -210,7 +210,7 @@ msgstr "Start AI Sitebuilder"
 msgid "Retry AI"
 msgstr "Retry AI"
 
-#: inc/dashboard/blocks/deep-links/index.php:96
+#: inc/dashboard/blocks/deep-links/index.php:100
 msgid "Manage Hosting"
 msgstr "Manage Hosting"
 
@@ -224,11 +224,11 @@ msgctxt "block description"
 msgid "Banner"
 msgstr "Banner"
 
-#: inc/dashboard/blocks/deep-links/index.php:66
+#: inc/dashboard/blocks/deep-links/index.php:70
 msgid "Account Management"
 msgstr "Account Management"
 
-#: inc/dashboard/blocks/deep-links/index.php:67
+#: inc/dashboard/blocks/deep-links/index.php:71
 msgid "One-click access to your customer account, login security and subscriptions"
 msgstr "One-click access to your customer account, login security and subscriptions"
 
@@ -241,16 +241,16 @@ msgstr "Easily navigate to frequently used features and tools"
 msgid "Overview"
 msgstr "Overview"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:200
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:197
 msgid "Create Page"
 msgstr "Create Page"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:184
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:190
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:182
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:188
 msgid "Add Logo"
 msgstr "Add Logo"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:185
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:183
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Ensure your website is branded with your unique logo for a professional look."
 
@@ -258,86 +258,86 @@ msgstr "Ensure your website is branded with your unique logo for a professional 
 msgid "Connect Domain"
 msgstr "Connect Domain"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:111
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:110
 msgid "Edit & Complete Your Website"
 msgstr "Edit & Complete Your Website"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:112
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:111
 msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
 msgstr "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:117
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:116
 msgid "Edit Website"
 msgstr "Edit Website"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:125
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:123
 msgid "Discover Help Center"
 msgstr "Discover Help Center"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:126
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:124
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
 msgstr "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:131
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:129
 msgid "Open Help Center"
 msgstr "Open Help Center"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:139
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:145
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:137
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:143
 msgid "Set Up Email"
 msgstr "Set Up Email"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:140
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:138
 msgid "Set up your included email account and integrate it with your website."
 msgstr "Set up your included email account and integrate it with your website."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:159
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:162
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:157
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:160
 msgid "Set Up Contact Form"
 msgstr "Set Up Contact Form"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:160
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:158
 msgid "Create a contact form to stay connected with your visitors."
 msgstr "Create a contact form to stay connected with your visitors."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:173
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:171
 msgid "Set Up Your WooCommerce Store"
 msgstr "Set Up Your WooCommerce Store"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:174
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:172
 msgid "Launch your online store now with a guided setup wizard."
 msgstr "Launch your online store now with a guided setup wizard."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:176
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:174
 msgid "Start Setup"
 msgstr "Start Setup"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:208
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:204
 msgid "Social Media Setup"
 msgstr "Social Media Setup"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:209
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:205
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Connect your social media profiles to your website and expand your online presence."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:216
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:212
 msgid "Connect Social Media"
 msgstr "Connect Social Media"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:224
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:230
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:219
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:225
 msgid "Add Favicon"
 msgstr "Add Favicon"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:225
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:220
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:197
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:194
 msgid "Create a Page"
 msgstr "Create a Page"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:198
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:195
 msgid "Create and publish a page and share your story with the world."
 msgstr "Create and publish a page and share your story with the world."
 
@@ -470,3 +470,7 @@ msgstr "Upload media files"
 #: inc/dashboard/blocks/next-best-actions/index.php:64
 msgid "Dismiss"
 msgstr "Dismiss"
+
+#: inc/dashboard/blocks/vulnerability/render.php:19
+msgid "Scan for WordPress specific threats and vulnerabilities"
+msgstr "Scan for WordPress specific threats and vulnerabilities"
