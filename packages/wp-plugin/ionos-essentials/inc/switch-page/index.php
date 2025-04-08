@@ -9,23 +9,11 @@ if (! defined('ABSPATH')) {
   exit();
 }
 
-/**
- * Helper function for wp_option 'ionos_group_brand_menu'.
- * Used in visible stuff to the user.
- */
-function get_brand_menu()
-{
-  return \get_option('ionos_group_brand_menu', 'IONOS');
-}
-
-/**
- * Helper function for wp_option 'ionos_group_brand'.
- * Used in urls and internal stuff.
- */
-function get_brand_lowercase()
+function get_brand_lowercase() : string
 {
   return strtolower(\get_option('ionos_group_brand', 'ionos'));
 }
+
 /**
  * Add onboarding menu page.
  */
@@ -75,7 +63,7 @@ function get_brand_lowercase()
   'admin_title',
   function ($title) {
     if (isset($_GET['page']) && get_brand_lowercase() . '-onboarding' === $_GET['page']) {
-      return get_brand_menu() . ' ' . __('Onboarding', 'ionos-assistant');
+      return \get_option('ionos_group_brand_menu', 'IONOS') . ' ' . __('Onboarding', 'ionos-assistant');
     }
     return $title;
   },
