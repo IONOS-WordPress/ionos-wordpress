@@ -74,7 +74,6 @@ function get_brand_lowercase()
 \add_filter(
   'admin_title',
   function ($title) {
-    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     if (isset($_GET['page']) && $_GET['page'] === get_brand_lowercase() . '-onboarding') {
       return get_brand_menu() . ' ' . __('Onboarding', 'ionos-assistant');
     }

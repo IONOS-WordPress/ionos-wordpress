@@ -127,7 +127,6 @@ function _persist_dashboard(\WP_Post $post): void
 
   // abort if the request failed or the response code is not 200 or the response body is empty
   if ((200 !== \wp_remote_retrieve_response_code($res)) || ('' === \wp_remote_retrieve_body($res))) {
-    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     \wp_die("Failed to fetch rendered page(url={$permalink}): " . print_r($res, true));
   }
 
@@ -141,9 +140,7 @@ function _persist_dashboard(\WP_Post $post): void
       \esc_html(POST_TYPE_TEMPLATE_CONTENT_START_MARKER),
       \esc_html($html)
     );
-    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
     error_log($error_message);
-    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     \wp_die($error_message);
   }
 
@@ -154,9 +151,7 @@ function _persist_dashboard(\WP_Post $post): void
       \esc_html(POST_TYPE_TEMPLATE_CONTENT_END_MARKER),
       \esc_html($html)
     );
-    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
     error_log($error_message);
-    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     \wp_die($error_message);
   }
 
