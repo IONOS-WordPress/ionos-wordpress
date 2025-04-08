@@ -1,17 +1,17 @@
 <?php
 
-namespace ionos\essentials;
-
-/**
+/*
  * implements plugin update mechanism
  */
 
- /*
+namespace ionos\essentials;
+
+/*
 // @DEBUG: ENABLE ONLY WHEN DEBUGGING PLUGIN UPDATE CHECKS
 if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true)) {
-  // if wordpress is in development mode (https://developer.wordpress.org/reference/functions/wp_get_development_mode/)
-  // force plugin update checks / disable transient caching
-  \add_action('plugins_loaded', fn () => \delete_site_transient('update_plugins'));
+ // if wordpress is in development mode (https://developer.wordpress.org/reference/functions/wp_get_development_mode/)
+ // force plugin update checks / disable transient caching
+ \add_action('plugins_loaded', fn () => \delete_site_transient('update_plugins'));
 }
 */
 
