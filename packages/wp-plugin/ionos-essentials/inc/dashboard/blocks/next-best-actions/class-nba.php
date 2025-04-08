@@ -177,7 +177,6 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
 }
 
 // TODO open file dialog
-// wenn das theme Extendable aktiv ist dann mache nba::register
 if ('extendable' === get_stylesheet()) {
   NBA::register(
     id: 'upload-logo',
