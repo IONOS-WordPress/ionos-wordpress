@@ -1,9 +1,5 @@
 <?php
 
-namespace ionos\essentials\migration;
-
-use const ionos\essentials\PLUGIN_FILE;
-
 /*
  * the migration logic uses an auto loaded option to store the last installed version data
  * this way we can run the migration logic only once after the plugin was installed or updated
@@ -14,7 +10,11 @@ use const ionos\essentials\PLUGIN_FILE;
  * to make it more efficient we use configure the option to be autoloaded
  */
 
-/**
+namespace ionos\essentials\migration;
+
+use const ionos\essentials\PLUGIN_FILE;
+
+/*
  * wp option where the installation data is stored
  * the value is a associative array with keys from WP_OPTION_LAST_INSTALL_DATA_KEY_* constants
  * we use a array to be able to store multiple values in the future
