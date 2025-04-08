@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 0.1.3
+
+### Patch Changes
+
+- bbf1d2a: development release
+
 ## 0.1.2
 
 ### Patch Changes
