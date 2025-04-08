@@ -178,6 +178,11 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
 
 // TODO open file dialog
 if ('extendable' === get_stylesheet()) {
+  $custom_logo_id = get_theme_mod( 'custom_logo' );
+  $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+  $logo_src = $logo ? $logo[0] : '';
+  $is_default_or_empty_logo = strpos($logo_src, 'extendify-demo-logo.png') !== false || $logo_src === '';
+
   NBA::register(
     id: 'upload-logo',
     title: \__('Add Logo', 'ionos-essentials'),
@@ -188,7 +193,7 @@ if ('extendable' === get_stylesheet()) {
     link: \admin_url(
       'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'),
     anchor: \__('Add Logo', 'ionos-essentials'),
-    completed: false // done when logo is changed
+    completed: ! $is_default_or_empty_logo
   );
 }
 
