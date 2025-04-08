@@ -1,4 +1,18 @@
 /* WHATS NEW SECTION */
+@font-face {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  speak: none;
+  font-family: exos-icon-font;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 1;
+  src: url(https://ce1.uicdn.net/exos/icons/exos-icon-font.woff2?v=23) format("woff2"),
+       url(https://ce1.uicdn.net/exos/icons/exos-icon-font.woff?v=23) format("woff");
+  text-transform: none;
+}
+
 .whats-new{
   img {
     max-width: 100px;
