@@ -199,7 +199,7 @@ if [[ "${GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK}" != '' ]]; then
   CHANGED_PACKAGES=$(echo "$CHANGESET_STATUS_JSON" | jq -r '.releases[] | "* \(.name)(\(.oldVersion)->\(.newVersion))"')
   curl -X POST \
     -H 'Content-Type: application/json' \
-    -d "{\"text\": \"*${TRIGGERING_ACTOR}* pre-released repository *${REPOSITORY_NAME}*.\nThe following packages would be pre-released:\n\n${CHANGED_PACKAGES} \n\nSee ${REPOSITORY_URL}\"}" \
+    -d "{\"text\": \"*${TRIGGERING_ACTOR}* pre-released repository *${REPOSITORY_NAME}*.\n\n${CHANGED_PACKAGES} \n\nSee ${REPOSITORY_URL}\"}" \
     "${GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK}"
 else
   if [[ "${CI:-}" == "true" ]]; then
