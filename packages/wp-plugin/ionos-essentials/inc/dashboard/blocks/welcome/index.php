@@ -30,7 +30,7 @@ function render_callback(): string
 <dialog id="essentials-welcome_block">
     <div class="horizontal-card">
         <header class="horizontal-card__header">
-            <img class="horizontal-card__visual" src="' . esc_url($welcome_banner_url) . '" alt="Welcome Banner">
+            <img class="horizontal-card__visual" src="' . \esc_url($welcome_banner_url) . '" alt="Welcome Banner">
         </header>
         <div class="horizontal-card__content">
             <section class="horizontal-card__section">
