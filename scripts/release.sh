@@ -51,9 +51,8 @@ else
   ionos.wordpress.log_header "Releasing $PRE_RELEASE"
 fi
 
-# get or create the release titled 'latest'
-readonly LATEST_RELEASE=$(gh release list --json tagName,isLatest | jq -r '.[] | select(.isLatest == true) | .tagName')
-if [[ "$LATEST_RELEASE" != "$LATEST_RELEASE_TAG" ]]; then
+# ensure release titled $LATEST_RELEASE_TAG exists
+if ! gh release view "LATEST_RELEASE_TAG"; then
   ionos.wordpress.log_info "did not found a release named/tagged '$LATEST_RELEASE_TAG'"
 
   # ensure there is no tag named "$LATEST_RELEASE_TAG"
@@ -64,7 +63,7 @@ if [[ "$LATEST_RELEASE" != "$LATEST_RELEASE_TAG" ]]; then
   gh release create "$LATEST_RELEASE_TAG" \
     --notes '' \
     --title "$LATEST_RELEASE_TAG" \
-    --latest=true \
+    --latest=false \
     2>/dev/null
 
   echo "created release '$LATEST_RELEASE_TAG'"
