@@ -73,8 +73,11 @@ fi
 # Get the commit hash of the tag associated with the pre-release
 readonly PRE_RELEASE_COMMIT_HASH=$(git rev-list -n 1 "$PRE_RELEASE")
 
+// example value : IONOS-WordPress/ionos-wordpress
+readonly GITHUB_OWNER_REPO=$(git remote get-url origin | sed -E 's|.*[:/]([^/]+)/([^/.]+)(\.git)?$|\1/\2|')
+
 # update 'latest' release data
-readonly PRE_RELEASE_URL="https://github.com/lgersman/ionos-wordpress/releases/tag/$(printf $PRE_RELEASE | jq -Rrs '@uri')"
+readonly PRE_RELEASE_URL="https://github.com/$GITHUB_OWNER_REPO/releases/tag/$(printf $PRE_RELEASE | jq -Rrs '@uri')"
 gh release edit "$LATEST_RELEASE_TAG" \
   --title "$LATEST_RELEASE_TAG" \
   --target $PRE_RELEASE_COMMIT_HASH \
@@ -105,7 +108,7 @@ gh release edit "$PRE_RELEASE" --prerelease=false --draft=false --latest=true 1>
 
 ionos.wordpress.log_info "Removed 'pre-release' flag from release '$PRE_RELEASE'"
 
-readonly success_message="Successfully updated release '$LATEST_RELEASE_TAG' (https://github.com/lgersman/ionos-wordpress/releases/tag/%40ionos-wordpress%2Flatest) to point to release '${PRE_RELEASE}' ($PRE_RELEASE_URL)"
+readonly success_message="Successfully updated release '$LATEST_RELEASE_TAG' (https://github.com/$GITHUB_OWNER_REPO/releases/tag/%40ionos-wordpress%2Flatest) to point to release '${PRE_RELEASE}' ($PRE_RELEASE_URL)"
 # @TODO: success message can be markdown containing links
 [[ "${CI:-}" == "true" ]] && echo "$success_message" >> $GITHUB_STEP_SUMMARY
 echo "$success_message"
