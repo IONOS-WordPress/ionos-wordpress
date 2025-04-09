@@ -84,7 +84,7 @@ function render_callback()
     $nba_id = $_GET['complete_nba'];
 
     $nba = NBA::get_nba($nba_id);
-    $nba->set_status(ActionStatus::completed, true);
+    $nba->set_status('completed', true);
   }
 });
 
@@ -97,7 +97,7 @@ function render_callback()
       $nba_id = $params['id'];
 
       $nba = NBA::get_nba($nba_id);
-      $res = $nba->set_status(ActionStatus::dismissed, true);
+      $res = $nba->set_status('dismissed', true);
       if ($res) {
         return new \WP_REST_Response([
           'status' => 'success',
@@ -132,7 +132,7 @@ function render_callback()
   }
 
   if ($nba) {
-    $nba->set_status(ActionStatus::completed, true);
+    $nba->set_status('completed', true);
   }
 }, 10, 3);
 
