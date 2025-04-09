@@ -248,7 +248,7 @@ msgstr "Logo hinzufügen"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Ensure your website is branded with your unique logo for a professional look."
-msgstr "Fügen Deiner Website Dein einzigartiges Logo hinzu, um ein professionelles Aussehen zu gewährleisten."
+msgstr "Füge Deiner Website Dein einzigartiges Logo hinzu, um ein professionelles Aussehen zu gewährleisten."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:103
 msgid "Connect Domain"
@@ -272,7 +272,7 @@ msgstr "Hilfe-Center entdecken"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:124
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
-msgstr "Machen Dich mit unseren umfangreichen Support Angeboten vertraut und nutze unseren AI Chat für alle Fragen rund um WordPress."
+msgstr "Mache Dich mit unseren umfangreichen Support Angeboten vertraut und nutze unseren AI Chat für alle Fragen rund um WordPress."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:129
 msgid "Open Help Center"
@@ -294,7 +294,7 @@ msgstr "Kontakt-Formular einrichten"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:158
 msgid "Create a contact form to stay connected with your visitors."
-msgstr "Richte  das Kontaktformular ein, um mit Deine Besuchern in Kontakt zu bleiben."
+msgstr "Richte das Kontaktformular ein, um mit Deinen Besuchern in Kontakt zu bleiben."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:171
 msgid "Set Up Your WooCommerce Store"
@@ -335,7 +335,7 @@ msgstr "Eine Seite erstellen"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:203
 msgid "Create and publish a page and share your story with the world."
-msgstr "Erstelle und veröffentliche eine neue Seite und teilen Deine Inhalte mit der Welt."
+msgstr "Erstelle und veröffentliche eine neue Seite und teile Deine Inhalte mit der Welt."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:98
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
@@ -413,7 +413,7 @@ msgstr "News & Updates"
 
 #: inc/dashboard/blocks/whats-new/index.php:37
 msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
-msgstr "Ein neues Design und eine verbesserte Nutzung, die das Management Deiner Website einfacher macht, als je zuvor."
+msgstr "Ein neues Design und eine verbesserte Nutzung, die das Management Deiner Website einfacher , als je zuvor."
 
 #: inc/dashboard/blocks/whats-new/index.php:43
 msgid "Vulnerability Scan Results"
@@ -465,7 +465,7 @@ msgstr "Bilder und Videos hochladen"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
 msgid "Get an overview of the latest updates and enhancements"
-msgstr "Hier erhälste Du einen Überblick über die neuesten Updates und Produktverbesserungen"
+msgstr "Hier erhälst Du einen Überblick über die neuesten Updates und Produktverbesserungen"
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"
