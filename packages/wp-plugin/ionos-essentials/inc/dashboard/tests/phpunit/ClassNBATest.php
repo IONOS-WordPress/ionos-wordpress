@@ -1,7 +1,6 @@
 <?php
 
 use ionos\essentials\dashboard\blocks\next_best_actions\NBA;
-use ionos\essentials\dashboard\blocks\next_best_actions\ActionStatus;
 
 use const ionos\essentials\PLUGIN_DIR;
 
@@ -47,7 +46,7 @@ class ClassNBATest extends \WP_UnitTestCase {
     $nba = NBA::get_nba($ID);
     $this->assertTrue($nba->active);
 
-    $nba->set_status(ActionStatus::completed, true);
+    $nba->set_status('completed', true);
     $this->assertFalse($nba->active);
   }
 
@@ -65,7 +64,7 @@ class ClassNBATest extends \WP_UnitTestCase {
 
     $nba = NBA::get_nba($ID);
     $this->assertTrue($nba->active);
-    $nba->set_status(ActionStatus::dismissed, true);
+    $nba->set_status('dismissed', true);
     $this->assertFalse($nba->active);
   }
 

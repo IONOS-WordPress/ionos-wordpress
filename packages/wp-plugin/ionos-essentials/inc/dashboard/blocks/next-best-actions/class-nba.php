@@ -6,12 +6,6 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
-enum ActionStatus
-{
-  case completed;
-  case dismissed;
-}
-
 class NBA
 {
   public const OPTION_NAME = 'ionos_nba_status';
@@ -43,13 +37,13 @@ class NBA
     }
   }
 
-  public function set_status(ActionStatus $key, $value)
+  public function set_status($key, $value)
   {
     $id     = $this->id;
     $option = self::_get_option();
 
     $option[$id] ??= [];
-    $option[$id][$key->name] = $value;
+    $option[$id][$key] = $value;
     return self::_set_option($option);
   }
 
