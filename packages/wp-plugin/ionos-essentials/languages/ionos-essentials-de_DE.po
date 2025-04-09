@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-04-09 06:52+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: Poedit 3.6\n"
 
 #. Plugin URI of the plugin
 #: ionos-essentials.php
@@ -38,8 +38,7 @@ msgstr "https://www.ionos-group.com/brands.html"
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/tenants/config/piensa.php:8
 #: dist/ionos-essentials-0.1.2/inc/tenants/config/arsys.php:8
 #: dist/ionos-essentials-0.1.2/inc/tenants/config/piensa.php:8
-#: inc/tenants/config/arsys.php:8
-#: inc/tenants/config/piensa.php:8
+#: inc/tenants/config/arsys.php:8 inc/tenants/config/piensa.php:8
 msgid "My offers"
 msgstr "Meine Angebote"
 
@@ -67,8 +66,7 @@ msgstr "Meine Rechnungen"
 #: dist/ionos-essentials-0.1.2/inc/tenants/config/arsys.php:24
 #: dist/ionos-essentials-0.1.2/inc/tenants/config/fasthosts.php:8
 #: dist/ionos-essentials-0.1.2/inc/tenants/config/piensa.php:24
-#: inc/tenants/config/arsys.php:24
-#: inc/tenants/config/fasthosts.php:8
+#: inc/tenants/config/arsys.php:24 inc/tenants/config/fasthosts.php:8
 #: inc/tenants/config/piensa.php:24
 msgid "Control Panel"
 msgstr "Bedienfeld"
@@ -89,7 +87,7 @@ msgstr "WordPress-Websites"
 #: dist/ionos-essentials-0.1.2/inc/tenants/config/ionos.php:8
 #: inc/tenants/config/ionos.php:8
 msgid "Contracts & Subscriptions"
-msgstr "Verträge & Abonnements"
+msgstr "Verträge & Abos"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/tenants/config/ionos.php:12
 #: dist/ionos-essentials-0.1.2/inc/tenants/config/ionos.php:12
@@ -106,19 +104,19 @@ msgstr "Rechnungen & Zahlungsdetails"
 #: dist/ionos-essentials-0.1.2/inc/tenants/config/ionos.php:20
 #: inc/tenants/config/ionos.php:20
 msgid "Data Protection & Privacy Notice"
-msgstr "Hinweis zum Datenschutz und zur Privatsphäre"
+msgstr "Datenschutz & Privatsphäre"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/tenants/config/ionos.php:24
 #: dist/ionos-essentials-0.1.2/inc/tenants/config/ionos.php:24
 #: inc/tenants/config/ionos.php:24
 msgid "Contact Details"
-msgstr "Kontakt Details"
+msgstr "Meine Kundendaten"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/tenants/config/ionos.php:28
 #: dist/ionos-essentials-0.1.2/inc/tenants/config/ionos.php:28
 #: inc/tenants/config/ionos.php:28
 msgid "Profile Details"
-msgstr "Profil-Details"
+msgstr "Profilangaben"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/tenants/config/piensa.php:12
 #: dist/ionos-essentials-0.1.2/inc/tenants/config/piensa.php:12
@@ -166,7 +164,7 @@ msgstr "Aktuelle Angebote"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/quick-links/render.php:13
 #: inc/dashboard/blocks/quick-links/render.php:13
 msgid "Quick Links"
-msgstr "Schnelle Links"
+msgstr "Schnellzugriff"
 
 #: build/dashboard/blocks/deep-links/block.json
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/build/dashboard/blocks/deep-links/block.json
@@ -289,13 +287,13 @@ msgstr "Nächstbeste Aktionen"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/banner/index.php:25
 #: inc/dashboard/blocks/banner/index.php:25
 msgid "View Site"
-msgstr "Website anzeigen"
+msgstr "Zur Website"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/banner/index.php:56
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/banner/index.php:56
 #: inc/dashboard/blocks/banner/index.php:56
 msgid "Start AI Sitebuilder"
-msgstr "AI Sitebuilder starten"
+msgstr "Webseite mit AI erstellen "
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/banner/index.php:65
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/banner/index.php:65
@@ -307,7 +305,7 @@ msgstr "Wiederholung AI"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/deep-links/index.php:100
 #: inc/dashboard/blocks/deep-links/index.php:100
 msgid "Manage Hosting"
-msgstr "Verwalten von Hosting"
+msgstr " Zum Control Panel"
 
 #: build/dashboard/blocks/banner/block.json
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/build/dashboard/blocks/banner/block.json
@@ -329,26 +327,25 @@ msgstr "Banner"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/deep-links/index.php:70
 #: inc/dashboard/blocks/deep-links/index.php:70
 msgid "Account Management"
-msgstr "Kontoführung"
+msgstr "Mein Konto"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/deep-links/index.php:71
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/deep-links/index.php:71
 #: inc/dashboard/blocks/deep-links/index.php:71
 msgid "One-click access to your customer account, login security and subscriptions"
-msgstr "Ein-Klick-Zugang zu deinem Kundenkonto, Login-Sicherheit und Abonnements"
+msgstr "Schnellzugriff auf Ihr Kundenkonto, Verträge und Logineinstellungen"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/quick-links/render.php:14
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/quick-links/render.php:14
 #: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Easily navigate to frequently used features and tools"
-msgstr "Einfache Navigation zu häufig verwendeten Funktionen und Tools"
+msgstr "Nutzen Sie diese einfache Navigation zu den häufigsten Funktionen und Tools in WordPress "
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/index.php:124
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/index.php:125
 #: dist/ionos-essentials-0.1.2/inc/dashboard/index.php:124
 #: dist/ionos-essentials-0.1.2/inc/dashboard/index.php:125
-#: inc/dashboard/index.php:124
-#: inc/dashboard/index.php:125
+#: inc/dashboard/index.php:124 inc/dashboard/index.php:125
 msgid "Overview"
 msgstr "Übersicht"
 
@@ -371,7 +368,7 @@ msgstr "Logo hinzufügen"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:183
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Ensure your website is branded with your unique logo for a professional look."
-msgstr "Stelle sicher, dass deine Website mit deinem einzigartigen Logo versehen ist, um ein professionelles Aussehen zu gewährleisten."
+msgstr "Fügen Sie Ihre Website Ihr einzigartiges Logo hinzu, um ein professionelles Aussehen zu gewährleisten."
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php:136
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:103
@@ -383,13 +380,13 @@ msgstr "Domain verbinden"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:110
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:110
 msgid "Edit & Complete Your Website"
-msgstr "Bearbeiten und Vervollständigen deiner Website"
+msgstr "Webseite bearbeiten"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php:144
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:111
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:111
 msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
-msgstr "Füge Seiten, Texte und Bilder hinzu, stimme deine Website mit KI-gestützten Tools ab oder passe Farben und Schriftarten an."
+msgstr "Vervollständigen und personalisieren Sie Ihre Webseite, fügen Sie neue Inhalte wie Seiten, Texte und Bilder hinzu oder passen Sie Farben und Schriftarten an"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php:149
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:116
@@ -407,7 +404,7 @@ msgstr "Hilfe-Center entdecken"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:124
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:124
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
-msgstr "Erhalte sofortige Unterstützung mit Co-Pilot AI, erkunde unsere Wissensdatenbank oder nimm an geführten Touren teil."
+msgstr "Machen Sie sich mit unseren umfangreichen Support Angeboten vertraut und nutzen Sie unseren AI Chat für alle Fragen rund um WordPress"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php:162
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:129
@@ -443,7 +440,7 @@ msgstr "Kontakt-Formular einrichten"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:158
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:158
 msgid "Create a contact form to stay connected with your visitors."
-msgstr "Erstelle ein Kontaktformular, um mit deinen Besuchern in Kontakt zu bleiben."
+msgstr "Richten Sie das Kontaktformular ein, um mit Ihren Besuchern in Kontakt zu bleiben."
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php:204
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:171
@@ -455,7 +452,7 @@ msgstr "Einrichten deines WooCommerce Shops"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:172
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:172
 msgid "Launch your online store now with a guided setup wizard."
-msgstr "Starte deinen Online-Shop jetzt mit einem geführten Einrichtungsassistenten."
+msgstr "Starten Sie jetzt Ihren Online-Shop mit dem einfachen und komfortablen Einrichtungsassistenten."
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php:207
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:174
@@ -467,7 +464,7 @@ msgstr "Start Setup"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:205
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:212
 msgid "Social Media Setup"
-msgstr "Einrichtung sozialer Medien"
+msgstr "Social Media verbinden"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php:239
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:206
@@ -479,7 +476,7 @@ msgstr "Verbinde deine Social-Media-Profile mit deiner Website und erweitere dei
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:213
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:220
 msgid "Connect Social Media"
-msgstr "Soziale Medien verbinden"
+msgstr "Social Media verbinden"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php:253
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php:259
@@ -506,7 +503,7 @@ msgstr "Eine Seite erstellen"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:196
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:203
 msgid "Create and publish a page and share your story with the world."
-msgstr "Erstelle und veröffentliche eine Seite und teile deine Geschichte mit der Welt."
+msgstr "Erstellen und veröffentlichen Sie eine neue Seite und teilen Sie ihre Inhalte mit der Welt"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php:131
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/class-nba.php:98
@@ -524,13 +521,13 @@ msgstr "Eine Domain verbinden"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/index.php:35
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Unlock Your Website's Potential"
-msgstr "Erschließen Sie das Potenzial Ihrer Website"
+msgstr "Nutzen Sie das volle Potenzial Ihrer Website"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/index.php:36
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/index.php:36
 #: inc/dashboard/blocks/next-best-actions/index.php:36
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-msgstr "Ihre Website ist jetzt online, aber Ihre Reise hat gerade erst begonnen. Entdecken Sie die empfohlenen nächsten Schritte, um das Wachstum zu fördern, die Leistung zu verbessern und Ihre Online-Ziele zu erreichen."
+msgstr "Ihre Website ist online, aber die Reise hat gerade erst begonnen. Hier finden Sie empfohlene nächste Schritte, um Ihre Webseite erfolgreich zu machen und Ihre Online-Ziele zu erreichen."
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php
@@ -578,7 +575,7 @@ msgstr "Bleiben Sie dran, denn es kommen spannende neue Funktionen und Updates a
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/welcome/index.php:69
 #: inc/dashboard/blocks/welcome/index.php:69
 msgid "Close"
-msgstr "Schließen Sie"
+msgstr "Schließen"
 
 #: build/dashboard/blocks/welcome/block.json
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/build/dashboard/blocks/welcome/block.json
@@ -602,7 +599,7 @@ msgstr "Willkommen"
 #: src/dashboard/blocks/whats-new/block.json
 msgctxt "block title"
 msgid "What's New"
-msgstr "Was gibt's Neues?"
+msgstr "News & Updates"
 
 #: build/dashboard/blocks/whats-new/block.json
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/build/dashboard/blocks/whats-new/block.json
@@ -610,13 +607,13 @@ msgstr "Was gibt's Neues?"
 #: src/dashboard/blocks/whats-new/block.json
 msgctxt "block description"
 msgid "What's New"
-msgstr "Was gibt's Neues?"
+msgstr "News & Updates"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/whats-new/index.php:25
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/whats-new/index.php:25
 #: inc/dashboard/blocks/whats-new/index.php:25
 msgid "What’s New"
-msgstr "Was gibt's Neues?"
+msgstr "News & Updates"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/whats-new/index.php:29
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/whats-new/index.php:29
@@ -632,53 +629,53 @@ msgstr "Einführung des neuen WordPress-Hubs"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/whats-new/index.php:37
 #: inc/dashboard/blocks/whats-new/index.php:37
 msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
-msgstr "Mit einem völlig neuen Design und einer verbesserten Benutzerfreundlichkeit wird die Verwaltung Ihrer Website einfacher denn je."
+msgstr "Ein neues Design und eine verbesserte Nutzung, die das Management Ihrer Website einfacher macht, als je zuvor."
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/whats-new/index.php:43
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/whats-new/index.php:43
 #: inc/dashboard/blocks/whats-new/index.php:43
 msgid "Vulnerability Scan Results"
-msgstr "Ergebnisse des Schwachstellen-Scans"
+msgstr "Ergebnisse des Scans auf Bedrohungen und Schwachstellen"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/whats-new/index.php:44
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/whats-new/index.php:44
 #: inc/dashboard/blocks/whats-new/index.php:44
 msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
-msgstr "Wir haben die Scanergebnisse direkt in Ihr Dashboard eingefügt, so dass Sie sofort einen Überblick über potenzielle Sicherheitsrisiken erhalten."
+msgstr "Wir haben die Scan Ergebnisse jetzt direkt in die Übersicht integriert, um schneller über potenzielle Sicherheitsrisiken zu informieren."
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/quick-links/config.php:10
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/quick-links/config.php:10
 #: inc/dashboard/blocks/quick-links/config.php:10
 msgid "Add new page"
-msgstr "Neue Seite hinzufügen"
+msgstr "Neue Seite erstellen"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/quick-links/config.php:18
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/quick-links/config.php:18
 #: inc/dashboard/blocks/quick-links/config.php:18
 msgid "Add new post"
-msgstr "Neuen Beitrag hinzufügen"
+msgstr "Neuen Beitrag erstellen"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/quick-links/config.php:23
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/quick-links/config.php:23
 msgid "Edit site navigation"
-msgstr "Website-Navigation bearbeiten"
+msgstr "Seitennavigation (Menü) editieren"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/quick-links/config.php:31
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/quick-links/config.php:31
 msgid "Change styles"
-msgstr "Stile ändern"
+msgstr "Design ändern"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/quick-links/config.php:39
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/quick-links/config.php:39
 #: inc/dashboard/blocks/quick-links/config.php:39
 msgid "Edit Header"
-msgstr "Kopfzeile bearbeiten"
+msgstr "Header editieren"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/quick-links/config.php:44
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/quick-links/config.php:44
 #: inc/dashboard/blocks/quick-links/config.php:44
 msgid "Edit Footer"
-msgstr "Fußzeile bearbeiten"
+msgstr "Footer editieren"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/quick-links/config.php:52
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/quick-links/config.php:52
@@ -688,42 +685,42 @@ msgstr "Plugins hinzufügen"
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/quick-links/config.php:60
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/quick-links/config.php:60
 msgid "Upload media files"
-msgstr "Hochladen von Mediendateien"
+msgstr "Bilder und Videos hochladen"
 
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/inc/dashboard/blocks/next-best-actions/index.php:64
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/next-best-actions/index.php:64
 #: inc/dashboard/blocks/next-best-actions/index.php:64
 msgid "Dismiss"
-msgstr "Ablehnen"
+msgstr "Nicht mehr anzeigen"
 
 #: inc/dashboard/blocks/vulnerability/render.php:19
 msgid "Scan for WordPress specific threats and vulnerabilities"
-msgstr "Suche nach WordPress-spezifischen Bedrohungen und Schwachstellen"
+msgstr "Überprüfung auf WordPress-spezifische Schwachstellen und Bedrohungen"
 
 #: inc/dashboard/blocks/quick-links/config.php:23
 msgid "Edit site Navigation"
-msgstr ""
+msgstr "Seitennavigation (Menü) editieren"
 
 #: inc/dashboard/blocks/quick-links/config.php:31
 msgid "Change Styles"
-msgstr ""
+msgstr "Design ändern"
 
 #: inc/dashboard/blocks/quick-links/config.php:52
 msgid "Add Plugins"
-msgstr ""
+msgstr "Plugins hinzufügen"
 
 #: inc/dashboard/blocks/quick-links/config.php:60
 msgid "Upload Media files"
-msgstr ""
+msgstr "Bilder und Videos hochladen"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
 msgid "Get an overview of the latest updates and enhancements"
-msgstr ""
+msgstr "Hier erhalten Sie einen Überblick über die neuesten Updates und Produktverbesserungen"
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"
-msgstr ""
+msgstr "Neue Benutzeroberfläche"
 
 #: inc/tenants/config/ionos.php:12
 msgid "Login & Account Security"
-msgstr ""
+msgstr "Login & Kontosicherheit"
