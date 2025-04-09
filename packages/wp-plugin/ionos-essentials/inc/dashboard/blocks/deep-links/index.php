@@ -26,7 +26,7 @@ function get_deep_links_data()
     return $data;
   }
 
-  $tenant      = strtolower(\get_option('ionos_group_brand', false));
+  $tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
   $config_file = PLUGIN_DIR . '/inc/tenants/config/' . $tenant . '.php';
 
   if (! $tenant || ! file_exists($config_file)) {
