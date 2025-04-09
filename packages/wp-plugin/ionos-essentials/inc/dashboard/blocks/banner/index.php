@@ -65,7 +65,7 @@ function get_ai_button(): array
         'link'           => \admin_url('admin.php?page=extendify-launch'),
         'text'           => \__('Retry AI', 'ionos-essentials'),
         'css-attributes' => 'retryai',
-        'title'          => __('Valid for up to 72h'),
+        'title'          => \__('Valid for up to 72h', 'ionos-essentials'),
       ], ];
   }
 
