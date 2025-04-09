@@ -188,8 +188,7 @@ require_once __DIR__ . '/blocks/whats-new/index.php';
       // replace our wp-env url with the actual host url
       $html = str_replace('http://localhost:8888', \get_site_url(), $html);
 
-      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-      echo $html;
+      printf('%s', $html);
       exit();
     }
   );

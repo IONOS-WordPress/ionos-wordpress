@@ -36,12 +36,13 @@
   height: 100%;
 }
 
-#ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column > .action-content > p {
-  margin-top: -10px;
-}
-
+/* @FIXME: use nested css or convert this file to scss */
 #ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column > p {
   flex-grow: 1;
+}
+
+#ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column > .action-content > p {
+  margin-top: -10px;
 }
 
 #ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column:nth-child(3n + 1) {

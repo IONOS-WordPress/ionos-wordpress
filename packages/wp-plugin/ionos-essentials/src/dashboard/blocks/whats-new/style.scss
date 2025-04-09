@@ -1,4 +1,18 @@
 /* WHATS NEW SECTION */
+@font-face {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  speak: none;
+  font-family: exos-icon-font;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 1;
+  src: url(https://ce1.uicdn.net/exos/icons/exos-icon-font.woff2?v=23) format("woff2"),
+       url(https://ce1.uicdn.net/exos/icons/exos-icon-font.woff?v=23) format("woff");
+  text-transform: none;
+}
+
 .whats-new{
   img {
     max-width: 100px;
@@ -13,8 +27,29 @@
     }
   }
   content {
-       li {
-      margin-bottom: .5rem;
+
+    li {
+        list-style-type: none;
+        padding-right: 24px;
+        position: relative;
+        line-height: 1.5em;
+        margin-bottom: 8px;
+      font-size: 14px;
     }
-  };
+    li:before {
+      background: var(--check-list-icon-background-color, #95caeb);
+      border-radius: 50%;
+      color: var(--check-list-icon-color, #003d8f);
+      content: "";
+      font-family: exos-icon-font, sans-serif;
+      font-size: var(--default-text-size, 14px);
+      height: 20px;
+      line-height: 20px;
+      margin-left: -28px;
+      margin-top: 1px;
+      position: absolute;
+      text-align: center;
+      width: 20px;
+    }
+  }
 }

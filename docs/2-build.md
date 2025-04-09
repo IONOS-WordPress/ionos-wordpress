@@ -90,7 +90,6 @@
 
     \add_action( 'init', function (): void {
       $translated_text = \__('Hello World !', 'foo');
-      // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
       error_log($translated_text);
     });
     ```

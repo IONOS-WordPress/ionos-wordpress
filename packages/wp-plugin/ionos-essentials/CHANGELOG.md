@@ -1,5 +1,23 @@
 # @ionos-wordpress/essentials
 
+## 0.2.1
+
+### Patch Changes
+
+- 26a6207: new de_formal and es_ES
+
+## 0.2.0
+
+### Minor Changes
+
+- e5ab0a5: demo release
+
+## 0.1.3
+
+### Patch Changes
+
+- bbf1d2a: development release
+
 ## 0.1.2
 
 ### Patch Changes

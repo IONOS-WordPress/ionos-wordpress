@@ -26,7 +26,7 @@ function get_deep_links_data()
     return $data;
   }
 
-  $tenant      = strtolower(\get_option('ionos_group_brand', false));
+  $tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
   $config_file = PLUGIN_DIR . '/inc/tenants/config/' . $tenant . '.php';
 
   if (! $tenant || ! file_exists($config_file)) {
@@ -35,15 +35,15 @@ function get_deep_links_data()
 
   require $config_file;
 
-  $market = strtolower(\get_option($tenant . '_market', 'de'));
-  $domain = $market_domains[$market] ?? reset($market_domains);
+  $market   = strtolower(\get_option($tenant . '_market', 'de'));
+  $domain   = $market_domains[$market] ?? reset($market_domains);
   $nbalinks = $nba_link;
 
   $data = [
-    'links'  => $links,
-    'domain' => $domain,
-    'market' => $market,
-    'tenant' => $tenant,
+    'links'     => $links,
+    'domain'    => $domain,
+    'market'    => $market,
+    'tenant'    => $tenant,
     'nba_links' => $nbalinks,
   ];
 
