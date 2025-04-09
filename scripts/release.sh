@@ -52,7 +52,7 @@ else
 fi
 
 # ensure release titled $LATEST_RELEASE_TAG exists
-if ! gh release view "LATEST_RELEASE_TAG"; then
+if ! gh release view "$LATEST_RELEASE_TAG"; then
   ionos.wordpress.log_info "did not found a release named/tagged '$LATEST_RELEASE_TAG'"
 
   # ensure there is no tag named "$LATEST_RELEASE_TAG"
