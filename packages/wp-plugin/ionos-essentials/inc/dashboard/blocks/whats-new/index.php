@@ -27,13 +27,13 @@ function render_callback()
 </header>
 <content>
 <p>' . \esc_html__(
-  'Discover new features and get an overview of the latest updates and enhancements of your WordPress Hub',
+  'Get an overview of the latest updates and enhancements',
   'ionos-essentials'
 ) .
 '</p>
 <ul class="wp-block-list">
 <li class="has-small-font-size">
-  <b>' . \esc_html__('Introducing the new WordPress Hub', 'ionos-essentials') . '</b>
+  <b>' . \esc_html__('New User Interface', 'ionos-essentials') . '</b>
   <br>' . \esc_html__(
   'Featuring a completely new design and an improved user experience, making managing your website easier than ever.',
   'ionos-essentials'

@@ -22,3 +22,8 @@ $links = [
 $market_domains = [
   'en' => 'https://admin.fasthosts.co.uk/',
 ];
+
+$nba_link = [
+  'connectdomain' => '',
+  'connectmail'   => 'HostingPackages/[[PACKAGE_INSTANCE_ID]]/Email/Service/[[MAIL_SERVICE_ID]]',
+];

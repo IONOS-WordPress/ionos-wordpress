@@ -6,7 +6,6 @@ use const ionos\test_mu_plugin\PLUGIN_FILE;
 
 function feature_2(): void
 {
-  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log('hello from ionos\test_mu_plugin\feature_2');
 }
 

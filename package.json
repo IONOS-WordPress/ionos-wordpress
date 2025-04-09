@@ -13,6 +13,7 @@
     "clean": "./scripts/clean.sh",
     "distclean": "./scripts/distclean.sh",
     "changeset": "./scripts/changeset.sh",
+    "pre-release": "./scripts/pre-release.sh",
     "release": "./scripts/release.sh",
     "rector-fix-types": "./scripts/rector-fix-types.sh",
     "lint": "./scripts/lint.sh",

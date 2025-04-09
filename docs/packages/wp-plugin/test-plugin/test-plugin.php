@@ -28,7 +28,6 @@ enum ModeParam: string
 
 function dummy_function_using_mode_param(ModeParam $mode_param, int $count): void
 {
-  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log("mode_param={$mode_param}, count={$count}");
 }
 
@@ -36,7 +35,6 @@ function dummy_function_using_mode_param(ModeParam $mode_param, int $count): voi
   \load_plugin_textdomain(domain: 'test-plugin', plugin_rel_path: basename(__DIR__) . '/languages/');
 
   $translated_text = \__('hello.world', 'test-plugin');
-  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log($translated_text);
 });
 

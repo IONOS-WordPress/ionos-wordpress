@@ -43,7 +43,7 @@ class NBA
     }
   }
 
-  public function setStatus(ActionStatus $key, $value)
+  public function set_status(ActionStatus $key, $value)
   {
     $id     = $this->id;
     $option = self::_get_option();
@@ -53,12 +53,12 @@ class NBA
     return self::_set_option($option);
   }
 
-  public static function getNBA($id): self|null
+  public static function get_nba($id): self|null
   {
     return self::$actions[$id];
   }
 
-  public static function getActions(): array
+  public static function get_actions(): array
   {
     return self::$actions;
   }
@@ -99,13 +99,12 @@ if (null !== $data) {
       'Connect your domain to your website to increase visibility and attract more visitors.',
       'ionos-essentials'
     ),
-    link: $data['domain'],
+    link: $data['domain'] . $data['nba_links']['connectdomain'],
     anchor: \__('Connect Domain', 'ionos-essentials'),
     completed: false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost'),
   );
 }
 
-// DONE
 NBA::register(
   id: 'edit-and-complete',
   title: \__('Edit & Complete Your Website', 'ionos-essentials'),
@@ -119,7 +118,6 @@ NBA::register(
     ->publish
 );
 
-// DONE
 NBA::register(
   id: 'help-center',
   title: \__('Discover Help Center', 'ionos-essentials'),
@@ -132,26 +130,26 @@ NBA::register(
   completed: false // done when cta is clicked but helpcenter is opened immediately
 );
 
-// TODO show when domain-action is connected/done ( it is Tenant specific )
-if (false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost')) {
-  NBA::register(
-    id: 'email-account',
-    title: \__('Set Up Email', 'ionos-essentials'),
-    description: \__(
-      'Set up your included email account and integrate it with your website.',
-      'ionos-essentials'
-    ),
-    link: '#',
-    anchor: \__('Set Up Email', 'ionos-essentials'),
-    completed: false // done when cta is clicked
-  );
+if (null !== $data) {
+  if (false === strpos(home_url(), 'live-website.com') /*&& false === strpos(home_url(), 'localhost')*/) {
+    NBA::register(
+      id: 'email-account',
+      title: \__('Set Up Email', 'ionos-essentials'),
+      description: \__(
+        'Set up your included email account and integrate it with your website.',
+        'ionos-essentials'
+      ),
+      link: $data['domain'] . $data['nba_links']['connectmail'],
+      anchor: \__('Set Up Email', 'ionos-essentials'),
+      completed: false // done when cta is clicked
+    );
+  }
 }
 
 if (! function_exists('is_plugin_active')) {
   include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 }
 
-// DONE
 // show when contactform7 is installed and active
 if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
   NBA::register(
@@ -164,7 +162,7 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
   );
 }
 
-// DONE
+// show when woocommerce is installed and active
 if (is_plugin_active('woocommerce/woocommerce.php')) {
   $woo_onboarding_status = get_option('woocommerce_onboarding_profile');
 
@@ -179,19 +177,26 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
 }
 
 // TODO open file dialog
-NBA::register(
-  id: 'upload-logo',
-  title: \__('Add Logo', 'ionos-essentials'),
-  description: \__(
-    'Ensure your website is branded with your unique logo for a professional look.',
-    'ionos-essentials'
-  ),
-  link: '#', // open upload file dialog
-  anchor: \__('Add Logo', 'ionos-essentials'),
-  completed: false // done when logo is changed
-);
+if ('extendable' === get_stylesheet()) {
+  $custom_logo_id = get_theme_mod( 'custom_logo' );
+  $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+  $logo_src = $logo ? $logo[0] : '';
+  $is_default_or_empty_logo = strpos($logo_src, 'extendify-demo-logo.png') !== false || $logo_src === '';
 
-// DONE
+  NBA::register(
+    id: 'upload-logo',
+    title: \__('Add Logo', 'ionos-essentials'),
+    description: \__(
+      'Ensure your website is branded with your unique logo for a professional look.',
+      'ionos-essentials'
+    ),
+    link: \admin_url(
+      'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'),
+    anchor: \__('Add Logo', 'ionos-essentials'),
+    completed: ! $is_default_or_empty_logo
+  );
+}
+
 NBA::register(
   id: 'create-page',
   title: \__('Create a Page', 'ionos-essentials'),
@@ -201,7 +206,6 @@ NBA::register(
   completed: false
 );
 
-// DONE
 if ('extendable' === get_stylesheet()) {
   NBA::register(
     id: 'social-media',
@@ -218,7 +222,6 @@ if ('extendable' === get_stylesheet()) {
   );
 }
 
-// DONE
 NBA::register(
   id: 'favicon',
   title: \__('Add Favicon', 'ionos-essentials'),

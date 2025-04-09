@@ -26,7 +26,7 @@ function get_deep_links_data()
     return $data;
   }
 
-  $tenant      = strtolower(\get_option('ionos_group_brand', false));
+  $tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
   $config_file = PLUGIN_DIR . '/inc/tenants/config/' . $tenant . '.php';
 
   if (! $tenant || ! file_exists($config_file)) {
@@ -35,18 +35,21 @@ function get_deep_links_data()
 
   require $config_file;
 
-  $market = strtolower(\get_option($tenant . '_market', 'de'));
+  $market   = strtolower(\get_option($tenant . '_market', 'de'));
   $webmail_links = '';
   if ( $tenant === 'ionos' ) {
     $webmail_links = $webmailloginlinks[$market] ?? reset($webmailloginlinks['de']);
   }
-
-  $domain = $market_domains[$market] ?? reset($market_domains);
+  $domain   = $market_domains[$market] ?? reset($market_domains);
 
   $data = [
-    'links'  => $links,
-    'domain' => $domain,
-    'webmail' => $webmail_links,
+    'links'        => $links,
+    'domain'       => $domain,
+    'market'       => $market,
+    'tenant'       => $tenant,
+    'nba_links'    => $nba_links,
+    'webmail'      => $webmail_links,
+    'banner_links' => $banner_links,
   ];
 
   return $data;
@@ -108,7 +111,7 @@ function render_callback()
   $data = get_deep_links_data();
 
   $button_list[] = [
-    'link'           => $data['domain'],
+    'link'           => $data['domain'] . $data['banner_links']['managehosting'],
     'target'         => '_blank',
     'text'           => \esc_html__('Manage Hosting', 'ionos-essentials'),
     'css-attributes' => 'deeplink',

@@ -8,8 +8,8 @@ $links = [
     'anchor' => __('My Products', 'ionos-essentials'),
   ],
   [
-    'url'    => 'account',
-    'anchor' => __('My Account', 'ionos-essentials'),
+    'url'    => 'account-security',
+    'anchor' => __('Login & Account Security', 'ionos-essentials'),
   ],
   [
     'url'    => 'website',
@@ -28,7 +28,7 @@ $links = [
 // Trainling slash
 // The first market is the default market
 $market_domains = [
-  'de' => 'https://my.ionos.com/',
+  'de' => 'https://mein.ionos.de/',
   'uk' => 'https://my.ionos.co.uk/',
   'gb' => 'https://my.ionos.co.uk/',
   'fr' => 'https://my.ionos.fr/',
@@ -72,4 +72,13 @@ $webmailloginlinks = [
   [ 'url' => 'https://id.ionos.mx/',
     'anchor' => __('Acceso al webmail', 'ionos-essentials'),
   ],
+];
+
+$nba_links = [
+  'connectdomain' => 'domains',
+  'connectmail'   => 'email-portfolio?',
+];
+
+$banner_links = [
+  'managehosting' => 'websites',
 ];
