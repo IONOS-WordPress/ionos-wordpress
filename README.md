@@ -40,6 +40,18 @@ The repository provides
 
 - `vscode` configuration and settings so that all required plugins and settings are automatically installed and configured
 
+## Branches & Naming
+
+The repository branching is inspired by git flow. There is a development branch from which feature branches branch off of and are finally merged back to. To easily identify the kind of change, use one of the following prefixes for your feature branches:
+
+- feature/
+- bugfix/
+- docs/
+- chore/
+
+if there is a Jira ticket that this branch implements, append it to the end of your branch name like so:
+"feature/add-awesome-button-GPHWPP-123"
+
 ## Directory layout
 
 - The top level directory contains configuration files
