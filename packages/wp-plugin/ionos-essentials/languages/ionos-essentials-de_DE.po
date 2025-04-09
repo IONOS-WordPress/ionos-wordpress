@@ -305,7 +305,7 @@ msgstr "Wiederholung AI"
 #: dist/ionos-essentials-0.1.2/inc/dashboard/blocks/deep-links/index.php:100
 #: inc/dashboard/blocks/deep-links/index.php:100
 msgid "Manage Hosting"
-msgstr " Zum Control Panel"
+msgstr "Zum Control Panel"
 
 #: build/dashboard/blocks/banner/block.json
 #: dist/ionos-essentials-0.1.2-php7.4/ionos-essentials/build/dashboard/blocks/banner/block.json
