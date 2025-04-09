@@ -26,7 +26,6 @@ const PLUGIN_FILE = __FILE__;
   );
 
   $translated_text = \__('hello.world', 'test-mu-plugin');
-  // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
   error_log($translated_text);
 });
 

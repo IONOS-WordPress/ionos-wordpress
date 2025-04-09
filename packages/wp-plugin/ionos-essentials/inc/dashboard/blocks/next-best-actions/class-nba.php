@@ -43,7 +43,7 @@ class NBA
     }
   }
 
-  public function setStatus(ActionStatus $key, $value)
+  public function set_status(ActionStatus $key, $value)
   {
     $id     = $this->id;
     $option = self::_get_option();
@@ -53,12 +53,12 @@ class NBA
     return self::_set_option($option);
   }
 
-  public static function getNBA($id): self|null
+  public static function get_nba($id): self|null
   {
     return self::$actions[$id];
   }
 
-  public static function getActions(): array
+  public static function get_actions(): array
   {
     return self::$actions;
   }

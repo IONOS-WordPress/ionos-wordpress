@@ -16,7 +16,7 @@ use const ionos\essentials\PLUGIN_DIR;
 function render_callback()
 {
   require_once __DIR__ . '/class-nba.php';
-  $actions = NBA::getActions();
+  $actions = NBA::get_actions();
   if (empty($actions)) {
     return;
   }
@@ -75,7 +75,7 @@ function render_callback()
     return;
   }
 
-  return \sprintf($template, $header, $description, $body);
+  return sprintf($template, $header, $description, $body);
 }
 
 \add_action('admin_init', function () {
@@ -83,8 +83,8 @@ function render_callback()
     require_once __DIR__ . '/class-nba.php';
     $nba_id = $_GET['complete_nba'];
 
-    $nba = NBA::getNBA($nba_id);
-    $nba->setStatus(ActionStatus::completed, true);
+    $nba = NBA::get_nba($nba_id);
+    $nba->set_status(ActionStatus::completed, true);
   }
 });
 
@@ -96,8 +96,8 @@ function render_callback()
       $params = $request->get_params();
       $nba_id = $params['id'];
 
-      $nba = NBA::getNBA($nba_id);
-      $res = $nba->setStatus(ActionStatus::dismissed, true);
+      $nba = NBA::get_nba($nba_id);
+      $res = $nba->set_status(ActionStatus::dismissed, true);
       if ($res) {
         return new \WP_REST_Response([
           'status' => 'success',
@@ -122,17 +122,17 @@ function render_callback()
   require_once __DIR__ . '/class-nba.php';
   switch ($post_after->post_type) {
     case 'post':
-      $nba = NBA::getNBA('edit-post');
+      $nba = NBA::get_nba('edit-post');
       break;
     case 'page':
-      $nba = NBA::getNBA('edit-page');
+      $nba = NBA::get_nba('edit-page');
       break;
     default:
       return;
   }
 
   if ($nba) {
-    $nba->setStatus(ActionStatus::completed, true);
+    $nba->set_status(ActionStatus::completed, true);
   }
 }, 10, 3);
 

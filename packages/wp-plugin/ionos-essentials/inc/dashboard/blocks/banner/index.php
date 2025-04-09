@@ -27,11 +27,11 @@ function render_callback(): string
     ],
   ];
 
-  $button_list = \array_merge($button_list, get_ai_button());
-  $button_list = \apply_filters('ionos_dashboard_banner__register_button', $button_list);
-  $button_list = \array_merge($button_list, $view_site);
+  $button_list = array_merge($button_list, get_ai_button());
+  $button_list = apply_filters('ionos_dashboard_banner__register_button', $button_list);
+  $button_list = array_merge($button_list, $view_site);
 
-  $button_html = \implode('', \array_map(fn (array $button): string => \sprintf(
+  $button_html = implode('', array_map(fn (array $button): string => sprintf(
     BUTTON_TEMPLATE,
     \esc_url($button['link'] ?? '#'),
     $button['target']         ?? '_top',
@@ -39,7 +39,7 @@ function render_callback(): string
     \esc_html($button['text'] ?? '')
   ), $button_list));
 
-  return \sprintf(MAIN_TEMPLATE, $button_html);
+  return sprintf(MAIN_TEMPLATE, $button_html);
 }
 
 function get_ai_button(): array
@@ -48,8 +48,8 @@ function get_ai_button(): array
     return [];
   }
 
-  $launchCompleted = \get_option('extendify_onboarding_completed', false);
-  if (false === $launchCompleted) {
+  $launch_completed = \get_option('extendify_onboarding_completed', false);
+  if (false === $launch_completed) {
     return [
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),
@@ -58,7 +58,7 @@ function get_ai_button(): array
       ], ];
   }
 
-  if (strtotime($launchCompleted) > time() - (3 * 24 * 60 * 60)) {
+  if (strtotime($launch_completed) > time() - (3 * 24 * 60 * 60)) {
     return [
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),

@@ -1,17 +1,17 @@
 <?php
 
-namespace ionos\essentials;
-
-/**
+/*
  * implements plugin update mechanism
  */
 
- /*
+namespace ionos\essentials;
+
+/*
 // @DEBUG: ENABLE ONLY WHEN DEBUGGING PLUGIN UPDATE CHECKS
 if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true)) {
-  // if wordpress is in development mode (https://developer.wordpress.org/reference/functions/wp_get_development_mode/)
-  // force plugin update checks / disable transient caching
-  \add_action('plugins_loaded', fn () => \delete_site_transient('update_plugins'));
+ // if wordpress is in development mode (https://developer.wordpress.org/reference/functions/wp_get_development_mode/)
+ // force plugin update checks / disable transient caching
+ \add_action('plugins_loaded', fn () => \delete_site_transient('update_plugins'));
 }
 */
 
@@ -35,7 +35,6 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
   if ((200 !== \wp_remote_retrieve_response_code($res)) || ('' === \wp_remote_retrieve_body($res))) {
     if ('' !== \wp_remote_retrieve_response_code($res)) {
       // may happen for rate limit exceeded
-      // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
       error_log(
         sprintf(
           'Failed to fetch latest update information from "%s"(http-status=%s) : %s',
@@ -45,7 +44,6 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
         )
       );
     } else {
-      // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
       error_log(sprintf('Failed to download update information from "%s"', $plugin_data['UpdateURI']));
     }
     return $update;
