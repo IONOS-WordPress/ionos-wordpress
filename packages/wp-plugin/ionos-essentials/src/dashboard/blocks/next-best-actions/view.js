@@ -24,6 +24,15 @@ domReady(() => {
       });
     });
 
+
+
+    const emailAccountLink = document.querySelector('a.nba-link[data-nba-id="email-account"]');
+    if (emailAccountLink) {
+      emailAccountLink.onclick = () => {
+        dismissItem(emailAccountLink);
+      };
+    }
+
     const helpCenterLink = document.querySelector('a.nba-link[data-nba-id="help-center"]');
     if (helpCenterLink) {
       helpCenterLink.onclick = () => {
