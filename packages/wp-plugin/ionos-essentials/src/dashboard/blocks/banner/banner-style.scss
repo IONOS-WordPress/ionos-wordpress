@@ -24,6 +24,11 @@
         background-color: #f0b7fb !important;
       }
     }
+    .retryai::before {
+      content: "";
+      font-family: exos-icon-font;
+      float: left;
+    }
 
     .deeplink {
       background-color: #fff;

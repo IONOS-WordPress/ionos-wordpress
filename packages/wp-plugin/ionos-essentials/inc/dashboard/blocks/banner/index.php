@@ -14,7 +14,7 @@ use const ionos\essentials\PLUGIN_DIR;
 });
 
 const MAIN_TEMPLATE   = '<div class="wp-block-buttons banner-buttons">%s</div>';
-const BUTTON_TEMPLATE = '<div class="wp-block-button button"><a href="%s" target="%s" class="wp-block-button__link has-text-align-center wp-element-button %s">%s</a></div>';
+const BUTTON_TEMPLATE = '<div class="wp-block-button button"><a href="%s" target="%s" class="wp-block-button__link has-text-align-center wp-element-button %s" title="%s">%s</a></div>';
 function render_callback(): string
 {
   $button_list = [];
@@ -36,6 +36,7 @@ function render_callback(): string
     \esc_url($button['link'] ?? '#'),
     $button['target']         ?? '_top',
     $button['css-attributes'] ?? '',
+    $button['title']          ?? '',
     \esc_html($button['text'] ?? '')
   ), $button_list));
 
@@ -64,6 +65,7 @@ function get_ai_button(): array
         'link'           => \admin_url('admin.php?page=extendify-launch'),
         'text'           => \__('Retry AI', 'ionos-essentials'),
         'css-attributes' => 'retryai',
+        'title'          => __('Valid for up to 72h'),
       ], ];
   }
 
