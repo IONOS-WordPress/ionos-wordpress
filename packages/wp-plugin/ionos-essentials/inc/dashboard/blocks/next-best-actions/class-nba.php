@@ -131,7 +131,7 @@ NBA::register(
 );
 
 if (null !== $data) {
-  if (false !== strpos(home_url(), 'live-website.com') || false !== strpos(home_url(), 'localhost')) {
+  if (false !== strpos(home_url(), 'live-website.com') || (false !== strpos(home_url(), 'localhost'))) {
     NBA::register(
       id: 'email-account',
       title: \__('Set Up Email', 'ionos-essentials'),
