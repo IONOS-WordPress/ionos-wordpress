@@ -38,8 +38,9 @@ function get_deep_links_data()
   $market   = strtolower(\get_option($tenant . '_market', 'de'));
   $webmail_links = '';
   if ( $tenant === 'ionos' ) {
-    $webmail_links = $webmailloginlinks[$market] ?? reset($webmailloginlinks['de']);
+    $webmail_links = $webmailloginlinks[$market] ?? $webmailloginlinks['de'];
   }
+
   $domain   = $market_domains[$market] ?? reset($market_domains);
 
   $data = [
@@ -97,8 +98,8 @@ function render_callback()
           <p class="has-text-align-center has-small-font-size">%s</p>
         </a>
       </div>',
-      \esc_url($data['webmail']['url']),
-      \esc_html($data['webmail']['anchor'])
+      \esc_url($data['webmail']),
+      \esc_html__('Webmail Login', 'ionos-essentials')
     );
   }
 

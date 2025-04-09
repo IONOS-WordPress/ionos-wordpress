@@ -186,7 +186,7 @@ msgstr "Webseite mit AI erstellen "
 msgid "Retry AI"
 msgstr "Wiederholung AI"
 
-#: inc/dashboard/blocks/deep-links/index.php:116
+#: inc/dashboard/blocks/deep-links/index.php:117
 msgid "Manage Hosting"
 msgstr "Zum Control Panel"
 
@@ -200,11 +200,11 @@ msgctxt "block description"
 msgid "Banner"
 msgstr "Banner"
 
-#: inc/dashboard/blocks/deep-links/index.php:75
+#: inc/dashboard/blocks/deep-links/index.php:76
 msgid "Account Management"
 msgstr "Mein Konto"
 
-#: inc/dashboard/blocks/deep-links/index.php:76
+#: inc/dashboard/blocks/deep-links/index.php:77
 msgid "One-click access to your customer account, login security and subscriptions"
 msgstr "Schnellzugriff auf Ihr Kundenkonto, Verträge und Logineinstellungen"
 
@@ -471,24 +471,8 @@ msgstr ""
 msgid "Add more products"
 msgstr ""
 
-#: inc/tenants/config/ionos.php:45
-#: inc/tenants/config/ionos.php:49
-#: inc/tenants/config/ionos.php:53
-#: inc/tenants/config/ionos.php:61
+#: inc/dashboard/blocks/deep-links/index.php:102
 msgid "Webmail Login"
-msgstr ""
-
-#: inc/tenants/config/ionos.php:57
-msgid "Connexion à la messagerie Web"
-msgstr ""
-
-#: inc/tenants/config/ionos.php:65
-#: inc/tenants/config/ionos.php:73
-msgid "Acceso al webmail"
-msgstr ""
-
-#: inc/tenants/config/ionos.php:69
-msgid "Accesso Webmail"
 msgstr ""
 
 #: inc/tenants/config/udag.php:8

@@ -40,38 +40,14 @@ $market_domains = [
 ];
 
 $webmailloginlinks = [
-  'de' =>
-  [ 'url' => 'https://id.ionos.de/',
-    'anchor' => __('Webmail Login', 'ionos-essentials'),
-  ],
-  'uk' =>
-  [ 'url' => 'https://id.ionos.co.uk/',
-    'anchor' => __('Webmail Login', 'ionos-essentials'),
-  ],
-  'gb' =>
-  [ 'url' => 'https://id.ionos.co.uk/',
-    'anchor' => __('Webmail Login', 'ionos-essentials'),
-  ],
-  'fr' =>
-  [ 'url' => 'https://id.ionos.fr/',
-    'anchor' => __('Connexion à la messagerie Web', 'ionos-essentials'),
-  ],
-  'us' =>
-  [ 'url' => 'https://id.ionos.com/',
-    'anchor' => __('Webmail Login', 'ionos-essentials'),
-  ],
-  'es' =>
-  [ 'url' => 'https://id.ionos.es/',
-    'anchor' => __('Acceso al webmail', 'ionos-essentials'),
-  ],
-  'it' =>
-  [ 'url' => 'https://id.ionos.it/',
-    'anchor' => __('Accesso Webmail', 'ionos-essentials'),
-  ],
-  'mx' =>
-  [ 'url' => 'https://id.ionos.mx/',
-    'anchor' => __('Acceso al webmail', 'ionos-essentials'),
-  ],
+  'de' => 'https://id.ionos.de/',
+  'uk' => 'https://id.ionos.co.uk/',
+  'gb' => 'https://id.ionos.co.uk/',
+  'fr' => 'https://id.ionos.fr/',
+  'us' => 'https://id.ionos.com/',
+  'es' => 'https://id.ionos.es/',
+  'it' => 'https://id.ionos.it/',
+  'mx' => 'https://id.ionos.mx/',
 ];
 
 $nba_links = [
