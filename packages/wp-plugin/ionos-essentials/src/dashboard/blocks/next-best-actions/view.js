@@ -1,4 +1,3 @@
-
 import apiFetch from '@wordpress/api-fetch';
 import domReady from '@wordpress/dom-ready';
 import './style.css';
