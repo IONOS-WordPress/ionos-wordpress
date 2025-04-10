@@ -15,10 +15,10 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
 }
 */
 
-\add_action('init', function() {
-  if( ! function_exists('get_plugin_data') ){
-		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	}
+\add_action('init', function () {
+  if (! function_exists('get_plugin_data')) {
+    require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+  }
 
   $update_domain = parse_url(\get_plugin_data(PLUGIN_FILE, false, false)['UpdateURI'], PHP_URL_HOST);
 
@@ -30,7 +30,7 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
 
     // Extract hostname from UpdateURI
     $parsed_url = parse_url($plugin_data['UpdateURI']);
-    $hostname = $parsed_url['host'] ?? '';
+    $hostname   = $parsed_url['host'] ?? '';
 
     if (\plugin_basename(PLUGIN_FILE) !== $plugin_slug) {
       return $update;
@@ -101,14 +101,15 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
     // show error message including link in the changelog section
     $result->sections['changelog'] = sprintf(
       'Failed to download <a href=\"%s\">%s-info.json</a>(response status=%s)',
-      $plugin_data['UpdateURI'], $plugin_data['Name'],
+      $plugin_data['UpdateURI'],
+      $plugin_data['Name'],
       print_r(\wp_remote_retrieve_response_code($res), true),
     );
 
     return $result;
   }
 
-  $result = (object)json_decode($res['body'], true);
+  $result       = (object) json_decode($res['body'], true);
   $result->name = $plugin_data['Name'];
 
   return $result;
