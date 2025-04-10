@@ -1,3 +1,4 @@
+
 import apiFetch from '@wordpress/api-fetch';
 import domReady from '@wordpress/dom-ready';
 import './style.css';
@@ -24,6 +25,13 @@ domReady(() => {
       });
     });
 
+    const emailAccountLink = document.querySelector('a.nba-link[data-nba-id="email-account"]');
+    if (emailAccountLink) {
+      emailAccountLink.onclick = () => {
+        dismissItem(emailAccountLink);
+      };
+    }
+
     const helpCenterLink = document.querySelector('a.nba-link[data-nba-id="help-center"]');
     if (helpCenterLink) {
       helpCenterLink.onclick = () => {
@@ -37,7 +45,7 @@ domReady(() => {
       const res = await apiFetch({
         path: `ionos/essentials/dashboard/nba/v1/dismiss/${target.dataset.nbaId}`,
         method: 'POST',
-      });
+      })
 
       if (res.status === 'success') {
         const element = target.closest('.wp-block-column');

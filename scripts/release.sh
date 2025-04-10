@@ -56,15 +56,14 @@ if ! gh release view "$LATEST_RELEASE_TAG"; then
   ionos.wordpress.log_info "did not found a release named/tagged '$LATEST_RELEASE_TAG'"
 
   # ensure there is no tag named "$LATEST_RELEASE_TAG"
-  git tag -d "$LATEST_RELEASE_TAG" 2>/dev/null ||:
-  git push origin --delete "$LATEST_RELEASE_TAG" 2>/dev/null ||:
+  git tag -d "$LATEST_RELEASE_TAG" ||:
+  git push origin --delete "$LATEST_RELEASE_TAG" ||:
 
   # create release
   gh release create "$LATEST_RELEASE_TAG" \
     --notes '' \
     --title "$LATEST_RELEASE_TAG" \
-    --latest=false \
-    2>/dev/null
+    --latest=false
 
   echo "created release '$LATEST_RELEASE_TAG'"
 fi
@@ -84,8 +83,7 @@ gh release edit "$LATEST_RELEASE_TAG" \
   --tag $LATEST_RELEASE_TAG \
   --latest=false \
   --draft=false \
-  --prerelease=false \
-  1>/dev/null
+  --prerelease=false
 
 # update latest release assets
 ASSETS=$(gh release view $PRE_RELEASE --json assets --jq '.assets[] | .name')
@@ -103,7 +101,7 @@ for ASSET in $ASSETS; do
 done
 
 # Remove the 'pre-release' flag from the PRE_RELEASE
-gh release edit "$PRE_RELEASE" --prerelease=false --draft=false --latest=true 1>/dev/null
+gh release edit "$PRE_RELEASE" --prerelease=false --draft=false --latest=true
 
 ionos.wordpress.log_info "Removed 'pre-release' flag from release '$PRE_RELEASE'"
 
