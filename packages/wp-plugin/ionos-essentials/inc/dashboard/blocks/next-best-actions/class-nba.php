@@ -6,12 +6,6 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
-enum ActionStatus
-{
-  case completed;
-  case dismissed;
-}
-
 class NBA
 {
   public const OPTION_NAME = 'ionos_nba_status';
@@ -43,13 +37,13 @@ class NBA
     }
   }
 
-  public function set_status(ActionStatus $key, $value)
+  public function set_status($key, $value)
   {
     $id     = $this->id;
     $option = self::_get_option();
 
     $option[$id] ??= [];
-    $option[$id][$key->name] = $value;
+    $option[$id][$key] = $value;
     return self::_set_option($option);
   }
 
@@ -127,11 +121,11 @@ NBA::register(
   ),
   link: '#',
   anchor: \__('Open Help Center', 'ionos-essentials'),
-  completed: false // done when cta is clicked but helpcenter is opened immediately
+  completed: false // handled by view.js
 );
 
 if (null !== $data) {
-  if (false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost')) {
+  if (false !== strpos(home_url(), 'live-website.com') || (false !== strpos(home_url(), 'localhost'))) {
     NBA::register(
       id: 'email-account',
       title: \__('Set Up Email', 'ionos-essentials'),
@@ -141,7 +135,7 @@ if (null !== $data) {
       ),
       link: $data['domain'] . $data['nba_links']['connectmail'],
       anchor: \__('Setup Email Account', 'ionos-essentials'),
-      completed: false // done when cta is clicked
+      completed: false // handled by view.js because of external link
     );
   }
 }
@@ -156,7 +150,7 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
     id: 'contact-form',
     title: \__('Set Up Contact Form', 'ionos-essentials'),
     description: \__('Create a contact form to stay connected with your visitors.', 'ionos-essentials'),
-    link: \admin_url('admin.php?page=wpcf7-new'),
+    link: \admin_url('admin.php?page=wpcf7-new&complete_nba=contact-form'),
     anchor: \__('Set Up Contact Form', 'ionos-essentials'),
     completed: false,
   );
@@ -201,7 +195,7 @@ NBA::register(
   id: 'create-page',
   title: \__('Create a Page', 'ionos-essentials'),
   description: \__('Create and publish a page and share your story with the world.', 'ionos-essentials'),
-  link: \admin_url('post-new.php?post_type=page'),
+  link: \admin_url('post-new.php?post_type=page&complete_nba=create-page'),
   anchor: \__('Create Page', 'ionos-essentials'),
   completed: false
 );
@@ -215,7 +209,7 @@ if ('extendable' === get_stylesheet()) {
       'ionos-essentials'
     ),
     link: \admin_url(
-      'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit'
+      'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit&complete_nba=social-media'
     ),
     anchor: \__('Connect Social Media', 'ionos-essentials'),
     completed: false

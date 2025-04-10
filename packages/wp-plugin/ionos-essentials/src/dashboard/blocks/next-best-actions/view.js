@@ -20,14 +20,35 @@ domReady(() => {
     document.querySelectorAll('.dismiss-nba').forEach((el) => {
       el.addEventListener('click', async (click) => {
         click.preventDefault();
+        dismissItem(click.target);
+      });
+    });
 
-        const res = await apiFetch({
-          path: `ionos/essentials/dashboard/nba/v1/dismiss/${click.target.dataset.nbaId}`,
-          method: 'POST',
-        });
 
+
+    const emailAccountLink = document.querySelector('a.nba-link[data-nba-id="email-account"]');
+    if (emailAccountLink) {
+      emailAccountLink.onclick = () => {
+        dismissItem(emailAccountLink);
+      };
+    }
+
+    const helpCenterLink = document.querySelector('a.nba-link[data-nba-id="help-center"]');
+    if (helpCenterLink) {
+      helpCenterLink.onclick = () => {
+        window.parent.document.querySelector('.extendify-help-center button').click();
+        dismissItem(helpCenterLink);
+      };
+    }
+
+    //Dismiss element
+    const dismissItem = async (target) => {
+      await apiFetch({
+        path: `ionos/essentials/dashboard/nba/v1/dismiss/${target.dataset.nbaId}`,
+        method: 'POST',
+      }).then((res) => {
         if (res.status === 'success') {
-          const element = click.target.closest('.wp-block-column');
+          const element = target.closest('.wp-block-column');
           element.classList.add('dismissed');
 
           setTimeout(() => {
@@ -44,12 +65,6 @@ domReady(() => {
           }, 250);
         }
       });
-    });
-  }
-  const helpCenterLink = document.querySelector('a.nba-link[data-nba-id="help-center"]');
-  if (helpCenterLink) {
-    helpCenterLink.onclick = () => {
-      window.parent.document.querySelector('.extendify-help-center button').click();
-    };
+    }
   }
 });
