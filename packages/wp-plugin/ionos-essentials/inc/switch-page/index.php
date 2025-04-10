@@ -9,7 +9,7 @@ if (! defined('ABSPATH')) {
   exit();
 }
 
-function get_brand_lowercase() : string
+function get_brand_lowercase(): string
 {
   return strtolower(\get_option('ionos_group_brand', 'ionos'));
 }
