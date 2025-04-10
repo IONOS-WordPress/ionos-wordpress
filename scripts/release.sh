@@ -98,6 +98,41 @@ for ASSET in $ASSETS; do
     echo "Error: $error_message"
   fi
   rm -f $TARGET_ASSET_FILENAME
+
+  #
+  # create/update <plugin>-latest.json file (example : ionos-essentials.info.json)
+  #
+  {
+    # example: 1.2.3
+    VERSION=$(echo $ASSET | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
+    # example: ionos-essentials
+    PLUGIN=$(echo $ASSET | sed -E 's/^(.*)-[0-9]+\.[0-9]+\.[0-9]+.*/\1/')
+    # example : ionos-essentials/ionos-essentials.php
+    SLUG="${PLUGIN}/${PLUGIN}.php"
+    # example: https://github.com/lgersman/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.1.3/ionos-essentials-0.1.3-php7.4.zip
+    PACKAGE="https://github.com/$GITHUB_OWNER_REPO/releases/download/$(printf $PRE_RELEASE | jq -Rrs '@uri')/$ASSET"
+    # CHANGELOG is the release note of the pre-release (aka the changelog markdown of the release)
+    CHANGELOG="$(gh release view $PRE_RELEASE --json body --jq '.body')"
+
+    # Convert markdown in CHANGELOG to HTML using a Node.js package
+    CHANGELOG_HTML=$(echo "$CHANGELOG" | npx marked)
+
+    INFO_JSON_FILENAME="${PLUGIN}-info.json"
+
+    jq -n \
+      --arg version "$VERSION" \
+      --arg slug "$SLUG" \
+      --arg package "$PACKAGE" \
+      --arg changelog "$CHANGELOG_HTML" \
+      '{version: $version, slug: $slug, package: $package, sections : { changelog: $changelog }}' > "$INFO_JSON_FILENAME"
+
+    if ! gh release upload $LATEST_RELEASE_TAG $INFO_JSON_FILENAME --clobber; then
+      $error_message="Failed to upload asset $INFO_JSON_FILENAME"
+      [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+      echo "Error: $error_message"
+    fi
+    rm -f $INFO_JSON_FILENAME
+  }
 done
 
 # Remove the 'pre-release' flag from the PRE_RELEASE
@@ -131,5 +166,3 @@ else
     ionos.wordpress.log_warn "CI environment detected - skip setting up git hooks"
   fi
 fi
-
-
