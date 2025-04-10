@@ -413,7 +413,7 @@ msgstr "News & Updates"
 
 #: inc/dashboard/blocks/whats-new/index.php:37
 msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
-msgstr "Ein neues Design und eine verbesserte Nutzung, die das Management Deiner Website einfacher , als je zuvor."
+msgstr "Ein neues Design und eine verbesserte Nutzung, die das Management Deiner Website einfacher macht als je zuvor."
 
 #: inc/dashboard/blocks/whats-new/index.php:43
 msgid "Vulnerability Scan Results"
