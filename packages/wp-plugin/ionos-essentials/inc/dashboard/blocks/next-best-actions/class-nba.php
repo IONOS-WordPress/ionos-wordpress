@@ -131,7 +131,7 @@ NBA::register(
 );
 
 if (null !== $data) {
-  if (false === strpos(home_url(), 'live-website.com') /*&& false === strpos(home_url(), 'localhost')*/) {
+  if (false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost')) {
     NBA::register(
       id: 'email-account',
       title: \__('Set Up Email', 'ionos-essentials'),
@@ -140,7 +140,7 @@ if (null !== $data) {
         'ionos-essentials'
       ),
       link: $data['domain'] . $data['nba_links']['connectmail'],
-      anchor: \__('Set Up Email', 'ionos-essentials'),
+      anchor: \__('Setup Email Account', 'ionos-essentials'),
       completed: false // done when cta is clicked
     );
   }
@@ -176,12 +176,11 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
   );
 }
 
-// TODO open file dialog
 if ('extendable' === get_stylesheet()) {
-  $custom_logo_id = get_theme_mod( 'custom_logo' );
-  $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-  $logo_src = $logo ? $logo[0] : '';
-  $is_default_or_empty_logo = strpos($logo_src, 'extendify-demo-logo.png') !== false || $logo_src === '';
+  $custom_logo_id           = get_theme_mod('custom_logo');
+  $logo                     = wp_get_attachment_image_src($custom_logo_id, 'full');
+  $logo_src                 = $logo ? $logo[0] : '';
+  $is_default_or_empty_logo = false !== strpos($logo_src, 'extendify-demo-logo.png') || '' === $logo_src;
 
   NBA::register(
     id: 'upload-logo',
@@ -191,7 +190,8 @@ if ('extendable' === get_stylesheet()) {
       'ionos-essentials'
     ),
     link: \admin_url(
-      'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'),
+      'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'
+    ),
     anchor: \__('Add Logo', 'ionos-essentials'),
     completed: ! $is_default_or_empty_logo
   );

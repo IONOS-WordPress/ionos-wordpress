@@ -136,11 +136,11 @@ function render_callback()
   }
 }, 10, 3);
 
-\add_action( 'enqueue_block_editor_assets', function () {
-  if ( ! isset($_GET['essentials-nba'])) {
+\add_action('enqueue_block_editor_assets', function () {
+  if (! isset($_GET['essentials-nba'])) {
     return;
   }
-  \add_action( 'admin_footer', function () {
+  \add_action('admin_footer', function () {
     echo "<script>
       const observer = new MutationObserver((mutations, obs) => {
         const iframe = document.querySelector('iframe');
@@ -161,5 +161,5 @@ function render_callback()
         subtree: true
       });
     </script>";
-  } );
-} );
+  });
+});

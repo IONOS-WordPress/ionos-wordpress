@@ -35,9 +35,9 @@ function get_deep_links_data()
 
   require $config_file;
 
-  $market   = strtolower(\get_option($tenant . '_market', 'de'));
+  $market        = strtolower(\get_option($tenant . '_market', 'de'));
   $webmail_links = '';
-  if ( $tenant === 'ionos' ) {
+  if ('ionos' === $tenant) {
     $webmail_links = $webmailloginlinks[$market] ?? $webmailloginlinks['de'];
   }
 
@@ -91,7 +91,7 @@ function render_callback()
       \esc_html($link['anchor'])
     );
   }
-  if ( ! empty( $data['webmail'] ) ) {
+  if (! empty($data['webmail'])) {
     $body .= sprintf(
       '<div class="wp-block-group has-background element">
         <a class="element-link" href="%s" target="_blank">

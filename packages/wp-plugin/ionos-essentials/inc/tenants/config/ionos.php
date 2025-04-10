@@ -8,8 +8,8 @@ $links = [
     'anchor' => __('My Products', 'ionos-essentials'),
   ],
   [
-    'url'    => 'account-security',
-    'anchor' => __('Login & Account Security', 'ionos-essentials'),
+    'url'    => 'account',
+    'anchor' => __('My Account', 'ionos-essentials'),
   ],
   [
     'url'    => 'website',
@@ -34,7 +34,6 @@ $market_domains = [
   'fr' => 'https://my.ionos.fr/',
   'us' => 'https://my.ionos.com/',
   'es' => 'https://my.ionos.es/',
-  'ca' => 'https://my.ionos.ca/',
   'it' => 'https://my.ionos.it/',
   'mx' => 'https://my.ionos.mx/',
 ];
