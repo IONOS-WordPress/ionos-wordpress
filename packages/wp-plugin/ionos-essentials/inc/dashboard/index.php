@@ -57,10 +57,7 @@ require_once __DIR__ . '/blocks/whats-new/index.php';
           display: none
         }
         #wpwrap #wpcontent {
-          margin-left: -10px;
-        }
-        .folded #wpwrap #wpcontent {
-          margin-left: 16px;
+          padding-left: 0;
         }
         .wp-responsive-open #wpbody {
           right: -13em !important;
