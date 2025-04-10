@@ -13,6 +13,27 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     await execSync('pnpm -s wp-env run tests-cli wp plugin install --activate https://web-hosting.s3-eu-central-1.ionoscloud.com/extendify/01-ext-ion2hs971.zip --force');
   });
 
+  test('test dismissing an option ', async ({ admin, page }) => {
+    // show dashboard and click on dismiss button of "create-page" action
+    await admin.visitAdminPage('/');
+    // get the iframe element
+    let iframeLocator = await page.locator('iframe');
+    // get the iframe's body element
+    let iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
+
+    // get dismiss anchor element
+    let dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="edit-and-complete"]');
+    await expect(dismissAncor).toHaveCount(1);
+    await dismissAncor.click();
+
+    // show dashboard and ensure "create-page" action is not more available
+    await admin.visitAdminPage('/');
+    iframeLocator = await page.locator('iframe');
+    iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
+    dismissAncor = await iframeBodyLocator.locator('css=.dismiss-nba[data-nba-id="edit-and-complete"]');
+    await expect(dismissAncor).toHaveCount(0);
+  });
+
   test('test help center action behavior', async ({ admin, page }) => {
     // redirect to admin page and check if the help center cart exists => expectation is true
     await admin.visitAdminPage('/');
