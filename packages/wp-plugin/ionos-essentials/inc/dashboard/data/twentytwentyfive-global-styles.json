@@ -261,6 +261,15 @@
                         "bottom": "4px"
                     }
                 }
+            },
+            "core\/quote": {
+                "typography": {
+                    "fontStyle": "normal",
+                    "fontWeight": "300"
+                }
+            },
+            "core\/image": {
+                "css": "min-width:180px;"
             }
         },
         "color": {
@@ -276,7 +285,7 @@
             },
             "link": {
                 "color": {
-                    "text": "#001b41"
+                    "text": "var(--wp--preset--color--base)"
                 }
             }
         }

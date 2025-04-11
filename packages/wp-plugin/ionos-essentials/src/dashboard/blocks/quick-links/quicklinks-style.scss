@@ -7,12 +7,20 @@
 
   .elements{
     display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
+    grid-template-columns:repeat(1,minmax(0,1fr));
     gap:0.8rem;
     min-height:0px;
     margin-top:var(--wp--preset--spacing--40);
     margin-bottom:0;
     padding: 0;
+
+    @media only screen and (min-width: 685px) {
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    @media only screen and (min-width: 1290px) {
+      grid-template-columns:repeat(4,minmax(0,1fr));
+    }
   }
 
   .element {
@@ -37,6 +45,7 @@
 
       .icon {
         aspect-ratio:1;
+        min-width: 20px !important;
         width:20px;
         height:auto;
       }
