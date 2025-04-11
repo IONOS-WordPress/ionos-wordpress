@@ -100,7 +100,7 @@ git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
 # commit changes
 # no-verify will disable the pre-push hook since we wont automatically run lint
-git commit --no-verify -am "chore(release) : updated versions and sbom information [skip release]"
+git commit --no-verify -m "chore(release) : updated versions and sbom information [skip release]"
 
 # tag release
 pnpm changeset tag
