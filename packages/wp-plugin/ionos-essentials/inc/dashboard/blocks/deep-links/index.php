@@ -35,16 +35,22 @@ function get_deep_links_data()
 
   require $config_file;
 
-  $market   = strtolower(\get_option($tenant . '_market', 'de'));
+  $market        = strtolower(\get_option($tenant . '_market', 'de'));
+  $webmail_links = '';
+  if ('ionos' === $tenant) {
+    $webmail_links = $webmailloginlinks[$market] ?? $webmailloginlinks['de'];
+  }
+
   $domain   = $market_domains[$market] ?? reset($market_domains);
-  $nbalinks = $nba_link;
 
   $data = [
-    'links'     => $links,
-    'domain'    => $domain,
-    'market'    => $market,
-    'tenant'    => $tenant,
-    'nba_links' => $nbalinks,
+    'links'        => $links,
+    'domain'       => $domain,
+    'market'       => $market,
+    'tenant'       => $tenant,
+    'nba_links'    => $nba_links,
+    'webmail'      => $webmail_links,
+    'banner_links' => $banner_links,
   ];
 
   return $data;
@@ -85,6 +91,17 @@ function render_callback()
       \esc_html($link['anchor'])
     );
   }
+  if (! empty($data['webmail'])) {
+    $body .= sprintf(
+      '<div class="wp-block-group has-background element">
+        <a class="element-link" href="%s" target="_blank">
+          <p class="has-text-align-center has-small-font-size">%s</p>
+        </a>
+      </div>',
+      \esc_url($data['webmail']),
+      \esc_html__('Webmail Login', 'ionos-essentials')
+    );
+  }
 
   if (! empty($body)) {
     return sprintf($template, $headline, $description, $body);
@@ -95,7 +112,7 @@ function render_callback()
   $data = get_deep_links_data();
 
   $button_list[] = [
-    'link'           => $data['domain'],
+    'link'           => $data['domain'] . $data['banner_links']['managehosting'],
     'target'         => '_blank',
     'text'           => \esc_html__('Manage Hosting', 'ionos-essentials'),
     'css-attributes' => 'deeplink',

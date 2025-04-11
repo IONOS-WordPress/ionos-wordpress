@@ -134,7 +134,7 @@ if (null !== $data) {
         'ionos-essentials'
       ),
       link: $data['domain'] . $data['nba_links']['connectmail'],
-      anchor: \__('Set Up Email', 'ionos-essentials'),
+      anchor: \__('Setup Email Account', 'ionos-essentials'),
       completed: false // handled by view.js because of external link
     );
   }
@@ -170,7 +170,6 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
   );
 }
 
-// TODO open file dialog
 if ('extendable' === get_stylesheet()) {
   $custom_logo_id           = get_theme_mod('custom_logo');
   $logo                     = wp_get_attachment_image_src($custom_logo_id, 'full');
