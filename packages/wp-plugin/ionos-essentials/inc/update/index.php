@@ -28,10 +28,6 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
     string $plugin_slug,
   ): array|false {
 
-    // Extract hostname from UpdateURI
-    $parsed_url = parse_url($plugin_data['UpdateURI']);
-    $hostname   = $parsed_url['host'] ?? '';
-
     if (\plugin_basename(PLUGIN_FILE) !== $plugin_slug) {
       return $update;
     }
