@@ -15,7 +15,7 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
 }
 */
 
-\add_filter('update_plugins_github.com' . $update_domain, function (
+\add_filter('update_plugins_github.com', function (
   array|false $update,
   array $plugin_data,
   string $plugin_slug,
@@ -32,27 +32,24 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
     ],
   ]);
 
-  // abort if the request failed or the response code is not 200 or the response body is empty
-  if ((200 !== \wp_remote_retrieve_response_code($res)) || ('' === \wp_remote_retrieve_body($res))) {
-    if ('' !== \wp_remote_retrieve_response_code($res)) {
-      // may happen for rate limit exceeded
-      error_log(
-        sprintf(
-          'Failed to fetch latest update information from "%s"(http-status=%s) : %s',
-          $plugin_data['UpdateURI'],
-          \wp_remote_retrieve_response_code($res),
-          \wp_remote_retrieve_body($res),
-        )
-      );
-    } else {
-      error_log(sprintf('Failed to download update information from "%s"', $plugin_data['UpdateURI']));
-    }
-    return $update;
+  // if the request was successful
+  if ((200 === \wp_remote_retrieve_response_code($res)) || ('' !== \wp_remote_retrieve_body($res))) {
+    $info_json = json_decode($res['body'], true);
+
+    return $info_json;
   }
 
-  $info_json = json_decode($res['body'], true);
-
-  return $info_json;
+  if ((200 !== \wp_remote_retrieve_response_code($res))) {
+    error_log(
+      sprintf(
+        'Failed to fetch latest update information from "%s"(http-status=%s) : %s',
+        $plugin_data['UpdateURI'],
+        \wp_remote_retrieve_response_code($res),
+        '' !== \wp_remote_retrieve_body($res) ? \wp_remote_retrieve_body($res) : 'response body was empty',
+      )
+    );
+    return $update;
+  }
 }, 10, 3);
 
 /*
