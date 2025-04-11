@@ -20,7 +20,7 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     await execSync('pnpm -s wp-env run tests-cli wp media import --skip-copy --title="test-logo" wp-content/plugins/ionos-essentials/inc/dashboard/data/tenant-logos/welcome-banner.png');
   });
 
-  test.skip('test dismissing an option ', async ({ admin, page }) => {
+  test('test dismissing an option ', async ({ admin, page }) => {
     // show dashboard and click on dismiss button of "create-page" action
     await admin.visitAdminPage('/');
     // get the iframe element
@@ -41,7 +41,7 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     await expect(dismissAncor).toHaveCount(0);
   });
 
-  test.skip('test help center action behavior', async ({ admin, page }) => {
+  test('test help center action behavior', async ({ admin, page }) => {
     // redirect to admin page and check if the help center cart exists => expectation is true
     await admin.visitAdminPage('/');
     let iframeLocator = await page.locator('iframe');
