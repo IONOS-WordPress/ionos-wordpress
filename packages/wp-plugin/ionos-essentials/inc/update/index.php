@@ -15,53 +15,45 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
 }
 */
 
-\add_action('init', function () {
-  if (! function_exists('get_plugin_data')) {
-    require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+\add_filter('update_plugins_github.com' . $update_domain, function (
+  array|false $update,
+  array $plugin_data,
+  string $plugin_slug,
+): array|false {
+
+  if (\plugin_basename(PLUGIN_FILE) !== $plugin_slug) {
+    return $update;
   }
 
-  $update_domain = parse_url(\get_plugin_data(PLUGIN_FILE, false, false)['UpdateURI'], PHP_URL_HOST);
+  // get the redirect URL from the UpdateURI
+  $res = \wp_remote_get($plugin_data['UpdateURI'], [
+    'headers' => [
+      'Accept' => 'application/json',
+    ],
+  ]);
 
-  \add_filter('update_plugins_' . $update_domain, function (
-    array|false $update,
-    array $plugin_data,
-    string $plugin_slug,
-  ): array|false {
-
-    if (\plugin_basename(PLUGIN_FILE) !== $plugin_slug) {
-      return $update;
+  // abort if the request failed or the response code is not 200 or the response body is empty
+  if ((200 !== \wp_remote_retrieve_response_code($res)) || ('' === \wp_remote_retrieve_body($res))) {
+    if ('' !== \wp_remote_retrieve_response_code($res)) {
+      // may happen for rate limit exceeded
+      error_log(
+        sprintf(
+          'Failed to fetch latest update information from "%s"(http-status=%s) : %s',
+          $plugin_data['UpdateURI'],
+          \wp_remote_retrieve_response_code($res),
+          \wp_remote_retrieve_body($res),
+        )
+      );
+    } else {
+      error_log(sprintf('Failed to download update information from "%s"', $plugin_data['UpdateURI']));
     }
+    return $update;
+  }
 
-    // get the redirect URL from the UpdateURI
-    $res = \wp_remote_get($plugin_data['UpdateURI'], [
-      'headers' => [
-        'Accept' => 'application/json',
-      ],
-    ]);
+  $info_json = json_decode($res['body'], true);
 
-    // abort if the request failed or the response code is not 200 or the response body is empty
-    if ((200 !== \wp_remote_retrieve_response_code($res)) || ('' === \wp_remote_retrieve_body($res))) {
-      if ('' !== \wp_remote_retrieve_response_code($res)) {
-        // may happen for rate limit exceeded
-        error_log(
-          sprintf(
-            'Failed to fetch latest update information from "%s"(http-status=%s) : %s',
-            $plugin_data['UpdateURI'],
-            \wp_remote_retrieve_response_code($res),
-            \wp_remote_retrieve_body($res),
-          )
-        );
-      } else {
-        error_log(sprintf('Failed to download update information from "%s"', $plugin_data['UpdateURI']));
-      }
-      return $update;
-    }
-
-    $info_json = json_decode($res['body'], true);
-
-    return $info_json;
-  }, 10, 3);
-});
+  return $info_json;
+}, 10, 3);
 
 /*
 * This filter is used to modify the plugin information that is displayed in the WordPress admin panel as plugin details.
