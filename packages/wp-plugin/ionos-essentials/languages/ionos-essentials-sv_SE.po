@@ -151,7 +151,7 @@ msgstr "Visa wp-skanningsdata."
 msgid "WPScan not available"
 msgstr "WPScan inte tillgänglig"
 
-#: inc/dashboard/index.php:227
+#: inc/dashboard/index.php:226
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -198,11 +198,11 @@ msgstr "Nästa bästa åtgärder"
 msgid "View Site"
 msgstr "Visa webbplats"
 
-#: inc/dashboard/blocks/banner/index.php:57
+#: inc/dashboard/blocks/banner/index.php:56
 msgid "Start AI Sitebuilder"
 msgstr "Starta AI Sitebuilder"
 
-#: inc/dashboard/blocks/banner/index.php:66
+#: inc/dashboard/blocks/banner/index.php:65
 msgid "Retry AI"
 msgstr "Försök igen AI"
 
@@ -232,116 +232,116 @@ msgstr "Tillgång till kundkonto, inloggningssäkerhet och prenumerationer med e
 msgid "Easily navigate to frequently used features and tools"
 msgstr "Enkel navigering till funktioner och verktyg som används ofta"
 
+#: inc/dashboard/index.php:124
 #: inc/dashboard/index.php:125
-#: inc/dashboard/index.php:126
 msgid "Overview"
 msgstr "Översikt"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:200
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:205
 msgid "Create Page"
 msgstr "Skapa sida"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:182
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:190
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:188
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:195
 msgid "Add Logo"
 msgstr "Lägg till logotyp"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:183
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Se till att din webbplats är märkt med din unika logotyp för att få ett professionellt utseende."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:97
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:103
 msgid "Connect Domain"
 msgstr "Anslut domän"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:104
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:110
 msgid "Edit & Complete Your Website"
 msgstr "Redigera och komplettera din webbplats"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:105
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:111
 msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
 msgstr "Lägg till sidor, text och bilder, finjustera din webbplats med AI-drivna verktyg eller justera färger och teckensnitt"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:110
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:116
 msgid "Edit Website"
 msgstr "Redigera webbplats"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:117
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:123
 msgid "Discover Help Center"
 msgstr "Discover Hjälpcenter"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:118
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:124
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
 msgstr "Få omedelbar support med Co-Pilot AI, utforska vår kunskapsbas eller gå på guidade turer."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:123
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:129
 msgid "Open Help Center"
 msgstr "Öppna hjälpcenter"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:131
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:137
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:143
 msgid "Set Up Email"
 msgstr "Konfigurera e-post"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:132
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:138
 msgid "Set up your included email account and integrate it with your website."
 msgstr "Skapa ett e-postkonto som ingår och integrera det med din webbplats."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:151
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:154
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:157
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:160
 msgid "Set Up Contact Form"
 msgstr "Konfigurera kontaktformulär"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:152
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:158
 msgid "Create a contact form to stay connected with your visitors."
 msgstr "Skapa ett kontaktformulär för att hålla kontakten med dina besökare."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:165
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:171
 msgid "Set Up Your WooCommerce Store"
 msgstr "Konfigurera din WooCommerce-butik"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:166
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:172
 msgid "Launch your online store now with a guided setup wizard."
 msgstr "Starta din onlinebutik nu med en guidad installationsguide."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:168
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:174
 msgid "Start Setup"
 msgstr "Starta installationen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:207
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:212
 msgid "Social Media Setup"
 msgstr "Inställning av sociala medier"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:208
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:213
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Koppla dina sociala medieprofiler till din webbplats och utöka din närvaro på nätet."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:215
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:220
 msgid "Connect Social Media"
 msgstr "Anslut sociala medier"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:222
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:233
 msgid "Add Favicon"
 msgstr "Lägg till favicon"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:223
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Lägg till en favicon (webbplats-ikon) på din webbplats för att öka varumärkets igenkänning och synlighet."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:197
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:202
 msgid "Create a Page"
 msgstr "Skapa en sida"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:198
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:203
 msgid "Create and publish a page and share your story with the world."
 msgstr "Skapa och publicera en sida och dela med dig av din historia till hela världen."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:92
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:98
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
 msgstr "Koppla din domän till din webbplats för att öka synligheten och locka fler besökare."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:91
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:97
 msgid "Connect a Domain"
 msgstr "Anslut en domän"
 
@@ -473,8 +473,4 @@ msgstr ""
 
 #: inc/tenants/config/ionos.php:12
 msgid "Login & Account Security"
-msgstr ""
-
-#: inc/dashboard/blocks/banner/index.php:68
-msgid "Valid for up to 72h"
 msgstr ""
