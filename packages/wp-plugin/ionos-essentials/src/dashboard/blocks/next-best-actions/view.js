@@ -44,7 +44,7 @@ domReady(() => {
       const res = await apiFetch({
         path: `ionos/essentials/dashboard/nba/v1/dismiss/${target.dataset.nbaId}`,
         method: 'POST',
-      })
+      });
 
       if (res.status === 'success') {
         const element = target.closest('.wp-block-column');
@@ -60,9 +60,12 @@ domReady(() => {
           if (nextHiddenItem) {
             nextHiddenItem.classList.remove('hiddenaction'); // Show the next item
             nextHiddenItem.style.display = 'block'; // Make it visible
+          } else if (!items.find((item) => !item.classList.contains('dismissed'))) {
+            // If no more items show, hide the container
+            document.getElementById('ionos-dashboard__essentials_nba').style.display = 'none';
           }
         }, 250);
       }
-    }
+    };
   }
 });

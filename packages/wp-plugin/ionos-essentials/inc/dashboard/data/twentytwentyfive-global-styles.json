@@ -17,7 +17,7 @@
                         "top": "var(--wp--preset--spacing--50)"
                     }
                 },
-                "css": ".equal-height-columns {\n    display: flex;\n}\n\n.equal-height-columns .wp-block-column {\n    display: flex;\n    flex-direction: column;\n    justify-content: stretch;\n}",
+                "css": ":has(>.wp-block-column:empty) {\n  display:none !important;\n}",
                 "border": {
                     "radius": "0px"
                 }
