@@ -328,11 +328,6 @@ msgstr "Libera el potencial de tu sitio web"
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Tu sitio web ya está en línea, pero esto acaba de comenzar. Explora las acciones recomendadas para crecer, mejorar el rendimiento y alcanzar tus objetivos en línea. "
 
-#. Plugin Name of the plugin
-#: ionos-essentials.php
-msgid "ionos-essentials"
-msgstr "ionos-essentials"
-
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php:40
 msgid "Welcome to your %s Hub"
@@ -527,3 +522,9 @@ msgstr "Instalando..."
 #: inc/dashboard/blocks/vulnerability/render.php:156
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
 msgstr "Vulnerability Scan no es posible. Póngase en contacto con el servicio de atención al cliente."
+msgstr ""
+
+#. Plugin Name of the plugin
+#: ionos-essentials.php
+msgid "Essentials"
+msgstr "Essentials"

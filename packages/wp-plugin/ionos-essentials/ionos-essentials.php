@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name:       ionos-essentials
+ * Plugin Name:       Essentials
  * Description:       The essentials plugin provides IONOS hosting specific functionality.
  * Requires at least: 6.6
  * Requires Plugins:
