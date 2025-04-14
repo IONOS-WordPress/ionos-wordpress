@@ -11,14 +11,18 @@
 }
 
 .ionos_dashboard-template * {
-  font-family: OpenSansSemibold, sans-serif !important;
   color: #001b41;
 }
-.ionos_dashboard-template p, .ionos_dashboard-template li {
+
+.ionos_dashboard-template .wp-site-blocks * {
+  font-family: OpenSansSemibold, sans-serif !important;
+}
+
+.ionos_dashboard-template .wp-site-blocks p, .ionos_dashboard-template .wp-site-blocks li {
   font-family: OpenSansRegular, sans-serif !important;
 }
 
-.banner-buttons {
+.ionos_dashboard-template .wp-site-blocks .banner-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 0 !important;
