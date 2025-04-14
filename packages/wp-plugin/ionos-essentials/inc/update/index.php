@@ -18,11 +18,7 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
 \add_filter(
   hook_name: 'update_plugins_github.com',
   accepted_args: 3,
-  callback: function (
-    array|false $update,
-    array $plugin_data,
-    string $plugin_slug,
-  ): array|false {
+  callback: function (array|false $update, array $plugin_data, string $plugin_slug): array|false {
 
     if (\plugin_basename(PLUGIN_FILE) !== $plugin_slug) {
       return $update;

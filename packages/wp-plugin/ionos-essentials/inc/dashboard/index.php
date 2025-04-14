@@ -31,6 +31,7 @@ if (is_file(__DIR__ . '/editor.php')) {
 }
 
 require_once __DIR__ . '/blocks/welcome/index.php';
+require_once __DIR__ . '/blocks/vulnerability/index.php';
 require_once __DIR__ . '/blocks/next-best-actions/index.php';
 require_once __DIR__ . '/blocks/deep-links/index.php';
 require_once __DIR__ . '/blocks/banner/index.php';
@@ -62,6 +63,9 @@ require_once __DIR__ . '/blocks/whats-new/index.php';
         }
         #wpwrap ul#adminmenu a.wp-has-current-submenu:after, #wpwrap ul#adminmenu > li.current > a.current:after {
           border-right-color: #f4f7fa;
+        }
+        .extendify-help-center ul[data-test="help-center-tours-items-list"] li:last-child {
+          display: none;
         }
         EOF
     );
