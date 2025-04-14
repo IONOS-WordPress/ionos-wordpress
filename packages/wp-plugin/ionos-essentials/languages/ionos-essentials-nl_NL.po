@@ -65,26 +65,6 @@ msgstr "Mijn gebruiker"
 msgid "WordPress Websites"
 msgstr "WordPress Websites"
 
-#: inc/tenants/config/ionos.php:8
-msgid "Contracts & Subscriptions"
-msgstr "Contracten en abonnementen"
-
-#: inc/tenants/config/ionos.php:16
-msgid "Invoices & Payment Details"
-msgstr "Facturen en betalingsgegevens"
-
-#: inc/tenants/config/ionos.php:20
-msgid "Data Protection & Privacy Notice"
-msgstr "Gegevensbescherming en privacyverklaring"
-
-#: inc/tenants/config/ionos.php:24
-msgid "Contact Details"
-msgstr "Contactgegevens"
-
-#: inc/tenants/config/ionos.php:28
-msgid "Profile Details"
-msgstr "Profiel details"
-
 #: inc/tenants/config/piensa.php:12
 msgid "Data of customer"
 msgstr "Gegevens van klant"
@@ -99,19 +79,19 @@ msgstr "Facturen"
 
 #: inc/tenants/config/strato.php:8
 msgid "Package overview"
-msgstr "Overzicht pakketten"
+msgstr "Overzicht van je pakketten"
 
 #: inc/tenants/config/strato.php:12
 msgid "Your invoices"
-msgstr "Je facturen"
+msgstr "Fakturen weergeven"
 
 #: inc/tenants/config/strato.php:16
 msgid "Your contract"
-msgstr "Uw contract"
+msgstr "Je contract"
 
 #: inc/tenants/config/strato.php:20
 msgid "Current offers"
-msgstr "Huidige aanbiedingen"
+msgstr "Actuele aanbiedingen"
 
 #: inc/dashboard/blocks/quick-links/render.php:13
 msgid "Quick Links"
@@ -151,7 +131,7 @@ msgstr "Wp-scangegevens weergeven."
 msgid "WPScan not available"
 msgstr "WPScan niet beschikbaar"
 
-#: inc/dashboard/index.php:227
+#: inc/dashboard/index.php:229
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -206,7 +186,7 @@ msgstr "AI Sitebuilder starten"
 msgid "Retry AI"
 msgstr "AI opnieuw proberen"
 
-#: inc/dashboard/blocks/deep-links/index.php:100
+#: inc/dashboard/blocks/deep-links/index.php:117
 msgid "Manage Hosting"
 msgstr "Hosting beheren"
 
@@ -220,11 +200,11 @@ msgctxt "block description"
 msgid "Banner"
 msgstr "Banner"
 
-#: inc/dashboard/blocks/deep-links/index.php:70
+#: inc/dashboard/blocks/deep-links/index.php:76
 msgid "Account Management"
 msgstr "Accountbeheer"
 
-#: inc/dashboard/blocks/deep-links/index.php:71
+#: inc/dashboard/blocks/deep-links/index.php:77
 msgid "One-click access to your customer account, login security and subscriptions"
 msgstr "Met één klik toegang tot je klantenaccount, inlogbeveiliging en abonnementen"
 
@@ -232,21 +212,21 @@ msgstr "Met één klik toegang tot je klantenaccount, inlogbeveiliging en abonne
 msgid "Easily navigate to frequently used features and tools"
 msgstr "Eenvoudig navigeren naar veelgebruikte functies en tools"
 
-#: inc/dashboard/index.php:125
-#: inc/dashboard/index.php:126
+#: inc/dashboard/index.php:127
+#: inc/dashboard/index.php:128
 msgid "Overview"
 msgstr "Overzicht"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:200
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:199
 msgid "Create Page"
 msgstr "Pagina maken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:182
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:190
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:181
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Add Logo"
 msgstr "Logo toevoegen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:183
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:182
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Zorg ervoor dat je website is voorzien van je unieke logo voor een professionele uitstraling."
 
@@ -279,7 +259,6 @@ msgid "Open Help Center"
 msgstr "Helpcentrum openen"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:131
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:137
 msgid "Set Up Email"
 msgstr "E-mail instellen"
 
@@ -308,32 +287,32 @@ msgstr "Start nu je online winkel met een begeleide installatiewizard."
 msgid "Start Setup"
 msgstr "Start instellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:207
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
 msgid "Social Media Setup"
 msgstr "Sociale media instellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:208
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:207
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Koppel uw sociale-mediaprofielen aan uw website en breid uw online aanwezigheid uit."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:215
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:214
 msgid "Connect Social Media"
 msgstr "Sociale media aansluiten"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:222
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:221
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
 msgid "Add Favicon"
 msgstr "Favicon toevoegen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:223
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:222
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Voeg een favicon (websitepictogram) toe aan je website om de merkherkenning en zichtbaarheid te verbeteren."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:197
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:196
 msgid "Create a Page"
 msgstr "Een pagina maken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:198
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:197
 msgid "Create and publish a page and share your story with the world."
 msgstr "Maak en publiceer een pagina en deel je verhaal met de wereld."
 
@@ -471,10 +450,66 @@ msgstr "Een overzicht van de nieuwste updates en verbeteringen"
 msgid "New User Interface"
 msgstr "Nieuwe gebruikersinterface"
 
-#: inc/tenants/config/ionos.php:12
-msgid "Login & Account Security"
-msgstr "Inloggen en accountbeveiliging"
+#: inc/tenants/config/ionos.php:8
+msgid "My Products"
+msgstr "Mijn producten"
+
+#: inc/tenants/config/ionos.php:16
+msgid "Project Overview"
+msgstr "Projectoverzicht"
+
+#: inc/tenants/config/ionos.php:20
+msgid "Domains and SSL management"
+msgstr "Beheer van domeinen en SSL"
+
+#: inc/tenants/config/ionos.php:24
+msgid "Add more products"
+msgstr "Meer producten toevoegen"
+
+#: inc/dashboard/blocks/deep-links/index.php:102
+msgid "Webmail Login"
+msgstr "Inloggen Webmail"
+
+#: inc/tenants/config/udag.php:8
+msgid "Meine Daten"
+msgstr "Mijn gegevens"
+
+#: inc/tenants/config/udag.php:12
+msgid "WordPress verwalten "
+msgstr "WordPress verwalten"
+
+#: inc/tenants/config/udag.php:16
+msgid "Domains verwalten"
+msgstr "Domeinen verwalten"
+
+#: inc/tenants/config/udag.php:20
+msgid "E-Mail verwalten"
+msgstr "E-mail verwalten"
+
+#: inc/tenants/config/udag.php:24
+msgid "Webspace "
+msgstr "Webruimte"
+
+#: inc/tenants/config/udag.php:28
+msgid "RankingCoach"
+msgstr "RanglijstCoach"
+
+#: inc/tenants/config/udag.php:32
+msgid "SSL"
+msgstr "SSL"
+
+#: inc/tenants/config/udag.php:36
+msgid "Markenschutz"
+msgstr "Markenschutz"
 
 #: inc/dashboard/blocks/banner/index.php:68
 msgid "Valid for up to 72h"
 msgstr "Geldig tot 72 uur"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:137
+msgid "Setup Email Account"
+msgstr "E-mailaccount instellen"
+
+#: inc/tenants/config/ionos.php:12
+msgid "My Account"
+msgstr "Mijn account"
