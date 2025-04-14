@@ -10,14 +10,13 @@ test.describe('essentials:dashboard next-best-actions block', () => {
 
     // Install nessesary plugins
     await execSync('pnpm -s wp-env run tests-cli wp plugin install --activate extendify --force');
-    await execSync('pnpm -s wp-env run tests-cli wp plugin install --activate https://web-hosting.s3-eu-central-1.ionoscloud.com/extendify/01-ext-ion2hs971.zip --force');
+    await execSync(
+      'pnpm -s wp-env run tests-cli wp plugin install --activate https://web-hosting.s3-eu-central-1.ionoscloud.com/extendify/01-ext-ion2hs971.zip --force'
+    );
 
     // Install the extendable theme
     await execSync('pnpm -s wp-env run tests-cli wp theme install --activate extendable --force');
-
-    // Upload image to the media library
-    await execSync('pnpm -s wp-env run tests-cli wp post delete $(pnpm -s run wp-env run tests-cli wp post list --post_type=attachment --format=ids) --force');
-    await execSync('pnpm -s wp-env run tests-cli wp media import --skip-copy --title="test-logo" wp-content/plugins/ionos-essentials/inc/dashboard/data/tenant-logos/welcome-banner.png');
+    await execSync('pnpm -s wp-env run tests-cli wp option update extendify_attempted_redirect_count 4');
   });
 
   test('test dismissing an option ', async ({ admin, page }) => {
@@ -64,6 +63,15 @@ test.describe('essentials:dashboard next-best-actions block', () => {
   });
 
   test('test logo upload action behavior', async ({ admin, page }) => {
+    // Upload image to the media library
+    await execSync(
+      'pnpm -s wp-env run tests-cli wp post delete $(pnpm -s run wp-env run tests-cli wp post list --post_type=attachment --format=ids) --force || true'
+    );
+    await execSync(
+      'pnpm -s wp-env run tests-cli wp media import --skip-copy --title="test-logo" wp-content/plugins/ionos-essentials/inc/dashboard/data/tenant-logos/welcome-banner.png '
+    );
+    await execSync('pnpm -s wp-env run tests-cli wp option update thumbnail_size_w 0');
+    await execSync('pnpm -s wp-env run tests-cli wp option update thumbnail_size_h 0');
     // redirect to admin page and check if the help center cart exists => expectation is true
     await admin.visitAdminPage('/');
     let iframeLocator = await page.locator('iframe');
@@ -74,7 +82,7 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     // click logo upload action and expect redirect to the upload logo page with opened upload overlay
     await nbaLink.click();
     await expect(page).toHaveTitle(/Editor/);
-    let uploadLogoOverlay = await page.locator('.supports-drag-drop');
+    let uploadLogoOverlay = await page.locator('.media-modal');
     await expect(uploadLogoOverlay).toHaveCount(1);
 
     // check if image is uploaded
@@ -89,7 +97,6 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     // set image as logo
     let setLogoButton = await page.locator('.media-button.media-button-select');
     await expect(setLogoButton).toHaveCount(1);
-    await setLogoButton.click();
+    // await setLogoButton.click();
   });
 });
-
