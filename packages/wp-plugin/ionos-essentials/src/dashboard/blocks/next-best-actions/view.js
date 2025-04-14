@@ -24,8 +24,6 @@ domReady(() => {
       });
     });
 
-
-
     const emailAccountLink = document.querySelector('a.nba-link[data-nba-id="email-account"]');
     if (emailAccountLink) {
       emailAccountLink.onclick = () => {
@@ -43,28 +41,28 @@ domReady(() => {
 
     //Dismiss element
     const dismissItem = async (target) => {
-      await apiFetch({
+      const res = await apiFetch({
         path: `ionos/essentials/dashboard/nba/v1/dismiss/${target.dataset.nbaId}`,
         method: 'POST',
-      }).then((res) => {
-        if (res.status === 'success') {
-          const element = target.closest('.wp-block-column');
-          element.classList.add('dismissed');
+      })
 
-          setTimeout(() => {
-            element.style.display = 'none'; // Hide dismissed item
+      if (res.status === 'success') {
+        const element = target.closest('.wp-block-column');
+        element.classList.add('dismissed');
 
-            // Find the next hidden item
-            const nextHiddenItem = items.find((item) => item.classList.contains('hiddenaction'));
+        setTimeout(() => {
+          element.style.display = 'none'; // Hide dismissed item
 
-            // If there is a hidden item, reveal it
-            if (nextHiddenItem) {
-              nextHiddenItem.classList.remove('hiddenaction'); // Show the next item
-              nextHiddenItem.style.display = 'block'; // Make it visible
-            }
-          }, 250);
-        }
-      });
+          // Find the next hidden item
+          const nextHiddenItem = items.find((item) => item.classList.contains('hiddenaction'));
+
+          // If there is a hidden item, reveal it
+          if (nextHiddenItem) {
+            nextHiddenItem.classList.remove('hiddenaction'); // Show the next item
+            nextHiddenItem.style.display = 'block'; // Make it visible
+          }
+        }, 250);
+      }
     }
   }
 });
