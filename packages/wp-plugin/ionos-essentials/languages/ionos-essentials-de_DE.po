@@ -437,7 +437,7 @@ msgstr "Bilder und Videos hochladen"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
 msgid "Get an overview of the latest updates and enhancements"
-msgstr "Hier erhälst Du einen Überblick über die neuesten Updates und Produktverbesserungen"
+msgstr "Hier erhältst Du einen Überblick über die neuesten Updates und Produktverbesserungen"
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"
