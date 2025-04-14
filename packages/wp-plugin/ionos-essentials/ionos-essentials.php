@@ -37,15 +37,16 @@ require_once __DIR__ . '/inc/dashboard/index.php';
 // soc plugin components
 require_once __DIR__ . '/inc/migration/index.php';
 
-\add_filter(
-  'gettext_ionos-essentials',
-  function ($text) {
-    $brand_name = \get_option('ionos_brand_name', 'IONOS');
-    $brand_name = 'Strato';
-    if ('Essentials' === $text) {
-      return $brand_name;
-    }
-    // TODO: replace more? menu_brand, non capital, ...
-    return str_replace('IONOS', $brand_name, $text);
-  }
-);
+// TODO: evaluate for other tenants than IONOS
+
+// \add_filter(
+//   'gettext_ionos-essentials',
+//   function ($text) {
+//     if ( ! str_contains($text, 'IONOS')) {
+//       return $text;
+//     }
+//     $brand_name = \get_option('ionos_brand_name', 'IONOS');
+//     // TODO: replace more? menu_brand, non capital, ...
+//     return str_replace('IONOS', $brand_name, $text);
+//   }
+// );
