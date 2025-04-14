@@ -11,6 +11,9 @@
 #   - semantic versions in assets will be renamed to 'latest'
 #       (example: ionos-essentials-0.1.1-php7.4.zip => ionos-essentials-latest-php7.4.zip)
 #   - release note will be set to the 'pre-release' release url and title to make it easier to find the origin release
+#   - a info.json file will be created/updated for each plugin asset (ionos-essentials-0.1.1-php7.4.zip => ionos-essentials-info.json)
+#       containing { version, slug, package, sections: { changelog } }, where package points to the download url
+#       of the 'latest' flagged release (example: https://.../ionos-essentials-0.1.1-php7.4.zip)
 # - remove the 'pre-release' flag from the release used to populate the 'latest' release and flag it 'latest'
 #
 # afterwards the 'latest' release will contain the same assets as the 'pre-release' release
@@ -98,6 +101,41 @@ for ASSET in $ASSETS; do
     echo "Error: $error_message"
   fi
   rm -f $TARGET_ASSET_FILENAME
+
+  #
+  # create/update <plugin>-latest.json file (example : ionos-essentials.info.json)
+  #
+  {
+    # example: 1.2.3
+    VERSION=$(echo $ASSET | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
+    # example: ionos-essentials
+    PLUGIN=$(echo $ASSET | sed -E 's/^(.*)-[0-9]+\.[0-9]+\.[0-9]+.*/\1/')
+    # example : ionos-essentials/ionos-essentials.php
+    SLUG="${PLUGIN}/${PLUGIN}.php"
+    # example: https://github.com/lgersman/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.1.3/ionos-essentials-0.1.3-php7.4.zip
+    PACKAGE="https://github.com/$GITHUB_OWNER_REPO/releases/download/$(printf $PRE_RELEASE | jq -Rrs '@uri')/$ASSET"
+    # CHANGELOG is the release note of the pre-release (aka the changelog markdown of the release)
+    CHANGELOG="$(gh release view $PRE_RELEASE --json body --jq '.body')"
+
+    # Convert markdown in CHANGELOG to HTML using a Node.js package
+    CHANGELOG_HTML=$(echo "$CHANGELOG" | npx marked)
+
+    INFO_JSON_FILENAME="${PLUGIN}-info.json"
+
+    jq -n \
+      --arg version "$VERSION" \
+      --arg slug "$SLUG" \
+      --arg package "$PACKAGE" \
+      --arg changelog "$CHANGELOG_HTML" \
+      '{version: $version, slug: $slug, package: $package, sections : { changelog: $changelog }}' > "$INFO_JSON_FILENAME"
+
+    if ! gh release upload $LATEST_RELEASE_TAG $INFO_JSON_FILENAME --clobber; then
+      $error_message="Failed to upload asset $INFO_JSON_FILENAME"
+      [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+      echo "Error: $error_message"
+    fi
+    rm -f $INFO_JSON_FILENAME
+  }
 done
 
 # Remove the 'pre-release' flag from the PRE_RELEASE
@@ -131,5 +169,3 @@ else
     ionos.wordpress.log_warn "CI environment detected - skip setting up git hooks"
   fi
 fi
-
-

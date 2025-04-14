@@ -87,8 +87,8 @@ docker run -it --rm -v $(pwd):/project anchore/syft \
   -o spdx-json=/project/ionos-wordpress.sbom.json.tmp && \
   jq '.' ionos-wordpress.sbom.json.tmp > ionos-wordpress.sbom.syft.json && rm -f ionos-wordpress.sbom.json.tmp
 
-# add updated files to git
-git add -A .
+# add updated files (except po and pot files) to git
+git add --all -- ':!*.po?'
 
 # set git user to the user who made the last commit
 # (aka the user who triggered the release)
@@ -100,7 +100,7 @@ git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
 # commit changes
 # no-verify will disable the pre-push hook since we wont automatically run lint
-git commit --no-verify -am "chore(release) : updated versions and sbom information [skip release]"
+git commit --no-verify -m "chore(release) : updated versions and sbom information [skip release]"
 
 # tag release
 pnpm changeset tag
