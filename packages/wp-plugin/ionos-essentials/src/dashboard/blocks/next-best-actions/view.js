@@ -62,7 +62,7 @@ domReady(() => {
             nextHiddenItem.style.display = 'block'; // Make it visible
           } else if (!items.find((item) => !item.classList.contains('dismissed'))) {
             // If no more items show, hide the container
-            document.getElementById('ionos-dashboard__essentials_nba').style.display = 'none';
+            document.getElementById('ionos-dashboard__essentials_nba').parentNode.remove();
           }
         }, 250);
       }
