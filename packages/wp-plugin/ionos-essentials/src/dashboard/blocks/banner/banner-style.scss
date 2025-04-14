@@ -3,6 +3,8 @@
   justify-content: space-between;
   margin-top: 0 !important;
   flex-direction: column;
+  overflow: auto;
+  margin-bottom: 10px !important;
 
   .button {
     width: 210px !important;
@@ -45,6 +47,10 @@
     }
   }
 
+  @media only screen and (max-width: 620px) {
+    margin-bottom: 10px !important;
+  }
+
   @media only screen and (min-width: 1000px) {
     flex-direction: row;
 
@@ -57,4 +63,3 @@
     }
   }
 }
-
