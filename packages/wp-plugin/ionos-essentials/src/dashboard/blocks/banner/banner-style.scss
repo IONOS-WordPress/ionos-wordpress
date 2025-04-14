@@ -1,4 +1,24 @@
-.banner-buttons {
+@font-face {
+  font-display: swap;
+  font-family: OpenSansRegular;
+  src: url(https://ce1.uicdn.net/exos/fonts/open-sans/opensans-regular.woff2) format("woff2"), url(https://ce1.uicdn.net/exos/fonts/open-sans/opensans-regular.woff) format("woff")
+}
+
+@font-face {
+  font-display: swap;
+  font-family: OpenSansSemibold;
+  src: url(https://ce1.uicdn.net/exos/fonts/open-sans/opensans-semibold.woff2) format("woff2"), url(https://ce1.uicdn.net/exos/fonts/open-sans/opensans-semibold.woff) format("woff")
+}
+
+.ionos_dashboard-template .wp-site-blocks * {
+  font-family: OpenSansSemibold, sans-serif !important;
+}
+
+.ionos_dashboard-template .wp-site-blocks p, .ionos_dashboard-template .wp-site-blocks li {
+  font-family: OpenSansRegular, sans-serif !important;
+}
+
+.ionos_dashboard-template .wp-site-blocks .banner-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 0 !important;
