@@ -14,11 +14,6 @@ msgstr ""
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
-#. Plugin Name of the plugin
-#: ionos-essentials.php
-msgid "ionos-essentials"
-msgstr "ionos-essentials"
-
 #. Plugin URI of the plugin
 #: ionos-essentials.php
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
@@ -527,3 +522,8 @@ msgstr "Instalando..."
 #: inc/dashboard/blocks/vulnerability/render.php:156
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
 msgstr "No es posible la exploración de vulnerabilidades. Póngase en contacto con el servicio de atención al cliente."
+
+#. Plugin Name of the plugin
+#: ionos-essentials.php
+msgid "Essentials"
+msgstr "Essentials"

@@ -328,11 +328,6 @@ msgstr "Ontsluit het potentieel van uw website"
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Uw website is live, maar uw reis is nog maar net begonnen. Bekijk de aanbevolen volgende acties om groei te stimuleren, prestaties te verbeteren en uw online doelen te bereiken."
 
-#. Plugin Name of the plugin
-#: ionos-essentials.php
-msgid "ionos-essentials"
-msgstr "ionos-benodigdheden"
-
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php:40
 msgid "Welcome to your %s Hub"
@@ -527,3 +522,8 @@ msgstr "Installeren..."
 #: inc/dashboard/blocks/vulnerability/render.php:156
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
 msgstr "Scan op kwetsbaarheid niet mogelijk. Neem contact op met de klantenservice."
+
+#. Plugin Name of the plugin
+#: ionos-essentials.php
+msgid "Essentials"
+msgstr "Essentials"

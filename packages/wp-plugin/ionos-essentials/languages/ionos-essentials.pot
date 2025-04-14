@@ -3,6 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ionos-essentials 0.2.3\n"
+"Project-Id-Version: Essentials 0.2.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,13 +11,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-04-14T09:53:25+00:00\n"
+"POT-Creation-Date: 2025-04-12T11:45:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php
-msgid "ionos-essentials"
+msgid "Essentials"
 msgstr ""
 
 #. Plugin URI of the plugin
