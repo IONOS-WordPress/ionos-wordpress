@@ -19,6 +19,11 @@ msgstr ""
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
 
+#. Description of the plugin
+#: ionos-essentials.php
+msgid "The essentials plugin provides IONOS hosting specific functionality."
+msgstr "El plugin essentials proporciona funcionalidades específicas para el alojamiento de IONOS."
+
 #. Author of the plugin
 #: ionos-essentials.php
 msgid "IONOS Group"
@@ -517,14 +522,8 @@ msgstr "Instalando..."
 #: inc/dashboard/blocks/vulnerability/render.php:156
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
 msgstr "Vulnerability Scan no es posible. Póngase en contacto con el servicio de atención al cliente."
-msgstr ""
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php
 msgid "Essentials"
-msgstr ""
-
-#. Description of the plugin
-#: ionos-essentials.php
-msgid "The essentials plugin provides IONOS hosting specific functionality."
-msgstr ""
+msgstr "Essentials"
