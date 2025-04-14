@@ -17,7 +17,7 @@
                         "top": "var(--wp--preset--spacing--50)"
                     }
                 },
-                "css": ":has(>.wp-block-column:empty) {\n  display:none !important;\n}",
+                "css": ":not(:has(>.wp-block-column:not(:empty))) {\n  \/* columns block has no column blocks with content *\/\n  display:none !important;\n}",
                 "border": {
                     "radius": "0px"
                 }
