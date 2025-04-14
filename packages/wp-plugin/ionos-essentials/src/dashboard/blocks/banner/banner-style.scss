@@ -10,10 +10,10 @@
   src: url(https://ce1.uicdn.net/exos/fonts/open-sans/opensans-semibold.woff2) format("woff2"), url(https://ce1.uicdn.net/exos/fonts/open-sans/opensans-semibold.woff) format("woff")
 }
 
-* {
+.ionos_dashboard-template * {
   font-family: OpenSansSemibold, sans-serif !important;
 }
-p, li {
+.ionos_dashboard-template p, .ionos_dashboard-template li {
   font-family: OpenSansRegular, sans-serif !important;
 }
 
