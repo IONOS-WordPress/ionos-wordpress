@@ -89,7 +89,7 @@
     "@wordpress/scripts": "^30.14.1",
     "@wp-now/wp-now": "0.1.74",
     "eslint": "9.24.0",
-    "eslint-config-prettier": "10.1.1",
+    "eslint-config-prettier": "10.1.2",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-prettier": "5.2.6",
     "eslint-plugin-react": "7.37.5",
