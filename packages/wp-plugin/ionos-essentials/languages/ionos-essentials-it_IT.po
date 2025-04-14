@@ -65,26 +65,6 @@ msgstr "Il mio utente"
 msgid "WordPress Websites"
 msgstr "Siti web WordPress"
 
-#: inc/tenants/config/ionos.php:8
-msgid "Contracts & Subscriptions"
-msgstr "Contratti e abbonamenti"
-
-#: inc/tenants/config/ionos.php:16
-msgid "Invoices & Payment Details"
-msgstr "Fatture e impostazioni di pagamento"
-
-#: inc/tenants/config/ionos.php:20
-msgid "Data Protection & Privacy Notice"
-msgstr "Protezione dei dati e privacy"
-
-#: inc/tenants/config/ionos.php:24
-msgid "Contact Details"
-msgstr "I miei dati di contatto"
-
-#: inc/tenants/config/ionos.php:28
-msgid "Profile Details"
-msgstr "Informazioni sul profilo"
-
 #: inc/tenants/config/piensa.php:12
 msgid "Data of customer"
 msgstr "Dati del cliente"
@@ -147,7 +127,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Mostra i dati della scansione wp."
 
-#: inc/dashboard/index.php:228
+#: inc/dashboard/index.php:231
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -194,12 +174,11 @@ msgstr "Le prossime azioni migliori"
 msgid "View Site"
 msgstr "Visualizza sito"
 
-#: inc/dashboard/blocks/banner/index.php:52
-#: inc/dashboard/blocks/banner/index.php:65
+#: inc/dashboard/blocks/banner/index.php:57
 msgid "Start AI Sitebuilder"
 msgstr "Avvia creazione con IA"
 
-#: inc/dashboard/blocks/banner/index.php:74
+#: inc/dashboard/blocks/banner/index.php:66
 msgid "Retry AI"
 msgstr "Riprova AI"
 
@@ -229,8 +208,8 @@ msgstr "Accedi con un solo clic al tuo account cliente, ai contratti e alle impo
 msgid "Easily navigate to frequently used features and tools"
 msgstr "Accedi facilmente alle funzioni e agli strumenti utilizzati più frequentemente"
 
-#: inc/dashboard/index.php:126
-#: inc/dashboard/index.php:127
+#: inc/dashboard/index.php:129
+#: inc/dashboard/index.php:130
 msgid "Overview"
 msgstr "Panoramica"
 
@@ -516,7 +495,7 @@ msgstr "SSL"
 msgid "Markenschutz"
 msgstr "Markenschutz"
 
-#: inc/dashboard/blocks/banner/index.php:76
+#: inc/dashboard/blocks/banner/index.php:68
 msgid "Valid for up to 72h"
 msgstr "Valido fino a 72 ore"
 
