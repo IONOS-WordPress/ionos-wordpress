@@ -28,7 +28,11 @@ $market_domains = [
   'nl' => 'https://strato.nl/',
 ];
 
-$nba_link = [
+$nba_links = [
   'connectdomain' => 'apps/CustomerService?dlink=DomainOverview',
   'connectmail'   => 'apps/CustomerService?dlink=EMailManagement',
+];
+
+$banner_links = [
+  'managehosting' => 'apps/CustomerService?dlink=HopeApplications',
 ];

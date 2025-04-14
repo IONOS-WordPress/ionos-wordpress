@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: sv\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
-"Language: sv\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
@@ -65,26 +65,6 @@ msgstr "Min användare"
 msgid "WordPress Websites"
 msgstr "WordPress Webbplatser"
 
-#: inc/tenants/config/ionos.php:8
-msgid "Contracts & Subscriptions"
-msgstr "Avtal och prenumerationer"
-
-#: inc/tenants/config/ionos.php:16
-msgid "Invoices & Payment Details"
-msgstr "Fakturor och betalningsinformation"
-
-#: inc/tenants/config/ionos.php:20
-msgid "Data Protection & Privacy Notice"
-msgstr "Dataskydd och integritet"
-
-#: inc/tenants/config/ionos.php:24
-msgid "Contact Details"
-msgstr "Kontaktuppgifter"
-
-#: inc/tenants/config/ionos.php:28
-msgid "Profile Details"
-msgstr "Detaljer om profilen"
-
 #: inc/tenants/config/piensa.php:12
 msgid "Data of customer"
 msgstr "Uppgifter om kunden"
@@ -99,11 +79,11 @@ msgstr "Fakturor"
 
 #: inc/tenants/config/strato.php:8
 msgid "Package overview"
-msgstr "Översikt över paketet"
+msgstr "Paketöversikt"
 
 #: inc/tenants/config/strato.php:12
 msgid "Your invoices"
-msgstr "Dina fakturor"
+msgstr "Visa fakturor"
 
 #: inc/tenants/config/strato.php:16
 msgid "Your contract"
@@ -151,7 +131,7 @@ msgstr "Visa wp-skanningsdata."
 msgid "WPScan not available"
 msgstr "WPScan inte tillgänglig"
 
-#: inc/dashboard/index.php:227
+#: inc/dashboard/index.php:229
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -206,7 +186,7 @@ msgstr "Starta AI Sitebuilder"
 msgid "Retry AI"
 msgstr "Försök igen AI"
 
-#: inc/dashboard/blocks/deep-links/index.php:100
+#: inc/dashboard/blocks/deep-links/index.php:117
 msgid "Manage Hosting"
 msgstr "Hantera hosting"
 
@@ -220,11 +200,11 @@ msgctxt "block description"
 msgid "Banner"
 msgstr "Banner"
 
-#: inc/dashboard/blocks/deep-links/index.php:70
+#: inc/dashboard/blocks/deep-links/index.php:76
 msgid "Account Management"
 msgstr "Kontohantering"
 
-#: inc/dashboard/blocks/deep-links/index.php:71
+#: inc/dashboard/blocks/deep-links/index.php:77
 msgid "One-click access to your customer account, login security and subscriptions"
 msgstr "Tillgång till kundkonto, inloggningssäkerhet och prenumerationer med ett enda klick"
 
@@ -232,21 +212,21 @@ msgstr "Tillgång till kundkonto, inloggningssäkerhet och prenumerationer med e
 msgid "Easily navigate to frequently used features and tools"
 msgstr "Enkel navigering till funktioner och verktyg som används ofta"
 
-#: inc/dashboard/index.php:125
-#: inc/dashboard/index.php:126
+#: inc/dashboard/index.php:127
+#: inc/dashboard/index.php:128
 msgid "Overview"
 msgstr "Översikt"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:200
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:199
 msgid "Create Page"
 msgstr "Skapa sida"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:182
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:190
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:181
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Add Logo"
 msgstr "Lägg till logotyp"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:183
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:182
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Se till att din webbplats är märkt med din unika logotyp för att få ett professionellt utseende."
 
@@ -279,7 +259,6 @@ msgid "Open Help Center"
 msgstr "Öppna hjälpcenter"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:131
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:137
 msgid "Set Up Email"
 msgstr "Konfigurera e-post"
 
@@ -308,32 +287,32 @@ msgstr "Starta din onlinebutik nu med en guidad installationsguide."
 msgid "Start Setup"
 msgstr "Starta installationen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:207
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
 msgid "Social Media Setup"
 msgstr "Inställning av sociala medier"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:208
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:207
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Koppla dina sociala medieprofiler till din webbplats och utöka din närvaro på nätet."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:215
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:214
 msgid "Connect Social Media"
 msgstr "Anslut sociala medier"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:222
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:221
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
 msgid "Add Favicon"
 msgstr "Lägg till favicon"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:223
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:222
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Lägg till en favicon (webbplats-ikon) på din webbplats för att öka varumärkets igenkänning och synlighet."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:197
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:196
 msgid "Create a Page"
 msgstr "Skapa en sida"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:198
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:197
 msgid "Create and publish a page and share your story with the world."
 msgstr "Skapa och publicera en sida och dela med dig av din historia till hela världen."
 
@@ -449,32 +428,88 @@ msgstr "Sök efter WordPress-specifika hot och sårbarheter"
 
 #: inc/dashboard/blocks/quick-links/config.php:23
 msgid "Edit site Navigation"
-msgstr ""
+msgstr "Redigera webbplatsens navigering"
 
 #: inc/dashboard/blocks/quick-links/config.php:31
 msgid "Change Styles"
-msgstr ""
+msgstr "Ändra stilar"
 
 #: inc/dashboard/blocks/quick-links/config.php:52
 msgid "Add Plugins"
-msgstr ""
+msgstr "Lägg till plugins"
 
 #: inc/dashboard/blocks/quick-links/config.php:60
 msgid "Upload Media files"
-msgstr ""
+msgstr "Ladda upp mediefiler"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
 msgid "Get an overview of the latest updates and enhancements"
-msgstr ""
+msgstr "Få en överblick över de senaste uppdateringarna och förbättringarna"
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"
-msgstr ""
+msgstr "Nytt användargränssnitt"
 
-#: inc/tenants/config/ionos.php:12
-msgid "Login & Account Security"
-msgstr ""
+#: inc/tenants/config/ionos.php:8
+msgid "My Products"
+msgstr "Mina produkter"
+
+#: inc/tenants/config/ionos.php:16
+msgid "Project Overview"
+msgstr "Projektöversikt"
+
+#: inc/tenants/config/ionos.php:20
+msgid "Domains and SSL management"
+msgstr "Domäner och SSL-hantering"
+
+#: inc/tenants/config/ionos.php:24
+msgid "Add more products"
+msgstr "Lägg till fler produkter"
+
+#: inc/dashboard/blocks/deep-links/index.php:102
+msgid "Webmail Login"
+msgstr "Webmail-inloggning"
+
+#: inc/tenants/config/udag.php:8
+msgid "Meine Daten"
+msgstr "Mina uppgifter"
+
+#: inc/tenants/config/udag.php:12
+msgid "WordPress verwalten "
+msgstr "WordPress Förvalta"
+
+#: inc/tenants/config/udag.php:16
+msgid "Domains verwalten"
+msgstr "Domäner verwalten"
+
+#: inc/tenants/config/udag.php:20
+msgid "E-Mail verwalten"
+msgstr "Förvalta e-post"
+
+#: inc/tenants/config/udag.php:24
+msgid "Webspace "
+msgstr "Webbutrymme"
+
+#: inc/tenants/config/udag.php:28
+msgid "RankingCoach"
+msgstr "RankingCoach"
+
+#: inc/tenants/config/udag.php:32
+msgid "SSL"
+msgstr "SSL"
+
+#: inc/tenants/config/udag.php:36
+msgid "Markenschutz"
+msgstr "Markskydd"
 
 #: inc/dashboard/blocks/banner/index.php:68
 msgid "Valid for up to 72h"
-msgstr ""
+msgstr "Giltig i upp till 72 timmar"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:137
+msgid "Setup Email Account"
+msgstr "Konfigurera e-postkonto"
+
+#: inc/tenants/config/ionos.php:12
+msgid "My Account"
+msgstr "Mitt konto"

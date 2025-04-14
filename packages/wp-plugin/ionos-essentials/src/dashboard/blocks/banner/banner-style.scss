@@ -22,9 +22,10 @@
   display: flex;
   justify-content: space-between;
   margin-top: 0 !important;
+  flex-direction: column;
 
   .button {
-    width: 200px !important;
+    width: 210px !important;
 
     margin: 0 10px !important;
 
@@ -34,6 +35,7 @@
     }
 
     .startai, .retryai {
+      margin-bottom: 10px;
       color: #e480f8;
       border-color: #e480f8 !important;
       background-color: #fff;
@@ -51,6 +53,7 @@
     }
 
     .deeplink {
+      margin-bottom: 10px;
       background-color: #fff;
       color: #0b2a63;
 
@@ -61,4 +64,17 @@
       }
     }
   }
+
+  @media only screen and (min-width: 1000px) {
+    flex-direction: row;
+
+    .startai, .retryai {
+      margin-bottom: 0px;
+    }
+
+    .deeplink {
+      margin-bottom: 0px;
+    }
+  }
 }
+
