@@ -38,3 +38,4 @@ packages/*/*/webpack.config.js
 /wp-playground-blueprint.json
 /wp-playground-blueprint.local.json
 .DS_Store
+.go-waas.env
