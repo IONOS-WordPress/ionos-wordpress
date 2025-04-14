@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 0.2.5
+
+### Patch Changes
+
+- a1d5128: another prerelease candidate
+
 ## 0.2.4
 
 ### Patch Changes
