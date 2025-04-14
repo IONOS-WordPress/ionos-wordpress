@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="de">
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -1244,8 +1244,7 @@ min-width: 200px !important;
 :root :where(.wp-block-button .wp-block-button__link){background-color: #0b2a63;border-radius: 24px;border-top-color: #0b2a63;border-top-width: 2px;border-top-style: solid;border-right-color: #0b2a63;border-right-width: 2px;border-right-style: solid;border-bottom-color: #0b2a63;border-bottom-width: 2px;border-bottom-style: solid;border-left-color: #0b2a63;border-left-width: 2px;border-left-style: solid;color: var(--wp--preset--color--base);font-size: 14px;font-style: normal;font-weight: 400;line-height: 1.7;padding-top: 4px;padding-right: 20px;padding-bottom: 4px;padding-left: 20px;}:root :where(.wp-block-button .wp-block-button__link:hover ){background-color: rgb(20, 116, 196) !important;
   border-color: rgb(20, 116, 196) !important;}
 :root :where(.wp-block-button .wp-block-button__link a:where(:not(.wp-element-button))){color: var(--wp--preset--color--base);}
-:root :where(.wp-block-columns){border-radius: 0px;margin-top: var(--wp--preset--spacing--40);margin-bottom: var(--wp--preset--spacing--40);padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;}:root :where(.wp-block-columns:not(:has(>.wp-block-column:not(:empty))) ){/* columns block has no column blocks with content */
-  display:none !important;}
+:root :where(.wp-block-columns){border-radius: 0px;margin-top: var(--wp--preset--spacing--40);margin-bottom: var(--wp--preset--spacing--40);padding-top: 0;padding-right: 0;padding-bottom: 0;padding-left: 0;}
 :root :where(.wp-block-buttons){line-height: 1.7;margin-top: 15px;margin-bottom: 4px;}:root :where(.wp-block-buttons-is-layout-flow) > :first-child{margin-block-start: 0;}:root :where(.wp-block-buttons-is-layout-flow) > :last-child{margin-block-end: 0;}:root :where(.wp-block-buttons-is-layout-flow) > *{margin-block-start: 16px;margin-block-end: 0;}:root :where(.wp-block-buttons-is-layout-constrained) > :first-child{margin-block-start: 0;}:root :where(.wp-block-buttons-is-layout-constrained) > :last-child{margin-block-end: 0;}:root :where(.wp-block-buttons-is-layout-constrained) > *{margin-block-start: 16px;margin-block-end: 0;}:root :where(.wp-block-buttons-is-layout-flex){gap: 16px;}:root :where(.wp-block-buttons-is-layout-grid){gap: 16px;}
 :root :where(p){border-top-width: 0px;border-top-style: none;border-right-width: 0px;border-right-style: none;border-bottom-width: 0px;border-bottom-style: none;border-left-width: 0px;border-left-style: none;color: #001b41;font-size: 14px;font-style: normal;font-weight: 400;line-height: 1.7;margin-bottom: 0;padding-top: 0;padding-bottom: 0;}
 :root :where(p a:where(:not(.wp-element-button))){color: #001b41;}
@@ -1397,6 +1396,13 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 </script>
 <script src="http://localhost:8888/wp-includes/js/dist/vendor/wp-polyfill.js?ver=3.15.0" id="wp-polyfill-js"></script>
 <script src="http://localhost:8888/wp-includes/js/dist/url.js?ver=d62dba05ffc50c672f4a" id="wp-url-js"></script>
+<script id="wp-api-fetch-js-translations">
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", {"translation-revision-date":"2025-04-06 17:18:54+0000","generator":"GlotPress\/4.0.1","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"de"},"An unknown error occurred.":["Ein unbekannter Fehler ist aufgetreten."],"The response is not a valid JSON response.":["Die Antwort ist keine g\u00fcltige JSON-Antwort."],"Media upload failed. If this is a photo or a large image, please scale it down and try again.":["Das Hochladen der Mediendatei ist fehlgeschlagen. Wenn es sich um ein Foto oder ein gro\u00dfes Bild handelt, verkleinere es bitte und versuche es erneut."],"You are probably offline.":["Du bist wahrscheinlich offline."]}},"comment":{"reference":"wp-includes\/js\/dist\/api-fetch.js"}} );
+</script>
 <script src="http://localhost:8888/wp-includes/js/dist/api-fetch.js?ver=c7fab2b80f62e49268dd" id="wp-api-fetch-js"></script>
 <script id="wp-api-fetch-js-after">
 wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( "http://localhost:8888/wp-json/" ) );
@@ -1453,12 +1459,12 @@ wp.apiFetch.nonceEndpoint = "http://localhost:8888/wp-admin/admin-ajax.php?actio
 		skipLink = document.createElement( 'a' );
 		skipLink.classList.add( 'skip-link', 'screen-reader-text' );
 		skipLink.href = '#' + skipLinkTargetID;
-		skipLink.innerHTML = 'Skip to content';
+		skipLink.innerHTML = 'Zum Inhalt springen';
 
 		// Inject the skip link.
 		sibling.parentElement.insertBefore( skipLink, sibling );
 	}() );
-
+	
 </script>
 </body>
 </html>
