@@ -245,7 +245,7 @@ msgstr "Crea pagina"
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:182
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:190
 msgid "Add Logo"
-msgstr "Crea una pagina"
+msgstr "Aggiungi un logo"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:183
 msgid "Ensure your website is branded with your unique logo for a professional look."
@@ -332,7 +332,7 @@ msgstr "Aggiungi una favicon (icona per siti web) al tuo sito per migliorare il 
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:197
 msgid "Create a Page"
-msgstr "Creare una pagina"
+msgstr "Crea una pagina"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:198
 msgid "Create and publish a page and share your story with the world."
