@@ -41,6 +41,9 @@ function get_deep_links_data()
     $webmail_links = $webmailloginlinks[$market] ?? $webmailloginlinks['de'];
   }
 
+  $nba_links    = $nba_links    ?? '';
+  $banner_links = $banner_links ?? '';
+
   $domain   = $market_domains[$market] ?? reset($market_domains);
 
   $data = [
@@ -111,8 +114,10 @@ function render_callback()
 \add_filter('ionos_dashboard_banner__register_button', function ($button_list) {
   $data = get_deep_links_data();
 
+  $managehosting = $data['banner_links']['managehosting'] ?? '';
+
   $button_list[] = [
-    'link'           => $data['domain'] . $data['banner_links']['managehosting'],
+    'link'           => $data['domain'] . $managehosting,
     'target'         => '_blank',
     'text'           => \esc_html__('Manage Hosting', 'ionos-essentials'),
     'css-attributes' => 'deeplink',

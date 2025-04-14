@@ -12,7 +12,7 @@ $links = [
     'anchor' => __('My Account', 'ionos-essentials'),
   ],
   [
-    'url'    => 'website',
+    'url'    => 'websites',
     'anchor' => __('Project Overview', 'ionos-essentials'),
   ],
   [

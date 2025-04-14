@@ -86,6 +86,9 @@ class NBA
 $data = \ionos\essentials\dashboard\blocks\deep_links\get_deep_links_data();
 
 if (null !== $data) {
+
+  $connectdomain = $data['nba_links']['connectdomain'] ?? '';
+
   NBA::register(
     id: 'connect-domain',
     title: \__('Connect a Domain', 'ionos-essentials'),
@@ -93,7 +96,7 @@ if (null !== $data) {
       'Connect your domain to your website to increase visibility and attract more visitors.',
       'ionos-essentials'
     ),
-    link: $data['domain'] . $data['nba_links']['connectdomain'],
+    link: $data['domain'] . $connectdomain,
     anchor: \__('Connect Domain', 'ionos-essentials'),
     completed: false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost'),
   );
@@ -126,6 +129,8 @@ NBA::register(
 
 if (null !== $data) {
   if (false !== strpos(home_url(), 'live-website.com') || (false !== strpos(home_url(), 'localhost'))) {
+    $connectmail = $data['nba_links']['connectmail'] ?? '';
+
     NBA::register(
       id: 'email-account',
       title: \__('Set Up Email', 'ionos-essentials'),
@@ -133,7 +138,7 @@ if (null !== $data) {
         'Set up your included email account and integrate it with your website.',
         'ionos-essentials'
       ),
-      link: $data['domain'] . $data['nba_links']['connectmail'],
+      link: $data['domain'] . $connectmail,
       anchor: \__('Setup Email Account', 'ionos-essentials'),
       completed: false // handled by view.js because of external link
     );
