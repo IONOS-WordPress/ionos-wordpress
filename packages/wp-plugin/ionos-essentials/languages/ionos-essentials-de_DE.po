@@ -256,7 +256,7 @@ msgstr "E-Mail einrichten"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:137
 msgid "Set up your included email account and integrate it with your website."
-msgstr "Richte dein integriertes E-Mail-Konto ein und integriere es in deine Website."
+msgstr "Nutzen Sie Ihre inkludierte E-Mail-Adresse passend zur Ihrer eigenen Webseite und Domain."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:156
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:159
