@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.0.0
+
+### Major Changes
+
+- 1fc02a5: new Feature: Overview
+
 ## 0.2.6
 
 ### Patch Changes
