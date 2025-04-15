@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: sv\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
@@ -127,7 +127,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Visa wp-skanningsdata."
 
-#: inc/dashboard/index.php:228
+#: inc/dashboard/index.php:231
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -157,7 +157,7 @@ msgstr[0] "varning hittad"
 msgstr[1] "varningar hittade"
 
 #: inc/dashboard/blocks/vulnerability/render.php:64
-msgid "issues found"
+msgid "Issues found"
 msgstr "fel hittade"
 
 #: build/dashboard/blocks/next-best-actions/block.json
@@ -178,10 +178,6 @@ msgstr "Visa webbplats"
 msgid "Start AI Sitebuilder"
 msgstr "Starta AI Sitebuilder"
 
-#: inc/dashboard/blocks/banner/index.php:66
-msgid "Retry AI"
-msgstr "Försök igen AI"
-
 #: inc/dashboard/blocks/deep-links/index.php:122
 msgid "Manage Hosting"
 msgstr "Hantera hosting"
@@ -201,15 +197,15 @@ msgid "Account Management"
 msgstr "Kontohantering"
 
 #: inc/dashboard/blocks/deep-links/index.php:80
-msgid "One-click access to your customer account, login security and subscriptions"
-msgstr "Tillgång till kundkonto, inloggningssäkerhet och prenumerationer med ett enda klick"
+msgid "One-click access to your customer account, login security and subscriptions."
+msgstr "Tillgång till kundkonto, inloggningssäkerhet och prenumerationer med ett enda klick."
 
 #: inc/dashboard/blocks/quick-links/render.php:14
-msgid "Easily navigate to frequently used features and tools"
-msgstr "Enkel navigering till funktioner och verktyg som används ofta"
+msgid "Easily navigate to frequently used features and tools."
+msgstr "Enkel navigering till funktioner och verktyg som används ofta."
 
-#: inc/dashboard/index.php:126
-#: inc/dashboard/index.php:127
+#: inc/dashboard/index.php:129
+#: inc/dashboard/index.php:130
 msgid "Overview"
 msgstr "Översikt"
 
@@ -235,8 +231,8 @@ msgid "Edit & Complete Your Website"
 msgstr "Redigera och komplettera din webbplats"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:108
-msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
-msgstr "Lägg till sidor, text och bilder, finjustera din webbplats med AI-drivna verktyg eller justera färger och teckensnitt"
+msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
+msgstr "Lägg till sidor, text och bilder, finjustera din webbplats med AI-drivna verktyg eller justera färger och teckensnitt."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:113
 msgid "Edit Website"
@@ -436,8 +432,8 @@ msgid "Upload Media files"
 msgstr "Ladda upp mediefiler"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
-msgid "Get an overview of the latest updates and enhancements"
-msgstr "Få en överblick över de senaste uppdateringarna och förbättringarna"
+msgid "Get an overview of the latest updates and enhancements."
+msgstr "Få en överblick över de senaste uppdateringarna och förbättringarna."
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"
@@ -495,10 +491,6 @@ msgstr "SSL"
 msgid "Markenschutz"
 msgstr "Markskydd"
 
-#: inc/dashboard/blocks/banner/index.php:68
-msgid "Valid for up to 72h"
-msgstr "Giltig i upp till 72 timmar"
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:142
 msgid "Setup Email Account"
 msgstr "Konfigurera e-postkonto"
@@ -527,3 +519,11 @@ msgstr "Sårbarhetsskanning inte möjlig. Vänligen kontakta kundtjänst."
 #: ionos-essentials.php
 msgid "Essentials"
 msgstr "Essentials"
+
+#: inc/dashboard/blocks/banner/index.php:66
+msgid "Rebuild Website"
+msgstr "Bygga om webbplats"
+
+#: inc/dashboard/blocks/banner/index.php:68
+msgid "It is possible to rebuild your AI-created website within 72 hours"
+msgstr "Det är möjligt att återuppbygga din AI-skapade webbplats inom 72 timmar"

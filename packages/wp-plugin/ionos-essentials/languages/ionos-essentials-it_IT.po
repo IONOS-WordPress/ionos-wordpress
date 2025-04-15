@@ -157,7 +157,7 @@ msgstr[0] "Allarme rilevato"
 msgstr[1] "Allarmi rilevati"
 
 #: inc/dashboard/blocks/vulnerability/render.php:64
-msgid "issues found"
+msgid "Issues found"
 msgstr "Problemi rilevati"
 
 #: build/dashboard/blocks/next-best-actions/block.json
@@ -178,10 +178,6 @@ msgstr "Visualizza sito"
 msgid "Start AI Sitebuilder"
 msgstr "Avvia creazione con IA"
 
-#: inc/dashboard/blocks/banner/index.php:66
-msgid "Retry AI"
-msgstr "Riprova AI"
-
 #: inc/dashboard/blocks/deep-links/index.php:122
 msgid "Manage Hosting"
 msgstr "Gestisci hosting"
@@ -201,12 +197,12 @@ msgid "Account Management"
 msgstr "Il mio account"
 
 #: inc/dashboard/blocks/deep-links/index.php:80
-msgid "One-click access to your customer account, login security and subscriptions"
-msgstr "Accedi con un solo clic al tuo account cliente, ai contratti e alle impostazioni di login"
+msgid "One-click access to your customer account, login security and subscriptions."
+msgstr "Accedi con un solo clic al tuo account cliente, ai contratti e alle impostazioni di login."
 
 #: inc/dashboard/blocks/quick-links/render.php:14
-msgid "Easily navigate to frequently used features and tools"
-msgstr "Accedi facilmente alle funzioni e agli strumenti utilizzati più frequentemente"
+msgid "Easily navigate to frequently used features and tools."
+msgstr "Accedi facilmente alle funzioni e agli strumenti utilizzati più frequentemente."
 
 #: inc/dashboard/index.php:129
 #: inc/dashboard/index.php:130
@@ -235,7 +231,7 @@ msgid "Edit & Complete Your Website"
 msgstr "Modifica e completa il tuo sito web"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:108
-msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
+msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
 msgstr "Aggiungi pagine, testi e immagini, perfeziona il tuo sito web con strumenti IA o imposta colori e caratteri."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:113
@@ -436,8 +432,8 @@ msgid "Upload Media files"
 msgstr "Carica file multimediali"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
-msgid "Get an overview of the latest updates and enhancements"
-msgstr "Scopri le ultime novità e aggiornamenti"
+msgid "Get an overview of the latest updates and enhancements."
+msgstr "Scopri le ultime novità e aggiornamenti."
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"
@@ -495,10 +491,6 @@ msgstr "SSL"
 msgid "Markenschutz"
 msgstr "Markenschutz"
 
-#: inc/dashboard/blocks/banner/index.php:68
-msgid "Valid for up to 72h"
-msgstr "Valido fino a 72 ore"
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:142
 msgid "Setup Email Account"
 msgstr "Crea account email"
@@ -527,3 +519,11 @@ msgstr "La scansione delle vulnerabilità non è possibile. Contattare l'assiste
 #: ionos-essentials.php
 msgid "Essentials"
 msgstr "Essentials"
+
+#: inc/dashboard/blocks/banner/index.php:66
+msgid "Rebuild Website"
+msgstr "Ricostruire il sito web"
+
+#: inc/dashboard/blocks/banner/index.php:68
+msgid "It is possible to rebuild your AI-created website within 72 hours"
+msgstr "È possibile ricostruire il sito web creato dall'intelligenza artificiale entro 72 ore."

@@ -11,7 +11,7 @@ if (file_exists($config_file)) {
     <div class="wp-block-column quick-links">
       <div class="wp-block-group">';
   printf('<h3>%s</h3>', \esc_html__('Quick Links', 'ionos-essentials'));
-  printf('<p>%s</p>', \esc_html__('Easily navigate to frequently used features and tools', 'ionos-essentials'));
+  printf('<p>%s</p>', \esc_html__('Easily navigate to frequently used features and tools.', 'ionos-essentials'));
   echo '</div>
       <div class="wp-block-group elements">
       ';
