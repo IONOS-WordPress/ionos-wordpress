@@ -172,11 +172,11 @@ msgstr "Nächstbeste Aktionen"
 
 #: inc/dashboard/blocks/banner/index.php:25
 msgid "View Site"
-msgstr "Zur Webseite"
+msgstr "Zur Website"
 
 #: inc/dashboard/blocks/banner/index.php:57
 msgid "Start AI Sitebuilder"
-msgstr "Webseite mit AI erstellen"
+msgstr "Website mit AI erstellen"
 
 #: inc/dashboard/blocks/deep-links/index.php:122
 msgid "Manage Hosting"
@@ -228,11 +228,11 @@ msgstr "Domain verbinden"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:107
 msgid "Edit & Complete Your Website"
-msgstr "Webseite bearbeiten"
+msgstr "Website bearbeiten"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:108
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
-msgstr "Vervollständigen und personalisieren Sie Ihre Webseite, fügen Sie neue Inhalte wie Seiten, Texte und Bilder hinzu oder passen Sie Farben und Schriftarten an."
+msgstr "Vervollständigen und personalisieren Sie Ihre Website, fügen Sie neue Inhalte wie Seiten, Texte und Bilder hinzu oder passen Sie Farben und Schriftarten an."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:113
 msgid "Edit Website"
@@ -240,7 +240,7 @@ msgstr "Website bearbeiten"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:120
 msgid "Discover Help Center"
-msgstr "Webseite bearbeiten"
+msgstr "Hilfe-Center entdecken"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:121
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
@@ -256,7 +256,7 @@ msgstr "E-Mail einrichten"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:137
 msgid "Set up your included email account and integrate it with your website."
-msgstr "Nutzen Sie Ihre inkludierte E-Mail-Adresse passend zur Ihrer eigenen Webseite und Domain."
+msgstr "Nutzen Sie Ihre inkludierte E-Mail-Adresse passend zur Ihrer eigenen Website und Domain."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:156
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:159
@@ -298,7 +298,7 @@ msgstr "Favicon hinzufügen"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:227
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
-msgstr "Füge deiner Website ein Favicon (Website-Symbol) hinzu, um die Wiedererkennung und Sichtbarkeit deiner Marke zu verbessern."
+msgstr "Fügen Sie Ihrer Website ein Favicon (Website-Symbol) hinzu, um die Wiedererkennung und Sichtbarkeit Ihrer Marke zu verbessern."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:201
 msgid "Create a Page"
@@ -310,11 +310,11 @@ msgstr "Erstellen und veröffentlichen Sie eine neue Seite und teilen Sie ihre I
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:95
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
-msgstr "Verbinde deine Domain mit deiner Website, um die Sichtbarkeit zu erhöhen und mehr Besucher anzuziehen."
+msgstr "Verbinden Sie Ihre Domain mit Ihrer Website, um die Sichtbarkeit zu erhöhen und mehr Besucher anzuziehen."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:94
 msgid "Connect a Domain"
-msgstr "Eine Domain verbinden"
+msgstr "Domain verbinden"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Unlock Your Website's Potential"
@@ -322,7 +322,7 @@ msgstr "Nutzen Sie das volle Potenzial Ihrer Website"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:36
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-msgstr "Ihre Website ist online, aber die Reise hat gerade erst begonnen. Hier finden Sie empfohlene nächste Schritte, um Ihre Webseite erfolgreich zu machen und Ihre Online-Ziele zu erreichen."
+msgstr "Ihre Website ist online, aber die Reise hat gerade erst begonnen. Hier finden Sie empfohlene nächste Schritte, um Ihre Website erfolgreich zu machen und Ihre Online-Ziele zu erreichen."
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php:40
