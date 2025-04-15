@@ -2,4 +2,4 @@
 '@ionos-wordpress/essentials': major
 ---
 
-Dashboard Overview
+new Feature: Dashboard Overview
