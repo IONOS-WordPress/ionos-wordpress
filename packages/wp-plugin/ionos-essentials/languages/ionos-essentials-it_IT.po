@@ -202,7 +202,7 @@ msgstr "Accedi con un solo clic al tuo account cliente, ai contratti e alle impo
 
 #: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Easily navigate to frequently used features and tools."
-msgstr "Accedi facilmente alle funzioni e agli strumenti utilizzati più frequentemente"
+msgstr "Accedi facilmente alle funzioni e agli strumenti utilizzati più frequentemente."
 
 #: inc/dashboard/index.php:129
 #: inc/dashboard/index.php:130
@@ -433,7 +433,7 @@ msgstr "Carica file multimediali"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
 msgid "Get an overview of the latest updates and enhancements."
-msgstr "Scopri le ultime novità e aggiornamenti"
+msgstr "Scopri le ultime novità e aggiornamenti."
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"

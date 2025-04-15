@@ -202,7 +202,7 @@ msgstr "Met één klik toegang tot je klantenaccount, inlogbeveiliging en abonne
 
 #: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Easily navigate to frequently used features and tools."
-msgstr "Eenvoudig navigeren naar veelgebruikte functies en tools"
+msgstr "Eenvoudig navigeren naar veelgebruikte functies en tools."
 
 #: inc/dashboard/index.php:129
 #: inc/dashboard/index.php:130
@@ -232,7 +232,7 @@ msgstr "Uw website bewerken en voltooien"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:108
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
-msgstr "Voeg pagina's, tekst en afbeeldingen toe, verfijn je website met AI-tools of pas kleuren en lettertypen aan"
+msgstr "Voeg pagina's, tekst en afbeeldingen toe, verfijn je website met AI-tools of pas kleuren en lettertypen aan."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:113
 msgid "Edit Website"
@@ -433,7 +433,7 @@ msgstr "Mediabestanden uploaden"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
 msgid "Get an overview of the latest updates and enhancements."
-msgstr "Een overzicht van de nieuwste updates en verbeteringen"
+msgstr "Een overzicht van de nieuwste updates en verbeteringen."
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"

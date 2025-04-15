@@ -202,7 +202,7 @@ msgstr "Accede con un solo clic a tu cuenta de cliente, seguridad de inicio de s
 
 #: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Easily navigate to frequently used features and tools."
-msgstr "Accede fácilmente a las funciones y herramientas más utilizadas"
+msgstr "Accede fácilmente a las funciones y herramientas más utilizadas."
 
 #: inc/dashboard/index.php:129
 #: inc/dashboard/index.php:130
@@ -322,7 +322,7 @@ msgstr "Libera el potencial de tu sitio web"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:36
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-msgstr "Tu sitio web ya está en línea, pero esto acaba de comenzar. Explora las acciones recomendadas para crecer, mejorar el rendimiento y alcanzar tus objetivos en línea. "
+msgstr "Tu sitio web ya está en línea, pero esto acaba de comenzar. Explora las acciones recomendadas para crecer, mejorar el rendimiento y alcanzar tus objetivos en línea. ."
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php:40
@@ -433,7 +433,7 @@ msgstr "Cargar archivos multimedia"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
 msgid "Get an overview of the latest updates and enhancements."
-msgstr "Obtén una visión general de las últimas actualizaciones y mejoras"
+msgstr "Obtén una visión general de las últimas actualizaciones y mejoras."
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"

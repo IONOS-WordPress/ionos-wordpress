@@ -202,7 +202,7 @@ msgstr "Tillgång till kundkonto, inloggningssäkerhet och prenumerationer med e
 
 #: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Easily navigate to frequently used features and tools."
-msgstr "Enkel navigering till funktioner och verktyg som används ofta"
+msgstr "Enkel navigering till funktioner och verktyg som används ofta."
 
 #: inc/dashboard/index.php:129
 #: inc/dashboard/index.php:130
@@ -232,7 +232,7 @@ msgstr "Redigera och komplettera din webbplats"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:108
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
-msgstr "Lägg till sidor, text och bilder, finjustera din webbplats med AI-drivna verktyg eller justera färger och teckensnitt"
+msgstr "Lägg till sidor, text och bilder, finjustera din webbplats med AI-drivna verktyg eller justera färger och teckensnitt."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:113
 msgid "Edit Website"
@@ -433,7 +433,7 @@ msgstr "Ladda upp mediefiler"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
 msgid "Get an overview of the latest updates and enhancements."
-msgstr "Få en överblick över de senaste uppdateringarna och förbättringarna"
+msgstr "Få en överblick över de senaste uppdateringarna och förbättringarna."
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"

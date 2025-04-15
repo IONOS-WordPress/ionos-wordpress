@@ -202,7 +202,7 @@ msgstr "Schnellzugriff auf Ihr Kundenkonto, Verträge und Logineinstellungen"
 
 #: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Easily navigate to frequently used features and tools."
-msgstr "Nutzen Sie diese einfache Navigation zu den häufigsten Funktionen und Tools in WordPress"
+msgstr "Nutzen Sie diese einfache Navigation zu den häufigsten Funktionen und Tools in WordPress."
 
 #: inc/dashboard/index.php:129
 #: inc/dashboard/index.php:130
@@ -232,7 +232,7 @@ msgstr "Webseite bearbeiten"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:108
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
-msgstr "Vervollständigen und personalisieren Sie Ihre Webseite, fügen Sie neue Inhalte wie Seiten, Texte und Bilder hinzu oder passen Sie Farben und Schriftarten an"
+msgstr "Vervollständigen und personalisieren Sie Ihre Webseite, fügen Sie neue Inhalte wie Seiten, Texte und Bilder hinzu oder passen Sie Farben und Schriftarten an."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:113
 msgid "Edit Website"
@@ -433,7 +433,7 @@ msgstr "Bilder und Videos hochladen"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
 msgid "Get an overview of the latest updates and enhancements."
-msgstr "Hier erhalten Sie einen Überblick über die neuesten Updates und Produktverbesserungen"
+msgstr "Hier erhalten Sie einen Überblick über die neuesten Updates und Produktverbesserungen."
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"
