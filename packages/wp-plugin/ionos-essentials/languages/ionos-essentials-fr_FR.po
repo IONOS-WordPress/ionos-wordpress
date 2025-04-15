@@ -306,7 +306,7 @@ msgstr "Créer une page"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:203
 msgid "Create and publish a page and share your story with the world."
-msgstr "Créez et publiez une page ; partagez votre histoire avec le monde entier."
+msgstr "Créez et publiez une page et partagez votre histoire avec le monde entier."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:95
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
@@ -331,7 +331,7 @@ msgstr "Bienvenue sur votre Hub %s"
 
 #: inc/dashboard/blocks/welcome/index.php:43
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "Cette vue d'ensemble est votre passerelle pour débloquer tout le potentiel de votre site Web WordPress. "
+msgstr "Cette vue d'ensemble est votre passerelle pour débloquer tout le potentiel de votre site Web WordPress."
 
 #: inc/dashboard/blocks/welcome/index.php:51
 msgid "Recommendations for next steps"
@@ -343,7 +343,7 @@ msgstr "Liens et raccourcis utiles"
 
 #: inc/dashboard/blocks/welcome/index.php:53
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr "Section d'aide complète, comprenant : support Chat IA, visites guidées et une vaste base de connaissances"
+msgstr "Section d'aide complète, comprenant: support Chat IA, visites guidées et une vaste base de connaissances"
 
 #: inc/dashboard/blocks/welcome/index.php:61
 msgid "Stay tuned for exciting new features and updates to come!"
@@ -445,7 +445,7 @@ msgstr "Mes produits"
 
 #: inc/tenants/config/ionos.php:12
 msgid "Project Overview"
-msgstr "Vue d'ensemble du projet "
+msgstr "Vue d'ensemble du projet"
 
 #: inc/tenants/config/ionos.php:16
 msgid "Domains and SSL management"
