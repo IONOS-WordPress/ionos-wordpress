@@ -105,7 +105,7 @@ msgstr "Tiefe Links"
 #: build/dashboard/blocks/deep-links/block.json
 msgctxt "block description"
 msgid "Show links to the Control Panel of your provider."
-msgstr "Links zum Control Panel deines Providers anzeigen."
+msgstr "Links zum Control Panel Ihres Providers anzeigen."
 
 #: build/dashboard/blocks/quick-links/block.json
 msgctxt "block title"
@@ -269,7 +269,7 @@ msgstr "Richten Sie das Kontaktformular ein, um mit Ihren Besuchern in Kontakt z
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:170
 msgid "Set Up Your WooCommerce Store"
-msgstr "Einrichten deines WooCommerce Shops"
+msgstr "Einrichten Ihres WooCommerce Shops"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:171
 msgid "Launch your online store now with a guided setup wizard."
@@ -285,7 +285,7 @@ msgstr "Social Media verbinden"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:212
 msgid "Connect your social media profiles to your website and expand your online presence."
-msgstr "Verbinde deine Social-Media-Profile mit deiner Website und erweitere deine Online-Präsenz."
+msgstr "Verbinden Sie Ihre Social-Media-Profile mit Ihrer Website und erweitern Sie Ihre Online-Präsenz."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:219
 msgid "Connect Social Media"
