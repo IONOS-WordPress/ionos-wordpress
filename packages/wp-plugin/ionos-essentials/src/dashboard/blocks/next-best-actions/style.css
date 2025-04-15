@@ -40,6 +40,10 @@
   margin-top: 0px;
 }
 
+#ionos-dashboard__essentials_nba .wp-block-buttons {
+  margin-top: 20px
+}
+
 /* @FIXME: use nested css or convert this file to scss */
 #ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column > p {
   flex-grow: 1;
