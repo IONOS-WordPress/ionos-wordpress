@@ -127,7 +127,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Afficher les données de balayage wp."
 
-#: inc/dashboard/index.php:228
+#: inc/dashboard/index.php:231
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -178,10 +178,6 @@ msgstr "Voir le site"
 msgid "Start AI Sitebuilder"
 msgstr "Démarrer AI Sitebuilder"
 
-#: inc/dashboard/blocks/banner/index.php:66
-msgid "Retry AI"
-msgstr "Réessayer l'IA"
-
 #: inc/dashboard/blocks/deep-links/index.php:122
 msgid "Manage Hosting"
 msgstr "Gérer l'hébergement"
@@ -208,8 +204,8 @@ msgstr "Accès en un clic à votre compte client, à votre sécurité de connexi
 msgid "Easily navigate to frequently used features and tools"
 msgstr "Naviguer facilement vers les fonctions et les outils les plus fréquemment utilisés"
 
-#: inc/dashboard/index.php:126
-#: inc/dashboard/index.php:127
+#: inc/dashboard/index.php:129
+#: inc/dashboard/index.php:130
 msgid "Overview"
 msgstr "Vue d'ensemble"
 
@@ -495,10 +491,6 @@ msgstr "SSL"
 msgid "Markenschutz"
 msgstr "Markenschutz"
 
-#: inc/dashboard/blocks/banner/index.php:68
-msgid "Valid for up to 72h"
-msgstr "Valable jusqu'à 72 heures"
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:142
 msgid "Setup Email Account"
 msgstr "Créer un compte e-mail"
@@ -527,3 +519,11 @@ msgstr "L'analyse de vulnérabilité n'est pas possible. Veuillez contacter le s
 #: ionos-essentials.php
 msgid "Essentials"
 msgstr "Essentials"
+
+#: inc/dashboard/blocks/banner/index.php:66
+msgid "Rebuild Website"
+msgstr "Reconstruire le site web"
+
+#: inc/dashboard/blocks/banner/index.php:68
+msgid "It is possible to rebuild your AI-created website within 72 hours"
+msgstr "Il est possible de reconstruire votre site Web créé par l'IA dans les 72 heures."

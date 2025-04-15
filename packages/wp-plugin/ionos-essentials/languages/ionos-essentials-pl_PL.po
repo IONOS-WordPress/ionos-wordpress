@@ -127,7 +127,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Pokaż dane skanowania wp."
 
-#: inc/dashboard/index.php:228
+#: inc/dashboard/index.php:231
 msgid "Brand Logo"
 msgstr "Logo marki"
 
@@ -180,10 +180,6 @@ msgstr "Wyświetl stronę"
 msgid "Start AI Sitebuilder"
 msgstr "Uruchom AI Sitebuilder"
 
-#: inc/dashboard/blocks/banner/index.php:66
-msgid "Retry AI"
-msgstr "Retry AI"
-
 #: inc/dashboard/blocks/deep-links/index.php:122
 msgid "Manage Hosting"
 msgstr "Zarządzanie hostingiem"
@@ -210,8 +206,8 @@ msgstr "Dostęp do konta klienta, zabezpieczeń logowania i subskrypcji jednym k
 msgid "Easily navigate to frequently used features and tools"
 msgstr "Łatwa nawigacja do często używanych funkcji i narzędzi"
 
-#: inc/dashboard/index.php:126
-#: inc/dashboard/index.php:127
+#: inc/dashboard/index.php:129
+#: inc/dashboard/index.php:130
 msgid "Overview"
 msgstr "Przegląd"
 
@@ -497,10 +493,6 @@ msgstr "SSL"
 msgid "Markenschutz"
 msgstr "Markenschutz"
 
-#: inc/dashboard/blocks/banner/index.php:68
-msgid "Valid for up to 72h"
-msgstr "Ważność do 72 godzin"
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:142
 msgid "Setup Email Account"
 msgstr "Konfiguracja konta e-mail"
@@ -529,3 +521,11 @@ msgstr "Skanowanie podatności nie jest możliwe. Prosimy o kontakt z działem o
 #: ionos-essentials.php
 msgid "Essentials"
 msgstr "Essentials"
+
+#: inc/dashboard/blocks/banner/index.php:66
+msgid "Rebuild Website"
+msgstr "Przebudowa strony internetowej"
+
+#: inc/dashboard/blocks/banner/index.php:68
+msgid "It is possible to rebuild your AI-created website within 72 hours"
+msgstr "Możliwe jest odbudowanie witryny stworzonej przez sztuczną inteligencję w ciągu 72 godzin."

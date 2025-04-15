@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: it\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-04-14 14:15+0200\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-04-14 14:15+0200\n"
-"Language: it\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -177,10 +177,6 @@ msgstr "Visualizza sito"
 #: inc/dashboard/blocks/banner/index.php:57
 msgid "Start AI Sitebuilder"
 msgstr "Avvia creazione con IA"
-
-#: inc/dashboard/blocks/banner/index.php:66
-msgid "Retry AI"
-msgstr "Riprova AI"
 
 #: inc/dashboard/blocks/deep-links/index.php:122
 msgid "Manage Hosting"
@@ -495,10 +491,6 @@ msgstr "SSL"
 msgid "Markenschutz"
 msgstr "Markenschutz"
 
-#: inc/dashboard/blocks/banner/index.php:68
-msgid "Valid for up to 72h"
-msgstr "Valido fino a 72 ore"
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:142
 msgid "Setup Email Account"
 msgstr "Crea account email"
@@ -527,3 +519,11 @@ msgstr "La scansione delle vulnerabilità non è possibile. Contattare l'assiste
 #: ionos-essentials.php
 msgid "Essentials"
 msgstr "Essentials"
+
+#: inc/dashboard/blocks/banner/index.php:66
+msgid "Rebuild Website"
+msgstr "Ricostruire il sito web"
+
+#: inc/dashboard/blocks/banner/index.php:68
+msgid "It is possible to rebuild your AI-created website within 72 hours"
+msgstr "È possibile ricostruire il sito web creato dall'intelligenza artificiale entro 72 ore."

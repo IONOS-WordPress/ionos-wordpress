@@ -127,7 +127,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Show wp scan data."
 
-#: inc/dashboard/index.php:228
+#: inc/dashboard/index.php:231
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -178,10 +178,6 @@ msgstr "View Site"
 msgid "Start AI Sitebuilder"
 msgstr "Start AI Sitebuilder"
 
-#: inc/dashboard/blocks/banner/index.php:66
-msgid "Retry AI"
-msgstr "Retry AI"
-
 #: inc/dashboard/blocks/deep-links/index.php:122
 msgid "Manage Hosting"
 msgstr "Manage Hosting"
@@ -208,8 +204,8 @@ msgstr "One-click access to your customer account, login security and subscripti
 msgid "Easily navigate to frequently used features and tools"
 msgstr "Easily navigate to frequently used features and tools"
 
-#: inc/dashboard/index.php:126
-#: inc/dashboard/index.php:127
+#: inc/dashboard/index.php:129
+#: inc/dashboard/index.php:130
 msgid "Overview"
 msgstr "Overview"
 
@@ -495,10 +491,6 @@ msgstr "SSL"
 msgid "Markenschutz"
 msgstr "Markenschutz"
 
-#: inc/dashboard/blocks/banner/index.php:68
-msgid "Valid for up to 72h"
-msgstr "Valid for up to 72h"
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:142
 msgid "Setup Email Account"
 msgstr "Setup Email Account"
@@ -527,3 +519,11 @@ msgstr "Vulnerability Scan not possible. Please contact Customer Care."
 #: ionos-essentials.php
 msgid "Essentials"
 msgstr "Essentials"
+
+#: inc/dashboard/blocks/banner/index.php:66
+msgid "Rebuild Website"
+msgstr "Rebuild Website"
+
+#: inc/dashboard/blocks/banner/index.php:68
+msgid "It is possible to rebuild your AI-created website within 72 hours"
+msgstr "It is possible to rebuild your AI-created website within 72 hours"
