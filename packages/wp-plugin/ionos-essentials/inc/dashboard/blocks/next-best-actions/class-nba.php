@@ -127,9 +127,8 @@ NBA::register(
   completed: false // handled by view.js
 );
 
-// TODO: connect email if domain is connected
 if (null !== $data) {
-  if (false !== strpos(home_url(), 'live-website.com') || (false !== strpos(home_url(), 'localhost'))) {
+  if (false !== strpos(home_url(), 'live-website.com') && (false !== strpos(home_url(), 'localhost'))) {
     $connectmail = $data['nba_links']['connectmail'] ?? '';
 
     NBA::register(
