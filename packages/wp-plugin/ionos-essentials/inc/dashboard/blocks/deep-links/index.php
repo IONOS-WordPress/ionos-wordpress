@@ -78,7 +78,7 @@ function render_callback()
 
   $headline    = \esc_html__('Account Management', 'ionos-essentials');
   $description = \esc_html__(
-    'One-click access to your customer account, login security and subscriptions',
+    'One-click access to your customer account, login security and subscriptions.',
     'ionos-essentials'
   );
 

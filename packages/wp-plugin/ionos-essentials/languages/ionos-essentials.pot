@@ -60,7 +60,7 @@ msgid "Account Management"
 msgstr ""
 
 #: inc/dashboard/blocks/deep-links/index.php:80
-msgid "One-click access to your customer account, login security and subscriptions"
+msgid "One-click access to your customer account, login security and subscriptions."
 msgstr ""
 
 #: inc/dashboard/blocks/deep-links/index.php:105

@@ -199,8 +199,8 @@ msgid "Account Management"
 msgstr "Zarządzanie kontem"
 
 #: inc/dashboard/blocks/deep-links/index.php:80
-msgid "One-click access to your customer account, login security and subscriptions"
-msgstr "Dostęp do konta klienta, zabezpieczeń logowania i subskrypcji jednym kliknięciem"
+msgid "One-click access to your customer account, login security and subscriptions."
+msgstr "Dostęp do konta klienta, zabezpieczeń logowania i subskrypcji jednym kliknięciem."
 
 #: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Easily navigate to frequently used features and tools."
