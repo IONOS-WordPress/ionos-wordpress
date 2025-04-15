@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.0.1
+
+### Patch Changes
+
+- f1265a3: add de_DE_formal language
+
 ## 1.0.0
 
 ### Major Changes
