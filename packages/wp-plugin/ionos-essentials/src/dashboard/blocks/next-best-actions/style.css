@@ -36,6 +36,10 @@
   height: 100%;
 }
 
+#ionos-dashboard__essentials_nba .wp-block-column h4.wp-block-heading {
+  margin-top: 0px;
+}
+
 /* @FIXME: use nested css or convert this file to scss */
 #ionos-dashboard__essentials_nba > .wp-block-columns > .wp-block-column > p {
   flex-grow: 1;
