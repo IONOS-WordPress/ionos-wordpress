@@ -24,6 +24,7 @@ function render_callback(): string
       'link'           => \home_url(),
       'text'           => \__('View Site', 'ionos-essentials'),
       'css-attributes' => 'viewsite',
+      'target'         => '_blank',
     ],
   ];
 
