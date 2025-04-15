@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.0.0
+
+### Major Changes
+
+- 3323a04: new Feature: Dashboard Overview
+
 ## 0.2.6
 
 ### Patch Changes
