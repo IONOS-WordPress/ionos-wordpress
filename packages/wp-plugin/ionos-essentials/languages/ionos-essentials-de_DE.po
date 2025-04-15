@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-04-09 14:39+0200\n"
+"PO-Revision-Date: 2025-04-09 14:29+0200\n"
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
@@ -87,7 +87,7 @@ msgstr "Rechnungen anzeigen"
 
 #: inc/tenants/config/strato.php:16
 msgid "Your contract"
-msgstr "Dein Vertrag"
+msgstr "Ihr Vertrag"
 
 #: inc/tenants/config/strato.php:20
 msgid "Current offers"
@@ -198,11 +198,11 @@ msgstr "Mein Konto"
 
 #: inc/dashboard/blocks/deep-links/index.php:80
 msgid "One-click access to your customer account, login security and subscriptions."
-msgstr "Schnellzugriff auf Dein Kundenkonto, Verträge und Logineinstellungen."
+msgstr "Schnellzugriff auf Ihr Kundenkonto, Verträge und Logineinstellungen."
 
 #: inc/dashboard/blocks/quick-links/render.php:14
 msgid "Easily navigate to frequently used features and tools."
-msgstr "Nutze diese einfache Navigation zu den häufigsten Funktionen und Tools in WordPress."
+msgstr "Nutzen Sie diese einfache Navigation zu den häufigsten Funktionen und Tools in WordPress."
 
 #: inc/dashboard/index.php:129
 #: inc/dashboard/index.php:130
@@ -220,7 +220,7 @@ msgstr "Logo hinzufügen"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:187
 msgid "Ensure your website is branded with your unique logo for a professional look."
-msgstr "Füge Deiner Website Dein einzigartiges Logo hinzu, um ein professionelles Aussehen zu gewährleisten."
+msgstr "Fügen Sie Ihre Website Ihr einzigartiges Logo hinzu, um ein professionelles Aussehen zu gewährleisten."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:100
 msgid "Connect Domain"
@@ -232,7 +232,7 @@ msgstr "Webseite bearbeiten"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:108
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
-msgstr "Vervollständige und personalisiere Deine Webseite, füge neue Inhalte wie Seiten, Texte und Bilder hinzu oder passe Farben und Schriftarten an."
+msgstr "Vervollständigen und personalisieren Sie Ihre Webseite, fügen Sie neue Inhalte wie Seiten, Texte und Bilder hinzu oder passen Sie Farben und Schriftarten an."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:113
 msgid "Edit Website"
@@ -244,7 +244,7 @@ msgstr "Hilfe-Center entdecken"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:121
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
-msgstr "Mache Dich mit unseren umfangreichen Support Angeboten vertraut und nutze unseren AI Chat für alle Fragen rund um WordPress."
+msgstr "Machen Sie sich mit unseren umfangreichen Support Angeboten vertraut und nutzen Sie unseren AI Chat für alle Fragen rund um WordPress."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:126
 msgid "Open Help Center"
@@ -265,7 +265,7 @@ msgstr "Kontakt-Formular einrichten"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:157
 msgid "Create a contact form to stay connected with your visitors."
-msgstr "Richte das Kontaktformular ein, um mit Deinen Besuchern in Kontakt zu bleiben."
+msgstr "Richten Sie das Kontaktformular ein, um mit Ihren Besuchern in Kontakt zu bleiben."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:170
 msgid "Set Up Your WooCommerce Store"
@@ -273,7 +273,7 @@ msgstr "Einrichten deines WooCommerce Shops"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:171
 msgid "Launch your online store now with a guided setup wizard."
-msgstr "Starte jetzt Deinen Online-Shop mit dem einfachen und komfortablen Einrichtungsassistenten."
+msgstr "Starten Sie jetzt Ihren Online-Shop mit dem einfachen und komfortablen Einrichtungsassistenten."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:173
 msgid "Start Setup"
@@ -306,7 +306,7 @@ msgstr "Eine Seite erstellen"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:202
 msgid "Create and publish a page and share your story with the world."
-msgstr "Erstelle und veröffentliche eine neue Seite und teile Deine Inhalte mit der Welt."
+msgstr "Erstellen und veröffentlichen Sie eine neue Seite und teilen Sie ihre Inhalte mit der Welt."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:95
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
@@ -318,20 +318,20 @@ msgstr "Eine Domain verbinden"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Unlock Your Website's Potential"
-msgstr "Nutze das volle Potenzial Deiner Website"
+msgstr "Nutzen Sie das volle Potenzial Ihrer Website"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:36
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-msgstr "Deine Website ist online, aber die Reise hat gerade erst begonnen. Hier findest Du empfohlene nächste Schritte, um Deine Webseite erfolgreich zu machen und Deine Online-Ziele zu erreichen."
+msgstr "Ihre Website ist online, aber die Reise hat gerade erst begonnen. Hier finden Sie empfohlene nächste Schritte, um Ihre Webseite erfolgreich zu machen und Ihre Online-Ziele zu erreichen."
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php:40
 msgid "Welcome to your %s Hub"
-msgstr "Willkommen in Deinem %s Hub"
+msgstr "Willkommen in Ihrem %s Hub"
 
 #: inc/dashboard/blocks/welcome/index.php:43
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "Diese Übersicht ist Dein Einstieg, um das volle Potenzial Deiner WordPress-Website zu erschließen."
+msgstr "Diese Übersicht ist Ihr Einstieg, um das volle Potenzial Ihrer WordPress-Website zu erschließen."
 
 #: inc/dashboard/blocks/welcome/index.php:51
 msgid "Recommendations for next steps"
@@ -347,7 +347,7 @@ msgstr "Umfassender Hilfebereich, einschließlich: KI-Chat-Support, geführte To
 
 #: inc/dashboard/blocks/welcome/index.php:61
 msgid "Stay tuned for exciting new features and updates to come!"
-msgstr "Bleibe dran, denn es kommen spannende neue Funktionen und Updates auf Dich zu!"
+msgstr "Bleiben Sie dran, denn es kommen spannende neue Funktionen und Updates auf Sie zu!"
 
 #: inc/dashboard/blocks/welcome/index.php:69
 msgid "Close"
@@ -379,7 +379,7 @@ msgstr "News & Updates"
 
 #: inc/dashboard/blocks/whats-new/index.php:37
 msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
-msgstr "Ein neues Design und eine verbesserte Nutzung, die das Management Deiner Website einfacher macht als je zuvor."
+msgstr "Ein neues Design und eine verbesserte Nutzung, die das Management Ihrer Website einfacher macht als je zuvor."
 
 #: inc/dashboard/blocks/whats-new/index.php:43
 msgid "Vulnerability Scan Results"
@@ -433,7 +433,7 @@ msgstr "Bilder und Videos hochladen"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
 msgid "Get an overview of the latest updates and enhancements."
-msgstr "Hier erhältst Du einen Überblick über die neuesten Updates und Produktverbesserungen."
+msgstr "Hier erhalten Sie einen Überblick über die neuesten Updates und Produktverbesserungen."
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"
@@ -445,7 +445,7 @@ msgstr "Meine Produkte"
 
 #: inc/tenants/config/ionos.php:16
 msgid "Project Overview"
-msgstr "Überblick über das Projekt"
+msgstr "Projektübersicht"
 
 #: inc/tenants/config/ionos.php:20
 msgid "Domains and SSL management"
@@ -513,7 +513,7 @@ msgstr "Installieren..."
 
 #: inc/dashboard/blocks/vulnerability/render.php:156
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
-msgstr "Schwachstellen-Scan nicht möglich. Bitte kontaktiere den Kundendienst."
+msgstr "Schwachstellen-Scan nicht möglich. Bitte kontaktieren Sie den Kundendienst."
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php
