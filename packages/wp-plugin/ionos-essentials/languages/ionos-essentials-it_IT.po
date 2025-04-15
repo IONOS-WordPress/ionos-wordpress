@@ -235,7 +235,7 @@ msgid "Edit & Complete Your Website"
 msgstr "Modifica e completa il tuo sito web"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:108
-msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
+msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
 msgstr "Aggiungi pagine, testi e immagini, perfeziona il tuo sito web con strumenti IA o imposta colori e caratteri."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:113
