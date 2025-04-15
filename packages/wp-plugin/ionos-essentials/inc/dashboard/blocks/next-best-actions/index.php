@@ -50,7 +50,7 @@ function render_callback()
     $body .= '
       <div class="wp-block-column is-style-default has-background is-layout-flow action" style="border-radius:24px;background-color:#f4f7fa">
         <div class="action-content">
-          <h3 class="wp-block-heading">' . \esc_html($action->title) . '</h3>
+          <h4 class="wp-block-heading">' . \esc_html($action->title) . '</h4>
           <p>' . \esc_html($action->description) . '</p>
           <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
               <div class="wp-block-button">
