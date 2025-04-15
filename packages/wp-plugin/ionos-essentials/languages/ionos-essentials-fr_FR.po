@@ -127,7 +127,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Afficher les données de balayage wp."
 
-#: inc/dashboard/index.php:228
+#: inc/dashboard/index.php:231
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -204,8 +204,8 @@ msgstr "Accès en un clic à votre compte client, à votre sécurité de connexi
 msgid "Easily navigate to frequently used features and tools."
 msgstr "Naviguez facilement vers les fonctions et les outils les plus fréquemment utilisés."
 
-#: inc/dashboard/index.php:126
-#: inc/dashboard/index.php:127
+#: inc/dashboard/index.php:129
+#: inc/dashboard/index.php:130
 msgid "Overview"
 msgstr "Vue d'ensemble"
 
@@ -306,7 +306,7 @@ msgstr "Créer une page"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:203
 msgid "Create and publish a page and share your story with the world."
-msgstr "Créez et publiez une page et partagez votre histoire avec le monde entier."
+msgstr "Créez et publiez une page ; partagez votre histoire avec le monde entier."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:95
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
