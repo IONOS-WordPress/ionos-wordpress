@@ -27,7 +27,7 @@ function render_callback()
 </header>
 <content>
 <p>' . \esc_html__(
-  'Get an overview of the latest updates and enhancements',
+  'Get an overview of the latest updates and enhancements.',
   'ionos-essentials'
 ) .
 '</p>

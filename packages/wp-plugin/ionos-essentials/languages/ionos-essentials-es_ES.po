@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: es\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-04-09 07:46+0200\n"
-"POT-Creation-Date: 2025-02-05T09:50:40+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-05T09:50:40+00:00\n"
+"PO-Revision-Date: 2025-04-09 07:46+0200\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -127,7 +127,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Mostrar datos de escaneo wp."
 
-#: inc/dashboard/index.php:228
+#: inc/dashboard/index.php:231
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -157,7 +157,7 @@ msgstr[0] "Alerta detectada"
 msgstr[1] "Alertas detectadas"
 
 #: inc/dashboard/blocks/vulnerability/render.php:64
-msgid "issues found"
+msgid "Issues found"
 msgstr "Problemas detectados"
 
 #: build/dashboard/blocks/next-best-actions/block.json
@@ -178,10 +178,6 @@ msgstr "Ver el sitio"
 msgid "Start AI Sitebuilder"
 msgstr "Iniciar AI Sitebuilder"
 
-#: inc/dashboard/blocks/banner/index.php:66
-msgid "Retry AI"
-msgstr "Reintentar IA"
-
 #: inc/dashboard/blocks/deep-links/index.php:122
 msgid "Manage Hosting"
 msgstr "Gestionar el hosting"
@@ -201,15 +197,15 @@ msgid "Account Management"
 msgstr "Mi cuenta"
 
 #: inc/dashboard/blocks/deep-links/index.php:80
-msgid "One-click access to your customer account, login security and subscriptions"
-msgstr "Accede con un solo clic a tu cuenta de cliente, seguridad de inicio de sesión y suscripciones"
+msgid "One-click access to your customer account, login security and subscriptions."
+msgstr "Accede con un solo clic a tu cuenta de cliente, seguridad de inicio de sesión y suscripciones."
 
 #: inc/dashboard/blocks/quick-links/render.php:14
-msgid "Easily navigate to frequently used features and tools"
-msgstr "Accede fácilmente a las funciones y herramientas más utilizadas"
+msgid "Easily navigate to frequently used features and tools."
+msgstr "Accede fácilmente a las funciones y herramientas más utilizadas."
 
-#: inc/dashboard/index.php:126
-#: inc/dashboard/index.php:127
+#: inc/dashboard/index.php:129
+#: inc/dashboard/index.php:130
 msgid "Overview"
 msgstr "Vista general"
 
@@ -235,7 +231,7 @@ msgid "Edit & Complete Your Website"
 msgstr "Editar y completar su sitio web"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:108
-msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
+msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
 msgstr "Añade páginas ,texto e imágenes, ajusta tu sitio web con herramientas de inteligencia artifial o modifica los colores y el tipo de letra."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:113
@@ -326,7 +322,7 @@ msgstr "Libera el potencial de tu sitio web"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:36
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-msgstr "Tu sitio web ya está en línea, pero esto acaba de comenzar. Explora las acciones recomendadas para crecer, mejorar el rendimiento y alcanzar tus objetivos en línea. "
+msgstr "Tu sitio web ya está en línea, pero esto acaba de comenzar. Explora las acciones recomendadas para crecer, mejorar el rendimiento y alcanzar tus objetivos en línea."
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php:40
@@ -436,8 +432,8 @@ msgid "Upload Media files"
 msgstr "Cargar archivos multimedia"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
-msgid "Get an overview of the latest updates and enhancements"
-msgstr "Obtén una visión general de las últimas actualizaciones y mejoras"
+msgid "Get an overview of the latest updates and enhancements."
+msgstr "Obtén una visión general de las últimas actualizaciones y mejoras."
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"
@@ -495,10 +491,6 @@ msgstr "SSL"
 msgid "Markenschutz"
 msgstr "Markenschutz"
 
-#: inc/dashboard/blocks/banner/index.php:68
-msgid "Valid for up to 72h"
-msgstr "Válido hasta 72 horas"
-
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:142
 msgid "Setup Email Account"
 msgstr "Crear correo electrónico"
@@ -527,3 +519,11 @@ msgstr "Vulnerability Scan no es posible. Póngase en contacto con el servicio d
 #: ionos-essentials.php
 msgid "Essentials"
 msgstr "Essentials"
+
+#: inc/dashboard/blocks/banner/index.php:66
+msgid "Rebuild Website"
+msgstr "Reconstruir el sitio web"
+
+#: inc/dashboard/blocks/banner/index.php:68
+msgid "It is possible to rebuild your AI-created website within 72 hours"
+msgstr "Es posible reconstruir su sitio web creado con IA en 72 horas"

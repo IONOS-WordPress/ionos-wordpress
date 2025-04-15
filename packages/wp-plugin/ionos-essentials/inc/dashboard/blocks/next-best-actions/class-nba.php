@@ -106,7 +106,7 @@ NBA::register(
   id: 'edit-and-complete',
   title: \__('Edit & Complete Your Website', 'ionos-essentials'),
   description: \__(
-    'Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts',
+    'Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts.',
     'ionos-essentials'
   ),
   link: \admin_url('post-new.php?post_type=page&ext-close'), //  /wp-admin/post-new.php?post_type=page&ext-close

@@ -27,7 +27,8 @@
   margin-bottom: 10px !important;
 
   .button {
-    width: 210px !important;
+    min-width: 200px !important;
+    max-width: 300px !important;
 
     margin: 0 10px !important;
 
