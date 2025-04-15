@@ -231,7 +231,7 @@ msgid "Quick Links"
 msgstr ""
 
 #: inc/dashboard/blocks/quick-links/render.php:14
-msgid "Easily navigate to frequently used features and tools"
+msgid "Easily navigate to frequently used features and tools."
 msgstr ""
 
 #: inc/dashboard/blocks/vulnerability/render.php:32
@@ -319,7 +319,7 @@ msgid "What’s New"
 msgstr ""
 
 #: inc/dashboard/blocks/whats-new/index.php:29
-msgid "Get an overview of the latest updates and enhancements"
+msgid "Get an overview of the latest updates and enhancements."
 msgstr ""
 
 #: inc/dashboard/blocks/whats-new/index.php:36

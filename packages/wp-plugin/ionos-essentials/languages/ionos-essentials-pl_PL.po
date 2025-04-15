@@ -203,7 +203,7 @@ msgid "One-click access to your customer account, login security and subscriptio
 msgstr "Dostęp do konta klienta, zabezpieczeń logowania i subskrypcji jednym kliknięciem"
 
 #: inc/dashboard/blocks/quick-links/render.php:14
-msgid "Easily navigate to frequently used features and tools"
+msgid "Easily navigate to frequently used features and tools."
 msgstr "Łatwa nawigacja do często używanych funkcji i narzędzi"
 
 #: inc/dashboard/index.php:129
@@ -434,7 +434,7 @@ msgid "Upload Media files"
 msgstr "Przesyłanie plików multimedialnych"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
-msgid "Get an overview of the latest updates and enhancements"
+msgid "Get an overview of the latest updates and enhancements."
 msgstr "Przegląd najnowszych aktualizacji i ulepszeń"
 
 #: inc/dashboard/blocks/whats-new/index.php:36

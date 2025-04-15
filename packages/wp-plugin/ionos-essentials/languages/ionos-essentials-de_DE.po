@@ -201,7 +201,7 @@ msgid "One-click access to your customer account, login security and subscriptio
 msgstr "Schnellzugriff auf Dein Kundenkonto, Verträge und Logineinstellungen"
 
 #: inc/dashboard/blocks/quick-links/render.php:14
-msgid "Easily navigate to frequently used features and tools"
+msgid "Easily navigate to frequently used features and tools."
 msgstr "Nutze diese einfache Navigation zu den häufigsten Funktionen und Tools in WordPress"
 
 #: inc/dashboard/index.php:129
@@ -432,7 +432,7 @@ msgid "Upload Media files"
 msgstr "Bilder und Videos hochladen"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
-msgid "Get an overview of the latest updates and enhancements"
+msgid "Get an overview of the latest updates and enhancements."
 msgstr "Hier erhältst Du einen Überblick über die neuesten Updates und Produktverbesserungen"
 
 #: inc/dashboard/blocks/whats-new/index.php:36
