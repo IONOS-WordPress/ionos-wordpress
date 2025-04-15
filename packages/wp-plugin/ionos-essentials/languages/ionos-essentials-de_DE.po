@@ -172,7 +172,7 @@ msgstr "Nächstbeste Aktionen"
 
 #: inc/dashboard/blocks/banner/index.php:25
 msgid "View Site"
-msgstr "Zur Website"
+msgstr "Zur Webseite"
 
 #: inc/dashboard/blocks/banner/index.php:57
 msgid "Start AI Sitebuilder"
@@ -240,7 +240,7 @@ msgstr "Website bearbeiten"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:120
 msgid "Discover Help Center"
-msgstr "Hilfe-Center entdecken"
+msgstr "Webseite bearbeiten"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:121
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
