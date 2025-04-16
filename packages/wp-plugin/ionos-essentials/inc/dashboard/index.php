@@ -64,9 +64,6 @@ require_once __DIR__ . '/blocks/whats-new/index.php';
         #wpwrap ul#adminmenu a.wp-has-current-submenu:after, #wpwrap ul#adminmenu > li.current > a.current:after {
           border-right-color: #f4f7fa;
         }
-        .extendify-help-center ul[data-test="help-center-tours-items-list"] li:last-child {
-          display: none;
-        }
         EOF
     );
   });
@@ -235,3 +232,10 @@ add_action('init', function () {
     },
   ]);
 });
+
+// TODO: extendify will add a data attribute to the item we want to hide in the help center
+add_action('admin_head', function () { echo '<style>
+  .extendify-help-center ul[data-test="help-center-tours-items-list"] li:last-child {
+    display: none;
+  }
+</style>'; });
