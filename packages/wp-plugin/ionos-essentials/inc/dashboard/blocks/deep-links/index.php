@@ -71,7 +71,7 @@ function render_callback()
   <div class="wp-block-column deep-links">
       <h3 class="wp-block-heading">%s</h3>
       <p>%s</p>
-    <div class="wp-block-group">
+    <div class="wp-block-group" id="deeplinks-elements">
     %s
     </div>
   </div>';

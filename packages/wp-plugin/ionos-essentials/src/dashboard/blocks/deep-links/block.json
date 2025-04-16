@@ -13,5 +13,6 @@
   },
   "textdomain": "ionos-essentials",
   "editorScript": "file:./index.js",
+  "viewScript": "file:./view.js",
   "style": "file:./index.css"
 }
