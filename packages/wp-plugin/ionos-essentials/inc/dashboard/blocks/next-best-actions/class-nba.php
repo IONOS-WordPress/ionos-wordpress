@@ -115,17 +115,19 @@ NBA::register(
     ->publish
 );
 
-NBA::register(
-  id: 'help-center',
-  title: \__('Discover Help Center', 'ionos-essentials'),
-  description: \__(
-    'Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours.',
-    'ionos-essentials'
-  ),
-  link: '#',
-  anchor: \__('Open Help Center', 'ionos-essentials'),
-  completed: false // handled by view.js
-);
+if (is_plugin_active('extendify/extendify.php')) {
+  NBA::register(
+    id: 'help-center',
+    title: \__('Discover Help Center', 'ionos-essentials'),
+    description: \__(
+      'Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours.',
+      'ionos-essentials'
+    ),
+    link: '#',
+    anchor: \__('Open Help Center', 'ionos-essentials'),
+    completed: false // handled by view.js
+  );
+}
 
 if (null !== $data) {
   if (false !== strpos(home_url(), 'live-website.com') && (false !== strpos(home_url(), 'localhost'))) {
