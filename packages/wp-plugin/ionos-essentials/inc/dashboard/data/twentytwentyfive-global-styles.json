@@ -17,7 +17,7 @@
                         "top": "var(--wp--preset--spacing--50)"
                     }
                 },
-                "css": ":not(:has(>.wp-block-column:not(:empty))) {\n  \/* columns block has no column blocks with content *\/\n  display:none !important;\n}",
+                "css": ":not(:has(>.wp-block-column:not(:empty))) {\n \/* columns block has no column blocks with content *\/\n display:none !important;\n}",
                 "border": {
                     "radius": "0px"
                 }
@@ -276,7 +276,7 @@
             "background": "#f4f7fa",
             "text": "#001b41"
         },
-        "css": ".hiddenelement {\ndisplay: none;\n}\n\n.ionos__banner {\nflex-direction: column;\n  @media only screen and (min-width: 620px) {\n    flex-direction: row;\n  }\n}\n\n.ionos__whatsnew {\nmin-width: 200px !important;\n}",
+        "css": ".hiddenelement {\ndisplay: none;\n}\n\n.ionos__banner {\njustify-content: space-between;\nalign-items: center;\nflex-direction: column;\nflex-wrap: nowrap;\n  @media only screen and (min-width: 620px) {\n    flex-direction: row;\n  }\n}\n\n.ionos__whatsnew {\nmin-width: 200px !important;\n}",
         "elements": {
             "heading": {
                 "color": {
