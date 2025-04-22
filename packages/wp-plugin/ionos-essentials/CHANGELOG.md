@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.0.2
+
+### Patch Changes
+
+- b261827: fix hub styles in wordpress 6.8
+
 ## 1.0.1
 
 ### Patch Changes
