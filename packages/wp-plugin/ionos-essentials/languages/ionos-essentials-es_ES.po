@@ -429,7 +429,7 @@ msgstr "Añadir plugins"
 
 #: inc/dashboard/blocks/quick-links/config.php:60
 msgid "Upload Media files"
-msgstr "Cargar archivos multimedia"
+msgstr "Añadir archivos de medios"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
 msgid "Get an overview of the latest updates and enhancements."
