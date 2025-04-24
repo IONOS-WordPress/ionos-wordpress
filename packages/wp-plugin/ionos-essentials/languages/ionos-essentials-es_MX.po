@@ -40,7 +40,7 @@ msgstr "Ver el sitio"
 
 #: inc/dashboard/blocks/banner/index.php:57
 msgid "Start AI Sitebuilder"
-msgstr "Iniciar AI Sitebuilder"
+msgstr "Iniciar Creador de sitios con IA"
 
 #: inc/dashboard/blocks/deep-links/index.php:79
 msgid "Account Management"
@@ -48,7 +48,7 @@ msgstr "Gestión de cuentas"
 
 #: inc/dashboard/blocks/deep-links/index.php:80
 msgid "One-click access to your customer account, login security and subscriptions."
-msgstr "Acceso con un solo clic a su cuenta de cliente, seguridad de inicio de sesión y suscripciones."
+msgstr "Acceso con un solo clic a su cuenta de cliente, seguridad de inicio de sesión y productos."
 
 #: inc/dashboard/blocks/deep-links/index.php:122
 msgid "Manage Hosting"
@@ -56,7 +56,7 @@ msgstr "Gestionar el alojamiento"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:94
 msgid "Connect a Domain"
-msgstr "Conectar un dominio"
+msgstr "Asociar un dominio"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:95
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
@@ -159,7 +159,7 @@ msgstr "Añadir Favicon"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:227
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
-msgstr "Añada un favicon (icono de sitio web) a su sitio web para mejorar el reconocimiento y la visibilidad de su marca."
+msgstr "Añade un favicono (icono de sitio web) a tu sitio web para mejorar el reconocimiento y la visibilidad de tu marca."
 
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Unlock Your Website's Potential"
