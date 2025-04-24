@@ -18,7 +18,7 @@ if (file_exists($config_file)) {
   foreach ($links as $link) {
     printf(
       '<div class="wp-block-group element">
-        <a href="%s" target="_blank">
+        <a href="%s" target="_top">
           <img class="wp-block-image size-large is-resized icon" src="%s" alt=""/>
           <p>%s</p>
         </a></div>',

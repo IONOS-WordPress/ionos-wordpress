@@ -57,6 +57,7 @@ function get_ai_button(): array
         'link'           => \admin_url('admin.php?page=extendify-launch'),
         'text'           => \__('Start AI Sitebuilder', 'ionos-essentials'),
         'css-attributes' => 'startai',
+        'target'         => '_blank',
       ], ];
   }
 
@@ -67,6 +68,7 @@ function get_ai_button(): array
         'text'           => \__('Rebuild Website', 'ionos-essentials'),
         'css-attributes' => 'retryai',
         'title'          => \__('It is possible to rebuild your AI-created website within 72 hours', 'ionos-essentials'),
+        'target'         => '_blank',
       ], ];
   }
 

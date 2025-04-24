@@ -256,7 +256,7 @@ msgstr "Créer une adresse e-mail"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:138
 msgid "Set up your included email account and integrate it with your website."
-msgstr "Configurez votre compte de messagerie et intégrez-le à votre site Web"
+msgstr "Configurez votre compte de messagerie et intégrez-le à votre site Web."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:157
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:160
