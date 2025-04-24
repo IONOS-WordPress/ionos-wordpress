@@ -331,7 +331,7 @@ msgstr "Willkommen in Ihrem %s Hub"
 
 #: inc/dashboard/blocks/welcome/index.php:43
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "Diese Übersicht ist Ihr Einstieg, um das volle Potenzial Ihrer WordPress-Website zu erschließen."
+msgstr "Dieser Bereich hilft Ihnen das volle Potenzial Ihrer WordPress Webseite zu entfalten und neue, spannede Features und Updates zu entdecken."
 
 #: inc/dashboard/blocks/welcome/index.php:51
 msgid "Recommendations for next steps"
@@ -339,11 +339,11 @@ msgstr "Empfehlungen für die nächsten Schritte"
 
 #: inc/dashboard/blocks/welcome/index.php:52
 msgid "Helpful links and shortcuts"
-msgstr "Hilfreiche Links und Abkürzungen"
+msgstr "Nützliche Links und Informationen"
 
 #: inc/dashboard/blocks/welcome/index.php:53
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr "Umfassender Hilfebereich, einschließlich: KI-Chat-Support, geführte Touren und eine umfangreiche Wissensdatenbank"
+msgstr "Hilfebereich mit AI-Chat, Touren und einer umfangreichen Wissensdatenbank"
 
 #: inc/dashboard/blocks/welcome/index.php:61
 msgid "Close"
