@@ -19,9 +19,9 @@ function render_callback(): string
 {
   $user_meta = \get_user_meta(user_id: \get_current_user_id(), key: USER_META_KEY, single: true);
 
-  // if (! empty($user_meta)) {
-  //   return '';
-  // }
+  if (! empty($user_meta)) {
+    return '';
+  }
 
   $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
   $welcome_banner_url = \plugins_url('data/tenant-logos/welcome-banner.png', dirname(__DIR__));
