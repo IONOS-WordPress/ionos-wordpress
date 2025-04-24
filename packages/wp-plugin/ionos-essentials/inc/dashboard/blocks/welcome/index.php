@@ -19,9 +19,9 @@ function render_callback(): string
 {
   $user_meta = \get_user_meta(user_id: \get_current_user_id(), key: USER_META_KEY, single: true);
 
-  if (! empty($user_meta)) {
-    return '';
-  }
+  // if (! empty($user_meta)) {
+  //   return '';
+  // }
 
   $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
   $welcome_banner_url = \plugins_url('data/tenant-logos/welcome-banner.png', dirname(__DIR__));
@@ -55,14 +55,6 @@ function render_callback(): string
                       'ionos-essentials'
                     ) . '</li>
                 </ul>
-            </section>
-            <section class="horizontal-card__section">
-                <div class="paragraph">
-                    ' . \esc_html__(
-                      'Stay tuned for exciting new features and updates to come!',
-                      'ionos-essentials'
-                    ) . '
-                </div>
             </section>
             <footer class="horizontal-card__footer horizontal-card__footer--small-align-center">
                 <button class="button button--primary" autofocus>
