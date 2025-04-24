@@ -276,7 +276,7 @@
             "background": "#f4f7fa",
             "text": "#001b41"
         },
-        "css": ".hiddenelement {\ndisplay: none;\n}\n\n.ionos__banner {\njustify-content: space-between;\nalign-items: center;\nflex-direction: column;\nflex-wrap: nowrap;\n  @media only screen and (min-width: 620px) {\n    flex-direction: row;\n  }\n}\n\n.ionos__whatsnew {\nmin-width: 200px !important;\n}",
+        "css": ".hiddenelement {\ndisplay: none;\n}\n\n.ionos__banner {\njustify-content: space-between;\nalign-items: center;\nflex-direction: column;\nflex-wrap: nowrap;\n  @media only screen and (min-width: 620px) {\n    flex-direction: row;\n  }\n}\n\n.ionos__whatsnew {\nmin-width: 200px !important;\n}\n\n.ionos__brand_logo img {\nmin-height: 100px\n}",
         "elements": {
             "heading": {
                 "color": {
