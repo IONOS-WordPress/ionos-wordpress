@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.0.3
+
+### Patch Changes
+
+- 45a4495: small css and wording improvements
+
 ## 1.0.2
 
 ### Patch Changes
