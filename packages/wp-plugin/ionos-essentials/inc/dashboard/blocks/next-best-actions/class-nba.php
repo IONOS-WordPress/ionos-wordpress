@@ -180,32 +180,7 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
 $tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
 $market        = strtolower(\get_option($tenant . '_market', 'de'));
 
-if ( /*$market === 'de' && */is_plugin_active('woocommerce/woocommerce.php') && ! is_plugin_active('woocommerce-german-market-light/woocommerce-german-market-light.php') ) {
-  echo '<script>
-  const installButton = document.querySelector(\'a.nba-link[data-nba-id=woocommerce-gml]\');
-  installButton.addEventListener("click", function(event) {
-    event.target.disabled = true;
-    event.target.innerText = "' . \esc_js(__('Installing...', 'ionos-essentials')) . '";
-
-    fetch("/wp-json/ionos/essentials/dashboard/nba/v1/install-gml", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        "X-WP-Nonce": "' . \wp_create_nonce('wp_rest') . '"
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === "success") {
-        location.reload();
-      } else {
-        console.error("Failed to install the GML plugin.");
-      }
-    })
-    .catch(error => console.error("Error:", error));
-  });
-  </script>';
+if ( $market === 'de' && is_plugin_active('woocommerce/woocommerce.php') && ! is_plugin_active('woocommerce-german-market-light/woocommerce-german-market-light.php') ) {
   NBA::register(
     id: 'woocommerce-gml',
     title: \__('Legally compliant selling with German Market Light', 'ionos-essentials'), // Rechtssicher verkaufen mit German Market Light

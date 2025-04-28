@@ -59,13 +59,18 @@ function render_callback()
           <h4 class="wp-block-heading">' . \esc_html($action->title) . '</h4>
           <p>' . \esc_html($action->description) . '</p>
           <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
-              <div class="wp-block-button">
-                  <a data-nba-id="' . $action->id . '" href="' . \esc_url(
+              <div class="wp-block-button">';
+
+              if($action->id === 'woocommerce-gml') {
+                $body .= '<button style="height: auto;" id="ionos_essentials_install_gml" class="wp-block-button__link wp-element-button nba-link">' . $action->anchor . '</button>';
+              } else {
+                $body .= '<a data-nba-id="' . $action->id . '" href="' . \esc_url(
       $action->link
     ) . '" class="wp-block-button__link wp-element-button nba-link" target="' . $target . '">' . \esc_html(
       $action->anchor
-    ) . '</a>
-              </div>
+    ) . '</a>';
+  }
+             $body .= '</div>
               <div class="wp-block-button is-style-outline is-style-outline--1">
                   <a data-nba-id="' . $action->id . '" class="wp-block-button__link wp-element-button dismiss-nba" target="_top">' . \esc_html__(
       'Dismiss',
@@ -118,6 +123,7 @@ function render_callback()
       return \current_user_can('manage_options');
     },
   ]);
+
   \register_rest_route('ionos/essentials/dashboard/nba/v1', 'install-gml', [
       'methods'             => 'GET',
       'permission_callback' => function () {
@@ -142,6 +148,8 @@ function render_callback()
       },
     ]
   );
+
+
 });
 
 
@@ -218,6 +226,15 @@ function install_plugin_from_url($plugin_url)
             if (uploadButton) {
               uploadButton.click();
             }
+
+            const installgmlBTN= iframeDocument.querySelector('#ionos_essentials_install_gml');
+            if (installgmlBTN) {
+              installgmlBTN.click();
+              alert('You clicked the link!');
+            } else {
+              console.log('Element not found');
+            }
+
           });
           obs.disconnect();
         }
@@ -228,5 +245,16 @@ function install_plugin_from_url($plugin_url)
         subtree: true
       });
     </script>";
+
+
+  });
+
+  \add_action('admin_head', function () {
+
+
+
   });
 });
+
+
+
