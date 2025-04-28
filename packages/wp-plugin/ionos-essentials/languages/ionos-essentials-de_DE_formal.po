@@ -178,7 +178,7 @@ msgstr "Zur Website"
 msgid "Start AI Sitebuilder"
 msgstr "Website mit AI erstellen"
 
-#: inc/dashboard/blocks/deep-links/index.php:122
+#: inc/dashboard/blocks/deep-links/index.php:124
 msgid "Manage Hosting"
 msgstr "Zum Control Panel"
 
@@ -192,11 +192,11 @@ msgctxt "block description"
 msgid "Banner"
 msgstr "Banner"
 
-#: inc/dashboard/blocks/deep-links/index.php:79
+#: inc/dashboard/blocks/deep-links/index.php:81
 msgid "Account Management"
 msgstr "Mein Konto"
 
-#: inc/dashboard/blocks/deep-links/index.php:80
+#: inc/dashboard/blocks/deep-links/index.php:82
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Schnellzugriff auf Ihr Kundenkonto, Verträge und Logineinstellungen."
 
@@ -209,16 +209,16 @@ msgstr "Nutzen Sie diese einfache Navigation zu den häufigsten Funktionen und T
 msgid "Overview"
 msgstr "Übersicht"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:204
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
 msgid "Create Page"
 msgstr "Seite erstellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:186
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:194
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:188
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:196
 msgid "Add Logo"
 msgstr "Logo hinzufügen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:187
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Fügen Sie Ihre Website Ihr einzigartiges Logo hinzu, um ein professionelles Aussehen zu gewährleisten."
 
@@ -238,73 +238,73 @@ msgstr "Vervollständigen und personalisieren Sie Ihre Website, fügen Sie neue 
 msgid "Edit Website"
 msgstr "Website bearbeiten"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:120
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:121
 msgid "Discover Help Center"
 msgstr "Hilfe-Center entdecken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:121
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:122
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
 msgstr "Machen Sie sich mit unseren umfangreichen Support Angeboten vertraut und nutzen Sie unseren AI Chat für alle Fragen rund um WordPress."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:126
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:127
 msgid "Open Help Center"
 msgstr "Hilfe-Center öffnen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:136
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:138
 msgid "Set Up Email"
 msgstr "E-Mail einrichten"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:137
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:139
 msgid "Set up your included email account and integrate it with your website."
 msgstr "Nutzen Sie Ihre inkludierte E-Mail-Adresse passend zur Ihrer eigenen Website und Domain."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:156
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:159
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:158
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:161
 msgid "Set Up Contact Form"
 msgstr "Kontakt-Formular einrichten"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:157
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:159
 msgid "Create a contact form to stay connected with your visitors."
 msgstr "Richten Sie das Kontaktformular ein, um mit Ihren Besuchern in Kontakt zu bleiben."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:170
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:172
 msgid "Set Up Your WooCommerce Store"
 msgstr "Einrichten Ihres WooCommerce Shops"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:171
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:173
 msgid "Launch your online store now with a guided setup wizard."
 msgstr "Starten Sie jetzt Ihren Online-Shop mit dem einfachen und komfortablen Einrichtungsassistenten."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:173
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:175
 msgid "Start Setup"
 msgstr "Start Setup"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:211
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:213
 msgid "Social Media Setup"
 msgstr "Social Media verbinden"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:212
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:214
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Verbinden Sie Ihre Social-Media-Profile mit Ihrer Website und erweitern Sie Ihre Online-Präsenz."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:219
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:221
 msgid "Connect Social Media"
 msgstr "Social Media verbinden"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:226
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:232
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:234
 msgid "Add Favicon"
 msgstr "Favicon hinzufügen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:229
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Fügen Sie Ihrer Website ein Favicon (Website-Symbol) hinzu, um die Wiedererkennung und Sichtbarkeit Ihrer Marke zu verbessern."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:201
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:203
 msgid "Create a Page"
 msgstr "Eine Seite erstellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:202
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:204
 msgid "Create and publish a page and share your story with the world."
 msgstr "Erstellen und veröffentlichen Sie eine neue Seite und teilen Sie ihre Inhalte mit der Welt."
 
@@ -327,11 +327,11 @@ msgstr "Ihre Website ist online, aber die Reise hat gerade erst begonnen. Hier f
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php:40
 msgid "Welcome to your %s Hub"
-msgstr "Willkommen in Ihrem %s Hub"
+msgstr "Willkommen im %s Hub"
 
 #: inc/dashboard/blocks/welcome/index.php:43
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "Diese Übersicht ist Ihr Einstieg, um das volle Potenzial Ihrer WordPress-Website zu erschließen."
+msgstr "Dieser Bereich hilft Ihnen das volle Potenzial Ihrer WordPress Webseite zu entfalten und neue, spannende Features und Updates zu entdecken."
 
 #: inc/dashboard/blocks/welcome/index.php:51
 msgid "Recommendations for next steps"
@@ -339,17 +339,13 @@ msgstr "Empfehlungen für die nächsten Schritte"
 
 #: inc/dashboard/blocks/welcome/index.php:52
 msgid "Helpful links and shortcuts"
-msgstr "Hilfreiche Links und Abkürzungen"
+msgstr "Nützliche Links und Informationen"
 
 #: inc/dashboard/blocks/welcome/index.php:53
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr "Umfassender Hilfebereich, einschließlich: KI-Chat-Support, geführte Touren und eine umfangreiche Wissensdatenbank"
+msgstr "Hilfebereich mit AI-Chat, Touren und einer umfangreichen Wissensdatenbank"
 
 #: inc/dashboard/blocks/welcome/index.php:61
-msgid "Stay tuned for exciting new features and updates to come!"
-msgstr "Bleiben Sie dran, denn es kommen spannende neue Funktionen und Updates auf Sie zu!"
-
-#: inc/dashboard/blocks/welcome/index.php:69
 msgid "Close"
 msgstr "Schließen"
 
@@ -455,7 +451,7 @@ msgstr "Domain und SSL verwalten"
 msgid "Add more products"
 msgstr "Weitere Produkte hinzufügen"
 
-#: inc/dashboard/blocks/deep-links/index.php:105
+#: inc/dashboard/blocks/deep-links/index.php:107
 msgid "Webmail Login"
 msgstr "Webmail Login"
 
@@ -491,7 +487,7 @@ msgstr "SSL"
 msgid "Markenschutz"
 msgstr "Markenschutz"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:142
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:144
 msgid "Setup Email Account"
 msgstr "E-Mail einrichten"
 
@@ -520,10 +516,10 @@ msgstr "Schwachstellen-Scan nicht möglich. Bitte kontaktieren Sie den Kundendie
 msgid "Essentials"
 msgstr "Essentials"
 
-#: inc/dashboard/blocks/banner/index.php:67
+#: inc/dashboard/blocks/banner/index.php:68
 msgid "Rebuild Website"
 msgstr "Website neu erstellen"
 
-#: inc/dashboard/blocks/banner/index.php:69
+#: inc/dashboard/blocks/banner/index.php:70
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr "Es ist möglich, Ihre Website innerhalb von 72 Stunden mit KI neu zu erstellen"

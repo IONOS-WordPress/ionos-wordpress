@@ -56,14 +56,6 @@ function render_callback(): string
                     ) . '</li>
                 </ul>
             </section>
-            <section class="horizontal-card__section">
-                <div class="paragraph">
-                    ' . \esc_html__(
-                      'Stay tuned for exciting new features and updates to come!',
-                      'ionos-essentials'
-                    ) . '
-                </div>
-            </section>
             <footer class="horizontal-card__footer horizontal-card__footer--small-align-center">
                 <button class="button button--primary" autofocus>
                     ' . \esc_html__('Close', 'ionos-essentials') . '
