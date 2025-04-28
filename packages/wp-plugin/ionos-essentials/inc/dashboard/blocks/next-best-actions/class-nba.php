@@ -177,6 +177,45 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
   );
 }
 
+$tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
+$market        = strtolower(\get_option($tenant . '_market', 'de'));
+
+if ( /*$market === 'de' && */is_plugin_active('woocommerce/woocommerce.php') && ! is_plugin_active('woocommerce-german-market-light/woocommerce-german-market-light.php') ) {
+  echo '<script>
+  const installButton = document.querySelector(\'a.nba-link[data-nba-id=woocommerce-gml]\');
+  installButton.addEventListener("click", function(event) {
+    event.target.disabled = true;
+    event.target.innerText = "' . \esc_js(__('Installing...', 'ionos-essentials')) . '";
+
+    fetch("/wp-json/ionos/essentials/dashboard/nba/v1/install-gml", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-WP-Nonce": "' . \wp_create_nonce('wp_rest') . '"
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success") {
+        location.reload();
+      } else {
+        console.error("Failed to install the GML plugin.");
+      }
+    })
+    .catch(error => console.error("Error:", error));
+  });
+  </script>';
+  NBA::register(
+    id: 'woocommerce-gml',
+    title: \__('Legally compliant selling with German Market Light', 'ionos-essentials'), // Rechtssicher verkaufen mit German Market Light
+    description: \__('Use the free extension for WooCommerce (... extension from German Market) to operate your online store in Germany and Austria in a legally compliant manner.', 'ionos-essentials'), // Nutzen Sie die für Sie kostenlose Erweiterung für WooCommerce (... Erweiterung von German Market), um Ihren Onlineshop in Deutschland und Österreich rechtssicher zu betreiben.
+    link: '#',
+    anchor: \__('Install now', 'ionos-essentials'), // Jetzt installieren
+    completed: is_plugin_active('woocommerce-german-market-light/woocommerce-german-market-light.php'), // when setup completed or cta is clicked
+  );
+}
+
 if ('extendable' === get_stylesheet()) {
   $custom_logo_id           = get_theme_mod('custom_logo');
   $logo                     = wp_get_attachment_image_src($custom_logo_id, 'full');

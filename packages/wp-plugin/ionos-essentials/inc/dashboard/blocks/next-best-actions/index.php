@@ -2,6 +2,12 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
+require_once ABSPATH . 'wp-admin/includes/plugin.php';
+require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+require_once ABSPATH . 'wp-admin/includes/file.php';
+require_once ABSPATH . 'wp-admin/includes/misc.php';
+
 use const ionos\essentials\PLUGIN_DIR;
 
 \add_action('init', function () {
@@ -112,7 +118,68 @@ function render_callback()
       return \current_user_can('manage_options');
     },
   ]);
+  \register_rest_route('ionos/essentials/dashboard/nba/v1', 'install-gml', [
+      'methods'             => 'GET',
+      'permission_callback' => function () {
+        return \current_user_can('install_plugins');
+      },
+      'callback'            => function () {
+        $plugin_slug = 'ionos-essentials/ionos-essentials.php';
+        if (! file_exists(WP_PLUGIN_DIR . '/' . $plugin_slug)) {
+          if (! install_plugin_from_url(
+            'https://marketpress.de/mp-download/no-key-woocommerce-german-market-light/woocommerce-german-market-light/1und1/'
+          )) {
+            return new \WP_REST_Response([
+              'status' => 'error',
+            ], 500);
+          }
+        }
+        \activate_plugin($plugin_slug, '', false, true);
+
+        return new \WP_REST_Response([
+          'status' => 'success',
+        ], 200);
+      },
+    ]
+  );
 });
+
+
+function install_plugin_from_url($plugin_url)
+{
+  class Silent_Skin extends \WP_Upgrader_Skin
+  {
+    public function feedback($string, ...$args)
+    {
+    }
+
+    public function header()
+    {
+    }
+
+    public function footer()
+    {
+    }
+
+    public function error($errors)
+    {
+    }
+
+    public function before()
+    {
+    }
+
+    public function after()
+    {
+    }
+  }
+
+  $skin     = new Silent_Skin();
+  $upgrader = new \Plugin_Upgrader($skin);
+  $result   = $upgrader->install($plugin_url);
+
+  return ! is_wp_error($result);
+}
 
 \add_action('post_updated', function ($post_id, $post_after, $post_before) {
   if ('publish' !== $post_before->post_status || ('publish' !== $post_after->post_status && 'draft' !== $post_after->post_status)) {
