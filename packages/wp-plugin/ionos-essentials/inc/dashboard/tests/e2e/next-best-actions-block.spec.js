@@ -63,6 +63,16 @@ test.describe('essentials:dashboard next-best-actions block', () => {
 
   test('test logo upload action behavior', async ({ admin, page }) => {
     // Upload image to the media library
+    // prevent thumbnail generation
+    await execSync('pnpm -s wp-env run tests-cli wp option update thumbnail_size_w 0');
+    await execSync('pnpm -s wp-env run tests-cli wp option update thumbnail_size_h 0');
+    await execSync('pnpm -s wp-env run tests-cli wp option update medium_size_w 0');
+    await execSync('pnpm -s wp-env run tests-cli wp option update medium_size_h 0');
+    await execSync('pnpm -s wp-env run tests-cli wp option update medium_large_size_w 0');
+    await execSync('pnpm -s wp-env run tests-cli wp option update medium_large_size_h 0');
+    await execSync('pnpm -s wp-env run tests-cli wp option update large_size_w 0');
+    await execSync('pnpm -s wp-env run tests-cli wp option update large_size_h 0');
+
     await execSync(
       'pnpm -s wp-env run tests-cli wp post delete $(pnpm -s run wp-env run tests-cli wp post list --post_type=attachment --format=ids) --force || true'
     );
