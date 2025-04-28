@@ -191,7 +191,7 @@ if ('extendable' === get_stylesheet()) {
       'ionos-essentials'
     ),
     link: \admin_url(
-      'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'
+      'site-editor.php?postId=extendable%2F%2Fheader&postType=wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'
     ),
     anchor: \__('Add Logo', 'ionos-essentials'),
     completed: ! $is_default_or_empty_logo
