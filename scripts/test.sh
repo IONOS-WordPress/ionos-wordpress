@@ -134,7 +134,7 @@ if [[ "${USE[@]}" =~ all|e2e ]]; then
   (
     # pnpm exec wp-scripts test-playwright --pass-with-no-tests -c ./playwright.config.js \
     pnpm exec playwright test --pass-with-no-tests -c ./playwright.config.js \
-      "${USE_OPTIONS[e2e]:---quiet}" \
+      ${USE_OPTIONS[e2e]:---quiet} \
       $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.js ]] && printf "$file "; done)
   )
 fi
@@ -211,6 +211,12 @@ Options:
     Execute only a single e2e test file :
       'pnpm run test:e2e packages/wp-plugin/ionos-essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js' or
       'pnpm run test:e2e deep-links-block.spec.js' (path can be left off for playwright)
+
+    Execute e2e tests by tag (https://playwright.dev/docs/test-annotations#tag-tests) :
+      # run only tests tagged with @globalstyles
+      'pnpm run test:e2e --e2e-opts "--grep @globalstyles"'
+      # run all tests except tagged with @editor
+      'pnpm run test:e2e --e2e-opts "--grep-invert @editor"'
 
     Execute only a single e2e test file with playwright debugger :
       'pnpm run test:e2e --e2e-opts '--debug' packages/wp-plugin/ionos-essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js' or
