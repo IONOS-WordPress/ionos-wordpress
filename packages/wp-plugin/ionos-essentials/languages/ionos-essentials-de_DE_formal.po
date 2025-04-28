@@ -327,11 +327,11 @@ msgstr "Ihre Website ist online, aber die Reise hat gerade erst begonnen. Hier f
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php:40
 msgid "Welcome to your %s Hub"
-msgstr "Willkommen in Ihrem %s Hub"
+msgstr "Willkommen im %s Hub"
 
 #: inc/dashboard/blocks/welcome/index.php:43
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "Dieser Bereich hilft Ihnen das volle Potenzial Ihrer WordPress Webseite zu entfalten und neue, spannede Features und Updates zu entdecken."
+msgstr "Dieser Bereich hilft Ihnen das volle Potenzial Ihrer WordPress Webseite zu entfalten und neue, spannende Features und Updates zu entdecken."
 
 #: inc/dashboard/blocks/welcome/index.php:51
 msgid "Recommendations for next steps"
