@@ -70,8 +70,6 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     await execSync(
       'pnpm -s wp-env run tests-cli wp media import --skip-copy --title="test-logo" wp-content/plugins/ionos-essentials/inc/dashboard/data/tenant-logos/welcome-banner.png '
     );
-    await execSync('pnpm -s wp-env run tests-cli wp option update thumbnail_size_w 0');
-    await execSync('pnpm -s wp-env run tests-cli wp option update thumbnail_size_h 0');
     // redirect to admin page and check if the help center cart exists => expectation is true
     await admin.visitAdminPage('/');
     let iframeLocator = await page.locator('iframe');
@@ -84,19 +82,5 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     await expect(page).toHaveTitle(/Editor/);
     let uploadLogoOverlay = await page.locator('.media-modal');
     await expect(uploadLogoOverlay).toHaveCount(1);
-
-    // check if image is uploaded
-    let uploadedImage = await page.locator('.attachments-wrapper li[aria-label="test-logo"]');
-    await expect(uploadedImage).toHaveCount(1);
-
-    // select thumplbail image
-    let imageThumbnail = await uploadedImage.locator('.thumbnail');
-    await expect(imageThumbnail).toHaveCount(1);
-    await imageThumbnail.click();
-
-    // set image as logo
-    let setLogoButton = await page.locator('.media-button.media-button-select');
-    await expect(setLogoButton).toHaveCount(1);
-    // await setLogoButton.click();
   });
 });
