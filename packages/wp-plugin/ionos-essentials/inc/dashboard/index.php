@@ -34,6 +34,7 @@ require_once __DIR__ . '/blocks/welcome/index.php';
 require_once __DIR__ . '/blocks/vulnerability/index.php';
 require_once __DIR__ . '/blocks/next-best-actions/index.php';
 require_once __DIR__ . '/blocks/deep-links/index.php';
+require_once __DIR__ . '/blocks/quick-links/index.php';
 require_once __DIR__ . '/blocks/banner/index.php';
 require_once __DIR__ . '/blocks/whats-new/index.php';
 
@@ -72,7 +73,6 @@ require_once __DIR__ . '/blocks/whats-new/index.php';
     PLUGIN_DIR . '/build/dashboard/blocks',
     PLUGIN_DIR . '/build/dashboard/blocks/blocks-manifest.php'
   );
-  \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/quick-links');
   \register_block_type(PLUGIN_DIR . '/build/dashboard/blocks/vulnerability');
 });
 

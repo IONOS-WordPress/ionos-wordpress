@@ -13,6 +13,5 @@
   },
   "textdomain": "ionos-essentials",
   "editorScript": "file:./index.js",
-  "render": "file:../../../../inc/dashboard/blocks/quick-links/render.php",
   "style": "file:./index.css"
 }
