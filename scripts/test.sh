@@ -108,9 +108,9 @@ if [[ "${USE[@]}" =~ all|php ]]; then
       TARGET_PHP_VERSION=$(echo "${transpiled_plugin_dir#*php}" | grep -oE '^[0-9.]+')
 
       ionos.wordpress.log_header "checking compatibility for target php version $TARGET_PHP_VERSION in plugin $transpiled_plugin_dir"
-      # check if the transpiled plugin code is valid for the desired php version
+      # check if the transpiled plugin code (except for phpunit test files ) is valid for the desired php version
       ! cat <<EOL | docker run -i --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:${TARGET_PHP_VERSION}-cli /bin/bash - | grep -v '^No syntax errors'
-find "$transpiled_plugin_dir" -name "*.php" -print0 | xargs -0L1 php -l
+find "$transpiled_plugin_dir" -name "*.php" -not -name "*Test.php" -print0 | xargs -0L1 php -l
 exit $?
 EOL
 
