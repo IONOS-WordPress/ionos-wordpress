@@ -19,7 +19,7 @@ $links = [
     'icon' => 'helparticle-16.svg',
   ],
   [
-    'url'  => $blog_url . '/wp-admin/site-editor.php?postType=wp_navigation',
+    'url'  => $blog_url . '/wp-admin/site-editor.php?postType=wp_navigation&p=%2Fwp_navigation%2F9&canvas=edit&ionos-deep-link=navigation',
     'text' => __(
       'Edit site Navigation',
       'ionos-essentials'
@@ -35,12 +35,12 @@ $links = [
     'icon' => 'favstar-16.svg',
   ],
   [
-    'url'  => $blog_url . '/wp-admin/site-editor.php',
+    'url'  => $blog_url . '/wp-admin/site-editor.php?p=%2Fwp_template_part%2Fextendable%2F%2Fheader&canvas=edit&ionos-deep-link=header',
     'text' => __('Edit Header', 'ionos-essentials'),
     'icon' => 'website-48.svg',
   ],
   [
-    'url'  => $blog_url . '/wp-admin/site-editor.php',
+    'url'  => $blog_url . '/wp-admin/site-editor.php?p=%2Fwp_template_part%2Fextendable%2F%2Ffooter&canvas=edit&ionos-deep-link=footer',
     'text' => __(
       'Edit Footer',
       'ionos-essentials'

@@ -47,3 +47,29 @@ function render_callback()
 
   return sprintf($template, $body);
 }
+
+\add_action('enqueue_block_editor_assets', function () {
+  if (! isset($_GET['ionos-deep-link'])) {
+    return;
+  }
+
+  switch ($_GET['ionos-deep-link']) {
+    case 'header':
+      \add_action('admin_footer', function () {
+        echo "<script>console.log('mops');</script>";
+      });
+      break;
+    case 'footer':
+      \add_action('admin_footer', function () {
+        echo "<script>console.log('klops');</script>";
+      });
+      break;
+    case 'navigation':
+      \add_action('admin_footer', function () {
+        echo "<script>console.log('drops');</script>";
+      });
+      break;
+    default:
+      return;
+  }
+});
