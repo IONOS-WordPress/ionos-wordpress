@@ -94,6 +94,20 @@ Everything works exactly as in DevContainer, but you need to have the requiremen
 
 - playwright dependencies installed globally (see `.devcontainer/Dockerfile`) : `sudo pnpx playwright install-deps`
 
+# testing production
+
+to test the production build :
+
+- configure environment `TEST_PRODUCTION=true` before starting `wp-env`.
+
+  This can be done locally by adding the environment to your `.env.local` file.
+
+  > `wp-env` must be restarted to be properly configured. You can ensure this by executing `pnpm destroy before`.
+
+- run the test command (excluding editor tests which are not available in the production build) : `pnpm run test --e2e-opts "--grep-invert @editor"`
+
+Alternatively you can destroy wp-env and start the everything at once by doing `TEST_PRODUCTION=true pnpm run test --e2e-opts "--grep-invert @editor"`.
+
 # links
 
 - dozens of useful playwright/wordpress testcases to borrow from :
