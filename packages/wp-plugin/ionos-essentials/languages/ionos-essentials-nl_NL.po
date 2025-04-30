@@ -127,7 +127,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Wp-scangegevens weergeven."
 
-#: inc/dashboard/index.php:228
+#: inc/dashboard/index.php:227
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -204,21 +204,21 @@ msgstr "Toegang tot je klantaccount, beveiligingsinstellingen en pakketten met Ã
 msgid "Easily navigate to frequently used features and tools."
 msgstr "Navigeer eenvoudig naar vaak gebruikte functies en tools."
 
+#: inc/dashboard/index.php:125
 #: inc/dashboard/index.php:126
-#: inc/dashboard/index.php:127
 msgid "Overview"
 msgstr "Overzicht"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:245
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:220
 msgid "Create Page"
 msgstr "Pagina maken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:235
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:202
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:210
 msgid "Add Logo"
 msgstr "Logo toevoegen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:203
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Zorg ervoor dat je website is voorzien van een uniek logo voor een professionele uitstraling."
 
@@ -279,32 +279,32 @@ msgstr "Lanceer je webshop met behulp van de set-upwizard."
 msgid "Start Setup"
 msgstr "Set-up starten"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:252
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
 msgid "Social Media Setup"
 msgstr "Social media verbinden"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:253
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Verbind je social media-profielen met je website en vergroot je online zichtbaarheid."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:260
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:235
 msgid "Connect Social Media"
 msgstr "Social media verbinden"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:267
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:273
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:242
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:248
 msgid "Add Favicon"
 msgstr "Favicon toevoegen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:268
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:243
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Voeg een favicon (website-icoon) toe aan je website om de herkenbaarheid en zichtbaarheid te verbeteren."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:242
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:217
 msgid "Create a Page"
 msgstr "Pagina maken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:243
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:218
 msgid "Create and publish a page and share your story with the world."
 msgstr "Maak en publiceer een pagina en deel je verhaal met de wereld."
 
@@ -401,7 +401,7 @@ msgstr "Header bewerken"
 msgid "Edit Footer"
 msgstr "Footer bewerken"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:70
+#: inc/dashboard/blocks/next-best-actions/index.php:75
 msgid "Dismiss"
 msgstr "Sluiten"
 
@@ -503,6 +503,7 @@ msgstr "De vereiste beveiligingsplugin ontbreekt."
 msgid "Install Security plugin"
 msgstr "Beveiligingsplugin installeren"
 
+#: inc/dashboard/blocks/next-best-actions/index.php:87
 #: inc/dashboard/blocks/vulnerability/render.php:122
 msgid "Installing..."
 msgstr "Installeren..."
@@ -524,14 +525,14 @@ msgstr "Website herbouwen"
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr "Het is mogelijk om je door AI gemaakte website binnen 72 uur opnieuw op te bouwen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:211
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:186
 msgid "Legally compliant selling with German Market Light"
-msgstr ""
+msgstr "Wettelijk conforme verkoop met German Market Light"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:212
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:187
 msgid "Use the free extension for WooCommerce (... extension from German Market) to operate your online store in Germany and Austria in a legally compliant manner."
-msgstr ""
+msgstr "Gebruik de gratis extensie voor WooCommerce (... extensie van Duitse Markt) om je online winkel in Duitsland en Oostenrijk op een wettelijk correcte manier te exploiteren."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:214
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Install now"
-msgstr ""
+msgstr "Nu installeren"

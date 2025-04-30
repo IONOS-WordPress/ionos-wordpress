@@ -127,7 +127,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Afficher les données de balayage wp."
 
-#: inc/dashboard/index.php:228
+#: inc/dashboard/index.php:227
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -204,21 +204,21 @@ msgstr "Accès en un clic à votre compte client, à votre sécurité de connexi
 msgid "Easily navigate to frequently used features and tools."
 msgstr "Naviguez facilement vers les fonctions et les outils les plus fréquemment utilisés."
 
+#: inc/dashboard/index.php:125
 #: inc/dashboard/index.php:126
-#: inc/dashboard/index.php:127
 msgid "Overview"
 msgstr "Vue d'ensemble"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:245
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:220
 msgid "Create Page"
 msgstr "Créer une page"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:235
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:202
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:210
 msgid "Add Logo"
 msgstr "Ajouter un logo"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:203
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Veillez à ce que votre site Web porte votre logo unique pour un aspect professionnel."
 
@@ -279,32 +279,32 @@ msgstr "Lancez votre boutique en ligne dès maintenant grâce à un assistant d'
 msgid "Start Setup"
 msgstr "Démarrer l'installation"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:252
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
 msgid "Social Media Setup"
 msgstr "Configurer les médias sociaux"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:253
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Connectez vos profils de médias sociaux à votre site Web et développez votre présence en ligne."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:260
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:235
 msgid "Connect Social Media"
 msgstr "Connecter les médias sociaux"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:267
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:273
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:242
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:248
 msgid "Add Favicon"
 msgstr "Ajouter un Favicon"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:268
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:243
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Ajoutez un favicon (icône de site Web) à votre site Web afin d'améliorer la reconnaissance et la visibilité de votre marque."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:242
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:217
 msgid "Create a Page"
 msgstr "Créer une page"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:243
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:218
 msgid "Create and publish a page and share your story with the world."
 msgstr "Créez et publiez une page ; partagez votre histoire avec le monde entier."
 
@@ -401,7 +401,7 @@ msgstr "Modifier l'en-tête"
 msgid "Edit Footer"
 msgstr "Modifier le bas de page"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:70
+#: inc/dashboard/blocks/next-best-actions/index.php:75
 msgid "Dismiss"
 msgstr "Ignorer"
 
@@ -503,6 +503,7 @@ msgstr "Le plugin de sécurité requis est manquant."
 msgid "Install Security plugin"
 msgstr "Installer le plugin de sécurité"
 
+#: inc/dashboard/blocks/next-best-actions/index.php:87
 #: inc/dashboard/blocks/vulnerability/render.php:122
 msgid "Installing..."
 msgstr "Installer..."
@@ -524,14 +525,14 @@ msgstr "Reconstruire le site web"
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr "Il est possible de reconstruire votre site Web créé par l'IA dans les 72 heures."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:211
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:186
 msgid "Legally compliant selling with German Market Light"
-msgstr ""
+msgstr "Vente conforme à la législation avec German Market Light"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:212
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:187
 msgid "Use the free extension for WooCommerce (... extension from German Market) to operate your online store in Germany and Austria in a legally compliant manner."
-msgstr ""
+msgstr "Utilisez l'extension gratuite pour WooCommerce (... extension from German Market) pour exploiter votre boutique en ligne en Allemagne et en Autriche dans le respect de la législation."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:214
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Install now"
-msgstr ""
+msgstr "Installer maintenant"
