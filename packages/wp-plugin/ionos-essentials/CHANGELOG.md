@@ -1,5 +1,47 @@
 # @ionos-wordpress/essentials
 
+## 1.0.3
+
+### Patch Changes
+
+- 45a4495: small css and wording improvements
+
+## 1.0.2
+
+### Patch Changes
+
+- b261827: fix hub styles in wordpress 6.8
+
+## 1.0.1
+
+### Patch Changes
+
+- f1265a3: add de_DE_formal language
+
+## 1.0.0
+
+### Major Changes
+
+- 1fc02a5: new Feature: Overview
+
+## 0.2.6
+
+### Patch Changes
+
+- b536b48: test release
+
+## 0.2.5
+
+### Patch Changes
+
+- a1d5128: another prerelease candidate
+
+## 0.2.4
+
+### Patch Changes
+
+- e7e576b: beta release
+
 ## 0.2.3
 
 ### Patch Changes

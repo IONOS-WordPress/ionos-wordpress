@@ -452,7 +452,7 @@ Options:
               - pnpm     operate on pnpm lock file
               - i18n     operate on po/pot files
 
-              The i18n allows autonmatic translation of po files using deepl.com if 'DEEPL_API_KEY' is set in './.secrets'
+              The i18n allows automatic translation of po files using deepl.com if 'DEEPL_API_KEY' is set in './.secrets'
               See './.secret.example' for an example file.
 
   Usage:

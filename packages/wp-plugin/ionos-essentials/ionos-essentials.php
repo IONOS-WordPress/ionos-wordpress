@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Plugin Name:       ionos-essentials
+ * Plugin Name:       Essentials
  * Description:       The essentials plugin provides IONOS hosting specific functionality.
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
- * Version:           0.2.3
+ * Version:           1.0.3
  * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials
  * License:           GPL-2.0-or-later
@@ -36,3 +36,17 @@ require_once __DIR__ . '/inc/dashboard/index.php';
 
 // soc plugin components
 require_once __DIR__ . '/inc/migration/index.php';
+
+// TODO: evaluate for other tenants than IONOS
+
+// \add_filter(
+//   'gettext_ionos-essentials',
+//   function ($text) {
+//     if ( ! str_contains($text, 'IONOS')) {
+//       return $text;
+//     }
+//     $brand_name = \get_option('ionos_brand_name', 'IONOS');
+//     // TODO: replace more? menu_brand, non capital, ...
+//     return str_replace('IONOS', $brand_name, $text);
+//   }
+// );

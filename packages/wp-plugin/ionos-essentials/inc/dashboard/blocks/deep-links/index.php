@@ -67,18 +67,20 @@ function render_callback()
     return null;
   }
 
-  $template = '
+  $number_of_links   = count($data['links']) + (empty($data['webmail']) ? 0 : 1);
+  $number_of_columns = round($number_of_links / 2);
+  $template          = '
   <div class="wp-block-column deep-links">
       <h3 class="wp-block-heading">%s</h3>
       <p>%s</p>
-    <div class="wp-block-group">
+    <div class="wp-block-group columns-' . $number_of_columns . '">
     %s
     </div>
   </div>';
 
   $headline    = \esc_html__('Account Management', 'ionos-essentials');
   $description = \esc_html__(
-    'One-click access to your customer account, login security and subscriptions',
+    'One-click access to your customer account, login security and subscriptions.',
     'ionos-essentials'
   );
 

@@ -21,14 +21,20 @@
 .ionos_dashboard-template .wp-site-blocks .banner-buttons {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 0 !important;
   flex-direction: column;
+  overflow: visible;
+  margin-bottom: 0px !important;
 
   .button {
-    width: 210px !important;
-
+    min-width: 210px !important;
+    max-width: 300px !important;
     margin: 0 10px !important;
 
+    &:first-child, &:nth-child(3) {
+      margin: 0 !important;
+    }
     a {
       width:100% !important;
       outline: none;
@@ -50,6 +56,7 @@
       content: "";
       font-family: exos-icon-font;
       float: left;
+      padding-right: 5px;
     }
 
     .deeplink {
@@ -63,18 +70,22 @@
         color: #fff !important;
       }
     }
+    @media only screen and (min-width: 1000px) {
+      .startai, .retryai {
+        margin-bottom: 0px;
+      }
+      .deeplink {
+        margin-bottom: 0px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 620px) {
+    margin-bottom: 10px !important;
   }
 
   @media only screen and (min-width: 1000px) {
     flex-direction: row;
-
-    .startai, .retryai {
-      margin-bottom: 0px;
-    }
-
-    .deeplink {
-      margin-bottom: 0px;
-    }
+    height: 36px;
   }
 }
-

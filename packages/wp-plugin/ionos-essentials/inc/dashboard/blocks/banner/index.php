@@ -24,6 +24,7 @@ function render_callback(): string
       'link'           => \home_url(),
       'text'           => \__('View Site', 'ionos-essentials'),
       'css-attributes' => 'viewsite',
+      'target'         => '_blank',
     ],
   ];
 
@@ -56,6 +57,7 @@ function get_ai_button(): array
         'link'           => \admin_url('admin.php?page=extendify-launch'),
         'text'           => \__('Start AI Sitebuilder', 'ionos-essentials'),
         'css-attributes' => 'startai',
+        'target'         => '_blank',
       ], ];
   }
 
@@ -63,9 +65,10 @@ function get_ai_button(): array
     return [
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),
-        'text'           => \__('Retry AI', 'ionos-essentials'),
+        'text'           => \__('Rebuild Website', 'ionos-essentials'),
         'css-attributes' => 'retryai',
-        'title'          => \__('Valid for up to 72h', 'ionos-essentials'),
+        'title'          => \__('It is possible to rebuild your AI-created website within 72 hours', 'ionos-essentials'),
+        'target'         => '_blank',
       ], ];
   }
 

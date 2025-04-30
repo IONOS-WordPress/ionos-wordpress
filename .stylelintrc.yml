@@ -10,6 +10,9 @@ rules:
   color-named: null
   selector-class-pattern: null
   prettier/prettier: true
+  font-family-no-missing-generic-family-keyword:
+    ignoreFontFamilies:
+      - 'exos-icon-font'
 plugins:
   - stylelint-scss
   - stylelint-prettier

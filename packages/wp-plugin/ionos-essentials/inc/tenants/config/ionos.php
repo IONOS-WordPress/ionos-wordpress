@@ -4,10 +4,6 @@ namespace ionos\essentials\dashboard\blocks\deep_links;
 
 $links = [
   [
-    'url'    => 'product-overview',
-    'anchor' => __('My Products', 'ionos-essentials'),
-  ],
-  [
     'url'    => 'account',
     'anchor' => __('My Account', 'ionos-essentials'),
   ],
@@ -18,6 +14,10 @@ $links = [
   [
     'url'    => 'domains',
     'anchor' => __('Domains and SSL management', 'ionos-essentials'),
+  ],
+  [
+    'url'    => 'product-overview',
+    'anchor' => __('My Products', 'ionos-essentials'),
   ],
   [
     'url'    => 'add-product',

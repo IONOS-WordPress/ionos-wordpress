@@ -7,7 +7,9 @@
 
 set -eo pipefail
 
-WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
+readonly WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
+
+readonly WP_ENV_HASH=$(basename "$WPENV_INSTALLPATH")
 
 # phpunit : install missing yoast/phpunit-polyfills
 # this is neeed to run the tests in the WordPress environment
@@ -22,16 +24,14 @@ docker cp "$WORDPRESS_TEST_CONTAINER:/home/$USER/.composer/vendor/" "$(pwd)/phpu
 docker cp "$(pwd)/phpunit/phpunit.xml" "$WORDPRESS_TEST_CONTAINER:/var/www/html/"
 docker cp "$(pwd)/phpunit/bootstrap.php" "$WORDPRESS_TEST_CONTAINER:/var/www/html/"
 
-
 # execute only when NOT in CI environment
 # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
 if [[ "${CI:-}" != "true" ]]; then
   # MARK: supress xdebug warnings if vscode is not running in local development mode
   (
-    prefix=$(basename "$(pnpm wp-env install-path)")
     # iterate over all wp-env containers and add "xdebug.log_level=0" to php.ini if not already present
     for suffix in 'cli-1' 'tests-cli-1' 'tests-wordpress-1' 'wordpress-1' ; do
-      cat <<EOF | docker exec --interactive -u root "${prefix}-${suffix}" sh -
+      cat <<EOF | docker exec --interactive -u root "${WP_ENV_HASH}-${suffix}" sh -
         grep -q 'xdebug.log_level=' /usr/local/etc/php/php.ini || \
           echo "xdebug.log_level=0" >> /usr/local/etc/php/php.ini
 EOF
@@ -189,35 +189,41 @@ fi
 # remove dolly demo plugin
 rm -f $WPENV_INSTALLPATH/{tests-WordPress,WordPress}/wp-content/plugins/hello.php
 
-for prefix in '' 'tests-' ; do
-  # this wp-cli configuration file needs to be created to enable wp-cli to work with the apache mod_rewrite module
-  pnpm exec wp-env run ${prefix}cli sh -c 'echo -e "apache_modules:\n  - mod_rewrite" > /var/www/html/wp-cli.yml'
+for prefix in 'cli-1' 'tests-cli-1' ; do
+  # execute multiple commands at once in the container
+  docker exec -i "${WP_ENV_HASH}-${prefix}" /bin/bash <<EOF
+    set -x
 
-  # The wp rewrite structure command updates the permalink structure. --hard also updates the .htaccess file
-  pnpm exec wp-env run ${prefix}cli wp --quiet rewrite structure '/%postname%' --hard
+    # this wp-cli configuration file needs to be created to enable wp-cli to work with the apache mod_rewrite module
+    echo -e "apache_modules:\n  - mod_rewrite" > /var/www/html/wp-cli.yml
 
-  # The wp rewrite flush command regenerates the rewrite rules for your WordPress site, which includes refreshing the permalinks.
-  pnpm exec wp-env run ${prefix}cli wp --quiet rewrite flush
+    # The wp rewrite structure command updates the permalink structure. --hard also updates the .htaccess file
+    wp --quiet rewrite structure '/%postname%' --hard
 
-  # Updates an option value for example the value of Simple page is id = 2
-  pnpm exec wp-env run ${prefix}cli wp --quiet option update page_on_front 2
-  # Update the page as front page by default.
-  pnpm exec wp-env run ${prefix}cli wp --quiet option update show_on_front page
+    # The wp rewrite flush command regenerates the rewrite rules for your WordPress site, which includes refreshing the permalinks.
+    wp --quiet rewrite flush
 
-  # activate twentytwenty-five theme in all wp-env instances (test and development)
-  pnpm exec wp-env run ${prefix}cli wp --quiet theme activate twentytwentyfive
+    # Updates an option value for example the value of Simple page is id = 2
+    wp --quiet option update page_on_front 2
+    # Update the page as front page by default.
+    wp --quiet option update show_on_front page
 
-  # activate all installed plugins in all wp-env instances (test and development)
-  pnpm exec wp-env run ${prefix}cli wp --quiet plugin activate --all
+    # activate twentytwenty-five theme in all wp-env instances (test and development)
+    wp --quiet theme activate twentytwentyfive
 
-  # emulate ionos brand by default
-  pnpm exec wp-env run ${prefix}cli wp --quiet option update ionos_group_brand ionos
+    # activate all installed plugins in all wp-env instances (test and development)
+    wp --quiet plugin activate --all
 
-  # fix permissions for mu-plugins folder if any
-  # (leaving the permisions as-is will result in an error on destroy restart wp-env)
-  if find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' &>/dev/null; then
-    pnpm exec wp-env run ${prefix}cli sh -c 'sudo chmod a+w -R /var/www/html/wp-content/mu-plugins' 2>/dev/null || true
-  fi
-  pnpm exec wp-env run ${prefix}cli sh -c 'sudo chmod a+w -R /var/www/html/phpunit.xml' 2>/dev/null || true
-  pnpm exec wp-env run ${prefix}cli sh -c 'sudo chmod a+w -R /var/www/html/bootstrap.php' 2>/dev/null || true
+    # emulate ionos brand by default
+    wp --quiet option update ionos_group_brand ionos
+
+    # fix permissions for mu-plugins folder if any
+    # (leaving the permisions as-is will result in an error on destroy restart wp-env)
+    if find /var/www/html/wp-content/mu-plugins -mindepth 1 -maxdepth 1 -type d -printf '%f\n' &>/dev/null; then
+      sudo chmod a+w -R /var/www/html/wp-content/mu-plugins 2>/dev/null || true
+    fi
+
+    sudo chmod a+w -R /var/www/html/phpunit.xml 2>/dev/null || true
+    sudo chmod a+w -R /var/www/html/bootstrap.php 2>/dev/null || true
+EOF
 done

@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: it\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-02-19T08:22:27+00:00\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-04-14 14:15+0200\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: Poedit 3.6\n"
 
 #. Plugin URI of the plugin
 #: ionos-essentials.php
@@ -133,7 +133,7 @@ msgstr "Brand Logo"
 
 #: inc/dashboard/blocks/vulnerability/render.php:90
 msgid "Show full scan report"
-msgstr "Mostra report completo della scansione"
+msgstr "Visualizza report completo della scansione"
 
 #: inc/dashboard/blocks/vulnerability/render.php:69
 msgid "Last scan"
@@ -157,7 +157,7 @@ msgstr[0] "Allarme rilevato"
 msgstr[1] "Allarmi rilevati"
 
 #: inc/dashboard/blocks/vulnerability/render.php:64
-msgid "issues found"
+msgid "Issues found"
 msgstr "Problemi rilevati"
 
 #: build/dashboard/blocks/next-best-actions/block.json
@@ -172,19 +172,15 @@ msgstr "Le prossime azioni migliori"
 
 #: inc/dashboard/blocks/banner/index.php:25
 msgid "View Site"
-msgstr "Visualizza il sito"
+msgstr "Visualizza sito"
 
-#: inc/dashboard/blocks/banner/index.php:57
+#: inc/dashboard/blocks/banner/index.php:58
 msgid "Start AI Sitebuilder"
-msgstr "Avviare AI Sitebuilder"
+msgstr "Avvia creazione con IA"
 
-#: inc/dashboard/blocks/banner/index.php:66
-msgid "Retry AI"
-msgstr "Riprova AI"
-
-#: inc/dashboard/blocks/deep-links/index.php:122
+#: inc/dashboard/blocks/deep-links/index.php:124
 msgid "Manage Hosting"
-msgstr "Gestire l'hosting"
+msgstr "Gestisci hosting"
 
 #: build/dashboard/blocks/banner/block.json
 msgctxt "block title"
@@ -196,169 +192,160 @@ msgctxt "block description"
 msgid "Banner"
 msgstr "Stendardo"
 
-#: inc/dashboard/blocks/deep-links/index.php:79
+#: inc/dashboard/blocks/deep-links/index.php:81
 msgid "Account Management"
-msgstr "Gestione dei conti"
+msgstr "Il mio account"
 
-#: inc/dashboard/blocks/deep-links/index.php:80
-msgid "One-click access to your customer account, login security and subscriptions"
-msgstr "Accesso con un solo clic all'account cliente, alla sicurezza del login e agli abbonamenti"
+#: inc/dashboard/blocks/deep-links/index.php:82
+msgid "One-click access to your customer account, login security and subscriptions."
+msgstr "Accedi con un solo clic al tuo account cliente, ai contratti e alle impostazioni di login."
 
 #: inc/dashboard/blocks/quick-links/render.php:14
-msgid "Easily navigate to frequently used features and tools"
-msgstr "Navigare facilmente verso le funzioni e gli strumenti utilizzati più frequentemente"
+msgid "Easily navigate to frequently used features and tools."
+msgstr "Accedi facilmente alle funzioni e agli strumenti utilizzati più frequentemente."
 
 #: inc/dashboard/index.php:126
 #: inc/dashboard/index.php:127
 msgid "Overview"
 msgstr "Panoramica"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:204
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
 msgid "Create Page"
 msgstr "Crea pagina"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:186
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:194
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:188
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:196
 msgid "Add Logo"
-msgstr "Aggiungi logo"
+msgstr "Aggiungi un logo"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:187
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Ensure your website is branded with your unique logo for a professional look."
-msgstr "Assicuratevi che il vostro sito web sia marchiato con il vostro logo unico per un aspetto professionale."
+msgstr "Assicurati che nel tuo sito web sia visibile il tuo logo distintivo per un aspetto professionale."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:100
 msgid "Connect Domain"
-msgstr "Collega Dominio"
+msgstr "Collega dominio"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:107
 msgid "Edit & Complete Your Website"
-msgstr "Modifica e completamento del sito web"
+msgstr "Modifica e completa il tuo sito web"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:108
-msgid "Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts"
-msgstr "Aggiungete pagine, testi e immagini, perfezionate il vostro sito web con strumenti AI o regolate colori e caratteri."
+msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
+msgstr "Aggiungi pagine, testi e immagini, perfeziona il tuo sito web con strumenti IA o imposta colori e caratteri."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:113
 msgid "Edit Website"
-msgstr "Modifica del sito web"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:120
-msgid "Discover Help Center"
-msgstr "Scoprire il Centro assistenza"
+msgstr "Modifica sito web"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:121
+msgid "Discover Help Center"
+msgstr "Scopri il Centro Assistenza"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:122
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
-msgstr "Ottenete assistenza immediata con Co-Pilot AI, esplorate la nostra Knowledge Base o partecipate a tour guidati."
+msgstr "Ottieni assistenza immediata con la Chat IA, consulta la nostra knowledge base o segui dei tour guidati."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:126
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:127
 msgid "Open Help Center"
-msgstr "Aprire il Centro assistenza"
+msgstr "Apri Centro Assistenza"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:136
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:138
 msgid "Set Up Email"
-msgstr "Impostazione dell'e-mail"
+msgstr "Configura e-mail"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:137
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:139
 msgid "Set up your included email account and integrate it with your website."
-msgstr "Configurate l'account e-mail incluso e integratelo con il vostro sito web."
+msgstr "Configura il tuo account e-mail e integralo con il tuo sito web."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:156
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:159
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:158
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:161
 msgid "Set Up Contact Form"
-msgstr "Impostazione del modulo di contatto"
+msgstr "Configura modulo di contatto"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:157
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:159
 msgid "Create a contact form to stay connected with your visitors."
-msgstr "Create un modulo di contatto per rimanere in contatto con i vostri visitatori."
+msgstr "Crea un modulo di contatto per facilitare la comunicazione con chi visita il tuo sito web."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:170
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:172
 msgid "Set Up Your WooCommerce Store"
-msgstr "Configurare il negozio WooCommerce"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:171
-msgid "Launch your online store now with a guided setup wizard."
-msgstr "Lanciate subito il vostro negozio online con una procedura guidata di configurazione."
+msgstr "Configura un negozio WooCommerce"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:173
+msgid "Launch your online store now with a guided setup wizard."
+msgstr "Avvia subito il tuo negozio online grazie alla procedura di configurazione guidata."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:175
 msgid "Start Setup"
-msgstr "Impostazione iniziale"
+msgstr "Avvia configurazione"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:211
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:213
 msgid "Social Media Setup"
-msgstr "Impostazione dei social media"
+msgstr "Configura social media"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:212
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:214
 msgid "Connect your social media profiles to your website and expand your online presence."
-msgstr "Collegate i profili dei social media al vostro sito web e ampliate la vostra presenza online."
+msgstr "Collega i profili social al tuo sito web e amplia la tua presenza online."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:219
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:221
 msgid "Connect Social Media"
-msgstr "Collegare i social media"
+msgstr "Collega social media"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:226
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:232
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:234
 msgid "Add Favicon"
-msgstr "Aggiungi Favicon"
+msgstr "Aggiungi una Favicon"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:229
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
-msgstr "Aggiungete una favicon (icona del sito web) al vostro sito web per migliorare il riconoscimento e la visibilità del marchio."
+msgstr "Aggiungi una favicon (icona per siti web) al tuo sito per migliorare il riconoscimento e la visibilità del tuo marchio."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:201
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:203
 msgid "Create a Page"
-msgstr "Creare una pagina"
+msgstr "Crea una pagina"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:202
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:204
 msgid "Create and publish a page and share your story with the world."
-msgstr "Create e pubblicate una pagina e condividete la vostra storia con il mondo."
+msgstr "Crea e pubblica una pagina e condividi i tuoi contenuti con il mondo."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:95
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
-msgstr "Collegate il vostro dominio al vostro sito web per aumentare la visibilità e attirare più visitatori."
+msgstr "Collega un dominio al tuo sito web per aumentare la visibilità e ottenere più visite."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:94
 msgid "Connect a Domain"
-msgstr "Collegare un dominio"
+msgstr "Collega un dominio"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:35
 msgid "Unlock Your Website's Potential"
-msgstr "Liberate il potenziale del vostro sito web"
+msgstr "Libera il potenziale del tuo sito web"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:36
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-msgstr "Il vostro sito web è attivo, ma il vostro viaggio è appena iniziato. Esplorate le prossime azioni consigliate per stimolare la crescita, migliorare le prestazioni e raggiungere i vostri obiettivi online."
-
-#. Plugin Name of the plugin
-#: ionos-essentials.php
-msgid "ionos-essentials"
-msgstr "ionos-essenziali"
+msgstr "Il tuo sito web è online, ma il tuo viaggio è appena iniziato. Scopri quali sono i prossimi passi consigliati per favorire la crescita, migliorare le prestazioni e raggiungere i tuoi obiettivi online."
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php:40
 msgid "Welcome to your %s Hub"
-msgstr "Benvenuti nel vostro Hub %s"
+msgstr "Ti diamo il benvenuto nel tuo %s Hub"
 
 #: inc/dashboard/blocks/welcome/index.php:43
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "Questa panoramica è la porta d'accesso per sbloccare il pieno potenziale del vostro sito web WordPress."
+msgstr "Questa sezione ti permette di sfruttare tutto il potenziale del tuo sito WordPress."
 
 #: inc/dashboard/blocks/welcome/index.php:51
 msgid "Recommendations for next steps"
-msgstr "Raccomandazioni per i prossimi passi"
+msgstr "Consigli per i prossimi passi"
 
 #: inc/dashboard/blocks/welcome/index.php:52
 msgid "Helpful links and shortcuts"
-msgstr "Link utili e scorciatoie"
+msgstr "Link utili e collegamenti rapidi"
 
 #: inc/dashboard/blocks/welcome/index.php:53
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr "Sezione di aiuto completa, che include: Assistenza via chat con l'intelligenza artificiale, tour guidati e un ampio database di conoscenze."
+msgstr "Sezione di aiuto completa, che include: supporto tramite Chat IA, tour guidati e un'ampia knowledge base"
 
 #: inc/dashboard/blocks/welcome/index.php:61
-msgid "Stay tuned for exciting new features and updates to come!"
-msgstr "Rimanete sintonizzati per le nuove funzionalità e gli aggiornamenti in arrivo!"
-
-#: inc/dashboard/blocks/welcome/index.php:69
 msgid "Close"
 msgstr "Chiudere"
 
@@ -375,7 +362,7 @@ msgstr "Benvenuti"
 #: build/dashboard/blocks/whats-new/block.json
 msgctxt "block title"
 msgid "What's New"
-msgstr "Cosa c'è di nuovo"
+msgstr "Novità"
 
 #: build/dashboard/blocks/whats-new/block.json
 msgctxt "block description"
@@ -388,15 +375,15 @@ msgstr "Cosa c'è di nuovo"
 
 #: inc/dashboard/blocks/whats-new/index.php:37
 msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
-msgstr "Con un design completamente nuovo e un'esperienza utente migliorata, la gestione del vostro sito web è più facile che mai."
+msgstr "Grazie a un design completamente nuovo e un'esperienza utente migliorata, la gestione del tuo sito web non è mai stata così facile."
 
 #: inc/dashboard/blocks/whats-new/index.php:43
 msgid "Vulnerability Scan Results"
-msgstr "Risultati della scansione delle vulnerabilità"
+msgstr "Risultati Scansione delle vulnerabilità"
 
 #: inc/dashboard/blocks/whats-new/index.php:44
 msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
-msgstr "Abbiamo aggiunto i risultati delle scansioni direttamente alla vostra dashboard, dandovi una visibilità immediata sui potenziali rischi per la sicurezza."
+msgstr "Abbiamo aggiunto i risultati della scansione direttamente nella tua dashboard, in modo da offrirti una visibilità immediata dei potenziali rischi per la sicurezza."
 
 #: inc/dashboard/blocks/quick-links/config.php:10
 msgid "Add new page"
@@ -404,33 +391,33 @@ msgstr "Aggiungi una nuova pagina"
 
 #: inc/dashboard/blocks/quick-links/config.php:18
 msgid "Add new post"
-msgstr "Aggiungi un nuovo post"
+msgstr "Aggiungi un nuovo articolo"
 
 #: inc/dashboard/blocks/quick-links/config.php:39
 msgid "Edit Header"
-msgstr "Modifica intestazione"
+msgstr "Modifica l'intestazione"
 
 #: inc/dashboard/blocks/quick-links/config.php:44
 msgid "Edit Footer"
-msgstr "Modifica piè di pagina"
+msgstr "Modifica il piè di pagina"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:64
 msgid "Dismiss"
-msgstr "Congedo"
+msgstr "Ignora"
 
 #: inc/dashboard/blocks/vulnerability/render.php:32
 #: inc/dashboard/blocks/vulnerability/render.php:102
 #: inc/dashboard/blocks/vulnerability/render.php:149
 msgid "Scan for WordPress specific threats and vulnerabilities"
-msgstr "Scansione delle minacce e delle vulnerabilità specifiche di WordPress"
+msgstr "Scansione delle vulnerabilità"
 
 #: inc/dashboard/blocks/quick-links/config.php:23
 msgid "Edit site Navigation"
-msgstr "Modifica della navigazione del sito"
+msgstr "Modifica la navigazione del sito"
 
 #: inc/dashboard/blocks/quick-links/config.php:31
 msgid "Change Styles"
-msgstr "Cambiare stile"
+msgstr "Cambia stili, colori, font"
 
 #: inc/dashboard/blocks/quick-links/config.php:52
 msgid "Add Plugins"
@@ -438,25 +425,25 @@ msgstr "Aggiungi plugin"
 
 #: inc/dashboard/blocks/quick-links/config.php:60
 msgid "Upload Media files"
-msgstr "Caricare i file multimediali"
+msgstr "Carica file multimediali"
 
 #: inc/dashboard/blocks/whats-new/index.php:29
-msgid "Get an overview of the latest updates and enhancements"
-msgstr "Ottenere una panoramica degli ultimi aggiornamenti e miglioramenti"
+msgid "Get an overview of the latest updates and enhancements."
+msgstr "Scopri le ultime novità e aggiornamenti."
 
 #: inc/dashboard/blocks/whats-new/index.php:36
 msgid "New User Interface"
 msgstr "Nuova interfaccia utente"
 
-#: inc/tenants/config/ionos.php:8
+#: inc/tenants/config/ionos.php:20
 msgid "My Products"
 msgstr "I miei prodotti"
 
-#: inc/tenants/config/ionos.php:16
+#: inc/tenants/config/ionos.php:12
 msgid "Project Overview"
 msgstr "Panoramica del Progetto"
 
-#: inc/tenants/config/ionos.php:20
+#: inc/tenants/config/ionos.php:16
 msgid "Domains and SSL management"
 msgstr "Gestione dei domini e SSL"
 
@@ -464,7 +451,7 @@ msgstr "Gestione dei domini e SSL"
 msgid "Add more products"
 msgstr "Aggiungi altri prodotti"
 
-#: inc/dashboard/blocks/deep-links/index.php:105
+#: inc/dashboard/blocks/deep-links/index.php:107
 msgid "Webmail Login"
 msgstr "Accesso Webmail"
 
@@ -500,15 +487,11 @@ msgstr "SSL"
 msgid "Markenschutz"
 msgstr "Markenschutz"
 
-#: inc/dashboard/blocks/banner/index.php:68
-msgid "Valid for up to 72h"
-msgstr "Valido fino a 72 ore"
-
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:142
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:144
 msgid "Setup Email Account"
 msgstr "Crea account email"
 
-#: inc/tenants/config/ionos.php:12
+#: inc/tenants/config/ionos.php:8
 msgid "My Account"
 msgstr "Il mio account"
 
@@ -527,3 +510,16 @@ msgstr "Installazione..."
 #: inc/dashboard/blocks/vulnerability/render.php:156
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
 msgstr "La scansione delle vulnerabilità non è possibile. Contattare l'assistenza clienti."
+
+#. Plugin Name of the plugin
+#: ionos-essentials.php
+msgid "Essentials"
+msgstr "Essentials"
+
+#: inc/dashboard/blocks/banner/index.php:68
+msgid "Rebuild Website"
+msgstr "Ricostruire il sito web"
+
+#: inc/dashboard/blocks/banner/index.php:70
+msgid "It is possible to rebuild your AI-created website within 72 hours"
+msgstr "È possibile ricostruire il sito web creato dall'intelligenza artificiale entro 72 ore."

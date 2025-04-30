@@ -106,7 +106,7 @@ NBA::register(
   id: 'edit-and-complete',
   title: \__('Edit & Complete Your Website', 'ionos-essentials'),
   description: \__(
-    'Add pages, text, and images,  fine-tune your website with AI-powered tools or adjust colours and fonts',
+    'Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts.',
     'ionos-essentials'
   ),
   link: \admin_url('post-new.php?post_type=page&ext-close'), //  /wp-admin/post-new.php?post_type=page&ext-close
@@ -115,20 +115,22 @@ NBA::register(
     ->publish
 );
 
-NBA::register(
-  id: 'help-center',
-  title: \__('Discover Help Center', 'ionos-essentials'),
-  description: \__(
-    'Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours.',
-    'ionos-essentials'
-  ),
-  link: '#',
-  anchor: \__('Open Help Center', 'ionos-essentials'),
-  completed: false // handled by view.js
-);
+if (is_plugin_active('extendify/extendify.php')) {
+  NBA::register(
+    id: 'help-center',
+    title: \__('Discover Help Center', 'ionos-essentials'),
+    description: \__(
+      'Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours.',
+      'ionos-essentials'
+    ),
+    link: '#',
+    anchor: \__('Open Help Center', 'ionos-essentials'),
+    completed: false // handled by view.js
+  );
+}
 
 if (null !== $data) {
-  if (false !== strpos(home_url(), 'live-website.com') || (false !== strpos(home_url(), 'localhost'))) {
+  if (false !== strpos(home_url(), 'live-website.com') && (false !== strpos(home_url(), 'localhost'))) {
     $connectmail = $data['nba_links']['connectmail'] ?? '';
 
     NBA::register(
@@ -189,7 +191,7 @@ if ('extendable' === get_stylesheet()) {
       'ionos-essentials'
     ),
     link: \admin_url(
-      'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'
+      'site-editor.php?postId=extendable%2F%2Fheader&postType=wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'
     ),
     anchor: \__('Add Logo', 'ionos-essentials'),
     completed: ! $is_default_or_empty_logo
