@@ -187,7 +187,7 @@ if ( $market === 'de' && is_plugin_active('woocommerce/woocommerce.php') && ! is
     description: \__('Use the free extension for WooCommerce (... extension from German Market) to operate your online store in Germany and Austria in a legally compliant manner.', 'ionos-essentials'), // Nutzen Sie die für Sie kostenlose Erweiterung für WooCommerce (... Erweiterung von German Market), um Ihren Onlineshop in Deutschland und Österreich rechtssicher zu betreiben.
     link: '#',
     anchor: \__('Install now', 'ionos-essentials'), // Jetzt installieren
-    completed: is_plugin_active('woocommerce-german-market-light/woocommerce-german-market-light.php'), // when setup completed or cta is clicked
+    completed: is_plugin_active('woocommerce-german-market-light/WooCommerce-German-Market-Light.php'), // when setup completed or cta is clicked
   );
 }
 

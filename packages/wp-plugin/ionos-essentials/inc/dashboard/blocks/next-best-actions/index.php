@@ -154,7 +154,7 @@ function render_callback()
         return \current_user_can('install_plugins');
       },
       'callback'            => function () {
-        $plugin_slug = 'ionos-essentials/ionos-essentials.php';
+        $plugin_slug = 'woocommerce-german-market-light/WooCommerce-German-Market-Light.php';
         if (! file_exists(WP_PLUGIN_DIR . '/' . $plugin_slug)) {
           if (! install_plugin_from_url(
             'https://marketpress.de/mp-download/no-key-woocommerce-german-market-light/woocommerce-german-market-light/1und1/'
