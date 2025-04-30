@@ -211,16 +211,16 @@ msgstr "Łatwa nawigacja do często używanych funkcji i narzędzi."
 msgid "Overview"
 msgstr "Przegląd"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:245
 msgid "Create Page"
 msgstr "Utwórz stronę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:188
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:196
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:235
 msgid "Add Logo"
 msgstr "Dodaj logo"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Upewnij się, że Twoja witryna jest oznaczona unikalnym logo, aby uzyskać profesjonalny wygląd."
 
@@ -281,32 +281,32 @@ msgstr "Uruchom swój sklep internetowy już teraz dzięki kreatorowi konfigurac
 msgid "Start Setup"
 msgstr "Konfiguracja początkowa"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:213
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:252
 msgid "Social Media Setup"
 msgstr "Konfiguracja mediów społecznościowych"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:214
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:253
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Połącz swoje profile w mediach społecznościowych z witryną i zwiększ swoją obecność online."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:221
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:260
 msgid "Connect Social Media"
 msgstr "Połącz media społecznościowe"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:234
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:267
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:273
 msgid "Add Favicon"
 msgstr "Dodaj Favicon"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:229
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:268
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Dodaj favicon (ikonę witryny) do swojej witryny, aby zwiększyć rozpoznawalność i widoczność marki."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:203
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:242
 msgid "Create a Page"
 msgstr "Utwórz stronę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:204
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:243
 msgid "Create and publish a page and share your story with the world."
 msgstr "Utwórz i opublikuj stronę i podziel się swoją historią ze światem."
 
@@ -318,11 +318,11 @@ msgstr "Połącz swoją domenę z witryną, aby zwiększyć widoczność i przyc
 msgid "Connect a Domain"
 msgstr "Podłącz domenę"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:35
+#: inc/dashboard/blocks/next-best-actions/index.php:41
 msgid "Unlock Your Website's Potential"
 msgstr "Uwolnij potencjał swojej strony internetowej"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:36
+#: inc/dashboard/blocks/next-best-actions/index.php:42
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Twoja witryna już działa, ale Twoja podróż dopiero się zaczyna. Zapoznaj się z zalecanymi kolejnymi działaniami, aby przyspieszyć rozwój, poprawić wydajność i osiągnąć swoje cele online."
 
@@ -403,7 +403,7 @@ msgstr "Edytuj nagłówek"
 msgid "Edit Footer"
 msgstr "Edytuj stopkę"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:64
+#: inc/dashboard/blocks/next-best-actions/index.php:70
 msgid "Dismiss"
 msgstr "Odrzucić"
 
@@ -525,3 +525,15 @@ msgstr "Przebudowa strony internetowej"
 #: inc/dashboard/blocks/banner/index.php:70
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr "Możliwe jest odbudowanie witryny stworzonej przez sztuczną inteligencję w ciągu 72 godzin."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:211
+msgid "Legally compliant selling with German Market Light"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:212
+msgid "Use the free extension for WooCommerce (... extension from German Market) to operate your online store in Germany and Austria in a legally compliant manner."
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:214
+msgid "Install now"
+msgstr ""
