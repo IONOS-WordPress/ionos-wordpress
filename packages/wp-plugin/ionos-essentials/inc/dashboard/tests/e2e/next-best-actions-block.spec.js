@@ -8,12 +8,12 @@ test.describe('essentials:dashboard next-best-actions block', () => {
       wp option delete ionos_nba_status
       wp rewrite structure /%postname% --hard
       wp user meta update 1 ionos_essentials_welcome true
-
+      # install the extendify plugin and site assistant
       wp plugin install --activate extendify --force
-      wp plugin install --activate https://web-hosting.s3-eu-central-1.ionoscloud.com/extendify/01-ext-ion2hs971.zip --for
-
+      wp plugin install --activate https://web-hosting.s3-eu-central-1.ionoscloud.com/extendify/01-ext-ion2hs971.zip --force
+      # install the extendify theme
       wp theme install --activate extendable --force
-
+      # avoid extendify redirect
       wp option update extendify_attempted_redirect_count 4
     `);
   });

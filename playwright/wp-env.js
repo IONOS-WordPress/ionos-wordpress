@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 
+// find the name of the wp-env container
 const prefix = execSync('bash -c "basename $(pnpm exec wp-env install-path)"').toString().trim();
-console.log('prefix', prefix);
 
 export function execTestCLI(command) {
   execSync(`cat <<EOF | docker exec --interactive ${prefix}-tests-cli-1 sh -
