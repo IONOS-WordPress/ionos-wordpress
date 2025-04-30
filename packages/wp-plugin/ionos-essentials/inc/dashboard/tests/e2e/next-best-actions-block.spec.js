@@ -1,6 +1,8 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { execTestCLI } from '../../../../../../../playwright/wp-env.js';
 
+test.describe.configure({ mode: 'parallel' });
+
 test.describe('essentials:dashboard next-best-actions block', () => {
   test.beforeAll(async () => {
     // @FIXME: we need to run the rewrite structure command to avoid 404 error because phpunit will reset rewrite structure for some reason
