@@ -82,6 +82,30 @@ function render_callback()
       </div>';
   }
 
+  $body .= '<script>document.querySelector("#ionos_essentials_install_gml").addEventListener("click", function(event) {
+    event.target.disabled = true;
+    event.target.innerText = "' . \esc_js(__('Installing...', 'ionos-essentials')) . '";
+
+    fetch("/wp-json/ionos/essentials/dashboard/nba/v1/install-gml", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-WP-Nonce": "' . \wp_create_nonce('wp_rest') . '"
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success") {
+        location.reload();
+      } else {
+        console.error("Failed to install the GML plugin.");
+      }
+    })
+    .catch(error => console.error("Error:", error));
+  });
+  </script></script>';
+
   if (empty($body)) {
     return;
   }
@@ -226,15 +250,6 @@ function install_plugin_from_url($plugin_url)
             if (uploadButton) {
               uploadButton.click();
             }
-
-            const installgmlBTN= iframeDocument.querySelector('#ionos_essentials_install_gml');
-            if (installgmlBTN) {
-              installgmlBTN.click();
-              alert('You clicked the link!');
-            } else {
-              console.log('Element not found');
-            }
-
           });
           obs.disconnect();
         }
@@ -245,16 +260,5 @@ function install_plugin_from_url($plugin_url)
         subtree: true
       });
     </script>";
-
-
-  });
-
-  \add_action('admin_head', function () {
-
-
-
   });
 });
-
-
-
