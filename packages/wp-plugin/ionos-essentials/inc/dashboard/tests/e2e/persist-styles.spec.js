@@ -1,6 +1,7 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { execSync } from 'node:child_process';
 import { writeFileSync, unlinkSync, existsSync, renameSync } from 'node:fs';
+import { execTestCLI } from '../../../../../../../playwright/wp-env.js';
 
 // "editor" test that breaks when switching themes.
 // will be removed when we move to static, non-gutenberg dashboard
@@ -14,6 +15,10 @@ import { writeFileSync, unlinkSync, existsSync, renameSync } from 'node:fs';
 //     if (existsSync(GLOBAL_STYLES_FILE)) {
 //       renameSync(GLOBAL_STYLES_FILE, `${GLOBAL_STYLES_FILE}.bak`);
 //     }
+//     execTestCLI(`
+// wp theme activate ${THEME}
+// wp plugin deactivate extendify || true
+// `);
 //   });
 
 //   test.afterEach(async () => {
