@@ -12,7 +12,9 @@ add_action(
   function () {
     global $pagenow;
 
-    if (! is_admin() || 'options-general.php' !== $pagenow) {
+    if (\is_plugin_active(
+      'ionos-assistant/ionos-assistant.php'
+    ) || ! is_admin() || 'options-general.php' !== $pagenow) {
       return;
     }
 
