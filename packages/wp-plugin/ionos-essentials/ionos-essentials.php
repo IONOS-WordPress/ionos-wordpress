@@ -33,6 +33,7 @@ require_once __DIR__ . '/inc/update/index.php';
 // features
 require_once __DIR__ . '/inc/switch-page/index.php';
 require_once __DIR__ . '/inc/dashboard/index.php';
+require_once __DIR__ . '/inc/descriptify/index.php';
 
 // soc plugin components
 require_once __DIR__ . '/inc/migration/index.php';
