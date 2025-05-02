@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos\essentials\desciptify;
+namespace ionos\essentials\descriptify;
 
 $control_panel_links = [
   'ionos'  => [
