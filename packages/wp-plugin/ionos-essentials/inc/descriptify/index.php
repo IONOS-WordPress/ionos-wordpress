@@ -33,7 +33,7 @@ add_action(
     $control_panel_link = $control_panel_links[$tenant][$market];
 
     $website_url_description = sprintf( /* translators: s=link to control panel */
-      __('You can customize and manage your URL (domain) easily at <a href="%1$s" target="_blank">%2$s App Center</a>.', 'ionos-essentils'),
+      __('You can customize and manage your URL (domain) easily at <a href="%1$s" target="_blank">%2$s App Center</a>.', 'ionos-essentials'),
       $control_panel_link,
       \get_option('ionos_group_brand_menu', 'your')
     );
