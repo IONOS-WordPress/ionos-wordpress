@@ -32,7 +32,7 @@ $links = [
     'anchor' => __('SSL', 'ionos-essentials'),
   ],
   [
-    'url'    => 'marken/markenschutz/',
+    'url'    => 'a/marken/markenschutz',
     'anchor' => __('Markenschutz', 'ionos-essentials'),
   ],
 ];
