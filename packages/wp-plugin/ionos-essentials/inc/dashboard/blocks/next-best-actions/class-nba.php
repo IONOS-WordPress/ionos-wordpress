@@ -184,7 +184,7 @@ if ( $market === 'de' && is_plugin_active('woocommerce/woocommerce.php') && ! is
   NBA::register(
     id: 'woocommerce-gml',
     title: \__('Legally compliant selling with German Market Light', 'ionos-essentials'),
-    description: \__('Use the free extension for WooCommerce (... extension from German Market) to operate your online store in Germany and Austria in a legally compliant manner.', 'ionos-essentials'),
+    description: \__('Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner.', 'ionos-essentials'),
     link: '#',
     anchor: \__('Install now', 'ionos-essentials'),
     completed: is_plugin_active('woocommerce-german-market-light/WooCommerce-German-Market-Light.php'), // when gml is installed and activate

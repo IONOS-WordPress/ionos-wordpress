@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-30T13:17:41+00:00\n"
+"POT-Creation-Date: 2025-05-05T08:33:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -145,7 +145,7 @@ msgid "Legally compliant selling with German Market Light"
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:187
-msgid "Use the free extension for WooCommerce (... extension from German Market) to operate your online store in Germany and Austria in a legally compliant manner."
+msgid "Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner."
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:189
