@@ -41,7 +41,6 @@ $links = [
   [
     'url'  => [
       'extendable' => $blog_url . '/wp-admin/site-editor.php?postId=extendable%2F%2Fheader&postType=wp_template_part&canvas=edit&ionos-deep-link=extendable',
-      'block'      => $blog_url . '/wp-admin/site-editor.php?postType=wp_template&postId=%s&canvas=edit&ionos-deep-link=block_header',
     ],
     'text' => __(
       'Edit Header',
@@ -52,7 +51,6 @@ $links = [
   [
     'url'  => [
       'extendable' => $blog_url . '/wp-admin/site-editor.php?canvas=edit&p=%2Fwp_template_part%2Fextendable%2F%2Ffooter&ionos-deep-link=extendable',
-      'block'      => $blog_url . '/wp-admin/site-editor.php?postType=wp_template&postId=%s&canvas=edit&ionos-deep-link=block_footer',
     ],
     'text' => __(
       'Edit Footer',

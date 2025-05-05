@@ -29,11 +29,9 @@ function render_callback()
 
   $body = '';
   foreach ($links as $link) {
-    if (is_array($link['url'])) {
-      $url = handle_link($link['url']);
-    } else {
-      $url = $link['url'];
-    }
+    $url = is_array($link['url']) && isset($link['url']['extendable']) && 'Extendable' === wp_get_theme()->get('Name')
+      ? $link['url']['extendable']
+      : (is_array($link['url']) ? '' : $link['url']);
 
     if (empty($url)) {
       continue;
@@ -58,84 +56,9 @@ function render_callback()
   return sprintf($template, $body);
 }
 
-\add_action('enqueue_block_editor_assets', function () {
-  if (! isset($_GET['ionos-deep-link'])) {
-    return;
-  }
-
-  if (isset($_GET['ionos-deep-link']) && 'extendable' === $_GET['ionos-deep-link']) {
-    \add_action('admin_footer', function () {
-      echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const observer = new MutationObserver((mutations, obs) => {
-            const iframe = document.querySelector('iframe');
-            if (iframe) {
-              document.querySelector('.editor-document-tools__document-overview-toggle')?.click();
-              iframe.addEventListener('load', function() {
-              const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-              if ( iframeDocument ) {
-                document.querySelector('tr[aria-level=\"1\"] td a')?.click();
-              }
-              });
-              obs.disconnect();
-            }
-          });
-
-          observer.observe(document, {
-            childList: true,
-            subtree: true
-          });
-        });
-      </script>";
-    });
-  }
-  if (isset($_GET['ionos-deep-link']) && in_array(
-    $_GET['ionos-deep-link'],
-    ['block_header', 'block_footer'],
-    true
-  )) {
-    \add_action('admin_footer', function () {
-      echo "<script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const observer = new MutationObserver((mutations, obs) => {
-          const buttons = document.querySelectorAll('.components-panel__body div button');
-          if (buttons.length === 2) {
-            const buttonIndex = 'block_footer' === '" . $_GET['ionos-deep-link'] . "' ? 1 : 0;
-            buttons[buttonIndex].click();
-            obs.disconnect();
-          }
-        });
-
-        observer.observe(document, {
-          childList: true,
-          subtree: true
-        });
-      });
-    </script>";
-    });
-  }
+//mach mal n admin_enqueue_scripts und lade meine focus.js
+add_action('admin_enqueue_scripts', function () {
+  $script = \plugins_url('focus.js', __FILE__);
+  $version = filemtime(__DIR__ . '/focus.js');
+  \wp_enqueue_script('ionos-essentials-focus', $script, [], $version, true);
 });
-
-function handle_link($link)
-{
-  if (! \is_array($link)) {
-    return '';
-  }
-
-  $theme = wp_get_theme();
-  if (isset($link['extendable']) && 'Extendable' === $theme->get('Name')) {
-    return $link['extendable'];
-  }
-
-  if (isset($link['block']) && true === $theme->is_block_theme()) {
-    $template_id = wp_get_theme()
-      ->get_stylesheet() . '//' . get_post(get_option('page_on_front'))->post_type;
-    return sprintf($link['block'], $template_id, '');
-  }
-
-  if (isset($link['classic']) && false === $theme->is_block_theme()) {
-    return \sprintf($link['classic'], $theme->get_stylesheet(), '');
-  }
-
-  return '';
-}
