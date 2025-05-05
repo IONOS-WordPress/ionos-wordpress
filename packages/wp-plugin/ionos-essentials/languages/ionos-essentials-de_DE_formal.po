@@ -530,8 +530,8 @@ msgid "Legally compliant selling with German Market Light"
 msgstr "Rechtssicher verkaufen mit German Market Light"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:187
-msgid "Use the free extension for WooCommerce (... extension from German Market) to operate your online store in Germany and Austria in a legally compliant manner."
-msgstr "Nutzen Sie die für Sie kostenlose Erweiterung für WooCommerce (... Erweiterung von German Market), um Ihren Onlineshop in Deutschland und Österreich rechtssicher zu betreiben."
+msgid "Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner."
+msgstr "Nutzen Sie die für Sie kostenlose Erweiterung für WooCommerce, um Ihren Onlineshop in Deutschland und Österreich rechtssicher zu betreiben."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Install now"
