@@ -62,13 +62,13 @@ fi
          "config": {
           "IONOS_WP_ENV_MODE": "development"
         },
-        "phpmyadminPort": 9000
+        "phpmyadminPort": $([[ "${CI:-}" != "true" ]] && echo '9000' || echo 'null')
       },
       "tests": {
         "config": {
           "IONOS_WP_ENV_MODE": "test"
         },
-        "phpmyadminPort": 9001
+        "phpmyadminPort": $([[ "${CI:-}" != "true" ]] && echo '9001' || echo 'null')
       }
     },
     "config": {
