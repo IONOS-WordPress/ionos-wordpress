@@ -88,7 +88,7 @@
     "@wordpress/env": "^10.22.0",
     "@wordpress/scripts": "^30.15.0",
     "@wp-now/wp-now": "0.1.74",
-    "eslint": "9.25.1",
+    "eslint": "9.26.0",
     "eslint-config-prettier": "10.1.2",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-prettier": "5.2.6",
