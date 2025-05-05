@@ -3,6 +3,7 @@
 namespace ionos\essentials\dashboard\blocks\quick_links;
 
 use const ionos\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_FILE;
 
 \add_action('init', function () {
   \register_block_type(
@@ -58,7 +59,7 @@ function render_callback()
 
 //mach mal n admin_enqueue_scripts und lade meine focus.js
 add_action('admin_enqueue_scripts', function () {
-  $script = \plugins_url('focus.js', __FILE__);
-  $version = filemtime(__DIR__ . '/focus.js');
+  $script  = \plugins_url('/build/dashboard/blocks/quick-links/focus.js', PLUGIN_FILE);
+  $version = filemtime(PLUGIN_DIR . '/build/dashboard/blocks/quick-links/focus.js');
   \wp_enqueue_script('ionos-essentials-focus', $script, [], $version, true);
 });
