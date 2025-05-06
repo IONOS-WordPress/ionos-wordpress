@@ -17,8 +17,8 @@ const config = defineConfig({
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 1,
-  // Opt out of parallel tests on CI.
-  workers: process.env.CI ? 1 : undefined,
+  /* Opt out of parallel tests */
+  workers: 1,
   webServer: {
     ...baseConfig.webServer,
     command: 'pnpm start',
