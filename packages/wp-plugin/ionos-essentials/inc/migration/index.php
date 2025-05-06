@@ -68,6 +68,8 @@ function _install()
       \uninstall_plugin('ionos-loop/ionos-loop.php');
       \uninstall_plugin('ionos-journey/ionos-journey.php');
       \uninstall_plugin('ionos-navigation/ionos-navigation.php');
+    case version_compare($last_installed_version, '1.0.4', '<'):
+      \uninstall_plugin('ionos-assistant/ionos-assistant.php');
 
       //   /*
       //     example migration cases:
