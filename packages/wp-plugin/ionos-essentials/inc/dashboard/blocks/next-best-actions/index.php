@@ -86,7 +86,7 @@ function render_callback()
     event.target.disabled = true;
     event.target.innerText = "' . \esc_js(__('Installing...', 'ionos-essentials')) . '";
 
-    fetch("/wp-json/ionos/essentials/dashboard/nba/v1/install-gml", {
+    fetch("' . get_rest_url( null, '/ionos/essentials/dashboard/vulnerability/v1/install-gml' ) . '", {
       method: "GET",
       credentials: "include",
       headers: {
