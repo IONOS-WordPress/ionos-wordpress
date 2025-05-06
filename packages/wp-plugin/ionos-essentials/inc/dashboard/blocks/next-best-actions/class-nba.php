@@ -177,6 +177,20 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
   );
 }
 
+$tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
+$market        = strtolower(\get_option($tenant . '_market', 'de'));
+
+if ( $market === 'de' && is_plugin_active('woocommerce/woocommerce.php') && ! is_plugin_active('woocommerce-german-market-light/woocommerce-german-market-light.php') ) {
+  NBA::register(
+    id: 'woocommerce-gml',
+    title: \__('Legally compliant selling with German Market Light', 'ionos-essentials'),
+    description: \__('Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner.', 'ionos-essentials'),
+    link: '#',
+    anchor: \__('Install now', 'ionos-essentials'),
+    completed: is_plugin_active('woocommerce-german-market-light/WooCommerce-German-Market-Light.php'), // when gml is installed and activate
+  );
+}
+
 if ('extendable' === get_stylesheet()) {
   $custom_logo_id           = get_theme_mod('custom_logo');
   $logo                     = wp_get_attachment_image_src($custom_logo_id, 'full');
