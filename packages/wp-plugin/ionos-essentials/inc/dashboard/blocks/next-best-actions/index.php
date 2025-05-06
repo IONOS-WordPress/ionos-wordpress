@@ -61,16 +61,16 @@ function render_callback()
           <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
               <div class="wp-block-button">';
 
-              if($action->id === 'woocommerce-gml') {
-                $body .= '<button style="height: auto;" id="ionos_essentials_install_gml" class="wp-block-button__link wp-element-button nba-link">' . $action->anchor . '</button>';
-              } else {
-                $body .= '<a data-nba-id="' . $action->id . '" href="' . \esc_url(
-      $action->link
-    ) . '" class="wp-block-button__link wp-element-button nba-link" target="' . $target . '">' . \esc_html(
-      $action->anchor
-    ) . '</a>';
-  }
-             $body .= '</div>
+    if ('woocommerce-gml' === $action->id) {
+      $body .= '<button style="height: auto;" id="ionos_essentials_install_gml" class="wp-block-button__link wp-element-button nba-link">' . $action->anchor . '</button>';
+    } else {
+      $body .= '<a data-nba-id="' . $action->id . '" href="' . \esc_url(
+        $action->link
+      ) . '" class="wp-block-button__link wp-element-button nba-link" target="' . $target . '">' . \esc_html(
+        $action->anchor
+      ) . '</a>';
+    }
+    $body .= '</div>
               <div class="wp-block-button is-style-outline is-style-outline--1">
                   <a data-nba-id="' . $action->id . '" class="wp-block-button__link wp-element-button dismiss-nba" target="_top">' . \esc_html__(
       'Dismiss',
@@ -86,7 +86,7 @@ function render_callback()
     event.target.disabled = true;
     event.target.innerText = "' . \esc_js(__('Installing...', 'ionos-essentials')) . '";
 
-    fetch("' . get_rest_url( null, '/ionos/essentials/dashboard/vulnerability/v1/install-gml' ) . '", {
+    fetch("' . get_rest_url(null, '/ionos/essentials/dashboard/vulnerability/v1/install-gml') . '", {
       method: "GET",
       credentials: "include",
       headers: {
@@ -148,7 +148,10 @@ function render_callback()
     },
   ]);
 
-  \register_rest_route('ionos/essentials/dashboard/nba/v1', 'install-gml', [
+  \register_rest_route(
+    'ionos/essentials/dashboard/nba/v1',
+    'install-gml',
+    [
       'methods'             => 'GET',
       'permission_callback' => function () {
         return \current_user_can('install_plugins');
@@ -172,10 +175,7 @@ function render_callback()
       },
     ]
   );
-
-
 });
-
 
 function install_plugin_from_url($plugin_url)
 {
