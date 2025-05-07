@@ -49,7 +49,6 @@ require_once __DIR__ . '/blocks/whats-new/index.php';
       <<<EOF
         #wpbody {
             height: calc(100vh - var(--wp-admin--admin-bar--height, '0'));
-            overflow: hidden;
         }
         #wpbody-content {
           height: 100%

@@ -127,7 +127,7 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "WPScan-Daten anzeigen."
 
-#: inc/dashboard/index.php:228
+#: inc/dashboard/index.php:227
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
@@ -204,21 +204,21 @@ msgstr "Schnellzugriff auf Ihr Kundenkonto, Verträge und Logineinstellungen."
 msgid "Easily navigate to frequently used features and tools."
 msgstr "Nutzen Sie diese einfache Navigation zu den häufigsten Funktionen und Tools in WordPress."
 
+#: inc/dashboard/index.php:125
 #: inc/dashboard/index.php:126
-#: inc/dashboard/index.php:127
 msgid "Overview"
 msgstr "Übersicht"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:220
 msgid "Create Page"
 msgstr "Seite erstellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:188
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:196
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:202
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:210
 msgid "Add Logo"
 msgstr "Logo hinzufügen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:203
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Fügen Sie Ihre Website Ihr einzigartiges Logo hinzu, um ein professionelles Aussehen zu gewährleisten."
 
@@ -279,32 +279,32 @@ msgstr "Starten Sie jetzt Ihren Online-Shop mit dem einfachen und komfortablen E
 msgid "Start Setup"
 msgstr "Start Setup"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:213
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:227
 msgid "Social Media Setup"
 msgstr "Social Media verbinden"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:214
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Verbinden Sie Ihre Social-Media-Profile mit Ihrer Website und erweitern Sie Ihre Online-Präsenz."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:221
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:235
 msgid "Connect Social Media"
 msgstr "Social Media verbinden"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:234
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:242
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:248
 msgid "Add Favicon"
 msgstr "Favicon hinzufügen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:229
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:243
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Fügen Sie Ihrer Website ein Favicon (Website-Symbol) hinzu, um die Wiedererkennung und Sichtbarkeit Ihrer Marke zu verbessern."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:203
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:217
 msgid "Create a Page"
 msgstr "Eine Seite erstellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:204
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:218
 msgid "Create and publish a page and share your story with the world."
 msgstr "Erstellen und veröffentlichen Sie eine neue Seite und teilen Sie ihre Inhalte mit der Welt."
 
@@ -316,11 +316,11 @@ msgstr "Verbinden Sie Ihre Domain mit Ihrer Website, um die Sichtbarkeit zu erh�
 msgid "Connect a Domain"
 msgstr "Domain verbinden"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:35
+#: inc/dashboard/blocks/next-best-actions/index.php:41
 msgid "Unlock Your Website's Potential"
 msgstr "Nutzen Sie das volle Potenzial Ihrer Website"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:36
+#: inc/dashboard/blocks/next-best-actions/index.php:42
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Ihre Website ist online, aber die Reise hat gerade erst begonnen. Hier finden Sie empfohlene nächste Schritte, um Ihre Website erfolgreich zu machen und Ihre Online-Ziele zu erreichen."
 
@@ -401,7 +401,7 @@ msgstr "Header editieren"
 msgid "Edit Footer"
 msgstr "Footer editieren"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:64
+#: inc/dashboard/blocks/next-best-actions/index.php:75
 msgid "Dismiss"
 msgstr "Ausblenden"
 
@@ -503,6 +503,7 @@ msgstr "Das erforderliche Sicherheits-Plugin fehlt."
 msgid "Install Security plugin"
 msgstr "Sicherheits-Plugin installieren"
 
+#: inc/dashboard/blocks/next-best-actions/index.php:87
 #: inc/dashboard/blocks/vulnerability/render.php:122
 msgid "Installing..."
 msgstr "Installieren..."
@@ -535,8 +536,3 @@ msgstr "Nutzen Sie die für Sie kostenlose Erweiterung für WooCommerce, um Ihre
 #: inc/dashboard/blocks/next-best-actions/class-nba.php:189
 msgid "Install now"
 msgstr "Installieren"
-
-#. translators: s=link to control panel
-#: inc/descriptify/index.php:38
-msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
-msgstr ""
