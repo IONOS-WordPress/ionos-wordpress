@@ -210,8 +210,6 @@ Options:
       'pnpm run test:e2e deep-links-block.spec.js' (path can be left off for playwright)
 
     Execute e2e tests by tag (https://playwright.dev/docs/test-annotations#tag-tests) :
-      # run only tests tagged with @globalstyles
-      'pnpm run test:e2e --e2e-opts "--grep @globalstyles"'
       # run all tests except tagged with @editor
       'pnpm run test:e2e --e2e-opts "--grep-invert @editor"'
 
