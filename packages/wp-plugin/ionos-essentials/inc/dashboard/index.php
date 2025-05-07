@@ -63,6 +63,9 @@ require_once __DIR__ . '/blocks/whats-new/index.php';
         #wpwrap ul#adminmenu a.wp-has-current-submenu:after, #wpwrap ul#adminmenu > li.current > a.current:after {
           border-right-color: #f4f7fa;
         }
+        #wpbody-content .update-nag {
+          margin: 5px 15px 2px;
+        }
         EOF
     );
   });
