@@ -403,7 +403,7 @@ msgstr "Footer editieren"
 
 #: inc/dashboard/blocks/next-best-actions/index.php:64
 msgid "Dismiss"
-msgstr "Nicht mehr anzeigen"
+msgstr "Ausblenden"
 
 #: inc/dashboard/blocks/vulnerability/render.php:32
 #: inc/dashboard/blocks/vulnerability/render.php:102
@@ -523,3 +523,20 @@ msgstr "Website neu erstellen"
 #: inc/dashboard/blocks/banner/index.php:70
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr "Es ist möglich, Ihre Website innerhalb von 72 Stunden mit KI neu zu erstellen"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:186
+msgid "Legally compliant selling with German Market Light"
+msgstr "Rechtssicher verkaufen mit German Market Light"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:187
+msgid "Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner."
+msgstr "Nutzen Sie die für Sie kostenlose Erweiterung für WooCommerce, um Ihren Onlineshop in Deutschland und Österreich rechtssicher zu betreiben."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
+msgid "Install now"
+msgstr "Installieren"
+
+#. translators: s=link to control panel
+#: inc/descriptify/index.php:38
+msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
+msgstr ""

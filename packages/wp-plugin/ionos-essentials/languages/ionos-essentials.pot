@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-24T13:00:48+00:00\n"
+"POT-Creation-Date: 2025-05-06T11:18:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -341,6 +341,11 @@ msgstr ""
 
 #: inc/dashboard/index.php:228
 msgid "Brand Logo"
+msgstr ""
+
+#. translators: s=link to control panel
+#: inc/descriptify/index.php:38
+msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
 msgstr ""
 
 #: inc/tenants/config/arsys.php:8

@@ -523,3 +523,20 @@ msgstr "Reconstruire le site web"
 #: inc/dashboard/blocks/banner/index.php:70
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr "Il est possible de reconstruire votre site Web créé par l'IA dans les 72 heures."
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:186
+msgid "Legally compliant selling with German Market Light"
+msgstr "Vente conforme à la législation avec German Market Light"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
+msgid "Install now"
+msgstr "Installer maintenant"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php:187
+msgid "Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner."
+msgstr "Utilisez l'extension gratuite pour WooCommerce afin d'exploiter votre boutique en ligne en Allemagne et en Autriche dans le respect de la législation."
+
+#. translators: s=link to control panel
+#: inc/descriptify/index.php:38
+msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
+msgstr ""
