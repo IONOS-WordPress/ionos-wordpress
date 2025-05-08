@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
+use ionos\essentials\dashboard\Silent_Skin;
+
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
@@ -179,32 +181,7 @@ function render_callback()
 
 function install_plugin_from_url($plugin_url)
 {
-  class Silent_Skin extends \WP_Upgrader_Skin
-  {
-    public function feedback($string, ...$args)
-    {
-    }
-
-    public function header()
-    {
-    }
-
-    public function footer()
-    {
-    }
-
-    public function error($errors)
-    {
-    }
-
-    public function before()
-    {
-    }
-
-    public function after()
-    {
-    }
-  }
+  require_once PLUGIN_DIR . '/inc/dashboard/class-silent-skin.php';
 
   $skin     = new Silent_Skin();
   $upgrader = new \Plugin_Upgrader($skin);
