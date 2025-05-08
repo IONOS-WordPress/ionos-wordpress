@@ -62,7 +62,6 @@ done
 # (this is necessary because the cache is not portable between environments)
 if [[ "${USE[@]}" =~ e2e|react|all ]]; then
   ionos.wordpress.log_info "found playwight installations : $(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)"
-  ionos.wordpress.log_info "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null)"
 
   PLAYWRIGHT_DIR=$(realpath ./playwright)
   if [[ -f "$PLAYWRIGHT_DIR/.cache/metainfo.json" ]] && ! grep "$PLAYWRIGHT_DIR" ./playwright/.cache/metainfo.json > /dev/null; then
@@ -71,9 +70,7 @@ if [[ "${USE[@]}" =~ e2e|react|all ]]; then
   fi
 
   # execute playwright browser installation if not already done
-  if ! find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null; then
-    pnpm exec playwright install chromium
-  fi
+  [[ $(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l) -eq "0" ]] && pnpm exec playwright install chromium
 fi
 
 
