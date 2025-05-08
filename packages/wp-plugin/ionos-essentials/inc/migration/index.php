@@ -48,50 +48,28 @@ function _uninstall()
 
 function _install()
 {
-  $last_install_data      = \get_option(WP_OPTION_LAST_INSTALL_DATA, false);
-  $last_installed_version = $last_install_data[WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION] ?? false;
+  $last_install_data      = \get_option(WP_OPTION_LAST_INSTALL_DATA);
+  // default for first time activation: "0.0.0"
+  $last_installed_version = $last_install_data[WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION] ?? '0.0.0';
   $current_version        = \get_plugin_data(PLUGIN_FILE)['Version'];
 
   $current_install_data = [
     WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION => $current_version,
   ];
 
-  switch ($last_installed_version) {
+  switch (true) {
     // plugin data match current version
-    case $current_version:
+    case version_compare($last_installed_version, $current_version, '=='):
       // nothing to do
-      break;
+      return;
 
-      // first time activation
-    case false:
     case version_compare($last_installed_version, '1.0.0', '<'):
       \uninstall_plugin('ionos-loop/ionos-loop.php');
       \uninstall_plugin('ionos-journey/ionos-journey.php');
       \uninstall_plugin('ionos-navigation/ionos-navigation.php');
-
-      //   /*
-      //     example migration cases:
-      //   */
-
-      // case version_compare($last_installed_version, '1.1.0', '<'):
-      //   // do migration from version $last_installed_version -> 1.1.0
-      // case version_compare($last_installed_version, '1.2.0', '<'):
-      //   // do migration from version 1.1.0 -> 1.2.0
-      // case version_compare($last_installed_version, '3.0.0', '<'):
-      //   // do migration from version 1.2.0 -> 3.0.0
-
-      //   /* -- */
-
-      break;
-
-    default:
-      // handle a unknown version or a version that does not need migration
-      break;
+      // no break because we want to run all migrations sequentially
+    case version_compare($last_installed_version, '1.0.4', '<'):
+      update_option('ionos-migration-step', 1);
   }
-
-  if (false === $last_installed_version) {
-    \add_option(option : WP_OPTION_LAST_INSTALL_DATA, value : $current_install_data, autoload: true);
-  } elseif ($last_installed_version !== $current_version) {
-    \update_option(option : WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
-  }
+  \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }
