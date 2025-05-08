@@ -141,6 +141,7 @@ msgstr "Last scan"
 
 #. translators: %s is replaced with the time since the last scan
 #: inc/dashboard/blocks/vulnerability/render.php
+#, php-format
 msgid "%s ago"
 msgstr "%s ago"
 
@@ -326,6 +327,7 @@ msgstr "Your website is live, but your journey is just beginning. Explore the re
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php
+#, php-format
 msgid "Welcome to your %s Hub"
 msgstr "Welcome to your %s Hub"
 
@@ -539,5 +541,6 @@ msgstr "Use the free extension for WooCommerce to operate your online store in G
 
 #. translators: s=link to control panel
 #: inc/descriptify/index.php
+#, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
 msgstr ""
