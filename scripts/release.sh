@@ -101,8 +101,10 @@ for ASSET in $ASSETS; do
     echo "Error: $error_message"
   fi
   # upload latest to s3
-  S3_FILENAME=$(echo $TARGET_ASSET_FILENAME | sed -E 's/-latest-.+$/.latest.zip/')
-  echo "upload '$ASSET' to s3 as '$S3_FILENAME'"
+  S3_LATEST_FILENAME=$(echo $TARGET_ASSET_FILENAME | sed -E 's/-latest-.+$/.latest.zip/')
+  S3_VERSION_FILENAME=$(echo $ASSET | sed -E 's/-([0-9]+\.[0-9]+\.[0-9]+)-.+$/.\1.zip/')
+
+  echo "upload '$ASSET' to s3 as '$S3_VERSION_FILENAME'"
   # ensure we have a AWS_ACCESS_KEY_ID
   if [[ -z "${AWS_ACCESS_KEY_ID}" ]] || [[ -z "${AWS_SECRET_ACCESS_KEY}" ]]; then
     ionos.wordpress.log_error "aws secrets are not complete. AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY is necessary"
@@ -114,7 +116,8 @@ for ASSET in $ASSETS; do
       aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
       aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
 
-      aws --endpoint-url https://s3-de-central.profitbricks.com s3 cp /tmp/$TARGET_ASSET_FILENAME s3://web-hosting/ionos-group/$S3_FILENAME
+      aws --endpoint-url https://s3-de-central.profitbricks.com s3 cp /tmp/$TARGET_ASSET_FILENAME s3://web-hosting/ionos-group/$S3_VERSION_FILENAME
+      aws --endpoint-url https://s3-de-central.profitbricks.com s3 cp s3://web-hosting/ionos-group/$S3_VERSION_FILENAME s3://web-hosting/ionos-group/$S3_LATEST_FILENAME
 EOF
 
     if [[ $? -ne 0 ]]; then
