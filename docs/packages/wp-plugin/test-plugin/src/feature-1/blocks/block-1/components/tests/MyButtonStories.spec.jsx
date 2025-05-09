@@ -7,23 +7,29 @@ import MyButton from '../MyButton.jsx';
 
 const test = createTest(base);
 
-test('Link story', async ({ mount, page }) => {
-  await mount(<stories.Link />);
+test(
+  'Link story',
+  {
+    tag: ['@example'],
+  },
+  async ({ mount, page }) => {
+    await mount(<stories.Link />);
 
-  const buttonLocator = await page.locator('button[type="button"]');
+    const buttonLocator = await page.locator('button[type="button"]');
 
-  console.log('located button : ', await buttonLocator.evaluate((_) => _.outerHTML));
-  /*
+    console.log('located button : ', await buttonLocator.evaluate((_) => _.outerHTML));
+    /*
   <button type="button" disabled="" class="components-button is-link">Link disabled Button</button>
   */
 
-  expect(buttonLocator, 'button was found').toBeTruthy();
+    expect(buttonLocator, 'button was found').toBeTruthy();
 
-  expect(await buttonLocator.evaluate((element) => element.disabled), 'button should be disabled').toBeTruthy();
-  // same same as the line above
-  expect(buttonLocator).toBeDisabled();
+    expect(await buttonLocator.evaluate((element) => element.disabled), 'button should be disabled').toBeTruthy();
+    // same same as the line above
+    expect(buttonLocator).toBeDisabled();
 
-  expect(buttonLocator, "button should have class 'is-link'").toHaveClass(/is-link/);
+    expect(buttonLocator, "button should have class 'is-link'").toHaveClass(/is-link/);
 
-  expect(buttonLocator.click(), 'button should not be clickable').rejects.toThrowError();
-});
+    expect(buttonLocator.click(), 'button should not be clickable').rejects.toThrowError();
+  }
+);
