@@ -68,8 +68,10 @@ function _install()
       \uninstall_plugin('ionos-loop/ionos-loop.php');
       \uninstall_plugin('ionos-journey/ionos-journey.php');
       \uninstall_plugin('ionos-navigation/ionos-navigation.php');
-    case version_compare($last_installed_version, '1.0.4', '<'):
+    case version_compare($last_installed_version, '1.0.3', '<'):
       \uninstall_plugin('ionos-assistant/ionos-assistant.php');
+      update_plugin( 'ionos-marketplace/ionos-marketplace.php');
+
 
       //   /*
       //     example migration cases:
@@ -95,5 +97,25 @@ function _install()
     \add_option(option : WP_OPTION_LAST_INSTALL_DATA, value : $current_install_data, autoload: true);
   } elseif ($last_installed_version !== $current_version) {
     \update_option(option : WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
+  }
+}
+
+
+function update_plugin( $plugin_slug) {
+  if (current_user_can('update_plugins')) {
+    include_once ABSPATH . 'wp-admin/includes/plugin.php';
+    include_once ABSPATH . 'wp-admin/includes/update.php';
+    include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+
+    wp_update_plugins();
+
+    $upgrader = new \Plugin_Upgrader(new class extends \Automatic_Upgrader_Skin {
+        public function feedback($string, ...$args) {}}
+    );
+
+    $upgrader->upgrade($plugin_slug);
+    if (!is_plugin_active($plugin_slug)) {
+      activate_plugin($plugin_slug);
+    }
   }
 }
