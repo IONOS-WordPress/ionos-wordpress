@@ -9,7 +9,7 @@
 #
 
 # load bootstrap script
-. "$(git rev-parse --show-toplevel)/scripts/includes/update-dependencies.sh"
+. "$GIT_ROOT_PATH/scripts/includes/update-dependencies.sh"
 
 # load .env file
 ionos.wordpress.load_env $pwd
