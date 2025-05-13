@@ -49,7 +49,7 @@ add_action(
         ( function () {
             const description = document.createElement('p');
             description.className = 'description';
-            description.innerHTML = '<?php echo addslashes($website_url_description); ?>';
+            description.innerHTML = '<?php echo \esc_js(addslashes($website_url_description)); ?>';
 
             document.getElementById( 'siteurl' )?.parentNode.appendChild( description.cloneNode( true ) );
             document.getElementById( 'home' )?.parentNode.appendChild( description.cloneNode( true ) );
