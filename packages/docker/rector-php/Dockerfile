@@ -14,7 +14,7 @@ ARG RECTOR_VERSION
 ENV COMPOSER_HOME=/tmp
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN composer global require --dev rector/rector:${RECTOR_VERSION}
+RUN composer install
 
 FROM php:${PHP_VERSION}-cli-alpine
 
