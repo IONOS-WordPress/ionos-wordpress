@@ -447,7 +447,6 @@ EOF
           --user "$DOCKER_USER" \
           -v $path/$TARGET_DIR:/project/dist \
           -v $(pwd)/packages/docker/rector-php/${RECTOR_CONFIG}.php:/project/${RECTOR_CONFIG}.php \
-          -v $(pwd)/packages/docker/rector-php/wordpress-stubs.php:/project/wordpress-stubs.php \
           ionos-wordpress/rector-php \
           --clear-cache \
           --config "${RECTOR_CONFIG}.php" \
