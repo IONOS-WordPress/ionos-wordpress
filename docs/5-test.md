@@ -104,9 +104,9 @@ to test the production build :
 
   > `wp-env` must be restarted to be properly configured. You can ensure this by executing `pnpm destroy before`.
 
-- run the test command (excluding editor tests which are not available in the production build) : `pnpm run test --e2e-opts`
+- run the test command (excluding editor tests which are not available in the production build) : `pnpm run test`
 
-Alternatively you can destroy wp-env and start the everything at once by doing `TEST_PRODUCTION=true pnpm run test --e2e-opts`.
+Alternatively you can destroy wp-env and start the everything at once by doing `TEST_PRODUCTION=true pnpm run test`.
 
 # links
 
