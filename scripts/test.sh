@@ -214,7 +214,7 @@ Options:
 
     Execute e2e tests by tag (https://playwright.dev/docs/test-annotations#tag-tests) :
       # run all tests except tagged with @editor
-      'pnpm run test:e2e --e2e-opts "--grep-invert @editor"'
+      'pnpm run test:e2e --e2e-opts'
 
     Execute only a single e2e test file with playwright debugger :
       'pnpm run test:e2e --e2e-opts '--debug' packages/wp-plugin/ionos-essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js' or
