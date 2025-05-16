@@ -99,7 +99,6 @@ msgid "Set up your included email account and integrate it with your website."
 msgstr "Configure su cuenta de correo electrónico incluida e intégrela con su sitio web."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set Up Contact Form"
 msgstr "Configurar formulario de contacto"
 
@@ -119,7 +118,6 @@ msgstr "Lance su tienda en línea ahora con un asistente de configuración guiad
 msgid "Start Setup"
 msgstr "Iniciar configuración"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Logo"
 msgstr "Añadir logotipo"
@@ -152,7 +150,6 @@ msgstr "Conecte sus perfiles en las redes sociales a su sitio web y amplíe su p
 msgid "Connect Social Media"
 msgstr "Conectar las redes sociales"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Favicon"
 msgstr "Añadir Favicon"
@@ -213,8 +210,6 @@ msgstr "Enlaces rápidos"
 msgid "Easily navigate to frequently used features and tools."
 msgstr "Navegue fácilmente a las funciones y herramientas más utilizadas."
 
-#: inc/dashboard/blocks/vulnerability/render.php
-#: inc/dashboard/blocks/vulnerability/render.php
 #: inc/dashboard/blocks/vulnerability/render.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Búsqueda de amenazas y vulnerabilidades específicas de WordPress"
@@ -299,7 +294,6 @@ msgstr "Resultados de la exploración de vulnerabilidades"
 msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
 msgstr "Hemos añadido los resultados de los análisis directamente a su panel de control, lo que le ofrece una visibilidad instantánea de los posibles riesgos para la seguridad."
 
-#: inc/dashboard/index.php
 #: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Visión general"
