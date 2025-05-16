@@ -16,6 +16,13 @@ updates:
       interval: 'weekly'
     pull-request-strategy: 'single'
 
+  - package-ecosystem: 'composer'
+    directories:
+      - '/packages/docker/**/*'
+    schedule:
+      interval: 'weekly'
+    pull-request-strategy: 'single'
+
   - package-ecosystem: 'github-actions'
     directories:
       # "For GitHub Actions, use the value /. Dependabot will search the /.github/workflows directory, as well as the action.yml/action.yaml file from the root directory."
