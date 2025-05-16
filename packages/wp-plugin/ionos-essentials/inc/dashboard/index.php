@@ -237,7 +237,7 @@ add_action('init', function () {
 
 // TODO: extendify will add a data attribute to the item we want to hide in the help center
 add_action('admin_head', function () { echo '<style>
-  .extendify-help-center ul[data-test="help-center-tours-items-list"] li:last-child {
+  [data-extendify-tour-id=site-assistant-tour] {
     display: none;
   }
 </style>'; });
