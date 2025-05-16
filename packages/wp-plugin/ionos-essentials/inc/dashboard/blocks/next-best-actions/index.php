@@ -25,7 +25,7 @@ function render_callback()
 {
   require_once __DIR__ . '/class-nba.php';
   $actions = NBA::get_actions();
-  if (empty($actions)) {
+  if (empty($actions) || array_all($actions, fn (NBA $action) => ! $action->active)) {
     return;
   }
 
