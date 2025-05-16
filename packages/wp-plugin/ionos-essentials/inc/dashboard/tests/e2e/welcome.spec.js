@@ -1,11 +1,13 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { execSync } from 'node:child_process';
+import { execTestCLI } from '../../../../../../../playwright/wp-env.js';
 
 test.describe('essentials:dashboard next-best-actions block', () => {
   test.beforeAll(async () => {
     try {
-      await execSync('pnpm -s wp-env run tests-cli wp rewrite structure /%postname% --hard');
-      await execSync('pnpm -s wp-env run tests-cli wp user meta delete 1 ionos_essentials_welcome');
+      execTestCLI(
+        `wp rewrite structure /%postname% --hard
+      wp user meta delete 1 ionos_essentials_welcome`
+      );
     } catch (error) {}
   });
 
