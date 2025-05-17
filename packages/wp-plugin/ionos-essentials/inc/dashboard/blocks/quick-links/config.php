@@ -19,7 +19,11 @@ $links = [
     'icon' => 'helparticle-16.svg',
   ],
   [
-    'url'  => $blog_url . '/wp-admin/site-editor.php?postType=wp_navigation',
+    'url'  => [
+      'extendable' => $blog_url . '/wp-admin/site-editor.php?p=/wp_navigation/9&ionos-deep-link=extendable',
+      'block'      => $blog_url . '/wp-admin/site-editor.php?p=/wp_navigation/9&ionos-deep-link=extendable',
+      'classic'    => $blog_url . '/wp-admin/nav-menus.php?action=edit&menu=0&theme=%s&ionos-deep-link=classic_navigation',
+    ],
     'text' => __(
       'Edit site Navigation',
       'ionos-essentials'
@@ -35,12 +39,19 @@ $links = [
     'icon' => 'favstar-16.svg',
   ],
   [
-    'url'  => $blog_url . '/wp-admin/site-editor.php',
-    'text' => __('Edit Header', 'ionos-essentials'),
+    'url'  => [
+      'extendable' => $blog_url . '/wp-admin/site-editor.php?postId=extendable%2F%2Fheader&postType=wp_template_part&canvas=edit&ionos-deep-link=extendable',
+    ],
+    'text' => __(
+      'Edit Header',
+      'ionos-essentials'
+    ),
     'icon' => 'website-48.svg',
   ],
   [
-    'url'  => $blog_url . '/wp-admin/site-editor.php',
+    'url'  => [
+      'extendable' => $blog_url . '/wp-admin/site-editor.php?canvas=edit&p=%2Fwp_template_part%2Fextendable%2F%2Ffooter&ionos-deep-link=extendable',
+    ],
     'text' => __(
       'Edit Footer',
       'ionos-essentials'
