@@ -114,8 +114,6 @@ function update_plugin( $plugin_slug) {
     );
 
     $upgrader->upgrade($plugin_slug);
-    if (!is_plugin_active($plugin_slug)) {
-      activate_plugin($plugin_slug);
-    }
+    activate_plugin($plugin_slug);
   }
 }
