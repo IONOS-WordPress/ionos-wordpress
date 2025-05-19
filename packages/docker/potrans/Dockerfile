@@ -6,13 +6,12 @@ ARG PHP_VERSION
 FROM php:${PHP_VERSION}-cli-alpine as build
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-# ecs version from .env
-ARG POTRANS_VERSION
-
 ENV COMPOSER_HOME=/composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN composer global require --dev om/potrans:${POTRANS_VERSION}
+COPY packages/docker/potrans/composer.json /composer/
+COPY packages/docker/potrans/composer.lock /composer/
+RUN composer global install
 
 # install apk packages to create a user
 # install i18n support into php

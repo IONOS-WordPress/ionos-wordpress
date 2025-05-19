@@ -4,6 +4,7 @@
   "devDependencies": {
     "@ionos-wordpress/rector-php": "workspace:*",
     "@ionos-wordpress/ecs-php": "workspace:*",
+    "@ionos-wordpress/potrans": "workspace:*",
     "@ionos-wordpress/dennis-i18n": "workspace:*"
   }
 }

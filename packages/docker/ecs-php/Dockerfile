@@ -13,14 +13,15 @@ ARG WORDPRESS_CODING_STANDARDS_VERSION
 ENV COMPOSER_HOME=/composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
+COPY packages/docker/ecs-php/composer.json /composer/
+COPY packages/docker/ecs-php/composer.lock /composer/
+
 RUN <<EOF
   # install apk packages to create a user
   # install i18n support into php
   apk add --no-cache icu-dev shadow && docker-php-ext-install intl
 
-  composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-  composer global require --dev symplify/easy-coding-standard:${ECS_VERSION} --with-dependencies
-  composer global require --dev wp-coding-standards/wpcs:${WORDPRESS_CODING_STANDARDS_VERSION}
+  composer global install
 
   # tell phpcs dependency of easy-coding-standard where to find the used standards
   /composer/vendor/symplify/easy-coding-standard/vendor/squizlabs/php_codesniffer/bin/phpcs \

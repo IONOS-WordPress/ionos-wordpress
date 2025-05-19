@@ -2,6 +2,7 @@
 # additionally to the paths listed in .gitignore
 
 pnpm-lock.yaml
+composer.lock
 docs/packages/
 packages/wp-plugin/ionos-essentials/inc/dashboard/data/ionos
 packages/wp-plugin/ionos-essentials/inc/dashboard/data/twentytwentyfive-global-styles.json

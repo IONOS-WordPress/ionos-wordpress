@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
-
 use Rector\ValueObject\PhpVersion;
 
 /*
@@ -12,7 +11,7 @@ use Rector\ValueObject\PhpVersion;
   - https://masteringlaravel.io/daily/2023-11-22-how-to-reference-a-php-codesniffer-ruleset-in-easycodingstandard
  */
 
-require_once __DIR__ . '/wordpress-stubs.php';
+require_once '/composer/php-stubs/wordpress-stubs/wordpress-stubs.php';
 
 return RectorConfig::configure()->withSkip([__DIR__ . '/dist/vendor', __DIR__ . '/dist/languages'])->withParallel()
   // see https://github.com/rectorphp/rector-src/blob/3ed476b9ab65958d85416e48a810b11dbaf4283a/build/config/config-downgrade.php
