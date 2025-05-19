@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec2a13c84cba9f901e36ea76cfa6b8bd",
+    "content-hash": "dfc1d5bc8ad7aa03bd6f5c0d6ddd4e4d",
     "packages": [],
     "packages-dev": [
         {
@@ -341,16 +341,16 @@
         },
         {
             "name": "symplify/easy-coding-standard",
-            "version": "12.5.16",
+            "version": "12.5.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/easy-coding-standard/easy-coding-standard.git",
-                "reference": "3e99ec9bd64528cedb7f7e0a9e892a1c3c803935"
+                "reference": "451dfeba3770f2d7476468b891a789c451ae4b34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easy-coding-standard/easy-coding-standard/zipball/3e99ec9bd64528cedb7f7e0a9e892a1c3c803935",
-                "reference": "3e99ec9bd64528cedb7f7e0a9e892a1c3c803935",
+                "url": "https://api.github.com/repos/easy-coding-standard/easy-coding-standard/zipball/451dfeba3770f2d7476468b891a789c451ae4b34",
+                "reference": "451dfeba3770f2d7476468b891a789c451ae4b34",
                 "shasum": ""
             },
             "require": {
@@ -386,7 +386,7 @@
             ],
             "support": {
                 "issues": "https://github.com/easy-coding-standard/easy-coding-standard/issues",
-                "source": "https://github.com/easy-coding-standard/easy-coding-standard/tree/12.5.16"
+                "source": "https://github.com/easy-coding-standard/easy-coding-standard/tree/12.5.18"
             },
             "funding": [
                 {
@@ -398,7 +398,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-28T07:01:07+00:00"
+            "time": "2025-05-14T09:38:08+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
