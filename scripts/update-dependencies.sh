@@ -86,20 +86,23 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# find all composer.json files and run "composer update" on them
-for composer_json in $(find ./packages -name composer.json -not -path "*/node_modules/*"); do
-  (
-    cd "$(dirname $composer_json)"
-    docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest update --no-install --no-scripts
-    docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest composer outdated --locked --direct --format json | jq '.locked'
-  )
-done
-exit
+function ionos.wordpress.update_composer_dependencies() {
+  # find all composer.json files and run "composer update" on them
+  for composer_json in $(find ./packages -name composer.json -not -path "*/node_modules/*"); do
+    ionos.wordpress.log_header "checking '$composer_json' for updates ..."
+    (
+      cd "$(dirname $composer_json)"
+      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest update --no-install --no-scripts
+      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest composer outdated --locked --direct
+    )
+  done
+}
 
 ionos.wordpress.update_package_dependencies "${PNPM_OPTS:-}"
 ionos.wordpress.check_nodejs_updates
 ionos.wordpress.check_pnpm_version
 ionos.wordpress.check_docker_version
+ionos.wordpress.update_composer_dependencies
 
 # execute optional "update-dependencies" script targets of individual workspace packages
 for package_path in $(find packages -mindepth 2 -maxdepth 2 -type d); do
