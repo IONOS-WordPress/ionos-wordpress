@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
+use ionos\essentials\dashboard\Silent_Skin;
+
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
@@ -23,7 +25,7 @@ function render_callback()
 {
   require_once __DIR__ . '/class-nba.php';
   $actions = NBA::get_actions();
-  if (empty($actions)) {
+  if (empty($actions) || array_all($actions, fn (NBA $action) => ! $action->active)) {
     return;
   }
 
@@ -86,7 +88,7 @@ function render_callback()
     event.target.disabled = true;
     event.target.innerText = "' . \esc_js(__('Installing...', 'ionos-essentials')) . '";
 
-    fetch("' . get_rest_url(null, '/ionos/essentials/dashboard/vulnerability/v1/install-gml') . '", {
+    fetch("' . get_rest_url(null, '/ionos/essentials/dashboard/nba/v1/install-gml') . '", {
       method: "GET",
       credentials: "include",
       headers: {
@@ -179,32 +181,7 @@ function render_callback()
 
 function install_plugin_from_url($plugin_url)
 {
-  class Silent_Skin extends \WP_Upgrader_Skin
-  {
-    public function feedback($string, ...$args)
-    {
-    }
-
-    public function header()
-    {
-    }
-
-    public function footer()
-    {
-    }
-
-    public function error($errors)
-    {
-    }
-
-    public function before()
-    {
-    }
-
-    public function after()
-    {
-    }
-  }
+  require_once PLUGIN_DIR . '/inc/dashboard/class-silent-skin.php';
 
   $skin     = new Silent_Skin();
   $upgrader = new \Plugin_Upgrader($skin);
