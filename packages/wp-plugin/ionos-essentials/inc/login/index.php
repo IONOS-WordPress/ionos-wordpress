@@ -13,7 +13,6 @@ add_action( 'init', function() {
     return;
   }
 
-  // implementiere die style.css
   add_action(
     'login_enqueue_scripts',
     function () {
