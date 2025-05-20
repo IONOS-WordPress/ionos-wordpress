@@ -96,10 +96,34 @@ for ASSET in $ASSETS; do
   echo "upload release '$PRE_RELEASE' asset '$ASSET' as '$TARGET_ASSET_FILENAME' to release '$LATEST_RELEASE_TAG'"
   gh release download $PRE_RELEASE --pattern $ASSET -O $TARGET_ASSET_FILENAME
   if ! gh release upload $LATEST_RELEASE_TAG $TARGET_ASSET_FILENAME --clobber; then
-    $error_message="Failed to upload asset $TARGET_ASSET_FILENAME"
+    error_message="Failed to upload asset $TARGET_ASSET_FILENAME"
     [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
     echo "Error: $error_message"
   fi
+  # upload latest to s3
+  S3_FILENAME=$(echo $TARGET_ASSET_FILENAME | sed -E 's/-latest-.+$/.latest.zip/')
+  echo "upload '$ASSET' to s3 as '$S3_FILENAME'"
+  # ensure we have a AWS_ACCESS_KEY_ID
+  if [[ -z "${AWS_ACCESS_KEY_ID}" ]] || [[ -z "${AWS_SECRET_ACCESS_KEY}" ]]; then
+    ionos.wordpress.log_error "aws secrets are not complete. AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY is necessary"
+  else
+    docker run -i --rm -v "$(pwd)/$TARGET_ASSET_FILENAME":"/tmp/$TARGET_ASSET_FILENAME" --entrypoint bash amazon/aws-cli - <<EOF
+      export AWS_REQUEST_CHECKSUM_CALCULATION=when_required
+      export AWS_RESPONSE_CHECKSUM_VALIDATION=when_required
+
+      aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+      aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+
+      aws --endpoint-url https://s3-de-central.profitbricks.com s3 cp /tmp/$TARGET_ASSET_FILENAME s3://web-hosting/ionos-group/$S3_FILENAME
+EOF
+
+    if [[ $? -ne 0 ]]; then
+      error_message="Failed to upload asset $TARGET_ASSET_FILENAME to S3"
+      [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+      echo "Error: $error_message"
+    fi
+  fi
+
   rm -f $TARGET_ASSET_FILENAME
 
   #

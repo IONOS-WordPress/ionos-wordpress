@@ -49,7 +49,6 @@ require_once __DIR__ . '/blocks/whats-new/index.php';
       <<<EOF
         #wpbody {
             height: calc(100vh - var(--wp-admin--admin-bar--height, '0'));
-            overflow: hidden;
         }
         #wpbody-content {
           height: 100%
@@ -63,6 +62,9 @@ require_once __DIR__ . '/blocks/whats-new/index.php';
         }
         #wpwrap ul#adminmenu a.wp-has-current-submenu:after, #wpwrap ul#adminmenu > li.current > a.current:after {
           border-right-color: #f4f7fa;
+        }
+        #wpbody-content .update-nag {
+          margin: 5px 15px 2px;
         }
         EOF
     );
@@ -233,9 +235,11 @@ add_action('init', function () {
   ]);
 });
 
-// TODO: extendify will add a data attribute to the item we want to hide in the help center
-add_action('admin_head', function () { echo '<style>
-  .extendify-help-center ul[data-test="help-center-tours-items-list"] li:last-child {
-    display: none;
-  }
-</style>'; });
+\add_action('admin_enqueue_scripts', function($hook) {
+  \wp_add_inline_style(
+    'admin-bar',
+    '[data-extendify-tour-id=site-assistant-tour] {
+      display: none;
+    }'
+  );
+});

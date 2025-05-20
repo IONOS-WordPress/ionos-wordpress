@@ -372,6 +372,12 @@ EOF
       fi
     )
 
+    # strip line numbers from comments in .pot and .po files
+    for po_file in $(find "./packages/$1/" -name "*.po" -or -name "*.pot" -type f); do
+      sed -i -e 's/^\(#:.*\):[0-9]\+/\1/g' $po_file
+      sed -i -e '/^#:/{$!N;/^\(#:.*\)\n\1$/!P;D}' $po_file
+    done
+
     # make-pot regenerates the pot file even if no localization changes are
     # present in source files with a new creation date so that git always
     # notices a changed pot pot file
