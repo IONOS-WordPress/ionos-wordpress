@@ -34,66 +34,66 @@ msgstr "IONOS Groep"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: inc/tenants/config/arsys.php:8
-#: inc/tenants/config/piensa.php:8
+#: inc/tenants/config/arsys.php
+#: inc/tenants/config/piensa.php
 msgid "My offers"
 msgstr "Mijn aanbiedingen"
 
-#: inc/tenants/config/arsys.php:12
+#: inc/tenants/config/arsys.php
 msgid "My data"
 msgstr "Mijn gegevens"
 
-#: inc/tenants/config/arsys.php:16
+#: inc/tenants/config/arsys.php
 msgid "My products"
 msgstr "Mijn producten"
 
-#: inc/tenants/config/arsys.php:20
+#: inc/tenants/config/arsys.php
 msgid "My invoices"
 msgstr "Mijn facturen"
 
-#: inc/tenants/config/arsys.php:24
-#: inc/tenants/config/fasthosts.php:8
-#: inc/tenants/config/piensa.php:24
+#: inc/tenants/config/arsys.php
+#: inc/tenants/config/fasthosts.php
+#: inc/tenants/config/piensa.php
 msgid "Control Panel"
 msgstr "Bedieningspaneel"
 
-#: inc/tenants/config/fasthosts.php:12
+#: inc/tenants/config/fasthosts.php
 msgid "My User"
 msgstr "Mijn gebruiker"
 
-#: inc/tenants/config/fasthosts.php:16
+#: inc/tenants/config/fasthosts.php
 msgid "WordPress Websites"
 msgstr "WordPress Websites"
 
-#: inc/tenants/config/piensa.php:12
+#: inc/tenants/config/piensa.php
 msgid "Data of customer"
 msgstr "Gegevens van klant"
 
-#: inc/tenants/config/piensa.php:16
+#: inc/tenants/config/piensa.php
 msgid "Services"
 msgstr "Diensten"
 
-#: inc/tenants/config/piensa.php:20
+#: inc/tenants/config/piensa.php
 msgid "Invoices"
 msgstr "Facturen"
 
-#: inc/tenants/config/strato.php:8
+#: inc/tenants/config/strato.php
 msgid "Package overview"
 msgstr "Overzicht van je pakketten"
 
-#: inc/tenants/config/strato.php:12
+#: inc/tenants/config/strato.php
 msgid "Your invoices"
 msgstr "Fakturen weergeven"
 
-#: inc/tenants/config/strato.php:16
+#: inc/tenants/config/strato.php
 msgid "Your contract"
 msgstr "Je contract"
 
-#: inc/tenants/config/strato.php:20
+#: inc/tenants/config/strato.php
 msgid "Current offers"
 msgstr "Actuele aanbiedingen"
 
-#: inc/dashboard/blocks/quick-links/render.php:13
+#: inc/dashboard/blocks/quick-links/render.php
 msgid "Quick Links"
 msgstr "Snelle links"
 
@@ -127,36 +127,37 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Wp-scangegevens weergeven."
 
-#: inc/dashboard/index.php:228
+#: inc/dashboard/index.php
 msgid "Brand Logo"
 msgstr "Brand Logo"
 
-#: inc/dashboard/blocks/vulnerability/render.php:90
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Show full scan report"
 msgstr "Volledig scanrapport tonen"
 
-#: inc/dashboard/blocks/vulnerability/render.php:69
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Last scan"
 msgstr "Laatste scan"
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/render.php:73
+#: inc/dashboard/blocks/vulnerability/render.php
+#, php-format
 msgid "%s ago"
 msgstr "%s geleden"
 
-#: inc/dashboard/blocks/vulnerability/render.php:50
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiek probleem gevonden"
 msgstr[1] "kritieke problemen gevonden"
 
-#: inc/dashboard/blocks/vulnerability/render.php:57
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "waarschuwing gevonden"
 msgstr[1] "waarschuwingen gevonden"
 
-#: inc/dashboard/blocks/vulnerability/render.php:64
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Issues found"
 msgstr "problemen gevonden"
 
@@ -170,15 +171,15 @@ msgctxt "block description"
 msgid "Next Best Actions"
 msgstr "Volgende beste acties"
 
-#: inc/dashboard/blocks/banner/index.php:25
+#: inc/dashboard/blocks/banner/index.php
 msgid "View Site"
 msgstr "Site bekijken"
 
-#: inc/dashboard/blocks/banner/index.php:58
+#: inc/dashboard/blocks/banner/index.php
 msgid "Start AI Sitebuilder"
 msgstr "AI websitemaker starten"
 
-#: inc/dashboard/blocks/deep-links/index.php:124
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "Manage Hosting"
 msgstr "Hosting beheren"
 
@@ -192,160 +193,157 @@ msgctxt "block description"
 msgid "Banner"
 msgstr "Banner"
 
-#: inc/dashboard/blocks/deep-links/index.php:81
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "Account Management"
 msgstr "Accountbeheer"
 
-#: inc/dashboard/blocks/deep-links/index.php:82
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Toegang tot je klantaccount, beveiligingsinstellingen en pakketten met één klik."
 
-#: inc/dashboard/blocks/quick-links/render.php:14
+#: inc/dashboard/blocks/quick-links/render.php
 msgid "Easily navigate to frequently used features and tools."
 msgstr "Navigeer eenvoudig naar vaak gebruikte functies en tools."
 
-#: inc/dashboard/index.php:126
-#: inc/dashboard/index.php:127
+#: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Overzicht"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:206
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Create Page"
 msgstr "Pagina maken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:188
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:196
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Logo"
 msgstr "Logo toevoegen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:189
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Zorg ervoor dat je website is voorzien van een uniek logo voor een professionele uitstraling."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:100
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect Domain"
 msgstr "Domeinnaam koppelen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:107
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Edit & Complete Your Website"
 msgstr "Uw website bewerken en voltooien"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:108
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
 msgstr "Voeg pagina's, teksten en afbeeldingen toe, optimaliseer je website met AI-tools of pas kleuren en lettertypen aan."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:113
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Edit Website"
 msgstr "Website bewerken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:121
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Discover Help Center"
 msgstr "Helpcentrum ontdekken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:122
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
 msgstr "Krijg direct ondersteuning van de AI-chatbot, verken de kennisbank of neem een rondleiding."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:127
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Open Help Center"
 msgstr "Helpcentrum openen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:138
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set Up Email"
 msgstr "E-mail instellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:139
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set up your included email account and integrate it with your website."
 msgstr "Configureer je inbegrepen e-mailaccount in en integreer het in je website."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:158
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:161
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set Up Contact Form"
 msgstr "Contactformulier instellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:159
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Create a contact form to stay connected with your visitors."
 msgstr "Maak een contactformulier om in verbinding te blijven met je bezoekers."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:172
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set Up Your WooCommerce Store"
 msgstr "WooCommerce webshop instellen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:173
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Launch your online store now with a guided setup wizard."
 msgstr "Lanceer je webshop met behulp van de set-upwizard."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:175
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Start Setup"
 msgstr "Set-up starten"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:213
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Social Media Setup"
 msgstr "Social media verbinden"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:214
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Verbind je social media-profielen met je website en vergroot je online zichtbaarheid."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:221
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect Social Media"
 msgstr "Social media verbinden"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:228
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:234
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Favicon"
 msgstr "Favicon toevoegen"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:229
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Voeg een favicon (website-icoon) toe aan je website om de herkenbaarheid en zichtbaarheid te verbeteren."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:203
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Create a Page"
 msgstr "Pagina maken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:204
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Create and publish a page and share your story with the world."
 msgstr "Maak en publiceer een pagina en deel je verhaal met de wereld."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:95
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
 msgstr "Koppel een domeinnaam aan je website om de zichtbaarheid te vergroten en meer bezoekers te ontvangen."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:94
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect a Domain"
 msgstr "Domeinnaam koppelen"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:35
+#: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Unlock Your Website's Potential"
 msgstr "Haal nog meer uit je website"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:36
+#: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Je website is live, maar je reis begint pas net. Ontdek onze tips om sneller te groeien, de performance te verbeteren en je online doelen te bereiken."
 
 #. translators: %s: Brand name
-#: inc/dashboard/blocks/welcome/index.php:40
+#: inc/dashboard/blocks/welcome/index.php
+#, php-format
 msgid "Welcome to your %s Hub"
 msgstr "Welkom bij je %s Hub"
 
-#: inc/dashboard/blocks/welcome/index.php:43
+#: inc/dashboard/blocks/welcome/index.php
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
 msgstr "Via dit overzicht kun je het volledige potentieel van je WordPress website benutten."
 
-#: inc/dashboard/blocks/welcome/index.php:51
+#: inc/dashboard/blocks/welcome/index.php
 msgid "Recommendations for next steps"
 msgstr "Tips voor volgende stappen"
 
-#: inc/dashboard/blocks/welcome/index.php:52
+#: inc/dashboard/blocks/welcome/index.php
 msgid "Helpful links and shortcuts"
 msgstr "Handige links en shortcuts"
 
-#: inc/dashboard/blocks/welcome/index.php:53
+#: inc/dashboard/blocks/welcome/index.php
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Overzichtelijk helpcentrum met een AI-chatbot, rondleidingen en een uitgebreide kennisbank"
 
-#: inc/dashboard/blocks/welcome/index.php:61
+#: inc/dashboard/blocks/welcome/index.php
 msgid "Close"
 msgstr "Sluiten"
 
@@ -369,145 +367,144 @@ msgctxt "block description"
 msgid "What's New"
 msgstr "Wat is er nieuw?"
 
-#: inc/dashboard/blocks/whats-new/index.php:25
+#: inc/dashboard/blocks/whats-new/index.php
 msgid "What’s New"
 msgstr "Wat is er nieuw?"
 
-#: inc/dashboard/blocks/whats-new/index.php:37
+#: inc/dashboard/blocks/whats-new/index.php
 msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
 msgstr "Goed nieuws! We hebben onze gebruikersinterface compleet vernieuwd, met een nieuw ontwerp en verbeterde gebruikerservaring. Het is nog nooit zo eenvoudig geweest om je WordPress website te beheren."
 
-#: inc/dashboard/blocks/whats-new/index.php:43
+#: inc/dashboard/blocks/whats-new/index.php
 msgid "Vulnerability Scan Results"
 msgstr "Resultaten kwetsbaarheidsscan"
 
-#: inc/dashboard/blocks/whats-new/index.php:44
+#: inc/dashboard/blocks/whats-new/index.php
 msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
 msgstr "We hebben scanresultaten direct aan je dashboard toegevoegd, zodat je direct inzicht hebt in potentiële beveiligingsrisico's. Zo ontdek je potentiële risico's meteen en houd je je WordPress site veilig."
 
-#: inc/dashboard/blocks/quick-links/config.php:10
+#: inc/dashboard/blocks/quick-links/config.php
 msgid "Add new page"
 msgstr "Nieuwe pagina toevoegen"
 
-#: inc/dashboard/blocks/quick-links/config.php:18
+#: inc/dashboard/blocks/quick-links/config.php
 msgid "Add new post"
 msgstr "Nieuw bericht toevoegen"
 
-#: inc/dashboard/blocks/quick-links/config.php:39
+#: inc/dashboard/blocks/quick-links/config.php
 msgid "Edit Header"
 msgstr "Header bewerken"
 
-#: inc/dashboard/blocks/quick-links/config.php:44
+#: inc/dashboard/blocks/quick-links/config.php
 msgid "Edit Footer"
 msgstr "Footer bewerken"
 
-#: inc/dashboard/blocks/next-best-actions/index.php:64
+#: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Dismiss"
 msgstr "Sluiten"
 
-#: inc/dashboard/blocks/vulnerability/render.php:32
-#: inc/dashboard/blocks/vulnerability/render.php:102
-#: inc/dashboard/blocks/vulnerability/render.php:149
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Scan je WordPress voor bedreigingen en kwetsbaarheden"
 
-#: inc/dashboard/blocks/quick-links/config.php:23
+#: inc/dashboard/blocks/quick-links/config.php
 msgid "Edit site Navigation"
 msgstr "Sitenavigatie bewerken"
 
-#: inc/dashboard/blocks/quick-links/config.php:31
+#: inc/dashboard/blocks/quick-links/config.php
 msgid "Change Styles"
 msgstr "Stijlen, kleuren en lettertypen wijzigen"
 
-#: inc/dashboard/blocks/quick-links/config.php:52
+#: inc/dashboard/blocks/quick-links/config.php
 msgid "Add Plugins"
 msgstr "Plugins toevoegen"
 
-#: inc/dashboard/blocks/quick-links/config.php:60
+#: inc/dashboard/blocks/quick-links/config.php
 msgid "Upload Media files"
 msgstr "Mediabestanden uploaden"
 
-#: inc/dashboard/blocks/whats-new/index.php:29
+#: inc/dashboard/blocks/whats-new/index.php
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Ontdek nieuwe functies en krijg een overzicht van de laatste updates en verbeteringen van de WordPress Hub."
 
-#: inc/dashboard/blocks/whats-new/index.php:36
+#: inc/dashboard/blocks/whats-new/index.php
 msgid "New User Interface"
 msgstr "Introductie van de nieuwe WP Hub"
 
-#: inc/tenants/config/ionos.php:20
+#: inc/tenants/config/ionos.php
 msgid "My Products"
 msgstr "Mijn producten"
 
-#: inc/tenants/config/ionos.php:12
+#: inc/tenants/config/ionos.php
 msgid "Project Overview"
 msgstr "Projectoverzicht"
 
-#: inc/tenants/config/ionos.php:16
+#: inc/tenants/config/ionos.php
 msgid "Domains and SSL management"
 msgstr "Beheer van domeinen en SSL"
 
-#: inc/tenants/config/ionos.php:24
+#: inc/tenants/config/ionos.php
 msgid "Add more products"
 msgstr "Meer producten toevoegen"
 
-#: inc/dashboard/blocks/deep-links/index.php:107
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "Webmail Login"
 msgstr "Inloggen Webmail"
 
-#: inc/tenants/config/udag.php:8
+#: inc/tenants/config/udag.php
 msgid "Meine Daten"
 msgstr "Mijn gegevens"
 
-#: inc/tenants/config/udag.php:12
+#: inc/tenants/config/udag.php
 msgid "WordPress verwalten "
 msgstr "WordPress verwalten"
 
-#: inc/tenants/config/udag.php:16
+#: inc/tenants/config/udag.php
 msgid "Domains verwalten"
 msgstr "Domeinen verwalten"
 
-#: inc/tenants/config/udag.php:20
+#: inc/tenants/config/udag.php
 msgid "E-Mail verwalten"
 msgstr "E-mail verwalten"
 
-#: inc/tenants/config/udag.php:24
+#: inc/tenants/config/udag.php
 msgid "Webspace "
 msgstr "Webruimte"
 
-#: inc/tenants/config/udag.php:28
+#: inc/tenants/config/udag.php
 msgid "RankingCoach"
 msgstr "RanglijstCoach"
 
-#: inc/tenants/config/udag.php:32
+#: inc/tenants/config/udag.php
 msgid "SSL"
 msgstr "SSL"
 
-#: inc/tenants/config/udag.php:36
+#: inc/tenants/config/udag.php
 msgid "Markenschutz"
 msgstr "Markenschutz"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php:144
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Setup Email Account"
 msgstr "E-mailaccount instellen"
 
-#: inc/tenants/config/ionos.php:8
+#: inc/tenants/config/ionos.php
 msgid "My Account"
 msgstr "Mijn account"
 
-#: inc/dashboard/blocks/vulnerability/render.php:109
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "The required Security plugin is missing."
 msgstr "De vereiste beveiligingsplugin ontbreekt."
 
-#: inc/dashboard/blocks/vulnerability/render.php:114
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Install Security plugin"
 msgstr "Beveiligingsplugin installeren"
 
-#: inc/dashboard/blocks/vulnerability/render.php:122
+#: inc/dashboard/blocks/next-best-actions/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Installing..."
 msgstr "Installeren..."
 
-#: inc/dashboard/blocks/vulnerability/render.php:156
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
 msgstr "Scan op kwetsbaarheid niet mogelijk. Neem contact op met de klantenservice."
 
@@ -516,10 +513,28 @@ msgstr "Scan op kwetsbaarheid niet mogelijk. Neem contact op met de klantenservi
 msgid "Essentials"
 msgstr "Essentials"
 
-#: inc/dashboard/blocks/banner/index.php:68
+#: inc/dashboard/blocks/banner/index.php
 msgid "Rebuild Website"
 msgstr "Website herbouwen"
 
-#: inc/dashboard/blocks/banner/index.php:70
+#: inc/dashboard/blocks/banner/index.php
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr "Het is mogelijk om je door AI gemaakte website binnen 72 uur opnieuw op te bouwen"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
+msgid "Legally compliant selling with German Market Light"
+msgstr "Wettelijk conforme verkoop met German Market Light"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
+msgid "Install now"
+msgstr "Nu installeren"
+
+#: inc/dashboard/blocks/next-best-actions/class-nba.php
+msgid "Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner."
+msgstr "Gebruik de gratis extensie voor WooCommerce om je webwinkel in Duitsland en Oostenrijk in overeenstemming met de wet te exploiteren."
+
+#. translators: s=link to control panel
+#: inc/descriptify/index.php
+#, php-format
+msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
+msgstr ""

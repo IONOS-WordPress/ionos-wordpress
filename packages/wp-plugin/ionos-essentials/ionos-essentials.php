@@ -6,7 +6,7 @@
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
- * Version:           1.0.3
+ * Version:           1.0.5
  * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials
  * License:           GPL-2.0-or-later
@@ -33,6 +33,8 @@ require_once __DIR__ . '/inc/update/index.php';
 // features
 require_once __DIR__ . '/inc/switch-page/index.php';
 require_once __DIR__ . '/inc/dashboard/index.php';
+require_once __DIR__ . '/inc/descriptify/index.php';
+require_once __DIR__ . '/inc/login/index.php';
 
 // soc plugin components
 require_once __DIR__ . '/inc/migration/index.php';

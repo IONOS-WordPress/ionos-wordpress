@@ -23,6 +23,7 @@ docker cp "$WORDPRESS_TEST_CONTAINER:/home/$USER/.composer/vendor/" "$(pwd)/phpu
 # copy our phpunit config and bootstrap file to the wp-env wordpress test instance instead of mapping them in wp-env.json
 docker cp "$(pwd)/phpunit/phpunit.xml" "$WORDPRESS_TEST_CONTAINER:/var/www/html/"
 docker cp "$(pwd)/phpunit/bootstrap.php" "$WORDPRESS_TEST_CONTAINER:/var/www/html/"
+docker cp "$(pwd)/phpunit/wp-tests-config.php" "$WORDPRESS_TEST_CONTAINER:/wordpress-phpunit/"
 
 # execute only when NOT in CI environment
 # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables

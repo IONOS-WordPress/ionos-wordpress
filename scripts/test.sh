@@ -62,7 +62,6 @@ done
 # (this is necessary because the cache is not portable between environments)
 if [[ "${USE[@]}" =~ e2e|react|all ]]; then
   ionos.wordpress.log_info "found playwight installations : $(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l)"
-  ionos.wordpress.log_info "$(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null)"
 
   PLAYWRIGHT_DIR=$(realpath ./playwright)
   if [[ -f "$PLAYWRIGHT_DIR/.cache/metainfo.json" ]] && ! grep "$PLAYWRIGHT_DIR" ./playwright/.cache/metainfo.json > /dev/null; then
@@ -71,9 +70,7 @@ if [[ "${USE[@]}" =~ e2e|react|all ]]; then
   fi
 
   # execute playwright browser installation if not already done
-  if ! find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null; then
-    pnpm exec playwright install chromium
-  fi
+  [[ $(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l) -eq "0" ]] && pnpm exec playwright install chromium
 fi
 
 
@@ -108,9 +105,9 @@ if [[ "${USE[@]}" =~ all|php ]]; then
       TARGET_PHP_VERSION=$(echo "${transpiled_plugin_dir#*php}" | grep -oE '^[0-9.]+')
 
       ionos.wordpress.log_header "checking compatibility for target php version $TARGET_PHP_VERSION in plugin $transpiled_plugin_dir"
-      # check if the transpiled plugin code is valid for the desired php version
+      # check if the transpiled plugin code (except for phpunit test files ) is valid for the desired php version
       ! cat <<EOL | docker run -i --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:${TARGET_PHP_VERSION}-cli /bin/bash - | grep -v '^No syntax errors'
-find "$transpiled_plugin_dir" -name "*.php" -print0 | xargs -0L1 php -l
+find "$transpiled_plugin_dir" -name "*.php" -not -name "*Test.php" -print0 | xargs -0L1 php -l
 exit $?
 EOL
 
@@ -134,7 +131,7 @@ if [[ "${USE[@]}" =~ all|e2e ]]; then
   (
     # pnpm exec wp-scripts test-playwright --pass-with-no-tests -c ./playwright.config.js \
     pnpm exec playwright test --pass-with-no-tests -c ./playwright.config.js \
-      "${USE_OPTIONS[e2e]:---quiet}" \
+      ${USE_OPTIONS[e2e]:---quiet} \
       $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.js ]] && printf "$file "; done)
   )
 fi
@@ -211,6 +208,10 @@ Options:
     Execute only a single e2e test file :
       'pnpm run test:e2e packages/wp-plugin/ionos-essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js' or
       'pnpm run test:e2e deep-links-block.spec.js' (path can be left off for playwright)
+
+    Execute e2e tests by tag (https://playwright.dev/docs/test-annotations#tag-tests) :
+      # run all tests except tagged with @editor
+      'pnpm run test:e2e --e2e-opts'
 
     Execute only a single e2e test file with playwright debugger :
       'pnpm run test:e2e --e2e-opts '--debug' packages/wp-plugin/ionos-essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js' or
