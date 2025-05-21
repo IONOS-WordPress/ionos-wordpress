@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.0.5
+
+### Patch Changes
+
+- ac6b2cf: redesign login page
+
 ## 1.0.4
 
 ### Patch Changes
