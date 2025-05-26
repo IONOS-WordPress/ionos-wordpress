@@ -86,7 +86,7 @@
     "@wordpress/components": "catalog:",
     "@wordpress/e2e-test-utils-playwright": "^1.23.0",
     "@wordpress/env": "^10.23.0",
-    "@wordpress/scripts": "^30.16.0",
+    "@wordpress/scripts": "^30.17.0",
     "@wp-now/wp-now": "0.1.74",
     "eslint": "9.27.0",
     "eslint-config-prettier": "10.1.5",
