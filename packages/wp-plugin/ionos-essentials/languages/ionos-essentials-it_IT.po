@@ -206,7 +206,6 @@ msgid "Easily navigate to frequently used features and tools."
 msgstr "Accedi facilmente alle funzioni e agli strumenti utilizzati più frequentemente."
 
 #: inc/dashboard/index.php
-#: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Panoramica"
 
@@ -214,7 +213,6 @@ msgstr "Panoramica"
 msgid "Create Page"
 msgstr "Crea pagina"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Logo"
 msgstr "Aggiungi un logo"
@@ -260,7 +258,6 @@ msgid "Set up your included email account and integrate it with your website."
 msgstr "Configura il tuo account e-mail e integralo con il tuo sito web."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set Up Contact Form"
 msgstr "Configura modulo di contatto"
 
@@ -292,7 +289,6 @@ msgstr "Collega i profili social al tuo sito web e amplia la tua presenza online
 msgid "Connect Social Media"
 msgstr "Collega social media"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Favicon"
 msgstr "Aggiungi una Favicon"
@@ -407,8 +403,6 @@ msgstr "Modifica il piè di pagina"
 msgid "Dismiss"
 msgstr "Ignora"
 
-#: inc/dashboard/blocks/vulnerability/render.php
-#: inc/dashboard/blocks/vulnerability/render.php
 #: inc/dashboard/blocks/vulnerability/render.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Scansione delle vulnerabilità"

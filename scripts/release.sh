@@ -22,7 +22,7 @@
 
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
-
+set -x
 # ensure we have a GITHUB_TOKEN
 if [[ -z "${GITHUB_TOKEN}" ]]; then
   ionos.wordpress.log_error "GITHUB_TOKEN environment variable is not set."
