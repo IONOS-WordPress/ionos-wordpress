@@ -2,17 +2,6 @@
 
 namespace ionos\essentials\dashboard\blocks\welcome;
 
-use const ionos\essentials\PLUGIN_DIR;
-
-\add_action('init', function () {
-  \register_block_type(
-    PLUGIN_DIR . '/build/dashboard/blocks/welcome',
-    [
-      'render_callback' => __NAMESPACE__ . '\\render_callback',
-    ]
-  );
-});
-
 const USER_META_KEY = 'ionos_essentials_welcome';
 
 function render_callback(): string

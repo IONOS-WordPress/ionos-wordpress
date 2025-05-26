@@ -12,15 +12,6 @@ require_once ABSPATH . 'wp-admin/includes/misc.php';
 
 use const ionos\essentials\PLUGIN_DIR;
 
-\add_action('init', function () {
-  \register_block_type(
-    PLUGIN_DIR . '/build/dashboard/blocks/next-best-actions',
-    [
-      'render_callback' => 'ionos\essentials\dashboard\blocks\next_best_actions\render_callback',
-    ]
-  );
-});
-
 function render_callback()
 {
   require_once __DIR__ . '/class-nba.php';
