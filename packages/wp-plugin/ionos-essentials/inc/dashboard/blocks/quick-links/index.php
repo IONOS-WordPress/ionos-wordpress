@@ -1,0 +1,41 @@
+<?php
+
+namespace ionos\essentials\dashboard\blocks\quick_links;
+
+use const ionos\essentials\PLUGIN_DIR;
+
+function render_callback()
+{
+  $config_file = __DIR__ . '/config.php';
+
+  if (file_exists($config_file)) {
+    require $config_file;
+
+    ?>
+<div class="card" style="">
+  <div class="card__content">
+    <section class="card__section">
+      <h2 class="card__headline"><?php echo \esc_html__('Quick Links', 'ionos-essentials'); ?></h2>
+      <p class="paragraph"><?php echo \esc_html__(
+        'Easily navigate to frequently used features and tools.',
+        'ionos-essentials'
+      ); ?></p>
+      <div>
+        <?php
+              foreach ($links as $link) {
+                printf(
+                  '<a href="%s" class="button button--secondary mb-1 button--with-icon">%s%s</a>',
+                  \esc_url($link['url']),
+                  file_get_contents(PLUGIN_DIR . '/assets/img/' . $link['icon']),
+                  \esc_html($link['text'])
+                );
+              }
+    ?>
+      </div>
+    </section>
+
+  </div>
+</div>
+    <?php
+  }
+}
