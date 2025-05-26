@@ -540,3 +540,36 @@ msgstr "Skorzystaj z bezpłatnego rozszerzenia dla WooCommerce, aby prowadzić s
 #, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
 msgstr ""
+
+#: inc/switch-page/view.php
+msgid "How do you want to create your new website?"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "Online in a few minutes"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "With AI"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "100% WordPress"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "Do it yourself"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
+msgstr ""
+
+#. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
+#: inc/switch-page/view.php
+msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
+msgstr ""
