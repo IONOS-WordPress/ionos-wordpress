@@ -537,4 +537,37 @@ msgstr "Installieren"
 #: inc/descriptify/index.php
 #, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
-msgstr ""
+msgstr "Sie können Ihre URL (Domain) ganz einfach im <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a> anpassen und verwalten."
+
+#: inc/switch-page/view.php
+msgid "How do you want to create your new website?"
+msgstr "Wie möchtest Du Deine neue Webseite erstellen?"
+
+#: inc/switch-page/view.php
+msgid "Online in a few minutes"
+msgstr "In wenigen Minuten online"
+
+#: inc/switch-page/view.php
+msgid "With AI"
+msgstr "Mit AI"
+
+#: inc/switch-page/view.php
+msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
+msgstr "Automatische Website-Erstellung auf der Grundlage Ihrer Präferenzen und Anforderungen. Inklusive gebrauchsfertiger Texte und Bilder."
+
+#: inc/switch-page/view.php
+msgid "100% WordPress"
+msgstr "100% WordPress"
+
+#: inc/switch-page/view.php
+msgid "Do it yourself"
+msgstr "Selber machen"
+
+#: inc/switch-page/view.php
+msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
+msgstr "Sie entscheiden, wie Sie Ihre Website erstellen möchten. Keine Sorge, Sie können die KI-Erstellung auch später über das WordPress-Dashboard starten."
+
+#. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
+#: inc/switch-page/view.php
+msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
+msgstr "Durch die Nutzung von AI-Funktionen erklären Sie sich mit den OpenAI %1$sNutzungsbedingungen%2$s und %3$sDatenschutzbestimmungen%4$s einverstanden."
