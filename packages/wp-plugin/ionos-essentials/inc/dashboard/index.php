@@ -89,3 +89,29 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   },
   accepted_args : 2
 );
+
+
+\add_action('rest_api_init', function () {
+  \register_rest_route(
+    'ionos/essentials/dashboard/welcome/v1',
+    '/closer',
+    [
+      'methods'             => 'GET',
+      'permission_callback' => fn () => 0 !== \get_current_user_id(),
+      'callback'            => function () {
+        $meta = \update_user_meta(\get_current_user_id(), 'ionos_essentials_welcome', true);
+
+        if (false === $meta) {
+          return rest_ensure_response(new \WP_REST_Response([
+            'error' => 'failed to update user meta',
+          ], 500));
+        }
+
+        return rest_ensure_response(new \WP_REST_Response([
+          'status' => $meta,
+        ], 200));
+      },
+    ]
+  );
+});
+

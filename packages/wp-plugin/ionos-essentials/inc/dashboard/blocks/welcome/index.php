@@ -2,11 +2,9 @@
 
 namespace ionos\essentials\dashboard\blocks\welcome;
 
-const USER_META_KEY = 'ionos_essentials_welcome';
-
 function render_callback(): string
 {
-  $user_meta = \get_user_meta(user_id: \get_current_user_id(), key: USER_META_KEY, single: true);
+  $user_meta = \get_user_meta(user_id: \get_current_user_id(), key: 'ionos_essentials_welcome', single: true);
 
   if (! empty($user_meta)) {
     return '';
@@ -63,10 +61,12 @@ function render_callback(): string
         closeButton.addEventListener("click", function() {
             dialog.close();
             fetch("' . \esc_url(\rest_url('ionos/essentials/dashboard/welcome/v1/closer')) . '", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                "X-WP-Nonce": "' . \wp_create_nonce('wp_rest') . '"
+              },
+              credentials: "include",
             }).then(response => {
                 if (!response.ok) {
                     console.error("Failed to update user meta");
@@ -80,26 +80,3 @@ function render_callback(): string
 
 ';
 }
-\add_action('rest_api_init', function () {
-  \register_rest_route(
-    'ionos/essentials/dashboard/welcome/v1',
-    '/closer',
-    [
-      'methods'             => 'POST',
-      'permission_callback' => fn () => 0 !== \get_current_user_id(),
-      'callback'            => function () {
-        $meta = \update_user_meta(\get_current_user_id(), USER_META_KEY, true);
-
-        if (false === $meta) {
-          return rest_ensure_response(new \WP_REST_Response([
-            'error' => 'failed to update user meta',
-          ], 500));
-        }
-
-        return rest_ensure_response(new \WP_REST_Response([
-          'status' => $meta,
-        ], 200));
-      },
-    ]
-  );
-});
