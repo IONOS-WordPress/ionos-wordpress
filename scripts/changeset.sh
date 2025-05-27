@@ -16,28 +16,14 @@ if [[ "$@" == '' ]]; then
   exit 0
 fi
 
-# otherwise delegate all arguments to wp-env
-pnpm exec changeset $@
-
 # if versioning occured process to update the new version numbers in other files
 if [[ "$1" == 'version' ]]; then
-  if [[ -d ./packages/wp-plugin ]]; then
-    # loop over all plugin.php files in ./packages/wp-plugin/*/
-    for PLUGIN_PHP in $(find ./packages/wp-plugin -maxdepth 2 -type f -name 'plugin.php'); do
-      VERSION=$(jq -r '.version' "$(dirname $PLUGIN_PHP)/package.json")
-      # update version in plugin.php
-      sed -i --regexp-extended "s/^ \* Version:(\s*).*/ \* Version:\1$VERSION/" "$PLUGIN_PHP"
-    done
-  fi
-
-  if [[ -d ./packages/wp-theme ]]; then
-    # loop over all style.css files in ./packages/wp-theme/*/
-    for STYLE_CSS in $(find ./packages/wp-theme -maxdepth 2 -type f -name 'style.css'); do
-      VERSION=$(jq -r '.version' "$(dirname $STYLE_CSS)/package.json")
-      # update version in style.css
-      sed -i --regexp-extended "s/^(\s*)Version:(\s*).*/\1Version:\2$VERSION/" "$STYLE_CSS"
-    done
-  fi
+  # 'changeset version' doesnt abort with error code if no changesets are found
+  # thats why we abort
+  #   if 'changeset version' spits out 'No unreleased changesets found' on stderr
+  pnpm exec changeset version 2>&1 | tee /dev/stderr | grep -q -v 'No unreleased changesets found'
+else
+  pnpm exec changeset $@
 fi
 
 # we need to keep the lockfile in sync with the updated package.json files

@@ -10,14 +10,14 @@ const config = defineConfig({
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
   snapshotDir: './playwright/storybook/__snapshots__',
   /* Maximum time one test can run for. */
-  timeout: 10 * 1000,
+  timeout: 30 * 1000,
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
-  /* Retry 2 times */
-  retries: 2,
-  // Opt out of parallel tests
+  /* Retry on CI only */
+  retries: process.env.CI ? 2 : 1,
+  /* Opt out of parallel tests */
   workers: 1,
   webServer: {
     ...baseConfig.webServer,

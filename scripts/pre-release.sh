@@ -77,6 +77,7 @@ pnpm changeset version
 pnpm install
 
 # build & test repository
+# (build will automatically sync the updated version numbers into the plugin / theme entry files)
 pnpm test
 
 # generate sbom file

@@ -235,11 +235,8 @@ add_action('init', function () {
   ]);
 });
 
-\add_action('admin_enqueue_scripts', function($hook) {
-  \wp_add_inline_style(
-    'admin-bar',
-    '[data-extendify-tour-id=site-assistant-tour] {
+\add_action('admin_enqueue_scripts', function ($hook) {
+  \wp_add_inline_style('admin-bar', '[data-extendify-tour-id=site-assistant-tour] {
       display: none;
-    }'
-  );
+    }');
 });
