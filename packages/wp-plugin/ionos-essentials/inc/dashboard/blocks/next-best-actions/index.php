@@ -20,23 +20,20 @@ function render_callback()
     return;
   }
 
-  $template = '
-  <div id="ionos-dashboard__essentials_nba" class="wp-block-group alignwide">
-      <div class="wp-block-group is-layout-flow" style="margin-top:0px;margin-bottom:15px;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
-          <h3 class="wp-block-heading">%s</h3>
-          <p>%s</p>
-      </div>
-      <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-1 wp-block-columns-is-layout-flex" id="actions">
-          %s
-      </div>
-  </div>';
 
-  $header      = \esc_html__("Unlock Your Website's Potential", 'ionos-essentials');
-  $description = \esc_html__(
-    'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
-    'ionos-essentials'
-  );
-  $body = '';
+  $cards = '';
+  $card_template = '<div class="grid-col grid-col--4">
+          <div class="card" style="">
+            <div class="card__content">
+              <section class="card__section">
+                <h2 class="card__headline">%s</h2>
+                <p class="paragraph">%s</p>
+                %s
+              </section>
+            </div>
+          </div>
+        </div>';
+
   foreach ($actions as $action) {
     if (! $action->active) {
       continue;
@@ -46,45 +43,59 @@ function render_callback()
     if ('#' === $action->link) {
       $target = '';
     }
-    $body .= '
-      <div class="wp-block-column is-style-default has-background is-layout-flow action" style="border-radius:24px;background-color:#f4f7fa">
-        <div class="action-content">
-          <h4 class="wp-block-heading">' . \esc_html($action->title) . '</h4>
-          <p>' . \esc_html($action->description) . '</p>
-          <div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
-              <div class="wp-block-button">';
 
+    $buttons = sprintf(
+      '<a data-nba-id="%s" href="%s" class="button button--primary" target="%s">%s</a>',
+      $action->id,
+      \esc_url($action->link),
+      $target,
+      \esc_html($action->anchor)
+    );
+
+    // Overwrite cta button for GML installation
     if ('woocommerce-gml' === $action->id) {
-      $body .= '<button style="height: auto;" id="ionos_essentials_install_gml" class="wp-block-button__link wp-element-button nba-link">' . $action->anchor . '</button>';
-    } else {
-      $body .= '<a data-nba-id="' . $action->id . '" href="' . \esc_url(
-        $action->link
-      ) . '" class="wp-block-button__link wp-element-button nba-link" target="' . $target . '">' . \esc_html(
-        $action->anchor
-      ) . '</a>';
+      $buttons = '<a id="ionos_essentials_install_gml" class="button button--primary">' . $action->anchor . '</a>';
     }
-    $body .= '</div>
-              <div class="wp-block-button is-style-outline is-style-outline--1">
-                  <a data-nba-id="' . $action->id . '" class="wp-block-button__link wp-element-button dismiss-nba" target="_top">' . \esc_html__(
+
+    $buttons .= '<a data-nba-id="' . $action->id . '" class="button button--secondary">' . \esc_html__(
       'Dismiss',
       'ionos-essentials'
-    ) . '</a>
-              </div>
-            </div>
-          </div>
-      </div>';
+    ) . '</a>';
+
+    $cards .= \sprintf(
+      $card_template,
+      \esc_html($action->title),
+      \esc_html($action->description),
+      $buttons
+    );
+
   }
 
-  $body .= '<script>document.querySelector("#ionos_essentials_install_gml").addEventListener("click", function(event) {
-    event.target.disabled = true;
-    event.target.innerText = "' . \esc_js(__('Installing...', 'ionos-essentials')) . '";
+  ?>
+  <div class="page-section">
+    <div class="">
+      <div class="grid">
+        <div class="headline"><?php echo \esc_html__("Unlock Your Website's Potential", 'ionos-essentials'); ?></div>
+        <div class="headline headline--sub"><?php echo  \esc_html__(
+          'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
+          'ionos-essentials'
+        );?></div>
 
-    fetch("' . get_rest_url(null, '/ionos/essentials/dashboard/nba/v1/install-gml') . '", {
+        <?php echo $cards; ?>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.querySelector("#ionos_essentials_install_gml")?.addEventListener("click", function(event) {
+    event.target.disabled = true;
+    event.target.innerText = "<?php echo \esc_js(__('Installing...', 'ionos-essentials'));?>";
+
+    fetch("<?php echo get_rest_url(null, '/ionos/essentials/dashboard/nba/v1/install-gml'); ?>", {
       method: "GET",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        "X-WP-Nonce": "' . \wp_create_nonce('wp_rest') . '"
+        "X-WP-Nonce": "<?php echo \wp_create_nonce('wp_rest'); ?>"
       }
     })
     .then(response => response.json())
@@ -97,13 +108,8 @@ function render_callback()
     })
     .catch(error => console.error("Error:", error));
   });
-  </script></script>';
-
-  if (empty($body)) {
-    return;
-  }
-
-  return sprintf($template, $header, $description, $body);
+  </script>
+  <?php
 }
 
 \add_action('admin_init', function () {
@@ -202,31 +208,3 @@ function install_plugin_from_url($plugin_url)
     $nba->set_status('completed', true);
   }
 }, 10, 3);
-
-\add_action('enqueue_block_editor_assets', function () {
-  if (! isset($_GET['essentials-nba'])) {
-    return;
-  }
-  \add_action('admin_footer', function () {
-    echo "<script>
-      const observer = new MutationObserver((mutations, obs) => {
-        const iframe = document.querySelector('iframe');
-        if (iframe) {
-          iframe.addEventListener('load', function(event) {
-            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-            const uploadButton = iframeDocument.querySelector('.wp-block-site-logo .components-placeholder__fieldset > button');
-            if (uploadButton) {
-              uploadButton.click();
-            }
-          });
-          obs.disconnect();
-        }
-      });
-
-      observer.observe(document, {
-        childList: true,
-        subtree: true
-      });
-    </script>";
-  });
-});

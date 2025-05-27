@@ -24,9 +24,9 @@ function render_callback()
         <?php
               foreach ($links as $link) {
                 printf(
-                  '<a href="%s" class="button button--secondary mb-1 button--with-icon">%s%s</a>',
+                  '<a href="%s" class="button button--secondary mb-1 button--with-icon"><i class="button__icon exos-icon exos-icon-%s"></i>%s</a>',
                   \esc_url($link['url']),
-                  file_get_contents(PLUGIN_DIR . '/assets/img/' . $link['icon']),
+                  $link['icon'],
                   \esc_html($link['text'])
                 );
               }
