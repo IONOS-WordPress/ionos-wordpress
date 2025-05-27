@@ -72,17 +72,17 @@ function render_callback()
   }
 
   ?>
-  <div class="page-section">
+  <div class="grid">
     <div class="">
-      <div class="grid">
+      <div class="grid-col grid-col--12">
         <div class="headline"><?php echo \esc_html__("Unlock Your Website's Potential", 'ionos-essentials'); ?></div>
         <div class="headline headline--sub"><?php echo  \esc_html__(
           'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
           'ionos-essentials'
         );?></div>
-
-        <?php echo $cards; ?>
       </div>
+        <?php echo $cards; ?>
+
     </div>
   </div>
   <script>
