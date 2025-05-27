@@ -53,7 +53,8 @@ jobs:
         with:
           runCmd: |
             pnpm install --frozen-lockfile
-            pnpm test
+            # pnpm test
+            TEST_PRODUCTION=true pnpm run test
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts

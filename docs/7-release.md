@@ -12,6 +12,8 @@ Realising is a 2 step process :
 
   This will create a new release flagged `pre release` at Github
 
+  > **Ensure that at least a single changeset file exists on `develop` before merging to `main` !** Otherwise the pre-release script will fail. You can create a changeset file interactively by executing `pnpm changeset add`
+
 - trigger the release pipeline at GitHub manually
 
   This will create/update release `@wordpress/latest`.
@@ -38,13 +40,13 @@ Caveats:
 
 - `pnpm changeset version` will update all affected packages (version and changelog)
 
-  You can now inspect the resulting changes locally
+  You can now inspect the resulting changes locally.
 
 - `pnpm build`
 
   Now you have EXACTLY the same plugin zips as you would have in a release - check it out !
 
-- unset all local changes : `git checkout .`
+> Don't forget to revert all changes made by `pnpm changeset version` before committing by unsetting all local changes using `git checkout .`
 
 # create a new prerelease
 
@@ -60,7 +62,7 @@ Caveats:
 
 Caveats:
 
-- a pre release requires **at least one** changeset file. You can create one using `pnpm changeset add`.
+- **a pre release requires **at least one** changeset file. You can create one using `pnpm changeset add`.**
 
 ## creating the next pre release locally
 

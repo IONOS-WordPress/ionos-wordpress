@@ -206,7 +206,6 @@ msgid "Easily navigate to frequently used features and tools."
 msgstr "Navigeer eenvoudig naar vaak gebruikte functies en tools."
 
 #: inc/dashboard/index.php
-#: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Overzicht"
 
@@ -214,7 +213,6 @@ msgstr "Overzicht"
 msgid "Create Page"
 msgstr "Pagina maken"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Logo"
 msgstr "Logo toevoegen"
@@ -260,7 +258,6 @@ msgid "Set up your included email account and integrate it with your website."
 msgstr "Configureer je inbegrepen e-mailaccount in en integreer het in je website."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set Up Contact Form"
 msgstr "Contactformulier instellen"
 
@@ -292,7 +289,6 @@ msgstr "Verbind je social media-profielen met je website en vergroot je online z
 msgid "Connect Social Media"
 msgstr "Social media verbinden"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Favicon"
 msgstr "Favicon toevoegen"
@@ -407,8 +403,6 @@ msgstr "Footer bewerken"
 msgid "Dismiss"
 msgstr "Sluiten"
 
-#: inc/dashboard/blocks/vulnerability/render.php
-#: inc/dashboard/blocks/vulnerability/render.php
 #: inc/dashboard/blocks/vulnerability/render.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Scan je WordPress voor bedreigingen en kwetsbaarheden"
@@ -543,4 +537,38 @@ msgstr "Gebruik de gratis extensie voor WooCommerce om je webwinkel in Duitsland
 #: inc/descriptify/index.php
 #, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
-msgstr ""
+msgstr "Je kunt je URL (domein) eenvoudig aanpassen en beheren in <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
+
+#: inc/switch-page/view.php
+msgid "How do you want to create your new website?"
+msgstr "Hoe wil je je nieuwe website maken?"
+
+#: inc/switch-page/view.php
+msgid "Online in a few minutes"
+msgstr "Binnen een paar minuten online"
+
+#: inc/switch-page/view.php
+msgid "With AI"
+msgstr "Met AI"
+
+#: inc/switch-page/view.php
+msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
+msgstr "Automatische websitecreatie op basis van jouw voorkeuren en vereisten. Inclusief kant-en-klare tekst en afbeeldingen."
+
+#: inc/switch-page/view.php
+msgid "100% WordPress"
+msgstr "100% WordPress"
+
+#: inc/switch-page/view.php
+msgid "Do it yourself"
+msgstr "Doe het zelf"
+
+#: inc/switch-page/view.php
+msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
+msgstr "Jij beslist hoe je je website maakt. Geen zorgen, je kunt de AI-creatie ook later starten vanuit het WordPress Dashboard."
+
+#. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
+#: inc/switch-page/view.php
+#, php-format
+msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
+msgstr "Door gebruik te maken van AI-functies gaat u akkoord met de OpenAI %1$sGebruiksvoorwaarden%2$s en %3$sPrivacybeleid%4$s."

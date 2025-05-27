@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Essentials 1.0.3\n"
+"Project-Id-Version: Essentials 1.0.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-07T10:14:04+00:00\n"
+"POT-Creation-Date: 2025-05-26T07:43:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -120,7 +120,6 @@ msgid "Setup Email Account"
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set Up Contact Form"
 msgstr ""
 
@@ -153,7 +152,6 @@ msgid "Install now"
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Logo"
 msgstr ""
 
@@ -185,7 +183,6 @@ msgstr ""
 msgid "Connect Social Media"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Favicon"
 msgstr ""
@@ -251,8 +248,6 @@ msgstr ""
 msgid "Easily navigate to frequently used features and tools."
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/render.php
-#: inc/dashboard/blocks/vulnerability/render.php
 #: inc/dashboard/blocks/vulnerability/render.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr ""
@@ -348,7 +343,6 @@ msgid "We've added scan results directly to your dashboard, giving you instant v
 msgstr ""
 
 #: inc/dashboard/index.php
-#: inc/dashboard/index.php
 msgid "Overview"
 msgstr ""
 
@@ -359,6 +353,39 @@ msgstr ""
 #. translators: s=link to control panel
 #: inc/descriptify/index.php
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "How do you want to create your new website?"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "Online in a few minutes"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "With AI"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "100% WordPress"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "Do it yourself"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
+msgstr ""
+
+#. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
+#: inc/switch-page/view.php
+msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr ""
 
 #: inc/tenants/config/arsys.php

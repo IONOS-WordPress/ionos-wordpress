@@ -208,7 +208,6 @@ msgid "Easily navigate to frequently used features and tools."
 msgstr "Łatwa nawigacja do często używanych funkcji i narzędzi."
 
 #: inc/dashboard/index.php
-#: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Przegląd"
 
@@ -216,7 +215,6 @@ msgstr "Przegląd"
 msgid "Create Page"
 msgstr "Utwórz stronę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Logo"
 msgstr "Dodaj logo"
@@ -262,7 +260,6 @@ msgid "Set up your included email account and integrate it with your website."
 msgstr "Skonfiguruj dołączone konto e-mail i zintegruj je ze swoją witryną."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set Up Contact Form"
 msgstr "Konfiguracja formularza kontaktowego"
 
@@ -294,7 +291,6 @@ msgstr "Połącz swoje profile w mediach społecznościowych z witryną i zwięk
 msgid "Connect Social Media"
 msgstr "Połącz media społecznościowe"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Favicon"
 msgstr "Dodaj Favicon"
@@ -409,8 +405,6 @@ msgstr "Edytuj stopkę"
 msgid "Dismiss"
 msgstr "Odrzucić"
 
-#: inc/dashboard/blocks/vulnerability/render.php
-#: inc/dashboard/blocks/vulnerability/render.php
 #: inc/dashboard/blocks/vulnerability/render.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Skanowanie w poszukiwaniu zagrożeń i luk w zabezpieczeniach WordPress"
@@ -545,4 +539,38 @@ msgstr "Skorzystaj z bezpłatnego rozszerzenia dla WooCommerce, aby prowadzić s
 #: inc/descriptify/index.php
 #, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
-msgstr ""
+msgstr "Możesz łatwo dostosować i zarządzać swoim adresem URL (domeną) w <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
+
+#: inc/switch-page/view.php
+msgid "How do you want to create your new website?"
+msgstr "Jak chcesz stworzyć swoją nową stronę internetową?"
+
+#: inc/switch-page/view.php
+msgid "Online in a few minutes"
+msgstr "Online w kilka minut"
+
+#: inc/switch-page/view.php
+msgid "With AI"
+msgstr "Z AI"
+
+#: inc/switch-page/view.php
+msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
+msgstr "Automatyczne tworzenie stron internetowych w oparciu o preferencje i wymagania użytkownika. W tym gotowe teksty i obrazy."
+
+#: inc/switch-page/view.php
+msgid "100% WordPress"
+msgstr "100% WordPress"
+
+#: inc/switch-page/view.php
+msgid "Do it yourself"
+msgstr "Zrób to sam"
+
+#: inc/switch-page/view.php
+msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
+msgstr "Ty decydujesz, jak utworzyć swoją witrynę. Nie martw się, możesz również rozpocząć tworzenie SI z pulpitu nawigacyjnego WordPress później."
+
+#. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
+#: inc/switch-page/view.php
+#, php-format
+msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
+msgstr "Korzystając z funkcji AI, użytkownik akceptuje %1$Warunki użytkowania%2$ i %3$Politykę prywatności%4$ OpenAI."
