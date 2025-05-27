@@ -48,7 +48,7 @@ class Install implements ViewController
 
   public static function get_page_title()
   {
-    return __('Installing Jetpack', 'ionos-assistant');
+    return __('Installing Jetpack', 'ionos-essentials');
   }
 
   private static function install()

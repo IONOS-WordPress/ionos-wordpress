@@ -15,6 +15,6 @@ class Confirm implements ViewController
 
   public static function get_page_title()
   {
-    return __('Confirm Jetpack installation', 'ionos-assistant');
+    return __('Confirm Jetpack installation', 'ionos-essentials');
   }
 }

@@ -63,7 +63,7 @@ function get_brand_lowercase(): string
   'admin_title',
   function ($title) {
     if (isset($_GET['page']) && get_brand_lowercase() . '-onboarding' === $_GET['page']) {
-      return \get_option('ionos_group_brand_menu', 'IONOS') . ' ' . __('Onboarding', 'ionos-assistant');
+      return \get_option('ionos_group_brand_menu', 'IONOS') . ' ' . __('Onboarding', 'ionos-essentials');
     }
     return $title;
   },

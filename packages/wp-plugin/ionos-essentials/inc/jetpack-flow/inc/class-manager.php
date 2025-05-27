@@ -72,7 +72,7 @@ class Manager
     }
 
     self::$hidden_page = new HiddenAdminPage(
-      __('Assistant', 'ionos-assistant'),
+      __('Assistant', 'ionos-essentials'),
       self::HIDDEN_PAGE_SLUG,
       function () {
         $step = (isset(self::$url_params['step']) && array_key_exists(
