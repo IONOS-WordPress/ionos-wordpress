@@ -2,8 +2,6 @@
 
 namespace ionos\essentials\dashboard\blocks\quick_links;
 
-use const ionos\essentials\PLUGIN_DIR;
-
 function render_callback()
 {
   $config_file = __DIR__ . '/config.php';

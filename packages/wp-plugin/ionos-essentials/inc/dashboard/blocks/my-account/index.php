@@ -76,7 +76,7 @@ function render_callback()
 
   ?>
 
-  <div class="card" style="">
+  <div class="card ionos_my_account">
     <div class="card__content">
       <section class="card__section">
         <h2 class="card__headline"><?php echo \esc_html__('Account Management', 'ionos-essentials'); ?></h2>
@@ -84,7 +84,7 @@ function render_callback()
           'One-click access to your customer account, login security and subscriptions.',
           'ionos-essentials'
         ); ?></p>
-      <div>
+      <div class="ionos_my_account_links">
         <?php echo $links; ?>
       </div>
       </section>

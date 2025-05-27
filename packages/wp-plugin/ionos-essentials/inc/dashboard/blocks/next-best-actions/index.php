@@ -20,8 +20,7 @@ function render_callback()
     return;
   }
 
-
-  $cards = '';
+  $cards         = '';
   $card_template = '<div class="grid-col grid-col--4">
           <div class="card" style="">
             <div class="card__content">
@@ -62,33 +61,28 @@ function render_callback()
       'ionos-essentials'
     ) . '</a>';
 
-    $cards .= \sprintf(
-      $card_template,
-      \esc_html($action->title),
-      \esc_html($action->description),
-      $buttons
-    );
+    $cards .= \sprintf($card_template, \esc_html($action->title), \esc_html($action->description), $buttons);
 
   }
 
   ?>
-  <div class="grid">
+  <div class="grid ionos_next_best_actions">
     <div class="">
       <div class="grid-col grid-col--12">
         <div class="headline"><?php echo \esc_html__("Unlock Your Website's Potential", 'ionos-essentials'); ?></div>
-        <div class="headline headline--sub"><?php echo  \esc_html__(
+        <div class="headline headline--sub"><?php echo \esc_html__(
           'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
           'ionos-essentials'
-        );?></div>
+        ); ?></div>
       </div>
-        <?php echo $cards; ?>
+      <?php echo $cards; ?>
 
     </div>
   </div>
   <script>
     document.querySelector("#ionos_essentials_install_gml")?.addEventListener("click", function(event) {
     event.target.disabled = true;
-    event.target.innerText = "<?php echo \esc_js(__('Installing...', 'ionos-essentials'));?>";
+    event.target.innerText = "<?php echo \esc_js(__('Installing...', 'ionos-essentials')); ?>";
 
     fetch("<?php echo get_rest_url(null, '/ionos/essentials/dashboard/nba/v1/install-gml'); ?>", {
       method: "GET",
