@@ -7,7 +7,7 @@ use ionos\essentials\jetpack_flow\Manager;
 <div class="wrapper">
   <div class="container">
     <form>
-      <input type="hidden" name="coupon" value="<?php echo $_GET['coupon']; ?>">
+      <input type="hidden" name="coupon" value="<?php echo esc_attr($_GET['coupon']); ?>">
       <input type="hidden" name="page" value="<?php echo esc_attr(Manager::HIDDEN_PAGE_SLUG); ?>">
       <input type="hidden" name="step" value="install">
 
