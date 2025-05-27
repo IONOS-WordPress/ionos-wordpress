@@ -1,5 +1,12 @@
 # @ionos-wordpress/essentials
 
+## 1.0.6
+
+### Patch Changes
+
+- e7a5bc4: Add translations for switch page
+- e7a5bc4: jetpack migration
+
 ## 1.0.5
 
 ### Patch Changes
