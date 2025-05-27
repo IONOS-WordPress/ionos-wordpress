@@ -8,7 +8,7 @@ use WP_User;
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 require_once 'class-loginredirect.php';
-require_once 'class-hidden-admin-page.php';
+require_once 'class-hiddenadminpage.php';
 require_once 'controllers/interface-view-controller.php';
 
 require_once 'controllers/class-confirm.php';
