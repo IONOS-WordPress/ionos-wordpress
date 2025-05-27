@@ -569,5 +569,6 @@ msgstr "Du bestämmer själv hur du vill skapa din webbplats. Oroa dig inte, du 
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: inc/switch-page/view.php
+#, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr "Genom att använda AI-funktioner godkänner du OpenAI %1$sTerms of Use%2$s och %3$sPrivacy Policy%4$s"

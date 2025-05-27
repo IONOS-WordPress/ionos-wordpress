@@ -571,5 +571,6 @@ msgstr "Ty decydujesz, jak utworzyć swoją witrynę. Nie martw się, możesz r�
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: inc/switch-page/view.php
+#, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr "Korzystając z funkcji AI, użytkownik akceptuje %1$Warunki użytkowania%2$ i %3$Politykę prywatności%4$ OpenAI."
