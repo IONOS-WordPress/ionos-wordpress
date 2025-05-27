@@ -52,7 +52,33 @@ function render_callback(): string
             </footer>
         </div>
     </div>
-</dialog>';
+</dialog>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const dashboard = document.querySelector("#wpbody-content").shadowRoot
+        const dialog = dashboard.querySelector("#essentials-welcome_block");
+        const closeButton = dashboard.querySelector(".button--primary");
+
+        closeButton.addEventListener("click", function() {
+            dialog.close();
+            fetch("' . \esc_url(\rest_url('ionos/essentials/dashboard/welcome/v1/closer')) . '", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then(response => {
+                if (!response.ok) {
+                    console.error("Failed to update user meta");
+                }
+            }).catch(error => {
+                console.error("Error:", error);
+            });
+        });
+    });
+</script>
+
+';
 }
 \add_action('rest_api_init', function () {
   \register_rest_route(

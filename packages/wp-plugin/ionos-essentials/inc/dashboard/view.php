@@ -48,7 +48,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 </style>
 
 
-<template shadowrootmode="open">
+<template id="ionos_dashboard" shadowrootmode="open">
 
 <script src="https://ce1.uicdn.net/exos/framework/3.0/exos.min.js" async="async" defer="defer"></script>
 <link rel="stylesheet" href="https://ce1.uicdn.net/exos/framework/3.0/exos.min.css" />
