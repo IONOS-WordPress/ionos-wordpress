@@ -85,7 +85,6 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
   }
 
   .ionos_my_account_links{
-
     display: flex;
     flex-wrap: wrap;
 
