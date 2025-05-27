@@ -66,7 +66,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
       <?php blocks\next_best_actions\render_callback(); ?>
     </div>
     <div class="grid-col grid-col--12 grid-col--small-12">
-      <?php blocks\my_account\render_callback(); ?>
+      <?php blocks\quick_links\render_callback(); ?>
     </div>
     <div class="grid-col grid-col--8 grid-col--small-12">
       <?php blocks\my_account\render_callback(); ?>
@@ -83,6 +83,18 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     white-space: nowrap;
     margin-bottom: 5px;
   }
+
+  .ionos_my_account_links{
+
+    display: flex;
+    flex-wrap: wrap;
+
+    .button{
+      line-height: 7em;
+      flex: 0 0 31%;
+    }
+  }
+
 </style>
 </main>
 </template>
