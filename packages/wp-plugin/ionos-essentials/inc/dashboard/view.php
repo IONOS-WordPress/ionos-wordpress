@@ -69,7 +69,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
       <?php blocks\my_account\render_callback(); ?>
     </div>
     <div class="grid-col grid-col--8 grid-col--small-12">
-      <?php blocks\deep_links\render_callback(); ?>
+      <?php blocks\my_account\render_callback(); ?>
     </div>
      <div class="grid-col grid-col--4 grid-col--small-12">
       <?php blocks\whatsnew\render_callback(); ?>
