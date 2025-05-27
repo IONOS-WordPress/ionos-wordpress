@@ -7,21 +7,30 @@ updates:
       - '/packages/wp-plugin/*/*'
     schedule:
       interval: 'weekly'
-    pull-request-strategy: 'single'
+    groups:
+      npm:
+        patterns:
+          - '*'
 
   - package-ecosystem: 'docker'
     directories:
       - '/packages/docker/*/*'
     schedule:
       interval: 'weekly'
-    pull-request-strategy: 'single'
+    groups:
+      docker:
+        patterns:
+          - '*'
 
   - package-ecosystem: 'composer'
     directories:
       - '/packages/docker/**/*'
     schedule:
       interval: 'weekly'
-    pull-request-strategy: 'single'
+    groups:
+      composer:
+        patterns:
+          - '*'
 
   - package-ecosystem: 'github-actions'
     directories:
@@ -29,11 +38,17 @@ updates:
       - '/'
     schedule:
       interval: 'weekly'
-    pull-request-strategy: 'single'
+    groups:
+      actions:
+        patterns:
+          - '*'
 
   - package-ecosystem: 'devcontainers'
     directories:
       - '/.devcontainer'
     schedule:
       interval: 'weekly'
-    pull-request-strategy: 'single'
+    groups:
+      devcontainers:
+        patterns:
+          - '*'
