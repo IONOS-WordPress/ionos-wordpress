@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos\essentials\dashboard\blocks\deep_links;
+namespace ionos\essentials\dashboard\blocks\my_account;
 
 use const ionos\essentials\PLUGIN_DIR;
 
@@ -9,7 +9,7 @@ use const ionos\essentials\PLUGIN_DIR;
  *
  * @return array|null
  */
-function get_deep_links_data()
+function get_account_data()
 {
   static $data = null;
 
@@ -52,7 +52,7 @@ function get_deep_links_data()
 
 function render_callback()
 {
-  $data = get_deep_links_data();
+  $data = get_account_data();
 
   if (null === $data) {
     return null;
@@ -96,7 +96,7 @@ function render_callback()
 }
 
 \add_filter('ionos_dashboard_banner__register_button', function ($button_list) {
-  $data = get_deep_links_data();
+  $data = get_account_data();
 
   $managehosting = $data['banner_links']['managehosting'] ?? '';
 

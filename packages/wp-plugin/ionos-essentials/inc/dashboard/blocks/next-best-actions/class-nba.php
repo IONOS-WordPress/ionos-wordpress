@@ -83,7 +83,7 @@ class NBA
   }
 }
 
-$data = \ionos\essentials\dashboard\blocks\deep_links\get_deep_links_data();
+$data = \ionos\essentials\dashboard\blocks\my_account\get_account_data();
 
 if (null !== $data) {
 

@@ -6,7 +6,7 @@ require_once __DIR__ . '/blocks/banner/index.php';
 require_once __DIR__ . '/blocks/welcome/index.php';
 require_once __DIR__ . '/blocks/vulnerability/index.php';
 require_once __DIR__ . '/blocks/next-best-actions/index.php';
-require_once __DIR__ . '/blocks/deep-links/index.php';
+require_once __DIR__ . '/blocks/my-account/index.php';
 require_once __DIR__ . '/blocks/whats-new/index.php';
 require_once __DIR__ . '/blocks/quick-links/index.php';
 
@@ -66,7 +66,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
       <?php blocks\next_best_actions\render_callback(); ?>
     </div>
     <div class="grid-col grid-col--12 grid-col--small-12">
-      <?php blocks\quick_links\render_callback(); ?>
+      <?php blocks\my_account\render_callback(); ?>
     </div>
     <div class="grid-col grid-col--8 grid-col--small-12">
       <?php blocks\deep_links\render_callback(); ?>
