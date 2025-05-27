@@ -13,10 +13,10 @@ use ionos\essentials\jetpack_flow\Manager;
 
       <h1 class="screen-reader-text"><?php _e('Jetpack Backup', 'ionos-essentials'); ?></h1>
       <img src="<?php echo esc_url(\plugins_url('', __DIR__) . '/img/jetpack-logo.svg'); ?>" class="jetpack-logo" alt="">
-      <p><?php _e('We are going to install Jetpack Backup now.', 'ionos-essentials'); ?></p>
+      <p><?php esc_html('We are going to install Jetpack Backup now.', 'ionos-essentials'); ?></p>
       <div class="buttons">
         <button class="btn primarybtn" type="submit"><?php _e('Ok', 'ionos-essentials'); ?></button>
-        <a class="linkbtn" href="<?php echo admin_url(); ?>"><?php _e('No thanks', 'ionos-essentials'); ?></a>
+        <a class="linkbtn" href="<?php echo esc_attr(admin_url()); ?>"><?php esc_html('No thanks', 'ionos-essentials'); ?></a>
       </div>
     </form>
   </div>
