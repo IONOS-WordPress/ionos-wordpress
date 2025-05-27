@@ -193,9 +193,9 @@ class Manager
     }
 
     return add_query_arg([
-        'page'   => self::HIDDEN_PAGE_SLUG,
-        'coupon' => $params['coupon'],
-      ], admin_url());
+      'page'   => self::HIDDEN_PAGE_SLUG,
+      'coupon' => $params['coupon'],
+    ], admin_url());
   }
 
   /**

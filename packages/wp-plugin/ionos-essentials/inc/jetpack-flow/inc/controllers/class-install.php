@@ -55,11 +55,11 @@ class Install implements ViewController
   {
     // Install from repo
     $api = plugins_api('plugin_information', [
-        'slug'   => 'jetpack',
-        'fields' => [
-          'downloadlink' => true,
-        ],
-      ]);
+      'slug'   => 'jetpack',
+      'fields' => [
+        'downloadlink' => true,
+      ],
+    ]);
 
     if (is_wp_error($api)) {
       return false;
