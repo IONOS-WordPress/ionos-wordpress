@@ -61,7 +61,7 @@ function render_callback()
   $links = '';
   foreach ($data['links'] as $link) {
     $links .= sprintf(
-      '<a class="button button--secondary mb-1" href="%s" target="_blank">%s</a>',
+      '<a class="button button--secondary" href="%s" target="_blank">%s</a>',
       \esc_url($data['domain'] . $link['url']),
       \esc_html($link['anchor'])
     );

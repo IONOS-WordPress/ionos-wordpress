@@ -53,14 +53,11 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 <script src="https://ce1.uicdn.net/exos/framework/3.0/exos.min.js" async="async" defer="defer"></script>
 <link rel="stylesheet" href="https://ce1.uicdn.net/exos/framework/3.0/exos.min.css" />
 
+ <?php echo blocks\welcome\render_callback(); ?>
+
 <main id="content">
   <div class="page-section">
-  <?php
-    blocks\banner\render_callback();
-// echo blocks\welcome\render_callback();
-
-// echo blocks\next_best_actions\render_callback();
-?>
+  <?php blocks\banner\render_callback(); ?>
   </div>
 
 <div class="page-section">
@@ -84,15 +81,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 <style>
   .button{
     white-space: nowrap;
-  }
-  .mb-1{
     margin-bottom: 5px;
-  }
-
-  .button--with-icon svg {
-    width: 1em;
-    height: 1em;
-    margin-right: 0.5em;
   }
 </style>
 </main>
