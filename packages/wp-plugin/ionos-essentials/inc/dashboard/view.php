@@ -11,6 +11,42 @@ require_once __DIR__ . '/blocks/whats-new/index.php';
 require_once __DIR__ . '/blocks/quick-links/index.php';
 
 ?>
+<?php
+// Fontface must be loaded before the template is rendered
+?>
+<style>
+@font-face {
+    font-display: swap;
+    font-family: OpenSansRegular;
+    src: url(https://ce1.uicdn.net/exos/fonts/open-sans/opensans-regular.woff2) format("woff2"),url(https://ce1.uicdn.net/exos/fonts/open-sans/opensans-regular.woff) format("woff")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: OpenSansSemibold;
+    src: url(https://ce1.uicdn.net/exos/fonts/open-sans/opensans-semibold.woff2) format("woff2"),url(https://ce1.uicdn.net/exos/fonts/open-sans/opensans-semibold.woff) format("woff")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: OverpassRegular;
+    src: url(https://ce1.uicdn.net/exos/fonts/overpass/overpass-regular.woff2) format("woff2"),url(https://ce1.uicdn.net/exos/fonts/overpass/overpass-regular.woff) format("woff")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: OverpassSemibold;
+    src: url(https://ce1.uicdn.net/exos/fonts/overpass/overpass-semibold.woff2) format("woff2"),url(https://ce1.uicdn.net/exos/fonts/overpass/overpass-semibold.woff) format("woff")
+}
+@font-face {
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;speak:none;font-family: exos-icon-font;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height:1;src: url(https://ce1.uicdn.net/exos/icons/exos-icon-font.woff2?v=23) format("woff2"),url(https://ce1.uicdn.net/exos/icons/exos-icon-font.woff?v=23) format("woff");
+    text-transform:none}
+</style>
+
 
 <template shadowrootmode="open">
 
@@ -30,6 +66,9 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 <div class="page-section">
   <div class="grid">
     <div class="grid-col grid-col--12 grid-col--small-12">
+      <?php blocks\next_best_actions\render_callback(); ?>
+    </div>
+    <div class="grid-col grid-col--12 grid-col--small-12">
       <?php blocks\quick_links\render_callback(); ?>
     </div>
     <div class="grid-col grid-col--8 grid-col--small-12">
@@ -40,6 +79,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     </div>
   </div>
 </div>
+
 
 <style>
   .button{
@@ -54,8 +94,11 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     height: 1em;
     margin-right: 0.5em;
   }
+</style>
 </main>
 </template>
+
+
 
 
 
