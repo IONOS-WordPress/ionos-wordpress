@@ -21,7 +21,7 @@ function render_callback()
   }
 
   $cards         = '';
-  $card_template = '<div class="grid-col grid-col--4">
+  $card_template = '<div class="grid-col grid-col--4 grid-col--medium-6 grid-col--small-12">
           <div class="card" style="">
             <div class="card__content">
               <section class="card__section">
