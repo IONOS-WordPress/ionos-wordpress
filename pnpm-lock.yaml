@@ -4,12 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-catalogs:
-  default:
-    '@wordpress/components':
-      specifier: ^29.3.0
-      version: 29.3.0
-
 importers:
 
   .:
@@ -49,7 +43,7 @@ importers:
         version: 1.52.0
       '@storybook/addon-essentials':
         specifier: ^8.6.14
-        version: 8.6.14(@types/react@18.3.22)(storybook@8.6.14(prettier@3.5.3))
+        version: 8.6.14(@types/react@18.3.23)(storybook@8.6.14(prettier@3.5.3))
       '@storybook/addon-interactions':
         specifier: ^8.6.14
         version: 8.6.14(storybook@8.6.14(prettier@3.5.3))
@@ -78,8 +72,8 @@ importers:
         specifier: 22.15.21
         version: 22.15.21
       '@wordpress/components':
-        specifier: 'catalog:'
-        version: 29.3.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.22)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: 29.10.0
+        version: 29.10.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.23)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@wordpress/e2e-test-utils-playwright':
         specifier: ^1.24.0
         version: 1.24.0(@playwright/test@1.52.0)
@@ -218,6 +212,10 @@ packages:
     resolution: {integrity: sha512-UnJfnIpc/+JO0/+KRVQNGU+y5taA5vCbwN8+azkX6beii/ZF+enZJSOKo11ZSzGJjlNfJHfQtmQT8H+9TXPG2w==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/generator@7.27.3':
+    resolution: {integrity: sha512-xnlJYj5zepml8NXtjkG0WquFUv8RskFqyFcVgTBp5k+NaA/8uw/K+OSVf8AMGw5e9HKP2ETd5xpK5MLZQD6b4Q==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/helper-annotate-as-pure@7.27.1':
     resolution: {integrity: sha512-WnuuDILl9oOBbKnb4L+DyODx7iC47XfzmNCpTttFsSp6hTG7XZxu60+4IO+2/hPfcGOoKbFiwoI/+zwARbNQow==}
     engines: {node: '>=6.9.0'}
@@ -303,6 +301,11 @@ packages:
 
   '@babel/parser@7.27.2':
     resolution: {integrity: sha512-QYLs8299NA7WM/bZAdp+CviYYkVoYXlDW2rzliy3chxd1PQjej7JORuMJDJXJUb9g0TT+B99EwaVLKmX+sPXWw==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
+  '@babel/parser@7.27.3':
+    resolution: {integrity: sha512-xyYxRj6+tLNDTWi0KCBcZ9V7yg3/lwL9DWh9Uwh/RIVlIfFidggcgxKX3GCXwCiswwcGRawBKbEg2LG/Y8eJhw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -854,8 +857,8 @@ packages:
     resolution: {integrity: sha512-FjoyLe754PMiYsFaN5C94ttGiOmBNYTf6pLr4xXHAT5uctHb092PBszndLDR5XA/jghQvn4n7JMHl7dmTgbm9w==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/runtime@7.27.1':
-    resolution: {integrity: sha512-1x3D2xEk2fRo3PAhwQwu5UubzgiVWSXTBfWpVd2Mx2AzRqJuDJCsgaDVZ7HB5iGzDW1Hl1sWN2mFyKjmR9uAog==}
+  '@babel/runtime@7.27.3':
+    resolution: {integrity: sha512-7EYtGezsdiDMyY80+65EzwiGmcJqpmcZCojSXaRgdrBaGtWTgDZKq69cPIVped6MkIM78cTQ2GOiEYjwOlG4xw==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.27.2':
@@ -866,8 +869,16 @@ packages:
     resolution: {integrity: sha512-ZCYtZciz1IWJB4U61UPu4KEaqyfj+r5T1Q5mqPo+IBpcG9kHv30Z0aD8LXPgC1trYa6rK0orRyAhqUgk4MjmEg==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/traverse@7.27.3':
+    resolution: {integrity: sha512-lId/IfN/Ye1CIu8xG7oKBHXd2iNb2aW1ilPszzGcJug6M8RCKfVNcYhpI5+bMvFYjK7lXIM0R+a+6r8xhHp2FQ==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/types@7.27.1':
     resolution: {integrity: sha512-+EzkxvLNfiUeKMgy/3luqfsCWFRXLb7U6wNQTk60tovuckwB15B191tJWvpp4HjiQWdJkCxO3Wbvc6jlk3Xb2Q==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/types@7.27.3':
+    resolution: {integrity: sha512-Y1GkI4ktrtvmawoSq+4FCVHNryea6uR+qUQy0AGxLSsjCX0nVmkYQMBLHDkXZuo5hGx7eYdnIaslsdBFm7zbUw==}
     engines: {node: '>=6.9.0'}
 
   '@bcoe/v8-coverage@0.2.3':
@@ -2479,9 +2490,6 @@ packages:
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
 
-  '@types/node@22.15.19':
-    resolution: {integrity: sha512-3vMNr4TzNQyjHcRZadojpRaD9Ofr6LsonZAoQ+HMUa/9ORTPoxVIw0e0mpqWpdjj8xybyCM+oKOUH2vwFu/oEw==}
-
   '@types/node@22.15.21':
     resolution: {integrity: sha512-EV/37Td6c+MgKAbkcLG6vqZ2zEYHD7bvSrzqqs2RIhbA6w3x+Dqz8MZM3sP6kGTeLrdoOgKZe+Xja7tUB2DNkQ==}
 
@@ -2505,8 +2513,8 @@ packages:
     peerDependencies:
       '@types/react': ^18.0.0
 
-  '@types/react@18.3.22':
-    resolution: {integrity: sha512-vUhG0YmQZ7kL/tmKLrD3g5zXbXXreZXB3pmROW8bg3CnLnpjkRVwUlLne7Ufa2r9yJ8+/6B73RzhAek5TBKh2Q==}
+  '@types/react@18.3.23':
+    resolution: {integrity: sha512-/LDXMQh55EzZQ0uVAZmKKhfENivEvWz6E+EYzh+/MCjMhNsotd+ZHhBGIjFDTi6+fz0OhQQQLbTgdQIxxCsC0w==}
 
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
@@ -2805,8 +2813,8 @@ packages:
     resolution: {integrity: sha512-qhFU0pAxNWKkraqMlgdYfcUm+A2Xam5toDIiZXA/6l2dH6iZN+Dnj13p7L7S8k+ftB486/GFXZ2uR8jWXlDQpw==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
 
-  '@wordpress/components@29.3.0':
-    resolution: {integrity: sha512-9lQIXsbgFeGY1QXEhNHQ6mq+6sS1TGGdZdaGSoQoP682WWgdjshnyq/0yhGULY9ReDKnZF2mHJ/J3FvleyYMcg==}
+  '@wordpress/components@29.10.0':
+    resolution: {integrity: sha512-PvEKB8E/bOxdmZkVENxyStAUck4TEJYnEKtEv/03HQ0NYmIVWewseSzVujb6ceKmxXSR49Ob0o69TIOm4to2eQ==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
     peerDependencies:
       react: ^18.0.0
@@ -5000,8 +5008,8 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  gradient-parser@0.1.5:
-    resolution: {integrity: sha512-+uPlcVbjrKOnTzvz0MjTj7BfACj8OmxIa1moIjJV7btvhUMSJk0D47RfDCgDrZE3dYMz9Cf5xKJwnrKLjUq0KQ==}
+  gradient-parser@1.0.2:
+    resolution: {integrity: sha512-gR6nY33xC9yJoH4wGLQtZQMXDi6RI3H37ERu7kQCVUzlXjNedpZM7xcA489Opwbq0BSGohtWGsWsntupmxelMg==}
     engines: {node: '>=0.10.0'}
 
   graphemer@1.4.0:
@@ -8522,6 +8530,14 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.25
       jsesc: 3.1.0
 
+  '@babel/generator@7.27.3':
+    dependencies:
+      '@babel/parser': 7.27.3
+      '@babel/types': 7.27.3
+      '@jridgewell/gen-mapping': 0.3.8
+      '@jridgewell/trace-mapping': 0.3.25
+      jsesc: 3.1.0
+
   '@babel/helper-annotate-as-pure@7.27.1':
     dependencies:
       '@babel/types': 7.27.1
@@ -8542,7 +8558,7 @@ snapshots:
       '@babel/helper-optimise-call-expression': 7.27.1
       '@babel/helper-replace-supers': 7.27.1(@babel/core@7.25.7)
       '@babel/helper-skip-transparent-expression-wrappers': 7.27.1
-      '@babel/traverse': 7.27.1
+      '@babel/traverse': 7.27.3
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
@@ -8567,15 +8583,15 @@ snapshots:
 
   '@babel/helper-member-expression-to-functions@7.27.1':
     dependencies:
-      '@babel/traverse': 7.27.1
-      '@babel/types': 7.27.1
+      '@babel/traverse': 7.27.3
+      '@babel/types': 7.27.3
     transitivePeerDependencies:
       - supports-color
 
   '@babel/helper-module-imports@7.27.1':
     dependencies:
-      '@babel/traverse': 7.27.1
-      '@babel/types': 7.27.1
+      '@babel/traverse': 7.27.3
+      '@babel/types': 7.27.3
     transitivePeerDependencies:
       - supports-color
 
@@ -8599,7 +8615,7 @@ snapshots:
 
   '@babel/helper-optimise-call-expression@7.27.1':
     dependencies:
-      '@babel/types': 7.27.1
+      '@babel/types': 7.27.3
 
   '@babel/helper-plugin-utils@7.27.1': {}
 
@@ -8608,7 +8624,7 @@ snapshots:
       '@babel/core': 7.25.7
       '@babel/helper-annotate-as-pure': 7.27.1
       '@babel/helper-wrap-function': 7.27.1
-      '@babel/traverse': 7.27.1
+      '@babel/traverse': 7.27.3
     transitivePeerDependencies:
       - supports-color
 
@@ -8623,8 +8639,8 @@ snapshots:
 
   '@babel/helper-skip-transparent-expression-wrappers@7.27.1':
     dependencies:
-      '@babel/traverse': 7.27.1
-      '@babel/types': 7.27.1
+      '@babel/traverse': 7.27.3
+      '@babel/types': 7.27.3
     transitivePeerDependencies:
       - supports-color
 
@@ -8637,8 +8653,8 @@ snapshots:
   '@babel/helper-wrap-function@7.27.1':
     dependencies:
       '@babel/template': 7.27.2
-      '@babel/traverse': 7.27.1
-      '@babel/types': 7.27.1
+      '@babel/traverse': 7.27.3
+      '@babel/types': 7.27.3
     transitivePeerDependencies:
       - supports-color
 
@@ -8650,6 +8666,10 @@ snapshots:
   '@babel/parser@7.27.2':
     dependencies:
       '@babel/types': 7.27.1
+
+  '@babel/parser@7.27.3':
+    dependencies:
+      '@babel/types': 7.27.3
 
   '@babel/plugin-bugfix-firefox-class-in-computed-class-key@7.27.1(@babel/core@7.25.7)':
     dependencies:
@@ -9402,7 +9422,7 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
-  '@babel/runtime@7.27.1': {}
+  '@babel/runtime@7.27.3': {}
 
   '@babel/template@7.27.2':
     dependencies:
@@ -9422,7 +9442,24 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@babel/traverse@7.27.3':
+    dependencies:
+      '@babel/code-frame': 7.27.1
+      '@babel/generator': 7.27.3
+      '@babel/parser': 7.27.3
+      '@babel/template': 7.27.2
+      '@babel/types': 7.27.3
+      debug: 4.4.1
+      globals: 11.12.0
+    transitivePeerDependencies:
+      - supports-color
+
   '@babel/types@7.27.1':
+    dependencies:
+      '@babel/helper-string-parser': 7.27.1
+      '@babel/helper-validator-identifier': 7.27.1
+
+  '@babel/types@7.27.3':
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
@@ -9762,7 +9799,7 @@ snapshots:
 
   '@emotion/memoize@0.9.0': {}
 
-  '@emotion/react@11.14.0(@types/react@18.3.22)(react@19.1.0)':
+  '@emotion/react@11.14.0(@types/react@18.3.23)(react@19.1.0)':
     dependencies:
       '@babel/runtime': 7.25.7
       '@emotion/babel-plugin': 11.13.5
@@ -9774,7 +9811,7 @@ snapshots:
       hoist-non-react-statics: 3.3.2
       react: 19.1.0
     optionalDependencies:
-      '@types/react': 18.3.22
+      '@types/react': 18.3.23
     transitivePeerDependencies:
       - supports-color
 
@@ -9788,18 +9825,18 @@ snapshots:
 
   '@emotion/sheet@1.4.0': {}
 
-  '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.22)(react@19.1.0))(@types/react@18.3.22)(react@19.1.0)':
+  '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.23)(react@19.1.0))(@types/react@18.3.23)(react@19.1.0)':
     dependencies:
       '@babel/runtime': 7.25.7
       '@emotion/babel-plugin': 11.13.5
       '@emotion/is-prop-valid': 1.3.1
-      '@emotion/react': 11.14.0(@types/react@18.3.22)(react@19.1.0)
+      '@emotion/react': 11.14.0(@types/react@18.3.23)(react@19.1.0)
       '@emotion/serialize': 1.3.3
       '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@19.1.0)
       '@emotion/utils': 1.4.2
       react: 19.1.0
     optionalDependencies:
-      '@types/react': 18.3.22
+      '@types/react': 18.3.23
     transitivePeerDependencies:
       - supports-color
 
@@ -10370,24 +10407,24 @@ snapshots:
 
   '@manypkg/find-root@1.1.0':
     dependencies:
-      '@babel/runtime': 7.27.1
+      '@babel/runtime': 7.27.3
       '@types/node': 12.20.55
       find-up: 4.1.0
       fs-extra: 8.1.0
 
   '@manypkg/get-packages@1.1.3':
     dependencies:
-      '@babel/runtime': 7.27.1
+      '@babel/runtime': 7.27.3
       '@changesets/types': 4.1.0
       '@manypkg/find-root': 1.1.0
       fs-extra: 8.1.0
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
-  '@mdx-js/react@3.1.0(@types/react@18.3.22)(react@19.1.0)':
+  '@mdx-js/react@3.1.0(@types/react@18.3.23)(react@19.1.0)':
     dependencies:
       '@types/mdx': 2.0.13
-      '@types/react': 18.3.22
+      '@types/react': 18.3.23
       react: 19.1.0
 
   '@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1':
@@ -10725,9 +10762,9 @@ snapshots:
       storybook: 8.6.14(prettier@3.5.3)
       ts-dedent: 2.2.0
 
-  '@storybook/addon-docs@8.6.14(@types/react@18.3.22)(storybook@8.6.14(prettier@3.5.3))':
+  '@storybook/addon-docs@8.6.14(@types/react@18.3.23)(storybook@8.6.14(prettier@3.5.3))':
     dependencies:
-      '@mdx-js/react': 3.1.0(@types/react@18.3.22)(react@19.1.0)
+      '@mdx-js/react': 3.1.0(@types/react@18.3.23)(react@19.1.0)
       '@storybook/blocks': 8.6.14(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@8.6.14(prettier@3.5.3))
       '@storybook/csf-plugin': 8.6.14(storybook@8.6.14(prettier@3.5.3))
       '@storybook/react-dom-shim': 8.6.14(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@8.6.14(prettier@3.5.3))
@@ -10738,12 +10775,12 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@storybook/addon-essentials@8.6.14(@types/react@18.3.22)(storybook@8.6.14(prettier@3.5.3))':
+  '@storybook/addon-essentials@8.6.14(@types/react@18.3.23)(storybook@8.6.14(prettier@3.5.3))':
     dependencies:
       '@storybook/addon-actions': 8.6.14(storybook@8.6.14(prettier@3.5.3))
       '@storybook/addon-backgrounds': 8.6.14(storybook@8.6.14(prettier@3.5.3))
       '@storybook/addon-controls': 8.6.14(storybook@8.6.14(prettier@3.5.3))
-      '@storybook/addon-docs': 8.6.14(@types/react@18.3.22)(storybook@8.6.14(prettier@3.5.3))
+      '@storybook/addon-docs': 8.6.14(@types/react@18.3.23)(storybook@8.6.14(prettier@3.5.3))
       '@storybook/addon-highlight': 8.6.14(storybook@8.6.14(prettier@3.5.3))
       '@storybook/addon-measure': 8.6.14(storybook@8.6.14(prettier@3.5.3))
       '@storybook/addon-outline': 8.6.14(storybook@8.6.14(prettier@3.5.3))
@@ -11185,7 +11222,7 @@ snapshots:
   '@testing-library/dom@10.4.0':
     dependencies:
       '@babel/code-frame': 7.27.1
-      '@babel/runtime': 7.27.1
+      '@babel/runtime': 7.27.3
       '@types/aria-query': 5.0.4
       aria-query: 5.3.0
       chalk: 4.1.2
@@ -11363,11 +11400,6 @@ snapshots:
 
   '@types/node@12.20.55': {}
 
-  '@types/node@22.15.19':
-    dependencies:
-      undici-types: 6.21.0
-    optional: true
-
   '@types/node@22.15.21':
     dependencies:
       undici-types: 6.21.0
@@ -11382,11 +11414,11 @@ snapshots:
 
   '@types/range-parser@1.2.7': {}
 
-  '@types/react-dom@18.3.7(@types/react@18.3.22)':
+  '@types/react-dom@18.3.7(@types/react@18.3.23)':
     dependencies:
-      '@types/react': 18.3.22
+      '@types/react': 18.3.23
 
-  '@types/react@18.3.22':
+  '@types/react@18.3.23':
     dependencies:
       '@types/prop-types': 15.7.14
       csstype: 3.1.3
@@ -11451,7 +11483,7 @@ snapshots:
 
   '@types/webpack@5.28.5(@swc/core@1.11.29)(esbuild@0.25.4)(webpack-cli@5.1.4(webpack-bundle-analyzer@4.10.2)(webpack-dev-server@4.15.2)(webpack@5.99.9))':
     dependencies:
-      '@types/node': 22.15.19
+      '@types/node': 22.15.21
       tapable: 2.2.2
       webpack: 5.99.9(@swc/core@1.11.29)(esbuild@0.25.4)(webpack-cli@5.1.4)
     transitivePeerDependencies:
@@ -11814,15 +11846,15 @@ snapshots:
 
   '@wordpress/browserslist-config@6.24.0': {}
 
-  '@wordpress/components@29.3.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.22)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@wordpress/components@29.10.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.23)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@ariakit/react': 0.4.17(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@babel/runtime': 7.25.7
       '@emotion/cache': 11.14.0
       '@emotion/css': 11.13.5
-      '@emotion/react': 11.14.0(@types/react@18.3.22)(react@19.1.0)
+      '@emotion/react': 11.14.0(@types/react@18.3.23)(react@19.1.0)
       '@emotion/serialize': 1.3.3
-      '@emotion/styled': 11.14.0(@emotion/react@11.14.0(@types/react@18.3.22)(react@19.1.0))(@types/react@18.3.22)(react@19.1.0)
+      '@emotion/styled': 11.14.0(@emotion/react@11.14.0(@types/react@18.3.23)(react@19.1.0))(@types/react@18.3.23)(react@19.1.0)
       '@emotion/utils': 1.4.2
       '@floating-ui/react-dom': 2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@types/gradient-parser': 0.1.3
@@ -11852,7 +11884,7 @@ snapshots:
       deepmerge: 4.3.1
       fast-deep-equal: 3.1.3
       framer-motion: 11.18.2(@emotion/is-prop-valid@1.3.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      gradient-parser: 0.1.5
+      gradient-parser: 1.0.2
       highlight-words-core: 1.2.3
       is-plain-object: 5.0.0
       memize: 2.1.0
@@ -11948,8 +11980,8 @@ snapshots:
   '@wordpress/element@6.24.0':
     dependencies:
       '@babel/runtime': 7.25.7
-      '@types/react': 18.3.22
-      '@types/react-dom': 18.3.7(@types/react@18.3.22)
+      '@types/react': 18.3.23
+      '@types/react-dom': 18.3.7(@types/react@18.3.23)
       '@wordpress/escape-html': 3.24.0
       change-case: 4.1.2
       is-plain-object: 5.0.0
@@ -14708,7 +14740,7 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  gradient-parser@0.1.5: {}
+  gradient-parser@1.0.2: {}
 
   graphemer@1.4.0: {}
 
@@ -16462,7 +16494,7 @@ snapshots:
 
   polished@4.3.1:
     dependencies:
-      '@babel/runtime': 7.27.1
+      '@babel/runtime': 7.27.3
 
   possible-typed-array-names@1.1.0: {}
 
