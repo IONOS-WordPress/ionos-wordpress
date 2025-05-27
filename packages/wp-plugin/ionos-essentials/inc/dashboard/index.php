@@ -89,4 +89,3 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   },
   accepted_args : 2
 );
-
