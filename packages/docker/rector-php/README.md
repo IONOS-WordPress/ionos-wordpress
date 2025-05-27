@@ -75,4 +75,4 @@ and call
 docker run -q -it --rm --user "$(id -u $USER):$(id -g $USER)" -v $(pwd):/project ionos-wordpress/rector-php
 ```
 
-to get your project checked against the configured coding standard.
+to get your project gets transformed using the rector configuration.

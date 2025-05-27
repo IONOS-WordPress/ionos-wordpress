@@ -165,6 +165,11 @@ function ionos.wordpress.build_workspace_package_docker() {
   #   fi
   # fi
 
+  # generate/update composer.lock file if composer.json exists in docker workspace package
+  if [[ -f "$path/composer.json" ]]; then
+    docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd)/$path":/app -w /app composer:latest update --no-install --no-scripts
+  fi
+
   rm -rf $path/{dist,build,build-info}
 
   pnpm --filter "$PACKAGE_NAME" --if-present run prebuild
@@ -448,7 +453,6 @@ EOF
           --user "$DOCKER_USER" \
           -v $path/$TARGET_DIR:/project/dist \
           -v $(pwd)/packages/docker/rector-php/${RECTOR_CONFIG}.php:/project/${RECTOR_CONFIG}.php \
-          -v $(pwd)/packages/docker/rector-php/wordpress-stubs.php:/project/wordpress-stubs.php \
           ionos-wordpress/rector-php \
           --clear-cache \
           --config "${RECTOR_CONFIG}.php" \

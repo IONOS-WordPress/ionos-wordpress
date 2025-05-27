@@ -3,18 +3,16 @@
 # php version from .env
 ARG PHP_VERSION
 
-FROM php:${PHP_VERSION}-cli as base
-
 FROM php:${PHP_VERSION}-cli-alpine as build
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-# rector version to embed into docker image
-ARG RECTOR_VERSION
-
-ENV COMPOSER_HOME=/tmp
+ENV COMPOSER_HOME=/composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN composer global require --dev rector/rector:${RECTOR_VERSION}
+# install rector globally
+COPY packages/docker/rector-php/composer.json /composer/
+COPY packages/docker/rector-php/composer.lock /composer/
+RUN composer global install
 
 FROM php:${PHP_VERSION}-cli-alpine
 
@@ -22,7 +20,8 @@ FROM php:${PHP_VERSION}-cli-alpine
 # install i18n support into php
 RUN apk add --no-cache icu-dev shadow && docker-php-ext-install intl
 
-COPY --from=build /tmp/vendor/ /composer/
+
+COPY --from=build /composer/vendor/ /composer/
 COPY --chmod=755 <<EOF /usr/bin/entrypoint.sh
 #!/bin/sh
 
