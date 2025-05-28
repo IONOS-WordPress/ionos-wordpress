@@ -108,7 +108,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     .dialog__content{
       display: flex;
       justify-content: center;
-      align-items: center;
+      margin-top: 10%;
       height: 100%;
     }
 
