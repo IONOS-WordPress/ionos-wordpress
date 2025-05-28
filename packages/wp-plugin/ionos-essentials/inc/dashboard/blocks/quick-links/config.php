@@ -11,12 +11,12 @@ $links = [
       'Add new page',
       'ionos-essentials'
     ),
-    'icon' => 'file-text-16.svg',
+    'icon' => 'file-text-16',
   ],
   [
     'url'  => $blog_url . '/wp-admin/post-new.php',
     'text' => __('Add new post', 'ionos-essentials'),
-    'icon' => 'helparticle-16.svg',
+    'icon' => 'helparticle-16',
   ],
   [
     'url'  => $blog_url . '/wp-admin/site-editor.php?postType=wp_navigation',
@@ -24,7 +24,7 @@ $links = [
       'Edit site Navigation',
       'ionos-essentials'
     ),
-    'icon' => 'digitalisation-48.svg',
+    'icon' => 'digitalisation-48',
   ],
   [
     'url'  => $blog_url . '/wp-admin/site-editor.php?path=%2Fwp_global_styles',
@@ -32,12 +32,12 @@ $links = [
       'Change Styles',
       'ionos-essentials'
     ),
-    'icon' => 'favstar-16.svg',
+    'icon' => 'favstar-16',
   ],
   [
     'url'  => $blog_url . '/wp-admin/site-editor.php',
     'text' => __('Edit Header', 'ionos-essentials'),
-    'icon' => 'website-48.svg',
+    'icon' => 'website-48',
   ],
   [
     'url'  => $blog_url . '/wp-admin/site-editor.php',
@@ -45,7 +45,7 @@ $links = [
       'Edit Footer',
       'ionos-essentials'
     ),
-    'icon' => 'download-document-14.svg',
+    'icon' => 'download-document-14',
   ],
   [
     'url'  => $blog_url . '/wp-admin/plugin-install.php',
@@ -53,11 +53,11 @@ $links = [
       'Add Plugins',
       'ionos-essentials'
     ),
-    'icon' => 'plus-16.svg',
+    'icon' => 'plus-16',
   ],
   [
     'url'  => $blog_url . '/wp-admin/upload.php',
     'text' => __('Upload Media files', 'ionos-essentials'),
-    'icon' => 'upload-16.svg',
+    'icon' => 'upload-16',
   ],
 ];

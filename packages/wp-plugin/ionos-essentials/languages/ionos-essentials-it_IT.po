@@ -93,29 +93,9 @@ msgstr "Il vostro contratto"
 msgid "Current offers"
 msgstr "Offerte attuali"
 
-#: inc/dashboard/blocks/quick-links/render.php
+#: inc/dashboard/blocks/quick-links/index.php
 msgid "Quick Links"
 msgstr "Collegamenti rapidi"
-
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block title"
-msgid "Deep Links"
-msgstr "Collegamenti profondi"
-
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block description"
-msgid "Show links to the Control Panel of your provider."
-msgstr "Mostra i link al pannello di controllo del vostro provider."
-
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block title"
-msgid "Quick Links"
-msgstr "Collegamenti rapidi"
-
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block description"
-msgid "Show links to common tasks in the WordPress backend."
-msgstr "Mostra i link alle attività più comuni nel backend di WordPress."
 
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block title"
@@ -126,10 +106,6 @@ msgstr "Vulnerabilità"
 msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Mostra i dati della scansione wp."
-
-#: inc/dashboard/index.php
-msgid "Brand Logo"
-msgstr "Brand Logo"
 
 #: inc/dashboard/blocks/vulnerability/render.php
 msgid "Show full scan report"
@@ -179,29 +155,19 @@ msgstr "Visualizza sito"
 msgid "Start AI Sitebuilder"
 msgstr "Avvia creazione con IA"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Manage Hosting"
 msgstr "Gestisci hosting"
 
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block title"
-msgid "Banner"
-msgstr "Stendardo"
-
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block description"
-msgid "Banner"
-msgstr "Stendardo"
-
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Account Management"
 msgstr "Il mio account"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Accedi con un solo clic al tuo account cliente, ai contratti e alle impostazioni di login."
 
-#: inc/dashboard/blocks/quick-links/render.php
+#: inc/dashboard/blocks/quick-links/index.php
 msgid "Easily navigate to frequently used features and tools."
 msgstr "Accedi facilmente alle funzioni e agli strumenti utilizzati più frequentemente."
 
@@ -347,26 +313,6 @@ msgstr "Sezione di aiuto completa, che include: supporto tramite Chat IA, tour g
 msgid "Close"
 msgstr "Chiudere"
 
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block title"
-msgid "Welcome"
-msgstr "Benvenuti"
-
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block description"
-msgid "Welcome"
-msgstr "Benvenuti"
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block title"
-msgid "What's New"
-msgstr "Novità"
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block description"
-msgid "What's New"
-msgstr "Cosa c'è di nuovo"
-
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "What’s New"
 msgstr "Cosa c'è di nuovo"
@@ -447,7 +393,7 @@ msgstr "Gestione dei domini e SSL"
 msgid "Add more products"
 msgstr "Aggiungi altri prodotti"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Webmail Login"
 msgstr "Accesso Webmail"
 

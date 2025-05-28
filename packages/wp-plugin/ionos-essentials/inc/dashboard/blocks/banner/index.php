@@ -2,20 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\banner;
 
-use const ionos\essentials\PLUGIN_DIR;
-
-\add_action('init', function () {
-  \register_block_type(
-    PLUGIN_DIR . '/build/dashboard/blocks/banner',
-    [
-      'render_callback' => __NAMESPACE__ . '\\render_callback',
-    ]
-  );
-});
-
-const MAIN_TEMPLATE   = '<div class="wp-block-buttons banner-buttons">%s</div>';
-const BUTTON_TEMPLATE = '<div class="wp-block-button button"><a href="%s" target="%s" class="wp-block-button__link has-text-align-center wp-element-button %s" title="%s">%s</a></div>';
-function render_callback(): string
+const BUTTON_TEMPLATE = '<a href="%s" class="button %s" title="%s">%s</a>';
+function render_callback(): void
 {
   $button_list = [];
 
@@ -23,8 +11,7 @@ function render_callback(): string
     [
       'link'           => \home_url(),
       'text'           => \__('View Site', 'ionos-essentials'),
-      'css-attributes' => 'viewsite',
-      'target'         => '_blank',
+      'css-class'      => 'button--primary',
     ],
   ];
 
@@ -32,16 +19,41 @@ function render_callback(): string
   $button_list = apply_filters('ionos_dashboard_banner__register_button', $button_list);
   $button_list = array_merge($button_list, $view_site);
 
-  $button_html = implode('', array_map(fn (array $button): string => sprintf(
+  $buttons = implode('', array_map(fn (array $button): string => sprintf(
     BUTTON_TEMPLATE,
     \esc_url($button['link'] ?? '#'),
-    $button['target']         ?? '_top',
-    $button['css-attributes'] ?? '',
-    $button['title']          ?? '',
+    $button['css-class'] ?? 'button--secondary',
+    $button['title']     ?? '',
     \esc_html($button['text'] ?? '')
   ), $button_list));
 
-  return sprintf(MAIN_TEMPLATE, $button_html);
+  $tenant_name = \get_option('ionos_group_brand_menu', 'IONOS');
+  $tenant_logo = \plugins_url(
+    'data/tenant-logos/' . \get_option('ionos_group_brand', 'ionos') . '.svg',
+    dirname(__DIR__)
+  );
+
+  ?>
+
+  <header class="" style="">
+  <div class="">
+    <div class="grid grid--large-vertical-align-center">
+      <div class="grid-col grid-col--8 grid-col--small-12">
+        <img class=""
+        src="<?php echo $tenant_logo; ?>"
+        alt="<?php echo $tenant_name; ?> Logo"
+        style="width: 200px"
+      >
+
+      </div>
+      <div class="grid-col grid-col--4 grid-col--small-12">
+        <?php echo $buttons; ?>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <?php
 }
 
 function get_ai_button(): array

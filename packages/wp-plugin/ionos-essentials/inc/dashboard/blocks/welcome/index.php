@@ -2,22 +2,9 @@
 
 namespace ionos\essentials\dashboard\blocks\welcome;
 
-use const ionos\essentials\PLUGIN_DIR;
-
-\add_action('init', function () {
-  \register_block_type(
-    PLUGIN_DIR . '/build/dashboard/blocks/welcome',
-    [
-      'render_callback' => __NAMESPACE__ . '\\render_callback',
-    ]
-  );
-});
-
-const USER_META_KEY = 'ionos_essentials_welcome';
-
 function render_callback(): string
 {
-  $user_meta = \get_user_meta(user_id: \get_current_user_id(), key: USER_META_KEY, single: true);
+  $user_meta = \get_user_meta(user_id: \get_current_user_id(), key: 'ionos_essentials_welcome', single: true);
 
   if (! empty($user_meta)) {
     return '';
@@ -27,7 +14,8 @@ function render_callback(): string
   $welcome_banner_url = \plugins_url('data/tenant-logos/welcome-banner.png', dirname(__DIR__));
 
   return '
-<dialog id="essentials-welcome_block">
+<dialog id="essentials-welcome_block" open>
+  <div class="dialog__content">
     <div class="horizontal-card">
         <header class="horizontal-card__header">
             <img class="horizontal-card__visual" src="' . \esc_url($welcome_banner_url) . '" alt="Welcome Banner">
@@ -63,28 +51,7 @@ function render_callback(): string
             </footer>
         </div>
     </div>
-</dialog>';
+  </div>
+</dialog>
+';
 }
-\add_action('rest_api_init', function () {
-  \register_rest_route(
-    'ionos/essentials/dashboard/welcome/v1',
-    '/closer',
-    [
-      'methods'             => 'POST',
-      'permission_callback' => fn () => 0 !== \get_current_user_id(),
-      'callback'            => function () {
-        $meta = \update_user_meta(\get_current_user_id(), USER_META_KEY, true);
-
-        if (false === $meta) {
-          return rest_ensure_response(new \WP_REST_Response([
-            'error' => 'failed to update user meta',
-          ], 500));
-        }
-
-        return rest_ensure_response(new \WP_REST_Response([
-          'status' => $meta,
-        ], 200));
-      },
-    ]
-  );
-});
