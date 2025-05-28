@@ -572,3 +572,43 @@ msgstr "Du bestämmer själv hur du vill skapa din webbplats. Oroa dig inte, du 
 #, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr "Genom att använda AI-funktioner godkänner du OpenAI %1$sTerms of Use%2$s och %3$sPrivacy Policy%4$s"
+
+#: inc/jetpack-flow/inc/class-manager.php
+msgid "Assistant"
+msgstr "Assistant"
+
+#: inc/jetpack-flow/inc/controllers/class-confirm.php
+msgid "Confirm Jetpack installation"
+msgstr "Bekräfta installationen av Jetpack"
+
+#: inc/jetpack-flow/inc/controllers/class-install.php
+msgid "Installing Jetpack"
+msgstr "Installerar Jetpack"
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "Jetpack Backup"
+msgstr "Jetpack-Backup"
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "We are going to install Jetpack Backup now."
+msgstr "Nu kommer vi att installera Jetpack Backup."
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "Ok"
+msgstr "Ok"
+
+#: inc/jetpack-flow/inc/views/install.php
+msgid "Installing Jetpack Backup"
+msgstr "Installerar Jetpack Backup"
+
+#: inc/jetpack-flow/inc/views/install.php
+msgid "Please wait a moment while we are installing Jetpack Backup for you."
+msgstr "Vänta lite medan vi installerar Jetpack Backup åt dig."
+
+#: inc/switch-page/index.php
+msgid "Onboarding"
+msgstr "Onboarding"
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "No thanks"
+msgstr "Nej tack"

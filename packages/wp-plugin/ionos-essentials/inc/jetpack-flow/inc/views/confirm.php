@@ -16,7 +16,7 @@ use ionos\essentials\jetpack_flow\Manager;
       <p><?php esc_html_e('We are going to install Jetpack Backup now.', 'ionos-essentials'); ?></p>
       <div class="buttons">
         <button class="btn primarybtn" type="submit"><?php esc_html_e('Ok', 'ionos-essentials'); ?></button>
-        <a class="linkbtn" href="<?php echo esc_attr(admin_url()); ?>"><?php esc_html('No thanks', 'ionos-essentials'); ?></a>
+        <a class="linkbtn" href="<?php echo esc_attr(admin_url()); ?>"><?php esc_html_e('No thanks', 'ionos-essentials'); ?></a>
       </div>
     </form>
   </div>
