@@ -4,7 +4,7 @@ namespace ionos\essentials\dashboard;
 
 require_once __DIR__ . '/blocks/banner/index.php';
 require_once __DIR__ . '/blocks/welcome/index.php';
-require_once __DIR__ . '/blocks/vulnerability/index.php';
+require_once __DIR__ . '/blocks/vulnerability/render.php';
 require_once __DIR__ . '/blocks/next-best-actions/index.php';
 require_once __DIR__ . '/blocks/my-account/index.php';
 require_once __DIR__ . '/blocks/whats-new/index.php';
@@ -65,7 +65,10 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     <div class="grid-col grid-col--12 grid-col--small-12">
       <?php blocks\next_best_actions\render_callback(); ?>
     </div>
-    <div class="grid-col grid-col--12 grid-col--small-12">
+    <div class="grid-col grid-col--6 grid-col--small-12">
+      <?php blocks\vulnerability\render_callback(); ?>
+    </div>
+    <div class="grid-col grid-col--6 grid-col--small-12">
       <?php blocks\quick_links\render_callback(); ?>
     </div>
     <div class="grid-col grid-col--8 grid-col--medium-6 grid-col--small-12">
