@@ -115,3 +115,20 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   );
 });
 
+\add_action('admin_enqueue_scripts', function ($hook) {
+  if ($hook !== ADMIN_PAGE_HOOK) {
+    return;
+  }
+  wp_enqueue_script(
+    'ionos-essentials-dashboard-js',
+    plugins_url('ionos-essentials/inc/dashboard/dashboard.js', PLUGIN_DIR),
+    [],
+    filemtime(PLUGIN_DIR . '/inc/dashboard/dashboard.js'),
+    true
+  );
+
+  wp_localize_script('ionos-essentials-dashboard-js', 'wpData', [
+        'nonce' => wp_create_nonce('wp_rest'),
+        'restUrl' => esc_url_raw(rest_url())
+  ]);
+});
