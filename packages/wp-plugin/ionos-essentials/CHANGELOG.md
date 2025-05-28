@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.0.7
+
+### Patch Changes
+
+- 0e4939c: updated localisation
+
 ## 1.0.6
 
 ### Patch Changes

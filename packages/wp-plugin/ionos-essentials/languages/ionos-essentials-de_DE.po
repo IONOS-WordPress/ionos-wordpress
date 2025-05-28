@@ -612,4 +612,3 @@ msgstr "Onboarding"
 #: inc/jetpack-flow/inc/views/confirm.php
 msgid "No thanks"
 msgstr "Nein, danke"
-
