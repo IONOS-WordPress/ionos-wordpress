@@ -61,7 +61,13 @@ function render_callback()
       'ionos-essentials'
     ) . '</a>';
 
-    $cards .= \sprintf($card_template, \esc_attr( $action->id), \esc_html($action->title), \esc_html($action->description), $buttons);
+    $cards .= \sprintf(
+      $card_template,
+      \esc_attr($action->id),
+      \esc_html($action->title),
+      \esc_html($action->description),
+      $buttons
+    );
 
   }
 

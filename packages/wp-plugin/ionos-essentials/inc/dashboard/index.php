@@ -167,7 +167,6 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   );
 });
 
-
 \add_action('admin_enqueue_scripts', function ($hook) {
   if (ADMIN_PAGE_HOOK !== $hook) {
     return;

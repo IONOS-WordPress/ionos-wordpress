@@ -253,7 +253,6 @@ NBA::register(
   completed: 0 < intval(\get_option('site_icon', 0))
 );
 
-
 // for($i = 1; $i <= 12; $i++) {
 //   NBA::register(
 //     id: 'dosth' . $i,
