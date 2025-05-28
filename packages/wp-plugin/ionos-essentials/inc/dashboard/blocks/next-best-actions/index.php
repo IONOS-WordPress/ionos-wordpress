@@ -22,16 +22,16 @@ function render_callback()
 
   $cards         = '';
   $card_template = '<div class="grid-col grid-col--4 grid-col--medium-6 grid-col--small-12">
-          <div class="card" style="">
-            <div class="card__content">
-              <section class="card__section">
-                <h2 class="card__headline">%s</h2>
-                <p class="paragraph">%s</p>
-                %s
-              </section>
-            </div>
-          </div>
-        </div>';
+  <div class="card nba-card">
+    <div class="card__content">
+      <section class="card__section">
+        <h2 class="card__headline">%s</h2>
+        <p class="paragraph">%s</p>
+        %s
+      </section>
+    </div>
+  </div>
+</div>';
 
   foreach ($actions as $action) {
     if (! $action->active) {
@@ -67,7 +67,6 @@ function render_callback()
 
   ?>
   <div class="grid ionos_next_best_actions">
-    <div class="">
       <div class="grid-col grid-col--12">
         <div class="headline"><?php echo \esc_html__("Unlock Your Website's Potential", 'ionos-essentials'); ?></div>
         <div class="headline headline--sub"><?php echo \esc_html__(
@@ -76,8 +75,6 @@ function render_callback()
         ); ?></div>
       </div>
       <?php echo $cards; ?>
-
-    </div>
   </div>
   <script>
     document.querySelector("#ionos_essentials_install_gml")?.addEventListener("click", function(event) {

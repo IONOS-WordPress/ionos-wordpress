@@ -84,6 +84,10 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     margin-bottom: 5px;
   }
 
+  .nba-card{
+    min-height: 20em;
+  }
+
   .ionos_my_account_links{
     display: flex;
     flex-wrap: wrap;
