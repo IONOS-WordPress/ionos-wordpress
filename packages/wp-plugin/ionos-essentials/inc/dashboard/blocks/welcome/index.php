@@ -14,7 +14,8 @@ function render_callback(): string
   $welcome_banner_url = \plugins_url('data/tenant-logos/welcome-banner.png', dirname(__DIR__));
 
   return '
-<dialog id="essentials-welcome_block" open style="z-index: 1">
+<dialog id="essentials-welcome_block" open>
+  <div class="dialog__content">
     <div class="horizontal-card">
         <header class="horizontal-card__header">
             <img class="horizontal-card__visual" src="' . \esc_url($welcome_banner_url) . '" alt="Welcome Banner">
@@ -50,6 +51,7 @@ function render_callback(): string
             </footer>
         </div>
     </div>
+  </div>
 </dialog>
 ';
 }

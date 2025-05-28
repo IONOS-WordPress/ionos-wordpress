@@ -94,6 +94,29 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     }
   }
 
+  #essentials-welcome_block{
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.95);
+    border: 0;
+
+    .dialog__content{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .horizontal-card{
+      width: 90%;
+      max-width: 800px;
+      height: 400px;
+      display: flex;
+      border: 2px solid black;
+    }
+  }
+
 </style>
 </main>
 </template>
