@@ -21,16 +21,10 @@ add_action( 'current_screen', function ( $screen ) {
   }
 } );
 
-\add_action( 'admin_init', function () {
-
-} );
-
-
 \add_action( 'admin_enqueue_scripts', function () {
   \wp_enqueue_style( 'ionos-essentials-security', plugins_url( 'style.css', __FILE__ ) );
 } );
 
-// implement security feature menu item
 \add_action( 'admin_menu', function () {
   $slug = strtolower( \get_option( 'ionos_group_brand_menu', 'IONOS' ) );
   \add_submenu_page(
