@@ -2,14 +2,6 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
-use ionos\essentials\dashboard\Silent_Skin;
-
-require_once ABSPATH . 'wp-admin/includes/plugin.php';
-require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
-require_once ABSPATH . 'wp-admin/includes/file.php';
-require_once ABSPATH . 'wp-admin/includes/misc.php';
-
 use const ionos\essentials\PLUGIN_DIR;
 
 function render_callback()
@@ -82,30 +74,6 @@ function render_callback()
       </div>
       <?php echo $cards; ?>
   </div>
-  <script>
-    document.querySelector("#ionos_essentials_install_gml")?.addEventListener("click", function(event) {
-    event.target.disabled = true;
-    event.target.innerText = "<?php echo \esc_js(__('Installing...', 'ionos-essentials')); ?>";
-
-    fetch("<?php echo get_rest_url(null, '/ionos/essentials/dashboard/nba/v1/install-gml'); ?>", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        "X-WP-Nonce": "<?php echo \wp_create_nonce('wp_rest'); ?>"
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === "success") {
-        location.reload();
-      } else {
-        console.error("Failed to install the GML plugin.");
-      }
-    })
-    .catch(error => console.error("Error:", error));
-  });
-  </script>
   <?php
 }
 
@@ -118,17 +86,6 @@ function render_callback()
     $nba->set_status('completed', true);
   }
 });
-
-function install_plugin_from_url($plugin_url)
-{
-  require_once PLUGIN_DIR . '/inc/dashboard/class-silent-skin.php';
-
-  $skin     = new Silent_Skin();
-  $upgrader = new \Plugin_Upgrader($skin);
-  $result   = $upgrader->install($plugin_url);
-
-  return ! is_wp_error($result);
-}
 
 \add_action('post_updated', function ($post_id, $post_after, $post_before) {
   if ('publish' !== $post_before->post_status || ('publish' !== $post_after->post_status && 'draft' !== $post_after->post_status)) {

@@ -85,7 +85,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
   }
 
   .nba-card{
-    min-height: 20em;
+    min-height: 22em;
   }
 
   .ionos_my_account_links{

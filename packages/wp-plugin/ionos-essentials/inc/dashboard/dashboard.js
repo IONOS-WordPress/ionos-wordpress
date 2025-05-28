@@ -71,4 +71,29 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error("Error:", error);
     });
   };
+
+  dashboard.querySelector("#ionos_essentials_install_gml")?.addEventListener("click", function(event) {
+
+    event.target.disabled = true;
+    event.target.innerText =  wpData.i18n.installing;
+
+    fetch(wpData.restUrl +  'ionos/essentials/dashboard/nba/v1/install-gml', {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "X-WP-Nonce": wpData.nonce
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success") {
+        location.reload();
+      } else {
+        console.error("Failed to install the GML plugin.");
+      }
+    })
+    .catch(error => console.error("Error:", error));
+  });
+
 });
