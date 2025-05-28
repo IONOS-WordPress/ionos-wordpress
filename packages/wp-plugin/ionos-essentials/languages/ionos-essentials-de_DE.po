@@ -572,3 +572,44 @@ msgstr "Sie entscheiden, wie Sie Ihre Website erstellen möchten. Keine Sorge, S
 #, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr "Durch die Nutzung von AI-Funktionen erklären Sie sich mit den OpenAI %1$sNutzungsbedingungen%2$s und %3$sDatenschutzbestimmungen%4$s einverstanden."
+
+#: inc/jetpack-flow/inc/class-manager.php
+msgid "Assistant"
+msgstr "Assistant"
+
+#: inc/jetpack-flow/inc/controllers/class-confirm.php
+msgid "Confirm Jetpack installation"
+msgstr "Bestätigen Sie die Installation von Jetpack"
+
+#: inc/jetpack-flow/inc/controllers/class-install.php
+msgid "Installing Jetpack"
+msgstr "Jetpack wird installiert"
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "Jetpack Backup"
+msgstr "Jetpack wird installiert"
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "We are going to install Jetpack Backup now."
+msgstr "Wir werden jetzt Jetpack-Backup installieren."
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "Ok"
+msgstr "Ok"
+
+#: inc/jetpack-flow/inc/views/install.php
+msgid "Installing Jetpack Backup"
+msgstr "Jetpack-Backup wird installiert"
+
+#: inc/jetpack-flow/inc/views/install.php
+msgid "Please wait a moment while we are installing Jetpack Backup for you."
+msgstr "Bitte warten Sie einen Moment, während wir Jetpack-Backup für Sie installieren."
+
+#: inc/switch-page/index.php
+msgid "Onboarding"
+msgstr "Onboarding"
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "No thanks"
+msgstr "Nein, danke"
+

@@ -48,18 +48,18 @@ class Install implements ViewController
 
   public static function get_page_title()
   {
-    return __('Installing Jetpack', 'ionos-assistant');
+    return __('Installing Jetpack', 'ionos-essentials');
   }
 
   private static function install()
   {
     // Install from repo
     $api = plugins_api('plugin_information', [
-        'slug'   => 'jetpack',
-        'fields' => [
-          'downloadlink' => true,
-        ],
-      ]);
+      'slug'   => 'jetpack',
+      'fields' => [
+        'downloadlink' => true,
+      ],
+    ]);
 
     if (is_wp_error($api)) {
       return false;

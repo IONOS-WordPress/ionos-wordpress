@@ -50,8 +50,7 @@ return $configure->withRules([
       '*/docs/packages/*',
       '**/ecs-config.php',
       '**/rector-config-php7.4.php',
-      '**/rector-fix-types.php',
-      '**/wordpress-stubs.php',
+      '**/rector-fix-types.php'
     ]
   )
   ->withPreparedSets(

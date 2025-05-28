@@ -3,17 +3,52 @@ updates:
   - package-ecosystem: 'npm'
     directories:
       - '/'
-      - '/packages/npm/*'
-      - '/packages/wp-plugin/*'
+      - '/packages/npm/*/*'
+      - '/packages/wp-plugin/*/*'
     schedule:
       interval: 'weekly'
+    groups:
+      npm:
+        patterns:
+          - '*'
+
   - package-ecosystem: 'docker'
     directories:
-      - '/packages/docker/*'
+      - '/packages/docker/*/*'
     schedule:
       interval: 'weekly'
+    groups:
+      docker:
+        patterns:
+          - '*'
+
+  - package-ecosystem: 'composer'
+    directories:
+      - '/packages/docker/**/*'
+    schedule:
+      interval: 'weekly'
+    groups:
+      composer:
+        patterns:
+          - '*'
+
   - package-ecosystem: 'github-actions'
     directories:
-      - '/.github/workflows/*'
+      # "For GitHub Actions, use the value /. Dependabot will search the /.github/workflows directory, as well as the action.yml/action.yaml file from the root directory."
+      - '/'
     schedule:
       interval: 'weekly'
+    groups:
+      actions:
+        patterns:
+          - '*'
+
+  - package-ecosystem: 'devcontainers'
+    directories:
+      - '/.devcontainer'
+    schedule:
+      interval: 'weekly'
+    groups:
+      devcontainers:
+        patterns:
+          - '*'

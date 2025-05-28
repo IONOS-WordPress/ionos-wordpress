@@ -8,7 +8,7 @@ use WP_User;
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 require_once 'class-loginredirect.php';
-require_once 'class-hidden-admin-page.php';
+require_once 'class-hiddenadminpage.php';
 require_once 'controllers/interface-view-controller.php';
 
 require_once 'controllers/class-confirm.php';
@@ -72,7 +72,7 @@ class Manager
     }
 
     self::$hidden_page = new HiddenAdminPage(
-      __('Assistant', 'ionos-assistant'),
+      __('Assistant', 'ionos-essentials'),
       self::HIDDEN_PAGE_SLUG,
       function () {
         $step = (isset(self::$url_params['step']) && array_key_exists(
@@ -193,9 +193,9 @@ class Manager
     }
 
     return add_query_arg([
-        'page'   => self::HIDDEN_PAGE_SLUG,
-        'coupon' => $params['coupon'],
-      ], admin_url());
+      'page'   => self::HIDDEN_PAGE_SLUG,
+      'coupon' => $params['coupon'],
+    ], admin_url());
   }
 
   /**

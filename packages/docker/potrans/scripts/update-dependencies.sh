@@ -14,7 +14,5 @@
 # load .env file
 ionos.wordpress.load_env $pwd
 
-ionos.wordpress.test_composer_package_uptodate 'om/potrans' 'POTRANS_VERSION'
-
-ionos.wordpress.test_php_package_uptodate 'PHP_VERSION'
+ionos.wordpress.test_php_version_uptodate 'PHP_VERSION'
 
