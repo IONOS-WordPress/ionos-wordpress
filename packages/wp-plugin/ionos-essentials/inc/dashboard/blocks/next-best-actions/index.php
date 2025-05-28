@@ -21,7 +21,7 @@ function render_callback()
   }
 
   $cards         = '';
-  $card_template = '<div class="grid-col grid-col--4 grid-col--medium-6 grid-col--small-12">
+  $card_template = '<div id="%s" class="grid-col grid-col--4 grid-col--medium-6 grid-col--small-12">
   <div class="card nba-card">
     <div class="card__content">
       <section class="card__section">
@@ -56,12 +56,12 @@ function render_callback()
       $buttons = '<a id="ionos_essentials_install_gml" class="button button--primary">' . $action->anchor . '</a>';
     }
 
-    $buttons .= '<a data-nba-id="' . $action->id . '" class="button button--secondary">' . \esc_html__(
+    $buttons .= '<a data-nba-id="' . $action->id . '" class="button button--secondary ionos-dismiss-nba">' . \esc_html__(
       'Dismiss',
       'ionos-essentials'
     ) . '</a>';
 
-    $cards .= \sprintf($card_template, \esc_html($action->title), \esc_html($action->description), $buttons);
+    $cards .= \sprintf($card_template, \esc_attr( $action->id), \esc_html($action->title), \esc_html($action->description), $buttons);
 
   }
 
@@ -111,60 +111,6 @@ function render_callback()
     $nba = NBA::get_nba($nba_id);
     $nba->set_status('completed', true);
   }
-});
-
-\add_action('rest_api_init', function () {
-  \register_rest_route('ionos/essentials/dashboard/nba/v1', '/dismiss/(?P<id>[a-zA-Z0-9-]+)', [
-    'methods'  => 'POST',
-    'callback' => function ($request) {
-      require_once __DIR__ . '/class-nba.php';
-      $params = $request->get_params();
-      $nba_id = $params['id'];
-
-      $nba = NBA::get_nba($nba_id);
-      $res = $nba->set_status('dismissed', true);
-      if ($res) {
-        return new \WP_REST_Response([
-          'status' => 'success',
-          'res'    => $res,
-        ], 200);
-      }
-      return new \WP_REST_Response([
-        'status' => 'error',
-      ], 500);
-    },
-    'permission_callback' => function () {
-      return \current_user_can('manage_options');
-    },
-  ]);
-
-  \register_rest_route(
-    'ionos/essentials/dashboard/nba/v1',
-    'install-gml',
-    [
-      'methods'             => 'GET',
-      'permission_callback' => function () {
-        return \current_user_can('install_plugins');
-      },
-      'callback'            => function () {
-        $plugin_slug = 'woocommerce-german-market-light/WooCommerce-German-Market-Light.php';
-        if (! file_exists(WP_PLUGIN_DIR . '/' . $plugin_slug)) {
-          if (! install_plugin_from_url(
-            'https://marketpress.de/mp-download/no-key-woocommerce-german-market-light/woocommerce-german-market-light/1und1/'
-          )) {
-            return new \WP_REST_Response([
-              'status' => 'error',
-            ], 500);
-          }
-        }
-        \activate_plugin($plugin_slug, '', false, true);
-
-        return new \WP_REST_Response([
-          'status' => 'success',
-        ], 200);
-      },
-    ]
-  );
 });
 
 function install_plugin_from_url($plugin_url)

@@ -252,3 +252,15 @@ NBA::register(
   anchor: \__('Add Favicon', 'ionos-essentials'),
   completed: 0 < intval(\get_option('site_icon', 0))
 );
+
+
+// for($i = 1; $i <= 12; $i++) {
+//   NBA::register(
+//     id: 'dosth' . $i,
+//     title: 'Do something ' . $i,
+//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+//     link: '#',
+//     anchor: 'Hier klicken',
+//     completed: false
+//   );
+// }

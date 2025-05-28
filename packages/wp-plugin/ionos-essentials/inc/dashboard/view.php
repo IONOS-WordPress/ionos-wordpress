@@ -121,6 +121,12 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     }
   }
 
+  .ionos_next_best_actions{
+    & > *:nth-child(n+8) {
+      display: none;
+    }
+  }
+
 </style>
 </main>
 </template>

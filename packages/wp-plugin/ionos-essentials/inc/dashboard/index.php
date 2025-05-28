@@ -112,7 +112,61 @@ const REQUIRED_USER_CAPABILITIES = 'read';
       },
     ]
   );
+
+  \register_rest_route('ionos/essentials/dashboard/nba/v1', '/dismiss/(?P<id>[a-zA-Z0-9-]+)', [
+    'methods'  => 'POST',
+    'callback' => function ($request) {
+      require_once PLUGIN_DIR . '/inc/dashboard/blocks/my-account/index.php';
+      require_once PLUGIN_DIR . '/inc/dashboard/blocks/next-best-actions/class-nba.php';
+      $params = $request->get_params();
+      $nba_id = $params['id'];
+
+      $nba = blocks\next_best_actions\NBA::get_nba($nba_id);
+      $res = $nba->set_status('dismissed', true);
+      if ($res) {
+        return new \WP_REST_Response([
+          'status' => 'success',
+          'res'    => $res,
+        ], 200);
+      }
+      return new \WP_REST_Response([
+        'status' => 'error',
+      ], 500);
+    },
+    'permission_callback' => function () {
+      return \current_user_can('manage_options');
+    },
+  ]);
+
+  \register_rest_route(
+    'ionos/essentials/dashboard/nba/v1',
+    'install-gml',
+    [
+      'methods'             => 'GET',
+      'permission_callback' => function () {
+        return \current_user_can('install_plugins');
+      },
+      'callback'            => function () {
+        $plugin_slug = 'woocommerce-german-market-light/WooCommerce-German-Market-Light.php';
+        if (! file_exists(WP_PLUGIN_DIR . '/' . $plugin_slug)) {
+          if (! install_plugin_from_url(
+            'https://marketpress.de/mp-download/no-key-woocommerce-german-market-light/woocommerce-german-market-light/1und1/'
+          )) {
+            return new \WP_REST_Response([
+              'status' => 'error',
+            ], 501);
+          }
+        }
+        \activate_plugin($plugin_slug, '', false, true);
+
+        return new \WP_REST_Response([
+          'status' => 'success',
+        ], 200);
+      },
+    ]
+  );
 });
+
 
 \add_action('admin_enqueue_scripts', function ($hook) {
   if (ADMIN_PAGE_HOOK !== $hook) {
