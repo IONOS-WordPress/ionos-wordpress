@@ -42,15 +42,15 @@ msgstr "Ver el sitio"
 msgid "Start AI Sitebuilder"
 msgstr "Iniciar Creador de sitios con IA"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Account Management"
 msgstr "Gestión de cuentas"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Acceso con un solo clic a su cuenta de cliente, seguridad de inicio de sesión y productos."
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Manage Hosting"
 msgstr "Gestionar el alojamiento"
 
@@ -202,11 +202,11 @@ msgstr "Añadir plugins"
 msgid "Upload Media files"
 msgstr "Cargar archivos multimedia"
 
-#: inc/dashboard/blocks/quick-links/render.php
+#: inc/dashboard/blocks/quick-links/index.php
 msgid "Quick Links"
 msgstr "Enlaces rápidos"
 
-#: inc/dashboard/blocks/quick-links/render.php
+#: inc/dashboard/blocks/quick-links/index.php
 msgid "Easily navigate to frequently used features and tools."
 msgstr "Navegue fácilmente a las funciones y herramientas más utilizadas."
 
@@ -298,10 +298,6 @@ msgstr "Hemos añadido los resultados de los análisis directamente a su panel d
 msgid "Overview"
 msgstr "Visión general"
 
-#: inc/dashboard/index.php
-msgid "Brand Logo"
-msgstr "Logotipo de la marca"
-
 #: inc/tenants/config/arsys.php
 #: inc/tenants/config/piensa.php
 msgid "My offers"
@@ -361,26 +357,6 @@ msgstr "Su contrato"
 msgid "Current offers"
 msgstr "Ofertas actuales"
 
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block title"
-msgid "Banner"
-msgstr "Banner"
-
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block description"
-msgid "Banner"
-msgstr "Banner"
-
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block title"
-msgid "Deep Links"
-msgstr "Enlaces profundos"
-
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block description"
-msgid "Show links to the Control Panel of your provider."
-msgstr "Mostrar enlaces al Panel de Control de su proveedor."
-
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
 msgid "NBA"
@@ -391,16 +367,6 @@ msgctxt "block description"
 msgid "Next Best Actions"
 msgstr "Próximas mejores acciones"
 
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block title"
-msgid "Quick Links"
-msgstr "Enlaces rápidos"
-
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block description"
-msgid "Show links to common tasks in the WordPress backend."
-msgstr "Mostrar enlaces a tareas comunes en el backend de WordPress."
-
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block title"
 msgid "Vulnerability"
@@ -410,26 +376,6 @@ msgstr "Vulnerabilidad"
 msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Mostrar datos de escaneo wp."
-
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block title"
-msgid "Welcome"
-msgstr "Bienvenido"
-
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block description"
-msgid "Welcome"
-msgstr "Bienvenido"
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block title"
-msgid "What's New"
-msgstr "Novedades"
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block description"
-msgid "What's New"
-msgstr "Novedades"
 
 #: inc/tenants/config/ionos.php
 msgid "My Products"
@@ -447,7 +393,7 @@ msgstr "Gestión de dominios y SSL"
 msgid "Add more products"
 msgstr "Añadir más productos"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Webmail Login"
 msgstr "Acceso al webmail"
 

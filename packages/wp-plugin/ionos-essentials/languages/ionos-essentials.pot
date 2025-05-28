@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-26T07:43:23+00:00\n"
+"POT-Creation-Date: 2025-05-28T07:43:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -55,19 +55,19 @@ msgstr ""
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr ""
 
-#: inc/dashboard/blocks/deep-links/index.php
-msgid "Account Management"
-msgstr ""
-
-#: inc/dashboard/blocks/deep-links/index.php
-msgid "One-click access to your customer account, login security and subscriptions."
-msgstr ""
-
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Webmail Login"
 msgstr ""
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
+msgid "Account Management"
+msgstr ""
+
+#: inc/dashboard/blocks/my-account/index.php
+msgid "One-click access to your customer account, login security and subscriptions."
+msgstr ""
+
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Manage Hosting"
 msgstr ""
 
@@ -192,15 +192,15 @@ msgid "Add a favicon (website icon) to your website to enhance brand recognition
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/index.php
+msgid "Dismiss"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Unlock Your Website's Potential"
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-msgstr ""
-
-#: inc/dashboard/blocks/next-best-actions/index.php
-msgid "Dismiss"
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/index.php
@@ -240,11 +240,11 @@ msgstr ""
 msgid "Upload Media files"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/render.php
+#: inc/dashboard/blocks/quick-links/index.php
 msgid "Quick Links"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/render.php
+#: inc/dashboard/blocks/quick-links/index.php
 msgid "Easily navigate to frequently used features and tools."
 msgstr ""
 
@@ -344,10 +344,6 @@ msgstr ""
 
 #: inc/dashboard/index.php
 msgid "Overview"
-msgstr ""
-
-#: inc/dashboard/index.php
-msgid "Brand Logo"
 msgstr ""
 
 #. translators: s=link to control panel
@@ -499,26 +495,6 @@ msgstr ""
 msgid "Markenschutz"
 msgstr ""
 
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block title"
-msgid "Banner"
-msgstr ""
-
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block description"
-msgid "Banner"
-msgstr ""
-
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block title"
-msgid "Deep Links"
-msgstr ""
-
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block description"
-msgid "Show links to the Control Panel of your provider."
-msgstr ""
-
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
 msgid "NBA"
@@ -529,16 +505,6 @@ msgctxt "block description"
 msgid "Next Best Actions"
 msgstr ""
 
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block title"
-msgid "Quick Links"
-msgstr ""
-
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block description"
-msgid "Show links to common tasks in the WordPress backend."
-msgstr ""
-
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block title"
 msgid "Vulnerability"
@@ -547,24 +513,4 @@ msgstr ""
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block description"
 msgid "Show wp scan data."
-msgstr ""
-
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block title"
-msgid "Welcome"
-msgstr ""
-
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block description"
-msgid "Welcome"
-msgstr ""
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block title"
-msgid "What's New"
-msgstr ""
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block description"
-msgid "What's New"
 msgstr ""
