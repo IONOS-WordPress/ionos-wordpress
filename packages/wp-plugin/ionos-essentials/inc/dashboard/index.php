@@ -90,7 +90,6 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   accepted_args : 2
 );
 
-
 \add_action('rest_api_init', function () {
   \register_rest_route(
     'ionos/essentials/dashboard/welcome/v1',
@@ -116,7 +115,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 });
 
 \add_action('admin_enqueue_scripts', function ($hook) {
-  if ($hook !== ADMIN_PAGE_HOOK) {
+  if (ADMIN_PAGE_HOOK !== $hook) {
     return;
   }
   wp_enqueue_script(
@@ -128,7 +127,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   );
 
   wp_localize_script('ionos-essentials-dashboard-js', 'wpData', [
-        'nonce' => wp_create_nonce('wp_rest'),
-        'restUrl' => esc_url_raw(rest_url())
+    'nonce'   => wp_create_nonce('wp_rest'),
+    'restUrl' => esc_url_raw(rest_url()),
   ]);
 });
