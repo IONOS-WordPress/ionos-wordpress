@@ -133,9 +133,3 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 </style>
 </main>
 </template>
-
-
-
-
-
-

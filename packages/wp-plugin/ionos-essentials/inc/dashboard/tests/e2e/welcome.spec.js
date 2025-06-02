@@ -11,7 +11,6 @@ test.describe('essentials:dashboard next-best-actions block', () => {
   });
 
   test('test welcome banner', async ({ admin, page }) => {
-    // show dashboard and click on dismiss button of "create-page" action
     await admin.visitAdminPage('/');
 
     let body = await page.locator('body');
