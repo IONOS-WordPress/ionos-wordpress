@@ -69,11 +69,12 @@ function _install()
       \uninstall_plugin('ionos-navigation/ionos-navigation.php');
       // no break because we want to run all migrations sequentially
     case version_compare($last_installed_version, '1.0.4', '<'):
-      update_option('ionos-migration-step', 1);
+      update_option('ionos_migration_step', 1);
       // no break
     case version_compare($last_installed_version, '1.0.5', '<'):
       \uninstall_plugin('ionos-assistant/ionos-assistant.php');
       update_plugin('ionos-marketplace/ionos-marketplace.php');
+      update_option('ionos_migration_step', 2);
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }
