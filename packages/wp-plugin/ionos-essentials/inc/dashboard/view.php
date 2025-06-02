@@ -82,6 +82,9 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 
 
 <style>
+  .mt-5{
+    margin-top: 2.5em;
+  }
   .button{
     white-space: nowrap;
     margin-bottom: 5px;
@@ -129,6 +132,50 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
       display: none;
     }
   }
+
+
+  .ionos_vulnerability{
+    background-color: #edfaef;
+
+    .ionos_vulnerability__content{
+      background-image: url(<?php echo plugins_url('/ionos-security/assets/img/none.svg'); ?>);
+      background-repeat: no-repeat;
+      background-position: top right;
+      min-height: 120px;
+    }
+
+    .bubble{
+      background-color: #4ab866;
+      color: #000;
+      border-radius: 50%;
+      padding: 0.2em 0.5em;
+      font-size: 0.8em;
+      margin-right: 0.5em;
+    }
+
+    /* Respect the order of this definition, as high overwrites medium */
+    &.medium{
+      background-color: #fcf9e8;
+      .ionos_vulnerability__content{
+        background-image: url(<?php echo plugins_url('/ionos-security/assets/img/medium.svg'); ?>);
+      }
+    }
+    &.high{
+      background-color: #fcf0f1;
+      .ionos_vulnerability__content{
+        background-image: url(<?php echo plugins_url('/ionos-security/assets/img/high.svg'); ?>);
+      }
+    }
+
+    .issue-row.high .bubble{
+      background-color: #cc1818;
+      color: white;
+    }
+    .issue-row.medium .bubble{
+      background-color: #f0b849;
+    }
+  }
+
 
 </style>
 </main>

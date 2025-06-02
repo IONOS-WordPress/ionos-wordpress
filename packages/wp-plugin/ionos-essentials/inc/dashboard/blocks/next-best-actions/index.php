@@ -2,8 +2,6 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
-use const ionos\essentials\PLUGIN_DIR;
-
 function render_callback()
 {
   require_once __DIR__ . '/class-nba.php';

@@ -8,7 +8,6 @@ require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/misc.php';
 
-use ionos\essentials\dashboard\Silent_Skin;
 use const ionos\essentials\PLUGIN_DIR;
 
 // exit if accessed directly
@@ -120,16 +119,16 @@ const REQUIRED_USER_CAPABILITIES = 'read';
     ]
   );
 
-function install_plugin_from_url($plugin_url)
-{
-  require_once PLUGIN_DIR . '/inc/dashboard/class-silent-skin.php';
+  function install_plugin_from_url($plugin_url)
+  {
+    require_once PLUGIN_DIR . '/inc/dashboard/class-silent-skin.php';
 
-  $skin     = new Silent_Skin();
-  $upgrader = new \Plugin_Upgrader($skin);
-  $result   = $upgrader->install($plugin_url);
+    $skin     = new Silent_Skin();
+    $upgrader = new \Plugin_Upgrader($skin);
+    $result   = $upgrader->install($plugin_url);
 
-  return ! is_wp_error($result);
-}
+    return ! is_wp_error($result);
+  }
 
   \register_rest_route('ionos/essentials/dashboard/nba/v1', '/dismiss/(?P<id>[a-zA-Z0-9-]+)', [
     'methods'  => 'POST',
@@ -202,6 +201,6 @@ function install_plugin_from_url($plugin_url)
     'restUrl' => esc_url_raw(rest_url()),
     'i18n'    => [
       'installing' => esc_html__('Installing...', 'ionos-essentials'),
-    ]
+    ],
   ]);
 });
