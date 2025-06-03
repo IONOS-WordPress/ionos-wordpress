@@ -46,7 +46,7 @@ function render_callback()
       $buttons = '<a id="ionos_essentials_install_gml" class="button button--primary">' . $action->anchor . '</a>';
     }
 
-    $buttons .= '<a data-nba-id="' . $action->id . '" class="button button--secondary ionos-dismiss-nba">' . \esc_html__(
+    $buttons .= '<a data-nba-id="' . $action->id . '" class="ghost-button ionos-dismiss-nba">' . \esc_html__(
       'Dismiss',
       'ionos-essentials'
     ) . '</a>';
@@ -70,7 +70,7 @@ function render_callback()
         ); ?></div>
 
       <?php echo $cards; ?>
- 
+
   <?php
 }
 

@@ -139,8 +139,8 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
       margin-left: -15px;
     }
 
-    .ionos_nba_dismissed{#
-      transform: translate(-30px);
+    .ionos_nba_dismissed{
+      transform: scale(0.7);
       opacity: 0;
       transition: all 0.75s ease-in-out;
     }

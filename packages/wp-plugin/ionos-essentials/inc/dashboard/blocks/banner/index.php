@@ -42,7 +42,7 @@ function render_callback(): void
             <img class=""
             src="<?php echo $tenant_logo; ?>"
             alt="<?php echo $tenant_name; ?> Logo"
-            style="width: 200px"
+            style="width: 150px; padding: 50px;"
           >
 
           </div>
