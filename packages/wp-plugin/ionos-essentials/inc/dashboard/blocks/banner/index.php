@@ -38,7 +38,7 @@ function render_callback(): void
     <div class="card__content">
       <section class="card__section">
         <div class="grid grid--large-vertical-align-center">
-          <div class="grid-col grid-col--8 grid-col--small-12">
+          <div class="grid-col grid-col--6 grid-col--small-12">
             <img class=""
             src="<?php echo $tenant_logo; ?>"
             alt="<?php echo $tenant_name; ?> Logo"
@@ -46,7 +46,7 @@ function render_callback(): void
           >
 
           </div>
-          <div class="grid-col grid-col--4 grid-col--small-12">
+          <div class="grid-col grid-col--6 grid-col--small-12" style="text-align: right;">
             <?php echo $buttons; ?>
           </div>
         </div>
@@ -70,7 +70,7 @@ function get_ai_button(): array
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),
         'text'           => \__('Start AI Sitebuilder', 'ionos-essentials'),
-        'css-attributes' => 'startai',
+        'css-class'      => 'button--magenta',
         'target'         => '_blank',
       ], ];
   }
@@ -80,7 +80,7 @@ function get_ai_button(): array
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),
         'text'           => \__('Rebuild Website', 'ionos-essentials'),
-        'css-attributes' => 'retryai',
+        'css-class'      => 'button--magenta',
         'title'          => \__('It is possible to rebuild your AI-created website within 72 hours', 'ionos-essentials'),
         'target'         => '_blank',
       ], ];
