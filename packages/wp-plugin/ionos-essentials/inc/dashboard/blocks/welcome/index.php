@@ -45,7 +45,7 @@ function render_callback(): string
                 </ul>
             </section>
             <footer class="horizontal-card__footer horizontal-card__footer--small-align-center">
-                <button class="button button--primary" autofocus>
+                <button class="button button--primary">
                     ' . \esc_html__('Close', 'ionos-essentials') . '
                 </button>
             </footer>

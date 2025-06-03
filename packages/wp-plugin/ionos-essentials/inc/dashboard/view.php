@@ -4,12 +4,11 @@ namespace ionos\essentials\dashboard;
 
 require_once __DIR__ . '/blocks/banner/index.php';
 require_once __DIR__ . '/blocks/welcome/index.php';
-require_once __DIR__ . '/blocks/vulnerability/render.php';
+require_once __DIR__ . '/blocks/vulnerability/index.php';
 require_once __DIR__ . '/blocks/next-best-actions/index.php';
 require_once __DIR__ . '/blocks/my-account/index.php';
 require_once __DIR__ . '/blocks/whats-new/index.php';
 require_once __DIR__ . '/blocks/quick-links/index.php';
-
 
 // Fontface must be loaded before the template is rendered
 ?>
@@ -62,7 +61,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 
 <div class="page-section">
   <div class="grid">
-    <div class="grid-col grid-col--12">
+    <div class="grid-col grid-col--12 ionos_next_best_actions">
       <?php blocks\next_best_actions\render_callback(); ?>
     </div>
     <div class="grid-col grid-col--6 grid-col--small-12">
@@ -82,16 +81,9 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 
 
 <style>
-  .mt-5{
-    margin-top: 2.5em;
-  }
   .button{
     white-space: nowrap;
     margin-bottom: 5px;
-  }
-
-  .nba-card{
-    min-height: 22em;
   }
 
   .ionos_my_account_links{
@@ -127,21 +119,38 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     }
   }
 
+
   .ionos_next_best_actions{
+    background: white;
+    margin-bottom: 2em;
+    border-radius: 16px;
+    padding-top: 2em;
+    margin-left: 15px;
+
+    .card{
+      background: rgb(244, 247, 250);
+    }
     & > *:nth-child(n+8) {
       display: none;
     }
-  }
 
+      .nba-card{
+        min-height: 22em;
+        margin-left: -15px;
+      }
+  }
 
   .ionos_vulnerability{
     background-color: #edfaef;
 
     .ionos_vulnerability__content{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       background-image: url(<?php echo plugins_url('/ionos-security/assets/img/none.svg'); ?>);
       background-repeat: no-repeat;
       background-position: top right;
-      min-height: 120px;
+      min-height: 150px;
     }
 
     .bubble{

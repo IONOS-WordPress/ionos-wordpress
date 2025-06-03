@@ -34,24 +34,26 @@ function render_callback(): void
   );
 
   ?>
+<div class="card">
+    <div class="card__content">
+      <section class="card__section">
+        <div class="grid grid--large-vertical-align-center">
+          <div class="grid-col grid-col--8 grid-col--small-12">
+            <img class=""
+            src="<?php echo $tenant_logo; ?>"
+            alt="<?php echo $tenant_name; ?> Logo"
+            style="width: 200px"
+          >
 
-  <header class="" style="">
-  <div class="">
-    <div class="grid grid--large-vertical-align-center">
-      <div class="grid-col grid-col--8 grid-col--small-12">
-        <img class=""
-        src="<?php echo $tenant_logo; ?>"
-        alt="<?php echo $tenant_name; ?> Logo"
-        style="width: 200px"
-      >
-
-      </div>
-      <div class="grid-col grid-col--4 grid-col--small-12">
-        <?php echo $buttons; ?>
-      </div>
+          </div>
+          <div class="grid-col grid-col--4 grid-col--small-12">
+            <?php echo $buttons; ?>
+          </div>
+        </div>
+      </section>
     </div>
-  </div>
-</header>
+</div>
+
 
   <?php
 }
