@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.0.8
+
+### Patch Changes
+
+- 2441f50: add new migration step
+
 ## 1.0.7
 
 ### Patch Changes
