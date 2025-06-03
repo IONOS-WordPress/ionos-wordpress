@@ -70,10 +70,10 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     <div class="grid-col grid-col--6 grid-col--small-12">
       <?php blocks\quick_links\render_callback(); ?>
     </div>
-    <div class="grid-col grid-col--8 grid-col--medium-6 grid-col--small-12">
+    <div class="grid-col grid-col--5 grid-col--medium-6 grid-col--small-12">
       <?php blocks\my_account\render_callback(); ?>
     </div>
-     <div class="grid-col grid-col--4 grid-col--medium-6 grid-col--small-12">
+     <div class="grid-col grid-col--7 grid-col--medium-6 grid-col--small-12">
       <?php blocks\whatsnew\render_callback(); ?>
     </div>
   </div>
@@ -91,7 +91,6 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     flex-wrap: wrap;
 
     .button{
-      line-height: 7em;
       flex: 0 0 31%;
     }
   }
@@ -135,7 +134,6 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     }
 
     .nba-card{
-      min-height: 22em;
       margin-left: -15px;
     }
 

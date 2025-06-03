@@ -10,7 +10,7 @@ function render_callback()
 <div class="card">
     <div class="card__content">
       <section class="card__section">
-        <img src="<?php echo \esc_url(\plugins_url('', __FILE__) . '/whats-new.png'); ?>">
+        <img src="<?php echo \esc_url(\plugins_url('', __FILE__) . '/whats-new.png'); ?>" style="float: right; height: 120px;">
 
         <h2 class="card__headline"><?php echo \esc_html__('What’s New', 'ionos-essentials'); ?></h2>
         <p class="paragraph"><?php echo \esc_html__('Get an overview of the latest updates and enhancements.', 'ionos-essentials'); ?></p>
