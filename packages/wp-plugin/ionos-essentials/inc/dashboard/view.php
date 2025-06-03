@@ -60,7 +60,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
   </div>
 
 <div class="page-section">
-  <div class="grid">
+  <div class="grid grid--full-height">
     <div class="grid-col grid-col--12 ionos_next_best_actions">
       <?php blocks\next_best_actions\render_callback(); ?>
     </div>
@@ -133,8 +133,12 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
       display: none;
     }
 
-    .nba-card{
-      margin-left: -15px;
+    .nba-card .card__section{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
     }
 
     .ionos_nba_dismissed{

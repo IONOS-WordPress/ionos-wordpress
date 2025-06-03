@@ -17,7 +17,7 @@ function render_callback()
       <section class="card__section">
         <h2 class="card__headline">%s</h2>
         <p class="paragraph">%s</p>
-        %s
+        <div>%s</div>
       </section>
     </div>
   </div>
@@ -69,7 +69,9 @@ function render_callback()
           'ionos-essentials'
         ); ?></div>
 
-      <?php echo $cards; ?>
+      <div class="grid">
+        <?php echo $cards; ?>
+      </div>
 
   <?php
 }
