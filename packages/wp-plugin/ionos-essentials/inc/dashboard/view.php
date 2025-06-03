@@ -10,8 +10,7 @@ require_once __DIR__ . '/blocks/my-account/index.php';
 require_once __DIR__ . '/blocks/whats-new/index.php';
 require_once __DIR__ . '/blocks/quick-links/index.php';
 
-?>
-<?php
+
 // Fontface must be loaded before the template is rendered
 ?>
 <style>
@@ -44,7 +43,8 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     font-variant: normal;
     font-weight: 400;
     line-height:1;src: url(https://ce1.uicdn.net/exos/icons/exos-icon-font.woff2?v=23) format("woff2"),url(https://ce1.uicdn.net/exos/icons/exos-icon-font.woff?v=23) format("woff");
-    text-transform:none}
+    text-transform:none;
+}
 </style>
 
 
@@ -62,7 +62,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 
 <div class="page-section">
   <div class="grid">
-    <div class="grid-col grid-col--12 grid-col--small-12">
+    <div class="grid-col grid-col--12">
       <?php blocks\next_best_actions\render_callback(); ?>
     </div>
     <div class="grid-col grid-col--6 grid-col--small-12">

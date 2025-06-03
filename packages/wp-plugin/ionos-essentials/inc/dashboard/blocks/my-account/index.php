@@ -55,7 +55,7 @@ function render_callback()
   $data = get_account_data();
 
   if (null === $data) {
-    return null;
+    return;
   }
 
   $links = '';

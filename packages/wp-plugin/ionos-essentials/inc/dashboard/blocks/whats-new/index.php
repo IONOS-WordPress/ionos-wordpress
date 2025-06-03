@@ -7,7 +7,7 @@ function render_callback()
 
   ?>
 
-<div class="card" style="">
+<div class="card">
     <div class="card__content">
       <section class="card__section">
         <img src="<?php echo \esc_url(\plugins_url('', __FILE__) . '/whats-new.png'); ?>">
