@@ -134,10 +134,16 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
       display: none;
     }
 
-      .nba-card{
-        min-height: 22em;
-        margin-left: -15px;
-      }
+    .nba-card{
+      min-height: 22em;
+      margin-left: -15px;
+    }
+
+    .ionos_nba_dismissed{#
+      transform: translate(-30px);
+      opacity: 0;
+      transition: all 0.75s ease-in-out;
+    }
   }
 
   .ionos_vulnerability{

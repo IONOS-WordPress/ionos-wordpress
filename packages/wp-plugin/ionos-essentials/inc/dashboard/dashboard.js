@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
       }
 
+       dashboard.getElementById(target.dataset.nbaId).classList.add('ionos_nba_dismissed');
       setTimeout(() => {
         dashboard.getElementById(target.dataset.nbaId).remove();
 
@@ -66,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (nbaCount === 0) {
           dashboard.querySelector('.ionos_next_best_actions').remove();
         }
-    }, 250);
+    }, 800);
     }).catch(error => {
         console.error("Error:", error);
     });
