@@ -92,7 +92,7 @@ function ionos.wordpress.ecs() {
   # command : /composer/vendor/bin/ecs check --no-diffs --clear-cache --config ./packages/docker/ecs-php/ecs-config.php --no-progress-bar .
 
   # ecs-php
-  echo docker run \
+  docker run \
     $DOCKER_FLAGS \
     --rm \
     --user "$DOCKER_USER" \
