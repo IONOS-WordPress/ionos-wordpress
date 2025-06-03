@@ -86,16 +86,6 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     margin-bottom: 5px;
   }
 
-  .button--magenta{
-    border-color: #e480f8;
-    color: #e480f8;
-
-    &:hover{
-      background-color: #e480f8 !important;
-      border-color: #e480f8 !important;
-    }
-  }
-
   .ionos_my_account_links{
     display: flex;
     flex-wrap: wrap;
