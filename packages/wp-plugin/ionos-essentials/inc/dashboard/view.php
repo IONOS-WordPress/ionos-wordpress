@@ -133,12 +133,21 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
       display: none;
     }
 
-    .nba-card .card__section{
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-between;
+    .nba-card{
+
+      &:hover{
+        transform: scale(1.02);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease-in-out;
+      }
+
+      .card__section{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
     }
 
     .ionos_nba_dismissed{
