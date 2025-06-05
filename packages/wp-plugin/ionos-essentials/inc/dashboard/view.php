@@ -61,21 +61,15 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 
 <div class="page-section">
   <div class="grid grid--full-height">
-    <div class="grid-col grid-col--12 ionos_next_best_actions">
-      <?php blocks\next_best_actions\render_callback(); ?>
-    </div>
-    <div class="grid-col grid-col--6 grid-col--small-12">
-      <?php blocks\vulnerability\render_callback(); ?>
-    </div>
-    <div class="grid-col grid-col--6 grid-col--small-12">
-      <?php blocks\quick_links\render_callback(); ?>
-    </div>
-    <div class="grid-col grid-col--5 grid-col--medium-6 grid-col--small-12">
-      <?php blocks\my_account\render_callback(); ?>
-    </div>
-     <div class="grid-col grid-col--7 grid-col--medium-6 grid-col--small-12">
-      <?php blocks\whatsnew\render_callback(); ?>
-    </div>
+    <!--
+      There must be no whitespace or newline within the .grid-col elements, as this would display even an empty cell,
+      but empty cells should not be displayed (see)
+    -->
+    <div class="grid-col grid-col--12 ionos_next_best_actions"><?php blocks\next_best_actions\render_callback(); ?></div>
+    <div class="grid-col grid-col--6 grid-col--small-12"><?php blocks\vulnerability\render_callback(); ?></div>
+    <div class="grid-col grid-col--6 grid-col--small-12"><?php blocks\quick_links\render_callback(); ?></div>
+    <div class="grid-col grid-col--5 grid-col--medium-6 grid-col--small-12"><?php blocks\my_account\render_callback(); ?></div>
+    <div class="grid-col grid-col--7 grid-col--medium-6 grid-col--small-12"><?php blocks\whatsnew\render_callback(); ?></div>
   </div>
 </div>
 
@@ -84,6 +78,10 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
   .button{
     white-space: nowrap;
     margin-bottom: 5px;
+  }
+
+  .grid-col:empty{
+    display: none !important;
   }
 
   .ionos_my_account_links{
