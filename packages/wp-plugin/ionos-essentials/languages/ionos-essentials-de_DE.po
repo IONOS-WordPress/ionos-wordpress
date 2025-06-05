@@ -107,33 +107,33 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "WPScan-Daten anzeigen."
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Show full scan report"
 msgstr "Vollständigen Scanbericht anzeigen"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Last scan"
 msgstr "Letzter Scan"
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 #, php-format
 msgid "%s ago"
 msgstr "vor %s"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Kritisches Problem gefunden"
 msgstr[1] "Kritische Probleme gefunden"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "Warnung gefunden"
 msgstr[1] "Warnungen gefunden"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Issues found"
 msgstr "Probleme gefunden"
 
@@ -349,7 +349,7 @@ msgstr "Footer editieren"
 msgid "Dismiss"
 msgstr "Nicht mehr anzeigen"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Überprüfung auf WordPress-spezifische Schwachstellen und Bedrohungen"
 
@@ -437,22 +437,9 @@ msgstr "E-Mail einrichten"
 msgid "My Account"
 msgstr "Mein Konto"
 
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "The required Security plugin is missing."
-msgstr "Das erforderliche Sicherheits-Plugin fehlt."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Install Security plugin"
-msgstr "Sicherheits-Plugin installieren"
-
-#: inc/dashboard/blocks/next-best-actions/index.php
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/index.php
 msgid "Installing..."
 msgstr "Installieren..."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
-msgstr "Schwachstellen-Scan nicht möglich. Bitte kontaktieren Sie den Kundendienst."
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php
@@ -517,3 +504,53 @@ msgstr "Sie entscheiden, wie Sie Ihre Website erstellen möchten. Keine Sorge, S
 #: inc/switch-page/view.php
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr "Durch die Nutzung von AI-Funktionen erklären Sie sich mit den OpenAI %1$sNutzungsbedingungen%2$s und %3$sDatenschutzbestimmungen%4$s einverstanden."
+
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block title"
+msgid "Banner"
+msgstr ""
+
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block description"
+msgid "Banner"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block title"
+msgid "Deep Links"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block description"
+msgid "Show links to the Control Panel of your provider."
+msgstr ""
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block title"
+msgid "Quick Links"
+msgstr ""
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block description"
+msgid "Show links to common tasks in the WordPress backend."
+msgstr ""
+
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block title"
+msgid "Welcome"
+msgstr ""
+
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block description"
+msgid "Welcome"
+msgstr ""
+
+#: build/dashboard/blocks/whats-new/block.json
+msgctxt "block title"
+msgid "What's New"
+msgstr ""
+
+#: build/dashboard/blocks/whats-new/block.json
+msgctxt "block description"
+msgid "What's New"
+msgstr ""

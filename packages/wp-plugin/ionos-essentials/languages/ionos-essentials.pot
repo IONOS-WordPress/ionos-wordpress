@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-28T07:43:24+00:00\n"
+"POT-Creation-Date: 2025-06-05T08:37:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -203,11 +203,6 @@ msgstr ""
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/index.php
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Installing..."
-msgstr ""
-
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Add new page"
 msgstr ""
@@ -248,49 +243,37 @@ msgstr ""
 msgid "Easily navigate to frequently used features and tools."
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Issues found"
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
+msgid "Show full scan report"
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Last scan"
 msgstr ""
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "%s ago"
-msgstr ""
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Show full scan report"
-msgstr ""
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "The required Security plugin is missing."
-msgstr ""
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Install Security plugin"
-msgstr ""
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
 msgstr ""
 
 #. translators: %s: Brand name
@@ -344,6 +327,10 @@ msgstr ""
 
 #: inc/dashboard/index.php
 msgid "Overview"
+msgstr ""
+
+#: inc/dashboard/index.php
+msgid "Installing..."
 msgstr ""
 
 #. translators: s=link to control panel
@@ -495,6 +482,26 @@ msgstr ""
 msgid "Markenschutz"
 msgstr ""
 
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block title"
+msgid "Banner"
+msgstr ""
+
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block description"
+msgid "Banner"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block title"
+msgid "Deep Links"
+msgstr ""
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block description"
+msgid "Show links to the Control Panel of your provider."
+msgstr ""
+
 #: build/dashboard/blocks/next-best-actions/block.json
 msgctxt "block title"
 msgid "NBA"
@@ -505,6 +512,16 @@ msgctxt "block description"
 msgid "Next Best Actions"
 msgstr ""
 
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block title"
+msgid "Quick Links"
+msgstr ""
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block description"
+msgid "Show links to common tasks in the WordPress backend."
+msgstr ""
+
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block title"
 msgid "Vulnerability"
@@ -513,4 +530,24 @@ msgstr ""
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block description"
 msgid "Show wp scan data."
+msgstr ""
+
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block title"
+msgid "Welcome"
+msgstr ""
+
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block description"
+msgid "Welcome"
+msgstr ""
+
+#: build/dashboard/blocks/whats-new/block.json
+msgctxt "block title"
+msgid "What's New"
+msgstr ""
+
+#: build/dashboard/blocks/whats-new/block.json
+msgctxt "block description"
+msgid "What's New"
 msgstr ""
