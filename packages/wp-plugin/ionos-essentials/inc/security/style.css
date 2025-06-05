@@ -1,0 +1,281 @@
+/* ToDo add global colors, spaces, fonts +/
+/* Maybe integrate tailwind */
+
+/* remove/modify default styling */
+.wp-filter {
+	margin: 0;
+	padding: 0 20px;
+	border: 0;
+}
+
+.filter-links {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.filter-links .current {
+	font-weight: 600;
+	border-bottom-color: #2271b1;
+}
+
+.filter-links li>a {
+	padding: 15px;
+	white-space: nowrap;
+	color: #1d2327;
+}
+
+.container {
+	background-color: #ffffff;
+	overflow-y: auto;
+}
+
+@media (min-width: 1280px) {
+	.container {
+		max-width: 1070px;
+	}
+}
+
+.horizontal-line {
+	display: block;
+	width: 100%;
+	height: 1px;
+	background-color: #cccccc;
+}
+
+form {
+	width: auto;
+	display: flex;
+	flex-direction: column;
+	width: auto;
+	padding: 0 30px;
+}
+
+.button-primary {
+	width: 100%;
+}
+
+@media (min-width: 720px) {
+	form {
+		display: block;
+	}
+	.button-primary {
+		width: auto;
+	}
+}
+
+@media (min-width: 1280px) {
+	form {
+		max-width: 1010px;
+	}
+}
+
+input[type=text], input[type=number] {
+	border-radius: 3px;
+}
+
+.description {
+	color: #757575;
+	margin-top: 0;
+}
+
+/* basic space between each component */
+form > div {
+	display: flex;
+	flex-direction: column;
+	margin: 20px 0;
+}
+
+.headline {
+	margin: 20px 0 10px 0;
+}
+
+.headline-small {
+	font-size: 15px;
+	font-weight: 400;
+	margin: 0 0 10px;
+	line-height: 1.5;
+}
+
+.inputfield {
+	width: 100%;
+	margin-left: 0px;
+}
+
+@media (min-width: 720px) {
+	.inputfield {
+		width: 80%;
+	}
+}
+
+.wp-core-ui .button {
+	text-align: center;
+	margin: 10px 0 20px 0;
+}
+
+/* Component */
+/* Checkbox */
+.ionos-form-checkbox {
+	flex-direction: initial;
+	flex-wrap: wrap;
+}
+
+.ionos-form-checkbox .switch {
+	position: relative;
+	width: 40px;
+	height: 24px;
+	flex-shrink: 0;
+	margin-right: 20px;
+}
+
+.ionos-form-checkbox input,
+.ionos-form-checkbox input:disabled {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	z-index: 1;
+	margin: 0;
+}
+
+.ionos-form-checkbox .checkbox-toggle {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #cccccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+	border-radius: 34px;
+}
+
+.ionos-form-checkbox .checkbox-toggle:before {
+	position: absolute;
+	content: "";
+	height: 14px;
+	width: 14px;
+	left: 4px;
+	bottom: 5px;
+	background-color: #ffffff;
+	-webkit-transition: .4s;
+	transition: .4s;
+	border-radius: 50%;
+}
+
+.ionos-form-checkbox input:checked + .checkbox-toggle {
+	background-color: #2271b1;
+}
+
+.ionos-form-checkbox input:focus + .checkbox-toggle {
+	box-shadow: 0 0 1px #2271b1;
+}
+
+.ionos-form-checkbox input:checked + .checkbox-toggle:before {
+	-webkit-transform: translateX(14px);
+	-ms-transform: translateX(14px);
+	transform: translateX(18px);
+}
+
+.ionos-form-checkbox input:disabled + .checkbox-toggle {
+	opacity: 0.5;
+}
+
+.ionos-form-checkbox .description {
+	width: 100%;
+	padding-left: 60px;
+}
+
+/* Component */
+/* Numberfield, Textfield */
+.flex-col {
+	display: flex;
+	flex-direction: column;
+}
+
+/* Components */
+/* Slider */
+.ionos-form-slider-with-number-field {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: 0;
+	margin-bottom: 1em;
+	padding: 2px;
+	touch-action: pan-y;
+	outline: none;
+}
+
+.ionos-form-slider-with-number-field .label-wrapper {
+	width: 100%;
+	display: block;
+}
+
+.ionos-form-slider-with-number-field .slider-wrapper {
+	flex-grow: 1;
+}
+
+.ionos-form-slider-with-number-field div,
+.ionos-form-slider-with-number-field svg {
+	display: block;
+	width: 350px;
+}
+
+.ionos-form-slider-with-number-field-label {
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+}
+
+.ionos-form-slider-with-number-field .value {
+	color: currentcolor;
+	fill: currentcolor;
+}
+
+.ionos-form-slider-with-number-field .valueBackground {
+	fill: white;
+	stroke-width: 0;
+}
+
+.ionos-form-slider-with-number-field .rail {
+	fill: #cccccc;
+}
+
+.ionos-form-slider-with-number-field .fill {
+	stroke-width: 0;
+	pointer-events: none;
+	fill: #2271b1;
+}
+
+.ionos-form-slider-with-number-field .thumb {
+	fill: #2271b1;
+}
+
+.ionos-form-slider-with-number-field .focus {
+	fill: transparent;
+	stroke: transparent;
+	stroke-width: 2px;
+}
+
+.ionos-form-slider-with-number-field .slider:focus .value,
+.ionos-form-slider-with-number-field .slider:hover .value {
+	font-weight: bold;
+}
+
+.ionos-form-slider-with-number-field .slider:focus .focus,
+.ionos-form-slider-with-number-field .slider:hover .focus {
+	stroke: currentcolor;
+}
+
+.biggerh2 {
+  font-size: 23px;
+  font-weight: 400;
+  padding: 9px 0 4px;
+}
