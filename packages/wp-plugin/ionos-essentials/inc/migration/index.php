@@ -75,6 +75,11 @@ function _install()
       \uninstall_plugin('ionos-assistant/ionos-assistant.php');
       update_plugin('ionos-marketplace/ionos-marketplace.php');
       update_option('ionos_migration_step', 2);
+
+    case version_compare($last_installed_version, '1.1.0', '<'):
+      \uninstall_plugin('ionos-security/ionos-security.php');
+      update_plugin('ionos-marketplace/ionos-marketplace.php');
+      update_option('ionos_migration_step', 3);
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }
