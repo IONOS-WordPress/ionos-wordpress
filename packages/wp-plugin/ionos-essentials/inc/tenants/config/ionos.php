@@ -25,7 +25,7 @@ $links = [
   ],
 ];
 
-// Trainling slash
+// Trailing slash
 // The first market is the default market
 $market_domains = [
   'de' => 'https://mein.ionos.de/',

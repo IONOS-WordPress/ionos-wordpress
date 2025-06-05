@@ -43,7 +43,7 @@ class ClassNBATest extends \WP_UnitTestCase {
     );
 
     $new_nba_count = count(NBA::get_actions());
-    $this->assertEquals($nba_count + 1, $new_nba_count, 'registered nbas should contain our newly radded nba');
+    $this->assertEquals($nba_count + 1, $new_nba_count, 'registered nbas should contain our newly added nba');
 
     $nba = NBA::get_nba($ID);
     $this->assertTrue($nba->active);
