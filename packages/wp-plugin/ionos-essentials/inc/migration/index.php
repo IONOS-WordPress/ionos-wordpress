@@ -64,22 +64,23 @@ function _install()
       return;
 
     case version_compare($last_installed_version, '1.0.0', '<'):
-      \uninstall_plugin('ionos-loop/ionos-loop.php');
-      \uninstall_plugin('ionos-journey/ionos-journey.php');
-      \uninstall_plugin('ionos-navigation/ionos-navigation.php');
+      \deactivate_plugins(['ionos-loop/ionos-loop.php','ionos-journey/ionos-journey.php','ionos-navigation/ionos-navigation.php']);
+      \delete_plugins(['ionos-loop/ionos-loop.php','ionos-journey/ionos-journey.php','ionos-navigation/ionos-navigation.php']);
       // no break because we want to run all migrations sequentially
     case version_compare($last_installed_version, '1.0.4', '<'):
-      update_option('ionos_migration_step', 1);
+      \update_option('ionos_migration_step', 1);
       // no break
-    case version_compare($last_installed_version, '1.0.5', '<'):
-      \uninstall_plugin('ionos-assistant/ionos-assistant.php');
-      update_plugin('ionos-marketplace/ionos-marketplace.php');
-      update_option('ionos_migration_step', 2);
+    case version_compare($last_installed_version, '1.0.9', '<'):
+      // deactivate and uninstall the ionos-assistant plugin
+      \deactivate_plugins('ionos-assistant/ionos-assistant.php');
+      \delete_plugins(['ionos-assistant/ionos-assistant.php']);
+      update_plugin('ionos-marketplace/ionos-marketplace.php', false);
+      \update_option('ionos_migration_step', 2);
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }
 
-function update_plugin($plugin_slug)
+function update_plugin($plugin_slug, $activate = true)
 {
   if (current_user_can('update_plugins')) {
     include_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -97,6 +98,8 @@ function update_plugin($plugin_slug)
     );
 
     $upgrader->upgrade($plugin_slug);
-    activate_plugin($plugin_slug);
+    if ($activate) {
+      activate_plugin($plugin_slug);
+    }
   }
 }
