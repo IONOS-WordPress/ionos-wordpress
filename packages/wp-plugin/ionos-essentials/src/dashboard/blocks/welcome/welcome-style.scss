@@ -118,7 +118,8 @@
       font-size: var(--second-level-headline-size, 22px);
       line-height: var(--second-level-headline-line-height, 30px);
       margin-bottom: 12px;
-      word-break: break-word;
+      overflow-wrap: break-word;
+
   }
   .paragraph, .paragraph--bold {
     font-size: var(--default-text-size, 14px);

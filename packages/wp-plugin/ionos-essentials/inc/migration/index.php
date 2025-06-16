@@ -64,8 +64,13 @@ function _install()
       return;
 
     case version_compare($last_installed_version, '1.0.0', '<'):
-      \deactivate_plugins(['ionos-loop/ionos-loop.php','ionos-journey/ionos-journey.php','ionos-navigation/ionos-navigation.php']);
-      \delete_plugins(['ionos-loop/ionos-loop.php','ionos-journey/ionos-journey.php','ionos-navigation/ionos-navigation.php']);
+      $plugins_to_remove = [
+        'ionos-loop/ionos-loop.php',
+        'ionos-journey/ionos-journey.php',
+        'ionos-navigation/ionos-navigation.php',
+      ];
+      \deactivate_plugins($plugins_to_remove);
+      \delete_plugins($plugins_to_remove);
       // no break because we want to run all migrations sequentially
     case version_compare($last_installed_version, '1.0.4', '<'):
       \update_option('ionos_migration_step', 1);
