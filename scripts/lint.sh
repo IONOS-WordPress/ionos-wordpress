@@ -456,6 +456,14 @@ Options:
               See './.secret.example' for an example file.
 
   Usage:
+    Lint all files matching all linters
+    'pnpm run lint'
+
+    Lint fix all files (except i18n)
+    'pnpm run lint-fix'
+
+    Lint fix i18n files
+    'pnpm run lint-fix:i18n'
 
     Lint all files matching prettier and i18n, skip php files etc.
     'pnpm run lint --use prettier --use i18n'
