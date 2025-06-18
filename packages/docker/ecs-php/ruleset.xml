@@ -48,13 +48,21 @@
     <exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned"/>
     <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents"/>
     <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r"/>
-    <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r"/>
     <exclude name="WordPress.Arrays.ArrayKeySpacingRestrictions.NoSpacesAroundArrayKeys"/>
-    <exclude name="WordPress.WhiteSpace.OperatorSpacing.NoSpaceBefore"/>
     <exclude name="WordPress.WP.AlternativeFunctions.file_system_operations_mkdir"/>
     <exclude name="WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents"/>
-    <exclude name="WordPress.WhiteSpace.OperatorSpacing.NoSpaceAfter"/>
+    <exclude name="WordPress.WhiteSpace.OperatorSpacing"/>
+    <exclude name="WordPress.WhiteSpace.ObjectOperatorSpacing"/>
+    <exclude name="WordPress.Arrays.ArrayKeySpacingRestrictions"/>
+    <exclude name="PSR2.ControlStructures.SwitchDeclaration"/>
+    <exclude name="PSR12.Files.FileHeader"/>
   </rule>
+
+  <!-- <rule ref="WordPress-Core">
+  </rule>
+
+  <rule ref="WordPress">
+  </rule> -->
 
   <rule ref="NormalizedArrays">
     <exclude name="NormalizedArrays.Arrays.ArrayBraceSpacing"/>
