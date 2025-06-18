@@ -40,8 +40,6 @@ COPY --chmod=755 <<EOF /usr/bin/entrypoint.sh
 exec /composer/vendor/bin/ecs \$@
 EOF
 
-# COPY packages/docker/ecs-php/ruleset.xml /ruleset.xml
-
 # create user/group to run ecs as non-root
 RUN groupadd --gid 1000 php && useradd --uid 1000 --gid php --shell /bin/sh --create-home php
 USER php
