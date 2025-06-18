@@ -139,7 +139,7 @@ function ionos.wordpress.ecs() {
 # @FIXME: the image could made smaller using distroless base image
 # @FIXME: the docker call could be
 function ionos.wordpress.dennis() {
-  if [[ "$FIX" == 'yes' ]]; then
+  if [[ "$FIX" == 'yes' ]] && [[ "${USE[@]}" =~ i18n ]]; then
     # abort lint fix if DEEP_API_KEY is not set
     if [[ -z "${DEEPL_API_KEY}" ]]; then
       ionos.wordpress.log_warn "Skip auto translating po files using deepl - DEEPL_API_KEY environment variable is not set in './.secrets'"
