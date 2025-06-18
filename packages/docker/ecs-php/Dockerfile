@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1.4
 
-# php version from .env
 ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-cli-alpine
@@ -25,14 +24,14 @@ RUN <<EOF
     php${PHP_VERSION//./}-xmlreader \
     php${PHP_VERSION//./}-xmlwriter \
     composer
-  rm -rf /var/cache/apk/*
+    rm -rf /var/cache/apk/*
 
-  composer global install
+    composer global install
 
-  # tell phpcs dependency of easy-coding-standard where to find the used standards
-  /composer/vendor/symplify/easy-coding-standard/vendor/squizlabs/php_codesniffer/bin/phpcs \
-    --config-set installed_paths \
-    "/composer/vendor/phpcsstandards/phpcsextra,/composer/vendor/phpcsstandards/phpcsutils,/composer/vendor/wp-coding-standards/wpcs"
+    # tell phpcs dependency of easy-coding-standard where to find the used standards
+    /composer/vendor/symplify/easy-coding-standard/vendor/squizlabs/php_codesniffer/bin/phpcs \
+      --config-set installed_paths \
+      "/composer/vendor/phpcsstandards/phpcsextra,/composer/vendor/phpcsstandards/phpcsutils,/composer/vendor/wp-coding-standards/wpcs"
 EOF
 
 COPY --chmod=755 <<EOF /usr/bin/entrypoint.sh
