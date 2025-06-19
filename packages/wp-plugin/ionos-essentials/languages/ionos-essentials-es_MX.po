@@ -218,13 +218,13 @@ msgstr "Búsqueda de amenazas y vulnerabilidades específicas de WordPress"
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "problema crítico detectado"
-msgstr[1] ""
+msgstr[1] "Problemas críticos detectados"
 
 #: inc/dashboard/blocks/vulnerability/render.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "advertencia encontrada"
-msgstr[1] ""
+msgstr[1] "advertencias encontradas"
 
 #: inc/dashboard/blocks/vulnerability/render.php
 msgid "Issues found"

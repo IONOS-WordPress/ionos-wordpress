@@ -102,7 +102,7 @@ to test the production build :
 
   This can be done locally by adding the environment to your `.env.local` file.
 
-  > `wp-env` must be restarted to be properly configured. You can ensure this by executing `pnpm destroy before`.
+  > `wp-env` must be restarted to be properly configured. You can ensure this by executing `pnpm destroy` before.
 
 - run the test command (excluding editor tests which are not available in the production build) : `pnpm run test`
 

@@ -126,7 +126,7 @@ class Manager
    */
   public static function prevent_my_jetpack_redirect($location)
   {
-    $query = wp_parse_url($location, PHP_URL_QUERY);
+    $query = wp_parse_url($location, PHP_URL_QUERY) ?? '';
     parse_str($query, $query_params);
 
     if (isset($query_params['page']) && 'my-jetpack' === $query_params['page']) {

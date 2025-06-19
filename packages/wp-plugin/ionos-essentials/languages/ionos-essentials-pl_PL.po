@@ -150,14 +150,14 @@ msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "znaleziony krytyczny problem"
 msgstr[1] "znalezione krytyczne problemy"
-msgstr[2] ""
+msgstr[2] "znalezione krytyczne problemy"
 
 #: inc/dashboard/blocks/vulnerability/render.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "znalezione ostrzeżenie"
 msgstr[1] "znalezione ostrzeżenia"
-msgstr[2] ""
+msgstr[2] "znalezione ostrzeżenia"
 
 #: inc/dashboard/blocks/vulnerability/render.php
 msgid "Issues found"
