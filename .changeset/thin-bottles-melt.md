@@ -2,4 +2,4 @@
 '@ionos-wordpress/essentials': patch
 ---
 
-migrate plugins into Essentials
+migrate Assistant Plugin into Essentials
