@@ -1,15 +1,19 @@
 # syntax=docker/dockerfile:1.4
 
-FROM debian:12-slim
+ARG PYTHON_VERSION
 
-# dennis version from .env
+FROM python:${PYTHON_VERSION}-alpine
+
 ARG DENNIS_VERSION
 
-RUN apt-get update && \
-  apt-get install  --no-install-suggests --no-install-recommends --yes pipx && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* && \
+RUN <<EOF
+  apk add --update \
+    pipx
+
+  rm -rf /var/cache/apk/*
+
   pipx install "dennis>=${DENNIS_VERSION}"
+EOF
 
 ENTRYPOINT ["/root/.local/bin/dennis-cmd"]
 
