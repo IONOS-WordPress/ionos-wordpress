@@ -21,9 +21,9 @@ RUN <<EOF
     php${PHP_VERSION//./}-intl \
     composer
 
-    rm -rf /var/cache/apk/*
+  rm -rf /var/cache/apk/*
 
-    composer global install
+  composer global install
 EOF
 
 COPY --chmod=755 <<EOF /usr/bin/entrypoint.sh
