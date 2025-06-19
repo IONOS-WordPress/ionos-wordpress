@@ -52,11 +52,13 @@ Both linting commands are implemented in `./scripts/lint.sh`.
 
 # commands
 
-## lint
-
 - start linting : `pnpm lint`
 
-- start linting + fixing : `pnpm lint --fix`
+  The various linting tools can also be called separately (for example `pnpm lint:css` or `pnpm lint-fix:css`). To see the whole list of lint targets call `pnpm run | grep lint`
+
+- start linting + fixing : `pnpm lint-fix`
+
+  > `pnpm lint-fix` will not fix missing translations in i18n files. To do so you have to explicitly execute `pnpm lint-fix:i18n`
 
 - `./scripts/lint.sh`
 
