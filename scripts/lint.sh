@@ -139,7 +139,7 @@ function ionos.wordpress.ecs() {
 # @FIXME: the image could made smaller using distroless base image
 # @FIXME: the docker call could be
 function ionos.wordpress.dennis() {
-  if [[ "$FIX" == 'yes' ]]; then
+  if [[ "$FIX" == 'yes' ]] && [[ "${USE[@]}" =~ i18n ]]; then
     # abort lint fix if DEEP_API_KEY is not set
     if [[ -z "${DEEPL_API_KEY}" ]]; then
       ionos.wordpress.log_warn "Skip auto translating po files using deepl - DEEPL_API_KEY environment variable is not set in './.secrets'"
@@ -396,7 +396,7 @@ if [[ "${USE[@]}" =~ all|pnpm ]]; then
   fi
 fi
 
-if [[ " ${USE[@]} " =~ all|i18n ]]; then
+if [[ "${USE[@]}" =~ all|i18n ]]; then
   if ionos.wordpress.dennis; then
     summaries["i18n"]="i18n $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
   else
@@ -456,6 +456,14 @@ Options:
               See './.secret.example' for an example file.
 
   Usage:
+    Lint all files matching all linters
+    'pnpm run lint'
+
+    Lint fix all files (except i18n)
+    'pnpm run lint-fix'
+
+    Lint fix i18n files
+    'pnpm run lint-fix:i18n'
 
     Lint all files matching prettier and i18n, skip php files etc.
     'pnpm run lint --use prettier --use i18n'
