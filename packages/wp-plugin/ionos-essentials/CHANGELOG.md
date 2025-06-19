@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.0.9
+
+### Patch Changes
+
+- b3f72ce: migrate Assistant Plugin into Essentials
+
 ## 1.0.8
 
 ### Patch Changes
