@@ -10,6 +10,8 @@ require_once __DIR__ . '/blocks/my-account/index.php';
 require_once __DIR__ . '/blocks/whats-new/index.php';
 require_once __DIR__ . '/blocks/quick-links/index.php';
 
+use const ionos\essentials\PLUGIN_DIR;
+
 // Fontface must be loaded before the template is rendered
 ?>
 <style>
@@ -51,8 +53,9 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 
 <script src="https://ce1.uicdn.net/exos/framework/3.0/exos.min.js" async="async" defer="defer"></script>
 <link rel="stylesheet" href="https://ce1.uicdn.net/exos/framework/3.0/exos.min.css" />
+<link rel="stylesheet" href="<?php echo plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR); ?>"/>
 
- <?php echo blocks\welcome\render_callback(); ?>
+<?php echo blocks\welcome\render_callback(); ?>
 
 <main id="content">
   <div class="page-section">
@@ -73,169 +76,5 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
   </div>
 </div>
 
-
-<style>
-  .button{
-    white-space: nowrap;
-    margin-bottom: 5px;
-  }
-
-  .grid-col:empty{
-    display: none !important;
-  }
-
-  .ionos_my_account_links{
-    display: flex;
-    flex-wrap: wrap;
-
-    .button{
-      flex: 0 0 31%;
-    }
-  }
-
-  #essentials-welcome_block{
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    background: rgba(255, 255, 255, 0.95);
-    border: 0;
-
-    .dialog__content{
-      display: flex;
-      justify-content: center;
-      margin-top: 10%;
-      height: 100%;
-    }
-
-    .horizontal-card{
-      width: 90%;
-      max-width: 800px;
-      height: 400px;
-      display: flex;
-      border: 2px solid black;
-    }
-  }
-
-
-  .ionos_next_best_actions{
-    background: white;
-    margin-bottom: 2em;
-    border-radius: 16px;
-    padding-top: 2em;
-    margin-left: 15px;
-
-    .card{
-      background: rgb(244, 247, 250);
-    }
-    & > *:nth-child(n+8) {
-      display: none;
-    }
-
-    .nba-card{
-      .card__section{
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: space-between;
-      }
-    }
-
-    .ionos_nba_dismissed{
-      transform: scale(0.7);
-      opacity: 0;
-      transition: all 0.75s ease-in-out;
-    }
-  }
-
-  .ionos_vulnerability{
-    background-color: #edfaef;
-
-    .ionos_vulnerability__content{
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background-image: url(<?php echo plugins_url('/ionos-security/assets/img/none.svg'); ?>);
-      background-repeat: no-repeat;
-      background-position: top right;
-      min-height: 150px;
-    }
-
-    .bubble{
-      background-color: #4ab866;
-      color: #000;
-      border-radius: 50%;
-      padding: 0.2em 0.5em;
-      font-size: 0.8em;
-      margin-right: 0.5em;
-    }
-
-    /* Respect the order of this definition, as high overwrites medium */
-    &.medium{
-      background-color: #fcf9e8;
-      .ionos_vulnerability__content{
-        background-image: url(<?php echo plugins_url('/ionos-security/assets/img/medium.svg'); ?>);
-      }
-    }
-    &.high{
-      background-color: #fcf0f1;
-      .ionos_vulnerability__content{
-        background-image: url(<?php echo plugins_url('/ionos-security/assets/img/high.svg'); ?>);
-      }
-    }
-
-    .issue-row.high .bubble{
-      background-color: #cc1818;
-      color: white;
-    }
-    .issue-row.medium .bubble{
-      background-color: #f0b849;
-    }
-  }
-
-  .ionos_quick_links_buttons{
-    a{
-      min-width: 32%;
-    }
-    a:nth-child(3n) {
-      margin-right: 0;
-    }
-  }
-  @media (max-width: 1500px) {
-    .ionos_quick_links_buttons{
-      a{
-        min-width: 47%;
-      }
-      a:nth-child(2n) {
-        margin-right: 0;
-      }
-      a:nth-child(3n) {
-        margin-right: 12px;
-      }
-    }
-  }
-    @media (max-width: 1100px) {
-    .ionos_quick_links_buttons{
-      a{
-        width: 100%;
-      }
-    }
-  }
-
-  .ionos_banner_buttons{
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  @media (max-width: 1024px) {
-    .ionos_banner_buttons{
-      flex-direction: column;
-      .button{
-        margin-right: 0;
-      }
-    }
-  }
-
-</style>
 </main>
 </template>
