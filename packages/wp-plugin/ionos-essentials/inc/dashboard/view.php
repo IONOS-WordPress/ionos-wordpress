@@ -48,17 +48,15 @@ use const ionos\essentials\PLUGIN_DIR;
 }
 </style>
 
-
 <template id="ionos_dashboard" shadowrootmode="open">
 
 <?php
 \wp_register_style(
   handle: 'ionos-essentials-dashboard',
-  src: plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR),
-  ver:  filemtime(PLUGIN_DIR . '/inc/dashboard/dashboard.css')
+  src: \plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR),
+  ver: filemtime(PLUGIN_DIR . '/inc/dashboard/dashboard.css')
 );
-\wp_print_styles(['ionos-essentials-dashboard']);
-\wp_deregister_style('ionos-essentials-dashboard');
+\wp_print_styles('ionos-essentials-dashboard');
 ?>
 
 <?php blocks\welcome\render_callback(); ?>
