@@ -70,7 +70,7 @@ function render_callback()
         ); ?></div>
 
       <div class="grid">
-        <?php echo \esc_html($card); ?>
+        <?php echo \wp_kses($cards, 'post'); ?>
       </div>
 
   <?php

@@ -40,13 +40,13 @@ function render_callback(): void
         <div class="grid grid--vertical-align-center">
           <div class="grid-col grid-col--6 grid-col--small-12">
             <img class=""
-            src="<?php echo \esc_attr($tenant_logo); ?>"
+            src="<?php echo esc_attr($tenant_logo); ?>"
             alt="<?php echo \esc_attr($tenant_name); ?> Logo"
             style="width: 150px; padding: 50px;"
           >
           </div>
           <div class="grid-col grid-col--6 grid-col--small-12 ionos_banner_buttons">
-            <?php echo \esc_html($buttons); ?>
+            <?php echo \wp_kses( $buttons, 'post'); ?>
           </div>
         </div>
       </section>
