@@ -13,9 +13,9 @@ test.describe('essentials:dashboard next-best-actions block', () => {
   test('test welcome banner', async ({ admin, page }) => {
     await admin.visitAdminPage('/');
 
-    let body = await page.locator('body');
+    const body = await page.locator('body');
 
-    let dialogBox = await body.locator('#essentials-welcome_block');
+    const dialogBox = await body.locator('#essentials-welcome_block');
     await expect(dialogBox).toHaveCount(1);
     await expect(dialogBox).toHaveAttribute('open');
 
@@ -26,9 +26,9 @@ test.describe('essentials:dashboard next-best-actions block', () => {
   test('test welcome is still closed', async ({ admin, page }) => {
     await admin.visitAdminPage('/');
 
-    let body = await page.locator('body');
+    const body = await page.locator('body');
 
-    let dialogBox = await body.locator('#essentials-welcome_block');
+    const dialogBox = await body.locator('#essentials-welcome_block');
     await expect(dialogBox).toHaveCount(0);
   });
 });
