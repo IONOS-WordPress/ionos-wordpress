@@ -16,6 +16,32 @@ document.addEventListener("DOMContentLoaded", function() {
       })
   });
 
+  // Tabs
+  const tabButtons = dashboard.querySelectorAll('[data-tab]');
+  tabButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      const activeTabs = dashboard.querySelectorAll('.ionos-tab.active, [data-tab].active');
+      activeTabs.forEach((tab) => {
+        tab.classList.remove('active');
+      });
+
+      event.target.classList.add('active');
+
+      const targetTab = event.target.getAttribute('data-tab');
+      dashboard.querySelector(`#${targetTab}`).classList.add('active');
+      window.location.hash = targetTab;
+    });
+  });
+  const anchorId = window.location.hash.substring(1);
+  if( anchorId ) {
+    dashboard.querySelector(`[data-tab="${anchorId}"]`)?.click();
+  }else{
+     dashboard.querySelector('[data-tab]')?.click();
+  }
+
+
   // NBA
   dashboard.querySelectorAll('.ionos-dismiss-nba').forEach((el) => {
     el.addEventListener('click', async (click) => {

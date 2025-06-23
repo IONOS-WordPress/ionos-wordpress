@@ -9,6 +9,31 @@
   display: none !important;
 }
 
+.ionos-tab{
+  display: none;
+
+  &.active{
+    display: block;
+  }
+}
+
+button[data-tab]{
+  white-space: nowrap;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 2px solid  transparent;
+
+  &:hover{
+    background-color: unset !important ;
+    color: var(--primary-button-border-color,#0b2a63);
+    border-bottom-color: var(--primary-button-border-color,#0b2a63);
+
+  }
+  &.active{
+    border-color: var(--ghost-button-text-color,#1474c4);
+  }
+}
+
 .ionos_my_account_links{
   display: flex;
   flex-wrap: wrap;
@@ -40,7 +65,6 @@
     border: 2px solid black;
   }
 }
-
 
 .ionos_next_best_actions{
   background: white;
