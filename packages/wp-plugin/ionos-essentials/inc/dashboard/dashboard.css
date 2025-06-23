@@ -117,6 +117,11 @@
 }
 
 .ionos_quick_links_buttons{
+  container-type: inline-size !important;
+  container: ionos_quick_links_buttons;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
   a{
     min-width: 32%;
   }
@@ -124,7 +129,7 @@
     margin-right: 0;
   }
 }
-@media (max-width: 1500px) {
+@container ionos_quick_links_buttons (max-width: 800px) {
   .ionos_quick_links_buttons{
     a{
       min-width: 47%;
@@ -137,10 +142,11 @@
     }
   }
 }
-  @media (max-width: 1100px) {
+@container ionos_quick_links_buttons (max-width: 500px) {
   .ionos_quick_links_buttons{
     a{
       width: 100%;
+      margin-right: 0 !important;
     }
   }
 }
