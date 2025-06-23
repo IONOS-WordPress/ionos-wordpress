@@ -51,9 +51,20 @@ use const ionos\essentials\PLUGIN_DIR;
 
 <template id="ionos_dashboard" shadowrootmode="open">
 
-<script src="https://ce1.uicdn.net/exos/framework/3.0/exos.min.js" async="async" defer="defer"></script>
-<link rel="stylesheet" href="https://ce1.uicdn.net/exos/framework/3.0/exos.min.css" />
-<link rel="stylesheet" href="<?php echo \esc_attr(\plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR)); ?>"/>
+<?php
+wp_register_style(
+  'ionos-essentials-dashboard',
+  plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR)
+);
+wp_enqueue_style('ionos-essentials-dashboard');
+wp_print_styles('ionos-essentials-dashboard');
+wp_deregister_style('ionos-essentials-dashboard');
+
+wp_register_style('ionos-exos', 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.css');
+wp_enqueue_style('ionos-exos');
+wp_print_styles('ionos-exos');
+wp_deregister_style('ionos-exos');
+?>
 
 <?php echo \esc_html(blocks\welcome\render_callback()); ?>
 

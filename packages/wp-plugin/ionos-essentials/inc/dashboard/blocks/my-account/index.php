@@ -85,7 +85,7 @@ function render_callback()
           'ionos-essentials'
         ); ?></p>
       <div class="ionos_my_account_links">
-        <?php echo \wp_kses( $links, 'post'); ; ?>
+        <?php echo \wp_kses($links, 'post'); ?>
       </div>
       </section>
 

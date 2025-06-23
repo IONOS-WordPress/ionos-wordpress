@@ -46,7 +46,7 @@ function render_callback(): void
           >
           </div>
           <div class="grid-col grid-col--6 grid-col--small-12 ionos_banner_buttons">
-            <?php echo \wp_kses( $buttons, 'post'); ?>
+            <?php echo \wp_kses($buttons, 'post'); ?>
           </div>
         </div>
       </section>
