@@ -2,16 +2,16 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Essentials 1.0.5\n"
+"Project-Id-Version: Essentials 1.0.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-05T08:37:18+00:00\n"
+"POT-Creation-Date: 2025-06-16T07:48:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ionos-essentials\n"
 
 #. Plugin Name of the plugin
@@ -55,19 +55,19 @@ msgstr ""
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr ""
 
-#: inc/dashboard/blocks/my-account/index.php
-msgid "Webmail Login"
-msgstr ""
-
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "Account Management"
 msgstr ""
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr ""
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/blocks/deep-links/index.php
+msgid "Webmail Login"
+msgstr ""
+
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "Manage Hosting"
 msgstr ""
 
@@ -192,15 +192,20 @@ msgid "Add a favicon (website icon) to your website to enhance brand recognition
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/index.php
-msgid "Dismiss"
-msgstr ""
-
-#: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Unlock Your Website's Potential"
 msgstr ""
 
 #: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/index.php
+msgid "Dismiss"
+msgstr ""
+
+#: inc/dashboard/blocks/next-best-actions/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
+msgid "Installing..."
 msgstr ""
 
 #: inc/dashboard/blocks/quick-links/config.php
@@ -235,49 +240,63 @@ msgstr ""
 msgid "Upload Media files"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/index.php
+#: inc/dashboard/blocks/quick-links/render.php
 msgid "Quick Links"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/index.php
+#: inc/dashboard/blocks/quick-links/render.php
 msgid "Easily navigate to frequently used features and tools."
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Issues found"
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
-msgid "Show full scan report"
-msgstr ""
-
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Last scan"
 msgstr ""
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
+#, php-format
 msgid "%s ago"
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/render.php
+msgid "Show full scan report"
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/render.php
+msgid "The required Security plugin is missing."
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/render.php
+msgid "Install Security plugin"
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/render.php
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
 msgstr ""
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php
+#, php-format
 msgid "Welcome to your %s Hub"
 msgstr ""
 
@@ -330,12 +349,53 @@ msgid "Overview"
 msgstr ""
 
 #: inc/dashboard/index.php
-msgid "Installing..."
+msgid "Brand Logo"
 msgstr ""
 
 #. translators: s=link to control panel
 #: inc/descriptify/index.php
+#, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
+msgstr ""
+
+#: inc/jetpack-flow/inc/class-manager.php
+msgid "Assistant"
+msgstr ""
+
+#: inc/jetpack-flow/inc/controllers/class-confirm.php
+msgid "Confirm Jetpack installation"
+msgstr ""
+
+#: inc/jetpack-flow/inc/controllers/class-install.php
+msgid "Installing Jetpack"
+msgstr ""
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "Jetpack Backup"
+msgstr ""
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "We are going to install Jetpack Backup now."
+msgstr ""
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "Ok"
+msgstr ""
+
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "No thanks"
+msgstr ""
+
+#: inc/jetpack-flow/inc/views/install.php
+msgid "Installing Jetpack Backup"
+msgstr ""
+
+#: inc/jetpack-flow/inc/views/install.php
+msgid "Please wait a moment while we are installing Jetpack Backup for you."
+msgstr ""
+
+#: inc/switch-page/index.php
+msgid "Onboarding"
 msgstr ""
 
 #: inc/switch-page/view.php
@@ -368,6 +428,7 @@ msgstr ""
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: inc/switch-page/view.php
+#, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr ""
 

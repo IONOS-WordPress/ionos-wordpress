@@ -93,9 +93,29 @@ msgstr "Ditt avtal"
 msgid "Current offers"
 msgstr "Aktuella erbjudanden"
 
-#: inc/dashboard/blocks/quick-links/index.php
+#: inc/dashboard/blocks/quick-links/render.php
 msgid "Quick Links"
 msgstr "Snabblänkar"
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block title"
+msgid "Deep Links"
+msgstr "Djupa länkar"
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block description"
+msgid "Show links to the Control Panel of your provider."
+msgstr "Visa länkar till kontrollpanelen hos din leverantör."
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block title"
+msgid "Quick Links"
+msgstr "Snabblänkar"
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block description"
+msgid "Show links to common tasks in the WordPress backend."
+msgstr "Visa länkar till vanliga uppgifter i WordPress backend."
 
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block title"
@@ -107,33 +127,37 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Visa wp-skanningsdata."
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/index.php
+msgid "Brand Logo"
+msgstr "Brand Logo"
+
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Show full scan report"
 msgstr "Visa fullständig skanningsrapport"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Last scan"
 msgstr "Senaste felsökning"
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 #, php-format
 msgid "%s ago"
 msgstr "för %s sedan"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiskt fel hittades"
 msgstr[1] "kritiska fel hittades"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "varning hittad"
 msgstr[1] "varningar hittade"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Issues found"
 msgstr "fel hittade"
 
@@ -155,19 +179,29 @@ msgstr "Visa webbplats"
 msgid "Start AI Sitebuilder"
 msgstr "Starta AI-hemsidegenerator"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "Manage Hosting"
 msgstr "Hantera webbhotell"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block title"
+msgid "Banner"
+msgstr "Banner"
+
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block description"
+msgid "Banner"
+msgstr "Banner"
+
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "Account Management"
 msgstr "Kontohantering"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Snabb åtkomst till ditt kundkonto, inloggningssäkerhet och prenumerationer."
 
-#: inc/dashboard/blocks/quick-links/index.php
+#: inc/dashboard/blocks/quick-links/render.php
 msgid "Easily navigate to frequently used features and tools."
 msgstr "Navigera enkelt till frekvent använda funktioner och verktyg."
 
@@ -313,6 +347,26 @@ msgstr "Omfattande hjälpsektion – med AI-chatt, guidade turer och en gedigen 
 msgid "Close"
 msgstr "Stäng"
 
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block title"
+msgid "Welcome"
+msgstr "Välkommen"
+
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block description"
+msgid "Welcome"
+msgstr "Välkommen"
+
+#: build/dashboard/blocks/whats-new/block.json
+msgctxt "block title"
+msgid "What's New"
+msgstr "Vad är nytt"
+
+#: build/dashboard/blocks/whats-new/block.json
+msgctxt "block description"
+msgid "What's New"
+msgstr "Vad är nytt"
+
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "What’s New"
 msgstr "Nyheter"
@@ -349,7 +403,7 @@ msgstr "Redigera sidfot"
 msgid "Dismiss"
 msgstr "Avvisa"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Skanna efter WordPress-specifika hot och sårbarheter"
 
@@ -393,7 +447,7 @@ msgstr "Domäner och SSL-hantering"
 msgid "Add more products"
 msgstr "Lägg till fler produkter"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "Webmail Login"
 msgstr "Webmail-inloggning"
 
@@ -437,9 +491,22 @@ msgstr "Konfigurera e-postkonto"
 msgid "My Account"
 msgstr "Mitt konto"
 
-#: inc/dashboard/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
+msgid "The required Security plugin is missing."
+msgstr "Det nödvändiga säkerhetspluginet saknas."
+
+#: inc/dashboard/blocks/vulnerability/render.php
+msgid "Install Security plugin"
+msgstr "Installera plugin för säkerhet"
+
+#: inc/dashboard/blocks/next-best-actions/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Installing..."
 msgstr "Installera..."
+
+#: inc/dashboard/blocks/vulnerability/render.php
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgstr "Sårbarhetsskanning inte möjlig. Vänligen kontakta kundtjänst."
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php
@@ -502,55 +569,46 @@ msgstr "Du bestämmer själv hur du vill skapa din webbplats. Oroa dig inte, du 
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: inc/switch-page/view.php
+#, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr "Genom att använda AI-funktioner godkänner du OpenAI %1$sTerms of Use%2$s och %3$sPrivacy Policy%4$s"
 
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block title"
-msgid "Banner"
-msgstr ""
+#: inc/jetpack-flow/inc/class-manager.php
+msgid "Assistant"
+msgstr "Assistant"
 
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block description"
-msgid "Banner"
-msgstr ""
+#: inc/jetpack-flow/inc/controllers/class-confirm.php
+msgid "Confirm Jetpack installation"
+msgstr "Bekräfta installationen av Jetpack"
 
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block title"
-msgid "Deep Links"
-msgstr ""
+#: inc/jetpack-flow/inc/controllers/class-install.php
+msgid "Installing Jetpack"
+msgstr "Installerar Jetpack"
 
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block description"
-msgid "Show links to the Control Panel of your provider."
-msgstr ""
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "Jetpack Backup"
+msgstr "Jetpack-Backup"
 
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block title"
-msgid "Quick Links"
-msgstr ""
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "We are going to install Jetpack Backup now."
+msgstr "Nu kommer vi att installera Jetpack Backup."
 
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block description"
-msgid "Show links to common tasks in the WordPress backend."
-msgstr ""
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "Ok"
+msgstr "Ok"
 
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block title"
-msgid "Welcome"
-msgstr ""
+#: inc/jetpack-flow/inc/views/install.php
+msgid "Installing Jetpack Backup"
+msgstr "Installerar Jetpack Backup"
 
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block description"
-msgid "Welcome"
-msgstr ""
+#: inc/jetpack-flow/inc/views/install.php
+msgid "Please wait a moment while we are installing Jetpack Backup for you."
+msgstr "Vänta lite medan vi installerar Jetpack Backup åt dig."
 
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block title"
-msgid "What's New"
-msgstr ""
+#: inc/switch-page/index.php
+msgid "Onboarding"
+msgstr "Onboarding"
 
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block description"
-msgid "What's New"
-msgstr ""
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "No thanks"
+msgstr "Nej tack"

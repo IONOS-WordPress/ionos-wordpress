@@ -93,9 +93,29 @@ msgstr "Twoja umowa"
 msgid "Current offers"
 msgstr "Aktualne oferty"
 
-#: inc/dashboard/blocks/quick-links/index.php
+#: inc/dashboard/blocks/quick-links/render.php
 msgid "Quick Links"
 msgstr "Szybkie łącza"
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block title"
+msgid "Deep Links"
+msgstr "Głębokie linki"
+
+#: build/dashboard/blocks/deep-links/block.json
+msgctxt "block description"
+msgid "Show links to the Control Panel of your provider."
+msgstr "Wyświetla łącza do Panelu sterowania dostawcy."
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block title"
+msgid "Quick Links"
+msgstr "Szybkie łącza"
+
+#: build/dashboard/blocks/quick-links/block.json
+msgctxt "block description"
+msgid "Show links to common tasks in the WordPress backend."
+msgstr "Wyświetlanie linków do typowych zadań w zapleczu WordPress."
 
 #: build/dashboard/blocks/vulnerability/block.json
 msgctxt "block title"
@@ -107,35 +127,39 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Pokaż dane skanowania wp."
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/index.php
+msgid "Brand Logo"
+msgstr "Logo marki"
+
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Show full scan report"
 msgstr "Pokaż pełny raport skanowania"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Last scan"
 msgstr "Ostatnie skanowanie"
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 #, php-format
 msgid "%s ago"
 msgstr "%s temu"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "znaleziony krytyczny problem"
 msgstr[1] "znalezione krytyczne problemy"
-msgstr[2] ""
+msgstr[2] "znalezione krytyczne problemy"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "znalezione ostrzeżenie"
 msgstr[1] "znalezione ostrzeżenia"
-msgstr[2] ""
+msgstr[2] "znalezione ostrzeżenia"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Issues found"
 msgstr "znalezione problemy"
 
@@ -157,19 +181,29 @@ msgstr "Wyświetl stronę"
 msgid "Start AI Sitebuilder"
 msgstr "Uruchom AI Sitebuilder"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "Manage Hosting"
 msgstr "Zarządzanie hostingiem"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block title"
+msgid "Banner"
+msgstr "Baner"
+
+#: build/dashboard/blocks/banner/block.json
+msgctxt "block description"
+msgid "Banner"
+msgstr "Baner"
+
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "Account Management"
 msgstr "Zarządzanie kontem"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Dostęp do konta klienta, zabezpieczeń logowania i subskrypcji jednym kliknięciem."
 
-#: inc/dashboard/blocks/quick-links/index.php
+#: inc/dashboard/blocks/quick-links/render.php
 msgid "Easily navigate to frequently used features and tools."
 msgstr "Łatwa nawigacja do często używanych funkcji i narzędzi."
 
@@ -315,6 +349,26 @@ msgstr "Kompleksowa sekcja pomocy, w tym: Wsparcie czatu AI, Wycieczki z przewod
 msgid "Close"
 msgstr "Zamknij"
 
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block title"
+msgid "Welcome"
+msgstr "Witamy"
+
+#: build/dashboard/blocks/welcome/block.json
+msgctxt "block description"
+msgid "Welcome"
+msgstr "Witamy"
+
+#: build/dashboard/blocks/whats-new/block.json
+msgctxt "block title"
+msgid "What's New"
+msgstr "Co nowego"
+
+#: build/dashboard/blocks/whats-new/block.json
+msgctxt "block description"
+msgid "What's New"
+msgstr "Co nowego"
+
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "What’s New"
 msgstr "Co nowego"
@@ -351,7 +405,7 @@ msgstr "Edytuj stopkę"
 msgid "Dismiss"
 msgstr "Odrzucić"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Skanowanie w poszukiwaniu zagrożeń i luk w zabezpieczeniach WordPress"
 
@@ -395,7 +449,7 @@ msgstr "Zarządzanie domenami i SSL"
 msgid "Add more products"
 msgstr "Dodaj więcej produktów"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/blocks/deep-links/index.php
 msgid "Webmail Login"
 msgstr "Logowanie do poczty internetowej"
 
@@ -439,9 +493,22 @@ msgstr "Konfiguracja konta e-mail"
 msgid "My Account"
 msgstr "Moje konto"
 
-#: inc/dashboard/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
+msgid "The required Security plugin is missing."
+msgstr "Brakuje wymaganej wtyczki Security."
+
+#: inc/dashboard/blocks/vulnerability/render.php
+msgid "Install Security plugin"
+msgstr "Zainstaluj wtyczkę Security"
+
+#: inc/dashboard/blocks/next-best-actions/index.php
+#: inc/dashboard/blocks/vulnerability/render.php
 msgid "Installing..."
 msgstr "Instalacja..."
+
+#: inc/dashboard/blocks/vulnerability/render.php
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgstr "Skanowanie podatności nie jest możliwe. Prosimy o kontakt z działem obsługi klienta."
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php
@@ -504,55 +571,46 @@ msgstr "Ty decydujesz, jak utworzyć swoją witrynę. Nie martw się, możesz r�
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: inc/switch-page/view.php
+#, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr "Korzystając z funkcji AI, użytkownik akceptuje %1$Warunki użytkowania%2$ i %3$Politykę prywatności%4$ OpenAI."
 
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block title"
-msgid "Banner"
-msgstr ""
+#: inc/jetpack-flow/inc/class-manager.php
+msgid "Assistant"
+msgstr "Assistant"
 
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block description"
-msgid "Banner"
-msgstr ""
+#: inc/jetpack-flow/inc/controllers/class-confirm.php
+msgid "Confirm Jetpack installation"
+msgstr "Potwierdź instalację Jetpack"
 
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block title"
-msgid "Deep Links"
-msgstr ""
+#: inc/jetpack-flow/inc/controllers/class-install.php
+msgid "Installing Jetpack"
+msgstr "Instalacja Jetpack"
 
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block description"
-msgid "Show links to the Control Panel of your provider."
-msgstr ""
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "Jetpack Backup"
+msgstr "Jetpack Backup"
 
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block title"
-msgid "Quick Links"
-msgstr ""
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "We are going to install Jetpack Backup now."
+msgstr "Teraz zainstalujemy Jetpack Backup"
 
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block description"
-msgid "Show links to common tasks in the WordPress backend."
-msgstr ""
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "Ok"
+msgstr "Ok"
 
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block title"
-msgid "Welcome"
-msgstr ""
+#: inc/jetpack-flow/inc/views/install.php
+msgid "Installing Jetpack Backup"
+msgstr "Instalacja Jetpack Backup"
 
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block description"
-msgid "Welcome"
-msgstr ""
+#: inc/jetpack-flow/inc/views/install.php
+msgid "Please wait a moment while we are installing Jetpack Backup for you."
+msgstr "Trwa instalacja Jetpack Backup"
 
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block title"
-msgid "What's New"
-msgstr ""
+#: inc/switch-page/index.php
+msgid "Onboarding"
+msgstr "Onboarding"
 
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block description"
-msgid "What's New"
-msgstr ""
+#: inc/jetpack-flow/inc/views/confirm.php
+msgid "No thanks"
+msgstr "Nie, dziękuję"

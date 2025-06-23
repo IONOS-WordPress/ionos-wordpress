@@ -1,5 +1,30 @@
 # @ionos-wordpress/essentials
 
+## 1.0.9
+
+### Patch Changes
+
+- b3f72ce: migrate Assistant Plugin into Essentials
+
+## 1.0.8
+
+### Patch Changes
+
+- a2c9f3d: add new migration step
+
+## 1.0.7
+
+### Patch Changes
+
+- 0e4939c: updated localisation
+
+## 1.0.6
+
+### Patch Changes
+
+- e5e3d79: Add translations for switch page
+- 83023d7: jetpack migration
+
 ## 1.0.5
 
 ### Patch Changes
