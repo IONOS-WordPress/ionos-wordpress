@@ -13,13 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
           "X-WP-Nonce": wpData.nonce
         },
         credentials: "include",
-      }).then(response => {
-          if (!response.ok) {
-            console.error("Failed to update user meta");
-          }
-      }).catch(error => {
-          console.error("Error:", error);
-      });
+      })
   });
 
   // NBA
@@ -55,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function() {
       credentials: "include",
    }).then(response => {
       if (!response.ok) {
-        console.error(response);
         return;
       }
 
@@ -68,8 +61,6 @@ document.addEventListener("DOMContentLoaded", function() {
           dashboard.querySelector('.ionos_next_best_actions').remove();
         }
     }, 800);
-    }).catch(error => {
-        console.error("Error:", error);
     });
   };
 
@@ -90,11 +81,8 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(data => {
       if (data.status === "success") {
         location.reload();
-      } else {
-        console.error("Failed to install the GML plugin.");
       }
     })
-    .catch(error => console.error("Error:", error));
   });
 
 });
