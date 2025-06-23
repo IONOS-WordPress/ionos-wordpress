@@ -12,9 +12,9 @@ test.describe('essentials:dashboard next-best-actions block', () => {
 
   test('test dismissing an option ', async ({ admin, page }) => {
     await admin.visitAdminPage('/');
-    const body = page.locator('body');
+    let body = page.locator('body');
 
-    const dismissAnchor = body.locator('.ionos-dismiss-nba[data-nba-id="create-page"]');
+    let dismissAnchor = body.locator('.ionos-dismiss-nba[data-nba-id="create-page"]');
     await expect(dismissAnchor).toHaveCount(1);
     await dismissAnchor.click();
 
