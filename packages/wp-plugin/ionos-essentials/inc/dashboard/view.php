@@ -52,16 +52,13 @@ use const ionos\essentials\PLUGIN_DIR;
 <template id="ionos_dashboard" shadowrootmode="open">
 
 <?php
-wp_register_style(
-  'ionos-essentials-dashboard',
-  plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR)
+\wp_register_style(
+  handle: 'ionos-essentials-dashboard',
+  src: plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR),
+  ver:  filemtime(PLUGIN_DIR . '/inc/dashboard/dashboard.css')
 );
-wp_register_style('ionos-exos', 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.css');
-
-wp_print_styles(['ionos-exos', 'ionos-essentials-dashboard']);
-
-wp_deregister_style('ionos-exos');
-wp_deregister_style('ionos-essentials-dashboard');
+\wp_print_styles(['ionos-essentials-dashboard']);
+\wp_deregister_style('ionos-essentials-dashboard');
 ?>
 
 <?php blocks\welcome\render_callback(); ?>
