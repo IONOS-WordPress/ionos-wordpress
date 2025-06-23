@@ -85,7 +85,7 @@ function render_callback()
           'ionos-essentials'
         ); ?></p>
       <div class="ionos_my_account_links">
-        <?php echo $links; ?>
+        <?php echo \esc_html($links); ?>
       </div>
       </section>
 

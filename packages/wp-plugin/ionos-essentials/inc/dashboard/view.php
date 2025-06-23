@@ -53,9 +53,9 @@ use const ionos\essentials\PLUGIN_DIR;
 
 <script src="https://ce1.uicdn.net/exos/framework/3.0/exos.min.js" async="async" defer="defer"></script>
 <link rel="stylesheet" href="https://ce1.uicdn.net/exos/framework/3.0/exos.min.css" />
-<link rel="stylesheet" href="<?php echo plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR); ?>"/>
+<link rel="stylesheet" href="<?php echo \esc_attr(\plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR)); ?>"/>
 
-<?php echo blocks\welcome\render_callback(); ?>
+<?php echo \esc_html(blocks\welcome\render_callback()); ?>
 
 <main id="content">
   <div class="page-section">

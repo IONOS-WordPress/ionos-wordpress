@@ -70,7 +70,7 @@ function render_callback()
         ); ?></div>
 
       <div class="grid">
-        <?php echo $cards; ?>
+        <?php echo \esc_html($card); ?>
       </div>
 
   <?php
