@@ -84,7 +84,7 @@ function render_callback()
           'One-click access to your customer account, login security and subscriptions.',
           'ionos-essentials'
         ); ?></p>
-      <div class="ionos_my_account_links">
+      <div class="ionos_my_account_links ionos_buttons_same_width">
         <?php echo \wp_kses($links, 'post'); ?>
       </div>
       </section>
