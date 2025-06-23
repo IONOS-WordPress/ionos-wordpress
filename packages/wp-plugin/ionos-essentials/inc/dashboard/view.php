@@ -193,6 +193,35 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     }
   }
 
+  .ionos_quick_links_buttons{
+    a{
+      min-width: 32%;
+    }
+    a:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+  @media (max-width: 1500px) {
+    .ionos_quick_links_buttons{
+      a{
+        min-width: 47%;
+      }
+      a:nth-child(2n) {
+        margin-right: 0;
+      }
+      a:nth-child(3n) {
+        margin-right: 12px;
+      }
+    }
+  }
+    @media (max-width: 1100px) {
+    .ionos_quick_links_buttons{
+      a{
+        width: 100%;
+      }
+    }
+  }
+
   .ionos_banner_buttons{
     display: flex;
     justify-content: flex-end;
@@ -206,6 +235,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
       }
     }
   }
+
 </style>
 </main>
 </template>

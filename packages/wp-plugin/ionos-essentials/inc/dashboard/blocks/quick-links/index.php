@@ -14,7 +14,7 @@ function render_callback()
   <div class="card__content">
     <section class="card__section">
       <h2 class="card__headline"><?php echo \esc_html__('Quick Links', 'ionos-essentials'); ?></h2>
-      <div class="">
+      <div class="ionos_quick_links_buttons">
         <?php
               foreach ($links as $link) {
                 printf(
