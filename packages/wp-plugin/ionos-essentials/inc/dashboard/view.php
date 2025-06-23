@@ -66,7 +66,7 @@ wp_print_styles('ionos-exos');
 wp_deregister_style('ionos-exos');
 ?>
 
-<?php echo \esc_html(blocks\welcome\render_callback()); ?>
+<?php blocks\welcome\render_callback(); ?>
 
 <main id="content">
   <div class="page-section">
