@@ -66,8 +66,8 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
       but empty cells should not be displayed (see)
     -->
     <div class="grid-col grid-col--12 ionos_next_best_actions"><?php blocks\next_best_actions\render_callback(); ?></div>
-    <div class="grid-col grid-col--6 grid-col--small-12"><?php blocks\vulnerability\render_callback(); ?></div>
-    <div class="grid-col grid-col--6 grid-col--small-12"><?php blocks\quick_links\render_callback(); ?></div>
+    <div class="grid-col grid-col--4 grid-col--small-12"><?php blocks\vulnerability\render_callback(); ?></div>
+    <div class="grid-col grid-col--8 grid-col--small-12"><?php blocks\quick_links\render_callback(); ?></div>
     <div class="grid-col grid-col--5 grid-col--medium-6 grid-col--small-12"><?php blocks\my_account\render_callback(); ?></div>
     <div class="grid-col grid-col--7 grid-col--medium-6 grid-col--small-12"><?php blocks\whatsnew\render_callback(); ?></div>
   </div>
@@ -132,13 +132,6 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     }
 
     .nba-card{
-
-      &:hover{
-        transform: scale(1.02);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        transition: all 0.2s ease-in-out;
-      }
-
       .card__section{
         height: 100%;
         display: flex;
@@ -200,7 +193,19 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
     }
   }
 
+  .ionos_banner_buttons{
+    display: flex;
+    justify-content: flex-end;
+  }
 
+  @media (max-width: 1024px) {
+    .ionos_banner_buttons{
+      flex-direction: column;
+      .button{
+        margin-right: 0;
+      }
+    }
+  }
 </style>
 </main>
 </template>

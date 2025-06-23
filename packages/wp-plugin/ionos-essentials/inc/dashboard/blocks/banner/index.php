@@ -37,16 +37,15 @@ function render_callback(): void
 <div class="card">
     <div class="card__content">
       <section class="card__section">
-        <div class="grid grid--large-vertical-align-center">
+        <div class="grid grid--vertical-align-center">
           <div class="grid-col grid-col--6 grid-col--small-12">
             <img class=""
             src="<?php echo $tenant_logo; ?>"
             alt="<?php echo $tenant_name; ?> Logo"
             style="width: 150px; padding: 50px;"
           >
-
           </div>
-          <div class="grid-col grid-col--6 grid-col--small-12" style="text-align: right;">
+          <div class="grid-col grid-col--6 grid-col--small-12 ionos_banner_buttons">
             <?php echo $buttons; ?>
           </div>
         </div>
