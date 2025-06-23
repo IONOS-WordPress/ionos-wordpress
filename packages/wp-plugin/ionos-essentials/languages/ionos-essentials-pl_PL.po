@@ -93,7 +93,7 @@ msgstr "Twoja umowa"
 msgid "Current offers"
 msgstr "Aktualne oferty"
 
-#: inc/dashboard/blocks/quick-links/render.php
+#: inc/dashboard/blocks/quick-links/index.php
 msgid "Quick Links"
 msgstr "Szybkie łącza"
 
@@ -127,39 +127,35 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Pokaż dane skanowania wp."
 
-#: inc/dashboard/index.php
-msgid "Brand Logo"
-msgstr "Logo marki"
-
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Show full scan report"
 msgstr "Pokaż pełny raport skanowania"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Last scan"
 msgstr "Ostatnie skanowanie"
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 #, php-format
 msgid "%s ago"
 msgstr "%s temu"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "znaleziony krytyczny problem"
 msgstr[1] "znalezione krytyczne problemy"
 msgstr[2] "znalezione krytyczne problemy"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "znalezione ostrzeżenie"
 msgstr[1] "znalezione ostrzeżenia"
 msgstr[2] "znalezione ostrzeżenia"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Issues found"
 msgstr "znalezione problemy"
 
@@ -181,7 +177,7 @@ msgstr "Wyświetl stronę"
 msgid "Start AI Sitebuilder"
 msgstr "Uruchom AI Sitebuilder"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Manage Hosting"
 msgstr "Zarządzanie hostingiem"
 
@@ -195,17 +191,13 @@ msgctxt "block description"
 msgid "Banner"
 msgstr "Baner"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Account Management"
 msgstr "Zarządzanie kontem"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Dostęp do konta klienta, zabezpieczeń logowania i subskrypcji jednym kliknięciem."
-
-#: inc/dashboard/blocks/quick-links/render.php
-msgid "Easily navigate to frequently used features and tools."
-msgstr "Łatwa nawigacja do często używanych funkcji i narzędzi."
 
 #: inc/dashboard/index.php
 msgid "Overview"
@@ -405,7 +397,7 @@ msgstr "Edytuj stopkę"
 msgid "Dismiss"
 msgstr "Odrzucić"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Skanowanie w poszukiwaniu zagrożeń i luk w zabezpieczeniach WordPress"
 
@@ -449,7 +441,7 @@ msgstr "Zarządzanie domenami i SSL"
 msgid "Add more products"
 msgstr "Dodaj więcej produktów"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Webmail Login"
 msgstr "Logowanie do poczty internetowej"
 
@@ -493,22 +485,9 @@ msgstr "Konfiguracja konta e-mail"
 msgid "My Account"
 msgstr "Moje konto"
 
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "The required Security plugin is missing."
-msgstr "Brakuje wymaganej wtyczki Security."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Install Security plugin"
-msgstr "Zainstaluj wtyczkę Security"
-
-#: inc/dashboard/blocks/next-best-actions/index.php
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/index.php
 msgid "Installing..."
 msgstr "Instalacja..."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
-msgstr "Skanowanie podatności nie jest możliwe. Prosimy o kontakt z działem obsługi klienta."
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php

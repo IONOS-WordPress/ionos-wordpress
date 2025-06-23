@@ -93,7 +93,7 @@ msgstr "Ditt avtal"
 msgid "Current offers"
 msgstr "Aktuella erbjudanden"
 
-#: inc/dashboard/blocks/quick-links/render.php
+#: inc/dashboard/blocks/quick-links/index.php
 msgid "Quick Links"
 msgstr "Snabblänkar"
 
@@ -127,37 +127,33 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Visa wp-skanningsdata."
 
-#: inc/dashboard/index.php
-msgid "Brand Logo"
-msgstr "Brand Logo"
-
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Show full scan report"
 msgstr "Visa fullständig skanningsrapport"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Last scan"
 msgstr "Senaste felsökning"
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 #, php-format
 msgid "%s ago"
 msgstr "för %s sedan"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiskt fel hittades"
 msgstr[1] "kritiska fel hittades"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "varning hittad"
 msgstr[1] "varningar hittade"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Issues found"
 msgstr "fel hittade"
 
@@ -179,7 +175,7 @@ msgstr "Visa webbplats"
 msgid "Start AI Sitebuilder"
 msgstr "Starta AI-hemsidegenerator"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Manage Hosting"
 msgstr "Hantera webbhotell"
 
@@ -193,17 +189,13 @@ msgctxt "block description"
 msgid "Banner"
 msgstr "Banner"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Account Management"
 msgstr "Kontohantering"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Snabb åtkomst till ditt kundkonto, inloggningssäkerhet och prenumerationer."
-
-#: inc/dashboard/blocks/quick-links/render.php
-msgid "Easily navigate to frequently used features and tools."
-msgstr "Navigera enkelt till frekvent använda funktioner och verktyg."
 
 #: inc/dashboard/index.php
 msgid "Overview"
@@ -403,7 +395,7 @@ msgstr "Redigera sidfot"
 msgid "Dismiss"
 msgstr "Avvisa"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Skanna efter WordPress-specifika hot och sårbarheter"
 
@@ -447,7 +439,7 @@ msgstr "Domäner och SSL-hantering"
 msgid "Add more products"
 msgstr "Lägg till fler produkter"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Webmail Login"
 msgstr "Webmail-inloggning"
 
@@ -491,22 +483,9 @@ msgstr "Konfigurera e-postkonto"
 msgid "My Account"
 msgstr "Mitt konto"
 
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "The required Security plugin is missing."
-msgstr "Det nödvändiga säkerhetspluginet saknas."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Install Security plugin"
-msgstr "Installera plugin för säkerhet"
-
-#: inc/dashboard/blocks/next-best-actions/index.php
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/index.php
 msgid "Installing..."
 msgstr "Installera..."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
-msgstr "Sårbarhetsskanning inte möjlig. Vänligen kontakta kundtjänst."
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php
