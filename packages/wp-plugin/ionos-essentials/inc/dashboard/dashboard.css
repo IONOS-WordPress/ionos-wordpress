@@ -40,12 +40,20 @@ button[data-tab]{
     height: 100%;
   }
 
-  .horizontal-card{
+  .welcome-card{
+    flex-wrap: wrap;
     width: 90%;
     max-width: 800px;
     height: 400px;
     display: flex;
     border: 2px solid black;
+  }
+
+  @media (max-width: 666px) {
+    .welcome-card{
+      height: 600px;;
+      flex-wrap: nowrap;
+    }
   }
 }
 

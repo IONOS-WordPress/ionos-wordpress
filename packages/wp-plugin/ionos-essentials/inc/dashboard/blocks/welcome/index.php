@@ -16,7 +16,7 @@ function render_callback()
   ?>
 <dialog id="essentials-welcome_block" open>
   <div class="dialog__content">
-    <div class="horizontal-card">
+    <div class="horizontal-card welcome-card">
         <header class="horizontal-card__header" style="justify-content: center;">
             <img src="<?php echo \esc_url($welcome_banner_url); ?>" alt="Welcome Banner">
         </header>
@@ -47,12 +47,12 @@ function render_callback()
                     ); ?></li>
                 </ul>
             </section>
-            <footer class="horizontal-card__footer horizontal-card__content--vertical-align-center">
-                <button class="button button--primary">
-                    <?php \esc_html_e('Close', 'ionos-essentials'); ?>
-                </button>
-            </footer>
         </div>
+        <footer class="horizontal-card__footer horizontal-card__content--vertical-align-center" style="width: 100%;display: flex; justify-content: center;">
+            <button class="button button--primary">
+                <?php \esc_html_e('Close', 'ionos-essentials'); ?>
+            </button>
+        </footer>
     </div>
   </div>
 </dialog>
