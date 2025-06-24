@@ -22,14 +22,22 @@ document.addEventListener('DOMContentLoaded', function () {
     button.addEventListener('click', (event) => {
       event.preventDefault();
 
-      const activeTabs = dashboard.querySelectorAll('.ionos-tab.active, [data-tab].active');
+      let tabButton = event.target;
+      if (tabButton.tagName !== 'A') {
+        tabButton = tabButton.parentElement;
+      }
+
+      const activeTabs = dashboard.querySelectorAll('.ionos-tab.active, .page-tabbar__link--active');
       activeTabs.forEach((tab) => {
-        tab.classList.remove('active');
+        tab.classList.remove('active','page-tabbar__link--active');
       });
 
-      event.target.classList.add('active');
+      tabButton.classList.add('page-tabbar__link--active');
 
-      const targetTab = event.target.getAttribute('data-tab');
+      let targetTab = event.target?.getAttribute('data-tab');
+      if (!targetTab) {
+        targetTab = event.target.parentElement?.getAttribute('data-tab');
+      }
       dashboard.querySelector(`#${targetTab}`).classList.add('active');
       window.location.hash = targetTab;
     });

@@ -45,8 +45,22 @@ function render_callback(): void
             style="width: 150px; padding: 50px;"
           >
 
-            <button class="ionos-tab-button ghost-button" data-tab="ionos-tab1"><?php esc_html_e('Overview', 'ionos-essentials'); ?></button>
-            <button class="ionos-tab-button ghost-button" data-tab="ionos-tab2"><?php esc_html_e('Tools', 'ionos-essentials'); ?></button>
+            <div class="page-tabbar__block">
+              <ul class="page-tabbar__items" role="menu">
+                <li class="page-tabbar__item" role="presentation">
+                  <a href="#" class="page-tabbar__link page-tabbar__link--active" data-tab="ionos-tab1">
+                    <div class="page-tabbar__label"><?php esc_html_e('Overview', 'ionos-essentials'); ?></div>
+                  </a>
+                </li>
+                <li class="page-tabbar__item" role="presentation">
+                  <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="ionos-tab2">
+                    <div class="page-tabbar__label"><?php esc_html_e('Tools', 'ionos-essentials'); ?></div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+
           </div>
 
           <div class="grid-col grid-col--6 grid-col--small-12 ionos_banner_buttons">
