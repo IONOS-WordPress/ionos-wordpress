@@ -9,6 +9,14 @@
   display: none !important;
 }
 
+.ionos-tab{
+  display: none;
+
+  &.active{
+    display: block;
+  }
+}
+
 button[data-tab]{
   white-space: nowrap;
   border-bottom-left-radius: 0;
