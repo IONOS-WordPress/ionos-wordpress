@@ -17,8 +17,8 @@ function render_callback()
 <dialog id="essentials-welcome_block" open>
   <div class="dialog__content">
     <div class="horizontal-card">
-        <header class="horizontal-card__header">
-            <img class="horizontal-card__visual" src="<?php echo \esc_url($welcome_banner_url); ?>" alt="Welcome Banner">
+        <header class="horizontal-card__header" style="justify-content: center;">
+            <img src="<?php echo \esc_url($welcome_banner_url); ?>" alt="Welcome Banner">
         </header>
         <div class="horizontal-card__content">
             <section class="horizontal-card__section" style="flex-grow: 0;">
