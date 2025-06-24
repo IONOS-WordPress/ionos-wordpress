@@ -21,7 +21,7 @@ function render_callback()
             <img class="horizontal-card__visual" src="<?php echo \esc_url($welcome_banner_url); ?>" alt="Welcome Banner">
         </header>
         <div class="horizontal-card__content">
-            <section class="horizontal-card__section">
+            <section class="horizontal-card__section" style="flex-grow: 0;">
                 <h2 class="horizontal-card__headline">
                     <?php
                       // translators: %s: Brand name
