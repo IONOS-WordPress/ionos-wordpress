@@ -9,14 +9,6 @@
   display: none !important;
 }
 
-.ionos-tab{
-  display: none;
-
-  &.active{
-    display: block;
-  }
-}
-
 button[data-tab]{
   white-space: nowrap;
   border-bottom-left-radius: 0;
@@ -56,6 +48,7 @@ button[data-tab]{
     border: 2px solid black;
   }
 }
+
 
 .ionos_next_best_actions{
   background: white;
