@@ -199,6 +199,7 @@ msgstr "Zarządzanie kontem"
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Dostęp do konta klienta, zabezpieczeń logowania i subskrypcji jednym kliknięciem."
 
+#: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Przegląd"
@@ -593,3 +594,7 @@ msgstr "Onboarding"
 #: inc/jetpack-flow/inc/views/confirm.php
 msgid "No thanks"
 msgstr "Nie, dziękuję"
+
+#: inc/dashboard/blocks/banner/index.php
+msgid "Security"
+msgstr ""

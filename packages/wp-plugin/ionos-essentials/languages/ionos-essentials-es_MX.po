@@ -290,6 +290,7 @@ msgstr "Resultados de la exploración de vulnerabilidades"
 msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
 msgstr "Hemos añadido los resultados de los análisis directamente a su panel de control, lo que le ofrece una visibilidad instantánea de los posibles riesgos para la seguridad."
 
+#: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Visión general"
@@ -591,3 +592,7 @@ msgstr "Onboarding"
 #: inc/jetpack-flow/inc/views/confirm.php
 msgid "No thanks"
 msgstr "No, gracias"
+
+#: inc/dashboard/blocks/banner/index.php
+msgid "Security"
+msgstr ""

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-23T11:20:23+00:00\n"
+"POT-Creation-Date: 2025-06-24T06:16:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -41,6 +41,15 @@ msgstr ""
 
 #: inc/dashboard/blocks/banner/index.php
 msgid "View Site"
+msgstr ""
+
+#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/index.php
+msgid "Overview"
+msgstr ""
+
+#: inc/dashboard/blocks/banner/index.php
+msgid "Security"
 msgstr ""
 
 #: inc/dashboard/blocks/banner/index.php
@@ -319,10 +328,6 @@ msgstr ""
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
-msgstr ""
-
-#: inc/dashboard/index.php
-msgid "Overview"
 msgstr ""
 
 #: inc/dashboard/index.php
