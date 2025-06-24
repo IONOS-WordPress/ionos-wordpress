@@ -47,7 +47,7 @@ function render_callback()
                     ); ?></li>
                 </ul>
             </section>
-            <footer class="horizontal-card__footer horizontal-card__footer--small-align-center">
+            <footer class="horizontal-card__footer horizontal-card__content--vertical-align-center">
                 <button class="button button--primary">
                     <?php \esc_html_e('Close', 'ionos-essentials'); ?>
                 </button>
