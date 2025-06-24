@@ -46,7 +46,7 @@ function render_callback(): void
           >
 
             <button class="ionos-tab-button ghost-button" data-tab="ionos-tab1"><?php esc_html_e('Overview', 'ionos-essentials'); ?></button>
-            <button class="ionos-tab-button ghost-button" data-tab="ionos-tab2"><?php esc_html_e('Security', 'ionos-essentials'); ?></button>
+            <button class="ionos-tab-button ghost-button" data-tab="ionos-tab2"><?php esc_html_e('Tools', 'ionos-essentials'); ?></button>
           </div>
 
           <div class="grid-col grid-col--6 grid-col--small-12 ionos_banner_buttons">
