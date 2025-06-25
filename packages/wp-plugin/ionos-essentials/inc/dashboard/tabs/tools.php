@@ -67,7 +67,7 @@ namespace ionos\essentials\dashboard;
               <hr class="horizontal-separator" style="margin: 0 16px;">
 
                 <?php
-                if ( \ionos\essentials\is_stretch() ) {
+                if ( ! \ionos\essentials\is_stretch() ) {
                 ?>
               <section class="card__section" style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
