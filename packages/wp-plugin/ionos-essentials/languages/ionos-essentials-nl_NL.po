@@ -594,5 +594,29 @@ msgid "No thanks"
 msgstr "Geen dank."
 
 #: inc/dashboard/blocks/banner/index.php
-msgid "Security"
+msgid "Tools"
+msgstr ""
+
+#: inc/dashboard/tabs/tab2.php
+msgid "Website security"
+msgstr ""
+
+#: inc/dashboard/tabs/tab2.php
+msgid "Vulnerability alerting"
+msgstr ""
+
+#: inc/dashboard/tabs/tab2.php
+msgid "Change email address"
+msgstr ""
+
+#: inc/dashboard/tabs/tab2.php
+msgid "Password monitoring"
+msgstr ""
+
+#: inc/dashboard/tabs/tab2.php
+msgid "Disable XML-RPC access"
+msgstr ""
+
+#: inc/dashboard/tabs/tab2.php
+msgid "Prevent email login"
 msgstr ""
