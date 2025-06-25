@@ -66,6 +66,9 @@ namespace ionos\essentials\dashboard;
 
               <hr class="horizontal-separator" style="margin: 0 16px;">
 
+                <?php
+                if ( \ionos\essentials\is_stretch() ) {
+                ?>
               <section class="card__section" style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
                   <h3 class="headline headline--paragraph"><?php \esc_html_e('Disable XML-RPC access', 'ionos-essentials'); ?></h3>
@@ -84,6 +87,8 @@ namespace ionos\essentials\dashboard;
               </section>
 
               <hr class="horizontal-separator" style="margin: 0 16px;">
+
+              <?php } ?>
 
               <section class="card__section" style="display: flex; align-items: center; justify-content: space-between;">
                 <div>

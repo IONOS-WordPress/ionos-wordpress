@@ -597,26 +597,26 @@ msgstr "Geen dank."
 msgid "Tools"
 msgstr "Gereedschap"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Website security"
 msgstr "Website beveiliging"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Vulnerability alerting"
 msgstr "Kwetsbaarheidswaarschuwing"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Change email address"
 msgstr "E-mailadres wijzigen"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Password monitoring"
 msgstr "Wachtwoordcontrole"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Disable XML-RPC access"
 msgstr "XML-RPC toegang uitschakelen"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Prevent email login"
 msgstr "Inloggen via e-mail voorkomen"

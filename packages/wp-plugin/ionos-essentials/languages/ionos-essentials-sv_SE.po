@@ -597,26 +597,26 @@ msgstr "Nej tack"
 msgid "Tools"
 msgstr "Verktyg"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Website security"
 msgstr "Webbplatsens säkerhet"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Vulnerability alerting"
 msgstr "Sårbarhetsvarning"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Change email address"
 msgstr "Ändra e-postadress"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Password monitoring"
 msgstr "Övervakning av lösenord"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Disable XML-RPC access"
 msgstr "Inaktivera XML-RPC-åtkomst"
 
-#: inc/dashboard/tabs/tab2.php
+#: inc/dashboard/tabs/tools.php
 msgid "Prevent email login"
 msgstr "Förhindra inloggning via e-post"
