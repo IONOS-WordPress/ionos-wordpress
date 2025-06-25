@@ -1,5 +1,9 @@
 @import 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.css';
 
+main{
+  scrollbar-gutter: stable;
+}
+
 .button{
   white-space: nowrap;
   margin-bottom: 5px;
@@ -73,6 +77,8 @@
 }
 
 .ionos_vulnerability{
+  container-type: inline-size !important;
+  container: ionos_vulnerability;
   background-color: #edfaef;
 
   .ionos_vulnerability__content{
@@ -117,6 +123,12 @@
   }
 }
 
+@container ionos_vulnerability (max-width: 400px) {
+  .ionos_vulnerability .ionos_vulnerability__content{
+    background-image: none;
+  }
+}
+
 .ionos_buttons_same_width{
   container-type: inline-size !important;
   container: ionos_buttons_same_width;
@@ -124,7 +136,8 @@
   flex-wrap: wrap;
   width: 100%;
   a{
-    min-width: 32%;
+    min-width: 27%;
+    justify-content: flex-start;
   }
   a:nth-child(3n) {
     margin-right: 0;
@@ -133,7 +146,7 @@
 @container ionos_buttons_same_width (max-width: 800px) {
   .ionos_buttons_same_width{
     a{
-      min-width: 47%;
+      min-width: 40%;
     }
     a:nth-child(2n) {
       margin-right: 0;

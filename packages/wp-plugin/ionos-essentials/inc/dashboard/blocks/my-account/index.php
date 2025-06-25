@@ -61,14 +61,14 @@ function render_callback()
   $links = '';
   foreach ($data['links'] as $link) {
     $links .= sprintf(
-      '<a class="button button--secondary" href="%s" target="_blank">%s</a>',
+      '<a class="ghost-button" href="%s" target="_blank">%s</a>',
       \esc_url($data['domain'] . $link['url']),
       \esc_html($link['anchor'])
     );
   }
   if (! empty($data['webmail'])) {
     $links .= sprintf(
-      '<a class="button button--secondary" href="%s" target="_blank">%s</a>',
+      '<a class="ghost-button" href="%s" target="_blank">%s</a>',
       \esc_url($data['webmail']),
       \esc_html__('Webmail Login', 'ionos-essentials')
     );

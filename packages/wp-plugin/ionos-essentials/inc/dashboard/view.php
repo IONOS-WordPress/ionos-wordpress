@@ -68,7 +68,7 @@ use const ionos\essentials\PLUGIN_DIR;
 
   <?php
     require_once __DIR__ . '/tabs/tab1.php';
-require_once __DIR__ . '/tabs/tab2.php';
+    require_once __DIR__ . '/tabs/tab2.php';
 ?>
 
 </main>
