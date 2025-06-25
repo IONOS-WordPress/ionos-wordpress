@@ -597,28 +597,28 @@ msgstr "Nie, dziękuję"
 
 #: inc/dashboard/blocks/banner/index.php
 msgid "Tools"
-msgstr ""
+msgstr "Narzędzia"
 
 #: inc/dashboard/tabs/tab2.php
 msgid "Website security"
-msgstr ""
+msgstr "Bezpieczeństwo stron internetowych"
 
 #: inc/dashboard/tabs/tab2.php
 msgid "Vulnerability alerting"
-msgstr ""
+msgstr "Ostrzeganie o podatności na zagrożenia"
 
 #: inc/dashboard/tabs/tab2.php
 msgid "Change email address"
-msgstr ""
+msgstr "Zmiana adresu e-mail"
 
 #: inc/dashboard/tabs/tab2.php
 msgid "Password monitoring"
-msgstr ""
+msgstr "Monitorowanie haseł"
 
 #: inc/dashboard/tabs/tab2.php
 msgid "Disable XML-RPC access"
-msgstr ""
+msgstr "Wyłączenie dostępu XML-RPC"
 
 #: inc/dashboard/tabs/tab2.php
 msgid "Prevent email login"
-msgstr ""
+msgstr "Zapobieganie logowaniu przez e-mail"
