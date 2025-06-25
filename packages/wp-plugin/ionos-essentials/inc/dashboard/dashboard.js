@@ -48,6 +48,12 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     dashboard.querySelector('[data-tab]')?.click();
   }
+  window.addEventListener('hashchange', () => {
+    const newHash = window.location.hash.substring(1);
+    if (newHash) {
+      dashboard.querySelector(`[data-tab="${newHash}"]`)?.click();
+    }
+  });
 
   // NBA
   dashboard.querySelectorAll('.ionos-dismiss-nba').forEach((el) => {

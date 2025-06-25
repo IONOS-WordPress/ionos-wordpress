@@ -166,3 +166,9 @@
   }
 }
 
+#ionos-tab2{
+  .ionos_vulnerability__report-link,
+  .card__headline{
+    display: none;
+  }
+}
