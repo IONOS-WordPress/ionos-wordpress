@@ -36,7 +36,6 @@ render_section([
             </div>
 
         <div class="sheet">
-          <div class="sheet__section">
             <div>
               <?php
 render_section([
@@ -67,7 +66,6 @@ render_section([
 ]);
 ?>
 
-            </div>
           </div>
         </div>
       </div>

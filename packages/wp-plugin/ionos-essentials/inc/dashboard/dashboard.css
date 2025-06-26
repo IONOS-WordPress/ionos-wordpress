@@ -96,7 +96,7 @@ main{
     background-image: url('assets/security/none.svg');
     background-repeat: no-repeat;
     background-position: top right;
-    min-height: 150px;
+    gap: 18px;
   }
 
   .bubble{
