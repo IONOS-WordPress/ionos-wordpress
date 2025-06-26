@@ -15,7 +15,7 @@ function render_callback()
   <div class="card nba-card">
     <div class="card__content">
       <section class="card__section">
-        <h2 class="card__headline">%s</h2>
+        <h2 class="headline headline--sub">%s</h2>
         <p class="paragraph">%s</p>
         <div>%s</div>
       </section>

@@ -22,7 +22,7 @@ function render_callback()
         </header>
         <div class="horizontal-card__content">
             <section class="horizontal-card__section" style="flex-grow: 0;">
-                <h2 class="horizontal-card__headline">
+                <h2 class="horizontal-headline headline--sub">
                     <?php
                       // translators: %s: Brand name
                       printf(\esc_html__('Welcome to your %s Hub', 'ionos-essentials'), $brand_name);
