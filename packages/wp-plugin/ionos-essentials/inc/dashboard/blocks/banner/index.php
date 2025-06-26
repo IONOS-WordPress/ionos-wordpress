@@ -38,7 +38,7 @@ function render_callback(): void
     <div class="card__content">
       <section class="card__section">
         <div class="grid grid--vertical-align-center">
-          <div class="grid-col grid-col--6 grid-col--small-12" style="display: flex; align-items: center; justify-content: center;">
+          <div class="grid-col grid-col--6  grid-col--medium-12 grid-col--small-12" style="display: flex; align-items: center; justify-content: center;">
             <img class=""
             src="<?php echo esc_attr($tenant_logo); ?>"
             alt="<?php echo \esc_attr($tenant_name); ?> Logo"
@@ -63,7 +63,7 @@ function render_callback(): void
 
           </div>
 
-          <div class="grid-col grid-col--6 grid-col--small-12 ionos_banner_buttons">
+          <div class="grid-col grid-col--6 grid-col--medium-12 grid-col--small-12 ionos_banner_buttons">
             <?php echo \wp_kses($buttons, 'post'); ?>
           </div>
         </div>
