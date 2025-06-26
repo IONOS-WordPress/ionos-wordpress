@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: sv\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-04-23 08:52+0200\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-04-23 08:52+0200\n"
-"Language: sv\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.4.2\n"
 
@@ -615,20 +615,20 @@ msgstr "Övervakning av lösenord"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
-msgstr ""
+msgstr "Övervaka lösenordsläckor. Om ett lösenord hittas i ett dataintrång kommer du att meddelas."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Enable XML-RPC Guard"
-msgstr ""
+msgstr "Aktivera XML-RPC Guard"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
-msgstr ""
+msgstr "Säkerhet inaktiverar XML-RPC i WordPress. Detta förbättrar säkerheten genom att minska den potentiella attackytan. XML-RPC kan utnyttjas för att starta brute force-attacker, DDoS-attacker eller för att få obehörig åtkomst till en webbplats."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Prohibit Email Login"
-msgstr ""
+msgstr "Förbjuda inloggning via e-post"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
-msgstr ""
+msgstr "Säkerhet inaktiverar inloggning med e-postadresser. Detta förbättrar säkerheten genom att minska den potentiella attackytan."

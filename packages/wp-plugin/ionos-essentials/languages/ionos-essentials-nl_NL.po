@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: nl\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-04-16 10:47+0200\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-04-16 10:47+0200\n"
-"Language: nl\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -615,20 +615,20 @@ msgstr "Wachtwoordcontrole"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
-msgstr ""
+msgstr "Controleer lekken in wachtwoorden. Als een wachtwoord wordt gevonden bij een datalek, wordt u hiervan op de hoogte gesteld."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Enable XML-RPC Guard"
-msgstr ""
+msgstr "XML-RPC bewaking inschakelen"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
-msgstr ""
+msgstr "Beveiliging schakelt XML-RPC in WordPress uit. Dit verbetert de beveiliging door het potentiële aanvalsoppervlak te verkleinen. XML-RPC kan worden misbruikt voor brute force-aanvallen, DDoS-aanvallen of om ongeautoriseerde toegang te krijgen tot een website."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Prohibit Email Login"
-msgstr ""
+msgstr "Inloggen via e-mail verbieden"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
-msgstr ""
+msgstr "Beveiliging schakelt inloggen met e-mailadressen uit. Dit verbetert de beveiliging door het potentiële aanvalsoppervlak te verkleinen."

@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-04-09 07:46+0200\n"
+"POT-Creation-Date: 2025-02-05T09:50:40+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-05T09:50:40+00:00\n"
-"PO-Revision-Date: 2025-04-09 07:46+0200\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -615,20 +615,20 @@ msgstr "Supervisión de contraseñas"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
-msgstr ""
+msgstr "Supervise las filtraciones de contraseñas. Si se encuentra una contraseña en una filtración de datos, se le notificará."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Enable XML-RPC Guard"
-msgstr ""
+msgstr "Activar XML-RPC Guard"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
-msgstr ""
+msgstr "Security desactiva XML-RPC en WordPress. Esto mejora la seguridad al reducir la superficie potencial de ataque. XML-RPC puede ser explotado para lanzar ataques de fuerza bruta, ataques DDoS u obtener acceso no autorizado a un sitio web."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Prohibit Email Login"
-msgstr ""
+msgstr "Prohibir el inicio de sesión por correo electrónico"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
-msgstr ""
+msgstr "Seguridad desactiva el inicio de sesión con direcciones de correo electrónico. Esto mejora la seguridad al reducir la superficie potencial de ataque."

@@ -55,7 +55,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
     },
   );
 
-   \add_submenu_page(
+  \add_submenu_page(
     parent_slug: ADMIN_PAGE_SLUG,
     page_title : __('Tools', 'ionos-essentials'),
     menu_title : __('Tools', 'ionos-essentials'),
