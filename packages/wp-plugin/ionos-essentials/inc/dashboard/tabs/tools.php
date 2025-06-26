@@ -8,107 +8,97 @@ namespace ionos\essentials\dashboard;
       <div class="grid-col grid-col--12">
         <h3 class="headline headline--sub"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
 
-          <div class="card">
-            <div class="card__content">
-              <div>
-                <section class="card__section">
-                  <div class="grid-col grid-col--4 grid-col--small-12"><?php blocks\vulnerability\render_callback(); ?></div>
-                </section>
-                <section class="card__section" style="display: flex; align-items: center; justify-content: space-between;">
-                  <div>
-                    <h3 class="headline"><?php \esc_html_e('Vulnerability alerting', 'ionos-essentials'); ?></h3>
-                    <p class="paragraph">
-                      <?php \esc_html_e('Vulnerabilities detected are immediately emails to'); ?>
-                      <br>
-                      <strong style="font-size: 1.2em">
-                        <?php echo esc_html(get_option('admin_email')); ?>
-                      </strong>
+          <div class="sheet">
+              <div class="grid">
+                <div class="grid-col grid-col--4 grid-col--small-12">
+                  <section class="sheet__section">
+                    <?php blocks\vulnerability\render_callback(); ?>
+                  </section>
+                </div>
+                <div class="grid-col grid-col--8 grid-col--small-12">
+                <?php
+                $description=  sprintf('<strong style="font-size: 1.2em">%s</strong>
                       <br><br>
-                      <a href="<?php echo esc_url(admin_url('options-general.php')); ?>" class="link link--action">
-                        <?php \esc_html_e('Change email address', 'ionos-essentials'); ?>
-                      </a>
-                    </p>
-                  </div>
-                  <div>
-                    <span class="input-switch">
-                      <input type="checkbox" id="switch2">
-                      <label for="switch1">
-                        <span class="input-switch__on"></span>
-                        <span class="input-switch__toggle"></span>
-                        <span class="input-switch__off"></span>
-                      </label>
-                    </span>
-                  </div>
-                </section>
+                      <a href="%s" class="link link--action">%s</a>',
+                  get_option('admin_email'),
+                  admin_url('options-general.php'),
+                  \esc_html__('Change email address', 'ionos-essentials')
+                );
+
+render_section([
+  'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
+  'id'           => 'mailnotify',
+  'description'  => $description,
+]);
+?>
+                </div>
               </div>
             </div>
-          </div>
 
-        <div class="card">
-          <div class="card__content">
+        <div class="sheet">
+          <div class="sheet__section">
             <div>
-              <section class="card__section" style="display: flex; align-items: center; justify-content: space-between;">
-                <div>
-                  <h3 class="headline headline--paragraph"><?php \esc_html_e('Password monitoring', 'ionos-essentials'); ?></h3>
-                  <p class="paragraph">Protect your website from threats</p>
-                </div>
-                <div>
-                  <span class="input-switch">
-                    <input type="checkbox" id="switch1">
-                    <label for="switch1">
-                      <span class="input-switch__on"></span>
-                      <span class="input-switch__toggle"></span>
-                      <span class="input-switch__off"></span>
-                    </label>
-                  </span>
-                </div>
-              </section>
+              <?php
+render_section([
+  'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
+  'id'          => 'password-monitoring',
+  'description' => \esc_html__(
+    'Monitor password leaks. If a password is found in a data breach, you will be notified.',
+    'ionos-essentials'
+  ),
+]);
 
-              <hr class="horizontal-separator" style="margin: 0 16px;">
+render_section([
+  'title'       => \esc_html__('Enable XML-RPC Guard', 'ionos-essentials'),
+  'id'          => 'xmlrpc',
+  'description' => \esc_html__(
+    'Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website.',
+    'ionos-essentials'
+  ),
+]);
 
-                <?php
-                if ( ! \ionos\essentials\is_stretch() ) {
-                ?>
-              <section class="card__section" style="display: flex; align-items: center; justify-content: space-between;">
-                <div>
-                  <h3 class="headline headline--paragraph"><?php \esc_html_e('Disable XML-RPC access', 'ionos-essentials'); ?></h3>
-                  <p class="paragraph">Protect your website from threats</p>
-                </div>
-                <div>
-                  <span class="input-switch">
-                    <input type="checkbox" id="switch3">
-                    <label for="switch1">
-                      <span class="input-switch__on"></span>
-                      <span class="input-switch__toggle"></span>
-                      <span class="input-switch__off"></span>
-                    </label>
-                  </span>
-                </div>
-              </section>
+render_section([
+  'title'       => \esc_html__('Prohibit Email Login', 'ionos-essentials'),
+  'id'          => 'pel',
+  'description' => \esc_html__(
+    'Security disables login with email addresses. This improves security by reducing the potential attack surface.',
+    'ionos-essentials'
+  ),
+]);
+?>
 
-              <hr class="horizontal-separator" style="margin: 0 16px;">
-
-              <?php } ?>
-
-              <section class="card__section" style="display: flex; align-items: center; justify-content: space-between;">
-                <div>
-                  <h3 class="headline headline--paragraph"><?php \esc_html_e('Prevent email login', 'ionos-essentials'); ?></h3>
-                  <p class="paragraph">Protect your website from threats</p>
-                </div>
-                <div>
-                  <span class="input-switch">
-                    <input type="checkbox" id="switch4">
-                    <label for="switch1">
-                      <span class="input-switch__on"></span>
-                      <span class="input-switch__toggle"></span>
-                      <span class="input-switch__off"></span>
-                    </label>
-                  </span>
-                </div>
-              </section>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+
+<?php
+function render_section($args)
+{
+  ?>
+<section class="sheet__section">
+      <div class="grid">
+          <div class="grid-col grid-col--8 grid-col--small-12">
+              <h2 class="headline headline--sub headline--cropped"><?php echo esc_html($args['title']); ?></h2>
+              <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
+                  <?php echo \wp_kses($args['description'], 'post'); ?>
+              </p>
+          </div>
+          <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
+              <span class="input-switch">
+                  <input id="<?php echo esc_attr($args['id']); ?>" type="checkbox" checked="">
+                  <label>
+                      <span class="input-switch__on"></span>
+                      <span class="input-switch__toggle"></span>
+                      <span class="input-switch__off"></span>
+                  </label>
+              </span>
+          </div>
+      </div>
+  </section>
+<?php
+}
+?>

@@ -13,6 +13,14 @@ main{
   display: none !important;
 }
 
+.sheet__section{
+  border-bottom: 1px solid #DBE2E8;
+  &:last-child{
+    border-bottom: none;
+  }
+}
+
+
 .ionos-tab{
   display: none;
 
