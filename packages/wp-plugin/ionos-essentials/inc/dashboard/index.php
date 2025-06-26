@@ -55,6 +55,14 @@ const REQUIRED_USER_CAPABILITIES = 'read';
     },
   );
 
+   \add_submenu_page(
+    parent_slug: ADMIN_PAGE_SLUG,
+    page_title : __('Tools', 'ionos-essentials'),
+    menu_title : __('Tools', 'ionos-essentials'),
+    capability : REQUIRED_USER_CAPABILITIES,
+    menu_slug  : 'admin.php?page=' . ADMIN_PAGE_SLUG . '#tools'
+  );
+
   // we stop ionos-library from removing our submenu item
   add_action('admin_menu', function () {
     global $wp_filter;

@@ -48,12 +48,12 @@ function render_callback(): void
             <div class="page-tabbar__block">
               <ul class="page-tabbar__items" role="menu">
                 <li class="page-tabbar__item" role="presentation">
-                  <a href="#" class="page-tabbar__link page-tabbar__link--active" data-tab="ionos-tab1">
+                  <a href="#" class="page-tabbar__link page-tabbar__link--active" data-tab="overview">
                     <div class="page-tabbar__label"><?php esc_html_e('Overview', 'ionos-essentials'); ?></div>
                   </a>
                 </li>
                 <li class="page-tabbar__item" role="presentation">
-                  <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="ionos-tab2">
+                  <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="tools">
                     <div class="page-tabbar__label"><?php esc_html_e('Tools', 'ionos-essentials'); ?></div>
                   </a>
                 </li>
