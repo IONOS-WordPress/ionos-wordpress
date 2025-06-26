@@ -616,9 +616,21 @@ msgid "Password monitoring"
 msgstr "Monitorowanie haseł"
 
 #: inc/dashboard/tabs/tools.php
-msgid "Disable XML-RPC access"
-msgstr "Wyłączenie dostępu XML-RPC"
+msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
-msgid "Prevent email login"
-msgstr "Zapobieganie logowaniu przez e-mail"
+msgid "Enable XML-RPC Guard"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Prohibit Email Login"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
+msgstr ""
