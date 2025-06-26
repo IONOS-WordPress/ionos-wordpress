@@ -13,6 +13,11 @@
 namespace ionos\essentials\migration;
 
 use const ionos\essentials\PLUGIN_FILE;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_PEL;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
 
 /*
  * wp option where the installation data is stored
@@ -81,6 +86,24 @@ function _install()
       \delete_plugins(['ionos-assistant/ionos-assistant.php']);
       update_plugin('ionos-marketplace/ionos-marketplace.php', false);
       \update_option('ionos_migration_step', 2);
+    case version_compare($last_installed_version, '1.0.10', '<'):
+      \deactivate_plugins('ionos-security/ionos-security.php');
+      \delete_plugins(['ionos-security/ionos-security.php']);
+
+      $xmlrpc_guard_enabled = \get_option( 'xmlrpc_guard_enabled', 1) === 1;
+      $pel_enabled = get_option( 'pel_enabled', 1) === 1;
+      $credentials_check_enabled = get_option( 'credentials_check_enabled',1 ) === 1;
+
+      \delete_option('xmlrpc_guard_enabled');
+      \delete_option('pel_enabled');
+      \delete_option('credentials_check_enabled');
+
+      $security_options = IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
+      $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC] = $xmlrpc_guard_enabled;
+      $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL] = $pel_enabled;
+      $security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING] = $credentials_check_enabled;
+
+      \add_option(IONOS_SECURITY_FEATURE_OPTION, $security_options, null, true);
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }
