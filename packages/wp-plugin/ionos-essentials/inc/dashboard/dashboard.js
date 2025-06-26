@@ -122,4 +122,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
   });
+
+  dashboard.querySelectorAll('.input-switch').forEach((switchElement) => {
+    switchElement.addEventListener('click', function (event) {
+      console.log('Switch clicked:', event.target.id);
+    });
+  });
 });
