@@ -46,7 +46,7 @@ render_section([
     'Monitor password leaks. If a password is found in a data breach, you will be notified.',
     'ionos-essentials',
   ),
-  'checked'   => get_settings_value('mailpasswordnotify') ? 'checked' : '',
+  'checked'   => get_settings_value('password-monitoring') ? 'checked' : '',
 ]);
 
 render_section([
@@ -106,7 +106,7 @@ function render_section($args)
 
 function get_settings_value($key)
 {
-  $option = \get_option('ionos_essentials_tools', []);
-  return $option[$key] ?? false;
+  static $options = \get_option(IONOS_SECURITY_FEATURE_OPTION, []);
+  return $options[$key] ?? false;
 }
 ?>

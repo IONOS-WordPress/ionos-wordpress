@@ -2,6 +2,10 @@
 
 namespace ionos\essentials\dashboard;
 
+if (! defined('ABSPATH')) {
+  exit();
+}
+
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
@@ -10,10 +14,8 @@ require_once ABSPATH . 'wp-admin/includes/misc.php';
 
 use const ionos\essentials\PLUGIN_DIR;
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+// @TODO: remove this constant here when we merge branches, as this comes from elsewehre
+const IONOS_SECURITY_FEATURE_OPTION = 'IONOS_SECURITY_FEATURE_OPTION';
 
 const REQUIRED_USER_CAPABILITIES = 'read';
 
@@ -205,9 +207,10 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   );
 
   wp_localize_script('ionos-essentials-dashboard-js', 'wpData', [
-    'nonce'   => wp_create_nonce('wp_rest'),
-    'restUrl' => esc_url_raw(rest_url()),
-    'i18n'    => [
+    'nonce'              => wp_create_nonce('wp_rest'),
+    'restUrl'            => esc_url_raw(rest_url()),
+    'securityOptionName' => IONOS_SECURITY_FEATURE_OPTION,
+    'i18n'               => [
       'installing' => esc_html__('Installing...', 'ionos-essentials'),
     ],
   ]);

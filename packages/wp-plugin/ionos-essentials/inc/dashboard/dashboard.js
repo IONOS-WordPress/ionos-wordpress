@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   dashboard.querySelectorAll('.input-switch').forEach((switchElement) => {
     switchElement.addEventListener('click', function (event) {
-     const option= "FOO"
+     const option= wpData.securityOptionName
      const key = event.target.id
      const  value = event.target.checked ? 1 : 0;
 
@@ -142,10 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
           value,
         }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        });
 
     });
   });
