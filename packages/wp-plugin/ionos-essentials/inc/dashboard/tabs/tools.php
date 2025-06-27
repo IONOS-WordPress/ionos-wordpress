@@ -29,6 +29,7 @@ render_section([
   'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
   'id'           => 'mailnotify',
   'description'  => $description,
+  'checked'      => get_settings_value('mailnotify') ? 'checked' : '',
 ]);
 ?>
                 </div>
@@ -43,8 +44,9 @@ render_section([
   'id'          => 'password-monitoring',
   'description' => \esc_html__(
     'Monitor password leaks. If a password is found in a data breach, you will be notified.',
-    'ionos-essentials'
+    'ionos-essentials',
   ),
+  'checked'   => get_settings_value('mailpasswordnotify') ? 'checked' : '',
 ]);
 
 render_section([
@@ -54,6 +56,7 @@ render_section([
     'Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website.',
     'ionos-essentials'
   ),
+  'checked'   => get_settings_value('xmlrpc') ? 'checked' : '',
 ]);
 
 render_section([
@@ -63,6 +66,7 @@ render_section([
     'Security disables login with email addresses. This improves security by reducing the potential attack surface.',
     'ionos-essentials'
   ),
+  'checked'   => get_settings_value('pel') ? 'checked' : '',
 ]);
 ?>
 
@@ -87,7 +91,7 @@ function render_section($args)
           </div>
           <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
               <span class="input-switch">
-                  <input id="<?php echo esc_attr($args['id']); ?>" type="checkbox" checked="">
+                  <input id="<?php echo esc_attr($args['id']); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
                   <label>
                       <span class="input-switch__on"></span>
                       <span class="input-switch__toggle"></span>
@@ -98,5 +102,11 @@ function render_section($args)
       </div>
   </section>
 <?php
+}
+
+function get_settings_value($key)
+{
+  $option = \get_option('ionos_essentials_tools', []);
+  return $option[$key] ?? false;
 }
 ?>

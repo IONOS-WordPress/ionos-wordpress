@@ -125,7 +125,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
   dashboard.querySelectorAll('.input-switch').forEach((switchElement) => {
     switchElement.addEventListener('click', function (event) {
-      console.log('Switch clicked:', event.target.id);
+     const option= "FOO"
+     const key = event.target.id
+     const  value = event.target.checked ? 1 : 0;
+
+      fetch(wpData.restUrl + 'ionos/essentials/option/set', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-WP-Nonce': wpData.nonce,
+        },
+        body: JSON.stringify({
+          option,
+          key,
+          value,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+
     });
   });
 });
