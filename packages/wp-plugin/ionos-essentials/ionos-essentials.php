@@ -59,3 +59,30 @@ function is_stretch()
 //     return str_replace('IONOS', $brand_name, $text);
 //   }
 // );
+
+\add_action('rest_api_init', function () {
+  \register_rest_route(
+    'ionos/essentials/option',
+    '/set',
+    [
+      'methods'             => 'POST',
+      'permission_callback' => fn () => 0 !== \get_current_user_id(),
+      'callback'            => function () {
+        $params = json_decode(file_get_contents('php://input'), true);
+        $option = $params['option']      ?? '';
+        $key    = $params['key']         ?? '';
+        $value  = $params['value']       ?? '';
+
+        $options       = \get_option($option, []);
+        $options[$key] = $value;
+        \update_option($option, $options);
+
+        return rest_ensure_response(new \WP_REST_Response([
+          'status' => $key,
+          'value'  => $value,
+          'option' => $option,
+        ], 200));
+      },
+    ]
+  );
+}, 1);
