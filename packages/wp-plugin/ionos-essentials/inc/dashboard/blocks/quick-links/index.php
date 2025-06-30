@@ -16,7 +16,7 @@ function render_callback()
       <h2 class="card__headline"><?php echo \esc_html__('Quick Links', 'ionos-essentials'); ?></h2>
       <div class="ionos_quick_links_buttons ionos_buttons_same_width">
         <?php
-              foreach ($links as $link) {
+              foreach (get_config() as $link) {
                 printf(
                   '<a href="%s" class="button button--secondary button--with-icon"><i class="button__icon exos-icon exos-icon-%s"></i>%s</a>',
                   \esc_url($link['url']),
