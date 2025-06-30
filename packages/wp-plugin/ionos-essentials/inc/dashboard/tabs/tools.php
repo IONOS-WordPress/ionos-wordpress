@@ -106,7 +106,12 @@ function render_section($args)
 
 function get_settings_value($key)
 {
-  static $options = \get_option(IONOS_SECURITY_FEATURE_OPTION, []);
+  static $options = null;
+
+  if (null === $options) {
+    $options = \get_option(IONOS_SECURITY_FEATURE_OPTION, []);
+  }
+
   return $options[$key] ?? false;
 }
 ?>
