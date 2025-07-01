@@ -225,13 +225,17 @@ const REQUIRED_USER_CAPABILITIES = 'read';
       'permission_callback' => fn () => 0 !== \get_current_user_id(),
       'callback'            => function () {
         $params = json_decode(file_get_contents('php://input'), true);
-        $option = $params['option']      ?? '';
-        $key    = $params['key']         ?? '';
-        $value  = $params['value']       ?? '';
+        $option = $params['option'] ?? '';
+        $key    = $params['key']    ?? '';
+        $value  = $params['value']  ?? '';
 
-        $options       = \get_option($option, []);
-        $options[$key] = $value;
-        \update_option($option, $options);
+        if (empty($option)) {
+          \update_option($key, $value);
+        } else {
+          $options       = \get_option($option, []);
+          $options[$key] = $value;
+          \update_option($option, $options);
+        }
 
         return rest_ensure_response(new \WP_REST_Response([
           'status' => $key,

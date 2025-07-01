@@ -2,8 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\quick_links;
 
-
-function get_config(){
+function get_config()
+{
   $blog_url = \get_bloginfo('url');
 
   return [

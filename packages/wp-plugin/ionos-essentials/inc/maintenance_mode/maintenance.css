@@ -1,0 +1,19 @@
+ul li#wp-admin-bar-ionos_maintenance_mode{
+  padding-top: 6px;
+}
+
+ul li#wp-admin-bar-ionos_maintenance_mode a,
+ul li#wp-admin-bar-ionos_maintenance_mode:hover a{
+  background-color: rgb(255, 170, 0) !important;
+  color: rgb(0, 27, 65) !important;
+  height: 20px !important;
+  line-height: 20px !important;
+  border-radius: 2px;
+}
+
+.ionos-maintenance-only {
+  display: none;
+}
+body.ionos-maintenance-mode .ionos-maintenance-only{
+  display: block;
+}
