@@ -47,7 +47,9 @@ add_action('init', function () {
     !str_starts_with(
       $_SERVER['REQUEST_URI'],
       '/wp-admin'
-    )
+    ) &&
+    (!defined('DOING_AJAX') || !DOING_AJAX) &&
+    (!defined('WP_CLI') || !WP_CLI)
   ) {
     wp_redirect(plugin_dir_url(__FILE__) . 'assets/maintenance.html');
     exit;
