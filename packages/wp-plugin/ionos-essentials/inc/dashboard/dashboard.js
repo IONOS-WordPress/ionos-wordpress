@@ -52,6 +52,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const newHash = window.location.hash.substring(1);
     if (newHash) {
       dashboard.querySelector(`[data-tab="${newHash}"]`)?.click();
+      const tabs = Array.from(dashboard.querySelectorAll('[data-tab]'));
+      const activeTab = dashboard.querySelector('.page-tabbar__link--active[data-tab]');
+      const activeTabIndex = tabs.indexOf(activeTab);
+
+      document.querySelector('li.current')?.classList.remove('current')
+      document.querySelector('#toplevel_page_ionos .wp-submenu li:nth-child(' + (activeTabIndex + 2) + ')').classList.add('current')
     }
   });
 
@@ -128,6 +134,9 @@ document.addEventListener('DOMContentLoaded', function () {
      const option = event.target.dataset.option || ''
      const key = event.target.id
      const value = event.target.checked ? 1 : 0;
+
+     window.EXOS.snackbar.success("Success Message");
+
 
       fetch(wpData.restUrl + 'ionos/essentials/option/set', {
         method: 'POST',
