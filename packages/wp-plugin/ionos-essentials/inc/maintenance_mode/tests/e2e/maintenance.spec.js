@@ -1,21 +1,43 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { execTestCLI } from '../../../../../../../playwright/wp-env.js';
 
-test.describe('Tabs', () => {
+test.describe('Maintenance', () => {
 
-  test('user can switch between tabs', async ({ admin, page }) => {
+  test.beforeAll(async () => {
+    try {
+      execTestCLI(
+        `wp option delete ionos_essentials_maintenance_mode`
+      );
+    } catch (error) {}
+  });
+
+  test.afterAll(async () => {
+    try {
+      execTestCLI(
+        `wp option delete ionos_essentials_maintenance_mode`
+      );
+    } catch (error) {}
+  });
+
+
+  test('maintenance mode is enabled', async ({ admin, page }) => {
     await admin.visitAdminPage('/');
-
-    const body = await page.locator('body');
-    const tab1 = body.locator('#overview');
-    const tab2 = body.locator('#tools');
-
-    await expect(tab1).toBeVisible();
-    await expect(tab2).not.toBeVisible();
-
     await page.getByRole('button', { name: 'Tools' }).click();
+    await page.locator('#ionos_essentials_maintenance_mode').click();
 
-    await expect(tab1).not.toBeVisible();
-    await expect(tab2).toBeVisible();
+    // Still no redirection to the maintenance page, because we are logged in
+    await page.goto('/');
+    let body = await page.locator('body');
+    await expect(body).toHaveText(/Blog/);
+
+
+    await page.goto('/wp-login.php?action=logout');
+    await page.click('text=log out');
+
+    await page.goto('/');
+    body = await page.locator('body');
+    await page.waitForTimeout(1000);
+    await expect(page).toHaveTitle('Construction');
   });
 
 

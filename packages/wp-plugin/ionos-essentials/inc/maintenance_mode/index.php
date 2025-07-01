@@ -4,7 +4,7 @@ namespace ionos\essentials\maintenance_mode;
 
 function is_maintenance_mode()
 {
-  return \get_option('ionos_essentials_maintenance_mode', true);
+  return \get_option('ionos_essentials_maintenance_mode', false);
 }
 
 add_action('admin_bar_menu', function ($wp_admin_bar) {
