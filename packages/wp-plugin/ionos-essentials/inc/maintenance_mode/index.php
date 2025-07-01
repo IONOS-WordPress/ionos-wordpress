@@ -40,17 +40,27 @@ add_action('admin_enqueue_scripts', function () {
 });
 
 add_action('init', function () {
-  if (
-    is_maintenance_mode()                                   &&
-    ! is_user_logged_in()                                   &&
-    'wp-login.php' !== $GLOBALS['pagenow']                  &&
-    ! str_starts_with($_SERVER['REQUEST_URI'], '/wp-admin') &&
-    (! defined('DOING_AJAX') || ! DOING_AJAX)               &&
-    (! defined('WP_CLI') || ! WP_CLI)
-  ) {
-    wp_redirect(plugin_dir_url(__FILE__) . 'assets/maintenance.html');
-    exit;
+  if (! is_maintenance_mode()) {
+    return;
   }
+
+  if (\is_user_logged_in()) {
+    return;
+  }
+
+  if ('wp-login.php' === $GLOBALS['pagenow'] || str_starts_with($_SERVER['REQUEST_URI'], '/wp-admin')) {
+    return;
+  }
+
+  if (
+    (defined('DOING_AJAX') && DOING_AJAX) ||
+    (defined('WP_CLI')     && WP_CLI)
+  ) {
+    return;
+  }
+
+  wp_redirect(plugin_dir_url(__FILE__) . 'assets/maintenance.html');
+  exit;
 });
 
 add_filter('admin_body_class', function ($classes) {
