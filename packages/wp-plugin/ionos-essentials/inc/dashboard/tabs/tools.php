@@ -21,7 +21,7 @@ use const ionos\essentials\PLUGIN_DIR;
                     <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
                         <?php \esc_html_e('Temporarily block public access to your site with a maintenance page', 'post'); ?>
                     </p>
-                    <a href="<?php echo \esc_url(\plugins_url('ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)); ?>"
+                    <a href="<?php echo \esc_url(\plugins_url('ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)); ?>" target="_blank"
                        class="link link--action">
                         <?php \esc_html_e('Preview maintenance page displayed to your visitors', 'ionos-essentials'); ?>
                     </a>
