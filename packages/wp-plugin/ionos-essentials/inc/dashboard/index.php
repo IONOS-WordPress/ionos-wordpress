@@ -211,7 +211,9 @@ const REQUIRED_USER_CAPABILITIES = 'read';
     'restUrl'            => esc_url_raw(rest_url()),
     'securityOptionName' => IONOS_SECURITY_FEATURE_OPTION,
     'i18n'               => [
-      'installing' => esc_html__('Installing...', 'ionos-essentials'),
+      'installing'  => esc_html__('Installing...', 'ionos-essentials'),
+      'activated'   => esc_html__('activated.', 'ionos-essentials'),
+      'deactivated' => esc_html__('deactivated.', 'ionos-essentials'),
     ],
   ]);
 });
@@ -241,6 +243,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
           'status' => $key,
           'value'  => $value,
           'option' => $option,
+
         ], 200));
       },
     ]

@@ -134,23 +134,33 @@ document.addEventListener('DOMContentLoaded', function () {
      const option = event.target.dataset.option || ''
      const key = event.target.id
      const value = event.target.checked ? 1 : 0;
+     const description = event.target.dataset.description || '';
 
-     window.EXOS.snackbar.success("Success Message");
-
-
-      fetch(wpData.restUrl + 'ionos/essentials/option/set', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wpData.nonce,
-        },
-        body: JSON.stringify({
-          option,
-          key,
-          value,
-        }),
-      })
+    fetch(wpData.restUrl + 'ionos/essentials/option/set', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': wpData.nonce,
+      },
+      body: JSON.stringify({
+        option,
+        key,
+        value,
+      }),
+    }).then((response) => {
+      if(!response.ok) {
+        window.EXOS.snackbar.warning("Error updating option " + key);
+        return;
+      }
+      return response.json();
+    }).then((response) => {
+      if(response.value){
+        window.EXOS.snackbar.success(description + ' ' + wpData.i18n.activated);
+      }else{
+        window.EXOS.snackbar.critical(description + ' ' + wpData.i18n.deactivated);
+      }
+    })
 
     });
   });

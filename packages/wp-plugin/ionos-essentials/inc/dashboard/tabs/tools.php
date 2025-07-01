@@ -21,14 +21,16 @@ use const ionos\essentials\PLUGIN_DIR;
                     <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
                         <?php \esc_html_e('Temporarily block public access to your site with a maintenance page.', 'post'); ?>
                     </p>
-                    <a href="<?php echo \esc_url(\plugins_url('ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)); ?>" target="_blank"
+                    <a href="<?php echo \esc_url(
+                      \plugins_url('ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)
+                    ); ?>" target="_blank"
                        class="link link--action">
                         <?php \esc_html_e('Preview maintenance page displayed to your visitors', 'ionos-essentials'); ?>
                     </a>
                 </div>
                 <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
                     <span class="input-switch">
-                        <input id="ionos_essentials_maintenance_mode" type="checkbox"
+                        <input id="ionos_essentials_maintenance_mode" type="checkbox" data-description="<?php \esc_attr_e('Maintenance mode', 'ionos-essentials'); ?>"
                         <?php
                         if (\ionos\essentials\maintenance_mode\is_maintenance_mode()) {
                           echo 'checked';
@@ -130,9 +132,9 @@ function render_section($args)
           </div>
           <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
               <span class="input-switch">
-                  <input id="<?php echo esc_attr(
-                    $args['id']
-                  ); ?>" data-option="<?php echo \esc_attr(IONOS_SECURITY_FEATURE_OPTION); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
+                  <input id="<?php echo esc_attr($args['id']); ?>" data-option="<?php echo \esc_attr(
+                    IONOS_SECURITY_FEATURE_OPTION
+                  ); ?>" data-description="<?php echo esc_attr($args['title']); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
                   <label>
                       <span class="input-switch__on"></span>
                       <span class="input-switch__toggle"></span>
