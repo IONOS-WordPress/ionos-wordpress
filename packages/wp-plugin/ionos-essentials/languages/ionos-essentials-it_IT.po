@@ -93,7 +93,7 @@ msgstr "Il vostro contratto"
 msgid "Current offers"
 msgstr "Offerte attuali"
 
-#: inc/dashboard/blocks/quick-links/render.php
+#: inc/dashboard/blocks/quick-links/index.php
 msgid "Quick Links"
 msgstr "Collegamenti rapidi"
 
@@ -127,37 +127,33 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Mostra i dati della scansione wp."
 
-#: inc/dashboard/index.php
-msgid "Brand Logo"
-msgstr "Brand Logo"
-
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Show full scan report"
 msgstr "Visualizza report completo della scansione"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Last scan"
 msgstr "Ultima scansione"
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 #, php-format
 msgid "%s ago"
 msgstr "%s fa"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problema critico rilevato"
 msgstr[1] "Problemi critici rilevati"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "Allarme rilevato"
 msgstr[1] "Allarmi rilevati"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Issues found"
 msgstr "Problemi rilevati"
 
@@ -179,7 +175,7 @@ msgstr "Visualizza sito"
 msgid "Start AI Sitebuilder"
 msgstr "Avvia creazione con IA"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Manage Hosting"
 msgstr "Gestisci hosting"
 
@@ -193,18 +189,15 @@ msgctxt "block description"
 msgid "Banner"
 msgstr "Stendardo"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Account Management"
 msgstr "Il mio account"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Accedi con un solo clic al tuo account cliente, ai contratti e alle impostazioni di login."
 
-#: inc/dashboard/blocks/quick-links/render.php
-msgid "Easily navigate to frequently used features and tools."
-msgstr "Accedi facilmente alle funzioni e agli strumenti utilizzati più frequentemente."
-
+#: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Panoramica"
@@ -403,7 +396,7 @@ msgstr "Modifica il piè di pagina"
 msgid "Dismiss"
 msgstr "Ignora"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Scansione delle vulnerabilità"
 
@@ -447,7 +440,7 @@ msgstr "Gestione dei domini e SSL"
 msgid "Add more products"
 msgstr "Aggiungi altri prodotti"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Webmail Login"
 msgstr "Accesso Webmail"
 
@@ -491,22 +484,9 @@ msgstr "Crea account email"
 msgid "My Account"
 msgstr "Il mio account"
 
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "The required Security plugin is missing."
-msgstr "Manca il plugin Security richiesto."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Install Security plugin"
-msgstr "Installare il plugin Sicurezza"
-
-#: inc/dashboard/blocks/next-best-actions/index.php
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/index.php
 msgid "Installing..."
 msgstr "Installazione..."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
-msgstr "La scansione delle vulnerabilità non è possibile. Contattare l'assistenza clienti."
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php
@@ -612,3 +592,44 @@ msgstr "Onboarding"
 #: inc/jetpack-flow/inc/views/confirm.php
 msgid "No thanks"
 msgstr "No grazie"
+
+#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/index.php
+msgid "Tools"
+msgstr "Strumenti"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Website security"
+msgstr "Sicurezza del sito web"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Vulnerability alerting"
+msgstr "Avviso di vulnerabilità"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Change email address"
+msgstr "Modifica dell'indirizzo e-mail"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Password monitoring"
+msgstr "Monitoraggio delle password"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
+msgstr "Monitorare le fughe di password. Se una password viene trovata in una violazione dei dati, sarete avvisati."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Enable XML-RPC Guard"
+msgstr "Abilitare la protezione XML-RPC"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
+msgstr "La sicurezza disabilita XML-RPC in WordPress. Questo migliora la sicurezza riducendo la superficie di attacco potenziale. XML-RPC può essere sfruttato per lanciare attacchi di forza bruta, attacchi DDoS o per ottenere l'accesso non autorizzato a un sito web."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Prohibit Email Login"
+msgstr "Vietare l'accesso via e-mail"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
+msgstr "La sicurezza disabilita il login con gli indirizzi e-mail. Questo migliora la sicurezza riducendo la superficie di attacco potenziale."

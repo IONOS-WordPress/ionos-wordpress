@@ -17,7 +17,7 @@ $links = [
   ],
 ];
 
-// Trainling slash
+// Trailing slash
 // The first market is the default market
 $market_domains = [
   'en' => 'https://admin.fasthosts.co.uk/',

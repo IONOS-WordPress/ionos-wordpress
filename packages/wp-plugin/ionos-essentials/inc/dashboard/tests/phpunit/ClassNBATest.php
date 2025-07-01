@@ -22,6 +22,8 @@ class ClassNBATest extends \WP_UnitTestCase {
 
     parent::setUp();
 
+    \activate_plugin('ionos-essentials/ionos-essentials.php');
+    require_once PLUGIN_DIR . '/inc/dashboard/blocks/my-account/index.php';
     require_once PLUGIN_DIR . '/inc/dashboard/blocks/next-best-actions/class-nba.php';
   }
 
@@ -41,7 +43,7 @@ class ClassNBATest extends \WP_UnitTestCase {
     );
 
     $new_nba_count = count(NBA::get_actions());
-    $this->assertEquals($nba_count + 1, $new_nba_count, 'registered nbas should contain our newly radded nba');
+    $this->assertEquals($nba_count + 1, $new_nba_count, 'registered nbas should contain our newly added nba');
 
     $nba = NBA::get_nba($ID);
     $this->assertTrue($nba->active);

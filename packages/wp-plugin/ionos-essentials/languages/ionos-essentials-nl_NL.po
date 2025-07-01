@@ -93,7 +93,7 @@ msgstr "Je contract"
 msgid "Current offers"
 msgstr "Actuele aanbiedingen"
 
-#: inc/dashboard/blocks/quick-links/render.php
+#: inc/dashboard/blocks/quick-links/index.php
 msgid "Quick Links"
 msgstr "Snelle links"
 
@@ -127,37 +127,33 @@ msgctxt "block description"
 msgid "Show wp scan data."
 msgstr "Wp-scangegevens weergeven."
 
-#: inc/dashboard/index.php
-msgid "Brand Logo"
-msgstr "Brand Logo"
-
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Show full scan report"
 msgstr "Volledig scanrapport tonen"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Last scan"
 msgstr "Laatste scan"
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 #, php-format
 msgid "%s ago"
 msgstr "%s geleden"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiek probleem gevonden"
 msgstr[1] "kritieke problemen gevonden"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "waarschuwing gevonden"
 msgstr[1] "waarschuwingen gevonden"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Issues found"
 msgstr "problemen gevonden"
 
@@ -179,7 +175,7 @@ msgstr "Site bekijken"
 msgid "Start AI Sitebuilder"
 msgstr "AI websitemaker starten"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Manage Hosting"
 msgstr "Hosting beheren"
 
@@ -193,18 +189,15 @@ msgctxt "block description"
 msgid "Banner"
 msgstr "Banner"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Account Management"
 msgstr "Accountbeheer"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Toegang tot je klantaccount, beveiligingsinstellingen en pakketten met één klik."
 
-#: inc/dashboard/blocks/quick-links/render.php
-msgid "Easily navigate to frequently used features and tools."
-msgstr "Navigeer eenvoudig naar vaak gebruikte functies en tools."
-
+#: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Overzicht"
@@ -403,7 +396,7 @@ msgstr "Footer bewerken"
 msgid "Dismiss"
 msgstr "Sluiten"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Scan je WordPress voor bedreigingen en kwetsbaarheden"
 
@@ -447,7 +440,7 @@ msgstr "Beheer van domeinen en SSL"
 msgid "Add more products"
 msgstr "Meer producten toevoegen"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Webmail Login"
 msgstr "Inloggen Webmail"
 
@@ -491,22 +484,9 @@ msgstr "E-mailaccount instellen"
 msgid "My Account"
 msgstr "Mijn account"
 
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "The required Security plugin is missing."
-msgstr "De vereiste beveiligingsplugin ontbreekt."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Install Security plugin"
-msgstr "Beveiligingsplugin installeren"
-
-#: inc/dashboard/blocks/next-best-actions/index.php
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/index.php
 msgid "Installing..."
 msgstr "Installeren..."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
-msgstr "Scan op kwetsbaarheid niet mogelijk. Neem contact op met de klantenservice."
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php
@@ -612,3 +592,44 @@ msgstr "Onboarding"
 #: inc/jetpack-flow/inc/views/confirm.php
 msgid "No thanks"
 msgstr "Geen dank."
+
+#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/index.php
+msgid "Tools"
+msgstr "Gereedschap"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Website security"
+msgstr "Website beveiliging"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Vulnerability alerting"
+msgstr "Kwetsbaarheidswaarschuwing"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Change email address"
+msgstr "E-mailadres wijzigen"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Password monitoring"
+msgstr "Wachtwoordcontrole"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
+msgstr "Controleer lekken in wachtwoorden. Als een wachtwoord wordt gevonden bij een datalek, wordt u hiervan op de hoogte gesteld."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Enable XML-RPC Guard"
+msgstr "XML-RPC bewaking inschakelen"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
+msgstr "Beveiliging schakelt XML-RPC in WordPress uit. Dit verbetert de beveiliging door het potentiële aanvalsoppervlak te verkleinen. XML-RPC kan worden misbruikt voor brute force-aanvallen, DDoS-aanvallen of om ongeautoriseerde toegang te krijgen tot een website."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Prohibit Email Login"
+msgstr "Inloggen via e-mail verbieden"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
+msgstr "Beveiliging schakelt inloggen met e-mailadressen uit. Dit verbetert de beveiliging door het potentiële aanvalsoppervlak te verkleinen."
