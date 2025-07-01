@@ -15,7 +15,7 @@ function render_callback()
   <div class="card nba-card">
     <div class="card__content">
       <section class="card__section">
-        <h2 class="card__headline">%s</h2>
+        <h2 class="headline headline--sub">%s</h2>
         <p class="paragraph">%s</p>
         <div>%s</div>
       </section>
@@ -34,7 +34,7 @@ function render_callback()
     }
 
     $buttons = sprintf(
-      '<a data-nba-id="%s" href="%s" class="button button--primary" target="%s">%s</a>',
+      '<a data-nba-id="%s" href="%s" class="button button--secondary" target="%s">%s</a>',
       $action->id,
       \esc_url($action->link),
       $target,
@@ -43,7 +43,7 @@ function render_callback()
 
     // Overwrite cta button for GML installation
     if ('woocommerce-gml' === $action->id) {
-      $buttons = '<a id="ionos_essentials_install_gml" class="button button--primary">' . $action->anchor . '</a>';
+      $buttons = '<a id="ionos_essentials_install_gml" class="button button--secondary">' . $action->anchor . '</a>';
     }
 
     $buttons .= '<a data-nba-id="' . $action->id . '" class="ghost-button ionos-dismiss-nba">' . \esc_html__(

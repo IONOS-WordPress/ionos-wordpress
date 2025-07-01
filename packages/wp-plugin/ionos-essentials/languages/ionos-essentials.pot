@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-24T06:16:09+00:00\n"
+"POT-Creation-Date: 2025-06-26T10:03:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -49,7 +49,8 @@ msgid "Overview"
 msgstr ""
 
 #: inc/dashboard/blocks/banner/index.php
-msgid "Security"
+#: inc/dashboard/index.php
+msgid "Tools"
 msgstr ""
 
 #: inc/dashboard/blocks/banner/index.php
@@ -332,6 +333,42 @@ msgstr ""
 
 #: inc/dashboard/index.php
 msgid "Installing..."
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Website security"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Change email address"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Vulnerability alerting"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Password monitoring"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Enable XML-RPC Guard"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Prohibit Email Login"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
 msgstr ""
 
 #. translators: s=link to control panel

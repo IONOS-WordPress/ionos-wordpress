@@ -40,6 +40,11 @@ require_once __DIR__ . '/inc/login/index.php';
 // soc plugin components
 require_once __DIR__ . '/inc/migration/index.php';
 
+function is_stretch()
+{
+  return str_starts_with(getcwd(), '/home/www/public');
+}
+
 // TODO: evaluate for other tenants than IONOS
 
 // \add_filter(

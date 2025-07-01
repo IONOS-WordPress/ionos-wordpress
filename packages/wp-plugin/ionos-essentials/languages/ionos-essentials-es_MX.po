@@ -594,5 +594,42 @@ msgid "No thanks"
 msgstr "No, gracias"
 
 #: inc/dashboard/blocks/banner/index.php
-msgid "Security"
-msgstr ""
+#: inc/dashboard/index.php
+msgid "Tools"
+msgstr "Herramientas"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Website security"
+msgstr "Seguridad del sitio web"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Vulnerability alerting"
+msgstr "Alerta de vulnerabilidad"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Change email address"
+msgstr "Cambiar la dirección de correo electrónico"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Password monitoring"
+msgstr "Supervisión de contraseñas"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
+msgstr "Supervise las filtraciones de contraseñas. Si se encuentra una contraseña en una filtración de datos, se le notificará."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Enable XML-RPC Guard"
+msgstr "Activar XML-RPC Guard"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
+msgstr "Security desactiva XML-RPC en WordPress. Esto mejora la seguridad al reducir la superficie potencial de ataque. XML-RPC puede ser explotado para lanzar ataques de fuerza bruta, ataques DDoS u obtener acceso no autorizado a un sitio web."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Prohibit Email Login"
+msgstr "Prohibir el inicio de sesión por correo electrónico"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
+msgstr "Seguridad desactiva el inicio de sesión con direcciones de correo electrónico. Esto mejora la seguridad al reducir la superficie potencial de ataque."

@@ -38,14 +38,32 @@ function render_callback(): void
     <div class="card__content">
       <section class="card__section">
         <div class="grid grid--vertical-align-center">
-          <div class="grid-col grid-col--6 grid-col--small-12">
+          <div class="grid-col grid-col--6  grid-col--medium-12 grid-col--small-12" style="display: flex; align-items: center; justify-content: center;">
             <img class=""
-            src="<?php echo esc_attr($tenant_logo); ?>"
+            src="<?php echo \esc_attr($tenant_logo); ?>"
             alt="<?php echo \esc_attr($tenant_name); ?> Logo"
             style="width: 150px; padding: 50px;"
           >
+
+            <div class="page-tabbar__block">
+              <ul class="page-tabbar__items" role="menu">
+                <li class="page-tabbar__item" role="presentation">
+                  <a href="#" class="page-tabbar__link page-tabbar__link--active" data-tab="overview">
+                    <div class="page-tabbar__label"><?php \esc_html_e('Overview', 'ionos-essentials'); ?></div>
+                  </a>
+                </li>
+                <li class="page-tabbar__item" role="presentation">
+                  <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="tools">
+                    <div class="page-tabbar__label"><?php \esc_html_e('Tools', 'ionos-essentials'); ?></div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+
           </div>
-          <div class="grid-col grid-col--6 grid-col--small-12 ionos_banner_buttons">
+
+          <div class="grid-col grid-col--6 grid-col--medium-12 grid-col--small-12 ionos_banner_buttons">
             <?php echo \wp_kses($buttons, 'post'); ?>
           </div>
         </div>

@@ -61,14 +61,14 @@ function render_callback()
   $links = '';
   foreach ($data['links'] as $link) {
     $links .= sprintf(
-      '<a class="button button--secondary" href="%s" target="_blank">%s</a>',
+      '<a class="ghost-button" href="%s" target="_blank">%s</a>',
       \esc_url($data['domain'] . $link['url']),
       \esc_html($link['anchor'])
     );
   }
   if (! empty($data['webmail'])) {
     $links .= sprintf(
-      '<a class="button button--secondary" href="%s" target="_blank">%s</a>',
+      '<a class="ghost-button" href="%s" target="_blank">%s</a>',
       \esc_url($data['webmail']),
       \esc_html__('Webmail Login', 'ionos-essentials')
     );
@@ -79,7 +79,7 @@ function render_callback()
   <div class="card ionos_my_account">
     <div class="card__content">
       <section class="card__section">
-        <h2 class="card__headline"><?php echo \esc_html__('Account Management', 'ionos-essentials'); ?></h2>
+        <h2 class="headline headline--sub"><?php echo \esc_html__('Account Management', 'ionos-essentials'); ?></h2>
         <p class="paragraph"><?php echo \esc_html__(
           'One-click access to your customer account, login security and subscriptions.',
           'ionos-essentials'
