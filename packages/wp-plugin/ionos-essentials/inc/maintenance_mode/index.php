@@ -40,7 +40,15 @@ add_action('admin_enqueue_scripts', function () {
 });
 
 add_action('init', function () {
-  if (is_maintenance_mode() && ! is_user_logged_in()) {
+  if (
+    is_maintenance_mode() &&
+    !is_user_logged_in() &&
+    $GLOBALS['pagenow'] !== 'wp-login.php' &&
+    !str_starts_with(
+      $_SERVER['REQUEST_URI'],
+      '/wp-admin'
+    )
+  ) {
     wp_redirect(plugin_dir_url(__FILE__) . 'assets/maintenance.html');
     exit;
   }
