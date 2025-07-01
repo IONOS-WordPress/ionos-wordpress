@@ -195,3 +195,9 @@ main{
   }
 }
 
+.ionos-maintenance-only {
+  display: none;
+}
+main.ionos-maintenance-mode .ionos-maintenance-only{
+  display: inline-block;
+}

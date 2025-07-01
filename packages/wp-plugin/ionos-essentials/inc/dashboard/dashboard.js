@@ -125,9 +125,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   dashboard.querySelectorAll('.input-switch').forEach((switchElement) => {
     switchElement.addEventListener('click', function (event) {
-     const option= wpData.securityOptionName
+     const option = event.target.dataset.option || ''
      const key = event.target.id
-     const  value = event.target.checked ? 1 : 0;
+     const value = event.target.checked ? 1 : 0;
 
       fetch(wpData.restUrl + 'ionos/essentials/option/set', {
         method: 'POST',

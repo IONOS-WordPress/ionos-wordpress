@@ -2,12 +2,51 @@
 
 namespace ionos\essentials\dashboard;
 
+use const ionos\essentials\PLUGIN_DIR;
+
 ?>
  <div id="tools" class="page-section ionos-tab">
     <div class="grid">
       <div class="grid-col grid-col--12">
-        <h3 class="headline headline--sub"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
+        <h3 class="headline headline--sub"><?php \esc_html_e('Tools', 'ionos-essentials'); ?></h3>
 
+        <div class="sheet">
+          <section class="sheet__section">
+            <div class="grid">
+                <div class="grid-col grid-col--8 grid-col--small-12">
+                    <h2 class="headline headline--sub headline--cropped">
+                      <?php \esc_html_e('Maintenance page', 'ionos-essentials'); ?>
+                      <span class="badge badge--warning-solid ionos-maintenance-only"><?php \esc_html_e('Active', 'ionos-essentials'); ?></span>
+                </h2>
+                    <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
+                        <?php \esc_html_e('Temporarily block public access to your site with a maintenance page', 'post'); ?>
+                    </p>
+                    <a href="<?php echo \esc_url(\plugins_url('ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)); ?>"
+                       class="link link--action">
+                        <?php \esc_html_e('Preview maintenance page displayed to your visitors', 'ionos-essentials'); ?>
+                    </a>
+                </div>
+                <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
+                    <span class="input-switch">
+                        <input id="ionos_essentials_maintenance_mode" type="checkbox"
+                        <?php
+                        if (\ionos\essentials\maintenance_mode\is_maintenance_mode()) {
+                          echo 'checked';
+                        }
+?>
+                        >
+                        <label>
+                            <span class="input-switch__on"></span>
+                            <span class="input-switch__toggle"></span>
+                            <span class="input-switch__off"></span>
+                        </label>
+                    </span>
+                </div>
+            </div>
+          </section>
+        </div>
+
+        <h3 class="headline headline--sub"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
           <div class="sheet">
               <div class="grid">
                 <div class="grid-col grid-col--4 grid-col--small-12">
@@ -91,7 +130,9 @@ function render_section($args)
           </div>
           <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
               <span class="input-switch">
-                  <input id="<?php echo esc_attr($args['id']); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
+                  <input id="<?php echo esc_attr(
+                    $args['id']
+                  ); ?>" data-option="<?php echo \esc_attr(IONOS_SECURITY_FEATURE_OPTION); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
                   <label>
                       <span class="input-switch__on"></span>
                       <span class="input-switch__toggle"></span>
