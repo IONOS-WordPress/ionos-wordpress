@@ -19,7 +19,7 @@ use const ionos\essentials\PLUGIN_DIR;
                       <span class="badge badge--warning-solid ionos-maintenance-only"><?php \esc_html_e('Active', 'ionos-essentials'); ?></span>
                 </h2>
                     <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
-                        <?php \esc_html_e('Temporarily block public access to your site with a maintenance page', 'post'); ?>
+                        <?php \esc_html_e('Temporarily block public access to your site with a maintenance page.', 'post'); ?>
                     </p>
                     <a href="<?php echo \esc_url(\plugins_url('ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)); ?>" target="_blank"
                        class="link link--action">
