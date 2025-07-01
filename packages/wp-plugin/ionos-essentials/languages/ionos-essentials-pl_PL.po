@@ -597,6 +597,7 @@ msgstr "Nie, dziękuję"
 
 #: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/index.php
+#: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr "Narzędzia"
 
@@ -635,3 +636,15 @@ msgstr "Zakaz logowania przez e-mail"
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
 msgstr "Zabezpieczenia wyłączają logowanie za pomocą adresów e-mail. Poprawia to bezpieczeństwo poprzez zmniejszenie potencjalnej powierzchni ataku."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Maintenance page"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Active"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Preview maintenance page displayed to your visitors"
+msgstr ""

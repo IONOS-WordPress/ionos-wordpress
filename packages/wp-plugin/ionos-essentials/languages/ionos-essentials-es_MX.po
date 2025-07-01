@@ -595,6 +595,7 @@ msgstr "No, gracias"
 
 #: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/index.php
+#: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr "Herramientas"
 
@@ -633,3 +634,15 @@ msgstr "Prohibir el inicio de sesión por correo electrónico"
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
 msgstr "Seguridad desactiva el inicio de sesión con direcciones de correo electrónico. Esto mejora la seguridad al reducir la superficie potencial de ataque."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Maintenance page"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Active"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Preview maintenance page displayed to your visitors"
+msgstr ""

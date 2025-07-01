@@ -595,6 +595,7 @@ msgstr "Geen dank."
 
 #: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/index.php
+#: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr "Gereedschap"
 
@@ -633,3 +634,15 @@ msgstr "Inloggen via e-mail verbieden"
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
 msgstr "Beveiliging schakelt inloggen met e-mailadressen uit. Dit verbetert de beveiliging door het potentiële aanvalsoppervlak te verkleinen."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Maintenance page"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Active"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Preview maintenance page displayed to your visitors"
+msgstr ""
