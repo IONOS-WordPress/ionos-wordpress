@@ -22,7 +22,7 @@ function render_callback()
         </header>
         <div class="horizontal-card__content">
             <section class="horizontal-card__section" style="flex-grow: 0;">
-                <h2 class="horizontal-headline headline--sub">
+                <h2 class="headline">
                     <?php
                       // translators: %s: Brand name
                       printf(\esc_html__('Welcome to your %s Hub', 'ionos-essentials'), $brand_name);
@@ -36,8 +36,7 @@ function render_callback()
     );
   ?>
                 </p>
-            </section>
-            <section class="horizontal-card__section">
+
                 <ul class="check-list">
                     <li><?php \esc_html_e('Recommendations for next steps', 'ionos-essentials'); ?></li>
                     <li><?php \esc_html_e('Helpful links and shortcuts', 'ionos-essentials'); ?></li>
@@ -46,7 +45,7 @@ function render_callback()
                       'ionos-essentials'
                     ); ?></li>
                 </ul>
-            </section>
+             </section>
         </div>
         <footer class="horizontal-card__footer horizontal-card__content--vertical-align-center" style="width: 100%;display: flex; justify-content: center;">
             <button class="button button--primary">
