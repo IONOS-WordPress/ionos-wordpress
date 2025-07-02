@@ -98,6 +98,8 @@ function _install()
       \delete_option('pel_enabled');
       \delete_option('credentials_check_enabled');
 
+      // @TODO: migrate wpscan option for mail notification
+
       $security_options = IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
       $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC] = $xmlrpc_guard_enabled;
       $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL] = $pel_enabled;

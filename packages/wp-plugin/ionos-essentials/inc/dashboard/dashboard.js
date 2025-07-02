@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
     switchElement.addEventListener('click', function (event) {
      const option= wpData.securityOptionName
      const key = event.target.id
-     const  value = event.target.checked ? 1 : 0;
+     const  value = event.target.checked ? true : false;
 
       fetch(wpData.restUrl + 'ionos/essentials/option/set', {
         method: 'POST',

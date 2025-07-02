@@ -20,6 +20,7 @@ namespace ionos\essentials;
 
 const PLUGIN_FILE = __FILE__;
 const PLUGIN_DIR  = __DIR__;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 
 defined('ABSPATH') || exit();
 
