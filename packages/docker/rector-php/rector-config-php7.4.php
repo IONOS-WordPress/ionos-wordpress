@@ -5,12 +5,6 @@ declare(strict_types=1);
 use Rector\Config\RectorConfig;
 use Rector\ValueObject\PhpVersion;
 
-/*
-  @TODO: integrate PHPCS and PHP-CS-Fixer rulesets with EasyCodingStandard instead of calling them separately in the ./scripts/lint.sh script
-  - https://hugo.alliau.me/blog/posts/2023-07-19-how-to-use-php-cs-fixer-ruleset-with-easy-coding-standard
-  - https://masteringlaravel.io/daily/2023-11-22-how-to-reference-a-php-codesniffer-ruleset-in-easycodingstandard
- */
-
 require_once '/composer/vendor/php-stubs/wordpress-stubs/wordpress-stubs.php';
 
 return RectorConfig::configure()->withSkip([__DIR__ . '/dist/vendor', __DIR__ . '/dist/languages'])->withParallel()
