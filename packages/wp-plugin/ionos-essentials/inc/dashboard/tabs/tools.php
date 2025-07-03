@@ -24,9 +24,7 @@ use const ionos\essentials\PLUGIN_DIR;
                     <a href="<?php echo \esc_url(
                       \plugins_url('ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)
                     ); ?>" target="_blank"
-                       class="link link--action">
-                        <?php \esc_html_e('Preview maintenance page displayed to your visitors', 'ionos-essentials'); ?>
-                    </a>
+                       class="link link--action"><?php \esc_html_e('Preview maintenance page', 'ionos-essentials'); ?></a>
                 </div>
                 <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
                     <span class="input-switch">
