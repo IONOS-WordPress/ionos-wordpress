@@ -6,7 +6,7 @@ use Rector\Config\RectorConfig;
 use Rector\ValueObject\PhpVersion;
 
 return RectorConfig::configure()->withSkip([__DIR__ . '/dist/vendor', __DIR__ . '/dist/languages'])->withParallel()
-  ->withPhpVersion(PhpVersion::PHP_83)->withPreparedSets(
+  ->withPhpVersion(PhpVersion::PHP_84)->withPreparedSets(
     // deadCode: true,
     codeQuality: true,
     // codingStyle: true,
@@ -16,6 +16,4 @@ return RectorConfig::configure()->withSkip([__DIR__ . '/dist/vendor', __DIR__ . 
     // instanceOf: true,
     // earlyReturn: true,
     // strictBooleans: true,
-    // carbon: true,
-    // rectorPreset: true,
   );
