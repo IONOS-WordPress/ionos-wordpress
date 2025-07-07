@@ -15,44 +15,17 @@ add_action( 'login_init', function () {
   if ( ! \get_option( 'IONOS_SECURITY_FEATURE_OPTION[IONOS_SECURITY_FEATURE_OPTION_PEL]', false ) ) {
     return;
   }
-
-  remove_filter( 'authenticate', 'wp_authenticate_email_password', 20 );
-  add_filter( 'authenticate',function ( $user, $username ) {
-    if ( false !== strpos( $username, '@' ) ) {
-      return new \WP_Error(
-        'email_login_inactive',
-        __( '<strong>Error</strong>: The login with an email address is deactivated for this website. Please use your username instead.', 'ionos-security' )
-      );
-    }
-
-    return $user;
-  }, 200, 2 );
 });
 
-// Add the menu item to the settings page
-add_filter('ionos_essentials_security_menu_item', function ($menu) {
-  $menu[] = [
-    'title' => __('Login Protection', 'ionos-essentials'),
-    'tab'   => 'login-protection',
-  ];
-
-  return $menu;
-}, 40, 1);
-
 add_action('implement_security_feature_page', function () {
-  global $current_screen;
-  if (( strpos($current_screen->id, '_page_ionos_security') === false ) || !isset( $_GET['tab'] ) || ( isset( $_GET['tab'] ) && $_GET['tab'] !== 'login-protection' )) {
-    return;
-  }
 
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $value = 0;
+    $value = true;
     if ( isset($_POST['ionos_security_pel_enabled']) ) {
-      $value = 1;
+      $value = false;
     }
 
-    \update_option('IONOS_SECURITY_FEATURE_OPTION[IONOS_SECURITY_FEATURE_OPTION_PEL]', false);
+    \update_option('IONOS_SECURITY_FEATURE_OPTION[IONOS_SECURITY_FEATURE_OPTION_PEL]', $value);
   }
 
-  $is_enabled = \get_option('IONOS_SECURITY_FEATURE_OPTION[IONOS_SECURITY_FEATURE_OPTION_PEL]', false);
 });
