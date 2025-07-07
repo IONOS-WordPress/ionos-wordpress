@@ -55,6 +55,24 @@ function enable_xmlrpc_methods_allowlisting() {
 
   $ip = $_SERVER['REMOTE_ADDR'];
 
+
+/*
+  "allowLists": {
+      "cidr": {
+          "ipv4": [
+              "122.248.245.244\/32",
+              "54.217.201.243\/32",
+              "54.232.116.4\/32",
+              "192.0.80.0\/20",
+              "192.0.96.0\/20",
+              "192.0.112.0\/20",
+              "195.234.108.0\/22"
+          ],
+          "ipv6": []
+      }
+  }
+*/
+
   if ( filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) !== false ) {
     $ipv4_allow_list = Config::get( 'features.xmlrpcGuard.allowLists.cidr.ipv4' );
     foreach ( $ipv4_allow_list as $cidr ) {
@@ -65,6 +83,7 @@ function enable_xmlrpc_methods_allowlisting() {
   }
 
   if ( filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) !== false ) {
+
     $ipv6_allow_list = Config::get( 'features.xmlrpcGuard.allowLists.cidr.ipv6' );
     foreach ( $ipv6_allow_list as $cidr ) {
       if ( ipv6_in_cidr( $ip, $cidr ) !== false ) {
