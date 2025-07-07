@@ -63,9 +63,7 @@ if ('' !== $siteeditor_quick_link) {
               resolve(editorCanvasIframeElement);
             }
 
-            editorCanvasIframeElement.onload = () => {
-              resolve();
-            };
+            editorCanvasIframeElement.onload = resolve;
           });
 
           setTimeout(() => {
