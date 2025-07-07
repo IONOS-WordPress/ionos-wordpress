@@ -35,9 +35,9 @@ function render_callback()
 }
 
 /* handle header and footer quicklinks */
-$siteeditorQuickLink = $_GET['ionos-siteeditor-quick-link'] ?? '';
-if($siteeditorQuickLink !== '') {
-  \add_action('enqueue_block_editor_assets', function() use ($siteeditorQuickLink) {
+$siteeditor_quick_link = $_GET['ionos-siteeditor-quick-link'] ?? '';
+if ('' !== $siteeditor_quick_link) {
+  \add_action('enqueue_block_editor_assets', function () use ($siteeditor_quick_link) {
     \wp_add_inline_script(
       handle: 'wp-edit-site',
       data: "
@@ -71,7 +71,7 @@ if($siteeditorQuickLink !== '') {
           setTimeout(() => {
             // select the block with the specified tagName
             wp.data.dispatch('core/block-editor').selectBlock(
-              wp.data.select('core/block-editor').getBlocks().find(block=>block.attributes.tagName==='{$siteeditorQuickLink}').clientId
+              wp.data.select('core/block-editor').getBlocks().find(block=>block.attributes.tagName==='{$siteeditor_quick_link}').clientId
             );
           }, 500);
         });
@@ -80,5 +80,3 @@ if($siteeditorQuickLink !== '') {
     );
   });
 }
-
-
