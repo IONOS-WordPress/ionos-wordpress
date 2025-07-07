@@ -37,7 +37,7 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
   if ($security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING] === true) {
     require_once __DIR__ . '/credentials-checking.php';
   }
-  if ($security_options[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY] === true) {
-    require_once __DIR__ . '/vulnerability-scan.php';
-  }
+  // if ($security_options[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY] === true) {
+  //   require_once __DIR__ . '/vulnerability-scan.php';
+  // }
 });
