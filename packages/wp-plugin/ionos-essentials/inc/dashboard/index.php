@@ -242,3 +242,5 @@ const REQUIRED_USER_CAPABILITIES = 'read';
     ]
   );
 }, 1);
+
+require_once __DIR__ . '/blocks/quick-links/index.php';

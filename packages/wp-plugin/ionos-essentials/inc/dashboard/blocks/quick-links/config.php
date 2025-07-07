@@ -21,7 +21,7 @@ function get_config()
       'icon' => 'helparticle-16',
     ],
     [
-      'url'  => $blog_url . '/wp-admin/site-editor.php?postType=wp_navigation',
+      'url'  => $blog_url . '/wp-admin/site-editor.php?p=%2Fnavigation',
       'text' => __(
         'Edit site Navigation',
         'ionos-essentials'
@@ -37,12 +37,12 @@ function get_config()
       'icon' => 'favstar-16',
     ],
     [
-      'url'  => $blog_url . '/wp-admin/site-editor.php',
+      'url'  => $blog_url . '/wp-admin/site-editor.php?p=%2Fpage&canvas=edit&ionos-siteeditor-quick-link=header',
       'text' => __('Edit Header', 'ionos-essentials'),
       'icon' => 'website-48',
     ],
     [
-      'url'  => $blog_url . '/wp-admin/site-editor.php',
+      'url'  => $blog_url . '/wp-admin/site-editor.php?p=%2Fpage&canvas=edit&ionos-siteeditor-quick-link=footer',
       'text' => __(
         'Edit Footer',
         'ionos-essentials'

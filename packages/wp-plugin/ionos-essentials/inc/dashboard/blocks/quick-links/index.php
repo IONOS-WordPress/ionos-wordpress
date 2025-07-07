@@ -10,7 +10,7 @@ function render_callback()
     require $config_file;
 
     ?>
-<div class="card" style="">
+<div class="card">
   <div class="card__content">
     <section class="card__section">
       <h2 class="headline headline--sub"><?php echo \esc_html__('Quick Links', 'ionos-essentials'); ?></h2>
@@ -33,3 +33,52 @@ function render_callback()
     <?php
   }
 }
+
+/* handle header and footer quicklinks */
+$siteeditorQuickLink = $_GET['ionos-siteeditor-quick-link'] ?? '';
+if($siteeditorQuickLink !== '') {
+  \add_action('enqueue_block_editor_assets', function() use ($siteeditorQuickLink) {
+    \wp_add_inline_script(
+      handle: 'wp-edit-site',
+      data: "
+        wp.domReady(async function() {
+          // Wait for the editor to be ready
+          await new Promise((resolve) => {
+            const unsubscribe = wp.data.subscribe(() => {
+              // This will trigger after the initial render blocking, before the window load event
+              // This seems currently more reliable than using __unstableIsEditorReady
+              if (wp.data.select('core/editor').isCleanNewPost() || wp.data.select('core/block-editor').getBlockCount() > 0) {
+                  unsubscribe();
+                  resolve();
+              }
+            })
+          });
+
+          // wait for the editor iframe to be ready
+          const editorCanvasIframeElement = document.querySelector('[name=\"editor-canvas\"]');
+          await new Promise((resolve) => {
+            if(!editorCanvasIframeElement.loading) {
+              // somehow the iframe has already loaded,
+              // skip waiting for onload event (won't be triggered)
+              resolve(editorCanvasIframeElement);
+            }
+
+            editorCanvasIframeElement.onload = () => {
+              resolve();
+            };
+          });
+
+          setTimeout(() => {
+            // select the block with the specified tagName
+            wp.data.dispatch('core/block-editor').selectBlock(
+              wp.data.select('core/block-editor').getBlocks().find(block=>block.attributes.tagName==='{$siteeditorQuickLink}').clientId
+            );
+          }, 500);
+        });
+      ",
+      position: 'after',
+    );
+  });
+}
+
+
