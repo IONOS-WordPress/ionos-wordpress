@@ -7,13 +7,13 @@ if (! defined('ABSPATH')) {
   exit();
 }
 
-if ( \get_option( 'IONOS_SECURITY_FEATURE_OPTION[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]' ) !== '1' ) {
+if ( ! \get_option( 'IONOS_SECURITY_FEATURE_OPTION[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]' ) ) {
   return;
 }
 
 
 // Check if toggle is switched on.
-if ( \get_option( 'IONOS_SECURITY_FEATURE_OPTION[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]' ) === 1 ) {
+if ( \get_option( 'IONOS_SECURITY_FEATURE_OPTION[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]' ) ) {
   enable_xmlrpc_methods_allowlisting();
 }
 
