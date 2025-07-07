@@ -1,10 +1,10 @@
-#adminmenumain,
+/* #adminmenumain,
 #wpadminbar,
 #wpfooter,
 #wpbody-content > .update-nag,
 #wpbody-content > .notice {
   display: none;
-}
+} */
 
 a {
   text-decoration: none;

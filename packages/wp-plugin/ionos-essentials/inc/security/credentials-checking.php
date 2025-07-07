@@ -3,12 +3,14 @@
 namespace ionos\essentials\security;
 
 const LEAKED_CREDENTIALS_FLAG_NAME = 'ionos_compromised_credentials_check_leak_detected_v2';
+use const ionos\essentials\PLUGIN_DIR;
 
 // exit if accessed directly
 if (! defined('ABSPATH')) {
   exit();
 }
 
+enable_credentials_checking();
 
 function check_passwords( $user_login, $pass1, $pass2 ) {
   if ( $pass1 !== $pass2 ) {
@@ -50,9 +52,9 @@ function is_leaked( $user_login, $password ) {
   return strpos( wp_remote_retrieve_body( $response ), $suffix ) !== false;
 }
 
-if ( ! is_ssl() ) {
-  return;
-}
+// if ( ! is_ssl() ) {
+//   return;
+// }
 
 function enable_credentials_checking() {
   register_wp_login_hooks();
@@ -81,7 +83,6 @@ function register_wp_login_hooks() {
     add_filter( 'authenticate', __NAMESPACE__ . '\authenticate' , 100, 3 );
   }
 }
-^
 
 function has_leaked_flag( $user_id ) {
   return (bool) get_user_meta( $user_id, LEAKED_CREDENTIALS_FLAG_NAME, true );
