@@ -131,10 +131,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   dashboard.querySelectorAll('.input-switch').forEach((switchElement) => {
     switchElement.addEventListener('click', async function (event) {
-     const option = event.target.dataset.option || ''
-     const key = event.target.id
+     const option = event.target.dataset.option ?? '';
+     const key = event.target.id;
      const value = event.target.checked;
-     const description = event.target.dataset.description || '';
+     const description = event.target.dataset.description ?? '';
 
 
      try {
