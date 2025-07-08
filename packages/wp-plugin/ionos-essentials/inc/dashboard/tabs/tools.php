@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard;
 
+use function ionos\essentials\is_stretch;
+
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
@@ -56,15 +58,17 @@ render_section([
   'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
 ]);
 
-render_section([
-  'title'       => \esc_html__('Enable XML-RPC Guard', 'ionos-essentials'),
-  'id'          => IONOS_SECURITY_FEATURE_OPTION_XMLRPC,
-  'description' => \esc_html__(
-    'Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website.',
-    'ionos-essentials'
-  ),
-  'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_XMLRPC) ? 'checked' : '',
-]);
+if (! is_stretch()) {
+  render_section([
+    'title'       => \esc_html__('Enable XML-RPC Guard', 'ionos-essentials'),
+    'id'          => IONOS_SECURITY_FEATURE_OPTION_XMLRPC,
+    'description' => \esc_html__(
+      'Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website.',
+      'ionos-essentials'
+    ),
+    'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_XMLRPC) ? 'checked' : '',
+  ]);
+}
 
 render_section([
   'title'       => \esc_html__('Prohibit Email Login', 'ionos-essentials'),

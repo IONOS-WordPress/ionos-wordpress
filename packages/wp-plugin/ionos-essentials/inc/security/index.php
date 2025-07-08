@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\security;
 
+use function ionos\essentials\is_stretch;
+
 // exit if accessed directly
 if (! defined('ABSPATH')) {
   exit();
@@ -24,9 +26,10 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
 
 \add_action('init', function () {
   $security_options = \get_option(IONOS_SECURITY_FEATURE_OPTION, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
-
-  if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]) {
-    require_once __DIR__ . '/xmlrpc.php';
+  if (! is_stretch()) {
+    if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]) {
+      require_once __DIR__ . '/xmlrpc.php';
+    }
   }
   if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL]) {
     require_once __DIR__ . '/pel.php';
