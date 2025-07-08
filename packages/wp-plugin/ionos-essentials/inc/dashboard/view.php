@@ -123,7 +123,7 @@ use const ionos\essentials\PLUGIN_DIR;
 
 <?php blocks\welcome\render_callback(); ?>
 
-<main id="content" class="<?php echo \ionos\essentials\maintenance_mode\is_maintenance_mode() ? 'ionos-maintenance-mode' : ''; ?>">
+<main id="content" class="<?php \ionos\essentials\maintenance_mode\is_maintenance_mode() && printf('ionos-maintenance-mode'); ?>">
   <div class="page-section">
     <?php blocks\banner\render_callback(); ?>
   </div>

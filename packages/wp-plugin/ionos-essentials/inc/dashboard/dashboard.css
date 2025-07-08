@@ -35,6 +35,7 @@ main{
   z-index: 1;
   background: rgba(255, 255, 255, 0.95);
   border: 0;
+  padding: 0;
 
   .dialog__content{
     display: flex;
@@ -47,7 +48,7 @@ main{
     flex-wrap: wrap;
     width: 90%;
     max-width: 800px;
-    height: 400px;
+    height: fit-content;
     display: flex;
     border: 2px solid black;
   }

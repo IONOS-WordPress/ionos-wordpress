@@ -130,37 +130,42 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   dashboard.querySelectorAll('.input-switch').forEach((switchElement) => {
-    switchElement.addEventListener('click', function (event) {
-     const option = event.target.dataset.option || ''
-     const key = event.target.id
-     const value = event.target.checked ? 1 : 0;
-     const description = event.target.dataset.description || '';
+    switchElement.addEventListener('click', async function (event) {
+     const option = event.target.dataset.option ?? '';
+     const key = event.target.id;
+     const value = event.target.checked;
+     const description = event.target.dataset.description ?? '';
 
-    fetch(wpData.restUrl + 'ionos/essentials/option/set', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-WP-Nonce': wpData.nonce,
-      },
-      body: JSON.stringify({
-        option,
-        key,
-        value,
-      }),
-    }).then((response) => {
-      if(!response.ok) {
-        window.EXOS.snackbar.warning("Error updating option " + key);
-        return;
+
+     try {
+        const response = await fetch(wpData.restUrl + 'ionos/essentials/option/set', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-WP-Nonce': wpData.nonce,
+          },
+          body: JSON.stringify({
+            option,
+            key,
+            value,
+          }),
+        });
+
+        if (!response.ok) {
+          window.EXOS.snackbar.warning("Error updating option " + key);
+          return;
+        }
+
+        const data = await response.json();
+
+        if (data.value) {
+          window.EXOS.snackbar.success(description + ' ' + wpData.i18n.activated);
+        } else {
+          window.EXOS.snackbar.critical(description + ' ' + wpData.i18n.deactivated);
+        }
+      } catch (error) {
+        window.EXOS.snackbar.warning("Network error updating option " + key);
       }
-      return response.json();
-    }).then((response) => {
-      if(response.value){
-        window.EXOS.snackbar.success(description + ' ' + wpData.i18n.activated);
-      }else{
-        window.EXOS.snackbar.critical(description + ' ' + wpData.i18n.deactivated);
-      }
-    })
 
     });
   });
