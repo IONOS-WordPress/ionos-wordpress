@@ -29,11 +29,9 @@ Example: packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/
   react/storybook tests utilize playwright to test the components in storybook.
 
   **For frontend testing we can use the same framework - playwright 🙌**
-
   - Run tests continuously when files change : `pnpm watch -- pnpm test:react`
 
   - vscode supports running tests by clicking on the play button in the test file.
-
     - same same for debugging tests.
 
     > [!TIP]
@@ -54,7 +52,6 @@ Example: `packages/wp-plugin/essentials/inc/dashboard/tests/phpunit/AcceptanceTe
 - run when ever you changed a file : `pnpm watch -- pnpm test:php`
 
 - debug phpunit tests :
-
   - start `wp-env` launch configuration in vscode
 
   - start phpunit tests `pnpm test:php`
@@ -72,11 +69,9 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
   or even simpler `pnpm run test:e2e example.spec.js` (paths can be skipped ion Playwright)
 
 - run whenever you changed a file : `pnpm watch -- pnpm test:e2e`
-
   - run a single e2e test without rebuilding and checking wp-env is alive in playwright debug mode : `pnpm exec playwright test -c ./playwright.config.js --debug ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
 - vscode supports running e2e tests by clicking on the play button in the test file.
-
   - same same for debugging tests.
 
   > [!TIP]

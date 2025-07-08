@@ -86,13 +86,14 @@ function _install()
       \delete_plugins(['ionos-assistant/ionos-assistant.php']);
       update_plugin('ionos-marketplace/ionos-marketplace.php', false);
       \update_option('ionos_migration_step', 2);
+      // no break
     case version_compare($last_installed_version, '1.0.10', '<'):
       \deactivate_plugins('ionos-security/ionos-security.php');
       \delete_plugins(['ionos-security/ionos-security.php']);
 
-      $xmlrpc_guard_enabled = \get_option( 'xmlrpc_guard_enabled', 1) === 1;
-      $pel_enabled = get_option( 'pel_enabled', 1) === 1;
-      $credentials_check_enabled = get_option( 'credentials_check_enabled',1 ) === 1;
+      $xmlrpc_guard_enabled      = 1 === \get_option('xmlrpc_guard_enabled', 1);
+      $pel_enabled               = 1 === get_option('pel_enabled', 1);
+      $credentials_check_enabled = 1 === get_option('credentials_check_enabled', 1);
 
       \delete_option('xmlrpc_guard_enabled');
       \delete_option('pel_enabled');
@@ -100,9 +101,9 @@ function _install()
 
       // @TODO: migrate wpscan option for mail notification
 
-      $security_options = IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
-      $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC] = $xmlrpc_guard_enabled;
-      $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL] = $pel_enabled;
+      $security_options                                                     = IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
+      $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]               = $xmlrpc_guard_enabled;
+      $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL]                  = $pel_enabled;
       $security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING] = $credentials_check_enabled;
 
       \add_option(IONOS_SECURITY_FEATURE_OPTION, $security_options, null, true);

@@ -13,9 +13,8 @@ require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/misc.php';
 
 use const ionos\essentials\PLUGIN_DIR;
-
-use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 
 const REQUIRED_USER_CAPABILITIES = 'read';
 
@@ -229,7 +228,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
         $key    = $params['key']         ?? '';
         $value  = $params['value']       ?? '';
 
-        $options       = \get_option($option, IONOS_SECURITY_FEATURE_OPTION_DEFAULT );
+        $options       = \get_option($option, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
         $options[$key] = $value;
         \update_option($option, $options);
 

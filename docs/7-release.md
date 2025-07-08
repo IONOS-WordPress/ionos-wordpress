@@ -57,7 +57,6 @@ Caveats:
   The pre-release pipeline (`./.github/workflows/pre-release.yml`) will be triggered and the pre release will be created.
 
   See header of the `./scripts/pre-release.sh` script for a detailed explanation of the pre release process.
-
   - the newly created pre release is will be [flagged](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) as `pre-release` in GitHub.
 
 Caveats:
@@ -69,7 +68,6 @@ Caveats:
 - For pre releasing locally you need to [create a fine-grained personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token)
 
   **Important** : You need to create a **New personal access token (classic)** (at https://github.com/settings/tokens) with the following scopes:
-
   - `repo`
   - `workflow`
   - `write:packages`
@@ -105,7 +103,6 @@ Promoting a new release will be done by the pre release pipeline (`./.github/wor
   The release contains a asset `ionos-essentials-0.2.0-php7.4.zip`.
 
   After triggering the release pipeline release `@wordpress/latest` will be updated
-
   - with the description `latest release is @ionos-wordpress/essentials@0.2.0`
 
   - attached asset `ionos-essentials-latest-php7.4.zip`. This asset is exactly the same file as `ionos-essentials-0.2.0-php7.4.zip`.
@@ -119,7 +116,6 @@ See header of the `./scripts/release.sh` script for a detailed explanation of th
 - For pre releasing locally you need to [create a fine-grained personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token)
 
   **Important** : You need to create a **New personal access token (classic)** (at https://github.com/settings/tokens) with the following scopes:
-
   - `repo`
   - `workflow`
   - `write:packages`
