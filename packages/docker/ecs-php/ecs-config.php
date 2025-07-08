@@ -82,7 +82,7 @@ return $configure->withRules([
   ->withConfiguredRule(BinaryOperatorSpacesFixer::class, [
     'default' => 'align',
   ])
-  ->withConfiguredRule(GlobalVariablesOverrideSniff::class, [
-    'treat_files_as_scoped' => true,
-  ])
+  // ->withConfiguredRule(GlobalVariablesOverrideSniff::class, [
+  //   'treat_files_as_scoped' => true,
+  // ])
 ;
