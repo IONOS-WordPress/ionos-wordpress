@@ -112,11 +112,8 @@ function render_section($args)
 
 function get_settings_value($key)
 {
-  static $options = null;
 
-  if (null === $options) {
-    $options = \get_option(IONOS_SECURITY_FEATURE_OPTION, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
-  }
+  static $options = \get_option(IONOS_SECURITY_FEATURE_OPTION, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
 
   return $options[$key] ?? false;
 }
