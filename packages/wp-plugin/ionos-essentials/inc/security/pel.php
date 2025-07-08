@@ -2,9 +2,6 @@
 
 namespace ionos\essentials\security;
 
-use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
-use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_PEL;
-
 // exit if accessed directly
 if (! defined('ABSPATH')) {
   exit();
