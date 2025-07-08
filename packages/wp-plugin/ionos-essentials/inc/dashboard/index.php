@@ -225,8 +225,8 @@ const REQUIRED_USER_CAPABILITIES = 'read';
     [
       'methods'             => 'POST',
       'permission_callback' => fn () => 0 !== \get_current_user_id(),
-      'callback'            => function () {
-        $params = json_decode(file_get_contents('php://input'), true);
+      'callback'            => function ($request) {
+        $params = $request->get_json_params();
         $option = $params['option'] ?? '';
         $key    = $params['key']    ?? '';
         $value  = $params['value']  ?? '';

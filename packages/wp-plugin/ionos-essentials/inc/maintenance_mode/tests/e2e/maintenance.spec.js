@@ -4,19 +4,15 @@ import { execTestCLI } from '../../../../../../../playwright/wp-env.js';
 test.describe('Maintenance', () => {
 
   test.beforeAll(async () => {
-    try {
       execTestCLI(
         `wp option delete ionos_essentials_maintenance_mode`
       );
-    } catch (error) {}
   });
 
   test.afterAll(async () => {
-    try {
       execTestCLI(
         `wp option delete ionos_essentials_maintenance_mode`
       );
-    } catch (error) {}
   });
 
 
