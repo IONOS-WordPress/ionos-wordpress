@@ -7,11 +7,6 @@ if (! defined('ABSPATH')) {
   exit();
 }
 
-if ( ! \get_option( 'IONOS_SECURITY_FEATURE_OPTION[IONOS_SECURITY_FEATURE_OPTION_SSL]', false ) ) {
-			return;
-		}
-
-
 if ( ! get_transient( 'ionos-ssl-check-notice-dismissed' ) ) {
   add_action( 'admin_notices', [ __CLASS__, 'admin_notice' ] );
   // add_action( 'admin_enqueue_scripts', [ __CLASS__, 'enqueue_script' ] );
