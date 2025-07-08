@@ -1,0 +1,22 @@
+.ionos-wpscan {
+  border: 1px solid red;
+  margin: 28px;
+
+  .settings-stripe__label{
+    &::before {
+      content: "\f106";
+      font-family: 'dashicons';
+      margin-right: 0.8em;
+    }
+  }
+
+  .theme .settings-stripe__label{
+    &::before {
+      content: "\f100";
+    }
+  }
+
+
+}
+
+

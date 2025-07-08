@@ -109,7 +109,12 @@ use const ionos\essentials\PLUGIN_DIR;
   src: \plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR),
   ver: filemtime(PLUGIN_DIR . '/inc/dashboard/dashboard.css')
 );
-\wp_print_styles('ionos-essentials-dashboard');
+\wp_register_style(
+  handle: 'ionos-wpscan',
+  src: \plugins_url('ionos-essentials/inc/wpscan/wpscan.css', PLUGIN_DIR),
+  ver: filemtime(PLUGIN_DIR . '/inc/wpscan/wpscan.css')
+);
+\wp_print_styles(['ionos-essentials-dashboard', 'ionos-wpscan']);
 
 \wp_register_script('ionos-exos-js', 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.js', [], true);
 \wp_print_scripts('ionos-exos-js');
