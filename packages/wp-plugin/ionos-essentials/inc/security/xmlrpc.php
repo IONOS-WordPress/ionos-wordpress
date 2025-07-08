@@ -12,6 +12,7 @@ const allowlistIP4 = [
               "195.234.108.0\/22" ];
 
 const allowlistIP6 = [];
+
 // exit if accessed directly
 if (! defined('ABSPATH')) {
   exit();
@@ -49,9 +50,9 @@ function disable_xmlrpc_methods() {
 
 
 function enable_xmlrpc_methods_allowlisting() {
-  // if ( ! is_xmlrpc_request() ) {
-  //   return;
-  // }
+  if ( ! is_xmlrpc_request() ) {
+    return;
+  }
 
   if ( ! isset( $_SERVER['REMOTE_ADDR'] ) ) {
     disable_xmlrpc_methods();
