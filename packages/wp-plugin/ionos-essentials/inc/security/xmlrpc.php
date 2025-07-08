@@ -2,20 +2,24 @@
 
 namespace ionos\essentials\security;
 
+const allowlistIP4 = [
+              "122.248.245.244\/32",
+              "54.217.201.243\/32",
+              "54.232.116.4\/32",
+              "192.0.80.0\/20",
+              "192.0.96.0\/20",
+              "192.0.112.0\/20",
+              "195.234.108.0\/22" ];
+
+const allowlistIP6 = [];
 // exit if accessed directly
 if (! defined('ABSPATH')) {
   exit();
 }
 
-if ( ! \get_option( 'IONOS_SECURITY_FEATURE_OPTION[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]' ) ) {
-  return;
-}
-
-
 // Check if toggle is switched on.
-if ( \get_option( 'IONOS_SECURITY_FEATURE_OPTION[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]' ) ) {
-  enable_xmlrpc_methods_allowlisting();
-}
+enable_xmlrpc_methods_allowlisting();
+
 
 function ipv4_in_cidr( $ipv4, $cidr ) {
   list ( $subnet, $mask ) = explode( '/', $cidr );
@@ -45,9 +49,9 @@ function disable_xmlrpc_methods() {
 
 
 function enable_xmlrpc_methods_allowlisting() {
-  if ( ! is_xmlrpc_request() ) {
-    return;
-  }
+  // if ( ! is_xmlrpc_request() ) {
+  //   return;
+  // }
 
   if ( ! isset( $_SERVER['REMOTE_ADDR'] ) ) {
     disable_xmlrpc_methods();
@@ -56,25 +60,8 @@ function enable_xmlrpc_methods_allowlisting() {
   $ip = $_SERVER['REMOTE_ADDR'];
 
 
-/*
-  "allowLists": {
-      "cidr": {
-          "ipv4": [
-              "122.248.245.244\/32",
-              "54.217.201.243\/32",
-              "54.232.116.4\/32",
-              "192.0.80.0\/20",
-              "192.0.96.0\/20",
-              "192.0.112.0\/20",
-              "195.234.108.0\/22"
-          ],
-          "ipv6": []
-      }
-  }
-*/
-
   if ( filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) !== false ) {
-    $ipv4_allow_list = Config::get( 'features.xmlrpcGuard.allowLists.cidr.ipv4' );
+    $ipv4_allow_list = allowlistIP4;
     foreach ( $ipv4_allow_list as $cidr ) {
       if ( ipv4_in_cidr( $ip, $cidr ) !== false ) {
         return;
@@ -84,7 +71,7 @@ function enable_xmlrpc_methods_allowlisting() {
 
   if ( filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) !== false ) {
 
-    $ipv6_allow_list = Config::get( 'features.xmlrpcGuard.allowLists.cidr.ipv6' );
+    $ipv6_allow_list = allowlistIP6;
     foreach ( $ipv6_allow_list as $cidr ) {
       if ( ipv6_in_cidr( $ip, $cidr ) !== false ) {
         return;
