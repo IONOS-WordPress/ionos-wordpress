@@ -43,7 +43,6 @@ use const ionos\essentials\PLUGIN_DIR;
                     </span>
                 </div>
             </div>
-          </section>
         </div>
 
         <h3 class="headline headline--sub"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
@@ -71,6 +70,9 @@ render_section([
   'checked'      => get_settings_value('mailnotify') ? 'checked' : '',
 ]);
 ?>
+                </div>
+                <div class="grid-col grid-col--12">
+                   <?php \ionos\essentials\wpscan\render_issues(  ); ?>
                 </div>
               </div>
             </div>
