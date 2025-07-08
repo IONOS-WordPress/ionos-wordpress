@@ -8,7 +8,7 @@
  * Requires PHP:      8.3
  * Version:           1.0.9
  * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json
- * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials
+ * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials
  * License:           GPL-2.0-or-later
  * Author:            IONOS Group
  * Author URI:        https://www.ionos-group.com/brands.html

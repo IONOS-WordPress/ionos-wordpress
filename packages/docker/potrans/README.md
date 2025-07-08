@@ -17,5 +17,5 @@ See [potrans](https://github.com/OzzyCzech/potrans) homepage for all options.
 ## Example usage
 
 ```bash
-docker run -q -it --rm --user "$(id -u $USER):$(id -g $USER)" -v $(pwd):/project ionos-wordpress/potrans deepl --from="en" --to="de_DE" --no-cache --apikey='your-deepl-api-key' packages/wp-plugin/essentials/languages/essentials-de_DE.po packages/wp-plugin/essentials/languages/
+docker run -q -it --rm --user "$(id -u $USER):$(id -g $USER)" -v $(pwd):/project ionos-wordpress/potrans deepl --from="en" --to="de_DE" --no-cache --apikey='your-deepl-api-key' packages/wp-plugin/ionos-essentials/languages/essentials-de_DE.po packages/wp-plugin/ionos-essentials/languages/
 ```
