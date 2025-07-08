@@ -13,7 +13,7 @@ docker run \
   $DOCKER_FLAGS \
   --rm \
   --user "$DOCKER_USER" \
-  -v $(pwd)/packages/wp-plugin/essentials:/project/dist \
+  -v $(pwd)/packages/wp-plugin/ionos-essentials:/project/dist \
   -v $(pwd)/packages/docker/rector-php/rector-fix-types.php:/project/rector-fix-types.php \
   ionos-wordpress/rector-php \
   --clear-cache \
