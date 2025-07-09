@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const activeTabIndex = tabs.indexOf(activeTab);
 
       document.querySelector('li.current')?.classList.remove('current')
-      document.querySelector('#toplevel_page_ionos .wp-submenu li:nth-child(' + (activeTabIndex + 2) + ')').classList.add('current')
+      document.querySelector('[id^="toplevel_page_"] .wp-submenu li:nth-child(' + (activeTabIndex + 2) + ')').classList.add('current')
     }
   });
 
