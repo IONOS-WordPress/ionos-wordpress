@@ -1,5 +1,5 @@
-.ionos-wpscan {
-  border: 1px solid red;
+.ionos-wpscan{
+  border: 1px solid var(--critical-text-color,#c80a00);;
   margin: 28px;
 
   .settings-stripe__label{
@@ -16,7 +16,19 @@
     }
   }
 
+  .default-text-color {
+    color: var(--default-text-color,#001b41);
+  }
 
+}
+
+.ionos-wpscan-summary{
+  .issue-row{
+    font-size: 150%;
+  }
+  .ionos_vulnerability__content{
+    background-image: none !important;
+  }
 }
 
 

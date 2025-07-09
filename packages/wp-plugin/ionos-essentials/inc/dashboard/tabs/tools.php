@@ -50,7 +50,7 @@ use const ionos\essentials\PLUGIN_DIR;
               <div class="grid">
                 <div class="grid-col grid-col--4 grid-col--small-12">
                   <section class="sheet__section">
-                    <?php blocks\vulnerability\render_callback(); ?>
+                    <?php \ionos\essentials\wpscan\render_summary(); ?>
                   </section>
                 </div>
                 <div class="grid-col grid-col--8 grid-col--small-12">

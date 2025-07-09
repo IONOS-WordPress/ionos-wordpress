@@ -1,9 +1,48 @@
 <?php
 namespace ionos\essentials\wpscan;
 
-?>
 
-<?php function render_issues() { ?>
+function render_summary() { ?>
+  <div class="card ionos_vulnerability ionos-wpscan-summary high">
+    <div class="card__content">
+      <section class="card__section">
+
+      <div style="display: flex; align-items: center;">
+        <div class="paragraph--critical" style="margin-right: 1em;">
+          <i class="exos-icon exos-icon-warningmessage-32"></i>
+        </div>
+        <div>
+          <h2 class="headline headline--sub"><?php echo \esc_html__('Vulnerability scan', 'ionos-essentials'); ?></h2>
+          <div class="ionos_vulnerability__content">
+            <div class="issue-row high">
+              <span class="bubble high">1</span> <?php echo \esc_html__('critical issue found', 'ionos-essentials'); ?>
+            </div>
+            <div class="issue-row medium">
+              <span class="bubble high">1</span> <?php echo \esc_html__('warnings found', 'ionos-essentials'); ?>
+            </div>
+          </div>
+          <p class="paragraph paragraph--small">
+            <?php echo \esc_html__('Last scan ran', 'ionos-essentials'); ?>
+            7
+            <?php echo \esc_html__('hours ago', 'ionos-essentials'); ?>
+          </p>
+        </div>
+      </div>
+
+
+        <p class="paragraph">
+          We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database. <a href="javascript: alert('How dare you to test this function sooo early');" class="link link--lookup">Learn more</a>
+        </p>
+
+      </section>
+
+    </div>
+  </div>
+
+
+<?php
+}
+function render_issues() { ?>
 <div class="sheet ionos-wpscan">
   <section class="sheet__section">
     <div class="grid">
@@ -13,7 +52,7 @@ namespace ionos\essentials\wpscan;
                 $count = 5;
                 echo esc_html( sprintf( \_n( 'One critical issue', '%d critical issues', $count, 'ionos-essentials' ), $count ) );
               ?>
-              <i class="exos-icon exos-icon-info-outlined-16" data-tooltip="HI"></i>
+              <i class="exos-icon exos-icon-info-outlined-16 default-text-color"  data-tooltip="HI"></i>
               </h2>
         </div>
 
