@@ -6,52 +6,47 @@ require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 use Automatic_Upgrader_Skin;
 use Plugin_Upgrader;
-use WP_User;
-
 use const ionos\essentials\PLUGIN_DIR;
 
-const HIDDEN_PAGE_SLUG = 'ionos-assistant-jetpack-backup-flow';
+const HIDDEN_PAGE_SLUG            = 'ionos-assistant-jetpack-backup-flow';
 const INSTALL_JETPACK_OPTION_NAME = 'assistant_jetpack_backup_flow_pending';
-const SSO_ACTIONS = ['ionos_oauth_authenticate', 'ionos_oauth_register'];
+const SSO_ACTIONS                 = ['ionos_oauth_authenticate', 'ionos_oauth_register'];
 const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 
 \add_filter(
   'login_redirect',
-  fn($redirect_to, $requested_redirect_to, $user) =>
-    _redirect_after_login($user, $redirect_to, $requested_redirect_to)
-  ,
+  fn ($redirect_to, $requested_redirect_to, $user) =>
+    _redirect_after_login($user, $redirect_to, $requested_redirect_to),
   90,
   3
 );
 
 \add_action(
-  'one_time_login_after_auth_cookie_set', fn($user) =>
+  'one_time_login_after_auth_cookie_set',
+  fn ($user) =>
     \wp_safe_redirect(_redirect_after_login($user, \admin_url())) && exit,
   10,
   1
 );
 
 // Redirects the user to the Jetpack page instead of the My Jetpack page.
-\add_filter('wp_redirect', function(string $location) : string {
+\add_filter('wp_redirect', function (string $location): string {
   $query = \wp_parse_url($location, PHP_URL_QUERY) ?? '';
   parse_str($query, $query_params);
 
-  if('my-jetpack' === ($query_params['page'] ?? '')) {
+  if ('my-jetpack' === ($query_params['page'] ?? '')) {
     $query_params['page'] = 'jetpack';
-    $location             = \add_query_arg(
-      $query_params,
-      \wp_parse_url($location, PHP_URL_PATH)
-    );
+    $location             = \add_query_arg($query_params, \wp_parse_url($location, PHP_URL_PATH));
   }
 
   return $location;
 });
 
-\add_action('init', function () : void {
+\add_action('init', function (): void {
   if (str_contains(\wp_login_url(), $_SERVER['SCRIPT_NAME'])) {
     \add_filter(
       'ionos_login_redirect_to',
-      function ($redirect_to, $requested_redirect_to, $logged_user) : string {
+      function ($redirect_to, $requested_redirect_to, $logged_user): string {
         $current_user_authorized = ($logged_user instanceof \WP_User && $logged_user->has_cap('manage_options'));
 
         if (! $current_user_authorized) {
@@ -96,7 +91,6 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
     exit;
   }
 
-
   $menu_page_title = __('Assistant', 'ionos-essentials');
   \add_menu_page(
     page_title: $menu_page_title,
@@ -105,7 +99,7 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
     menu_slug: HIDDEN_PAGE_SLUG,
     callback: function () use ($url_params) {
       $step = $_GET['step'] ?? 'confirm';
-      if($step === 'install') {
+      if ('install' === $step) {
         _render_install();
       } else {
         _render_confirm();
@@ -115,14 +109,11 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 
   \add_action(
     'admin_page_access_denied',
-    function () use ($url_params) : void {
-      $url = add_query_arg(
-        [
-          'page'   => HIDDEN_PAGE_SLUG,
-          'coupon' => $url_params['coupon'],
-        ],
-        \admin_url()
-      );
+    function () use ($url_params): void {
+      $url = add_query_arg([
+        'page'   => HIDDEN_PAGE_SLUG,
+        'coupon' => $url_params['coupon'],
+      ], \admin_url());
 
       \wp_redirect($url);
       exit;
@@ -131,18 +122,18 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 
   \add_action(
     'admin_init',
-    function () : void {
+    function (): void {
       if (! \current_user_can('manage_options')) {
         return;
       }
 
-      if(($_GET['step'] ?? 'confirm') === 'install') {
+      if (($_GET['step'] ?? 'confirm') === 'install') {
         _install_jetpack_plugin();
       }
     }
   );
 
-  \add_action('admin_enqueue_scripts', function ($hook_suffix) : void {
+  \add_action('admin_enqueue_scripts', function ($hook_suffix): void {
     if ('toplevel_page_' . HIDDEN_PAGE_SLUG !== $hook_suffix) {
       return;
     }
@@ -156,13 +147,15 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
   });
 });
 
-function _has_jetpack_backup_flow_params($params) : bool {
+function _has_jetpack_backup_flow_params($params): bool
+{
   return is_array($params)
       && isset($params['page'], $params['coupon'])
       && in_array($params['page'], [HIDDEN_PAGE_SLUG, 'ionos-assistant']);
 }
 
-function _get_params_from_url($url) : ?array {
+function _get_params_from_url($url): ?array
+{
   $url_query_string = \wp_parse_url($url, PHP_URL_QUERY);
   if (! is_string($url_query_string)) {
     return null;
@@ -173,12 +166,13 @@ function _get_params_from_url($url) : ?array {
   return $params;
 }
 
-function _redirect_after_login($user, $redirect_to, $requested_redirect_to = '') : string
+function _redirect_after_login($user, $redirect_to, $requested_redirect_to = ''): string
 {
   return \apply_filters('ionos_login_redirect_to', $redirect_to, $requested_redirect_to, $user);
 }
 
-function _is_plugin_installed($plugin_slug) : bool {
+function _is_plugin_installed($plugin_slug): bool
+{
   $installed_plugins = \get_plugins();
 
   foreach ($installed_plugins as $plugin_path => $wp_plugin_data) {
@@ -190,7 +184,8 @@ function _is_plugin_installed($plugin_slug) : bool {
   return false;
 }
 
-function _install_jetpack_plugin() : void {
+function _install_jetpack_plugin(): void
+{
   $option_value = \get_option(INSTALL_JETPACK_OPTION_NAME);
 
   if (false === $option_value) {
@@ -204,7 +199,7 @@ function _install_jetpack_plugin() : void {
 
   if ('0' === $option_value) {
     if (! _is_plugin_installed('jetpack')) {
-          // Install from repo
+      // Install from repo
       $api = plugins_api('plugin_information', [
         'slug'   => 'jetpack',
         'fields' => [
@@ -230,16 +225,17 @@ function _install_jetpack_plugin() : void {
   }
 }
 
-function _render_confirm() : void {
-  $coupon = \esc_attr($_GET['coupon']);
-  $hidden_page_slug_attr = \esc_attr(HIDDEN_PAGE_SLUG);
-  $title = \esc_html__('Installing Jetpack Backup', 'ionos-essentials');
-  $jetpack_logo_src_attr = \esc_attr(\plugins_url('assets/jetpack-logo.svg', __FILE__));
-  $jetpack_install_message = \esc_html__('We are going to install Jetpack Backup now.', 'ionos-essentials');
+function _render_confirm(): void
+{
+  $coupon                      = \esc_attr($_GET['coupon']);
+  $hidden_page_slug_attr       = \esc_attr(HIDDEN_PAGE_SLUG);
+  $title                       = \esc_html__('Installing Jetpack Backup', 'ionos-essentials');
+  $jetpack_logo_src_attr       = \esc_attr(\plugins_url('assets/jetpack-logo.svg', __FILE__));
+  $jetpack_install_message     = \esc_html__('We are going to install Jetpack Backup now.', 'ionos-essentials');
   $jetpack_install_button_text = \esc_html__('Ok', 'ionos-essentials');
-  $jetpack_no_thanks_text = \esc_html__('No thanks', 'ionos-essentials');
-  $admin_url_attr = \esc_attr(\admin_url());
-  echo <<<EOF
+  $jetpack_no_thanks_text      = \esc_html__('No thanks', 'ionos-essentials');
+  $admin_url_attr              = \esc_attr(\admin_url());
+  printf(<<<EOF
   <div class="wrapper">
     <div class="container">
       <form>
@@ -257,14 +253,18 @@ function _render_confirm() : void {
       </form>
     </div>
   </div>
-  EOF;
+  EOF);
 }
 
-function _render_install() : void {
-  $title = \esc_html__('Installing Jetpack Backup', 'ionos-essentials');
-  $jetpack_logo_src_attr = \esc_attr(\plugins_url('assets/jetpack-logo.svg', __FILE__));
-  $jetpack_install_message = \esc_html__('Please wait a moment while we are installing Jetpack Backup for you.', 'ionos-essentials');
-  echo <<<EOF
+function _render_install(): void
+{
+  $title                   = \esc_html__('Installing Jetpack Backup', 'ionos-essentials');
+  $jetpack_logo_src_attr   = \esc_attr(\plugins_url('assets/jetpack-logo.svg', __FILE__));
+  $jetpack_install_message = \esc_html__(
+    'Please wait a moment while we are installing Jetpack Backup for you.',
+    'ionos-essentials'
+  );
+  printf(<<<EOF
   <div class="wrapper">
     <div class="container">
       <h1 class="screen-reader-text">{$title}</h1>
@@ -272,5 +272,5 @@ function _render_install() : void {
       <p>{$jetpack_install_message}</p>
     </div>
   </div>
-  EOF;
+  EOF);
 }
