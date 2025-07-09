@@ -12,7 +12,7 @@ use ionos\essentials\jetpack_flow\Manager;
       <input type="hidden" name="step" value="install">
 
       <h1 class="screen-reader-text"><?php esc_html_e('Jetpack Backup', 'ionos-essentials'); ?></h1>
-      <img src="<?php echo esc_attr(\plugins_url('', __DIR__) . '/img/jetpack-logo.svg'); ?>" class="jetpack-logo" alt="">
+      <img src="<?php echo esc_attr(\plugins_url('jetpack-logo.svg', __FILE__)); ?>" class="jetpack-logo">
       <p><?php esc_html_e('We are going to install Jetpack Backup now.', 'ionos-essentials'); ?></p>
       <div class="buttons">
         <button class="btn primarybtn" type="submit"><?php esc_html_e('Ok', 'ionos-essentials'); ?></button>
