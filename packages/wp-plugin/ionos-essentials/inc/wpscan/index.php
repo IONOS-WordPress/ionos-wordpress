@@ -86,5 +86,5 @@ function render_issues() { ?>
     </div>
   </section>
 </div>
-<?php } ?>
+<?php }
 
