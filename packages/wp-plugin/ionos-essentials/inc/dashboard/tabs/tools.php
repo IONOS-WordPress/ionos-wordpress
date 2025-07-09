@@ -48,12 +48,12 @@ use const ionos\essentials\PLUGIN_DIR;
         <h3 class="headline headline--sub"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
           <div class="sheet">
               <div class="grid">
-                <div class="grid-col grid-col--4 grid-col--small-12">
+                <div class="grid-col grid-col--6 grid-col--small-12">
                   <section class="sheet__section">
                     <?php \ionos\essentials\wpscan\render_summary(); ?>
                   </section>
                 </div>
-                <div class="grid-col grid-col--8 grid-col--small-12">
+                <div class="grid-col grid-col--6 grid-col--small-12">
                 <?php
                 $description=  sprintf('<strong style="font-size: 1.2em">%s</strong>
                       <br><br>
@@ -71,9 +71,31 @@ render_section([
 ]);
 ?>
                 </div>
-                <div class="grid-col grid-col--12">
-                   <?php \ionos\essentials\wpscan\render_issues(  ); ?>
-                </div>
+                   <?php
+                    $plugins = get_plugins();
+$themes                      = array_slice(wp_get_themes(), 0, 1, true);
+shuffle($plugins);
+shuffle($themes);
+$critical_issues = array_merge($plugins, $themes);
+
+$themes = array_slice(wp_get_themes(), 0, 2, true);
+shuffle($plugins);
+$plugins = array_slice($plugins, 0, 1, true);
+shuffle($themes);
+$warnings = array_merge($plugins, $themes);
+
+\ionos\essentials\wpscan\render_issues([
+  'type'      => 'high',
+  'exos_class'=>
+  'critical',
+  'issues' => $critical_issues,
+]);
+\ionos\essentials\wpscan\render_issues([
+  'type'      => 'medium',
+  'exos_class'=> 'warning',
+  'issues'    => $warnings,
+]);
+?>
               </div>
             </div>
 
@@ -81,7 +103,8 @@ render_section([
             <div>
               <?php
 render_section([
-  'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
+  'title'
+                => \esc_html__('Password monitoring', 'ionos-essentials'),
   'id'          => 'password-monitoring',
   'description' => \esc_html__(
     'Monitor password leaks. If a password is found in a data breach, you will be notified.',
@@ -91,7 +114,8 @@ render_section([
 ]);
 
 render_section([
-  'title'       => \esc_html__('Enable XML-RPC Guard', 'ionos-essentials'),
+  'title'
+                => \esc_html__('Enable XML-RPC Guard', 'ionos-essentials'),
   'id'          => 'xmlrpc',
   'description' => \esc_html__(
     'Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website.',
@@ -101,7 +125,8 @@ render_section([
 ]);
 
 render_section([
-  'title'       => \esc_html__('Prohibit Email Login', 'ionos-essentials'),
+  'title'
+                => \esc_html__('Prohibit Email Login', 'ionos-essentials'),
   'id'          => 'pel',
   'description' => \esc_html__(
     'Security disables login with email addresses. This improves security by reducing the potential attack surface.',
