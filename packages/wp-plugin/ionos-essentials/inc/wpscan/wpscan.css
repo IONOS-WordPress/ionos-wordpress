@@ -24,10 +24,12 @@
 
 .ionos-wpscan-summary{
   .issue-row{
-    font-size: 150%;
+    font-size: var(--third-level-headline-size, 16px);
   }
   .ionos_vulnerability__content{
     background-image: none !important;
+    gap: 10px;
+    margin-bottom: 1em;
   }
 }
 
