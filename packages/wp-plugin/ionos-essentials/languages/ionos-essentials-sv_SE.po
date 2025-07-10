@@ -677,7 +677,25 @@ msgid "hours ago"
 msgstr "timmar sedan"
 
 #: inc/wpscan/index.php
-msgid "One critical issue"
+msgid "%s critical issue"
 msgid_plural "%d critical issues"
-msgstr[0] "En kritisk fråga"
+msgstr[0] "%s kritisk fråga"
 msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "%s warning"
+msgid_plural "%d warnings"
+msgstr[0] "%s varning"
+msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "View update details"
+msgstr "Visa uppdateringsinformation"
+
+#: inc/wpscan/index.php
+msgid "Delete"
+msgstr "Radera"
+
+#: inc/wpscan/index.php
+msgid "Update"
+msgstr "Uppdatering"

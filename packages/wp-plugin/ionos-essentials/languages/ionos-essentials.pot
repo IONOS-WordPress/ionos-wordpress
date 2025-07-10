@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-09T16:16:14+00:00\n"
+"POT-Creation-Date: 2025-07-10T05:48:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -603,10 +603,28 @@ msgid "hours ago"
 msgstr ""
 
 #: inc/wpscan/index.php
-msgid "One critical issue"
+msgid "%s critical issue"
 msgid_plural "%d critical issues"
 msgstr[0] ""
 msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "%s warning"
+msgid_plural "%d warnings"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "View update details"
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "Delete"
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "Update"
+msgstr ""
 
 #: build/dashboard/blocks/banner/block.json
 msgctxt "block title"
