@@ -1,8 +1,9 @@
 <?php
+
 namespace ionos\essentials\wpscan;
 
-
-function render_summary() { ?>
+function render_summary()
+{ ?>
   <div class="card ionos_vulnerability ionos-wpscan-summary high">
     <div class="card__content">
       <section class="card__section">
@@ -42,49 +43,57 @@ function render_summary() { ?>
 
 <?php
 }
-function render_issues() { ?>
-<div class="sheet ionos-wpscan">
-  <section class="sheet__section">
-    <div class="grid">
-        <div class="grid-col grid-col--12">
-            <h2 class="headline headline--critical">
+function render_issues($args)
+{
+  ?>
+<div class="grid-col grid-col--12">
+  <div class="sheet ionos-wpscan <?php echo esc_attr($args['type'] ?? ''); ?>">
+    <section class="sheet__section">
+      <div class="grid">
+          <div class="grid-col grid-col--12">
+              <h2 class="headline headline--<?php echo esc_attr($args['exos_class'] ?? ''); ?>">
+                <?php
+                    $count = count($args['issues']);
+  echo ('high' === $args['type'])
+  ? esc_html(sprintf(\_n('%s critical issue', '%d critical issues', $count, 'ionos-essentials'), $count))
+  : esc_html(sprintf(\_n('%s warning', '%d warnings', $count, 'ionos-essentials'), $count));
+  ?>
+                <i class="exos-icon exos-icon-info-outlined-16 default-text-color" data-tooltip="HI"></i>
+                </h2>
+          </div>
+
+          <div class="grid grid-col-12">
+            <ul class="sheet__stripes">
               <?php
-                $count = 5;
-                echo esc_html( sprintf( \_n( 'One critical issue', '%d critical issues', $count, 'ionos-essentials' ), $count ) );
-              ?>
-              <i class="exos-icon exos-icon-info-outlined-16 default-text-color"  data-tooltip="HI"></i>
-              </h2>
-        </div>
-
-        <div class="grid grid-col-12">
-          <ul class="sheet__stripes">
-            <?php
-                $plugins = get_plugins();
-                $themes = array_slice(wp_get_themes(), 0, 1, true);
-                $critical_issues = array_merge($plugins, $themes);
-                foreach($critical_issues as $issue ){
-                  //print_r($issue);
-
-                  if(is_array($issue)){
-                    $theme_or_plugin = 'plugin';
-                  }else {
-                    $theme_or_plugin = 'theme';
-                  }
-            ?>
-              <li class="settings-stripe settings-stripe--link __direct-selection <?php echo esc_attr( $theme_or_plugin ); ?>">
-                <div class="settings-stripe__label"><strong><?php echo esc_html( $issue['Name'] ); ?></strong></div>
-                <div class="settings-stripe__value"></div>
-                <div class="settings-stripe__action"><button class="button button-primary">Update</button></div>
-              </li>
-
-            <?php } ?>
-            </ul>
-        </div>
-
-
-
-    </div>
-  </section>
+    foreach ($args['issues'] as $issue) {
+      $theme_or_plugin = (is_array($issue) ? 'plugin' : 'theme');
+      render_issue_line([
+        'issue'           => $issue,
+        'theme_or_plugin' => $theme_or_plugin,
+      ]);
+    }
+  ?>
+              </ul>
+          </div>
+      </div>
+    </section>
+  </div>
 </div>
 <?php }
 
+function render_issue_line($args)
+{
+  ?>
+ <li class="settings-stripe settings-stripe--link __direct-selection <?php echo esc_attr($args['theme_or_plugin']); ?>">
+    <div class="settings-stripe__label"><strong><?php echo esc_html($args['issue']['Name']); ?></strong></div>
+    <div class="settings-stripe__value"></div>
+    <div class="settings-stripe__action">
+      <a href="#" class="link link-action" style="margin-right: 1em;"><?php esc_html_e('View update details', 'ionos-essentials'); ?></a>
+      <button class="button delete" onClick="alert('How dare you to delete this');"><?php esc_html_e('Delete', 'ionos-essentials'); ?></button>
+      <button class="button button-primary"><?php esc_html_e('Update', 'ionos-essentials'); ?></button>
+
+    </div>
+  </li>
+
+  <?php
+}

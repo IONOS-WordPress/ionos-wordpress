@@ -1,6 +1,13 @@
 .ionos-wpscan{
-  border: 1px solid var(--critical-text-color,#c80a00);;
   margin: 28px;
+
+  &.high{
+    border: 1px solid var(--critical-text-color,#c80a00);
+  }
+
+  &.medium{
+    border: 1px solid var(--warning-text-color,#f0b849);
+  }
 
   .settings-stripe__label{
     &::before {
@@ -18,6 +25,22 @@
 
   .default-text-color {
     color: var(--default-text-color,#001b41);
+  }
+
+  .settings-stripe--link .settings-stripe__action{
+    width: 50%;
+  }
+
+  .button{
+    &.delete{
+      border-color: #cc1818;
+      color: #cc1818;
+
+      &:hover{
+        background-color: #cc1818;
+        color: white;
+      }
+    }
   }
 
 }
