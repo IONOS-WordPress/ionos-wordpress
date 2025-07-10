@@ -498,7 +498,7 @@ function ionos.wordpress.build_workspace_package() {
   local type="${path%/*}"
   # (example : essentials)
   local name="${path#*/}"
-  # (example : [curent-dir]/packages/wp-plugin/essentials)
+  # (example : [curent-dir]/packages/wp-plugin/ionos-essentials)
   local package_path="$(pwd)/packages/$path"
 
   ionos.wordpress.log_header "building workspace package ./packages/$path"

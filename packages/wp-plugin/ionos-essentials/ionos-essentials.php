@@ -8,7 +8,7 @@
  * Requires PHP:      8.3
  * Version:           1.0.9
  * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json
- * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials
+ * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials
  * License:           GPL-2.0-or-later
  * Author:            IONOS Group
  * Author URI:        https://www.ionos-group.com/brands.html
@@ -40,6 +40,10 @@ require_once __DIR__ . '/inc/descriptify/index.php';
 require_once __DIR__ . '/inc/jetpack-flow/index.php';
 require_once __DIR__ . '/inc/login/index.php';
 require_once __DIR__ . '/inc/security/index.php';
+require_once __DIR__ . '/inc/maintenance_mode/index.php';
+
+// soc plugin components
+require_once __DIR__ . '/inc/migration/index.php';
 
 function is_stretch()
 {

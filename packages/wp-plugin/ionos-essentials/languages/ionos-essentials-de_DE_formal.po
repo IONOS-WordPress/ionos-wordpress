@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: de\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-04-09 14:29+0200\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-04-09 14:29+0200\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -595,6 +595,7 @@ msgstr "Nein, danke"
 
 #: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/index.php
+#: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr "Werkzeuge"
 
@@ -633,3 +634,27 @@ msgstr "E-Mail-Anmeldung verbieten"
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
 msgstr "Sicherheit deaktiviert die Anmeldung mit E-Mail-Adressen. Dies verbessert die Sicherheit, indem es die potenzielle Angriffsfläche verringert."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Maintenance page"
+msgstr "Seite Wartung"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Active"
+msgstr "Aktiv"
+
+#: inc/dashboard/index.php
+msgid "activated."
+msgstr "aktiviert."
+
+#: inc/dashboard/index.php
+msgid "deactivated."
+msgstr "Deaktiviert."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Maintenance mode"
+msgstr "Wartungsmodus"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Preview maintenance page"
+msgstr "Vorschau der Wartungsseite"

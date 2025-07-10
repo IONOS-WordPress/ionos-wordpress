@@ -210,7 +210,9 @@ const REQUIRED_USER_CAPABILITIES = 'read';
     'restUrl'            => esc_url_raw(rest_url()),
     'securityOptionName' => IONOS_SECURITY_FEATURE_OPTION,
     'i18n'               => [
-      'installing' => esc_html__('Installing...', 'ionos-essentials'),
+      'installing'  => esc_html__('Installing...', 'ionos-essentials'),
+      'activated'   => esc_html__('activated.', 'ionos-essentials'),
+      'deactivated' => esc_html__('deactivated.', 'ionos-essentials'),
     ],
   ]);
 });
@@ -222,22 +224,29 @@ const REQUIRED_USER_CAPABILITIES = 'read';
     [
       'methods'             => 'POST',
       'permission_callback' => fn () => 0 !== \get_current_user_id(),
-      'callback'            => function () {
-        $params = json_decode(file_get_contents('php://input'), true);
-        $option = $params['option']      ?? '';
-        $key    = $params['key']         ?? '';
-        $value  = $params['value']       ?? '';
+      'callback'            => function ($request) {
+        $params = $request->get_json_params();
+        $option = $params['option'] ?? '';
+        $key    = $params['key']    ?? '';
+        $value  = $params['value']  ?? '';
 
-        $options       = \get_option($option, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
-        $options[$key] = $value;
-        \update_option($option, $options);
+        if (empty($option)) {
+          \update_option($key, $value);
+        } else {
+          $options       = \get_option($option, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
+          $options[$key] = $value;
+          \update_option($option, $options);
+        }
 
         return rest_ensure_response(new \WP_REST_Response([
           'status' => $key,
           'value'  => $value,
           'option' => $option,
+
         ], 200));
       },
     ]
   );
 }, 1);
+
+require_once __DIR__ . '/blocks/quick-links/index.php';

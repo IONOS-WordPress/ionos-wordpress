@@ -46,6 +46,59 @@ use const ionos\essentials\PLUGIN_DIR;
     line-height:1;src: url(https://ce1.uicdn.net/exos/icons/exos-icon-font.woff2?v=23) format("woff2"),url(https://ce1.uicdn.net/exos/icons/exos-icon-font.woff?v=23) format("woff");
     text-transform:none;
 }
+/* Theses rules are copied from Exos, as they has to be present outside the shadowDOM*/
+.snackbar-container {
+    bottom: 20px;
+    pointer-events: none;
+    position: fixed;
+    width: 100%;
+    z-index: 81;
+}
+.snackbar {
+    align-items: center;
+    animation-fill-mode: both;
+    border-radius: var(--small-border-radius, 8px);
+    box-shadow: var(--primary-shadow, 0 2px 8px 0 #71809580);
+    box-sizing: border-box;
+    color: var(--default-text-color, #001b41);
+    display: flex;
+    line-height: 18px;
+    margin: 0 auto;
+    max-width: 320px;
+    padding: 16px 14px;
+    transition-timing-function: ease-in-out;
+    visibility: hidden;
+}
+.snackbar--visible {
+    animation-duration: .2s;
+    animation-name: keyframes--snackbar-translate-in;
+    visibility: visible
+}
+
+.snackbar--hidden {
+    animation-duration: .2s;
+    animation-name: keyframes--snackbar-translate-out
+}
+
+.snackbar--success {
+    border: var(--semantic-container-border-width,0) solid var(--success-shape-color,#0fa954)
+}
+.snackbar--success-solid, .snackbar--warning-solid  {
+    background-color: var(--solid-success-background-color,#12cf76)
+}
+
+.snackbar--warning-solid {
+    background-color: var(--solid-warning-background-color,#fa0)
+}
+
+.snackbar--critical-solid {
+    background-color: var(--solid-critical-background-color,#ff6159)
+}
+
+.snackbar--critical-solid,.snackbar--neutral-solid {
+    border: none;
+    color: var(--default-text-color,#001b41)
+}
 </style>
 
 <template id="ionos_dashboard" shadowrootmode="open">
@@ -57,11 +110,15 @@ use const ionos\essentials\PLUGIN_DIR;
   ver: filemtime(PLUGIN_DIR . '/inc/dashboard/dashboard.css')
 );
 \wp_print_styles('ionos-essentials-dashboard');
+
+\wp_register_script('ionos-exos-js', 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.js', [], true);
+\wp_print_scripts('ionos-exos-js');
+
 ?>
 
 <?php blocks\welcome\render_callback(); ?>
 
-<main id="content">
+<main id="content" class="<?php \ionos\essentials\maintenance_mode\is_maintenance_mode() && printf('ionos-maintenance-mode'); ?>">
   <div class="page-section">
     <?php blocks\banner\render_callback(); ?>
   </div>

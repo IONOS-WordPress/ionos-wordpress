@@ -52,6 +52,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const newHash = window.location.hash.substring(1);
     if (newHash) {
       dashboard.querySelector(`[data-tab="${newHash}"]`)?.click();
+      const tabs = Array.from(dashboard.querySelectorAll('[data-tab]'));
+      const activeTab = dashboard.querySelector('.page-tabbar__link--active[data-tab]');
+      const activeTabIndex = tabs.indexOf(activeTab);
+
+      document.querySelector('li.current')?.classList.remove('current')
+      document.querySelector('#toplevel_page_ionos .wp-submenu li:nth-child(' + (activeTabIndex + 2) + ')').classList.add('current')
     }
   });
 
@@ -124,24 +130,41 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   dashboard.querySelectorAll('.input-switch').forEach((switchElement) => {
-    switchElement.addEventListener('click', function (event) {
-     const option= wpData.securityOptionName
-     const key = event.target.id
-     const  value = event.target.checked ? true : false;
+    switchElement.addEventListener('click', async function (event) {
+     const option = event.target.dataset.option ?? '';
+     const key = event.target.id;
+     const value = event.target.checked;
+     const description = event.target.dataset.description ?? '';
 
-      fetch(wpData.restUrl + 'ionos/essentials/option/set', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wpData.nonce,
-        },
-        body: JSON.stringify({
-          option,
-          key,
-          value,
-        }),
-      })
+     try {
+        const response = await fetch(wpData.restUrl + 'ionos/essentials/option/set', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-WP-Nonce': wpData.nonce,
+          },
+          body: JSON.stringify({
+            option,
+            key,
+            value,
+          }),
+        });
+
+        if (!response.ok) {
+          window.EXOS.snackbar.warning("Error updating option " + key);
+          return;
+        }
+
+        const data = await response.json();
+
+        if (data.value) {
+          window.EXOS.snackbar.success(description + ' ' + wpData.i18n.activated);
+        } else {
+          window.EXOS.snackbar.critical(description + ' ' + wpData.i18n.deactivated);
+        }
+      } catch (error) {
+        window.EXOS.snackbar.warning("Network error updating option " + key);
+      }
 
     });
   });

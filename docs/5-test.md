@@ -45,7 +45,7 @@ Example: packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/
 
 > phpunit test are identified by file name convention (`*Test.php`)
 
-Example: `packages/wp-plugin/essentials/inc/dashboard/tests/phpunit/AcceptanceTest.php`
+Example: `packages/wp-plugin/ionos-essentials/inc/dashboard/tests/phpunit/AcceptanceTest.php`
 
 - run phpunit tests : `pnpm test:php`
 

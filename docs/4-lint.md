@@ -31,7 +31,7 @@ Both linting commands are implemented in `./scripts/lint.sh`.
 
 - `./.lintignore` can be used to disable linting. It will be consumed by `stylelint`, `eslint` and `prettier`.
 
-  Disabling linting for certain files makes especially sense for files that are under GIT control but machine generated (like `packages/wp-plugin/essentials/inc/dashboard/data/ionos/rendered-skeleton.html`)
+  Disabling linting for certain files makes especially sense for files that are under GIT control but machine generated (like `packages/wp-plugin/ionos-essentials/inc/dashboard/data/ionos/rendered-skeleton.html`)
 
   > Files matched by `.gitignore` will be automatically ignored by the linters. They don't need to be additionally added to `./.lintignore`
 
