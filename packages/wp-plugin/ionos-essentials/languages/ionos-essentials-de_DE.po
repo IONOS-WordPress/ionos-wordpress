@@ -645,20 +645,20 @@ msgstr ""
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your Feedback is important to us"
-msgstr ""
+msgstr "Ihre Meinung ist uns wichtig!"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
-msgstr ""
+msgstr "Wir sind ständig auf der Suche nach Möglichkeiten, Ihr WordPress-Hosting-Erlebnis noch besser zu machen. Nehmen Sie sich bitte ein paar Minuten Zeit, um an einer kurzen Online-Umfrage teilzunehmen."
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Take the survey"
-msgstr ""
+msgstr "zur Umfrage"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
-msgstr ""
+msgstr "Ihr %s Hub ist nun noch besser!"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
-msgstr ""
+msgstr "Wir haben gerade das Tools & Security Tab ausgerollt! Alle Features und Einstellungen die bisher vom Security Plugin bekannt sind, finden sich nun im Hub wieder. Außerdem finden Sie dort die neue Wartungsseite, die sie bei Bedarf an- und abschalten können. "
