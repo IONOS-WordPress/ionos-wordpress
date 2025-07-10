@@ -14,11 +14,6 @@ msgstr ""
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
-#. Plugin URI of the plugin
-#: ionos-essentials.php
-msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
-msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
-
 #. Description of the plugin
 #: ionos-essentials.php
 msgid "The essentials plugin provides IONOS hosting specific functionality."
@@ -142,6 +137,7 @@ msgid "%s ago"
 msgstr "il y a %s"
 
 #: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problème critique détecté"
@@ -658,3 +654,30 @@ msgstr "Mode maintenance"
 #: inc/dashboard/tabs/tools.php
 msgid "Preview maintenance page"
 msgstr "Prévisualisation de la page de maintenance"
+
+#. Plugin URI of the plugin
+#: ionos-essentials.php
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
+
+#: inc/wpscan/index.php
+msgid "Vulnerability scan"
+msgstr "Analyse de vulnérabilité"
+
+#: inc/wpscan/index.php
+msgid "warnings found"
+msgstr "avertissements trouvés"
+
+#: inc/wpscan/index.php
+msgid "Last scan ran"
+msgstr "Dernière analyse effectuée"
+
+#: inc/wpscan/index.php
+msgid "hours ago"
+msgstr "il y a quelques heures"
+
+#: inc/wpscan/index.php
+msgid "One critical issue"
+msgid_plural "%d critical issues"
+msgstr[0] "Une question cruciale"
+msgstr[1] ""
