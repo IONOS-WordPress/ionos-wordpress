@@ -2,8 +2,22 @@
 
 namespace ionos\essentials\wpscan;
 
+add_action('admin_enqueue_scripts', function () {
+  wp_enqueue_style(
+    'ionos-wpscan',
+    plugin_dir_url(__FILE__) . 'wpscan.css',
+    [],
+    filemtime(plugin_dir_path(__FILE__) . 'wpscan.css')
+  );
+});
+
+
+
 function render_summary()
 { ?>
+  <script>
+    document.querySelector('a[href$="tools"]').classList.add('has-red-dot')
+  </script>
   <div class="card ionos_vulnerability ionos-wpscan-summary high">
     <div class="card__content">
       <section class="card__section">
