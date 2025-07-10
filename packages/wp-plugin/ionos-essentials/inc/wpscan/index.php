@@ -2,16 +2,6 @@
 
 namespace ionos\essentials\wpscan;
 
-add_action('admin_enqueue_scripts', function () {
-  wp_enqueue_style(
-    'ionos-wpscan',
-    plugin_dir_url(__FILE__) . 'wpscan.css',
-    [],
-    filemtime(plugin_dir_path(__FILE__) . 'wpscan.css')
-  );
-});
-
-
 
 function render_summary()
 { ?>
