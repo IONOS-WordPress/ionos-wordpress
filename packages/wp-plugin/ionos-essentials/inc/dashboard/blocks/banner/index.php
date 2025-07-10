@@ -54,7 +54,7 @@ function render_callback(): void
                 </li>
                 <li class="page-tabbar__item" role="presentation">
                   <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="tools">
-                    <div class="page-tabbar__label"><?php \esc_html_e('Tools', 'ionos-essentials'); ?></div>
+                    <div class="page-tabbar__label may-have-issue-dot"><?php \esc_html_e('Tools', 'ionos-essentials'); ?></div>
                   </a>
                 </li>
               </ul>

@@ -45,7 +45,7 @@ use const ionos\essentials\PLUGIN_DIR;
             </div>
         </div>
 
-        <h3 class="headline headline--sub"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
+        <h3 class="headline headline--sub may-have-issue-dot"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
           <div class="sheet">
               <div class="grid">
                 <div class="grid-col grid-col--6 grid-col--small-12">
