@@ -8,9 +8,9 @@ if (! defined('ABSPATH')) {
 }
 
 if (! get_transient('ionos-ssl-check-notice-dismissed')) {
-  add_action('admin_notices', [__CLASS__, 'admin_notice']);
+  add_action('admin_notices', __NAMESPACE__ . '\admin_notice');
   // add_action( 'admin_enqueue_scripts', [ __CLASS__, 'enqueue_script' ] );
-  add_action('wp_ajax_ionos-ssl-check-dismiss-notice', [__CLASS__, 'dismiss_notice']);
+  add_action('wp_ajax_ionos-ssl-check-dismiss-notice', __NAMESPACE__ . '\dismiss_notice');
 }
 
 /* function enqueue_script() {
@@ -44,9 +44,9 @@ function admin_notice()
   printf(
     '<div class="ionos-ssl-check notice notice-warning is-dismissible"><p>%s<br>%s</p></div>',
     wp_kses($notice, [
-        'strong' => [],
-        'em'     => [],
-      ]),
+      'strong' => [],
+      'em'     => [],
+    ]),
     $button // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
   );
 }
