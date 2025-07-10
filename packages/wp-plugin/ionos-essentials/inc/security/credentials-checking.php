@@ -12,7 +12,27 @@ if (! defined('ABSPATH')) {
   exit();
 }
 
-enable_credentials_checking();
+add_action('check_passwords', __NAMESPACE__ . '\check_passwords', 10, 3);
+
+if (is_login()) {
+  add_action('login_form_icc_leak_detected', __NAMESPACE__ . '\show_view');
+
+  add_action('validate_password_reset', __NAMESPACE__ . '\validate_password_reset', 10, 2);
+  add_filter('authenticate', __NAMESPACE__ . '\authenticate', 100, 3);
+}
+
+add_action('admin_notices', function () {
+  if (has_leaked_flag(get_current_user_id())) {
+    $class   = 'notice notice-error';
+    $message = __('We detected that your password has been leaked and suggest that you change it as soon as possible.', 'ionos-security');
+    $link    = sprintf(
+      '<a href="%s">%s</a>',
+      esc_url(get_edit_profile_url()),
+      esc_html__('Click here to edit your profile settings.', 'ionos-security')
+    );
+    printf('<div class="%s"><p>%s %s</p></div>', esc_attr($class), esc_html($message), esc_url($link));
+  }
+});
 
 function check_passwords($user_login, $pass1, $pass2)
 {
@@ -59,40 +79,6 @@ function is_leaked($user_login, $password)
   return false !== strpos(wp_remote_retrieve_body($response), $suffix);
 }
 
-// if ( ! is_ssl() ) {
-//   return;
-// }
-
-function enable_credentials_checking()
-{
-  register_wp_login_hooks();
-
-  add_action('admin_notices', function () {
-    if (has_leaked_flag(get_current_user_id())) {
-      $class   = 'notice notice-error';
-      $message = __('We detected that your password has been leaked and suggest that you change it as soon as possible.', 'ionos-security');
-      $link    = sprintf(
-        '<a href="%s">%s</a>',
-        esc_url(get_edit_profile_url()),
-        esc_html__('Click here to edit your profile settings.', 'ionos-security')
-      );
-      printf('<div class="%s"><p>%s %s</p></div>', esc_attr($class), esc_html($message), esc_url($link));
-    }
-  });
-}
-
-function register_wp_login_hooks()
-{
-  add_action('check_passwords', __NAMESPACE__ . '\check_passwords', 10, 3);
-
-  if (is_login()) {
-    add_action('login_form_icc_leak_detected', __NAMESPACE__ . '\show_view');
-
-    add_action('validate_password_reset', __NAMESPACE__ . '\validate_password_reset', 10, 2);
-    add_filter('authenticate', __NAMESPACE__ . '\authenticate', 100, 3);
-  }
-}
-
 function has_leaked_flag($user_id)
 {
   return (bool) get_user_meta($user_id, LEAKED_CREDENTIALS_FLAG_NAME, true);
@@ -131,8 +117,11 @@ function show_view()
 }
 
 add_action(
-    'login_enqueue_scripts',
-    function () {
+  'login_enqueue_scripts',
+  function () {
+    $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    if ('icc_leak_detected' === $action) {
       wp_enqueue_style(
         'ionos-credentials-checking',
         plugins_url('style.css', __FILE__),
@@ -140,7 +129,8 @@ add_action(
         filemtime(__DIR__ . '/style.css')
       );
     }
-  );
+  }
+);
 
 function validate_password_reset($errors, $user)
 {
