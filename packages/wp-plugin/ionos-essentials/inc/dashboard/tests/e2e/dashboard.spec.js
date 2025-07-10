@@ -12,7 +12,7 @@ test.describe(
       await admin.visitAdminPage('/');
 
       const body = await page.locator('body');
-      await expect(body).toHaveText(/My Account/);
+      await expect(body).toHaveText(/Mein Konto/);
     });
   }
 );
