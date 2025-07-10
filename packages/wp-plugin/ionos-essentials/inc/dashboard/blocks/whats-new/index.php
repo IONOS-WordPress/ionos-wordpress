@@ -4,6 +4,7 @@ namespace ionos\essentials\dashboard\blocks\whatsnew;
 
 function render_callback()
 {
+  $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
 
   ?>
 
@@ -17,18 +18,21 @@ function render_callback()
 
         <ul class="check-list">
             <li>
-              <?php echo \esc_html__('New User Interface', 'ionos-essentials'); ?>
-              <?php echo \esc_html__(
-                'Featuring a completely new design and an improved user experience, making managing your website easier than ever.',
+              <h3 class="headline headline--sub"><?php echo \esc_html__('Your Feedback is important to us', 'ionos-essentials'); ?></h3>
+              <p><?php echo \esc_html__(
+                'We\'re always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.',
                 'ionos-essentials'
-              ); ?>
+              ); ?></p>
+              <a href="https://ionos.typeform.com/to/oh2b0k" target="_blank" class="link link--action">
+                <?php echo \esc_html__('Take the survey', 'ionos-essentials'); ?>
+              </a>
             </li>
             <li>
-              <?php echo \esc_html__('Vulnerability Scan Results', 'ionos-essentials'); ?>
-              <?php echo \esc_html__(
-                "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks.",
+              <h3 class="headline headline--sub"><?php printf(\esc_html__('Your %s Hub Just Got a Powerful Upgrade!', 'ionos-essentials'), $brand_name); ?></h3>
+              <p><?php echo \esc_html__(
+                "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it.",
                 'ionos-essentials'
-              ); ?>
+              ); ?></p>
             </li>
           </ul>
       </section>
