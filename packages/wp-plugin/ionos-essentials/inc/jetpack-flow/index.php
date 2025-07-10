@@ -47,14 +47,14 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
     \add_filter(
       'ionos_login_redirect_to',
       function ($redirect_to, $requested_redirect_to, $logged_user): string {
-        $current_user_authorized = ($logged_user instanceof \WP_User && $logged_user->has_cap('manage_options'));
+        $current_user_authorized = $logged_user instanceof \WP_User && $logged_user->has_cap('manage_options');
 
         if (! $current_user_authorized) {
           return $redirect_to;
         }
 
         if ('' === $requested_redirect_to) {
-          $requested_redirect_to = site_url() . $_SERVER['REQUEST_URI'];
+          $requested_redirect_to = \site_url() . $_SERVER['REQUEST_URI'];
         }
 
         $params = _get_params_from_url($requested_redirect_to);
@@ -72,7 +72,7 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
     );
   }
 
-  $url_params = _get_params_from_url(site_url() . $_SERVER['REQUEST_URI']);
+  $url_params = _get_params_from_url(\site_url() . $_SERVER['REQUEST_URI']);
 
   if (! _has_jetpack_backup_flow_params($url_params)) {
     return;
@@ -97,7 +97,7 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
     menu_title: $menu_page_title,
     capability: 'manage_options',
     menu_slug: HIDDEN_PAGE_SLUG,
-    callback: function () use ($url_params) {
+    callback: function () {
       $step = $_GET['step'] ?? 'confirm';
       if ('install' === $step) {
         _render_install();
@@ -109,10 +109,10 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 
   \add_action(
     'admin_page_access_denied',
-    function () use ($url_params): void {
+    function () : void {
       $url = add_query_arg([
         'page'   => HIDDEN_PAGE_SLUG,
-        'coupon' => $url_params['coupon'],
+        'coupon' => $_GET['coupon'],
       ], \admin_url());
 
       \wp_redirect($url);
@@ -200,14 +200,14 @@ function _install_jetpack_plugin(): void
   if ('0' === $option_value) {
     if (! _is_plugin_installed('jetpack')) {
       // Install from repo
-      $api = plugins_api('plugin_information', [
+      $api = \plugins_api('plugin_information', [
         'slug'   => 'jetpack',
         'fields' => [
           'downloadlink' => true,
         ],
       ]);
 
-      if (is_wp_error($api)) {
+      if (\is_wp_error($api)) {
         return;
       }
 
@@ -220,7 +220,7 @@ function _install_jetpack_plugin(): void
     \activate_plugin(JETPACK_PLUGIN_FILE);
 
     \delete_option(INSTALL_JETPACK_OPTION_NAME);
-    \wp_redirect(add_query_arg('jetpack-partner-coupon', $_GET['coupon'], admin_url()));
+    \wp_redirect(add_query_arg('jetpack-partner-coupon', $_GET['coupon'], \admin_url()));
     exit;
   }
 }
