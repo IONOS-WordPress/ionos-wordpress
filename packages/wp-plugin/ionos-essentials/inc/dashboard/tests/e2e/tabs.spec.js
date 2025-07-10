@@ -12,7 +12,7 @@ test.describe('Tabs', () => {
     await expect(tab1).toBeVisible();
     await expect(tab2).not.toBeVisible();
 
-    await page.getByRole('button', { name: 'Werkzeuge' }).click();
+    await page.getByRole('button', { name: 'Tools' }).click();
 
     await expect(tab1).not.toBeVisible();
     await expect(tab2).toBeVisible();
