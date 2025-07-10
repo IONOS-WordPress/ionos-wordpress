@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\security;
 
+use WP_Error;
+
 const LEAKED_CREDENTIALS_FLAG_NAME = 'ionos_compromised_credentials_check_leak_detected_v2';
 use const ionos\essentials\PLUGIN_DIR;
 
@@ -101,29 +103,44 @@ function show_view()
   $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
   if ('icc_leak_detected' === $action) {
-    $template_path = IONOS_SECURITY_DIR . '/inc/Views/CredentialsChecking/leak-detected.php';
+    add_action('login_header', function () {
+      printf(
+        '<div class="wrapper">
+            <div class="header">
+                <img class="logo" src="hallo.jpg" />
+            </div>
+            <div class="container">
+                <div class="content">
+                    <h1 class="headline">%s</h1>
+                    <p>%s</p>
+                    <p><em>%s</em> %s</p>
+                </div>
+            </div>
+        </div>',
+        //esc_attr( Config::get( 'branding.logo' ) ),
+        esc_html__( 'Security Notice', 'ionos-security' ),
+        esc_html__( 'It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password.', 'ionos-security' ),
+        esc_html__( 'Additional Information:', 'ionos-security' ),
+        sprintf(
+            esc_html__( 'To check if your password has been compromised we are using the free service %1$s. For that we encrypt your password and send parts of the encryption to the service.', 'ionos-security' ),
+            '<a href="https://haveibeenpwned.com/Passwords" target="_blank" rel="nofollow noopener noreferrer">Have I Been Pwned</a>'
+        )
+    );
+    });
   }
-
-  if (! is_readable($template_path)) {
-    return;
-  }
-
-  add_action('login_header', function () use ($template_path) {
-    load_template($template_path, true);
-  });
 }
 
-\add_action(
-  'admin_enqueue_scripts',
-  function ($hook_suffix) {
-    \wp_enqueue_style(
-      'ionos-security-credentials-checking',
-      \plugins_url('style.css', __FILE__),
-      [],
-      filemtime(PLUGIN_DIR . '/inc/security/style.css')
-    );
-  }
-);
+add_action(
+    'login_enqueue_scripts',
+    function () {
+      wp_enqueue_style(
+        'ionos-credentials-checking',
+        plugins_url('style.css', __FILE__),
+        [],
+        filemtime(__DIR__ . '/style.css')
+      );
+    }
+  );
 
 function validate_password_reset($errors, $user)
 {
@@ -162,11 +179,32 @@ function authenticate($user, $username, $password)
     return $user;
   }
 
-  add_filter('ionos_login_redirect_to', [__CLASS__, 'redirect_to_leaked_notice'], 200);
+  add_filter('ionos_login_redirect_to', __NAMESPACE__ . '\redirect_to_leaked_notice', 200);
   return new WP_Error(
     'ionos_password_leaked',
     __('It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password.', 'ionos-security')
   );
+}
+
+function redirect_to_leaked_notice() {
+  wp_logout();
+
+  $user_login = filter_input( INPUT_POST, 'log' );
+  if ( empty( $user_login ) ) {
+    return;
+  }
+
+  retrieve_password( $user_login );
+
+  $url = add_query_arg(
+    [
+      'action' => 'icc_leak_detected',
+    ],
+    wp_login_url()
+  );
+
+  wp_safe_redirect( $url );
+  exit;
 }
 
 function is_valid_email($email)
