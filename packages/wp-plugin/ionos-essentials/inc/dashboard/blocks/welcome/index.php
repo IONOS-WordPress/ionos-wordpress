@@ -25,25 +25,22 @@ function render_callback()
                 <h2 class="headline">
                     <?php
                       // translators: %s: Brand name
-                      printf(\esc_html__('Welcome to your %s Hub', 'ionos-essentials'), $brand_name);
+                      printf(\esc_html__('Welcome to your new %s Hub', 'ionos-essentials'), $brand_name);
   ?>
                 </h2>
                 <p class="paragraph">
                     <?php
     \esc_html_e(
-      'This overview is your gateway to unlocking the full potential of your WordPress website.',
+      'You\'re now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features.',
       'ionos-essentials'
     );
   ?>
                 </p>
 
                 <ul class="check-list">
-                    <li><?php \esc_html_e('Recommendations for next steps', 'ionos-essentials'); ?></li>
-                    <li><?php \esc_html_e('Helpful links and shortcuts', 'ionos-essentials'); ?></li>
-                    <li><?php \esc_html_e(
-                      'Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database',
-                      'ionos-essentials'
-                    ); ?></li>
+                    <li><?php \esc_html_e('Get familiar with the new layout', 'ionos-essentials'); ?></li>
+                    <li><?php \esc_html_e('Explore redesigned sections and discover new functionalities', 'ionos-essentials'); ?></li>
+                    <li><?php \esc_html_e('Stay tuned for upcoming feature releases and enhancements','ionos-essentials'); ?></li>
                 </ul>
              </section>
         </div>
