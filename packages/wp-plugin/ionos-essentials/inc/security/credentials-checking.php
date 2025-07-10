@@ -93,7 +93,7 @@ function show_view()
       printf(
         '<div class="wrapper">
             <div class="header">
-                <img class="logo" src="hallo.jpg" />
+                <img class="logo" src="%s" />
             </div>
             <div class="container">
                 <div class="content">
@@ -103,7 +103,10 @@ function show_view()
                 </div>
             </div>
         </div>',
-        //esc_attr( Config::get( 'branding.logo' ) ),
+        \plugins_url(
+          'inc/dashboard/data/tenant-logos/' . \get_option('ionos_group_brand', 'ionos') . '.svg',
+          dirname(__DIR__)
+        ),
         esc_html__( 'Security Notice', 'ionos-security' ),
         esc_html__( 'It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password.', 'ionos-security' ),
         esc_html__( 'Additional Information:', 'ionos-security' ),
