@@ -58,7 +58,8 @@ function render_issues($args)
   ? esc_html(sprintf(\_n('%s critical issue', '%d critical issues', $count, 'ionos-essentials'), $count))
   : esc_html(sprintf(\_n('%s warning', '%d warnings', $count, 'ionos-essentials'), $count));
   ?>
-                <i class="exos-icon exos-icon-info-outlined-16 default-text-color" data-tooltip="HI"></i>
+
+                <span class="paragraph--cropped paragraph--activating paragraph--exos-icon exos-icon-info-1 tooltip" data-tooltip="Place your tooltip content" data-tooltip-position="right"></span>
                 </h2>
           </div>
 

@@ -23,10 +23,6 @@
     }
   }
 
-  .default-text-color {
-    color: var(--default-text-color,#001b41);
-  }
-
   .settings-stripe--link .settings-stripe__action{
     width: 50%;
   }
