@@ -59,8 +59,8 @@ function render_issues($args)
                 <?php
                     $count = count($args['issues']);
   echo ('high' === $args['type'])
-  ? esc_html(sprintf(\_n('%s critical issue', '%d critical issues', $count, 'ionos-essentials'), $count))
-  : esc_html(sprintf(\_n('%s warning', '%d warnings', $count, 'ionos-essentials'), $count));
+  ? esc_html(sprintf(\_n('One critical issue', '%d critical issues', $count, 'ionos-essentials'), $count))
+  : esc_html(sprintf(\_n('One warning', '%d warnings', $count, 'ionos-essentials'), $count));
   ?>
 
                 <span class="paragraph--cropped paragraph--activating paragraph--exos-icon exos-icon-info-1 tooltip" data-tooltip="Place your tooltip content" data-tooltip-position="right"></span>
