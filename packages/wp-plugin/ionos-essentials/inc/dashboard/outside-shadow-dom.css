@@ -1,3 +1,11 @@
+.ionos-maintenance-only {
+  display: none;
+
+  body.ionos-maintenance-mode & {
+    display: block;
+  }
+}
+
 ul li#wp-admin-bar-ionos_maintenance_mode{
   padding-top: 6px;
 
@@ -8,14 +16,6 @@ ul li#wp-admin-bar-ionos_maintenance_mode{
     height: 20px !important;
     line-height: 20px !important;
     border-radius: 2px;
-  }
-}
-
-.ionos-maintenance-only {
-  display: none;
-
-  body.ionos-maintenance-mode & {
-    display: block;
   }
 }
 

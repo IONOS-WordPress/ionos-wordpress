@@ -250,4 +250,14 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   );
 }, 1);
 
+add_action('admin_enqueue_scripts', function () {
+  wp_enqueue_style(
+    'ionos-maintenance-mode-admin',
+    plugin_dir_url(__FILE__) . 'outside-shadow-dom.css',
+    [],
+    filemtime(plugin_dir_path(__FILE__) . 'outside-shadow-dom.css')
+  );
+});
+
+
 require_once __DIR__ . '/blocks/quick-links/index.php';
