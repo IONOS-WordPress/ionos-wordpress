@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: fr\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-04-15 10:33+0200\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-04-15 10:33+0200\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -702,3 +702,15 @@ msgid "One warning"
 msgid_plural "%d warnings"
 msgstr[0] "Un avertissement"
 msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "Critical website security issues, identified by a CVSS score of 8.0 or higher, require immediate attention."
+msgstr "Les problèmes critiques de sécurité des sites web, identifiés par un score CVSS de 8.0 ou plus, requièrent une attention immédiate."
+
+#: inc/wpscan/index.php
+msgid "Website security warnings, identified by a CVSS score up to 7.9, require prompt attention."
+msgstr "Les alertes de sécurité des sites web, identifiées par un score CVSS allant jusqu'à 7,9, requièrent une attention immédiate."
+
+#: inc/dashboard/view.php
+msgid "Vulnerability scan information"
+msgstr ""
