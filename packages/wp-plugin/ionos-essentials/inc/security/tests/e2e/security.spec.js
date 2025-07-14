@@ -1,4 +1,3 @@
-
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 // async function login (page) {
@@ -20,13 +19,13 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 test('prevent log in with e-mail', async ({ page }) => {
   // Login with email
-  await page.goto('/wp-admin')
-  await page.fill('#user_login', 'you@example.com')
-  await page.fill('#user_pass', 'password')
-  await page.click('[name="wp-submit"]')
+  await page.goto('/wp-admin');
+  await page.fill('#user_login', 'you@example.com');
+  await page.fill('#user_pass', 'password');
+  await page.click('[name="wp-submit"]');
 
-  expect(await page.title()).toContain('Anmelden')
-})
+  expect(await page.title()).toContain('Log In');
+});
 
 // test('warning of no ssl', async ({ page }) => {
 //   await login(page)
