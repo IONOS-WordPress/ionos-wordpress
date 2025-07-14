@@ -640,20 +640,20 @@ msgstr ""
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Welcome to your new %s Hub"
-msgstr ""
+msgstr "Willkommen in Ihrem neuen %s-Hub"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "You're now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features."
-msgstr ""
+msgstr "Sie nutzen nun die neueste Weiterentwicklung unseres Dashboards – konzipiert, um Ihre Arbeitsabläufe zu optimieren und Ihr Online-Management zu verbessern. Dieser neue Hub ersetzt Ihr bisheriges Dashboard und bietet Ihnen eine modernisierte Benutzeroberfläche, verbesserte Tools sowie spannende neue Funktionen."
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Get familiar with the new layout"
-msgstr ""
+msgstr "Machen Sie sich mit dem neuen Layout vertraut"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Explore redesigned sections and discover new functionalities"
-msgstr ""
+msgstr "Erkunden Sie neu gestaltete Bereiche und entdecken Sie neue Funktionen"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Stay tuned for upcoming feature releases and enhancements"
-msgstr ""
+msgstr "Bleiben Sie gespannt auf kommende Funktionsveröffentlichungen und Verbesserungen"
