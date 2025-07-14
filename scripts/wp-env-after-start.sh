@@ -230,3 +230,15 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     sudo chmod a+w -R /var/www/html/bootstrap.php 2>/dev/null || true
 EOF
 done
+
+# set the default admin password (needed for running playwright e2e tests successfully)
+# this is needed because the ionos essentials security feature option is enabled by default
+docker exec -i "${WP_ENV_HASH}-tests-cli-1" /bin/bash <<EOF
+  set -x
+
+  # set the default admin password to the password defined in .env file
+  wp user update admin --user_pass='${WP_ENV_TEST_ADMIN_PASSWORD}'
+
+  # reset the user meta for compromised credentials check
+  wp user meta delete admin ionos_compromised_credentials_check_leak_detected_v2 || true
+EOF
