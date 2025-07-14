@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en_US\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
+"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
-"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
-"Language: en_US\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.10.0\n"
 
@@ -676,18 +676,6 @@ msgid "hours ago"
 msgstr "hours ago"
 
 #: inc/wpscan/index.php
-msgid "%s critical issue"
-msgid_plural "%d critical issues"
-msgstr[0] "%s critical issue"
-msgstr[1] ""
-
-#: inc/wpscan/index.php
-msgid "%s warning"
-msgid_plural "%d warnings"
-msgstr[0] "%s warning"
-msgstr[1] ""
-
-#: inc/wpscan/index.php
 msgid "View update details"
 msgstr "View update details"
 
@@ -701,4 +689,16 @@ msgstr "Update"
 
 #: inc/dashboard/index.php
 msgid "Tools and security"
-msgstr ""
+msgstr "Tools and security"
+
+#: inc/wpscan/index.php
+msgid "One critical issue"
+msgid_plural "%d critical issues"
+msgstr[0] "One critical issue"
+msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "One warning"
+msgid_plural "%d warnings"
+msgstr[0] "One warning"
+msgstr[1] ""
