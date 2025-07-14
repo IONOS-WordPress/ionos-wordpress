@@ -219,3 +219,43 @@ main{
 main.ionos-maintenance-mode .ionos-maintenance-only{
   display: inline-block;
 }
+
+.et-has-tooltip {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+
+  .et-tooltip-anchor {
+    cursor: help;
+  }
+  .et-tooltip-content{
+    background-color: var(--tertiary-background-color-inverted,#718095);
+    border-radius: var(--small-border-radius,8px);
+    box-shadow: var(--primary-shadow,0 2px 8px 0 #71809580);
+    color: var(--white,#fff);
+    cursor: default;
+    line-height: 1.538em;
+    margin-top: 18px;
+    font-size: 14px;
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    text-align: center;
+    transition: margin-top .2s ease-out .25s,opacity .15s ease-out .25s;
+    position: absolute;
+    left: 40px;
+    z-index: 100;
+    width: 300px;
+  }
+
+  &:hover .et-tooltip-content {
+    visibility: visible;
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+
+.sheet{
+  overflow: visible;
+}
+

@@ -63,8 +63,17 @@ function render_issues($args)
   : esc_html(sprintf(\_n('One warning', '%d warnings', $count, 'ionos-essentials'), $count));
   ?>
 
-                <span class="paragraph--cropped paragraph--activating paragraph--exos-icon exos-icon-info-1 tooltip" data-tooltip="Place your tooltip content" data-tooltip-position="right"></span>
-                </h2>
+                <span class="et-has-tooltip">
+                  <span class="paragraph--cropped paragraph--activating paragraph--exos-icon exos-icon-info-1 et-tooltip-anchor"></span>
+                  <span class="et-tooltip-content">
+                    <?php
+                    echo ('high' === $args['type'])
+                      ? esc_html__('Critical website security issues, identified by a CVSS score of 8.0 or higher, require immediate attention.', 'ionos-essentials')
+                      : esc_html__('Website security warnings, identified by a CVSS score up to 7.9, require prompt attention.', 'ionos-essentials');
+                    ?>
+                  </span>
+                </span>
+              </h2>
           </div>
 
           <div class="grid grid-col-12">

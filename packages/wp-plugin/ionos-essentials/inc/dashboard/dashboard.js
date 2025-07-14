@@ -169,4 +169,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
   });
+
+  dashboard.querySelectorAll('[data-tooltip]').forEach((element) => {
+    element.addEventListener('click', function () {
+     alert(element.dataset.tooltip);
+    });
+  });
 });
