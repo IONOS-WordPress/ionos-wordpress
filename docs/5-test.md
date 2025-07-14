@@ -71,7 +71,7 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
   or even simpler `pnpm run test:e2e example.spec.js` (paths can be skipped ion Playwright)
 
 - run whenever you changed a file : `pnpm watch -- pnpm test:e2e`
-  - run a single e2e test without rebuilding and checking wp-env is alive in playwright debug mode : `. ./env && pnpm exec playwright test -c ./playwright.config.js --debug ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
+  - run a single e2e test without rebuilding and checking wp-env is alive in playwright debug mode : `pnpm run test:e2e --e2e-opts '--debug' ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js` (see `pnpm run test --help` for more)
 
 - vscode supports running e2e tests by clicking on the play button in the test file.
   - same same for debugging tests.

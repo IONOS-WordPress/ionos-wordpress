@@ -127,6 +127,11 @@ EOL
 fi
 
 if [[ "${USE[@]}" =~ all|e2e ]]; then
+  # set the default admin password to the password defined in .env file
+  pnpm -s wp-env run tests-cli wp user update admin --user_pass="${WP_ENV_TEST_ADMIN_PASSWORD}"
+  # reset the user meta for compromised credentials check
+  pnpm -s wp-env run tests-cli wp user meta delete admin ionos_compromised_credentials_check_leak_detected_v2 &>/dev/null || true
+
   # start wp-env e2e tests. provide part specific options and all positional arguments that are php files
   (
     # pnpm exec wp-scripts test-playwright --pass-with-no-tests -c ./playwright.config.js \

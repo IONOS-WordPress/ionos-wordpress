@@ -4,7 +4,7 @@ import { defineConfig, devices } from '@playwright/test';
 import baseConfig from '@wordpress/scripts/config/playwright.config.js';
 
 // take password from our .env file variable WP_ENV_TEST_ADMIN_PASSWORD
-process.env.WP_PASSWORD = process.env.WP_ENV_TEST_ADMIN_PASSWORD ?? 'g0lasch0815!';
+process.env.WP_PASSWORD = process.env.WP_ENV_TEST_ADMIN_PASSWORD;
 
 const config = defineConfig({
   ...baseConfig,
@@ -24,7 +24,7 @@ const config = defineConfig({
   workers: 1,
   webServer: {
     ...baseConfig.webServer,
-    command: 'pnpm start',
+    // command: 'pnpm start',
   },
   outputDir: './playwright/e2e/.test-results',
   use: {
