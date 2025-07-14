@@ -12,13 +12,13 @@ test.beforeAll(async () => {
   } catch (ex) {}
 });
 
-async function login (page) {
+async function login(page) {
   // Normally we use the wp-env standard user, but we need to create a new user for testing security
   // as the wp-env user has a leaked password
-  await page.goto('/wp-admin')
-  await page.fill('#user_login', 'admin')
-  await page.fill('#user_pass', 'g0lasch0815!')
-  await page.click('[name="wp-submit"]')
+  await page.goto('/wp-admin');
+  await page.fill('#user_login', 'admin');
+  await page.fill('#user_pass', 'g0lasch0815!');
+  await page.click('[name="wp-submit"]');
 
   // Click the Confirm-email button, if it exists
   try {
@@ -36,14 +36,14 @@ test('prevent log in with e-mail', async ({ page }) => {
   await page.fill('#user_pass', 'g0lasch0815!');
   await page.click('[name="wp-submit"]');
 
-  await expect(page.locator('.notice-error')).toHaveCount(1)
+  await expect(page.locator('.notice-error')).toHaveCount(1);
 });
 
 test('warning of no ssl', async ({ page }) => {
-  await login(page)
+  await login(page);
 
-  await expect(page.locator('.ionos-ssl-check')).toHaveCount(1)
-})
+  await expect(page.locator('.ionos-ssl-check')).toHaveCount(1);
+});
 
 test('disallow xml rpc', async ({ request }) => {
   const requestBody = `<?xml version="1.0" encoding="UTF-8"?>
@@ -53,13 +53,13 @@ test('disallow xml rpc', async ({ request }) => {
 <param><value>admin</value></param>
 <param><value>password</value></param>
 </params>
-</methodCall>`
+</methodCall>`;
 
   const response = await request.post('/xmlrpc.php', {
-    data: requestBody
-  })
+    data: requestBody,
+  });
 
-  const body = await response.text()
+  const body = await response.text();
 
-  expect(body).toContain('<name>faultCode</name>')
-})
+  await expect(body).toContain('<name>faultCode</name>');
+});
