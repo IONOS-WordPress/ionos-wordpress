@@ -109,7 +109,12 @@ use const ionos\essentials\PLUGIN_DIR;
   src: \plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR),
   ver: filemtime(PLUGIN_DIR . '/inc/dashboard/dashboard.css')
 );
-\wp_print_styles('ionos-essentials-dashboard');
+\wp_register_style(
+  handle: 'ionos-wpscan',
+  src: \plugins_url('ionos-essentials/inc/wpscan/wpscan.css', PLUGIN_DIR),
+  ver: filemtime(PLUGIN_DIR . '/inc/wpscan/wpscan.css')
+);
+\wp_print_styles(['ionos-essentials-dashboard', 'ionos-wpscan']);
 
 \wp_register_script('ionos-exos-js', 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.js', [], true);
 \wp_print_scripts('ionos-exos-js');
@@ -118,7 +123,25 @@ use const ionos\essentials\PLUGIN_DIR;
 
 <?php blocks\welcome\render_callback(); ?>
 
-<main id="content" class="<?php \ionos\essentials\maintenance_mode\is_maintenance_mode() && printf('ionos-maintenance-mode'); ?>">
+<div class="static-overlay__blocker"></div>
+<div class="static-overlay__container">
+  <div class="sheet static-overlay--closable static-overlay__content sheet--micro-effect" data-static-overlay-id="demo-overlay1" style="margin-top: inherit;">
+    <section class="sheet__section">
+      <div style="display: flex; justify-content: right;">
+        <i id="dialog-closer" class="exos-icon exos-icon-deleteinput-16"></i>
+      </div>
+      <h3 class="headline headline--sub"><?php \esc_html_e('Vulnerability scan information', 'ionos-essentials'); ?></h3>
+      <ul class="bullet-list">
+        <li>We use the WPScan database to provide security risk scores for plugins and themes.</li>
+        <li>The scores are on a scale of 1 to 10, where a higher value indicates greater security risk.</li>
+        <li>Installations of plugins and themes are prohibited if their score exceeds 7.0.</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+
+<main id="content" class="<?php \ionos\essentials\maintenance_mode\is_maintenance_mode() && printf('ionos-maintenance-mode'); ?> issues-found">
   <div class="page-section">
     <?php blocks\banner\render_callback(); ?>
   </div>

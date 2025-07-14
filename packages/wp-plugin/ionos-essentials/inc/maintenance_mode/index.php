@@ -21,15 +21,6 @@ add_action('admin_bar_menu', function ($wp_admin_bar) {
 }, 31);
 
 add_action('admin_enqueue_scripts', function () {
-  wp_enqueue_style(
-    'ionos-maintenance-mode-admin',
-    plugin_dir_url(__FILE__) . 'maintenance.css',
-    [],
-    filemtime(plugin_dir_path(__FILE__) . 'maintenance.css')
-  );
-});
-
-add_action('admin_enqueue_scripts', function () {
   wp_enqueue_script(
     'ionos-maintenance-mode-admin',
     plugin_dir_url(__FILE__) . 'maintenance.js',

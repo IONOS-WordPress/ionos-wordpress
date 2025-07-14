@@ -1,23 +1,18 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: sv\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-04-23 08:52+0200\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-04-23 08:52+0200\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.4.2\n"
-
-#. Plugin URI of the plugin
-#: ionos-essentials.php
-msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
-msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
 
 #. Description of the plugin
 #: ionos-essentials.php
@@ -142,6 +137,7 @@ msgid "%s ago"
 msgstr "för %s sedan"
 
 #: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiskt fel hittades"
@@ -594,7 +590,6 @@ msgid "No thanks"
 msgstr "Nej tack"
 
 #: inc/dashboard/blocks/banner/index.php
-#: inc/dashboard/index.php
 #: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr "Verktyg"
@@ -658,3 +653,64 @@ msgstr "Underhållsläge"
 #: inc/dashboard/tabs/tools.php
 msgid "Preview maintenance page"
 msgstr "Förhandsgranska underhållssidan"
+
+#. Plugin URI of the plugin
+#: ionos-essentials.php
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
+
+#: inc/wpscan/index.php
+msgid "Vulnerability scan"
+msgstr "Sårbarhetsskanning"
+
+#: inc/wpscan/index.php
+msgid "warnings found"
+msgstr "varningar hittades"
+
+#: inc/wpscan/index.php
+msgid "Last scan ran"
+msgstr "Senaste skanningen kördes"
+
+#: inc/wpscan/index.php
+msgid "hours ago"
+msgstr "timmar sedan"
+
+#: inc/wpscan/index.php
+msgid "View update details"
+msgstr "Visa uppdateringsinformation"
+
+#: inc/wpscan/index.php
+msgid "Delete"
+msgstr "Radera"
+
+#: inc/wpscan/index.php
+msgid "Update"
+msgstr "Uppdatering"
+
+#: inc/dashboard/index.php
+msgid "Tools and security"
+msgstr "Verktyg och säkerhet"
+
+#: inc/wpscan/index.php
+msgid "One critical issue"
+msgid_plural "%d critical issues"
+msgstr[0] "En kritisk fråga"
+msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "One warning"
+msgid_plural "%d warnings"
+msgstr[0] "En varning"
+msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "Critical website security issues, identified by a CVSS score of 8.0 or higher, require immediate attention."
+msgstr "Kritiska säkerhetsproblem på webbplatsen, som identifieras med en CVSS-poäng på 8,0 eller högre, kräver omedelbar uppmärksamhet."
+
+#: inc/wpscan/index.php
+msgid "Website security warnings, identified by a CVSS score up to 7.9, require prompt attention."
+msgstr "Säkerhetsvarningar på webbplatser, identifierade med en CVSS-poäng upp till 7,9, kräver omedelbar uppmärksamhet."
+
+#: inc/dashboard/view.php
+msgid "Vulnerability scan information"
+msgstr ""

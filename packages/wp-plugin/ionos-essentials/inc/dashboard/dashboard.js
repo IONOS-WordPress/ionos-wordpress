@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const activeTabIndex = tabs.indexOf(activeTab);
 
       document.querySelector('li.current')?.classList.remove('current')
-      document.querySelector('#toplevel_page_ionos .wp-submenu li:nth-child(' + (activeTabIndex + 2) + ')').classList.add('current')
+      document.querySelector('[id^="toplevel_page_"] .wp-submenu li:nth-child(' + (activeTabIndex + 2) + ')').classList.add('current')
     }
   });
 
@@ -169,4 +169,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
   });
+
+  dashboard.querySelectorAll('[data-tooltip]').forEach((element) => {
+    element.addEventListener('click', function () {
+     alert(element.dataset.tooltip);
+    });
+  });
+
+  dashboard.querySelector('#dialog-closer').addEventListener('click', function () {
+    dashboard.querySelector('.static-overlay__blocker--active').classList.remove('static-overlay__blocker--active');
+    dashboard.querySelector('.static-overlay__container--active').classList.remove('static-overlay__container--active');
+  });
+
+  dashboard.querySelector('#learn-more').addEventListener('click', function () {
+    console.log('Learn more clicked');
+    dashboard.querySelector('.static-overlay__blocker').classList.add('static-overlay__blocker--active');
+    dashboard.querySelector('.static-overlay__container').classList.add('static-overlay__container--active');
+  })
 });

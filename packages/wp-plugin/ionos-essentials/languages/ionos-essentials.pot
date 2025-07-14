@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-03T11:12:14+00:00\n"
+"POT-Creation-Date: 2025-07-14T07:08:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #. Plugin URI of the plugin
 #: ionos-essentials.php
-msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 msgstr ""
 
 #. Description of the plugin
@@ -49,7 +49,6 @@ msgid "Overview"
 msgstr ""
 
 #: inc/dashboard/blocks/banner/index.php
-#: inc/dashboard/index.php
 #: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr ""
@@ -255,6 +254,7 @@ msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr ""
 
 #: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] ""
@@ -333,6 +333,10 @@ msgid "We've added scan results directly to your dashboard, giving you instant v
 msgstr ""
 
 #: inc/dashboard/index.php
+msgid "Tools and security"
+msgstr ""
+
+#: inc/dashboard/index.php
 msgid "Installing..."
 msgstr ""
 
@@ -394,6 +398,10 @@ msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
+msgstr ""
+
+#: inc/dashboard/view.php
+msgid "Vulnerability scan information"
 msgstr ""
 
 #. translators: s=link to control panel
@@ -583,6 +591,54 @@ msgstr ""
 
 #: inc/tenants/config/udag.php
 msgid "Markenschutz"
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "Vulnerability scan"
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "warnings found"
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "Last scan ran"
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "hours ago"
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "One critical issue"
+msgid_plural "%d critical issues"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "One warning"
+msgid_plural "%d warnings"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "Critical website security issues, identified by a CVSS score of 8.0 or higher, require immediate attention."
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "Website security warnings, identified by a CVSS score up to 7.9, require prompt attention."
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "View update details"
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "Delete"
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "Update"
 msgstr ""
 
 #: build/dashboard/blocks/banner/block.json

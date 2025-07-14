@@ -1,0 +1,57 @@
+.ionos-wpscan{
+  margin: 28px;
+
+  &.high{
+    border: 1px solid var(--critical-text-color,#c80a00);
+  }
+
+  &.medium{
+    border: 1px solid var(--warning-text-color,#f0b849);
+  }
+
+  .settings-stripe__label{
+    &::before {
+      content: "\f106";
+      font-family: 'dashicons';
+      margin-right: 0.8em;
+    }
+  }
+
+  .theme .settings-stripe__label{
+    &::before {
+      content: "\f100";
+    }
+  }
+
+  .settings-stripe--link .settings-stripe__action{
+    width: 50%;
+  }
+
+  .button{
+    &.delete{
+      border-color: #cc1818;
+      color: #cc1818;
+
+      &:hover{
+        background-color: #cc1818;
+        color: white;
+      }
+    }
+  }
+
+}
+
+.ionos-wpscan-summary{
+  .issue-row{
+    font-size: var(--third-level-headline-size, 16px);
+  }
+  .ionos_vulnerability__content{
+    background-image: none !important;
+    gap: 10px;
+    margin-bottom: 1em;
+  }
+}
+
+
+
+

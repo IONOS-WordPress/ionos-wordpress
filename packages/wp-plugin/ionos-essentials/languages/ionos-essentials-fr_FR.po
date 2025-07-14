@@ -1,23 +1,18 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: fr\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-04-15 10:33+0200\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-04-15 10:33+0200\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
-
-#. Plugin URI of the plugin
-#: ionos-essentials.php
-msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
-msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
 
 #. Description of the plugin
 #: ionos-essentials.php
@@ -142,6 +137,7 @@ msgid "%s ago"
 msgstr "il y a %s"
 
 #: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problème critique détecté"
@@ -594,7 +590,6 @@ msgid "No thanks"
 msgstr "Non merci."
 
 #: inc/dashboard/blocks/banner/index.php
-#: inc/dashboard/index.php
 #: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr "Outils"
@@ -658,3 +653,64 @@ msgstr "Mode maintenance"
 #: inc/dashboard/tabs/tools.php
 msgid "Preview maintenance page"
 msgstr "Prévisualisation de la page de maintenance"
+
+#. Plugin URI of the plugin
+#: ionos-essentials.php
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
+
+#: inc/wpscan/index.php
+msgid "Vulnerability scan"
+msgstr "Analyse de vulnérabilité"
+
+#: inc/wpscan/index.php
+msgid "warnings found"
+msgstr "avertissements trouvés"
+
+#: inc/wpscan/index.php
+msgid "Last scan ran"
+msgstr "Dernière analyse effectuée"
+
+#: inc/wpscan/index.php
+msgid "hours ago"
+msgstr "il y a quelques heures"
+
+#: inc/wpscan/index.php
+msgid "View update details"
+msgstr "Voir les détails de la mise à jour"
+
+#: inc/wpscan/index.php
+msgid "Delete"
+msgstr "Supprimer"
+
+#: inc/wpscan/index.php
+msgid "Update"
+msgstr "Mise à jour"
+
+#: inc/dashboard/index.php
+msgid "Tools and security"
+msgstr "Outils et sécurité"
+
+#: inc/wpscan/index.php
+msgid "One critical issue"
+msgid_plural "%d critical issues"
+msgstr[0] "Une question cruciale"
+msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "One warning"
+msgid_plural "%d warnings"
+msgstr[0] "Un avertissement"
+msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "Critical website security issues, identified by a CVSS score of 8.0 or higher, require immediate attention."
+msgstr "Les problèmes critiques de sécurité des sites web, identifiés par un score CVSS de 8.0 ou plus, requièrent une attention immédiate."
+
+#: inc/wpscan/index.php
+msgid "Website security warnings, identified by a CVSS score up to 7.9, require prompt attention."
+msgstr "Les alertes de sécurité des sites web, identifiées par un score CVSS allant jusqu'à 7,9, requièrent une attention immédiate."
+
+#: inc/dashboard/view.php
+msgid "Vulnerability scan information"
+msgstr ""
