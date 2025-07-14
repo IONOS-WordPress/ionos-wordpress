@@ -5,7 +5,6 @@ namespace ionos\essentials\security;
 use WP_Error;
 
 const LEAKED_CREDENTIALS_FLAG_NAME = 'ionos_compromised_credentials_check_leak_detected_v2';
-use const ionos\essentials\PLUGIN_DIR;
 
 // exit if accessed directly
 if (! defined('ABSPATH')) {
@@ -107,14 +106,20 @@ function show_view()
           'inc/dashboard/data/tenant-logos/' . \get_option('ionos_group_brand', 'ionos') . '.svg',
           dirname(__DIR__)
         ),
-        esc_html__( 'Security Notice', 'ionos-security' ),
-        esc_html__( 'It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password.', 'ionos-security' ),
-        esc_html__( 'Additional Information:', 'ionos-security' ),
+        esc_html__('Security Notice', 'ionos-security'),
+        esc_html__(
+          'It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password.',
+          'ionos-security'
+        ),
+        esc_html__('Additional Information:', 'ionos-security'),
         sprintf(
-            esc_html__( 'To check if your password has been compromised we are using the free service %1$s. For that we encrypt your password and send parts of the encryption to the service.', 'ionos-security' ),
-            '<a href="https://haveibeenpwned.com/Passwords" target="_blank" rel="nofollow noopener noreferrer">Have I Been Pwned</a>'
+          esc_html__(
+            'To check if your password has been compromised we are using the free service %1$s. For that we encrypt your password and send parts of the encryption to the service.',
+            'ionos-security'
+          ),
+          '<a href="https://haveibeenpwned.com/Passwords" target="_blank" rel="nofollow noopener noreferrer">Have I Been Pwned</a>'
         )
-    );
+      );
     });
   }
 }
@@ -179,24 +184,22 @@ function authenticate($user, $username, $password)
   );
 }
 
-function redirect_to_leaked_notice() {
+function redirect_to_leaked_notice()
+{
   wp_logout();
 
-  $user_login = filter_input( INPUT_POST, 'log' );
-  if ( empty( $user_login ) ) {
+  $user_login = filter_input(INPUT_POST, 'log');
+  if (empty($user_login)) {
     return;
   }
 
-  retrieve_password( $user_login );
+  retrieve_password($user_login);
 
-  $url = add_query_arg(
-    [
-      'action' => 'icc_leak_detected',
-    ],
-    wp_login_url()
-  );
+  $url = add_query_arg([
+    'action' => 'icc_leak_detected',
+  ], wp_login_url());
 
-  wp_safe_redirect( $url );
+  wp_safe_redirect($url);
   exit;
 }
 
