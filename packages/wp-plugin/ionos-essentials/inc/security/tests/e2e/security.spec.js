@@ -1,5 +1,16 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
+import { execTestCLI } from '../../../../../../../playwright/wp-env.js';
+
+test.beforeAll(async () => {
+  try {
+    execTestCLI(`
+      wp user update admin --user_pass=g0lasch0815!
+      wp user meta delete admin ionos_compromised_credentials_check_leak_detected_v2
+    `);
+  } catch (ex) {}
+});
+
 // async function login (page) {
 //   // Normally we use the wp-env standard user, but we need to create a new user for testing security
 //   // as the wp-env user has a leaked password
