@@ -3,6 +3,8 @@ import { defineConfig, devices } from '@playwright/test';
 
 import baseConfig from '@wordpress/scripts/config/playwright.config.js';
 
+process.env.WP_PASSWORD = 'g0lasch0815!';
+
 const config = defineConfig({
   ...baseConfig,
   testMatch: 'wp-plugin/**/tests/e2e/*.spec.js',
