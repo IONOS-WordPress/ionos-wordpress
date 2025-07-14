@@ -155,9 +155,14 @@ EOF
     "**/dist/**",
     "**/build/**",
   ],
+  "search.useIgnoreFiles": true,
   "search.exclude": {
     // Avoid polluting search results with lockfile content
     "pnpm-lock.yaml": true,
+    "**/build/**": true,
+    "**/dist/**": true,
+    "**/node_modules/**": true,
+    "**/vendor/**": true,
   },
   // Ensure VSCode uses pnpm instead of npm
   "npm.packageManager": "pnpm",
