@@ -175,4 +175,15 @@ document.addEventListener('DOMContentLoaded', function () {
      alert(element.dataset.tooltip);
     });
   });
+
+  dashboard.querySelector('#dialog-closer').addEventListener('click', function () {
+    dashboard.querySelector('.static-overlay__blocker--active').classList.remove('static-overlay__blocker--active');
+    dashboard.querySelector('.static-overlay__container--active').classList.remove('static-overlay__container--active');
+  });
+
+  dashboard.querySelector('#learn-more').addEventListener('click', function () {
+    console.log('Learn more clicked');
+    dashboard.querySelector('.static-overlay__blocker').classList.add('static-overlay__blocker--active');
+    dashboard.querySelector('.static-overlay__container').classList.add('static-overlay__container--active');
+  })
 });

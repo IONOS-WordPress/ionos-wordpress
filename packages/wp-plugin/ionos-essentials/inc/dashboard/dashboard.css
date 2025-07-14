@@ -259,3 +259,10 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   overflow: visible;
 }
 
+.static-overlay__blocker, .static-overlay__container {
+  display: none;
+}
+
+.static-overlay__blocker--active, .static-overlay__container--active {
+  display: flex;
+}

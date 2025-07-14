@@ -182,4 +182,3 @@ function get_settings_value($key)
 
   return $options[$key] ?? false;
 }
-?>

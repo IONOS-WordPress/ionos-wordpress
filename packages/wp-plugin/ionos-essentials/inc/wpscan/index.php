@@ -36,7 +36,7 @@ function render_summary()
 
 
         <p class="paragraph">
-          We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database. <a href="javascript: alert('How dare you to test this function sooo early');" class="link link--lookup">Learn more</a>
+          We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database. <a href="#" class="link link--lookup" id="learn-more">Learn more</a>
         </p>
 
       </section>
