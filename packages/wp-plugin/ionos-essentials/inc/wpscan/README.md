@@ -8,7 +8,7 @@ There are two types of isses:
 - Medium ("Warning") (CVSS < 7)
 
 ## Plugins
-For every issue, there is exactly one recommendend action:
+For every issue, there is exactly one recommendend action. "Show update information" is shown if update is available.
 ```mermaid
 flowchart TD
   A[Plugin] --> B{Update Available?}
@@ -25,7 +25,7 @@ flowchart TD
 ```
 
 ## Themes
-For every issue, there is exactly one recommendend action.
+For every issue, there is exactly one recommendend action. No "Show update information" is shown, even if update is available.
 It is not considered, if a theme is active or not. Even an active theme is beeing deleted.
 ```mermaid
 flowchart TD
