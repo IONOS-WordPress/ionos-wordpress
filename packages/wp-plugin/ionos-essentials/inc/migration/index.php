@@ -113,7 +113,7 @@ function _install()
       $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL]                  = $pel_enabled;
       $security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING] = $credentials_check_enabled;
 
-      \add_option(IONOS_SECURITY_FEATURE_OPTION, $security_options, null, true);
+      \add_option(IONOS_SECURITY_FEATURE_OPTION, $security_options, '', true);
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }
