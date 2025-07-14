@@ -14,18 +14,6 @@ if (! get_transient('ionos-ssl-check-notice-dismissed')) {
 }
 
 /* function enqueue_script() {
-  $assets = include_once IONOS_SECURITY_DIR . '/build/ssl-check.asset.php';
-  wp_enqueue_script(
-    self::HANDLE,
-    plugins_url( 'build/ssl-check.js', IONOS_SECURITY_FILE ),
-    $assets['dependencies'],
-    $assets['version'],
-    true
-  );
-
-  $vars = [
-    'ajax_url' => admin_url( 'admin-ajax.php' ),
-  ];
   wp_localize_script( self::HANDLE, 'ionosSSLCheck', $vars );
 } */
 
