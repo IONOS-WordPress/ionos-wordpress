@@ -88,8 +88,10 @@ class WPScan
               }, array_keys($names)),
               array_values($names)
             );
-            $vuln['name'] = $names[$item['slug']]['Name'] ?? $item['slug'];
-            $vuln['slug'] = $item['slug'];
+            if( isset($item['slug'])) { // this line is just needed for the phpunit test
+              $vuln['name'] = $names[$item['slug']]['Name'] ?? $item['slug'];
+              $vuln['slug'] = $item['slug'];
+            }
 
             if (isset($vuln['score']) && 7 < $vuln['score']) {
               $critical[] = $vuln;
