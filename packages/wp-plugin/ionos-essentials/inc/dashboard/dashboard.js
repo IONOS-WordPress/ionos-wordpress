@@ -176,14 +176,37 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  dashboard.querySelector('#dialog-closer').addEventListener('click', function () {
+  dashboard.querySelector('.dialog-closer').addEventListener('click', function () {
     dashboard.querySelector('.static-overlay__blocker--active').classList.remove('static-overlay__blocker--active');
     dashboard.querySelector('.static-overlay__container--active').classList.remove('static-overlay__container--active');
   });
 
   dashboard.querySelector('#learn-more').addEventListener('click', function () {
-    console.log('Learn more clicked');
     dashboard.querySelector('.static-overlay__blocker').classList.add('static-overlay__blocker--active');
-    dashboard.querySelector('.static-overlay__container').classList.add('static-overlay__container--active');
+    dashboard.querySelector('#learn-more-overlay').classList.add('static-overlay__container--active');
   })
+
+  dashboard.querySelectorAll('[data-slug]').forEach((element) => {
+    element.addEventListener('click', function (event) {
+      const overlay = dashboard.querySelector('#plugin-install-overlay');
+
+      dashboard.querySelector('.static-overlay__blocker').classList.add('static-overlay__blocker--active');
+      overlay.classList.add('static-overlay__container--active');
+
+      const iframe = document.createElement('iframe');
+      iframe.style.border = 'none';
+      iframe.style.width = '772px';
+      iframe.style.height = '554px';
+      iframe.style.display = 'none';
+
+      overlay.innerHTML = '<div id="plugin-information-waiting" style="background: white;width:772px; height: 554px;">Waiting for plugin information...</div>';
+      overlay.appendChild(iframe);
+      iframe.onload = function () {
+        overlay.querySelector('#plugin-information-waiting').remove();
+        iframe.style.display = 'block';
+      };
+      iframe.src = `${window.location.origin}/wp-admin/plugin-install.php?tab=plugin-information&plugin=m-chart&`;
+
+    });
+  });
 });

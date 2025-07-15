@@ -124,11 +124,11 @@ use const ionos\essentials\PLUGIN_DIR;
 <?php blocks\welcome\render_callback(); ?>
 
 <div class="static-overlay__blocker"></div>
-<div class="static-overlay__container">
+<div class="static-overlay__container" id="learn-more-overlay">
   <div class="sheet static-overlay--closable static-overlay__content sheet--micro-effect" data-static-overlay-id="demo-overlay1" style="margin-top: inherit;">
     <section class="sheet__section">
       <div style="display: flex; justify-content: right;">
-        <i id="dialog-closer" class="exos-icon exos-icon-deleteinput-16"></i>
+        <i class="exos-icon exos-icon-deleteinput-16 dialog-closer"></i>
       </div>
       <h3 class="headline headline--sub"><?php \esc_html_e('Vulnerability scan information', 'ionos-essentials'); ?></h3>
       <ul class="bullet-list">
@@ -140,6 +140,9 @@ use const ionos\essentials\PLUGIN_DIR;
   </div>
 </div>
 
+<div class="static-overlay__container" id="plugin-install-overlay">
+  Showing update information
+</div>
 
 <main id="content" class="<?php \ionos\essentials\maintenance_mode\is_maintenance_mode() && printf('ionos-maintenance-mode'); ?> issues-found">
   <div class="page-section">

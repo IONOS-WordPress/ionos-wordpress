@@ -36,7 +36,7 @@ function render_summary()
 
 
         <p class="paragraph">
-          We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database. <a href="#" class="link link--lookup" id="learn-more">Learn more</a>
+          We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database. <span class="link link--lookup" id="learn-more">Learn more</span>
         </p>
 
       </section>
@@ -68,8 +68,8 @@ function render_issues($args)
                   <span class="et-tooltip-content">
                     <?php
                     echo ('high' === $args['type'])
-                      ? esc_html__('Critical website security issues, identified by a CVSS score of 8.0 or higher, require immediate attention.', 'ionos-essentials')
-                      : esc_html__('Website security warnings, identified by a CVSS score up to 7.9, require prompt attention.', 'ionos-essentials');
+                      ? esc_html__('Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention.', 'ionos-essentials')
+                      : esc_html__('Website security warnings, identified by a CVSS score up to 6.9, require prompt attention.', 'ionos-essentials');
                     ?>
                   </span>
                 </span>
@@ -84,6 +84,7 @@ function render_issues($args)
       render_issue_line([
         'issue'           => $issue,
         'theme_or_plugin' => $theme_or_plugin,
+        'slug'            => 'm-chart'
       ]);
     }
   ?>
@@ -102,9 +103,14 @@ function render_issue_line($args)
     <div class="settings-stripe__label"><strong><?php echo esc_html($args['issue']['Name']); ?></strong></div>
     <div class="settings-stripe__value"></div>
     <div class="settings-stripe__action">
-      <a href="#" class="link link-action" style="margin-right: 1em;"><?php esc_html_e('View update details', 'ionos-essentials'); ?></a>
-      <button class="button delete" onClick="alert('How dare you to delete this');"><?php esc_html_e('Delete', 'ionos-essentials'); ?></button>
-      <button class="button button-primary"><?php esc_html_e('Update', 'ionos-essentials'); ?></button>
+
+      <?php if (rand(0, 1)) {
+        printf('<span class="link link-action" data-slug="%s" style="margin-right: 1em;">%s</span>', \esc_attr($args['slug']), \esc_html__('View update details', 'ionos-essentials'));
+        printf('<button class="button button-primary">%s</button>', esc_html('Update', 'ionos-essentials'));
+      } else {
+        printf('<button class="button delete">%s</button>', esc_html('Delete', 'ionos-essentials'));
+      }
+      ?>
 
     </div>
   </li>
