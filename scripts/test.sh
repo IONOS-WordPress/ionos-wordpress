@@ -127,10 +127,11 @@ EOL
 fi
 
 if [[ "${USE[@]}" =~ all|e2e ]]; then
+  # next 2 steps are required since potential runned phpunit tests rest the database to a state that is not suitable for e2e tests
   # set the default admin password to the password defined in .env file
-  pnpm -s wp-env run tests-cli wp user update admin --user_pass="${WP_ENV_TEST_ADMIN_PASSWORD}"
+  pnpm -s wp-env run tests-cli wp --quiet user update admin --user_pass="${WP_PASSWORD}"
   # reset the user meta for compromised credentials check
-  pnpm -s wp-env run tests-cli wp user meta delete admin ionos_compromised_credentials_check_leak_detected_v2 &>/dev/null || true
+  pnpm -s wp-env run tests-cli wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2 &>/dev/null || true
 
   # start wp-env e2e tests. provide part specific options and all positional arguments that are php files
   (

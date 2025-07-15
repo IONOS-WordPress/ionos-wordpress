@@ -225,6 +225,11 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
 
     wp --quiet option update WPLANG 'en_US'
 
+    # set the default admin password to the password defined in .env file
+    wp --quiet user update admin --user_pass="${WP_PASSWORD}"
+    # reset the user meta for compromised credentials check (in case of wp-env restart)
+    wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2 &>/dev/null || true
+
     # fix permissions for mu-plugins folder if any
     # (leaving the permisions as-is will result in an error on destroy restart wp-env)
     if find /var/www/html/wp-content/mu-plugins -mindepth 1 -maxdepth 1 -type d -printf '%f\n' &>/dev/null; then
