@@ -67,11 +67,11 @@ function _disable_xmlrpc_methods()
 
     $ipv6_allow_list = IONOS_SECURITY_ALLOW_LIST_IP6;
     foreach ($ipv6_allow_list as $cidr) {
-      if (false !== __ipv6_in_cidr($ip, $cidr)) {
+      if (false !== _ipv6_in_cidr($ip, $cidr)) {
         return;
       }
     }
   }
 
-  __disable_xmlrpc_methods();
+  _disable_xmlrpc_methods();
 })();
