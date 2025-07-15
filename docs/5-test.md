@@ -62,6 +62,8 @@ Example: `packages/wp-plugin/ionos-essentials/inc/dashboard/tests/phpunit/Accept
 
 Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
+> playwright e2e tests will have a custom admin password set (in `.env` variable `WP_ENV_TEST_ADMIN_PASSWORD`) since the ionos-essentials security feature password checking requires a "safe" password to be set.
+
 - run e2e tests : `pnpm test:e2e`
 
 - (fastest) run a single e2e test : `pnpm run test:e2e ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
@@ -69,7 +71,7 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
   or even simpler `pnpm run test:e2e example.spec.js` (paths can be skipped ion Playwright)
 
 - run whenever you changed a file : `pnpm watch -- pnpm test:e2e`
-  - run a single e2e test without rebuilding and checking wp-env is alive in playwright debug mode : `pnpm exec playwright test -c ./playwright.config.js --debug ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
+  - run a single e2e test without rebuilding and checking wp-env is alive in playwright debug mode : `pnpm run test:e2e --e2e-opts '--debug' ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js` (see `pnpm run test --help` for more)
 
 - vscode supports running e2e tests by clicking on the play button in the test file.
   - same same for debugging tests.
