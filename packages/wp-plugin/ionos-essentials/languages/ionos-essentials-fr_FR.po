@@ -679,14 +679,6 @@ msgstr "il y a quelques heures"
 msgid "View update details"
 msgstr "Voir les détails de la mise à jour"
 
-#: inc/wpscan/index.php
-msgid "Delete"
-msgstr "Supprimer"
-
-#: inc/wpscan/index.php
-msgid "Update"
-msgstr "Mise à jour"
-
 #: inc/dashboard/index.php
 msgid "Tools and security"
 msgstr "Outils et sécurité"
@@ -703,14 +695,14 @@ msgid_plural "%d warnings"
 msgstr[0] "Un avertissement"
 msgstr[1] ""
 
-#: inc/wpscan/index.php
-msgid "Critical website security issues, identified by a CVSS score of 8.0 or higher, require immediate attention."
-msgstr "Les problèmes critiques de sécurité des sites web, identifiés par un score CVSS de 8.0 ou plus, requièrent une attention immédiate."
-
-#: inc/wpscan/index.php
-msgid "Website security warnings, identified by a CVSS score up to 7.9, require prompt attention."
-msgstr "Les alertes de sécurité des sites web, identifiées par un score CVSS allant jusqu'à 7,9, requièrent une attention immédiate."
-
 #: inc/dashboard/view.php
 msgid "Vulnerability scan information"
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
+msgstr ""
+
+#: inc/wpscan/index.php
+msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
 msgstr ""
