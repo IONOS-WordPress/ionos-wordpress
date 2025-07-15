@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
   const body = document.querySelector('body');
-  const dashboard = document.querySelector('#wpbody-content').shadowRoot;
+  const dashboard = document.querySelector('#wpbody-content')?.shadowRoot;
+
+  if (!dashboard) {
+    return;
+  }
 
   dashboard.querySelector('#ionos_essentials_maintenance_mode').addEventListener('click', function () {
     if (this.checked) {
