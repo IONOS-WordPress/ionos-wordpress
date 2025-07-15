@@ -44,7 +44,7 @@ function _disable_xmlrpc_methods()
 }
 
 (function () {
-  if (! defined('XMLRPC_REQUEST') && XMLRPC_REQUEST) {
+  if (! (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST)) {
     return;
   }
 
