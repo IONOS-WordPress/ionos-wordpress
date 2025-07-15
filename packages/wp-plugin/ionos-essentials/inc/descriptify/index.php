@@ -25,7 +25,7 @@ add_action(
     }
 
     require $config_file;
-    $tenant  = strToLower(\get_option('ionos_group_brand'));
+    $tenant  = strToLower(\get_option('ionos_group_brand', 'ionos'));
     $market  = strtolower(\get_option($tenant . '_market', ''));
 
     if (! isset($control_panel_links[$tenant][$market])) {
