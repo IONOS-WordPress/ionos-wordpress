@@ -683,18 +683,6 @@ msgstr "Visa uppdateringsinformation"
 msgid "Tools and security"
 msgstr "Verktyg och säkerhet"
 
-#: inc/wpscan/index.php
-msgid "One critical issue"
-msgid_plural "%d critical issues"
-msgstr[0] "En kritisk fråga"
-msgstr[1] ""
-
-#: inc/wpscan/index.php
-msgid "One warning"
-msgid_plural "%d warnings"
-msgstr[0] "En varning"
-msgstr[1] ""
-
 #: inc/dashboard/view.php
 msgid "Vulnerability scan information"
 msgstr ""
@@ -706,3 +694,15 @@ msgstr ""
 #: inc/wpscan/index.php
 msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
 msgstr ""
+
+#: inc/wpscan/index.php
+msgid "%d critical issue"
+msgid_plural "%d critical issues"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/wpscan/index.php
+msgid "%d warning"
+msgid_plural "%d warnings"
+msgstr[0] ""
+msgstr[1] ""
