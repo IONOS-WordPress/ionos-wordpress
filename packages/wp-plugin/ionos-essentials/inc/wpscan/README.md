@@ -39,3 +39,41 @@ flowchart TD
 
   classDef redNode fill:#f87171,stroke-width:0px,color:#000;
   class D redNode;
+```
+
+## Proposal
+### Plugins
+```mermaid
+flowchart TD
+  A[Plugin] --> B{Update Available?}
+  B -- Yes --> F['Update' Button]
+  B -- No --> D['Delete' Button]
+
+
+  classDef greenNode fill:#a3e635,stroke-width:0px,color:#000;
+  class F greenNode;
+
+  classDef redNode fill:#f87171,stroke-width:0px,color:#000;
+  class D redNode;
+```
+
+### Themes
+```mermaid
+flowchart TD
+  A[Theme] --> B{Update available?}
+  B -- yes --> F['Update' Button]
+
+  B -- No --> D[Theme status]
+  D -- inactive --> X['Delete' Button]
+  D -- active -->E[other themes installed?]
+  E -- only this --> H[install TwentyTwentyFive ]
+  E -- more themes --> G[active another theme]
+  H --> G
+  G --> X
+
+  classDef greenNode fill:#a3e635,stroke-width:0px,color:#000;
+  class F greenNode;
+
+  classDef redNode fill:#f87171,stroke-width:0px,color:#000;
+  class X redNode;
+```
