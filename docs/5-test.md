@@ -62,7 +62,7 @@ Example: `packages/wp-plugin/ionos-essentials/inc/dashboard/tests/phpunit/Accept
 
 Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
-> playwright e2e tests will have a custom admin password set (in `.env` variable `WP_ENV_TEST_ADMIN_PASSWORD`) since the ionos-essentials security feature password checking requires a "safe" password to be set.
+> wp-dev containers will have a custom admin password set (in `.env` variable `WP_PASSWORD`) since the ionos-essentials security feature password checking requires a "safe" password to be set.
 
 - run e2e tests : `pnpm test:e2e`
 

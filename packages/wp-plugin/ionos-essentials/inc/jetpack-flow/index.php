@@ -109,7 +109,7 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 
   \add_action(
     'admin_page_access_denied',
-    function () : void {
+    function (): void {
       $url = add_query_arg([
         'page'   => HIDDEN_PAGE_SLUG,
         'coupon' => $_GET['coupon'],

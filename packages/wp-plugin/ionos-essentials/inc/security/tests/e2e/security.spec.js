@@ -5,7 +5,7 @@ import { execTestCLI } from '../../../../../../../playwright/wp-env.js';
 test.beforeAll(async () => {
   try {
     execTestCLI(`
-      wp user update admin --user_pass='\${WP_ENV_TEST_ADMIN_PASSWORD}'
+      wp user update admin --user_pass='\${WP_PASSWORD}'
       wp user meta delete admin ionos_compromised_credentials_check_leak_detected_v2
       wp option delete IONOS_SECURITY_FEATURE_OPTION
     `);
