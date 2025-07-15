@@ -63,17 +63,22 @@ flowchart TD
   A[Theme] --> B{Update available?}
   B -- yes --> F['Update' Button]
 
-  B -- No --> D[Theme status]
+  B -- No --> D{Theme status}
   D -- inactive --> X['Delete' Button]
-  D -- active -->E[other themes installed?]
+  D -- active -->E{other themes installed?}
   E -- only this --> H[install TwentyTwentyFive ]
-  E -- more themes --> G[active another theme]
+  E -- more themes --> G[activate another theme]
   H --> G
   G --> X
 
   classDef greenNode fill:#a3e635,stroke-width:0px,color:#000;
   class F greenNode;
 
+  classDef blueNode fill:#38bdf8,stroke-width:0px,color:#000;
+  class G blueNode;
+  class H blueNode
+
   classDef redNode fill:#f87171,stroke-width:0px,color:#000;
   class X redNode;
 ```
+Green and red buttons are shown to the user, blue nodes happen secretly in the background without any further ado by the user.
