@@ -3,15 +3,13 @@
 namespace ionos\essentials\dashboard;
 
 use function ionos\essentials\is_stretch;
-
+use const ionos\essentials\PLUGIN_DIR;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_PEL;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
-use const ionos\essentials\PLUGIN_DIR;
-
 
 ?>
  <div id="tools" class="page-section ionos-tab">
