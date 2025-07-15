@@ -45,6 +45,10 @@ class WPScan
       ],
     ];
 
+    // Plugin which is not installed
+    $vulnerabilities['result']['plugins'][] = $vulnerabilities['result']['plugins'][1];
+    $vulnerabilities['result']['plugins'][3]['slug'] = 'not-installed-plugin';
+
     // Sort vulnerabilities by score, ascending
     foreach (['plugins', 'themes'] as $type) {
       if (! empty($vulnerabilities['result'][$type])) {

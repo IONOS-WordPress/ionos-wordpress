@@ -10,7 +10,7 @@
   }
 
   .settings-stripe__label{
-    width: fit-content;
+    width: 50%;
     &::before {
       content: "\f106";
       font-family: 'dashicons';

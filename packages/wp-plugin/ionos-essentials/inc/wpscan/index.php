@@ -118,7 +118,6 @@ function render_issue_line($args)
   ?>
  <li class="settings-stripe settings-stripe--link  <?php echo esc_attr($args['theme_or_plugin']); ?>">
     <div class="settings-stripe__label"><strong><?php echo esc_html($args['issue']['name']); ?></strong></div>
-    <div class="settings-stripe__value"></div>
     <div class="settings-stripe__action">
 
       <?php if ('plugin' === $args['theme_or_plugin']) {
