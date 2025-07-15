@@ -67,7 +67,7 @@ function render_issues($args)
     <section class="sheet__section">
       <div class="grid">
           <div class="grid-col grid-col--12">
-              <h2 class="headline headline--<?php echo esc_attr($args['type'] ?? ''); ?>">
+              <h2 class="headline headline--sub headline--<?php echo esc_attr($args['type'] ?? ''); ?>">
                 <?php
   ('critical' === $args['type'])
   ? printf(\_n('%d critical issue', '%d critical issues', $count, 'ionos-essentials'), $count)
@@ -116,7 +116,7 @@ function render_issues($args)
 function render_issue_line($args)
 {
   ?>
- <li class="settings-stripe settings-stripe--link __direct-selection <?php echo esc_attr($args['theme_or_plugin']); ?>">
+ <li class="settings-stripe settings-stripe--link  <?php echo esc_attr($args['theme_or_plugin']); ?>">
     <div class="settings-stripe__label"><strong><?php echo esc_html($args['issue']['name']); ?></strong></div>
     <div class="settings-stripe__value"></div>
     <div class="settings-stripe__action">

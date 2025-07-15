@@ -55,10 +55,12 @@ use const ionos\essentials\PLUGIN_DIR;
                 </div>
                 <div class="grid-col grid-col--6 grid-col--small-12">
                 <?php
-                $description=  sprintf('<strong style="font-size: 1.2em">%s</strong>
-                      <br><br>
+                $description=  sprintf('
+                      <p class="paragraph paragraph--small paragraph--minor">%s</p>
+                      <p class="paragraph paragraph--large paragraph-bold">%s</p>
                       <a href="%s" class="link link--action">%s</a>',
-                  get_option('admin_email'),
+                  \esc_html__('Vulnerabilities detected are being emailed to', 'ionos-essentials'),
+                  \get_option('admin_email'),
                   admin_url('options-general.php'),
                   \esc_html__('Change email address', 'ionos-essentials')
                 );

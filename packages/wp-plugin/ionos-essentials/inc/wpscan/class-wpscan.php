@@ -18,7 +18,7 @@ class WPScan
       [
         'title'    => 'Test Essentials Vulnerability',
         'fixed_in' => '1.2.3',
-        'score'    => 3.5,
+        'score'    => 9.5,
       ],
     ];
 

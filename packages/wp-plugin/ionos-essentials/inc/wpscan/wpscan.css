@@ -1,15 +1,16 @@
 .ionos-wpscan{
   margin: 28px;
 
-  &.high{
+  &.critical{
     border: 1px solid var(--critical-text-color,#c80a00);
   }
 
-  &.medium{
+  &.warning{
     border: 1px solid var(--warning-text-color,#f0b849);
   }
 
   .settings-stripe__label{
+    width: fit-content;
     &::before {
       content: "\f106";
       font-family: 'dashicons';
@@ -36,6 +37,21 @@
         background-color: #cc1818;
         color: white;
       }
+    }
+  }
+
+  .sheet__section{
+    margin-bottom: 0;
+
+    &:last-child{
+      padding-bottom: 0;
+    }
+  }
+
+  .settings-stripe{
+    &:last-child{
+      border-bottom-left-radius: 16px;
+
     }
   }
 

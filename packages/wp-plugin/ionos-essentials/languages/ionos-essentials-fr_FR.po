@@ -668,14 +668,6 @@ msgid "warnings found"
 msgstr "avertissements trouvés"
 
 #: inc/wpscan/index.php
-msgid "Last scan ran"
-msgstr "Dernière analyse effectuée"
-
-#: inc/wpscan/index.php
-msgid "hours ago"
-msgstr "il y a quelques heures"
-
-#: inc/wpscan/index.php
 msgid "View update details"
 msgstr "Voir les détails de la mise à jour"
 
@@ -706,3 +698,7 @@ msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] ""
 msgstr[1] ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Vulnerabilities detected are being emailed to"
+msgstr ""
