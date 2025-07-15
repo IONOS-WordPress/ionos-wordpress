@@ -1,14 +1,16 @@
 # WPScan
 
-WPScan identifies any vulnerabilities present in your installed plugins or themes.
-Vulnerability data is sourced from https://wpscan.com/ through our own middleware server.
+WPScan detects vulnerabilities in your installed plugins and themes.  
+Vulnerability data is sourced from [wpscan.com](https://wpscan.com/) via our middleware server.
 
-There are two types of isses:
-- High ("Critical") (CVSS >= 7 )
+There are two types of issues:
+- High ("Critical") (CVSS ≥ 7)
 - Medium ("Warning") (CVSS < 7)
 
+Both types are handled similarly but are listed under different headings.
+
 ## Plugins
-For every issue, there is exactly one recommendend action. "Show update information" is shown if update is available.
+For each issue, there is exactly one recommended action. If an update is available, a "Show update information" option is displayed.
 ```mermaid
 flowchart TD
   A[Plugin] --> B{Update Available?}
@@ -25,14 +27,13 @@ flowchart TD
 ```
 
 ## Themes
-For every issue, there is exactly one recommendend action. No "Show update information" is shown, even if update is available.
-It is not considered, if a theme is active or not. Even an active theme is beeing deleted.
+For each issue, there is exactly one recommended action. "Show update information" is not displayed, even if an update is available.  
+The theme's active status is not considered—active themes can also be deleted.
 ```mermaid
 flowchart TD
   A[Theme] --> B{Update Available?}
   B -- Yes --> F['Update' Button]
   B -- No --> D['Delete' Button]
-
 
   classDef greenNode fill:#a3e635,stroke-width:0px,color:#000;
   class F greenNode;
@@ -49,7 +50,6 @@ flowchart TD
   B -- Yes --> F['Update' Button]
   B -- No --> D['Delete' Button]
 
-
   classDef greenNode fill:#a3e635,stroke-width:0px,color:#000;
   class F greenNode;
 
@@ -65,9 +65,9 @@ flowchart TD
 
   B -- No --> D{Theme status}
   D -- inactive --> X['Delete' Button]
-  D -- active -->E{other themes installed?}
-  E -- only this --> H[install TwentyTwentyFive ]
-  E -- more themes --> G[activate another theme]
+  D -- active -->E{Other themes installed?}
+  E -- only this --> H[Install TwentyTwentyFive]
+  E -- more themes --> G[Activate another theme]
   H --> G
   G --> X
 
@@ -81,4 +81,4 @@ flowchart TD
   classDef redNode fill:#f87171,stroke-width:0px,color:#000;
   class X redNode;
 ```
-Green and red buttons are shown to the user, blue nodes happen secretly in the background without any further ado by the user.
+Green and red buttons are shown to the user. Blue nodes represent actions that happen automatically in the background, without user intervention.
