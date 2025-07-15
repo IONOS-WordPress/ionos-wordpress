@@ -124,7 +124,7 @@ use const ionos\essentials\PLUGIN_DIR;
 <?php blocks\welcome\render_callback(); ?>
 
 <div class="static-overlay__blocker"></div>
-<div class="static-overlay__container" id="learn-more-overlay">
+<div class="static-overlay__container dialog-closer" id="learn-more-overlay">
   <div class="sheet static-overlay--closable static-overlay__content sheet--micro-effect" data-static-overlay-id="demo-overlay1" style="margin-top: inherit;">
     <section class="sheet__section">
       <div style="display: flex; justify-content: right;">
@@ -140,7 +140,7 @@ use const ionos\essentials\PLUGIN_DIR;
   </div>
 </div>
 
-<div class="static-overlay__container" id="plugin-install-overlay">
+<div class="static-overlay__container dialog-closer" id="plugin-install-overlay">
   Showing update information
 </div>
 

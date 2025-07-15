@@ -176,9 +176,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  dashboard.querySelector('.dialog-closer').addEventListener('click', function () {
-    dashboard.querySelector('.static-overlay__blocker--active').classList.remove('static-overlay__blocker--active');
-    dashboard.querySelector('.static-overlay__container--active').classList.remove('static-overlay__container--active');
+  dashboard.querySelectorAll('.dialog-closer').forEach((element) => {
+    element.addEventListener('click', function () {
+      console.log(element);
+      dashboard.querySelector('.static-overlay__blocker--active').classList.remove('static-overlay__blocker--active');
+      dashboard.querySelector('.static-overlay__container--active').classList.remove('static-overlay__container--active');
+    });
   });
 
   dashboard.querySelector('#learn-more').addEventListener('click', function () {
