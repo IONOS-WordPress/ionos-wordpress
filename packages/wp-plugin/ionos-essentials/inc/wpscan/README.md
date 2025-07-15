@@ -1,6 +1,6 @@
 # WPScan
 
-WPScan detects vulnerabilities in your installed plugins and themes.  
+WPScan detects vulnerabilities in your installed plugins and themes.
 Vulnerability data is sourced from [wpscan.com](https://wpscan.com/) via our middleware server.
 
 There are two types of issues:
@@ -9,7 +9,9 @@ There are two types of issues:
 
 Both types are handled similarly but are listed under different headings.
 
-## Plugins
+
+### Security Plugin (legacy workflow)
+### Plugins
 For each issue, there is exactly one recommended action. If an update is available, a "Show update information" option is displayed.
 ```mermaid
 flowchart TD
@@ -26,8 +28,8 @@ flowchart TD
   class D redNode;
 ```
 
-## Themes
-For each issue, there is exactly one recommended action. "Show update information" is not displayed, even if an update is available.  
+### Themes
+For each issue, there is exactly one recommended action. "Show update information" is not displayed, even if an update is available.
 The theme's active status is not considered—active themes can also be deleted.
 ```mermaid
 flowchart TD
@@ -42,7 +44,7 @@ flowchart TD
   class D redNode;
 ```
 
-## Proposal
+## Essentials Plugin
 ### Plugins
 ```mermaid
 flowchart TD
@@ -63,13 +65,10 @@ flowchart TD
   A[Theme] --> B{Update available?}
   B -- yes --> F['Update' Button]
 
-  B -- No --> D{Theme status}
+  B -- No --> D{Theme active?}
   D -- inactive --> X['Delete' Button]
-  D -- active -->E{Other themes installed?}
-  E -- only this --> H[Install TwentyTwentyFive]
-  E -- more themes --> G[Activate another theme]
-  H --> G
-  G --> X
+  D -- active -->E[install and activate another theme ]
+
 
   classDef greenNode fill:#a3e635,stroke-width:0px,color:#000;
   class F greenNode;
@@ -81,4 +80,4 @@ flowchart TD
   classDef redNode fill:#f87171,stroke-width:0px,color:#000;
   class X redNode;
 ```
-Green and red buttons are shown to the user. Blue nodes represent actions that happen automatically in the background, without user intervention.
+
