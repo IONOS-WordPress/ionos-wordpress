@@ -18,16 +18,14 @@ add_action('admin_bar_menu', function ($wp_admin_bar) {
     ],
   ];
   $wp_admin_bar->add_node($args);
-}, 31);
 
-add_action('admin_enqueue_scripts', function () {
   wp_enqueue_style(
     'ionos-maintenance-mode-admin',
     plugin_dir_url(__FILE__) . 'maintenance.css',
     [],
     filemtime(plugin_dir_path(__FILE__) . 'maintenance.css')
   );
-});
+}, 31);
 
 add_action('admin_enqueue_scripts', function () {
   wp_enqueue_script(
@@ -66,6 +64,13 @@ add_action('init', function () {
 add_filter('admin_body_class', function ($classes) {
   if (is_maintenance_mode()) {
     $classes .= ' ionos-maintenance-mode';
+  }
+  return $classes;
+});
+
+add_filter('body_class', function ($classes) {
+  if (is_maintenance_mode()) {
+    $classes[] = 'ionos-maintenance-mode';
   }
   return $classes;
 });
