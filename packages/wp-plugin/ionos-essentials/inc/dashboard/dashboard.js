@@ -176,11 +176,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  window.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      dashboard.querySelector('.dialog-closer')?.click();
+    }
+});
+
   dashboard.querySelectorAll('.dialog-closer').forEach((element) => {
     element.addEventListener('click', function () {
-      console.log(element);
-      dashboard.querySelector('.static-overlay__blocker--active').classList.remove('static-overlay__blocker--active');
-      dashboard.querySelector('.static-overlay__container--active').classList.remove('static-overlay__container--active');
+      dashboard.querySelector('.static-overlay__blocker--active')?.classList.remove('static-overlay__blocker--active');
+      dashboard.querySelector('.static-overlay__container--active')?.classList.remove('static-overlay__container--active');
     });
   });
 
