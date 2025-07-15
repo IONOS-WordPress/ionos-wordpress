@@ -259,5 +259,4 @@ add_action('admin_enqueue_scripts', function () {
   );
 });
 
-
 require_once __DIR__ . '/blocks/quick-links/index.php';

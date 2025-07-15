@@ -2,7 +2,6 @@
 
 namespace ionos\essentials\wpscan;
 
-
 function render_summary()
 { ?>
   <script>
@@ -58,9 +57,9 @@ function render_issues($args)
               <h2 class="headline headline--<?php echo esc_attr($args['exos_class'] ?? ''); ?>">
                 <?php
                     $count = count($args['issues']);
-  echo ('high' === $args['type'])
-  ? esc_html(sprintf(\_n('One critical issue', '%d critical issues', $count, 'ionos-essentials'), $count))
-  : esc_html(sprintf(\_n('One warning', '%d warnings', $count, 'ionos-essentials'), $count));
+  ('high' === $args['type'])
+  ? printf(\_n('%d critical issue', '%d critical issues', $count, 'ionos-essentials'), $count)
+  : printf(\_n('%d warning', '%d warnings', $count, 'ionos-essentials'), $count);
   ?>
 
                 <span class="et-has-tooltip">
@@ -68,9 +67,15 @@ function render_issues($args)
                   <span class="et-tooltip-content">
                     <?php
                     echo ('high' === $args['type'])
-                      ? esc_html__('Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention.', 'ionos-essentials')
-                      : esc_html__('Website security warnings, identified by a CVSS score up to 6.9, require prompt attention.', 'ionos-essentials');
-                    ?>
+                      ? esc_html__(
+                        'Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention.',
+                        'ionos-essentials'
+                      )
+                      : esc_html__(
+                        'Website security warnings, identified by a CVSS score up to 6.9, require prompt attention.',
+                        'ionos-essentials'
+                      );
+  ?>
                   </span>
                 </span>
               </h2>
@@ -84,7 +89,7 @@ function render_issues($args)
       render_issue_line([
         'issue'           => $issue,
         'theme_or_plugin' => $theme_or_plugin,
-        'slug'            => 'm-chart'
+        'slug'            => 'm-chart',
       ]);
     }
   ?>
@@ -105,12 +110,16 @@ function render_issue_line($args)
     <div class="settings-stripe__action">
 
       <?php if (rand(0, 1)) {
-        printf('<span class="link link-action" data-slug="%s" style="margin-right: 1em;">%s</span>', \esc_attr($args['slug']), \esc_html__('View update details', 'ionos-essentials'));
+        printf(
+          '<span class="link link-action" data-slug="%s" style="margin-right: 1em;">%s</span>',
+          \esc_attr($args['slug']),
+          \esc_html__('View update details', 'ionos-essentials')
+        );
         printf('<button class="button button-primary">%s</button>', esc_html('Update', 'ionos-essentials'));
       } else {
         printf('<button class="button delete">%s</button>', esc_html('Delete', 'ionos-essentials'));
       }
-      ?>
+  ?>
 
     </div>
   </li>
