@@ -51,7 +51,7 @@
   .settings-stripe{
     &:last-child{
       border-bottom-left-radius: 16px;
-
+      border-bottom-right-radius: 16px;
     }
   }
 
