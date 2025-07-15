@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
         overlay.querySelector('#plugin-information-waiting').remove();
         iframe.style.display = 'block';
       };
-      iframe.src = `${window.location.origin}/wp-admin/plugin-install.php?tab=plugin-information&plugin=m-chart&`;
+      iframe.src = `${window.location.origin}/wp-admin/plugin-install.php?tab=plugin-information&plugin=${element.dataset.slug}&`;
 
     });
   });

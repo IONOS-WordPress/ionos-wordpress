@@ -72,28 +72,11 @@ render_section([
 ?>
                 </div>
                    <?php
-                    $plugins = get_plugins();
-$themes                      = array_slice(wp_get_themes(), 0, 1, true);
-shuffle($plugins);
-shuffle($themes);
-$critical_issues = array_merge($plugins, $themes);
-
-$themes = array_slice(wp_get_themes(), 0, 2, true);
-shuffle($plugins);
-$plugins = array_slice($plugins, 0, 1, true);
-shuffle($themes);
-$warnings = array_merge($plugins, $themes);
-
 \ionos\essentials\wpscan\render_issues([
-  'type'      => 'high',
-  'exos_class'=>
-  'critical',
-  'issues' => $critical_issues,
+  'type'      => 'critical',
 ]);
 \ionos\essentials\wpscan\render_issues([
-  'type'      => 'medium',
-  'exos_class'=> 'warning',
-  'issues'    => $warnings,
+  'type'      => 'warning',
 ]);
 ?>
               </div>
