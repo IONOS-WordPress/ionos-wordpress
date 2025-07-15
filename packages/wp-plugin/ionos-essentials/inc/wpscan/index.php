@@ -24,12 +24,12 @@ function render_summary()
           <div class="ionos_vulnerability__content">
             <div class="issue-row high">
               <span class="bubble high"><?php echo count($wpscan->get_vulnerabilities()['critical']);
-  ?></span> <?php \esc_html__e('critical issue found', 'ionos-essentials'); ?>
+  ?></span> <?php \esc_html_e('critical issue found', 'ionos-essentials'); ?>
             </div>
             <div class="issue-row medium">
               <span class="bubble high"><?php
     echo count($wpscan->get_vulnerabilities()['warning']
-    ) ?></span> <?php echo \esc_html__('warnings found', 'ionos-essentials'); ?>
+    ) ?></span> <?php \esc_html_e('warnings found', 'ionos-essentials'); ?>
             </div>
           </div>
           <p class="paragraph paragraph--small">
