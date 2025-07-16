@@ -57,7 +57,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
               <div class="grid">
                 <div class="grid-col grid-col--6 grid-col--small-12">
                   <section class="sheet__section">
-                    <?php \ionos\essentials\wpscan\render_summary(); ?>
+                    <?php \ionos\essentials\wpscan\views\summary(); ?>
                   </section>
                 </div>
                 <div class="grid-col grid-col--6 grid-col--small-12">
@@ -81,10 +81,10 @@ render_section([
 ?>
                 </div>
                    <?php
-\ionos\essentials\wpscan\render_issues([
+\ionos\essentials\wpscan\views\issues([
   'type'      => 'critical',
 ]);
-\ionos\essentials\wpscan\render_issues([
+\ionos\essentials\wpscan\views\issues([
   'type'      => 'warning',
 ]);
 ?>
