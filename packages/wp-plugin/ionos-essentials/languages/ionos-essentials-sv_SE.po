@@ -635,25 +635,26 @@ msgstr "Förhandsgranska underhållssidan"
 #. Plugin URI of the plugin
 #: ionos-essentials.php
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
-msgstr ""
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Welcome to your new %s Hub"
-msgstr ""
+msgstr "Välkommen till din nya %s Hub"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "You're now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features."
-msgstr ""
+msgstr "Du använder nu vår senaste version av kontrollpanelen – utformad för att göra din arbetsdag enklare och ge dig bättre koll på din digitala närvaro. Den här nya startsidan ersätter din tidigare vy, med en fräschare design, smartare verktyg och flera nya möjligheter."
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Get familiar with the new layout"
-msgstr ""
+msgstr "Bekanta dig med den nya layouten"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Explore redesigned sections and discover new functionalities"
-msgstr ""
+msgstr "Upptäck förbättrade sektioner och nya funktioner"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Stay tuned for upcoming feature releases and enhancements"
-msgstr ""
+msgstr "Håll utkik efter fler nyheter och uppdateringar som snart lanseras"
+

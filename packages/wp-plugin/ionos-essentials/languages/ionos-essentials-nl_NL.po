@@ -635,25 +635,25 @@ msgstr "Voorbeeld onderhoudspagina"
 #. Plugin URI of the plugin
 #: ionos-essentials.php
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
-msgstr ""
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Welcome to your new %s Hub"
-msgstr ""
+msgstr "Welkom bij je nieuwe %s hub"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "You're now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features."
-msgstr ""
+msgstr "Ervaar nu de nieuwste versie van ons dashboard, ontworpen om je workflow te stroomlijnen en het online beheer makkelijker te maken. Deze nieuwe hub vervangt het vorige dashboard en biedt je een moderne interface, verbeterde tools en handige nieuwe functies."
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Get familiar with the new layout"
-msgstr ""
+msgstr "Ontdek de nieuwe lay-out"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Explore redesigned sections and discover new functionalities"
-msgstr ""
+msgstr "Verken opnieuw vormgegeven secties en nieuwe functies"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Stay tuned for upcoming feature releases and enhancements"
-msgstr ""
+msgstr "Blijf op de hoogte van nieuwe versies en verbeteringen"
