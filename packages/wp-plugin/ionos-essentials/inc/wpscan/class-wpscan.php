@@ -46,7 +46,7 @@ class WPScan
     ];
 
     // Plugin which is not installed
-    $vulnerabilities['result']['plugins'][] = $vulnerabilities['result']['plugins'][1];
+    $vulnerabilities['result']['plugins'][]          = $vulnerabilities['result']['plugins'][1];
     $vulnerabilities['result']['plugins'][3]['slug'] = 'not-installed-plugin';
 
     // Sort vulnerabilities by score, ascending
@@ -88,7 +88,7 @@ class WPScan
               }, array_keys($names)),
               array_values($names)
             );
-            if( isset($item['slug'])) { // this line is just needed for the phpunit test
+            if (isset($item['slug'])) { // this line is just needed for the phpunit test
               $vuln['name'] = $names[$item['slug']]['Name'] ?? $item['slug'];
               $vuln['slug'] = $item['slug'];
             }
