@@ -6,7 +6,7 @@ function issues($args)
 {
   global $wpscan;
 
-  $count = count($wpscan->get_vulnerabilities()[$args['type']]);
+  $count = count($wpscan->get_issues($args['type']));
 
   if (0 === $count) {
     return;
@@ -46,14 +46,9 @@ function issues($args)
           <div class="grid grid-col-12">
             <ul class="sheet__stripes">
               <?php
-
-    foreach ($wpscan->get_vulnerabilities()[$args['type']] as $issue) {
-      issue_line([
-        'issue'           => $issue,
-        'theme_or_plugin' => $issue['type'] ?? 'plugin',
-        'slug'            => $issue['slug'] ?? '',
-      ]);
-    }
+                foreach ($wpscan->get_issues($args['type']) as $issue) {
+                  issue_line($issue);
+                }
   ?>
               </ul>
           </div>
@@ -63,19 +58,22 @@ function issues($args)
 </div>
 <?php }
 
-function issue_line($args)
+function issue_line($issue)
 {
   ?>
- <li class="settings-stripe settings-stripe--link  <?php echo esc_attr($args['theme_or_plugin']); ?>">
-    <div class="settings-stripe__label"><strong><?php echo esc_html($args['issue']['name']); ?></strong></div>
+ <li class="settings-stripe settings-stripe--link  <?php echo esc_attr($issue['type']); ?>">
+    <div class="settings-stripe__label"><strong><?php echo esc_html($issue['name']); ?></strong></div>
     <div class="settings-stripe__action">
 
-      <?php if ('plugin' === $args['theme_or_plugin']) {
-        printf(
-          '<span class="link link-action" data-slug="%s" style="margin-right: 1em;">%s</span>',
-          \esc_attr($args['slug']),
-          \esc_html__('View update details', 'ionos-essentials')
-        );
+      <?php
+      if ($issue['update']) {
+        if ('plugin' === $issue['type']) {
+          printf(
+            '<span class="link link-action" data-slug="%s" style="margin-right: 1em;">%s</span>',
+            \esc_attr($issue['slug']),
+            \esc_html__('View update details', 'ionos-essentials')
+          );
+        }
         printf('<button class="button button-primary">%s</button>', esc_html('Update', 'ionos-essentials'));
       } else {
         printf('<button class="button delete">%s</button>', esc_html('Delete', 'ionos-essentials'));

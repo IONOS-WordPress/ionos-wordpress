@@ -1,5 +1,12 @@
 @import 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.css';
 
+.with-issues-only, .with-issues-only-flex{
+  display: none;
+}
+.without-issues-only{
+  display: block;
+}
+
 main{
   scrollbar-gutter: stable;
 
@@ -17,6 +24,15 @@ main{
         top: -0.5em;
         left: 0.2em;
       }
+    }
+    .with-issues-only{
+      display: block;
+    }
+    .with-issues-only-flex{
+      display: flex;
+    }
+    .without-issues-only{
+      display: none;
     }
   }
 }
@@ -116,7 +132,6 @@ main{
   background-color: #edfaef;
 
   .ionos_vulnerability__content{
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
     background-image: url('assets/security/none.svg');

@@ -7,14 +7,20 @@ class WPScan
   /**
    * @var array
    */
-  private $vulnerabilities;
+  private $issues;
 
   public function __construct()
   {
-    $vulnerabilities = \get_option('ionos_security_wpscan', []);
+    require_once __DIR__ . '/testdata.php';
+    $this->issues = $testdata;
+  }
+
+  public function convert_middleware_data()
+  {
+    $issues = \get_option('ionos_security_wpscan', []);
 
     // Plugin Essentials
-    $vulnerabilities['result']['plugins'][0]['vulnerabilities'] = [
+    $issues['result']['plugins'][0]['issues'] = [
       [
         'title'    => 'Test Essentials Vulnerability',
         'fixed_in' => '1.2.3',
@@ -23,7 +29,7 @@ class WPScan
     ];
 
     // Plugin Marketplace
-    $vulnerabilities['result']['plugins'][1]['vulnerabilities'] = [
+    $issues['result']['plugins'][1]['issues'] = [
       [
         'title'    => 'Test Marketplace Vulnerability',
         'fixed_in' => '1.2.3',
@@ -32,7 +38,7 @@ class WPScan
     ];
 
     // Theme 2011
-    $vulnerabilities['result']['themes'][0]['vulnerabilities'] = [
+    $issues['result']['themes'][0]['issues'] = [
       [
         'title'    => 'Test 2011 Vulnerability',
         'fixed_in' => '1.2.3',
@@ -46,15 +52,15 @@ class WPScan
     ];
 
     // Plugin which is not installed
-    $vulnerabilities['result']['plugins'][]          = $vulnerabilities['result']['plugins'][1];
-    $vulnerabilities['result']['plugins'][3]['slug'] = 'not-installed-plugin';
+    $issues['result']['plugins'][]          = $issues['result']['plugins'][1];
+    $issues['result']['plugins'][3]['slug'] = 'not-installed-plugin';
 
-    // Sort vulnerabilities by score, ascending
+    // Sort issues by score, ascending
     foreach (['plugins', 'themes'] as $type) {
-      if (! empty($vulnerabilities['result'][$type])) {
-        foreach ($vulnerabilities['result'][$type] as &$item) {
-          if (! empty($item['vulnerabilities']) && is_array($item['vulnerabilities'])) {
-            usort($item['vulnerabilities'], function ($a, $b) {
+      if (! empty($issues['result'][$type])) {
+        foreach ($issues['result'][$type] as &$item) {
+          if (! empty($item['issues']) && is_array($item['issues'])) {
+            usort($item['issues'], function ($a, $b) {
               return $b['score'] <=> $a['score'];
             });
           }
@@ -63,12 +69,12 @@ class WPScan
       }
     }
 
-    // Filter out items without vulnerabilities
+    // Filter out items without issues
     foreach (['plugins', 'themes'] as $type) {
-      $vulnerabilities['result'][$type] = array_values(array_filter(
-        $vulnerabilities['result'][$type],
+      $issues['result'][$type] = array_values(array_filter(
+        $issues['result'][$type],
         function ($item) {
-          return ! empty($item['vulnerabilities']);
+          return ! empty($item['issues']);
         }
       ));
     }
@@ -76,9 +82,9 @@ class WPScan
     $critical = [];
     $warning  = [];
     foreach (['plugins', 'themes'] as $type) {
-      foreach ($vulnerabilities['result'][$type] as $item) {
-        if (! empty($item['vulnerabilities'])) {
-          foreach ($item['vulnerabilities'] as $vuln) {
+      foreach ($issues['result'][$type] as $item) {
+        if (! empty($item['issues'])) {
+          foreach ($item['issues'] as $vuln) {
             $vuln['type'] = substr($type, 0, -1);
 
             $names = \get_plugins();
@@ -104,15 +110,27 @@ class WPScan
       }
     }
 
-    $this->vulnerabilities = [
+    $this->issues = [
       'critical'  => $critical,
       'warning'   => $warning,
       'last_scan' => '8',
     ];
   }
 
-  public function get_vulnerabilities()
+  public function get_issues($filter = null)
   {
-    return $this->vulnerabilities;
+    if (null === $filter) {
+      return $this->issues;
+    }
+
+    return array_filter(
+      $this->issues ?? [],
+      fn ($issue) => ('critical' === $filter) ? 7 < $issue['score'] : 7 >= $issue['score']
+    );
+  }
+
+  public function get_lastscan()
+  {
+    return human_time_diff(time() - 4 * HOUR_IN_SECONDS, time());
   }
 }

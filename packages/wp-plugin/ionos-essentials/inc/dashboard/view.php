@@ -144,13 +144,18 @@ use const ionos\essentials\PLUGIN_DIR;
   Showing update information
 </div>
 
-<main id="content" class="<?php \ionos\essentials\maintenance_mode\is_maintenance_mode() && printf('ionos-maintenance-mode'); ?> issues-found">
+<main id="content" class="
+  <?php
+  \ionos\essentials\maintenance_mode\is_maintenance_mode() && printf('ionos-maintenance-mode');
+\ionos\essentials\wpscan\has_issues()                      && printf(' issues-found');
+?>
+  ">
   <div class="page-section">
     <?php blocks\banner\render_callback(); ?>
   </div>
 
   <?php
-    require_once __DIR__ . '/tabs/overview.php';
+  require_once __DIR__ . '/tabs/overview.php';
 require_once __DIR__ . '/tabs/tools.php';
 ?>
 

@@ -5,34 +5,45 @@ namespace ionos\essentials\wpscan\views;
 function summary()
 {
   global $wpscan;
+
+  if (count($wpscan->get_issues())) {
+    echo '<script>document.querySelector(\'a[href$="tools"]\').classList.add("has-red-dot");</script>';
+  }
+
+  $class = $wpscan->get_issues('warning') ? 'medium' : '';
+  $class = $wpscan->get_issues('critical') ? 'high' : $class;
+
   ?>
-  <script>
-    document.querySelector('a[href$="tools"]').classList.add('has-red-dot')
-  </script>
-  <div class="card ionos_vulnerability ionos-wpscan-summary high">
+  <div class="card ionos_vulnerability ionos-wpscan-summary <?php echo esc_attr($class); ?>">
     <div class="card__content">
       <section class="card__section">
 
       <div style="display: flex; align-items: center;">
-        <div class="paragraph--critical" style="margin-right: 1em;">
+
+        <div class="paragraph--critical with-issues-only" style="margin-right: 1em;">
           <i class="exos-icon exos-icon-warningmessage-32"></i>
         </div>
         <div>
           <h2 class="headline headline--sub"><?php echo \esc_html__('Vulnerability scan', 'ionos-essentials'); ?></h2>
-          <div class="ionos_vulnerability__content">
+          <div class="ionos_vulnerability__content with-issues-only-flex">
             <div class="issue-row high">
-              <span class="bubble high"><?php echo count($wpscan->get_vulnerabilities()['critical']);
-  ?></span> <?php \esc_html_e('critical issue found', 'ionos-essentials'); ?>
+              <span class="bubble high"><?php echo count($wpscan->get_issues('critical'));
+  ?></span> <?php \esc_html_e('critical issues found', 'ionos-essentials'); ?>
             </div>
             <div class="issue-row medium">
               <span class="bubble high"><?php
-    echo count($wpscan->get_vulnerabilities()['warning']
+    echo count($wpscan->get_issues('warning')
     ) ?></span> <?php \esc_html_e('warnings found', 'ionos-essentials'); ?>
             </div>
           </div>
+
+          <p class="paragraph without-issues-only">
+            Nothing found, all right.
+          </p>
+
           <p class="paragraph paragraph--small">
             <?php
-    echo \esc_html(sprintf('Last scan ran %s hours ago', $wpscan->get_vulnerabilities()['last_scan']));
+    echo \esc_html(sprintf('Last scan ran %s ago', $wpscan->get_lastscan()));
   ?>
           </p>
         </div>
