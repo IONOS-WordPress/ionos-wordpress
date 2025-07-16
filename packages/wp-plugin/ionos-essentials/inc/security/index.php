@@ -26,6 +26,24 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
 
 \add_action('init', function () {
   $security_options = \get_option(IONOS_SECURITY_FEATURE_OPTION, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
+
+  // ensure options are an array
+  if(!is_array($security_options)) {
+    $security_options = IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
+  }
+
+  // merge defaults with existing options
+  $_security_options = array_merge(
+    $security_options,
+    IONOS_SECURITY_FEATURE_OPTION_DEFAULT
+  );
+
+  // if the array keys differ from defaults, persist the updated options
+  if(count(array_diff_key($security_options, $_security_options)) > 0) {
+    \update_option(IONOS_SECURITY_FEATURE_OPTION, $_security_options);
+    $security_options = $_security_options;
+  }
+
   if (! is_stretch()) {
     if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]) {
       require_once __DIR__ . '/xmlrpc.php';
@@ -40,7 +58,7 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
   if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING]) {
     require_once __DIR__ . '/credentials-checking.php';
   }
-  // if ($security_options[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY] === true) {
+  // if (!empty($security_options[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY]) AND true === $security_options[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY]) {
   //   require_once __DIR__ . '/vulnerability-scan.php';
   // }
 });
