@@ -40,7 +40,7 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
 
   // if merged options are different from defaults, persist them
   if(count(array_diff($security_options, $_security_options)) > 0) {
-    \update_option(IONOS_SECURITY_FEATURE_OPTION, $security_options);
+    \update_option(IONOS_SECURITY_FEATURE_OPTION, $_security_options);
     $security_options = $_security_options;
   }
 
