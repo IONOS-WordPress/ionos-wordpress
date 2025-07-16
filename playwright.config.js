@@ -21,7 +21,7 @@ const config = defineConfig({
   workers: 1,
   webServer: {
     ...baseConfig.webServer,
-    command: 'pnpm start',
+    // command: 'pnpm start',
   },
   outputDir: './playwright/e2e/.test-results',
   use: {
