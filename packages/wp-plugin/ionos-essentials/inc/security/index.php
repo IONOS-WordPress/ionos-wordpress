@@ -26,18 +26,36 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
 
 \add_action('init', function () {
   $security_options = \get_option(IONOS_SECURITY_FEATURE_OPTION, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
+
+  // ensure options are an array
+  if(!is_array($security_options)) {
+    $security_options = IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
+  }
+
+  // merge defaults with existing options
+  $_security_options = array_merge(
+    $security_options,
+    IONOS_SECURITY_FEATURE_OPTION_DEFAULT
+  );
+
+  // if merged options are different from defaults, persist them
+  if(count(array_diff($security_options, $_security_options)) > 0) {
+    \update_option(IONOS_SECURITY_FEATURE_OPTION, $security_options);
+    $security_options = $_security_options;
+  }
+
   if (! is_stretch()) {
-    if (!empty($security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]) AND true === $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]) {
+    if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]) {
       require_once __DIR__ . '/xmlrpc.php';
     }
   }
-  if (!empty($security_options[IONOS_SECURITY_FEATURE_OPTION_PEL]) AND true === $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL]) {
+  if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL]) {
     require_once __DIR__ . '/pel.php';
   }
-  if (!empty($security_options[IONOS_SECURITY_FEATURE_OPTION_SSL]) AND true === $security_options[IONOS_SECURITY_FEATURE_OPTION_SSL]) {
+  if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_SSL]) {
     require_once __DIR__ . '/ssl.php';
   }
-  if (!empty($security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING]) AND true === $security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING]) {
+  if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING]) {
     require_once __DIR__ . '/credentials-checking.php';
   }
   // if (!empty($security_options[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY]) AND true === $security_options[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY]) {
