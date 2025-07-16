@@ -18,16 +18,14 @@ add_action('admin_bar_menu', function ($wp_admin_bar) {
     ],
   ];
   $wp_admin_bar->add_node($args);
-}, 31);
 
-add_action('admin_enqueue_scripts', function () {
   wp_enqueue_style(
     'ionos-maintenance-mode-admin',
     plugin_dir_url(__FILE__) . 'maintenance.css',
     [],
     filemtime(plugin_dir_path(__FILE__) . 'maintenance.css')
   );
-});
+}, 31);
 
 add_action('admin_enqueue_scripts', function () {
   wp_enqueue_script(
@@ -59,13 +57,37 @@ add_action('init', function () {
     return;
   }
 
-  wp_redirect(plugin_dir_url(__FILE__) . 'assets/maintenance.html');
+  if (isset($_GET['ionos_maintenance_mode']) || get_query_var('ionos_maintenance_mode') || 'maintenance' === trim(
+    parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH),
+    '/\\'
+  )) {
+    readfile(plugin_dir_path(__FILE__) . 'assets/maintenance.html');
+    exit;
+  }
+
+  \add_rewrite_rule('maintenance/?$', 'index.php?ionos_maintenance_mode=1', 'top');
+  if ('maintenance' === trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/\\')) {
+    return;
+  }
+  global $wp_rewrite;
+  if ($wp_rewrite->using_permalinks()) {
+    wp_redirect(home_url('/maintenance'), 302);
+    exit;
+  }
+  wp_redirect('index.php?ionos_maintenance_mode=1', 302);
   exit;
 });
 
 add_filter('admin_body_class', function ($classes) {
   if (is_maintenance_mode()) {
     $classes .= ' ionos-maintenance-mode';
+  }
+  return $classes;
+});
+
+add_filter('body_class', function ($classes) {
+  if (is_maintenance_mode()) {
+    $classes[] = 'ionos-maintenance-mode';
   }
   return $classes;
 });
