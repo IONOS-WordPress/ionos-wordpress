@@ -6,7 +6,7 @@ function render_callback()
 {
   require_once __DIR__ . '/class-nba.php';
   $actions = NBA::get_actions();
-  if (empty($actions) || array_all($actions, fn (NBA $action) => ! $action->active)) {
+  if (empty($actions) || count(array_filter($actions, fn (NBA $action) => $action->active)) === 0) {
     return;
   }
 
