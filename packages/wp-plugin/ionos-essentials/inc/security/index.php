@@ -27,20 +27,20 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
 \add_action('init', function () {
   $security_options = \get_option(IONOS_SECURITY_FEATURE_OPTION, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
   if (! is_stretch()) {
-    if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]) {
+    if (!empty($security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]) AND true === $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]) {
       require_once __DIR__ . '/xmlrpc.php';
     }
   }
-  if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL]) {
+  if (!empty($security_options[IONOS_SECURITY_FEATURE_OPTION_PEL]) AND true === $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL]) {
     require_once __DIR__ . '/pel.php';
   }
-  if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_SSL]) {
+  if (!empty($security_options[IONOS_SECURITY_FEATURE_OPTION_SSL]) AND true === $security_options[IONOS_SECURITY_FEATURE_OPTION_SSL]) {
     require_once __DIR__ . '/ssl.php';
   }
-  if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING]) {
+  if (!empty($security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING]) AND true === $security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING]) {
     require_once __DIR__ . '/credentials-checking.php';
   }
-  // if ($security_options[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY] === true) {
+  // if (!empty($security_options[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY]) AND true === $security_options[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY]) {
   //   require_once __DIR__ . '/vulnerability-scan.php';
   // }
 });
