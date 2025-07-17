@@ -11,7 +11,10 @@ require_once __DIR__ . '/views/issues.php';
   $wpscan = new WPScan();
 });
 
-// ToDo: remove transient on update
+
+add_action('upgrader_process_complete', function ($upgrader, $options) {
+  delete_transient('ionos_wpscan_issues');
+}, 10, 2);
 
 function get_wpscan(): WPScan
 {
