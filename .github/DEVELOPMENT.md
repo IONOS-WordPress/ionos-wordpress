@@ -15,7 +15,6 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
   _Ensure **not committing** the `./.secrets` file to GIT._
 
 - Act can be used on both Linux host machine and inside the dev container:
-
   - in local Linux host machine
 
     (Option 1) Install act using the following command:
@@ -54,7 +53,6 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
     ```
 
   - inside the dev container (preferred way)
-
     - authenticate to GitHub using the GitHub CLI:
 
     ```bash
@@ -76,7 +74,6 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
     > [!TIP]
     > if you have provided the GH_TOKEN in the `.secrets` file you can use the following command to skip GitHub authentication using `gh auth login`:
     > `source ./.secrets && gh extension install https://github.com/nektos/gh-act`
-
     - start act the first time using the following command:
 
     ```bash
@@ -86,7 +83,6 @@ Local GitHub workflow development can be done using https://github.com/nektos/ac
     At first time act will download the act container image.
 
     _Choose the medium image type if act asks you to choose._
-
     - Now you can use act to run the workflows locally. For example to trigger the `build` workflow:
 
     ```bash

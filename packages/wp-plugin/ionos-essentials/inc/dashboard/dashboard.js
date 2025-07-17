@@ -136,7 +136,6 @@ document.addEventListener('DOMContentLoaded', function () {
      const value = event.target.checked;
      const description = event.target.dataset.description ?? '';
 
-
      try {
         const response = await fetch(wpData.restUrl + 'ionos/essentials/option/set', {
           method: 'POST',

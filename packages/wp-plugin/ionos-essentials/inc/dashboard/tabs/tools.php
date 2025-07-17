@@ -2,7 +2,14 @@
 
 namespace ionos\essentials\dashboard;
 
+use function ionos\essentials\is_stretch;
 use const ionos\essentials\PLUGIN_DIR;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_PEL;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
 
 ?>
  <div id="tools" class="page-section ionos-tab">
@@ -65,9 +72,9 @@ use const ionos\essentials\PLUGIN_DIR;
 
 render_section([
   'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
-  'id'           => 'mailnotify',
+  'id'           => IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY,
   'description'  => $description,
-  'checked'      => get_settings_value('mailnotify') ? 'checked' : '',
+  'checked'      => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY) ? 'checked' : '',
 ]);
 ?>
                 </div>
@@ -103,36 +110,35 @@ $warnings = array_merge($plugins, $themes);
             <div>
               <?php
 render_section([
-  'title'
-                => \esc_html__('Password monitoring', 'ionos-essentials'),
-  'id'          => 'password-monitoring',
+  'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
+  'id'          => IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING,
   'description' => \esc_html__(
     'Monitor password leaks. If a password is found in a data breach, you will be notified.',
     'ionos-essentials',
   ),
-  'checked'   => get_settings_value('password-monitoring') ? 'checked' : '',
+  'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
 ]);
 
-render_section([
-  'title'
-                => \esc_html__('Enable XML-RPC Guard', 'ionos-essentials'),
-  'id'          => 'xmlrpc',
-  'description' => \esc_html__(
-    'Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website.',
-    'ionos-essentials'
-  ),
-  'checked'   => get_settings_value('xmlrpc') ? 'checked' : '',
-]);
+if (! is_stretch()) {
+  render_section([
+    'title'       => \esc_html__('Enable XML-RPC Guard', 'ionos-essentials'),
+    'id'          => IONOS_SECURITY_FEATURE_OPTION_XMLRPC,
+    'description' => \esc_html__(
+      'Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website.',
+      'ionos-essentials'
+    ),
+    'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_XMLRPC) ? 'checked' : '',
+  ]);
+}
 
 render_section([
-  'title'
-                => \esc_html__('Prohibit Email Login', 'ionos-essentials'),
-  'id'          => 'pel',
+  'title'       => \esc_html__('Prohibit Email Login', 'ionos-essentials'),
+  'id'          => IONOS_SECURITY_FEATURE_OPTION_PEL,
   'description' => \esc_html__(
     'Security disables login with email addresses. This improves security by reducing the potential attack surface.',
     'ionos-essentials'
   ),
-  'checked'   => get_settings_value('pel') ? 'checked' : '',
+  'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_PEL) ? 'checked' : '',
 ]);
 ?>
 
@@ -174,11 +180,8 @@ function render_section($args)
 
 function get_settings_value($key)
 {
-  static $options = null;
 
-  if (null === $options) {
-    $options = \get_option(IONOS_SECURITY_FEATURE_OPTION, []);
-  }
+  $options = \get_option(IONOS_SECURITY_FEATURE_OPTION, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
 
   return $options[$key] ?? false;
 }

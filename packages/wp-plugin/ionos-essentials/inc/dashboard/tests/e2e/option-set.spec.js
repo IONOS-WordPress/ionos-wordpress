@@ -11,12 +11,12 @@ test.describe('options', () => {
   test('user can set option', async ({ admin, page }) => {
     await admin.visitAdminPage('?page=ionos#tools');
     const body = page.locator('body');
-    const toggle = body.locator('#mailnotify');
+    const toggle = body.locator('#IONOS_SECURITY_FEATURE_OPTION_PEL');
 
-    await expect(toggle).not.toBeChecked();
-    await toggle.click();
-    
-    await page.reload();
     await expect(toggle).toBeChecked();
+    await toggle.click();
+    await page.waitForTimeout(3000);
+    await page.reload();
+    await expect(toggle).not.toBeChecked();
   });
 });
