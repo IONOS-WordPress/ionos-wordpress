@@ -22,6 +22,7 @@ function render_callback()
         </header>
         <div class="horizontal-card__content">
             <section class="horizontal-card__section" style="flex-grow: 0;">
+              <?php if ( \get_option('ionos_essentials_bk_rollout', false) ) ?>
                 <h2 class="headline">
                     <?php
                       // translators: %s: Brand name
@@ -42,6 +43,33 @@ function render_callback()
                     <li><?php \esc_html_e('Explore redesigned sections and discover new functionalities', 'ionos-essentials'); ?></li>
                     <li><?php \esc_html_e('Stay tuned for upcoming feature releases and enhancements','ionos-essentials'); ?></li>
                 </ul>
+              <?php else : ?>
+                <h2 class="headline">
+                    <?php
+                      // translators: %s: Brand name
+                      printf(\esc_html__('Welcome to your %s Hub', 'ionos-essentials'), $brand_name);
+  ?>
+                </h2>
+                <p class="paragraph">
+                    <?php
+    \esc_html_e(
+      'This overview is your gateway to unlocking the full potential of your WordPress website.',
+      'ionos-essentials'
+    );
+  ?>
+                </p>
+
+                <ul class="check-list">
+                    <li><?php \esc_html_e('Recommendations for next steps', 'ionos-essentials'); ?></li>
+                    <li><?php \esc_html_e('Helpful links and shortcuts', 'ionos-essentials'); ?></li>
+                    <li><?php \esc_html_e(
+                      'Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database',
+                      'ionos-essentials'
+                    ); ?></li>
+                </ul>
+
+              <?php endif; ?>
+
              </section>
         </div>
         <footer class="horizontal-card__footer horizontal-card__content--vertical-align-center" style="width: 100%;display: flex; justify-content: center;">
