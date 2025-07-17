@@ -14,6 +14,11 @@ class WPScan
     $this->issues = \get_transient('ionos_wpscan_issues');
     if (false === $this->issues) {
       $data         = $this->download_wpscan_data();
+      if(empty($data)) {
+        error_log('WPScan middleware: No data received');
+        $this->issues = [];
+        return;
+      }
       $data         = $this->convert_middleware_data($data);
 
       $next_run = (strpos(json_encode($data), 'UNKNOWN')) ? 5 * MINUTE_IN_SECONDS : 6 * HOUR_IN_SECONDS;
@@ -53,6 +58,10 @@ class WPScan
 
   public function get_lastscan()
   {
+    $transient = \get_transient('ionos_wpscan_issues');
+    if (false === $transient || !isset($transient['last_scan'])) {
+      return __('No scan has been performed yet.', 'ionos-essentials');
+    }
     return human_time_diff(\get_transient('ionos_wpscan_issues')['last_scan'], time());
   }
 

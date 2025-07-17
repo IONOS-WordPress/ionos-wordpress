@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-15T10:36:12+00:00\n"
+"POT-Creation-Date: 2025-07-17T12:55:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -254,7 +254,6 @@ msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr ""
 
 #: inc/dashboard/blocks/vulnerability/index.php
-#: inc/wpscan/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] ""
@@ -413,39 +412,27 @@ msgstr ""
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
 msgstr ""
 
-#: inc/jetpack-flow/inc/class-manager.php
+#: inc/jetpack-flow/index.php
 msgid "Assistant"
 msgstr ""
 
-#: inc/jetpack-flow/inc/controllers/class-confirm.php
-msgid "Confirm Jetpack installation"
-msgstr ""
-
-#: inc/jetpack-flow/inc/controllers/class-install.php
-msgid "Installing Jetpack"
-msgstr ""
-
-#: inc/jetpack-flow/inc/views/confirm.php
-msgid "Jetpack Backup"
-msgstr ""
-
-#: inc/jetpack-flow/inc/views/confirm.php
-msgid "We are going to install Jetpack Backup now."
-msgstr ""
-
-#: inc/jetpack-flow/inc/views/confirm.php
-msgid "Ok"
-msgstr ""
-
-#: inc/jetpack-flow/inc/views/confirm.php
-msgid "No thanks"
-msgstr ""
-
-#: inc/jetpack-flow/inc/views/install.php
+#: inc/jetpack-flow/index.php
 msgid "Installing Jetpack Backup"
 msgstr ""
 
-#: inc/jetpack-flow/inc/views/install.php
+#: inc/jetpack-flow/index.php
+msgid "We are going to install Jetpack Backup now."
+msgstr ""
+
+#: inc/jetpack-flow/index.php
+msgid "Ok"
+msgstr ""
+
+#: inc/jetpack-flow/index.php
+msgid "No thanks"
+msgstr ""
+
+#: inc/jetpack-flow/index.php
 msgid "Please wait a moment while we are installing Jetpack Backup for you."
 msgstr ""
 
@@ -597,36 +584,40 @@ msgstr ""
 msgid "Markenschutz"
 msgstr ""
 
-#: inc/wpscan/index.php
-msgid "Vulnerability scan"
-msgstr ""
-
-#: inc/wpscan/index.php
-msgid "warnings found"
-msgstr ""
-
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "%d critical issue"
 msgid_plural "%d critical issues"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
 msgstr ""
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
 msgstr ""
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "View update details"
+msgstr ""
+
+#: inc/wpscan/views/summary.php
+msgid "Vulnerability scan"
+msgstr ""
+
+#: inc/wpscan/views/summary.php
+msgid "critical issues found"
+msgstr ""
+
+#: inc/wpscan/views/summary.php
+msgid "warnings found"
 msgstr ""
 
 #: build/dashboard/blocks/banner/block.json

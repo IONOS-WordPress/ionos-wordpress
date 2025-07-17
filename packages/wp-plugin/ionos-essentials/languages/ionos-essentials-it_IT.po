@@ -137,7 +137,6 @@ msgid "%s ago"
 msgstr "%s fa"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-#: inc/wpscan/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problema critico rilevato"
@@ -549,35 +548,23 @@ msgstr "Siete voi a decidere come creare il vostro sito web. Non preoccupatevi, 
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr "Utilizzando le funzionalità dell'intelligenza artificiale si accettano le %1$Termini d'uso%2$ e le %3$Privacy%4$ di OpenAI."
 
-#: inc/jetpack-flow/inc/class-manager.php
+#: inc/jetpack-flow/index.php
 msgid "Assistant"
 msgstr "Assistant"
 
-#: inc/jetpack-flow/inc/controllers/class-confirm.php
-msgid "Confirm Jetpack installation"
-msgstr "Confermare l'installazione di Jetpack"
-
-#: inc/jetpack-flow/inc/controllers/class-install.php
-msgid "Installing Jetpack"
-msgstr "Installazione di Jetpack"
-
-#: inc/jetpack-flow/inc/views/confirm.php
-msgid "Jetpack Backup"
-msgstr "Backup del Jetpack"
-
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "We are going to install Jetpack Backup now."
 msgstr "Ora installeremo Jetpack Backup."
 
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "Ok"
 msgstr "Ok"
 
-#: inc/jetpack-flow/inc/views/install.php
+#: inc/jetpack-flow/index.php
 msgid "Installing Jetpack Backup"
 msgstr "Installazione di Jetpack Backup"
 
-#: inc/jetpack-flow/inc/views/install.php
+#: inc/jetpack-flow/index.php
 msgid "Please wait a moment while we are installing Jetpack Backup for you."
 msgstr "Attendete un momento mentre installiamo Jetpack Backup per voi."
 
@@ -585,7 +572,7 @@ msgstr "Attendete un momento mentre installiamo Jetpack Backup per voi."
 msgid "Onboarding"
 msgstr "Onboarding"
 
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "No thanks"
 msgstr "No grazie"
 
@@ -659,15 +646,15 @@ msgstr "Anteprima della pagina di manutenzione"
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
 msgstr "Scansione delle vulnerabilità"
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/summary.php
 msgid "warnings found"
 msgstr "avvertenze trovate"
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "View update details"
 msgstr "Visualizza i dettagli dell'aggiornamento"
 
@@ -679,21 +666,21 @@ msgstr "Strumenti e sicurezza"
 msgid "Vulnerability scan information"
 msgstr ""
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
 msgstr ""
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
 msgstr ""
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "%d critical issue"
 msgid_plural "%d critical issues"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] ""
@@ -701,4 +688,8 @@ msgstr[1] ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerabilities detected are being emailed to"
+msgstr ""
+
+#: inc/wpscan/views/summary.php
+msgid "critical issues found"
 msgstr ""
