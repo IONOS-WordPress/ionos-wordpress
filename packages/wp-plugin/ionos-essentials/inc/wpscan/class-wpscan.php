@@ -13,112 +13,23 @@ class WPScan
   {
     require_once __DIR__ . '/testdata.php';
     $this->issues = $testdata;
-  }
 
-  public function convert_middleware_data()
-  {
-    $issues = \get_option('ionos_security_wpscan', []);
-
-    // Plugin Essentials
-    $issues['result']['plugins'][0]['issues'] = [
-      [
-        'title'    => 'Test Essentials Vulnerability',
-        'fixed_in' => '1.2.3',
-        'score'    => 9.5,
-      ],
-    ];
-
-    // Plugin Marketplace
-    $issues['result']['plugins'][1]['issues'] = [
-      [
-        'title'    => 'Test Marketplace Vulnerability',
-        'fixed_in' => '1.2.3',
-        'score'    => 1.5,
-      ],
-    ];
-
-    // Theme 2011
-    $issues['result']['themes'][0]['issues'] = [
-      [
-        'title'    => 'Test 2011 Vulnerability',
-        'fixed_in' => '1.2.3',
-        'score'    => 2.5,
-      ],
-      [
-        'title'    => 'Test 2011 Vulnerability',
-        'fixed_in' => '1.2.3',
-        'score'    => 3.5,
-      ],
-    ];
-
-    // Plugin which is not installed
-    $issues['result']['plugins'][]          = $issues['result']['plugins'][1];
-    $issues['result']['plugins'][3]['slug'] = 'not-installed-plugin';
-
-    // Sort issues by score, ascending
-    foreach (['plugins', 'themes'] as $type) {
-      if (! empty($issues['result'][$type])) {
-        foreach ($issues['result'][$type] as &$item) {
-          if (! empty($item['issues']) && is_array($item['issues'])) {
-            usort($item['issues'], function ($a, $b) {
-              return $b['score'] <=> $a['score'];
-            });
-          }
-        }
-        unset($item);
-      }
-    }
-
-    // Filter out items without issues
-    foreach (['plugins', 'themes'] as $type) {
-      $issues['result'][$type] = array_values(array_filter(
-        $issues['result'][$type],
-        function ($item) {
-          return ! empty($item['issues']);
-        }
-      ));
-    }
-
-    $critical = [];
-    $warning  = [];
-    foreach (['plugins', 'themes'] as $type) {
-      foreach ($issues['result'][$type] as $item) {
-        if (! empty($item['issues'])) {
-          foreach ($item['issues'] as $vuln) {
-            $vuln['type'] = substr($type, 0, -1);
-
-            $names = \get_plugins();
-            $names = array_combine(
-              array_map(function ($file) {
-                return basename($file, '.php');
-              }, array_keys($names)),
-              array_values($names)
-            );
-            if (isset($item['slug'])) { // this line is just needed for the phpunit test
-              $vuln['name'] = $names[$item['slug']]['Name'] ?? $item['slug'];
-              $vuln['slug'] = $item['slug'];
-            }
-
-            if (isset($vuln['score']) && 7 < $vuln['score']) {
-              $critical[] = $vuln;
-            } else {
-              $warning[] = $vuln;
-            }
-            break; // Only take the first (=highest) vulnerability for each item
-          }
-        }
-      }
-    }
-
-    $this->issues = [
-      'critical'  => $critical,
-      'warning'   => $warning,
-      'last_scan' => '8',
-    ];
+    $data         = $this->download_wpscan_data();
+    $data         = $this->convert_middleware_data($data);
+    $this->issues = $data;
   }
 
   public function get_issues($filter = null)
   {
+    // Filter out issues for plugins/themes that are not installed
+    $all_slugs    = $this->get_installed_slugs();
+    $this->issues = array_filter(
+      $this->issues,
+      function ($issue) use ($all_slugs) {
+        return in_array($issue['slug'], $all_slugs, true);
+      }
+    );
+
     if (null === $filter) {
       return $this->issues;
     }
@@ -132,5 +43,176 @@ class WPScan
   public function get_lastscan()
   {
     return human_time_diff(time() - 4 * HOUR_IN_SECONDS, time());
+  }
+
+  private function download_wpscan_data()
+  {
+    $url   = 'https://webapps-vuln-scan.hosting.ionos.com/api/v1/vulnerabilities';
+    $token = get_option('ionos_security_wpscan_token', '');
+    if (empty($token)) {
+      return;
+    }
+
+    $response = wp_remote_post(
+      $url,
+      [
+        'headers' => [
+          'Accept'        => 'application/json',
+          'Authorization' => 'API-Key ' . $token,
+          'Content-Type'  => 'application/json',
+          'User-Agent'    => 'Security-Plugin',
+        ],
+        'timeout' => 15,
+        'body'    => $this->get_my_info(),
+      ]
+    );
+
+    if (\is_wp_error($response)) {
+      error_log('WPScan middleware error: ' . $response->get_error_message());
+      return false;
+    }
+
+    $status_code = \wp_remote_retrieve_response_code($response);
+    if (200 !== $status_code) {
+      error_log('WPScan middleware error: ' . \wp_remote_retrieve_response_message($response));
+      return false;
+    }
+
+    $body = \wp_remote_retrieve_body($response);
+    if (empty($body)) {
+      error_log('WPScan middleware error: Empty response');
+      return false;
+    }
+
+    return \json_decode($body, true);
+  }
+
+  /**
+   * Gathers information about the plugins and themes, that are installed.
+   *
+   * @return string JSON encoded information about the installed plugins and themes.
+   */
+  private function get_my_info()
+  {
+    if (! function_exists('get_plugins')) {
+      require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+
+    $info              = [
+      'coreVersion' => get_bloginfo('version'),
+      'plugins'     => [],
+      'themes'      => [],
+    ];
+    $installed_plugins = array_keys(get_plugins());
+    foreach ($installed_plugins as $plugin) {
+      $version = get_plugin_data(WP_PLUGIN_DIR . "/{$plugin}")['Version'];
+      if (! empty($version)) {
+        $info['plugins'][] = [
+          'slug'    => dirname(plugin_basename(WP_PLUGIN_DIR . "/{$plugin}")),
+          'version' => $version,
+        ];
+      }
+    }
+    $installed_themes = wp_get_themes();
+    foreach ($installed_themes as $theme) {
+      $version = $theme->get('Version');
+      if (! empty($version)) {
+        $info['themes'][] = [
+          'slug'    => $theme->get_stylesheet(),
+          'version' => $version,
+        ];
+      }
+    }
+    return json_encode($info);
+  }
+
+  private function convert_middleware_data($issues)
+  {
+    // Filter out items without issues
+    foreach (['plugins', 'themes'] as $type) {
+      $issues[$type] = array_values(array_filter(
+        $issues[$type],
+        function ($item) {
+          return ! empty($item['vulnerabilities']);
+        }
+      ));
+    }
+
+    // Leave the highest vulnerability for each plugin/theme, delete the rest
+    foreach (['plugins', 'themes'] as $type) {
+      foreach ($issues[$type] as &$item) {
+
+        // Sort vulnerabilities by score, descending
+        usort($item['vulnerabilities'], function ($a, $b) {
+          return $b['score'] <=> $a['score'];
+        });
+        // Keep only the highest vulnerability
+        $item['vulnerabilities'] = array_slice($item['vulnerabilities'], 0, 1);
+      }
+      unset($item);
+    }
+
+    $converted = [];
+    foreach (['plugins', 'themes'] as $type) {
+      foreach ($issues[$type] as $item) {
+
+        $converted[] = [
+          'name'   => $this->get_name($item['slug']),
+          'slug'   => $item['slug'],
+          'type'   => substr($type, 0, -1),
+          'update' => $this->is_update_available($item['slug']),
+          'score'  => $item['vulnerabilities'][0]['score'] ?? 0,
+        ];
+      }
+    }
+
+    return $converted;
+  }
+
+  private function get_name($slug)
+  {
+    if (! function_exists('get_plugins')) {
+      require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+    $plugins = get_plugins();
+    foreach ($plugins as $file => $data) {
+      if (dirname($file) === $slug || basename($file, '.php') === $slug) {
+        return $data['Name'] ?? $slug;
+      }
+    }
+    $themes = wp_get_themes();
+    foreach ($themes as $theme_slug => $theme_obj) {
+      if ($theme_slug === $slug) {
+        return $theme_obj->get('Name') ?? $slug;
+      }
+    }
+    return $slug;
+  }
+
+  private function is_update_available($slug)
+  {
+    $plugins_updates = get_site_transient('update_plugins');
+    $theme_updates   = get_site_transient('update_themes');
+    $updates         = array_keys(array_merge($plugins_updates->response ?? [], $theme_updates->response ?? []));
+
+    $short_slugs = array_map(function ($update) {
+      return basename($update, '.php');
+    }, $updates);
+
+    return in_array($slug, $short_slugs, true);
+  }
+
+  private function get_installed_slugs()
+  {
+    $plugins = \get_plugins();
+    $themes  = \wp_get_themes();
+
+    $plugin_slugs = array_map(function ($plugin) {
+      return basename($plugin, '.php');
+    }, array_keys($plugins));
+
+    $theme_slugs = array_keys($themes);
+
+    return array_merge($plugin_slugs, $theme_slugs);
   }
 }
