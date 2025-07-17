@@ -50,6 +50,7 @@ function _disable_xmlrpc_methods()
 
   if (! isset($_SERVER['REMOTE_ADDR'])) {
     _disable_xmlrpc_methods();
+    return;
   }
 
   $ip = $_SERVER['REMOTE_ADDR'];
