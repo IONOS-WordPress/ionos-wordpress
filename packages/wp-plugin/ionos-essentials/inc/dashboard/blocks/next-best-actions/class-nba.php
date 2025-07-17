@@ -30,7 +30,7 @@ class NBA
     // actions can be active (and thus shown to the user) for multiple reasons: they are not completed, they are not dismissed, they are not active yet, ...
     if ('active' === $property) {
       $status = $this->_get_status();
-      if (isset($status['completed']) && $status['completed'] || isset($status['dismissed']) && $status['dismissed']) {
+      if (($status['completed'] ?? false) || ($status['dismissed'] ?? false)) {
         return false;
       }
       return ! $this->completed;
