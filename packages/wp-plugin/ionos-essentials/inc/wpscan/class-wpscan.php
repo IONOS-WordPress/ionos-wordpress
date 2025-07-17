@@ -9,14 +9,22 @@ class WPScan
    */
   private $issues;
 
+  /**
+   * @var bool
+   */
+  private $error;
+
   public function __construct()
   {
     $this->issues = \get_transient('ionos_wpscan_issues');
+
+
     if (false === $this->issues) {
       $data         = $this->download_wpscan_data();
       if(empty($data)) {
         error_log('WPScan middleware: No data received');
         $this->issues = [];
+        $this->error = true;
         return;
       }
       $data         = $this->convert_middleware_data($data);
@@ -28,6 +36,11 @@ class WPScan
 
       $this->issues = $data;
     }
+  }
+
+  public function has_error()
+  {
+    return $this->error;
   }
 
   public function get_issues($filter = null)
