@@ -4,11 +4,15 @@ $wpcontentdir = dirname(getcwd(), 4);
 
 create_fake_plugin('F4 Tree', 'f4-tree');
 create_fake_plugin('o2tweet', 'o2tweet', '0.0.4');
+create_fake_plugin('Gutenberg Blocks with AI by Kadence WP – Page Builder Features', 'kadence-blocks', '1.0.4');
 create_fake_plugin('M Chart', 'm-chart', '1.0');
 create_fake_plugin('Hack-info', 'hackinfo', '1.0');
+create_fake_plugin('WP OAuth Server (OAuth Authentication)', 'oauth2-provider', '3.1.4');
+create_fake_plugin('Namaste LMS', 'namaste-lms','1.0.0');
 
 create_fake_theme('Hara', 'hara');
-create_fake_theme('Hestia', 'hestia');
+create_fake_theme('Hasium', 'hasium');
+create_fake_them('Hestia', 'hestia');
 create_fake_theme('OceanWP', 'oceanwp');
 
 function create_fake_theme($name, $slug, $version = '1.0.0')

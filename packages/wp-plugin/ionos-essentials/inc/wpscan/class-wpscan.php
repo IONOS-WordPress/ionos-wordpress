@@ -11,12 +11,17 @@ class WPScan
 
   public function __construct()
   {
-    require_once __DIR__ . '/testdata.php';
-    $this->issues = $testdata;
+    $this->issues = \get_transient('ionos_wpscan_issues');
+    if (false === $this->issues) {
+      $data         = $this->download_wpscan_data();
+      $data         = $this->convert_middleware_data($data);
 
-    $data         = $this->download_wpscan_data();
-    $data         = $this->convert_middleware_data($data);
-    $this->issues = $data;
+      $next_run = (strpos(json_encode($data), 'UKNOWN')) ? 5 * MINUTE_IN_SECONDS : 6 * HOUR_IN_SECONDS;
+      \set_transient('ionos_wpscan_issues', $data, $next_run);
+      
+      $this->issues = $data;
+    }
+
   }
 
   public function get_issues($filter = null)
