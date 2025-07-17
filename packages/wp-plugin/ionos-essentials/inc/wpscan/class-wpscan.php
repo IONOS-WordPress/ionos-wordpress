@@ -16,12 +16,13 @@ class WPScan
       $data         = $this->download_wpscan_data();
       $data         = $this->convert_middleware_data($data);
 
-      $next_run = (strpos(json_encode($data), 'UKNOWN')) ? 5 * MINUTE_IN_SECONDS : 6 * HOUR_IN_SECONDS;
+      $next_run = (strpos(json_encode($data), 'UNKNOWN')) ? 5 * MINUTE_IN_SECONDS : 6 * HOUR_IN_SECONDS;
+
+      $data['last_scan'] = time();
       \set_transient('ionos_wpscan_issues', $data, $next_run);
-      
+
       $this->issues = $data;
     }
-
   }
 
   public function get_issues($filter = null)
@@ -47,7 +48,7 @@ class WPScan
 
   public function get_lastscan()
   {
-    return human_time_diff(time() - 4 * HOUR_IN_SECONDS, time());
+    return human_time_diff(\get_transient('ionos_wpscan_issues')['last_scan'], time());
   }
 
   private function download_wpscan_data()

@@ -11,9 +11,9 @@ require_once __DIR__ . '/views/issues.php';
   $wpscan = new WPScan();
 });
 
-function has_issues(): bool
+function get_wpscan(): WPScan
 {
   global $wpscan;
 
-  return ! empty($wpscan->get_issues());
+  return $wpscan;
 }
