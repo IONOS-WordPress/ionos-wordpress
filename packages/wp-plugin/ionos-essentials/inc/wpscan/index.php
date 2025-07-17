@@ -11,6 +11,8 @@ require_once __DIR__ . '/views/issues.php';
   $wpscan = new WPScan();
 });
 
+// ToDo: remove transient on update
+
 function get_wpscan(): WPScan
 {
   global $wpscan;

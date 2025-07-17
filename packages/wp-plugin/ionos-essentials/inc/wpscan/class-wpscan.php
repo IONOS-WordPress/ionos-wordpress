@@ -36,6 +36,11 @@ class WPScan
       }
     );
 
+    // update the update information
+    foreach ($this->issues as &$issue) {
+      $issue['update'] = $this->is_update_available($issue['slug']);
+    }
+
     if (null === $filter) {
       return $this->issues;
     }
@@ -166,7 +171,7 @@ class WPScan
           'name'   => $this->get_name($item['slug']),
           'slug'   => $item['slug'],
           'type'   => substr($type, 0, -1),
-          'update' => $this->is_update_available($item['slug']),
+          'update' => false, // Placeholder, will be updated later
           'score'  => $item['vulnerabilities'][0]['score'] ?? 0,
         ];
       }
