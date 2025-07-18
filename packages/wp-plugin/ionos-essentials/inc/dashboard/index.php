@@ -214,7 +214,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
       'activated'   => esc_html__('activated.', 'ionos-essentials'),
       'deactivated' => esc_html__('deactivated.', 'ionos-essentials'),
       'updating'    => esc_html__('Updating...', 'ionos-essentials'),
-      'loading'    => esc_html__('Loading content ...', 'ionos-essentials'),
+      'loading'     => esc_html__('Loading content ...', 'ionos-essentials'),
     ],
   ]);
 });

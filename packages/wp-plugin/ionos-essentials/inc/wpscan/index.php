@@ -6,8 +6,6 @@ require_once __DIR__ . '/class-wpscan.php';
 require_once __DIR__ . '/views/summary.php';
 require_once __DIR__ . '/views/issues.php';
 
-use const ionos\essentials\PLUGIN_DIR;
-
 \add_action('init', function () {
   global $wpscan;
   $wpscan = new WPScan();
@@ -50,13 +48,13 @@ function handle_ajax_wpscan(\WP_REST_Request $request)
   }
 
   $status_code = 200;
-  $message = \__('Operation completed successfully', 'ionos-essentials');
-  $status = 'success';
+  $message     = \__('Operation completed successfully', 'ionos-essentials');
+  $status      = 'success';
 
-  if( 'plugin' === $type){
-    if( 'delete' === $action ){
-       \deactivate_plugins($path, true);
-        $response = \delete_plugins([$path], true);
+  if ('plugin' === $type) {
+    if ('delete' === $action) {
+      \deactivate_plugins($path, true);
+      $response = \delete_plugins([$path]);
 
       if (is_wp_error($response)) {
         $status_code = 500;
@@ -64,7 +62,7 @@ function handle_ajax_wpscan(\WP_REST_Request $request)
         $message     = __('Failed to delete plugin', 'ionos-essentials');
       }
     }
-    if( 'update' === $action ){
+    if ('update' === $action) {
       include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
       $upgrader = new \Plugin_Upgrader(new \Automatic_Upgrader_Skin());
 
@@ -79,8 +77,8 @@ function handle_ajax_wpscan(\WP_REST_Request $request)
     }
   }
 
-  if( 'theme' === $type ){
-    if( 'delete' === $action ){
+  if ('theme' === $type) {
+    if ('delete' === $action) {
       $theme = \wp_get_theme();
 
       if (strToLower($theme->get('Name')) === strToLower($slug)) {
@@ -99,7 +97,7 @@ function handle_ajax_wpscan(\WP_REST_Request $request)
       }
     }
 
-    if( 'update' === $action ){
+    if ('update' === $action) {
       include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
       $upgrader = new \Theme_Upgrader(new \Automatic_Upgrader_Skin());
 
@@ -115,11 +113,10 @@ function handle_ajax_wpscan(\WP_REST_Request $request)
     }
   }
 
-
   return new \WP_REST_Response([
     'status_code'    => $status_code,
-    'status' => $status,
-    'message' => $message,
+    'status'         => $status,
+    'message'        => $message,
   ], $status_code);
 }
 
