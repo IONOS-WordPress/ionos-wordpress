@@ -88,3 +88,4 @@ flowchart TD
   classDef redNode fill:#f87171,stroke-width:0px,color:#000;
   class X redNode;
 ```
+See https://docs.google.com/document/d/1wJTMBKej7Qo4B5m2sYt_IriLsMBmdpC609iU5oKGPSQ/edit?tab=t.0 for information about the decision.
