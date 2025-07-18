@@ -64,7 +64,7 @@ function handle_ajax_wpscan(\WP_REST_Request $request)
     }
     if ('update' === $action) {
       include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-      $upgrader = new \Plugin_Upgrader(new \Automatic_Upgrader_Skin());
+      $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
 
       $upgrader->upgrade($path);
       if (is_wp_error($upgrader->skin->result)) {
@@ -99,7 +99,7 @@ function handle_ajax_wpscan(\WP_REST_Request $request)
 
     if ('update' === $action) {
       include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-      $upgrader = new \Theme_Upgrader(new \Automatic_Upgrader_Skin());
+      $upgrader = new \Theme_Upgrader(new \WP_Ajax_Upgrader_Skin());
 
       $upgrader->upgrade($slug);
 
