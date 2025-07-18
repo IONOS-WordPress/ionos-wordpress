@@ -55,7 +55,9 @@ class WPScan
 
     // update the update information
     foreach ($this->issues as &$issue) {
-      $issue['update'] = $this->is_update_available($issue['slug']);
+      if($issue['update'] === null ) {
+        $issue['update'] = $this->is_update_available($issue['slug']);
+      }
     }
 
     if (null === $filter) {
@@ -192,7 +194,7 @@ class WPScan
           'slug'   => $item['slug'],
           'path'   => $item['slug'] . '/' . $item['slug'] . '.php',
           'type'   => substr($type, 0, -1),
-          'update' => false, // Placeholder, will be updated later
+          'update' =>  (strpos(json_encode($item['vulnerabilities']), 'fixed_in')) ? null : false,
           'score'  => $item['vulnerabilities'][0]['score'] ?? 0,
         ];
       }
