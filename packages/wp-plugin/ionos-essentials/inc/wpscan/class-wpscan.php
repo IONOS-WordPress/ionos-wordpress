@@ -18,20 +18,19 @@ class WPScan
   {
     $this->issues = \get_transient('ionos_wpscan_issues');
 
-
     if (false === $this->issues) {
       $data         = $this->download_wpscan_data();
-      if(empty($data)) {
+      if (empty($data)) {
         error_log('WPScan middleware: No data received');
         $this->issues = [];
-        $this->error = true;
+        $this->error  = true;
         return;
       }
       $data         = $this->convert_middleware_data($data);
 
       $next_run = (strpos(json_encode($data), 'UNKNOWN')) ? 5 * MINUTE_IN_SECONDS : 6 * HOUR_IN_SECONDS;
 
-      $data['last_scan'] = time();
+      \set_transient('ionos_wpscan_last_scan', time(), $next_run);
       \set_transient('ionos_wpscan_issues', $data, $next_run);
 
       $this->issues = $data;
@@ -71,11 +70,11 @@ class WPScan
 
   public function get_lastscan()
   {
-    $transient = \get_transient('ionos_wpscan_issues');
-    if (false === $transient || !isset($transient['last_scan'])) {
+    $last_run = \get_transient('ionos_wpscan_last_scan');
+    if (false === $last_run) {
       return __('No scan has been performed yet.', 'ionos-essentials');
     }
-    return human_time_diff(\get_transient('ionos_wpscan_issues')['last_scan'], time());
+    return human_time_diff($last_run, time());
   }
 
   private function download_wpscan_data()
@@ -188,10 +187,10 @@ class WPScan
     $converted = [];
     foreach (['plugins', 'themes'] as $type) {
       foreach ($issues[$type] as $item) {
-
         $converted[] = [
           'name'   => $this->get_name($item['slug']),
           'slug'   => $item['slug'],
+          'path'   => $item['slug'] . '/' . $item['slug'] . '.php',
           'type'   => substr($type, 0, -1),
           'update' => false, // Placeholder, will be updated later
           'score'  => $item['vulnerabilities'][0]['score'] ?? 0,
@@ -235,7 +234,7 @@ class WPScan
     return in_array($slug, $short_slugs, true);
   }
 
-  private function get_installed_slugs()
+  private function get_installed_slugs(): array
   {
     $plugins = \get_plugins();
     $themes  = \wp_get_themes();

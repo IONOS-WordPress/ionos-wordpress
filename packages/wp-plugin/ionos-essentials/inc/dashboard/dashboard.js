@@ -216,4 +216,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
   });
+
+  dashboard.querySelectorAll('[data-wpscan]').forEach((element) => {
+    element.addEventListener('click', function (event) {
+      event.preventDefault();
+      fetch(wpData.restUrl + 'ionos/essentials/wpscan/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-WP-Nonce': wpData.nonce,
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          data: element.dataset.wpscan,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status_code === 200) {
+            element.parentElement.parentElement.remove();
+            window.EXOS.snackbar.success(data.message);
+
+            window.setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }else{
+            window.EXOS.snackbar.critical(data.message);
+          }
+        });
+    });
+  });
 });

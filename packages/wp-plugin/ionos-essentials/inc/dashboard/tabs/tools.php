@@ -52,7 +52,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
             </div>
         </div>
 
-        <?php if(!\ionos\essentials\wpscan\get_wpscan()->has_error()) { ?>
+        <?php if (! \ionos\essentials\wpscan\get_wpscan()->has_error()) { ?>
         <h3 class="headline headline--sub may-have-issue-dot"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
           <div class="sheet">
               <div class="grid">
@@ -73,22 +73,22 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
                   \esc_html__('Change email address', 'ionos-essentials')
                 );
 
-render_section([
-  'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
-  'id'           => IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY,
-  'description'  => $description,
-  'checked'      => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY) ? 'checked' : '',
-]);
-?>
+          render_section([
+            'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
+            'id'           => IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY,
+            'description'  => $description,
+            'checked'      => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY) ? 'checked' : '',
+          ]);
+          ?>
                 </div>
                    <?php
-\ionos\essentials\wpscan\views\issues([
-  'type'      => 'critical',
-]);
-\ionos\essentials\wpscan\views\issues([
-  'type'      => 'warning',
-]);
-?>
+          \ionos\essentials\wpscan\views\issues([
+            'type'      => 'critical',
+          ]);
+          \ionos\essentials\wpscan\views\issues([
+            'type'      => 'warning',
+          ]);
+          ?>
               </div>
             </div>
         <?php } ?>
@@ -96,15 +96,15 @@ render_section([
         <div class="sheet">
             <div>
               <?php
-render_section([
-  'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
-  'id'          => IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING,
-  'description' => \esc_html__(
-    'Monitor password leaks. If a password is found in a data breach, you will be notified.',
-    'ionos-essentials',
-  ),
-  'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
-]);
+          render_section([
+            'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
+            'id'          => IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING,
+            'description' => \esc_html__(
+              'Monitor password leaks. If a password is found in a data breach, you will be notified.',
+              'ionos-essentials',
+            ),
+            'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
+          ]);
 
 if (! is_stretch()) {
   render_section([

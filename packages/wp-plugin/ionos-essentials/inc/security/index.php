@@ -28,18 +28,15 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
   $security_options = \get_option(IONOS_SECURITY_FEATURE_OPTION, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
 
   // ensure options are an array
-  if(!is_array($security_options)) {
+  if (! is_array($security_options)) {
     $security_options = IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
   }
 
   // merge defaults with existing options
-  $_security_options = array_merge(
-    $security_options,
-    IONOS_SECURITY_FEATURE_OPTION_DEFAULT
-  );
+  $_security_options = array_merge($security_options, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
 
   // if the array keys differ from defaults, persist the updated options
-  if(count(array_diff_key($security_options, $_security_options)) > 0) {
+  if (0 < count(array_diff_key($security_options, $_security_options))) {
     \update_option(IONOS_SECURITY_FEATURE_OPTION, $_security_options);
     $security_options = $_security_options;
   }

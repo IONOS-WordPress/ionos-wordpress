@@ -1,4 +1,9 @@
 <?php
+exec('wp transient delete ionos_wpscan_issues 2>&1', $output, $return_var);
+exec('wp transient delete --all --network');
+
+print_r($output);
+print_r($return_var);
 
 $wpcontentdir = dirname(getcwd(), 4);
 

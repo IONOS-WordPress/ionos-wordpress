@@ -146,7 +146,9 @@ use const ionos\essentials\PLUGIN_DIR;
 
 <main id="content" class="
   <?php
-  \ionos\essentials\maintenance_mode\is_maintenance_mode()                      && printf('ionos-maintenance-mode');
+  \ionos\essentials\maintenance_mode\is_maintenance_mode()                      && printf(
+    'ionos-maintenance-mode'
+  );
 ! empty(\ionos\essentials\wpscan\get_wpscan()->get_issues())                    && printf(' issues-found');
 ?>
 

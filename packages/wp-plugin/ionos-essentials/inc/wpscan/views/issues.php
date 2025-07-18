@@ -66,18 +66,38 @@ function issue_line($issue)
     <div class="settings-stripe__action">
 
       <?php
-      if ($issue['update']) {
-        if ('plugin' === $issue['type']) {
-          printf(
-            '<span class="link link-action" data-slug="%s" style="margin-right: 1em;">%s</span>',
-            \esc_attr($issue['slug']),
-            \esc_html__('View update details', 'ionos-essentials')
-          );
-        }
-        printf('<button class="button button-primary">%s</button>', esc_html('Update', 'ionos-essentials'));
-      } else {
-        printf('<button class="button delete">%s</button>', esc_html('Delete', 'ionos-essentials'));
-      }
+
+      $payload = [
+        'path' => $issue['path'],
+        'type' => $issue['type'],
+        'slug' => $issue['slug'],
+      ];
+
+  if ($issue['update']) {
+    if ('plugin' === $issue['type']) {
+      printf(
+        '<span class="link link-action" data-slug="%s" style="margin-right: 1em;">%s</span>',
+        \esc_attr($issue['slug']),
+        \esc_html__('View update details', 'ionos-essentials')
+      );
+    }
+    $payload['action'] = 'update';
+    $payload           = \wp_json_encode($payload);
+
+    printf(
+      '<button class="button button-primary" data-wpscan="%s">%s</button>',
+      esc_attr($payload),
+      esc_html('Update', 'ionos-essentials')
+    );
+  } else {
+    $payload['action'] = 'delete';
+    $payload           = \wp_json_encode($payload);
+    printf(
+      '<button class="button delete" data-wpscan="%s">%s</button>',
+      esc_attr($payload),
+      esc_html('Delete', 'ionos-essentials')
+    );
+  }
   ?>
 
     </div>
