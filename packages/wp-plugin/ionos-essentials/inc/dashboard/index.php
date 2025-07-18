@@ -6,9 +6,6 @@ if (! defined('ABSPATH')) {
   exit();
 }
 
-use Plugin_Upgrader;
-use WP_Ajax_Upgrader_Skin;
-
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 require_once ABSPATH . 'wp-admin/includes/plugin-install.php';

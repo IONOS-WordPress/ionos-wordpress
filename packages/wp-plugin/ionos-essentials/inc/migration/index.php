@@ -12,9 +12,6 @@
 
 namespace ionos\essentials\migration;
 
-use Plugin_Upgrader;
-use WP_Ajax_Upgrader_Skin;
-
 use const ionos\essentials\PLUGIN_FILE;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;

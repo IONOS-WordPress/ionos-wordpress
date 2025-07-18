@@ -4,9 +4,6 @@ namespace ionos\essentials\jetpack_flow;
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-use Plugin_Upgrader;
-use WP_Ajax_Upgrader_Skin;
-
 use const ionos\essentials\PLUGIN_DIR;
 
 const HIDDEN_PAGE_SLUG            = 'ionos-assistant-jetpack-backup-flow';
