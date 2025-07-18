@@ -94,7 +94,7 @@ function _install()
       update_plugin('ionos-marketplace/ionos-marketplace.php', false);
       \update_option('ionos_migration_step', 2);
       // no break
-    case version_compare($last_installed_version, '1.0.10', '<'):
+    case version_compare($last_installed_version, '1.1.0', '<'):
       \deactivate_plugins('ionos-security/ionos-security.php');
       \delete_plugins(['ionos-security/ionos-security.php']);
 
