@@ -66,9 +66,7 @@ function handle_ajax_wpscan(\WP_REST_Request $request)
     }
     if( 'update' === $action ){
       include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-      require_once PLUGIN_DIR . '/inc/dashboard/class-silent-skin.php';
-      $skin     = new \ionos\essentials\dashboard\Silent_Skin();
-      $upgrader = new \Plugin_Upgrader($skin);
+      $upgrader = new \Plugin_Upgrader(new \Automatic_Upgrader_Skin());
 
       $upgrader->upgrade($path);
       if (is_wp_error($upgrader->skin->result)) {
@@ -101,13 +99,12 @@ function handle_ajax_wpscan(\WP_REST_Request $request)
       }
     }
 
-
     if( 'update' === $action ){
-      require_once PLUGIN_DIR . '/inc/dashboard/class-silent-skin.php';
-      $skin     = new \ionos\essentials\dashboard\Silent_Skin();
-      $upgrader = new \Plugin_Upgrader($skin);
+      include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+      $upgrader = new \Theme_Upgrader(new \Automatic_Upgrader_Skin());
 
       $upgrader->upgrade($slug);
+
       if (is_wp_error($upgrader->skin->result)) {
         $status_code = 500;
         $status      = 'error';

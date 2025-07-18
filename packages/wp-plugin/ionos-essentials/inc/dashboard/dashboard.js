@@ -206,19 +206,22 @@ document.addEventListener('DOMContentLoaded', function () {
       iframe.style.height = '554px';
       iframe.style.display = 'none';
 
-      overlay.innerHTML = '<div id="plugin-information-waiting" style="background: white;width:772px; height: 554px;">Waiting for plugin information...</div>';
+      overlay.innerHTML = '<div id="plugin-information-waiting"><div class="loading-spin"></div><p class="paragraph paragraph--large paragraph--bold paragraph--align-center">' + wpData.i18n.loading + '</p></div>';
       overlay.appendChild(iframe);
       iframe.onload = function () {
         overlay.querySelector('#plugin-information-waiting').remove();
         iframe.style.display = 'block';
       };
-      iframe.src = `${window.location.origin}/wp-admin/plugin-install.php?tab=plugin-information&plugin=${element.dataset.slug}&`;
+      iframe.src = `${window.location.origin}/wp-admin/plugin-install.php?tab=plugin-information&section=changelog&plugin=${element.dataset.slug}&`;
 
     });
   });
 
   dashboard.querySelectorAll('[data-wpscan]').forEach((element) => {
     element.addEventListener('click', function (event) {
+      element.disabled = true;
+      element.innerText = wpData.i18n.updating;
+
       event.preventDefault();
       fetch(wpData.restUrl + 'ionos/essentials/wpscan/', {
         method: 'POST',

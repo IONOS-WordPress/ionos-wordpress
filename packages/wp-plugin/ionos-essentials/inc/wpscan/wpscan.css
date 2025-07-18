@@ -69,5 +69,13 @@
 }
 
 
-
+#plugin-information-waiting {
+  background: white;
+  width: 772px;
+  height: 554px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
