@@ -32,7 +32,6 @@ There are a few manual steps to be done to have a complete setup copy of the ori
 - (Optional) to do almost everything `local first` (for example doing releases), you need to [create a fine-grained personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token)
 
   **Important** : You need to create a **New personal access token (classic)** (at https://github.com/settings/tokens) with the following scopes:
-
   - `repo`
   - `workflow`
   - `write:packages`
