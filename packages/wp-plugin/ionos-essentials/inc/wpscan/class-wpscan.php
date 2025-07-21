@@ -35,11 +35,124 @@ class WPScan
 
       $this->issues = $data;
     }
+
+    add_action('rest_api_init', function () {
+      \register_rest_route('ionos/essentials', '/wpscan', [
+        'methods'             => 'POST',
+        'callback'            => [$this, 'handle_ajax_wpscan'],
+        'permission_callback' => function () {
+          return current_user_can('update_plugins');
+        },
+      ]);
+    });
+
+    if (0 < count($this->get_issues())) {
+      add_action('admin_notices', [$this, 'admin_notice']);
+    }
+
+    add_action('upgrader_process_complete', function ($upgrader, $options) {
+      delete_transient('ionos_wpscan_issues');
+    }, 10, 2);
   }
 
   public function has_error()
   {
     return $this->error;
+  }
+
+  public function handle_ajax_wpscan(\WP_REST_Request $request)
+  {
+    $data = $request->get_json_params()['data'] ?? [];
+    if (empty($data)) {
+      return new \WP_REST_Response([
+        'status'  => 'error',
+        'message' => __('No data provided', 'ionos-essentials'),
+      ], 400);
+    }
+    $data   = json_decode($data);
+    $slug   = $data->slug   ?? '';
+    $path   = $data->path   ?? '';
+    $action = $data->action ?? '';
+    $type   = $data->type   ?? '';
+
+    if (empty($slug) || empty($action) || empty($type)) {
+      return new \WP_REST_Response([
+        'status'  => 'error',
+        'message' => __('Missing required parameters', 'ionos-essentials'),
+      ], 400);
+    }
+
+    $status_code = 200;
+    $message     = \__('Operation completed successfully', 'ionos-essentials');
+    $status      = 'success';
+
+    if ('plugin' === $type) {
+      if ('delete' === $action) {
+        \deactivate_plugins($path, true);
+        $response = \delete_plugins([$path]);
+
+        if (is_wp_error($response)) {
+          $status_code = 500;
+          $status      = 'error';
+          $message     = __('Failed to delete plugin', 'ionos-essentials');
+        }
+      }
+      if ('update' === $action) {
+        include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+        $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
+
+        $upgrader->upgrade($path);
+        if (is_wp_error($upgrader->skin->result)) {
+          $status_code = 500;
+          $status      = 'error';
+          $message     = __('Failed to update plugin', 'ionos-essentials');
+        }
+
+        \delete_transient('ionos_wpscan_issues');
+      }
+    }
+
+    if ('theme' === $type) {
+      if ('delete' === $action) {
+        $theme = \wp_get_theme();
+
+        if (strToLower($theme->get('Name')) === strToLower($slug)) {
+          $status_code = 500;
+          $status      = 'error';
+          $message     = __('Active theme cannot be deleted', 'ionos-essentials');
+        } else {
+          require_once ABSPATH . 'wp-admin/includes/theme.php';
+
+          $response = \delete_theme($slug);
+          if (is_wp_error($response)) {
+            $status_code = 500;
+            $status      = 'error';
+            $message     = __('Failed to delete theme', 'ionos-essentials');
+          }
+        }
+      }
+
+      if ('update' === $action) {
+        include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+        $upgrader = new \Theme_Upgrader(new \WP_Ajax_Upgrader_Skin());
+
+        $upgrader->upgrade($slug);
+
+        if (is_wp_error($upgrader->skin->result)) {
+          $status_code = 500;
+          $status      = 'error';
+          $message     = __('Failed to update theme', 'ionos-essentials');
+        }
+
+        \delete_transient('ionos_wpscan_issues');
+      }
+    }
+
+    return new \WP_REST_Response([
+      'status_code'    => $status_code,
+      'status'         => $status,
+      'message'        => $message,
+    ], $status_code);
   }
 
   public function get_issues($filter = null)
@@ -55,7 +168,7 @@ class WPScan
 
     // update the update information
     foreach ($this->issues as &$issue) {
-      if($issue['update'] === null ) {
+      if (null === $issue['update']) {
         $issue['update'] = $this->is_update_available($issue['slug']);
       }
     }
@@ -77,6 +190,24 @@ class WPScan
       return __('No scan has been performed yet.', 'ionos-essentials');
     }
     return human_time_diff($last_run, time());
+  }
+
+  public function admin_notice()
+  {
+    global $current_screen;
+    if (! isset($current_screen->id) || in_array($current_screen->id, ['toplevel_page_ionos'], true)) {
+      return;
+    }
+
+    printf(
+      '<div class="notice ionos-issues-found-adminbar %s"><p>%s: %d %s. <a href="%s">%s.</a></p></div>',
+      (0 < count($this->get_issues('critical'))) ? 'critical' : '',
+      esc_html__('Vulnerability scan', 'ionos-essentials'),
+      5,
+      esc_html__('issues found', 'ionos-essentials'),
+      esc_url(admin_url('admin.php?page=ionos#tools')),
+      esc_html__('More information', 'ionos-essentials')
+    );
   }
 
   private function download_wpscan_data()
@@ -194,7 +325,7 @@ class WPScan
           'slug'   => $item['slug'],
           'path'   => $item['slug'] . '/' . $item['slug'] . '.php',
           'type'   => substr($type, 0, -1),
-          'update' =>  (strpos(json_encode($item['vulnerabilities']), 'fixed_in')) ? null : false,
+          'update' => (strpos(json_encode($item['vulnerabilities']), 'fixed_in')) ? null : false,
           'score'  => $item['vulnerabilities'][0]['score'] ?? 0,
         ];
       }

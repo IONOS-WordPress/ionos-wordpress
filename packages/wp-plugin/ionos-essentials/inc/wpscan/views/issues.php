@@ -91,7 +91,7 @@ function issue_line($issue)
     );
   } else {
     $active_theme = \wp_get_theme();
-    if('theme' === $issue['type'] AND strtolower($active_theme->get('Name')) === strtolower($issue['name'])) {
+    if ('theme' === $issue['type'] and strtolower($active_theme->get('Name')) === strtolower($issue['name'])) {
       printf(
         '<p class="paragraph">%s</p>',
         \esc_html__('This theme is active. Please activate another theme.', 'ionos-essentials')

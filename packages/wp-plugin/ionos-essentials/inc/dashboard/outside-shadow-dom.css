@@ -33,3 +33,11 @@ ul li#wp-admin-bar-ionos_maintenance_mode{
     left: 0.2em;
   }
 }
+
+.ionos-issues-found-adminbar{
+  background-color: green;
+
+  &.critical {
+    background-color: red;
+  }
+}
