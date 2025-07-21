@@ -4,8 +4,6 @@ namespace ionos\essentials\jetpack_flow;
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-use Automatic_Upgrader_Skin;
-use Plugin_Upgrader;
 use const ionos\essentials\PLUGIN_DIR;
 
 const HIDDEN_PAGE_SLUG            = 'ionos-assistant-jetpack-backup-flow';
@@ -214,13 +212,13 @@ function _install_jetpack_plugin(): void
       // Ignore failures on accessing SSL "https://api.wordpress.org/plugins/update-check/1.1/" in `wp_update_plugins()` which seem to occur intermittently.
       set_error_handler(null, E_USER_WARNING | E_USER_NOTICE);
 
-      $plugin_upgrader = new Plugin_Upgrader(new Automatic_Upgrader_Skin());
+      $plugin_upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
       $plugin_upgrader->install($api->download_link);
     }
     \activate_plugin(JETPACK_PLUGIN_FILE);
 
     \delete_option(INSTALL_JETPACK_OPTION_NAME);
-    \wp_redirect(add_query_arg('jetpack-partner-coupon', $_GET['coupon'], \admin_url()));
+    \wp_redirect(\add_query_arg('jetpack-partner-coupon', $_GET['coupon'], \admin_url()));
     exit;
   }
 }

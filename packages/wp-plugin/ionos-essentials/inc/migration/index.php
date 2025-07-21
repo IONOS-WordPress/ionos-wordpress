@@ -100,24 +100,18 @@ function _install()
 
 function update_plugin($plugin_slug, $activate = true)
 {
-  if (current_user_can('update_plugins')) {
+  if (\current_user_can('update_plugins')) {
     include_once ABSPATH . 'wp-admin/includes/plugin.php';
     include_once ABSPATH . 'wp-admin/includes/update.php';
     include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 
-    wp_update_plugins();
+    \wp_update_plugins();
 
-    $upgrader = new \Plugin_Upgrader(
-      new class() extends \Automatic_Upgrader_Skin {
-        public function feedback($string, ...$args)
-        {
-        }
-      }
-    );
+    $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
 
     $upgrader->upgrade($plugin_slug);
     if ($activate) {
-      activate_plugin($plugin_slug);
+      \activate_plugin($plugin_slug);
     }
   }
 }

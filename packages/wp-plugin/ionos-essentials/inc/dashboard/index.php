@@ -130,13 +130,10 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 
   function install_plugin_from_url($plugin_url)
   {
-    require_once PLUGIN_DIR . '/inc/dashboard/class-silent-skin.php';
-
-    $skin     = new Silent_Skin();
-    $upgrader = new \Plugin_Upgrader($skin);
+    $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
     $result   = $upgrader->install($plugin_url);
 
-    return ! is_wp_error($result);
+    return ! \is_wp_error($result);
   }
 
   \register_rest_route('ionos/essentials/dashboard/nba/v1', '/dismiss/(?P<id>[a-zA-Z0-9-]+)', [
