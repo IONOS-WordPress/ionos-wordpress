@@ -16,7 +16,7 @@ create_fake_plugin('Hack-info', 'hackinfo', '1.0');
 create_fake_plugin('WP OAuth Server (OAuth Authentication)', 'oauth2-provider', '3.1.4');
 create_fake_plugin('Namaste LMS', 'namaste-lms', '1.0.0');
 
-create_fake_theme('Hara', 'hara');
+create_fake_theme('Hester', 'hester');
 create_fake_theme('Hasium', 'hasium');
 create_fake_them('Hestia', 'hestia');
 create_fake_theme('OceanWP', 'oceanwp');

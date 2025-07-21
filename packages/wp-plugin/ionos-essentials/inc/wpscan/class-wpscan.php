@@ -1,6 +1,7 @@
 <?php
 
 namespace ionos\essentials\wpscan;
+use const ionos\essentials\PLUGIN_DIR;
 
 class WPScan
 {
@@ -51,8 +52,12 @@ class WPScan
       add_action('after_plugin_row', [$this, 'after_plugin_row'], 10, 3);
     }
 
-    add_action('upgrader_process_complete', function ($upgrader, $options) {
-      delete_transient('ionos_wpscan_issues');
+
+    add_action('admin_footer', [ $this, 'add_theme_issues_notice' ]);
+
+
+    \add_action('upgrader_process_complete', function ($upgrader, $options) {
+      \delete_transient('ionos_wpscan_issues');
     }, 10, 2);
   }
 
@@ -201,7 +206,7 @@ class WPScan
     }
 
     printf(
-      '<div class="notice ionos-issues-found-adminbar %s"><p>%s: %d %s. <a href="%s">%s.</a></p></div>',
+      '<div class="notice notice-alt ionos-issues-found-adminbar %s"><p>%s: %d %s. <a href="%s">%s.</a></p></div>',
       (0 < count($this->get_issues('critical'))) ? 'notice-error' : 'notice-warning',
       esc_html__('Vulnerability scan', 'ionos-essentials'),
       count($this->get_issues()),
@@ -412,5 +417,45 @@ class WPScan
     $theme_slugs = array_keys($themes);
 
     return array_merge($plugin_slugs, $theme_slugs);
+  }
+
+  public function add_theme_issues_notice()
+  {
+    $screen = get_current_screen();
+    if ($screen && 'themes' === $screen->id) {
+      $isses = $this->get_issues();
+      $issues = array_filter($isses, function($issue) {
+        return $issue['type'] === 'theme';
+      });
+
+      if (count($issues) === 0) {
+        return;
+      }
+
+      wp_enqueue_script(
+        'ionos-essentials-themes',
+        plugins_url('ionos-essentials/inc/wpscan/themes.js', PLUGIN_DIR),
+        [],
+        filemtime(PLUGIN_DIR . '/inc/wpscan/themes.js'),
+        true
+      );
+
+
+      wp_localize_script(
+        'ionos-essentials-themes',
+        'ionosEssentialsThemes',
+        [
+          'slugs' =>  array_column($issues, 'slug'),
+          'i18n' => [
+            'issues_found' => __('The vulnerability scan has found issues', 'ionos-essentials'),
+            'no_activation' => __('Activation is not recommended', 'ionos-essentials'),
+            'more_info' => __('More information', 'ionos-essentials'),
+          ],
+        ]
+      );
+
+
+
+    }
   }
 }

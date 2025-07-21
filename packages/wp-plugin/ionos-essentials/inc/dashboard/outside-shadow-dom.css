@@ -38,3 +38,11 @@ ul li#wp-admin-bar-ionos_maintenance_mode{
   box-shadow: none !important;
 }
 
+
+.active .ionos-no-activation{
+  display: none !important;
+}
+
+.ionos-theme-issues p::before{
+  content: unset;
+}
