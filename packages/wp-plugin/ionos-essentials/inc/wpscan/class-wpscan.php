@@ -48,6 +48,7 @@ class WPScan
 
     if (0 < count($this->get_issues())) {
       add_action('admin_notices', [$this, 'admin_notice']);
+      add_action('after_plugin_row', [$this, 'after_plugin_row'], 10, 3);
     }
 
     add_action('upgrader_process_complete', function ($upgrader, $options) {
@@ -206,6 +207,37 @@ class WPScan
       count($this->get_issues()),
       (1 === count($this->get_issues())) ? esc_html__('issue found', 'ionos-essentials') :
       esc_html__('issues found', 'ionos-essentials'),
+      esc_url(admin_url('admin.php?page=ionos#tools')),
+      esc_html__('More information', 'ionos-essentials')
+    );
+  }
+
+  public function after_plugin_row($plugin_file, $plugin_data, $status)
+  {
+
+    $paths = array_column($this->get_issues(), 'path');
+    if (! in_array($plugin_file, $paths, true)) {
+      return;
+    }
+    echo '<script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const row = document.querySelector("tr[data-plugin=\'' . esc_js($plugin_file) . '\']");
+        if (row) {
+          row.classList.add("update");
+        }
+      });
+    </script>';
+
+    $updates       = get_site_transient('update_plugins');
+    $noshadowclass = isset($updates->response[$plugin_file]) ? 'ionos-plugin-noshadow' : '';
+
+    printf(
+      '<tr class="plugin-update-tr %s ionos-wpscan-notice"><td colspan="4" class="plugin-update colspanchange %s"><div class="update-message notice inline %s notice-alt">%s %s. <a href="%s">%s.</a></div></td></tr>',
+      \is_plugin_active($plugin_file) ? 'active' : 'inactive',
+      esc_attr($noshadowclass ?? ''),
+      esc_attr('notice-error'),
+      esc_html__('The vulnerability scan has found issues for', 'ionos-essentials'),
+      esc_html($plugin_data['Name']),
       esc_url(admin_url('admin.php?page=ionos#tools')),
       esc_html__('More information', 'ionos-essentials')
     );

@@ -33,3 +33,8 @@ ul li#wp-admin-bar-ionos_maintenance_mode{
     left: 0.2em;
   }
 }
+
+.ionos-plugin-noshadow {
+  box-shadow: none !important;
+}
+
