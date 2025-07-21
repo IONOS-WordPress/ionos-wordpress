@@ -90,13 +90,21 @@ function issue_line($issue)
       esc_html('Update', 'ionos-essentials')
     );
   } else {
-    $payload['action'] = 'delete';
-    $payload           = \wp_json_encode($payload);
-    printf(
-      '<button class="button delete" data-wpscan="%s">%s</button>',
-      esc_attr($payload),
-      esc_html('Delete', 'ionos-essentials')
-    );
+    $active_theme = \wp_get_theme();
+    if('theme' === $issue['type'] AND strtolower($active_theme->get('Name')) === strtolower($issue['name'])) {
+      printf(
+        '<p class="paragraph">%s</p>',
+        \esc_html__('This theme is active. Please activate another theme.', 'ionos-essentials')
+      );
+    } else {
+      $payload['action'] = 'delete';
+      $payload           = \wp_json_encode($payload);
+      printf(
+        '<button class="button delete" data-wpscan="%s">%s</button>',
+        esc_attr($payload),
+        esc_html('Delete', 'ionos-essentials')
+      );
+    }
   }
   ?>
 
