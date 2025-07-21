@@ -22,7 +22,7 @@ function render_callback()
         </header>
         <div class="horizontal-card__content">
             <section class="horizontal-card__section" style="flex-grow: 0;">
-              <?php if ( \get_option('ionos_essentials_bk_rollout', false) ) ?>
+              <?php if ( \get_option('ionos_essentials_bk_rollout', false) ) { ?>
                 <h2 class="headline">
                     <?php
                       // translators: %s: Brand name
@@ -43,7 +43,7 @@ function render_callback()
                     <li><?php \esc_html_e('Explore redesigned sections and discover new functionalities', 'ionos-essentials'); ?></li>
                     <li><?php \esc_html_e('Stay tuned for upcoming feature releases and enhancements','ionos-essentials'); ?></li>
                 </ul>
-              <?php else : ?>
+              <?php }  else { ?>
                 <h2 class="headline">
                     <?php
                       // translators: %s: Brand name
@@ -68,7 +68,7 @@ function render_callback()
                     ); ?></li>
                 </ul>
 
-              <?php endif; ?>
+              <?php } ?>
 
              </section>
         </div>
