@@ -16,7 +16,7 @@ test.describe('Maintenance', () => {
   });
 
 
-  test.skip('maintenance mode is enabled', async ({ admin, page }) => {
+  test('maintenance mode is enabled', async ({ admin, page }) => {
     await admin.visitAdminPage('/');
     await page.getByRole('button', { name: 'Tools' }).click();
     await page.locator('#ionos_essentials_maintenance_mode').click();

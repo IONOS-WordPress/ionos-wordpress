@@ -46,7 +46,7 @@ function render_callback(): void
           >
 
             <div class="page-tabbar__block">
-              <ul class="page-tabbar__items" role="menu" style="display: none;">
+              <ul class="page-tabbar__items" role="menu">
                 <li class="page-tabbar__item" role="presentation">
                   <a href="#" class="page-tabbar__link page-tabbar__link--active" data-tab="overview">
                     <div class="page-tabbar__label"><?php \esc_html_e('Overview', 'ionos-essentials'); ?></div>
