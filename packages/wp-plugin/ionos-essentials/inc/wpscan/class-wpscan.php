@@ -55,6 +55,7 @@ class WPScan
 
     add_action('admin_footer', [ $this, 'add_theme_issues_notice' ]);
     add_action('admin_footer', [ $this, 'add_issue_on_plugin_install' ]);
+    add_action('admin_footer', [ $this, 'add_issue_on_theme_install' ]);
 
 
     \add_action('upgrader_process_complete', function ($upgrader, $options) {
@@ -418,6 +419,35 @@ class WPScan
     $theme_slugs = array_keys($themes);
 
     return array_merge($plugin_slugs, $theme_slugs);
+  }
+
+  public function add_issue_on_theme_install()
+  {
+    $screen = get_current_screen();
+    if (!$screen || 'theme-install' !== $screen->id) {
+      return;
+    }
+    wp_enqueue_script(
+      'ionos-wpscan-theme-install',
+      plugins_url('ionos-essentials/inc/wpscan/theme-install.js', PLUGIN_DIR),
+      [],
+      filemtime(PLUGIN_DIR . '/inc/wpscan/theme-install.js'),
+      true
+    );
+
+    wp_localize_script(
+      'ionos-wpscan-theme-install',
+      'ionosEssentialsThemeInstall',
+      [
+        'issues' => $this->get_issues(),
+        'i18n'   => [
+          'checking' => __('Checking for vulnerabilities...', 'ionos-essentials'),
+          'warnings_found' => __('Warnings found. Installation is not recommended.', 'ionos-essentials'),
+          'critical_found' => __('Critical vulnerabilities found! Installing is not possible.', 'ionos-essentials'),
+          'nothing_found' => __('No vulnerabilities found. You can safely install this theme.', 'ionos-essentials'),
+        ],
+      ]
+    );
   }
 
   public function add_issue_on_plugin_install(){
