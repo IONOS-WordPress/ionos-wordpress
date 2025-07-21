@@ -201,9 +201,10 @@ class WPScan
 
     printf(
       '<div class="notice ionos-issues-found-adminbar %s"><p>%s: %d %s. <a href="%s">%s.</a></p></div>',
-      (0 < count($this->get_issues('critical'))) ? 'critical' : '',
+      (0 < count($this->get_issues('critical'))) ? 'notice-error' : 'notice-warning',
       esc_html__('Vulnerability scan', 'ionos-essentials'),
-      5,
+      count($this->get_issues()),
+      (1 === count($this->get_issues())) ? esc_html__('issue found', 'ionos-essentials') :
       esc_html__('issues found', 'ionos-essentials'),
       esc_url(admin_url('admin.php?page=ionos#tools')),
       esc_html__('More information', 'ionos-essentials')
