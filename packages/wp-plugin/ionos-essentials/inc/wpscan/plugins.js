@@ -15,23 +15,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
      const message = document.createElement('div');
      message.classList.add('notice', 'notice-alt', 'notice-warning', 'inline');
-     message.innerHTML = `<p>Checking for vulnerabilities...</p>`;
-     pluginCard.insertBefore(message, pluginCard.firstChild);
+     message.innerHTML = `<p>${ionosEssentialsPlugins.i18n.checking}</p>`;
+     pluginCard?.insertBefore(message, pluginCard.firstChild);
 
      window.setTimeout(function () {
-        const isSafe = false;
+        // toDo: ask middleware for issues
+        // Simulate a random number of issues for demonstration purposes
+        // In a real scenario, you would replace this with an AJAX call to your server
+        // to check for plugin vulnerabilities or issues.
+        const issues = Math.floor(Math.random() * 3);
 
-        if(isSafe) {
-          message.innerHTML = `<p>No vulnerabilities found. You can safely install this plugin.</p>`;
-          message.classList.remove('notice-warning');
-          message.classList.add('notice-success');
-          event.target.dataset.safe = 'true';
-          event.target.click();
-        } else {
-          message.innerHTML = `<p>Vulnerabilities found! Please review the plugin details before proceeding.</p>`;
-          message.classList.remove('notice-warning');
-          message.classList.add('notice-error');
+        switch(issues) {
+          case 1:
+            message.innerHTML = `<p>${ionosEssentialsPlugins.i18n.warnings_found}</p>`;
+            message.classList.add('notice-info');
+            event.target.dataset.safe = 'true';
+            event.target.dataset.disabled = 'false';
+            break;
+          case 2:
+            message.innerHTML = `<p>${ionosEssentialsPlugins.i18n.critical_found}</p>`;
+            message.classList.remove('notice-warning');
+            message.classList.add('notice-error');
+            break;
+          default:
+            message.innerHTML = `<p>${ionosEssentialsPlugins.i18n.nothing_found}</p>`;
+            message.classList.remove('notice-warning');
+            message.classList.add('notice-success');
+            event.target.dataset.safe = 'true';
+            event.target.click();
+            break;
         }
+
      }, 2000);
 
 

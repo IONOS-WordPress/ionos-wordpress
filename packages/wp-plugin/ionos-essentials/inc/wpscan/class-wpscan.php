@@ -433,6 +433,20 @@ class WPScan
       filemtime(PLUGIN_DIR . '/inc/wpscan/plugins.js'),
       true
     );
+
+    wp_localize_script(
+      'ionos-wpscan-plugins',
+      'ionosEssentialsPlugins',
+      [
+        'issues' => $this->get_issues(),
+        'i18n'   => [
+          'checking' => __('Checking for vulnerabilities...', 'ionos-essentials'),
+          'warnings_found' => __('Warnings found. Installation is not recommended.', 'ionos-essentials'),
+          'critical_found' => __('Critical vulnerabilities found! Installing is not possible.', 'ionos-essentials'),
+          'nothing_found' => __('No vulnerabilities found. You can safely install this plugin.', 'ionos-essentials'),
+        ],
+      ]
+    );
   }
 
   public function add_theme_issues_notice()
