@@ -641,24 +641,25 @@ msgstr "Anteprima della pagina di manutenzione"
 #. Plugin URI of the plugin
 #: ionos-essentials.php
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
-msgstr ""
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your Feedback is important to us"
-msgstr ""
+msgstr "Il tuo feedback è importante per noi"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
-msgstr ""
+msgstr "Siamo sempre alla ricerca di modi per migliorare la tua esperienza di hosting WordPress. Ti preghiamo di dedicare qualche minuto alla compilazione di un breve sondaggio online."
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Take the survey"
-msgstr ""
+msgstr "Partecipa al sondaggio"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
-msgstr ""
+msgstr "Il tuo hub %s ha appena ricevuto un potente aggiornamento!"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
-msgstr ""
+msgstr "Abbiamo appena introdotto una nuova sezione \"Strumenti e sicurezza\". Tutte le funzionalità e le interfacce utente del tuo precedente plugin di sicurezza ora si trovano qui, rendendo tutto più centralizzato e facile da gestire. Inoltre, troverai una nuova funzione di pagina di manutenzione che puoi attivare ogni volta che ne hai bisogno."
+
