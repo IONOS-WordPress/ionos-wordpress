@@ -54,6 +54,7 @@ class WPScan
 
 
     add_action('admin_footer', [ $this, 'add_theme_issues_notice' ]);
+    add_action('admin_footer', [ $this, 'add_issue_on_plugin_install' ]);
 
 
     \add_action('upgrader_process_complete', function ($upgrader, $options) {
@@ -419,10 +420,27 @@ class WPScan
     return array_merge($plugin_slugs, $theme_slugs);
   }
 
+  public function add_issue_on_plugin_install(){
+
+    $screen = get_current_screen();
+    if (!$screen || 'plugin-install' !== $screen->id) {
+      return;
+    }
+    wp_enqueue_script(
+      'ionos-wpscan-plugins',
+      plugins_url('ionos-essentials/inc/wpscan/plugins.js', PLUGIN_DIR),
+      [],
+      filemtime(PLUGIN_DIR . '/inc/wpscan/plugins.js'),
+      true
+    );
+  }
+
   public function add_theme_issues_notice()
   {
     $screen = get_current_screen();
-    if ($screen && 'themes' === $screen->id) {
+    if (!$screen || 'themes' !== $screen->id) {
+      return;
+    }
       $isses = $this->get_issues();
       $issues = array_filter($isses, function($issue) {
         return $issue['type'] === 'theme';
@@ -440,7 +458,6 @@ class WPScan
         true
       );
 
-
       wp_localize_script(
         'ionos-essentials-themes',
         'ionosEssentialsThemes',
@@ -453,9 +470,5 @@ class WPScan
           ],
         ]
       );
-
-
-
-    }
   }
 }

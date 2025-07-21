@@ -132,7 +132,6 @@ main{
   background-color: #edfaef;
 
   .ionos_vulnerability__content{
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
     background-image: url('assets/security/none.svg');
