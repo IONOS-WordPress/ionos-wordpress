@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const notice = document.createElement('div');
         notice.innerHTML = html;
         notice.classList.add('update-message', 'notice', 'inline', 'notice-warning', 'notice-alt','ionos-theme-issues');
-        themeCard.appendChild(notice);
+        themeCard?.appendChild(notice);
 
         window.setTimeout(function () {
 

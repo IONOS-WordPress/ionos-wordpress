@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es_MX\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-04-09T08:51:38+00:00\n"
+"POT-Creation-Date: 2025-04-09T08:51:38+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-essentials 0.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-09T08:51:38+00:00\n"
-"PO-Revision-Date: 2025-04-09T08:51:38+00:00\n"
-"Language: es_MX\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.11.0\n"
 
@@ -664,32 +664,32 @@ msgstr "Herramientas y seguridad"
 
 #: inc/dashboard/view.php
 msgid "Vulnerability scan information"
-msgstr ""
+msgstr "Información sobre exploración de vulnerabilidades"
 
 #: inc/wpscan/views/issues.php
 msgid "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
-msgstr ""
+msgstr "Los problemas críticos de seguridad del sitio web, identificados por una puntuación CVSS de 7,0 o superior, requieren atención inmediata."
 
 #: inc/wpscan/views/issues.php
 msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
-msgstr ""
+msgstr "Las advertencias de seguridad de los sitios web, identificadas por una puntuación CVSS de hasta 6,9, requieren una atención inmediata."
 
 #: inc/wpscan/views/issues.php
 msgid "%d critical issue"
 msgid_plural "%d critical issues"
-msgstr[0] ""
+msgstr[0] "%d problema crítico"
 msgstr[1] ""
 
 #: inc/wpscan/views/issues.php
 msgid "%d warning"
 msgid_plural "%d warnings"
-msgstr[0] ""
+msgstr[0] "%d advertencia"
 msgstr[1] ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerabilities detected are being emailed to"
-msgstr ""
+msgstr "Las vulnerabilidades detectadas se envían por correo electrónico a"
 
 #: inc/wpscan/views/summary.php
 msgid "critical issues found"
-msgstr ""
+msgstr "cuestiones críticas encontradas"
