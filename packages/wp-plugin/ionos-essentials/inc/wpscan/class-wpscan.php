@@ -271,7 +271,7 @@ class WPScan
         'i18n'   => [
           'checking'       => __('Checking for vulnerabilities...', 'ionos-essentials'),
           'warnings_found' => __('Warnings found. Installation is not recommended.', 'ionos-essentials'),
-          'critical_found' => __('Critical vulnerabilities found! Installing is not possible.', 'ionos-essentials'),
+          'critical_found' => __('Critical vulnerabilities found! Installation is not possible.', 'ionos-essentials'),
           'nothing_found'  => __('No vulnerabilities found. You can safely install this theme.', 'ionos-essentials'),
         ],
       ]
@@ -301,7 +301,7 @@ class WPScan
         'i18n'   => [
           'checking'       => __('Checking for vulnerabilities...', 'ionos-essentials'),
           'warnings_found' => __('Warnings found. Installation is not recommended.', 'ionos-essentials'),
-          'critical_found' => __('Critical vulnerabilities found! Installing is not possible.', 'ionos-essentials'),
+          'critical_found' => __('Critical vulnerabilities found! Installation is not possible.', 'ionos-essentials'),
           'nothing_found'  => __('No vulnerabilities found. You can safely install this plugin.', 'ionos-essentials'),
         ],
       ]

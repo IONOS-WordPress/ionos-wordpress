@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: nl\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-04-16 10:47+0200\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-04-16 10:47+0200\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -646,6 +646,7 @@ msgstr "Voorbeeld onderhoudspagina"
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
+#: inc/wpscan/class-wpscan.php
 #: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
 msgstr "Kwetsbaarheidsscan"
@@ -693,3 +694,99 @@ msgstr "Ontdekte kwetsbaarheden worden per e-mail verzonden naar"
 #: inc/wpscan/views/summary.php
 msgid "critical issues found"
 msgstr "kritieke kwesties gevonden"
+
+#: inc/dashboard/blocks/vulnerability/index.php
+msgid "An error occurred while fetching the vulnerability data."
+msgstr "Er is een fout opgetreden bij het ophalen van de kwetsbaarheidsgegevens."
+
+#: inc/dashboard/index.php
+msgid "Updating..."
+msgstr "Bijwerken..."
+
+#: inc/dashboard/index.php
+msgid "Loading content ..."
+msgstr "Inhoud laden ..."
+
+#: inc/wpscan/class-wpscan.php
+msgid "No data provided"
+msgstr "Geen gegevens verstrekt"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Missing required parameters"
+msgstr "Ontbrekende vereiste parameters"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Operation completed successfully"
+msgstr "Operatie succesvol afgerond"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Failed to delete plugin"
+msgstr "Plugin niet verwijderd"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Failed to update plugin"
+msgstr "Plugin niet bijgewerkt"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Active theme cannot be deleted"
+msgstr "Actief thema kan niet worden verwijderd"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Failed to delete theme"
+msgstr "Thema niet verwijderd"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Failed to update theme"
+msgstr "Thema niet bijgewerkt"
+
+#: inc/wpscan/class-wpscan.php
+msgid "No scan has been performed yet."
+msgstr "Er is nog geen scan uitgevoerd."
+
+#: inc/wpscan/class-wpscan.php
+msgid "issue found"
+msgstr "probleem gevonden"
+
+#: inc/wpscan/class-wpscan.php
+msgid "issues found"
+msgstr "problemen gevonden"
+
+#: inc/wpscan/class-wpscan.php
+msgid "More information"
+msgstr "Meer informatie"
+
+#: inc/wpscan/class-wpscan.php
+msgid "The vulnerability scan has found issues for"
+msgstr "De kwetsbaarheidsscan heeft problemen gevonden voor"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Checking for vulnerabilities..."
+msgstr "Controleren op kwetsbaarheden..."
+
+#: inc/wpscan/class-wpscan.php
+msgid "Warnings found. Installation is not recommended."
+msgstr "Waarschuwingen gevonden. Installatie wordt niet aanbevolen."
+
+#: inc/wpscan/class-wpscan.php
+msgid "Critical vulnerabilities found! Installation is not possible."
+msgstr "Kritieke kwetsbaarheden gevonden! Installatie is niet mogelijk."
+
+#: inc/wpscan/class-wpscan.php
+msgid "No vulnerabilities found. You can safely install this theme."
+msgstr "Geen kwetsbaarheden gevonden. Je kunt dit thema veilig installeren."
+
+#: inc/wpscan/class-wpscan.php
+msgid "No vulnerabilities found. You can safely install this plugin."
+msgstr "Geen kwetsbaarheden gevonden. Je kunt deze plugin veilig installeren."
+
+#: inc/wpscan/class-wpscan.php
+msgid "The vulnerability scan has found issues"
+msgstr "De kwetsbaarheidsscan heeft problemen gevonden"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Activation is not recommended"
+msgstr "Activering wordt niet aanbevolen"
+
+#: inc/wpscan/views/issues.php
+msgid "This theme is active. Please activate another theme."
+msgstr "Dit thema is actief. Activeer een ander thema."

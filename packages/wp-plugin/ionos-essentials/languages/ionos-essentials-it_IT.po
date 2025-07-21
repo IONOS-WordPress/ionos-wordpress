@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: it\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-04-14 14:15+0200\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-04-14 14:15+0200\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -646,6 +646,7 @@ msgstr "Anteprima della pagina di manutenzione"
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
+#: inc/wpscan/class-wpscan.php
 #: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
 msgstr "Scansione delle vulnerabilità"
@@ -693,3 +694,99 @@ msgstr "Le vulnerabilità rilevate vengono inviate via e-mail a"
 #: inc/wpscan/views/summary.php
 msgid "critical issues found"
 msgstr "criticità riscontrate"
+
+#: inc/dashboard/blocks/vulnerability/index.php
+msgid "An error occurred while fetching the vulnerability data."
+msgstr "Si è verificato un errore durante il recupero dei dati sulla vulnerabilità."
+
+#: inc/dashboard/index.php
+msgid "Updating..."
+msgstr "Aggiornamento..."
+
+#: inc/dashboard/index.php
+msgid "Loading content ..."
+msgstr "Caricamento del contenuto ..."
+
+#: inc/wpscan/class-wpscan.php
+msgid "No data provided"
+msgstr "Nessun dato fornito"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Missing required parameters"
+msgstr "Mancano i parametri richiesti"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Operation completed successfully"
+msgstr "Operazione completata con successo"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Failed to delete plugin"
+msgstr "Impossibile eliminare il plugin"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Failed to update plugin"
+msgstr "Impossibile aggiornare il plugin"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Active theme cannot be deleted"
+msgstr "Il tema attivo non può essere cancellato"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Failed to delete theme"
+msgstr "Non è stato possibile eliminare il tema"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Failed to update theme"
+msgstr "Aggiornamento del tema fallito"
+
+#: inc/wpscan/class-wpscan.php
+msgid "No scan has been performed yet."
+msgstr "Non è ancora stata eseguita alcuna scansione."
+
+#: inc/wpscan/class-wpscan.php
+msgid "issue found"
+msgstr "problema riscontrato"
+
+#: inc/wpscan/class-wpscan.php
+msgid "issues found"
+msgstr "problemi riscontrati"
+
+#: inc/wpscan/class-wpscan.php
+msgid "More information"
+msgstr "Ulteriori informazioni"
+
+#: inc/wpscan/class-wpscan.php
+msgid "The vulnerability scan has found issues for"
+msgstr "La scansione delle vulnerabilità ha rilevato problemi per"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Checking for vulnerabilities..."
+msgstr "Controllo delle vulnerabilità..."
+
+#: inc/wpscan/class-wpscan.php
+msgid "Warnings found. Installation is not recommended."
+msgstr "Avvertenze trovate. L'installazione non è consigliata."
+
+#: inc/wpscan/class-wpscan.php
+msgid "Critical vulnerabilities found! Installation is not possible."
+msgstr "Sono state riscontrate vulnerabilità critiche! L'installazione non è possibile."
+
+#: inc/wpscan/class-wpscan.php
+msgid "No vulnerabilities found. You can safely install this theme."
+msgstr "Non sono state riscontrate vulnerabilità. È possibile installare questo tema in tutta sicurezza."
+
+#: inc/wpscan/class-wpscan.php
+msgid "No vulnerabilities found. You can safely install this plugin."
+msgstr "Non sono state riscontrate vulnerabilità. È possibile installare questo plugin in modo sicuro."
+
+#: inc/wpscan/class-wpscan.php
+msgid "The vulnerability scan has found issues"
+msgstr "La scansione delle vulnerabilità ha rilevato problemi"
+
+#: inc/wpscan/class-wpscan.php
+msgid "Activation is not recommended"
+msgstr "L'attivazione non è consigliata"
+
+#: inc/wpscan/views/issues.php
+msgid "This theme is active. Please activate another theme."
+msgstr "Questo tema è attivo. Attivare un altro tema."
