@@ -32,6 +32,8 @@ It enables developers to maintain all of our IONOS WordPress hosting related plu
 
 # Development
 
+The default password for wp-env wordpress containers is defined in environment variable `WP_PASSWORD`. The environment variable is defined in `.env`.
+
 The repository contains all the code, configuration and tools needed to maintain our IONOS WordPress Hosting specific artifacts.
 
 The repository provides
