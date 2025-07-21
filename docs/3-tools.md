@@ -28,7 +28,6 @@ packages/{docker} workspace packages will only be build if no matching (name,ver
 - `--use` Specify which operations to use (default: all)
 
   Currently supported operations:
-
   - `all` (default) apply all operations
   - `wp-plugin:wp-scripts` do wp-scripts bundling on wordpress plugins
   - `wp-plugin:i18n` do localization operations on wordpress plugins
@@ -110,7 +109,6 @@ By default every source file will be linted.
 - `--use` Specify which linters to use (default: all)
 
   Available options:
-
   - `all` operate on all files
   - `php` operate on php files
   - `prettier` operate html/yml/md/etc. files
@@ -173,7 +171,6 @@ will run tests for all packages.
 - `--use` Specify which tests to execute (default: all)
 
   Available options:
-
   - `php` execute PHPUnit tests
   - `e2e` execute E2E tests
   - `react` execute Storybook/React tests

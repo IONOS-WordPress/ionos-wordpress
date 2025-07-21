@@ -39,7 +39,6 @@ This can be achied by enabling SSH agent forwarding : See https://www.romanboehm
   The extension will automatically handle bootstrapping the [DevContainer](https://containers.dev/)
 
   > A [DevContainer](https://containers.dev/) provides a full-featured development environment using containers.
-
   - `vscode` will ask you (notice the notice panel on the right bottom in vsode !) to open into the vscode container.
 
 - Once `vscode` is done bootstrapping the [DevContainer](https://containers.dev/) you can enter the container by clicking on the green bottom left corner of `vscode` and selecting `Reopen in Container`
@@ -79,7 +78,6 @@ The project layout is designed to host a "product".
 A WordPress product may consist of various artifacts like plugins, themes, etc. That's why the project layout is a monorepo.
 
 - All _buildable_ artifacts are located in the `packages` directory.
-
   - `./packages/wp-plugin` hosts our wordpress plugins
   - `./packages/docker` hosts docker images
   - `./packages/npm` hosts npm packages
@@ -89,7 +87,6 @@ A WordPress product may consist of various artifacts like plugins, themes, etc. 
   Scripts will usually referenced by the `package.json` scripts section.
 
   Example: `pnpm test` will execute the `./scripts/test.sh` script.
-
   - scripts starting with '\_' are considered "private" and should not be executed directly. They get either used by other scripts or in GitHub Actions etc.
 
   - **every script** contains a header describing what it does, what it requires and what it returns.
@@ -134,7 +131,6 @@ In contrast to the in-house GitLab Community edition hosted in-house at IONOS **
   [GitHub Pages](https://pages.github.com/) content is reflecting the `gh_pages` branch of a project. In other words : **Versioning is a built-in feature.**
 
 - GitHub hosts a [package registry](https://docs.github.com/en/packages) for
-
   - `docker` images
   - `npm` packages
   - `ruby` gems
