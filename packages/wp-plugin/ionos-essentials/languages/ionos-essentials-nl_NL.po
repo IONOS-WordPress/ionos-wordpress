@@ -1,23 +1,18 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: nl\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-04-16 10:47+0200\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-04-16 10:47+0200\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
-
-#. Plugin URI of the plugin
-#: ionos-essentials.php
-msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
-msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
 
 #. Description of the plugin
 #: ionos-essentials.php
@@ -364,18 +359,6 @@ msgstr "Wat is er nieuw?"
 msgid "What’s New"
 msgstr "Wat is er nieuw?"
 
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
-msgstr "Goed nieuws! We hebben onze gebruikersinterface compleet vernieuwd, met een nieuw ontwerp en verbeterde gebruikerservaring. Het is nog nooit zo eenvoudig geweest om je WordPress website te beheren."
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "Vulnerability Scan Results"
-msgstr "Resultaten kwetsbaarheidsscan"
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
-msgstr "We hebben scanresultaten direct aan je dashboard toegevoegd, zodat je direct inzicht hebt in potentiële beveiligingsrisico's. Zo ontdek je potentiële risico's meteen en houd je je WordPress site veilig."
-
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Add new page"
 msgstr "Nieuwe pagina toevoegen"
@@ -419,10 +402,6 @@ msgstr "Mediabestanden uploaden"
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Ontdek nieuwe functies en krijg een overzicht van de laatste updates en verbeteringen van de WordPress Hub."
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "New User Interface"
-msgstr "Introductie van de nieuwe WP Hub"
 
 #: inc/tenants/config/ionos.php
 msgid "My Products"
@@ -658,3 +637,28 @@ msgstr "Onderhoudsmodus"
 #: inc/dashboard/tabs/tools.php
 msgid "Preview maintenance page"
 msgstr "Voorbeeld onderhoudspagina"
+
+#. Plugin URI of the plugin
+#: ionos-essentials.php
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "Your Feedback is important to us"
+msgstr "Jouw feedback is belangrijk voor ons"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
+msgstr "We zoeken altijd naar manieren om je ervaring met WordPress hosting nog beter te maken. Neem een paar minuten de tijd om een korte enquête in te vullen."
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "Take the survey"
+msgstr "Deelnemen aan enquête"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "Your %s Hub Just Got a Powerful Upgrade!"
+msgstr "Je %s hub heeft een upgrade gekregen!"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
+msgstr "We hebben een nieuw tabblad \"Tools & beveiliging\" toegevoegd! Alle functies van de vorige beveiligingsplug-in zijn nu hier te vinden, zodat je alles vanuit een plek kunt beheren. Bovendien vind je een nieuwe functie voor onderhoudspagina's, die je kunt inschakelen wanneer nodig."
