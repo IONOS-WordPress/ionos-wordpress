@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: sv\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-04-23 08:52+0200\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-04-23 08:52+0200\n"
-"Language: sv\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.4.2\n"
 
@@ -796,3 +796,21 @@ msgstr "Vi skannar automatiskt varje dag och när ett nytt plugin eller tema ins
 #: inc/wpscan/views/summary.php
 msgid "Learn more"
 msgstr "Läs mer om detta"
+
+#: inc/wpscan/views/issues.php
+msgid "%d critical issue"
+msgid_plural "%d critical issues"
+msgstr[0] "%d kritiskt problem"
+msgstr[1] ""
+
+#: inc/dashboard/view.php
+msgid "We use the WPScan database to provide security risk scores for plugins and themes."
+msgstr "Vi använder WPScan-databasen för att tillhandahålla säkerhetsriskpoäng för plugins och teman."
+
+#: inc/dashboard/view.php
+msgid "The scores are on a scale of 1 to 10, where a higher value indicates greater security risk."
+msgstr "Poängen anges på en skala från 1 till 10, där ett högre värde indikerar en större säkerhetsrisk."
+
+#: inc/dashboard/view.php
+msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
+msgstr "Installationer av plugins och teman är förbjudna om deras poäng överstiger 7,0."

@@ -40,7 +40,8 @@ class WPScanRest
     }
 
     $status_code = 200;
-    $message     = \__('Operation completed successfully', 'ionos-essentials');
+    $message  = ucFirst($type) . ' ';
+    $message .= ('delete' === $action ) ? __('was deleted', 'ionos-essentials') : __('was updated', 'ionos-essentials');
     $status      = 'success';
 
     if ('plugin' === $type) {

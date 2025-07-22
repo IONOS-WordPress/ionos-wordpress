@@ -132,9 +132,9 @@ use const ionos\essentials\PLUGIN_DIR;
       </div>
       <h3 class="headline headline--sub"><?php \esc_html_e('Vulnerability scan information', 'ionos-essentials'); ?></h3>
       <ul class="bullet-list">
-        <li>We use the WPScan database to provide security risk scores for plugins and themes.</li>
-        <li>The scores are on a scale of 1 to 10, where a higher value indicates greater security risk.</li>
-        <li>Installations of plugins and themes are prohibited if their score exceeds 7.0.</li>
+        <li><?php esc_html_e('We use the WPScan database to provide security risk scores for plugins and themes.', 'ionos-essentials'); ?></li>
+        <li><?php esc_html_e('The scores are on a scale of 1 to 10, where a higher value indicates greater security risk.', 'ionos-essentials'); ?></li>
+        <li><?php esc_html_e('Installations of plugins and themes are prohibited if their score exceeds 7.0.', 'ionos-essentials'); ?></li>
       </ul>
     </section>
   </div>
