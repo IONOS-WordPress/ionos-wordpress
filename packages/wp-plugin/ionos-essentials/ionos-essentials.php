@@ -60,7 +60,7 @@ function is_stretch()
     true
   );
 
-    wp_localize_script('ionos-essentials-js', 'wpData', [
+    wp_localize_script('ionos-essentials-js', 'ionosEssentialsWpData', [
       'nonce'              => wp_create_nonce('wp_rest'),
       'ajaxUrl'            => admin_url('admin-ajax.php'),
     ]);
