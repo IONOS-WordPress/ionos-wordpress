@@ -24,8 +24,6 @@ class WPScan
       $this->get_new_middleware_data();
     }
 
-    $api = new WPScanRest();
-
     if (0 < count($this->get_issues())) {
       add_action('admin_notices', [$this, 'admin_notice']);
       add_action('after_plugin_row', [$this, 'add_plugin_issue_notice'], 10, 3);
