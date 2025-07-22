@@ -676,16 +676,10 @@ msgid "Website security warnings, identified by a CVSS score up to 6.9, require 
 msgstr "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
 
 #: inc/wpscan/views/issues.php
-msgid "%d critical issue"
-msgid_plural "%d critical issues"
-msgstr[0] "%d critical issue"
-msgstr[1] ""
-
-#: inc/wpscan/views/issues.php
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] "%d warning"
-msgstr[1] ""
+msgstr[1] "%d warnings"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerabilities detected are being emailed to"
@@ -697,96 +691,108 @@ msgstr "critical issues found"
 
 #: inc/dashboard/blocks/vulnerability/index.php
 msgid "An error occurred while fetching the vulnerability data."
-msgstr ""
+msgstr "An error occurred while fetching the vulnerability data."
 
 #: inc/dashboard/index.php
 msgid "Updating..."
-msgstr ""
+msgstr "Updating..."
 
 #: inc/dashboard/index.php
 msgid "Loading content ..."
-msgstr ""
+msgstr "Loading content ..."
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "No data provided"
-msgstr ""
+msgstr "No data provided"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Missing required parameters"
-msgstr ""
+msgstr "Missing required parameters"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Operation completed successfully"
-msgstr ""
+msgstr "Operation completed successfully"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to delete plugin"
-msgstr ""
+msgstr "Failed to delete plugin"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to update plugin"
-msgstr ""
+msgstr "Failed to update plugin"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Active theme cannot be deleted"
-msgstr ""
+msgstr "Active theme cannot be deleted"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to delete theme"
-msgstr ""
+msgstr "Failed to delete theme"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to update theme"
-msgstr ""
+msgstr "Failed to update theme"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No scan has been performed yet."
-msgstr ""
+msgstr "No scan has been performed yet."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "issue found"
-msgstr ""
+msgstr "issue found"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "issues found"
-msgstr ""
+msgstr "issues found"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "More information"
-msgstr ""
+msgstr "More information"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues for"
-msgstr ""
+msgstr "The vulnerability scan has found issues for"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Checking for vulnerabilities..."
-msgstr ""
+msgstr "Checking for vulnerabilities..."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Warnings found. Installation is not recommended."
-msgstr ""
+msgstr "Warnings found. Installation is not recommended."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Critical vulnerabilities found! Installation is not possible."
-msgstr ""
+msgstr "Critical vulnerabilities found! Installation is not possible."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this theme."
-msgstr ""
+msgstr "No vulnerabilities found. You can safely install this theme."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this plugin."
-msgstr ""
+msgstr "No vulnerabilities found. You can safely install this plugin."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues"
-msgstr ""
+msgstr "The vulnerability scan has found issues"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Activation is not recommended"
-msgstr ""
+msgstr "Activation is not recommended"
 
 #: inc/wpscan/views/issues.php
 msgid "This theme is active. Please activate another theme."
-msgstr ""
+msgstr "This theme is active. Please activate another theme."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Temporarily block public access to your site with a maintenance page."
+msgstr "Temporarily block public access to your site with a maintenance page."
+
+#: inc/wpscan/views/summary.php
+msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
+msgstr "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
+
+#: inc/wpscan/views/summary.php
+msgid "Learn more"
+msgstr "Learn more"

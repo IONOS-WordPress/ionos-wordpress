@@ -676,12 +676,6 @@ msgid "Website security warnings, identified by a CVSS score up to 6.9, require 
 msgstr "Säkerhetsvarningar för webbplatser, identifierade med en CVSS-poäng upp till 6.9, kräver omedelbar uppmärksamhet."
 
 #: inc/wpscan/views/issues.php
-msgid "%d critical issue"
-msgid_plural "%d critical issues"
-msgstr[0] "%d kritiskt problem"
-msgstr[1] ""
-
-#: inc/wpscan/views/issues.php
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] "%d varning"
@@ -697,96 +691,108 @@ msgstr "kritiska frågor hittades"
 
 #: inc/dashboard/blocks/vulnerability/index.php
 msgid "An error occurred while fetching the vulnerability data."
-msgstr ""
+msgstr "Ett fel inträffade vid hämtning av sårbarhetsdata."
 
 #: inc/dashboard/index.php
 msgid "Updating..."
-msgstr ""
+msgstr "Uppdaterar..."
 
 #: inc/dashboard/index.php
 msgid "Loading content ..."
-msgstr ""
+msgstr "Laddar innehåll ..."
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "No data provided"
-msgstr ""
+msgstr "Inga uppgifter har lämnats"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Missing required parameters"
-msgstr ""
+msgstr "Saknar nödvändiga parametrar"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Operation completed successfully"
-msgstr ""
+msgstr "Operation slutförd framgångsrikt"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to delete plugin"
-msgstr ""
+msgstr "Misslyckades med att ta bort plugin"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to update plugin"
-msgstr ""
+msgstr "Misslyckades med att uppdatera plugin"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Active theme cannot be deleted"
-msgstr ""
+msgstr "Aktivt tema kan inte tas bort"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to delete theme"
-msgstr ""
+msgstr "Misslyckades med att ta bort tema"
 
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to update theme"
-msgstr ""
+msgstr "Misslyckades med att uppdatera temat"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No scan has been performed yet."
-msgstr ""
+msgstr "Ingen scanning har utförts ännu."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "issue found"
-msgstr ""
+msgstr "problem hittades"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "issues found"
-msgstr ""
+msgstr "problem hittades"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "More information"
-msgstr ""
+msgstr "Mer information"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues for"
-msgstr ""
+msgstr "Sårbarhetssökningen har hittat problem för"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Checking for vulnerabilities..."
-msgstr ""
+msgstr "Kollar efter sårbarheter..."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Warnings found. Installation is not recommended."
-msgstr ""
+msgstr "Varningar hittades. Installation rekommenderas inte."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Critical vulnerabilities found! Installation is not possible."
-msgstr ""
+msgstr "Kritiska sårbarheter har hittats! Installation är inte möjlig."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this theme."
-msgstr ""
+msgstr "Inga sårbarheter hittades. Du kan installera detta tema på ett säkert sätt."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this plugin."
-msgstr ""
+msgstr "Inga sårbarheter hittades. Du kan installera detta plugin på ett säkert sätt."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues"
-msgstr ""
+msgstr "Sårbarhetssökningen har hittat problem"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Activation is not recommended"
-msgstr ""
+msgstr "Aktivering rekommenderas inte"
 
 #: inc/wpscan/views/issues.php
 msgid "This theme is active. Please activate another theme."
-msgstr ""
+msgstr "Detta tema är aktivt. Vänligen aktivera ett annat tema."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Temporarily block public access to your site with a maintenance page."
+msgstr "Blockera tillfälligt allmänhetens åtkomst till din webbplats med en underhållssida."
+
+#: inc/wpscan/views/summary.php
+msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
+msgstr "Vi skannar automatiskt varje dag och när ett nytt plugin eller tema installeras, med hjälp av WPScans databas över sårbarheter."
+
+#: inc/wpscan/views/summary.php
+msgid "Learn more"
+msgstr "Läs mer om detta"

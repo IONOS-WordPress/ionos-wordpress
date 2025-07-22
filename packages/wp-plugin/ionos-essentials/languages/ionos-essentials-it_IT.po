@@ -676,12 +676,6 @@ msgid "Website security warnings, identified by a CVSS score up to 6.9, require 
 msgstr "Gli avvisi di sicurezza dei siti web, identificati da un punteggio CVSS fino a 6,9, richiedono un'attenzione immediata."
 
 #: inc/wpscan/views/issues.php
-msgid "%d critical issue"
-msgid_plural "%d critical issues"
-msgstr[0] "Problema critico %d"
-msgstr[1] ""
-
-#: inc/wpscan/views/issues.php
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] "Avviso %d"
@@ -790,3 +784,15 @@ msgstr "L'attivazione non è consigliata"
 #: inc/wpscan/views/issues.php
 msgid "This theme is active. Please activate another theme."
 msgstr "Questo tema è attivo. Attivare un altro tema."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Temporarily block public access to your site with a maintenance page."
+msgstr "Bloccate temporaneamente l'accesso pubblico al vostro sito con una pagina di manutenzione."
+
+#: inc/wpscan/views/summary.php
+msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
+msgstr "Eseguiamo una scansione automatica ogni giorno e ogni volta che viene installato un nuovo plugin o tema, utilizzando il database delle vulnerabilità di WPScan."
+
+#: inc/wpscan/views/summary.php
+msgid "Learn more"
+msgstr "Per saperne di più"

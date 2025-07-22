@@ -619,7 +619,7 @@ msgstr "Sicherheit deaktiviert die Anmeldung mit E-Mail-Adressen. Dies verbesser
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance page"
-msgstr "Seite Wartung"
+msgstr "Wartungsseite"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Active"
@@ -676,16 +676,10 @@ msgid "Website security warnings, identified by a CVSS score up to 6.9, require 
 msgstr "Sicherheitswarnungen für Websites, die mit einem CVSS-Score von bis zu 6.9 gekennzeichnet sind, erfordern sofortige Aufmerksamkeit."
 
 #: inc/wpscan/views/issues.php
-msgid "%d critical issue"
-msgid_plural "%d critical issues"
-msgstr[0] "%d kritisches Problem"
-msgstr[1] ""
-
-#: inc/wpscan/views/issues.php
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] "%d Warnung"
-msgstr[1] ""
+msgstr[1] "%d Warnungen"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerabilities detected are being emailed to"
@@ -790,3 +784,15 @@ msgstr "Aktivierung wird nicht empfohlen"
 #: inc/wpscan/views/issues.php
 msgid "This theme is active. Please activate another theme."
 msgstr "Dieses Thema ist aktiv. Bitte aktivieren Sie ein anderes Theme."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Temporarily block public access to your site with a maintenance page."
+msgstr "Sperren Sie den öffentlichen Zugang zu Ihrer Website vorübergehend mit einer Wartungsseite."
+
+#: inc/wpscan/views/summary.php
+msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
+msgstr "Wir scannen automatisch täglich und immer dann, wenn ein neues Plugin oder Theme installiert wird, unter Verwendung der WPScan-Datenbank für Sicherheitsrisiken."
+
+#: inc/wpscan/views/summary.php
+msgid "Learn more"
+msgstr "Mehr erfahren"
