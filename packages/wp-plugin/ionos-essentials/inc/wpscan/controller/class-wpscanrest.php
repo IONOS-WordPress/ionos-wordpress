@@ -51,11 +51,12 @@ class WPScanRest
 
         if (strToLower($theme->get('Name')) === strToLower($slug)) {
           \wp_send_json_success(__('Active theme cannot be deleted', 'ionos-essentials'), 200);
-        } else {
-          require_once ABSPATH . 'wp-admin/includes/theme.php';
-          $response = \delete_theme($slug);
         }
+
+        require_once ABSPATH . 'wp-admin/includes/theme.php';
+        $response = \delete_theme($slug);
         break;
+
       case 'theme-update':
         include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
         $upgrader = new \Theme_Upgrader(new \WP_Ajax_Upgrader_Skin());
@@ -63,13 +64,12 @@ class WPScanRest
         $upgrader->upgrade($slug);
         \delete_transient('ionos_wpscan_issues');
         break;
+
       default:
         \wp_send_json_error(null, 500);
     }
 
-    if (isset($response) && is_wp_error($response) || isset($upgrader->skin->result) && is_wp_error(
-      $upgrader->skin->result
-    )) {
+    if (isset($response) && is_wp_error($response) || isset($upgrader->skin->result) && is_wp_error($upgrader->skin->result)) {
       \wp_send_json_error(null, 500);
     }
 
