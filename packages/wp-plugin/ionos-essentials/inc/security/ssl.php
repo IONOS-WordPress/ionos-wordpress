@@ -42,14 +42,14 @@ if (! \get_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED)) {
 
   \add_action('admin_enqueue_scripts', function () {
     wp_enqueue_script(
-      'ionos-essentials-js',
-      plugins_url('essentials.js', PLUGIN_FILE),
+      'ionos-security-js',
+      plugins_url('inc/security/security.js', PLUGIN_FILE),
       [],
-      filemtime(PLUGIN_DIR . '/essentials.js'),
+      filemtime(PLUGIN_DIR . '/inc/security/security.js'),
       true
     );
 
-      wp_localize_script('ionos-essentials-js', 'ionosEssentialsWpData', [
+      wp_localize_script('ionos-security-js', 'ionosSecurityWpData', [
         'nonce'              => wp_create_nonce('wp_rest'),
         'ajaxUrl'            => admin_url('admin-ajax.php'),
       ]);
