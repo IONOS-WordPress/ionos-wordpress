@@ -51,21 +51,6 @@ function is_stretch()
   return str_starts_with(getcwd(), '/home/www/public');
 }
 
-\add_action('admin_enqueue_scripts', function () {
-  wp_enqueue_script(
-    'ionos-essentials-js',
-    plugins_url('essentials.js', PLUGIN_FILE),
-    [],
-    filemtime(PLUGIN_DIR . '/essentials.js'),
-    true
-  );
-
-    wp_localize_script('ionos-essentials-js', 'ionosEssentialsWpData', [
-      'nonce'              => wp_create_nonce('wp_rest'),
-      'ajaxUrl'            => admin_url('admin-ajax.php'),
-    ]);
-
-});
 // TODO: evaluate for other tenants than IONOS
 
 // \add_filter(
