@@ -37,6 +37,10 @@ main{
   }
 }
 
+.color--success{
+  color: var(--success-text-color, #096b35);
+}
+
 .button{
   white-space: nowrap;
   margin-bottom: 5px;
