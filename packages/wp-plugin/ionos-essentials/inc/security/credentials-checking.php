@@ -36,7 +36,7 @@ if (! defined('ABSPATH')) {
   accepted_args : 3
 );
 
-if (is_login()) {
+if (true) {
   \add_action('login_form_icc_leak_detected', function () {
     $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -67,7 +67,7 @@ if (is_login()) {
               'To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to %1$s',
               'ionos-security'
             ),
-            '<b>as*****is@gmail.com</b>' // TODO: get mail of current user
+            '<b>' . get_current_user_mail() . '</b>'
           )
         );
       });
@@ -195,4 +195,31 @@ function has_leaked_flag($user_id)
 function is_valid_email($email)
 {
   return IONOS_NOREPLY_EMAIL !== $email && is_email($email);
+}
+
+
+function get_current_user_mail(){
+  $user = wp_get_current_user();
+  $email = $user->user_email;
+  $email = hideEmail($email);
+
+  return $email;
+}
+
+function hideEmail($email)
+{
+   $mail_parts = explode("@", $email);
+    $length = strlen($mail_parts[0]);
+
+    if($length <= 4 & $length > 1)
+    {
+        $show = 1;
+    } else {
+        $show = floor($length%2);
+    }
+
+    $hide = $length - $show;
+    $replace = str_repeat("*", $hide);
+
+    return substr_replace ( $mail_parts[0] , $replace , $show, $hide ) . "@" . $mail_parts[1];
 }
