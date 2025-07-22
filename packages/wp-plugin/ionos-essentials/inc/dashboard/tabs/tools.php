@@ -26,7 +26,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
                       <span class="badge badge--warning-solid ionos-maintenance-only"><?php \esc_html_e('Active', 'ionos-essentials'); ?></span>
                 </h2>
                     <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
-                        <?php \esc_html_e('Temporarily block public access to your site with a maintenance page.', 'post'); ?>
+                        <?php \esc_html_e('Temporarily block public access to your site with a maintenance page.', 'ionos-essentials'); ?>
                     </p>
                     <a href="<?php echo \esc_url(
                       \plugins_url('ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)
