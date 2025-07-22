@@ -338,19 +338,23 @@ msgid "Get an overview of the latest updates and enhancements."
 msgstr ""
 
 #: inc/dashboard/blocks/whats-new/index.php
-msgid "New User Interface"
+msgid "Your Feedback is important to us"
 msgstr ""
 
 #: inc/dashboard/blocks/whats-new/index.php
-msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
+msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
 msgstr ""
 
 #: inc/dashboard/blocks/whats-new/index.php
-msgid "Vulnerability Scan Results"
+msgid "Take the survey"
 msgstr ""
 
 #: inc/dashboard/blocks/whats-new/index.php
-msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
+msgid "Your %s Hub Just Got a Powerful Upgrade!"
+msgstr ""
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
 msgstr ""
 
 #: inc/dashboard/index.php

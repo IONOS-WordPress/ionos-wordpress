@@ -337,18 +337,6 @@ msgstr "Novedades"
 msgid "What’s New"
 msgstr "Novedades"
 
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
-msgstr "Con un diseño totalmente renovado y una experiencia mejorada. Administrar tu sitio WordPress nunca había sido tan fácil."
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "Vulnerability Scan Results"
-msgstr "Resultados del escaneo de vulnerabilidades"
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
-msgstr "Hemos incorporado los resultados del escaneo para que tengas visibilidad inmediata de posibles riesgos de seguridad."
-
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Add new page"
 msgstr "Añadir nueva página"
@@ -392,10 +380,6 @@ msgstr "Añadir archivos de medios"
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Obtén una visión general de las últimas actualizaciones y mejoras."
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "New User Interface"
-msgstr "Nueva interfaz de usuario"
 
 #: inc/tenants/config/ionos.php
 msgid "My Products"
@@ -677,5 +661,22 @@ msgid "Helpful links and shortcuts"
 msgstr "Enlaces y atajos útiles"
 
 #: inc/dashboard/blocks/welcome/index.php
-msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr "Amplia sección de ayuda, que incluye: Asistencia por chat con IA, visitas guiadas y una amplia base de datos de conocimientos."
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "Your Feedback is important to us"
+msgstr "Tu opinión nos importa"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
+msgstr "Siempre estamos buscando formas de mejorar tu experiencia con Hosting WordPress. Por favor, dedica unos minutos a realizar una breve encuesta online."
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "Take the survey"
+msgstr "Participa en la encuesta"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "Your %s Hub Just Got a Powerful Upgrade!"
+msgstr "¡Hemos actualizado tu hub %s con potentes novedades!"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
+msgstr "¡Acabamos de habilitar la nueva pestaña «Herramientas y Seguridad»! Todas las funciones e interfaces de uso de tu anterior plugin de seguridad se encuentran ahora aquí para una gestión centralizada y más sencilla. Además, también tienes disponible una nueva función de página de mantenimiento que puedes activar cuando lo necesites."
