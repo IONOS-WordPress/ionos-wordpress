@@ -2,8 +2,8 @@
 
 namespace ionos\essentials\security;
 
-use const ionos\essentials\PLUGIN_FILE;
 use const ionos\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_FILE;
 
 // exit if accessed directly
 if (! defined('ABSPATH')) {
@@ -39,7 +39,6 @@ if (! \get_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED)) {
     fn () => (\set_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED, true, 0) && wp_die())
   );
 
-
   \add_action('admin_enqueue_scripts', function () {
     wp_enqueue_script(
       'ionos-security-js',
@@ -49,10 +48,9 @@ if (! \get_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED)) {
       true
     );
 
-      wp_localize_script('ionos-security-js', 'ionosSecurityWpData', [
-        'nonce'              => wp_create_nonce('wp_rest'),
-        'ajaxUrl'            => admin_url('admin-ajax.php'),
-      ]);
-
+    wp_localize_script('ionos-security-js', 'ionosSecurityWpData', [
+      'nonce'              => wp_create_nonce('wp_rest'),
+      'ajaxUrl'            => admin_url('admin-ajax.php'),
+    ]);
   });
 }

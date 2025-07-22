@@ -234,18 +234,20 @@ document.addEventListener('DOMContentLoaded', function () {
           data: element.dataset.wpscan,
         }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          if(data.status_code === 200) {
-            element.parentElement.parentElement.remove();
-            window.EXOS.snackbar.success(data.message);
-
-            window.setTimeout(() => {
-              window.location.reload();
-            }, 1000);
-          }else{
-            window.EXOS.snackbar.critical(data.message);
+        .then((response) => {
+          if (!response.ok) {
+            window.EXOS.snackbar.critical(response.statusText);
+            return Promise.reject();
           }
+          return response.json();
+        })
+        .then((data) => {
+          element.parentElement.parentElement.remove();
+          window.EXOS.snackbar.success(data.data);
+
+          window.setTimeout(() => {
+            window.location.reload();
+          }, 10000);
         });
     });
   });

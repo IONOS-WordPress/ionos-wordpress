@@ -4,24 +4,12 @@ namespace ionos\essentials\wpscan;
 
 class WPScanMiddleware
 {
-  /**
-   * @var array
-   */
-  private $issues;
-
-  /**
-   * @var bool
-   */
-  private $error;
-
-  public function __construct()
-  {
-  }
+  private const URL = 'https://webapps-vuln-scan.hosting.ionos.com/api/v1/vulnerabilities';
 
   public function download_wpscan_data()
   {
-    $url   = 'https://webapps-vuln-scan.hosting.ionos.com/api/v1/vulnerabilities';
-    $token = get_option('ionos_security_wpscan_token', '');
+    $url   = self::URL;
+    $token = \get_option('ionos_security_wpscan_token', '');
     if (empty($token)) {
       return;
     }
@@ -60,16 +48,11 @@ class WPScanMiddleware
     return \json_decode($body, true);
   }
 
-  public function convert_middleware_data($issues)
+  public function convert_middleware_data(array $issues): array
   {
     // Filter out items without issues
     foreach (['plugins', 'themes'] as $type) {
-      $issues[$type] = array_values(array_filter(
-        $issues[$type],
-        function ($item) {
-          return ! empty($item['vulnerabilities']);
-        }
-      ));
+      $issues[$type] = array_values(array_filter($issues[$type], fn ($item) => ! empty($item['vulnerabilities'])));
     }
 
     // Leave the highest vulnerability for each plugin/theme, delete the rest
@@ -77,11 +60,9 @@ class WPScanMiddleware
       foreach ($issues[$type] as &$item) {
 
         // Sort vulnerabilities by score, descending
-        usort($item['vulnerabilities'], function ($a, $b) {
-          return $b['score'] <=> $a['score'];
-        });
+        usort($item['vulnerabilities'], fn ($a, $b) => $b['score'] <=> $a['score']);
         // Keep only the highest vulnerability
-        $item['vulnerabilities'] = array_slice($item['vulnerabilities'], 0, 1);
+        $item['vulnerabilities'] = $item['vulnerabilities'][0];
       }
       unset($item);
     }
@@ -92,6 +73,7 @@ class WPScanMiddleware
         $converted[] = [
           'name'   => $this->get_name($item['slug']),
           'slug'   => $item['slug'],
+          // @TODO: path - this is not always correct -> a plugin can also be foo/plugin.php or just a plugin file
           'path'   => $item['slug'] . '/' . $item['slug'] . '.php',
           'type'   => substr($type, 0, -1),
           'update' => (strpos(json_encode($item['vulnerabilities']), 'fixed_in')) ? null : false,
@@ -147,8 +129,9 @@ class WPScanMiddleware
     if (! function_exists('get_plugins')) {
       require_once ABSPATH . 'wp-admin/includes/plugin.php';
     }
-    $plugins = get_plugins();
+    $plugins = \get_plugins();
     foreach ($plugins as $file => $data) {
+      // @TODO: path - this is not always correct -> a plugin can also be foo/plugin.php or just a plugin file
       if (dirname($file) === $slug || basename($file, '.php') === $slug) {
         return $data['Name'] ?? $slug;
       }

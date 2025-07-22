@@ -6,15 +6,9 @@ use const ionos\essentials\PLUGIN_DIR;
 
 class WPScan
 {
-  /**
-   * @var array
-   */
-  private $issues;
+  private array|bool $issues;
 
-  /**
-   * @var bool
-   */
-  private $error;
+  private bool $error;
 
   public function __construct()
   {
@@ -36,18 +30,17 @@ class WPScan
     \add_action('upgrader_process_complete', function () {
       \delete_transient('ionos_wpscan_issues');
     }, 10, 2);
+
+    $api = new WPScanRest();
+
+    $this->error = false;
   }
 
   public function get_issues($filter = null)
   {
     // Filter out issues for plugins/themes that are not installed
     $all_slugs    = $this->get_installed_slugs();
-    $this->issues = array_filter(
-      $this->issues,
-      function ($issue) use ($all_slugs) {
-        return in_array($issue['slug'], $all_slugs, true);
-      }
-    );
+    $this->issues = array_filter($this->issues, fn ($issue) => in_array($issue['slug'], $all_slugs, true));
 
     // update the update information
     foreach ($this->issues as &$issue) {
@@ -225,7 +218,7 @@ class WPScan
   {
     $last_run = \get_transient('ionos_wpscan_last_scan');
     if (false === $last_run) {
-      return __('No scan has been performed yet.', 'ionos-essentials');
+      return \__('No scan has been performed yet.', 'ionos-essentials');
     }
     return human_time_diff($last_run, time());
   }
@@ -257,13 +250,11 @@ class WPScan
 
   private function is_update_available($slug)
   {
-    $plugins_updates = get_site_transient('update_plugins');
-    $theme_updates   = get_site_transient('update_themes');
+    $plugins_updates = \get_site_transient('update_plugins');
+    $theme_updates   = \get_site_transient('update_themes');
     $updates         = array_keys(array_merge($plugins_updates->response ?? [], $theme_updates->response ?? []));
 
-    $short_slugs = array_map(function ($update) {
-      return basename($update, '.php');
-    }, $updates);
+    $short_slugs = array_map(fn ($update) => basename($update, '.php'), $updates);
 
     return in_array($slug, $short_slugs, true);
   }
@@ -273,9 +264,7 @@ class WPScan
     $plugins = \get_plugins();
     $themes  = \wp_get_themes();
 
-    $plugin_slugs = array_map(function ($plugin) {
-      return basename($plugin, '.php');
-    }, array_keys($plugins));
+    $plugin_slugs = array_map(fn ($plugin) => basename($plugin, '.php'), array_keys($plugins));
 
     $theme_slugs = array_keys($themes);
 

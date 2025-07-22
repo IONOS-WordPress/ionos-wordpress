@@ -9,7 +9,7 @@ class WPScanRest
     add_action('rest_api_init', function () {
       \register_rest_route('ionos/essentials', '/wpscan', [
         'methods'             => 'POST',
-        'callback'            => [$this, 'bulk_request'],
+        'callback'            => [$this, 'recommended_action'],
         'permission_callback' => function () {
           return current_user_can('update_plugins');
         },
@@ -17,15 +17,13 @@ class WPScanRest
     });
   }
 
-  public function bulk_request(\WP_REST_Request $request)
+  public function recommended_action(\WP_REST_Request $request)
   {
     $data = $request->get_json_params()['data'] ?? [];
     if (empty($data)) {
-      return new \WP_REST_Response([
-        'status'  => 'error',
-        'message' => __('No data provided', 'ionos-essentials'),
-      ], 400);
+      \wp_send_json_error(null, 500);
     }
+
     $data   = json_decode($data);
     $slug   = $data->slug   ?? '';
     $path   = $data->path   ?? '';
@@ -33,83 +31,50 @@ class WPScanRest
     $type   = $data->type   ?? '';
 
     if (empty($slug) || empty($action) || empty($type)) {
-      return new \WP_REST_Response([
-        'status'  => 'error',
-        'message' => __('Missing required parameters', 'ionos-essentials'),
-      ], 400);
+      \wp_send_json_error(null, 500);
     }
 
-    $status_code = 200;
-    $message  = ucFirst($type) . ' ';
-    $message .= ('delete' === $action ) ? __('was deleted', 'ionos-essentials') : __('was updated', 'ionos-essentials');
-    $status      = 'success';
-
-    if ('plugin' === $type) {
-      if ('delete' === $action) {
+    switch ($type . '-' . $action) {
+      case 'plugin-delete':
         \deactivate_plugins($path, true);
         $response = \delete_plugins([$path]);
-
-        if (is_wp_error($response)) {
-          $status_code = 500;
-          $status      = 'error';
-          $message     = __('Failed to delete plugin', 'ionos-essentials');
-        }
-      }
-      if ('update' === $action) {
+        break;
+      case 'plugin-update':
         include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
         $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
 
         $upgrader->upgrade($path);
-        if (is_wp_error($upgrader->skin->result)) {
-          $status_code = 500;
-          $status      = 'error';
-          $message     = __('Failed to update plugin', 'ionos-essentials');
-        }
-
         \delete_transient('ionos_wpscan_issues');
-      }
-    }
-
-    if ('theme' === $type) {
-      if ('delete' === $action) {
+        break;
+      case 'theme-delete':
         $theme = \wp_get_theme();
 
         if (strToLower($theme->get('Name')) === strToLower($slug)) {
-          $status_code = 500;
-          $status      = 'error';
-          $message     = __('Active theme cannot be deleted', 'ionos-essentials');
+          \wp_send_json_success(__('Active theme cannot be deleted', 'ionos-essentials'), 200);
         } else {
           require_once ABSPATH . 'wp-admin/includes/theme.php';
-
           $response = \delete_theme($slug);
-          if (is_wp_error($response)) {
-            $status_code = 500;
-            $status      = 'error';
-            $message     = __('Failed to delete theme', 'ionos-essentials');
-          }
         }
-      }
-
-      if ('update' === $action) {
+        break;
+      case 'theme-update':
         include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
         $upgrader = new \Theme_Upgrader(new \WP_Ajax_Upgrader_Skin());
 
         $upgrader->upgrade($slug);
-
-        if (is_wp_error($upgrader->skin->result)) {
-          $status_code = 500;
-          $status      = 'error';
-          $message     = __('Failed to update theme', 'ionos-essentials');
-        }
-
         \delete_transient('ionos_wpscan_issues');
-      }
+        break;
+      default:
+        \wp_send_json_error(null, 500);
     }
 
-    return new \WP_REST_Response([
-      'status_code'    => $status_code,
-      'status'         => $status,
-      'message'        => $message,
-    ], $status_code);
+    if (isset($response) && is_wp_error($response) || isset($upgrader->skin->result) && is_wp_error(
+      $upgrader->skin->result
+    )) {
+      \wp_send_json_error(null, 500);
+    }
+
+    $message  = ucFirst($type) . ' ';
+    $message .= ('delete' === $action) ? __('was deleted', 'ionos-essentials') : __('was updated', 'ionos-essentials');
+    \wp_send_json_success($message, 200);
   }
 }

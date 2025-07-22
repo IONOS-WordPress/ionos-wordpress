@@ -51,7 +51,10 @@ function summary()
       </div>
 
       <p class="paragraph">
-        <?php esc_html_e( 'We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database.', 'ionos-essentials' ); ?> <span class="link link--lookup" id="learn-more"><?php esc_html_e( 'Learn more', 'ionos-essentials' ); ?></span>
+        <?php esc_html_e(
+          'We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database.',
+          'ionos-essentials'
+        ); ?> <span class="link link--lookup" id="learn-more"><?php esc_html_e('Learn more', 'ionos-essentials'); ?></span>
       </p>
 
       </section>
