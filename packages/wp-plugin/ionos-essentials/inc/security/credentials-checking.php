@@ -36,7 +36,7 @@ if (! defined('ABSPATH')) {
   accepted_args : 3
 );
 
-if (true) {
+if (is_login()) {
   \add_action('login_form_icc_leak_detected', function () {
     $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -47,7 +47,7 @@ if (true) {
             <div class="container">
                 <div class="content">
                     <img class="logo" src="%s" />
-                    <h1 class="headline">%s</h1>
+                    <h2 class="headline">%s</h2>
                     <p>%s</p>
                     <p>%s</p>
                 </div>

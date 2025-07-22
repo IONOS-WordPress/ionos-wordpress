@@ -42,10 +42,11 @@ a {
   position: relative;
   min-height: 400px;
   margin: 81px 0 0;
-  padding: 50px 80px 80px;
+  padding: 80px;
   background-color: #fff;
   text-align: left;
   box-sizing: border-box;
+  border-radius: 16px;
 }
 
 @media (min-width: 800px) {
@@ -55,6 +56,14 @@ a {
 
   }
 }
+
+.headline {
+  font-size: 11px;;
+  line-height: 16px;
+  margin-top: 20px;
+  font-weight: 400;
+}
+
 .headline-small {
   font-weight: 310;
   font-size: 24px;
@@ -122,8 +131,7 @@ a {
 .login h1 {
   margin: 0.6em 0;
 }
-.login h1,
-.login .headline {
+.login h1 {
   font-weight: 310;
   font-size: 35px;
 }
