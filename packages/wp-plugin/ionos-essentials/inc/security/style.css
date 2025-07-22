@@ -34,7 +34,6 @@ a {
 .logo {
   vertical-align: top;
   height: 36px;
-  margin-left: 40px;
 }
 
 .container {
@@ -45,7 +44,7 @@ a {
   margin: 81px 0 0;
   padding: 50px 80px 80px;
   background-color: #fff;
-  text-align: center;
+  text-align: left;
   box-sizing: border-box;
 }
 
@@ -53,7 +52,7 @@ a {
   .container {
     width: 800px;
     margin: 160px auto 80px;
-    border: 1px solid #ccc;
+
   }
 }
 .headline-small {
@@ -66,7 +65,7 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .btn {
