@@ -8,10 +8,12 @@ function is_maintenance_mode()
 }
 
 add_action('admin_bar_menu', function ($wp_admin_bar) {
+  $brand = strtolower(get_option('ionos_group_brand', 'ionos'));
+
   $args = [
     'id'    => 'ionos_maintenance_mode',
     'title' => \esc_html('Maintenance page active', 'ionos-essentials'),
-    'href'  => \admin_url('admin.php?page=ionos#tools'),
+    'href'  => \admin_url('admin.php?page=' . $brand . '#tools'),
     'meta'  => [
       'class' => 'ionos-maintenance-mode ionos-maintenance-only',
       'title' => \esc_attr('Maintenance page active', 'ionos-essentials'),

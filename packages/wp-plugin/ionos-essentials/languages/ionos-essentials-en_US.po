@@ -646,7 +646,7 @@ msgstr "Preview maintenance page"
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 #: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
 msgstr "Vulnerability scan"
@@ -707,83 +707,83 @@ msgstr ""
 msgid "Loading content ..."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "No data provided"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Missing required parameters"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Operation completed successfully"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to delete plugin"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to update plugin"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Active theme cannot be deleted"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to delete theme"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to update theme"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "No scan has been performed yet."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "issue found"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "issues found"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "More information"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues for"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Checking for vulnerabilities..."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Warnings found. Installation is not recommended."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Activation is not recommended"
 msgstr ""
 

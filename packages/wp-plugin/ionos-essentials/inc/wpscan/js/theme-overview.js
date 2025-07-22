@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
       }
 
-      const html = `<p>${ionosEssentialsThemes.i18n.issues_found}. <span class="ionos-no-activation">${ionosEssentialsThemes.i18n.no_activation}</span> <a href="admin.php?page=ionos#tools" class="" type="button">${ionosEssentialsThemes.i18n.more_info}</a></p>`;
+      const html = `<p>${ionosEssentialsThemes.i18n.issues_found}. <span class="ionos-no-activation">${ionosEssentialsThemes.i18n.no_activation}</span> <a href="admin.php?page=${ionosEssentialsThemes.i18n.brand}#tools" class="" type="button">${ionosEssentialsThemes.i18n.more_info}</a></p>`;
       // Prevent link click from bubbling
       setTimeout(() => {
-        const link = theme.querySelector('a[href="admin.php?page=ionos#tools"]');
+        const link = theme.querySelector('a[href="admin.php?page=' + ionosEssentialsThemes.i18n.brand + '#tools"]');
         if (link) {
           link.addEventListener('click', function(e) {
         e.stopPropagation();

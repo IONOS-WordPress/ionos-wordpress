@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-21T19:25:42+00:00\n"
+"POT-Creation-Date: 2025-07-22T07:54:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -596,89 +596,89 @@ msgstr ""
 msgid "Markenschutz"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
-msgid "No data provided"
-msgstr ""
-
-#: inc/wpscan/class-wpscan.php
-msgid "Missing required parameters"
-msgstr ""
-
-#: inc/wpscan/class-wpscan.php
-msgid "Operation completed successfully"
-msgstr ""
-
-#: inc/wpscan/class-wpscan.php
-msgid "Failed to delete plugin"
-msgstr ""
-
-#: inc/wpscan/class-wpscan.php
-msgid "Failed to update plugin"
-msgstr ""
-
-#: inc/wpscan/class-wpscan.php
-msgid "Active theme cannot be deleted"
-msgstr ""
-
-#: inc/wpscan/class-wpscan.php
-msgid "Failed to delete theme"
-msgstr ""
-
-#: inc/wpscan/class-wpscan.php
-msgid "Failed to update theme"
-msgstr ""
-
-#: inc/wpscan/class-wpscan.php
-msgid "No scan has been performed yet."
-msgstr ""
-
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 #: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "issue found"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "issues found"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "More information"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
-msgid "The vulnerability scan has found issues for"
-msgstr ""
-
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Checking for vulnerabilities..."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Warnings found. Installation is not recommended."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues"
 msgstr ""
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Activation is not recommended"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "The vulnerability scan has found issues for"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "No scan has been performed yet."
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "No data provided"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "Missing required parameters"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "Operation completed successfully"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "Failed to delete plugin"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "Failed to update plugin"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "Active theme cannot be deleted"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "Failed to delete theme"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "Failed to update theme"
 msgstr ""
 
 #: inc/wpscan/views/issues.php

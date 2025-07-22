@@ -646,7 +646,7 @@ msgstr "Voorbeeld onderhoudspagina"
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 #: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
 msgstr "Kwetsbaarheidsscan"
@@ -707,83 +707,83 @@ msgstr "Bijwerken..."
 msgid "Loading content ..."
 msgstr "Inhoud laden ..."
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "No data provided"
 msgstr "Geen gegevens verstrekt"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Missing required parameters"
 msgstr "Ontbrekende vereiste parameters"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Operation completed successfully"
 msgstr "Operatie succesvol afgerond"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to delete plugin"
 msgstr "Plugin niet verwijderd"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to update plugin"
 msgstr "Plugin niet bijgewerkt"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Active theme cannot be deleted"
 msgstr "Actief thema kan niet worden verwijderd"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to delete theme"
 msgstr "Thema niet verwijderd"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to update theme"
 msgstr "Thema niet bijgewerkt"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "No scan has been performed yet."
 msgstr "Er is nog geen scan uitgevoerd."
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "issue found"
 msgstr "probleem gevonden"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "issues found"
 msgstr "problemen gevonden"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "More information"
 msgstr "Meer informatie"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues for"
 msgstr "De kwetsbaarheidsscan heeft problemen gevonden voor"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Checking for vulnerabilities..."
 msgstr "Controleren op kwetsbaarheden..."
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Warnings found. Installation is not recommended."
 msgstr "Waarschuwingen gevonden. Installatie wordt niet aanbevolen."
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "Kritieke kwetsbaarheden gevonden! Installatie is niet mogelijk."
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "Geen kwetsbaarheden gevonden. Je kunt dit thema veilig installeren."
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "Geen kwetsbaarheden gevonden. Je kunt deze plugin veilig installeren."
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues"
 msgstr "De kwetsbaarheidsscan heeft problemen gevonden"
 
-#: inc/wpscan/class-wpscan.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "Activation is not recommended"
 msgstr "Activering wordt niet aanbevolen"
 

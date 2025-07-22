@@ -71,7 +71,9 @@ class WPScan
   public function admin_notice()
   {
     global $current_screen;
-    if (! isset($current_screen->id) || in_array($current_screen->id, ['toplevel_page_ionos'], true)) {
+
+    $brand = strtolower(get_option('ionos_group_brand', 'ionos'));
+    if (! isset($current_screen->id) || in_array($current_screen->id, ['toplevel_page_' . $brand], true)) {
       return;
     }
 
@@ -82,7 +84,7 @@ class WPScan
       count($this->get_issues()),
       (1 === count($this->get_issues())) ? esc_html__('issue found', 'ionos-essentials') :
       esc_html__('issues found', 'ionos-essentials'),
-      esc_url(admin_url('admin.php?page=ionos#tools')),
+      esc_url(admin_url('admin.php?page=' . $brand . '#tools')),
       esc_html__('More information', 'ionos-essentials')
     );
   }
@@ -174,6 +176,7 @@ class WPScan
       'ionosEssentialsThemes',
       [
         'slugs' => array_column($issues, 'slug'),
+        'brand' => strtolower(get_option('ionos_group_brand', 'ionos')),
         'i18n'  => [
           'issues_found'  => __('The vulnerability scan has found issues', 'ionos-essentials'),
           'no_activation' => __('Activation is not recommended', 'ionos-essentials'),
@@ -206,6 +209,8 @@ class WPScan
     $updates       = get_site_transient('update_plugins');
     $noshadowclass = isset($updates->response[$plugin_file]) ? 'ionos-plugin-noshadow' : '';
 
+    $brand = strtolower(get_option('ionos_group_brand', 'ionos'));
+
     printf(
       '<tr class="plugin-update-tr %s ionos-wpscan-notice"><td colspan="4" class="plugin-update colspanchange %s"><div class="update-message notice inline %s notice-alt">%s %s. <a href="%s">%s.</a></div></td></tr>',
       \is_plugin_active($plugin_file) ? 'active' : 'inactive',
@@ -213,7 +218,7 @@ class WPScan
       esc_attr('notice-error'),
       esc_html__('The vulnerability scan has found issues for', 'ionos-essentials'),
       esc_html($plugin_data['Name']),
-      esc_url(admin_url('admin.php?page=ionos#tools')),
+      esc_url(admin_url('admin.php?page=' . $brand . '#tools')),
       esc_html__('More information', 'ionos-essentials')
     );
   }
