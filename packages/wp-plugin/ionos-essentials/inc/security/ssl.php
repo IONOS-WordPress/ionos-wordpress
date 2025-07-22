@@ -33,6 +33,8 @@ if (! \get_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED)) {
 
   \add_action(
     'wp_ajax_ionos-ssl-check-dismiss-notice',
-    fn () => \set_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED, true, 0)
+    fn () => (\set_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED, true, 0) && wp_die())
   );
+
+
 }
