@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: es\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-04-09 07:46+0200\n"
-"POT-Creation-Date: 2025-02-05T09:50:40+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-05T09:50:40+00:00\n"
+"PO-Revision-Date: 2025-04-09 07:46+0200\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -710,10 +710,6 @@ msgid "Missing required parameters"
 msgstr "Faltan parámetros obligatorios"
 
 #: inc/wpscan/controller/class-wpscanrest.php
-msgid "Operation completed successfully"
-msgstr "Operación completada con éxito"
-
-#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Failed to delete plugin"
 msgstr "Error al eliminar el plugin"
 
@@ -814,3 +810,15 @@ msgstr "Las puntuaciones se sitúan en una escala del 1 al 10, en la que un valo
 #: inc/dashboard/view.php
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "La instalación de plugins y temas está prohibida si su puntuación es superior a 7,0."
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "was deleted"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "was updated"
+msgstr ""
+
+#: inc/wpscan/views/summary.php
+msgid "Website is safe and secure"
+msgstr ""

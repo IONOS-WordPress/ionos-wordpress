@@ -38,7 +38,7 @@ function summary()
             </div>
           </div>
 
-          <p class="paragraph without-issues-only">
+          <p class="paragraph paragraph--large paragraph--bold without-issues-only">
             <?php esc_html_e('Website is safe and secure', 'ionos-essentials'); ?>
           </p>
 
