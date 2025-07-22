@@ -10,7 +10,9 @@ There are two types of issues:
 
 Both types are handled similarly but are listed under different headings.
 
-## Essentials Plugin
+For warnings, the user sees a hint before installation, for Criticals, installation is not possible (by disabling the button ).
+
+## Workflow in the dashboard
 
 ### Plugins
 
@@ -52,42 +54,3 @@ flowchart TD
 ```
 
 See https://docs.google.com/document/d/1wJTMBKej7Qo4B5m2sYt_IriLsMBmdpC609iU5oKGPSQ/edit?tab=t.0 for information about the decision.
-
-### Security Plugin (legacy workflow)
-
-### Plugins
-
-For each issue, there is exactly one recommended action. If an update is available, a "Show update information" option is displayed.
-
-```mermaid
-flowchart TD
-  A[Plugin] --> B{Update Available?}
-  B -- Yes --> F['Update' Button]
-  B -- No --> C{Plugin Status}
-  C -- Active --> D['Deactivate' Button]
-  C -- Inactive --> E[No Button]
-
-  classDef greenNode fill:#a3e635,stroke-width:0px,color:#000;
-  class F greenNode;
-
-  classDef redNode fill:#f87171,stroke-width:0px,color:#000;
-  class D redNode;
-```
-
-### Themes
-
-For each issue, there is exactly one recommended action. "Show update information" is not displayed, even if an update is available.
-The theme's active status is not considered—active themes can also be deleted.
-
-```mermaid
-flowchart TD
-  A[Theme] --> B{Update Available?}
-  B -- Yes --> F['Update' Button]
-  B -- No --> D['Delete' Button]
-
-  classDef greenNode fill:#a3e635,stroke-width:0px,color:#000;
-  class F greenNode;
-
-  classDef redNode fill:#f87171,stroke-width:0px,color:#000;
-  class D redNode;
-```

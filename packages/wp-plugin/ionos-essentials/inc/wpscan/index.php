@@ -2,7 +2,9 @@
 
 namespace ionos\essentials\wpscan;
 
-require_once __DIR__ . '/class-wpscan.php';
+require_once __DIR__ . '/controller/class-wpscan.php';
+require_once __DIR__ . '/controller/class-wpscanmiddleware.php';
+require_once __DIR__ . '/controller/class-wpscanrest.php';
 require_once __DIR__ . '/views/summary.php';
 require_once __DIR__ . '/views/issues.php';
 
