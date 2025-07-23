@@ -54,7 +54,6 @@
       border-bottom-right-radius: 16px;
     }
   }
-
 }
 
 .ionos-wpscan-summary{
@@ -79,5 +78,9 @@
   justify-content: center;
 }
 
-
-
+@media only screen and (max-width: 666px) {
+  .ionos-wpscan .grid{
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+}
