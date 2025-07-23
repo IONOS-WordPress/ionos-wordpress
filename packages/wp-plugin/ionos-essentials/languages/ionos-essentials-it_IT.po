@@ -702,32 +702,8 @@ msgid "Loading content ..."
 msgstr "Caricamento del contenuto ..."
 
 #: inc/wpscan/controller/class-wpscanrest.php
-msgid "No data provided"
-msgstr "Nessun dato fornito"
-
-#: inc/wpscan/controller/class-wpscanrest.php
-msgid "Missing required parameters"
-msgstr "Mancano i parametri richiesti"
-
-#: inc/wpscan/controller/class-wpscanrest.php
-msgid "Failed to delete plugin"
-msgstr "Impossibile eliminare il plugin"
-
-#: inc/wpscan/controller/class-wpscanrest.php
-msgid "Failed to update plugin"
-msgstr "Impossibile aggiornare il plugin"
-
-#: inc/wpscan/controller/class-wpscanrest.php
 msgid "Active theme cannot be deleted"
 msgstr "Il tema attivo non può essere cancellato"
-
-#: inc/wpscan/controller/class-wpscanrest.php
-msgid "Failed to delete theme"
-msgstr "Non è stato possibile eliminare il tema"
-
-#: inc/wpscan/controller/class-wpscanrest.php
-msgid "Failed to update theme"
-msgstr "Aggiornamento del tema fallito"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No scan has been performed yet."

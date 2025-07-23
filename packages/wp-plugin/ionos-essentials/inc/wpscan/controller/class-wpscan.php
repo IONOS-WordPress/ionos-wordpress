@@ -126,9 +126,10 @@ class WPScan
 
     wp_localize_script(
       'ionos-wpscan-plugins',
-      'ionosEssentialsPlugins',
+      'ionosWPScanPlugins',
       [
         'issues' => $this->get_issues(),
+        'ajaxUrl' => admin_url('admin-ajax.php'),
         'i18n'   => [
           'checking'       => __('Checking for vulnerabilities...', 'ionos-essentials'),
           'warnings_found' => __('Warnings found. Installation is not recommended.', 'ionos-essentials'),

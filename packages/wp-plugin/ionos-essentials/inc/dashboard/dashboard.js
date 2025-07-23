@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
       element.innerText = wpData.i18n.updating;
 
       event.preventDefault();
-      fetch(wpData.restUrl + 'ionos/essentials/wpscan/', {
+      fetch(wpData.restUrl + 'ionos/essentials/wpscan/recommended-action', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

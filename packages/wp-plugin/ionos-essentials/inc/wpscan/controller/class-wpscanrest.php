@@ -6,8 +6,8 @@ class WPScanRest
 {
   public function __construct()
   {
-    add_action('rest_api_init', function () {
-      \register_rest_route('ionos/essentials', '/wpscan', [
+    \add_action('rest_api_init', function () {
+      \register_rest_route('ionos/essentials/wpscan', '/recommended-action', [
         'methods'             => 'POST',
         'callback'            => [$this, 'recommended_action'],
         'permission_callback' => function () {
@@ -15,7 +15,25 @@ class WPScanRest
         },
       ]);
     });
+
+    \add_action(
+      'wp_ajax_ionos-wpscan-immediate',
+      [$this, 'immediate'],
+      10,
+      1
+    );
   }
+
+  public function immediate()
+  {
+    $slug = $_POST['slug'] ?? '';
+    if (empty($slug)) {
+      \wp_send_json_error(null, 500);
+    }
+    \wp_send_json_success( 'warnings_found', 200 );
+
+  }
+
 
   public function recommended_action(\WP_REST_Request $request)
   {
