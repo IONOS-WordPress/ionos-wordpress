@@ -615,7 +615,7 @@ msgstr "aktiviert."
 
 #: inc/dashboard/index.php
 msgid "deactivated."
-msgstr "Deaktiviert."
+msgstr "deaktiviert."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance mode"
