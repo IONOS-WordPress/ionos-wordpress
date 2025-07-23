@@ -166,7 +166,7 @@ class WPScan
 
     wp_localize_script(
       'ionos-essentials-themes',
-      'ionosEssentialsThemeInstall',
+      'ionosWPScanThemes',
       [
         'slugs' => array_column($issues, 'slug'),
         'brand' => strtolower(get_option('ionos_group_brand', 'ionos')),

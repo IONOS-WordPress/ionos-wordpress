@@ -77,7 +77,7 @@ class WPScanMiddleware
           'path'   => $item['slug'] . '/' . $item['slug'] . '.php',
           'type'   => substr($type, 0, -1),
           'update' => (strpos(json_encode($item['vulnerabilities']), 'fixed_in')) ? null : false,
-          'score'  => $item['vulnerabilities'][0]['score'] ?? 0,
+          'score'  => $item['vulnerabilities']['score'] ?? 0,
         ];
       }
     }
