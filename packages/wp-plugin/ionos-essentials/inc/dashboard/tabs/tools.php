@@ -158,7 +158,6 @@ function render_section($args)
                   <input id="<?php echo esc_attr($args['id']); ?>" data-option="<?php echo \esc_attr(
                     IONOS_SECURITY_FEATURE_OPTION
                   ); ?>" data-description="<?php echo esc_attr($args['title']); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
-                  <input id="<?php echo esc_attr($args['id']); ?>" data-description="<?php \esc_attr_e('Dashboard mode', 'ionos-essentials'); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
                   <label>
                       <span class="input-switch__on"></span>
                       <span class="input-switch__toggle"></span>
