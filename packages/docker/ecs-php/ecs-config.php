@@ -49,7 +49,8 @@ return $configure->withRules([
       '*/docs/packages/*',
       '**/ecs-config.php',
       '**/rector-config-php7.4.php',
-      '**/rector-fix-types.php'
+      '**/rector-fix-types.php',
+      YodaStyleFixer::class
     ]
   )
   ->withPreparedSets(
@@ -71,12 +72,6 @@ return $configure->withRules([
   // ->withEditorConfig(true)
   // use 2 spaces instead of psr12 default (4 spaces)
   ->withSpacing(indentation: '  ')
-
-  ->withConfiguredRule(YodaStyleFixer::class, [
-    'equal' => true,
-    'identical' => true,
-    'less_and_greater' => true,
-  ])
   // align assoc arrays
   ->withConfiguredRule(BinaryOperatorSpacesFixer::class, [
     'default' => 'align',

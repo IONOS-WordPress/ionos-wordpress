@@ -359,18 +359,6 @@ msgstr "Vad är nytt"
 msgid "What’s New"
 msgstr "Nyheter"
 
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
-msgstr "Vi är glada att meddela lanseringen av vårt nya användargränssnitt med en helt ny design och förbättrad användarupplevelse. Att hantera din WordPress-sida har aldrig varit enklare."
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "Vulnerability Scan Results"
-msgstr "Resultat från sårbarhetsskanning"
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
-msgstr "Vi har lagt till resultat från sårbarhetsskanning direkt i din instrumentpanel, så att du snabbt kan se potentiella säkerhetsrisker och skydda din WordPress-sida."
-
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Add new page"
 msgstr "Lägg till ny sida"
@@ -414,10 +402,6 @@ msgstr "Ladda upp mediefiler"
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Upptäck nya funktioner och få en översikt över de senaste uppdateringarna och förbättringarna i din WordPress Hub."
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "New User Interface"
-msgstr "Vi presenterar nya WP Hub"
 
 #: inc/tenants/config/ionos.php
 msgid "My Products"
@@ -794,6 +778,28 @@ msgstr ""
 #: inc/wpscan/controller/class-wpscanrest.php
 msgid "was updated"
 msgstr ""
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "Your Feedback is important to us"
+msgstr "Din feedback är viktig för oss"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
+msgstr "Vi jobbar ständigt för att göra din upplevelse med WordPress Webbhotell ännu bättre. Ta gärna några minuter och svara på vår korta enkät online."
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "Take the survey"
+msgstr "Delta i enkäten"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "Your %s Hub Just Got a Powerful Upgrade!"
+msgstr "Din %s Hub har precis blivit ännu bättre!"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
+msgstr ""
+"Nu finns fliken \"Verktyg & säkerhet\"! Alla funktioner och inställningar från ditt tidigare säkerhetsplugin finns nu samlade här. Det ger dig bättre överblick och gör det enklare att Dessutom finns nu en ny funktion för underhållssidan som du kan aktivera när du vill.\n"
+"develop"
 
 #: inc/wpscan/views/summary.php
 msgid "Website is safe and secure"
