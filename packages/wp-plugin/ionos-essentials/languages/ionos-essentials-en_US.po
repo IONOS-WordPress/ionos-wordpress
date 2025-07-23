@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en_US\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
+"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-07T11:44:38+00:00\n"
-"PO-Revision-Date: 2025-01-07T11:44:38+00:00\n"
-"Language: en_US\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: WP-CLI 2.10.0\n"
 
@@ -308,28 +308,6 @@ msgstr "Unlock Your Website's Potential"
 #: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-
-#. translators: %s: Brand name
-#: inc/dashboard/blocks/welcome/index.php
-#, php-format
-msgid "Welcome to your %s Hub"
-msgstr "Welcome to your %s Hub"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "This overview is your gateway to unlocking the full potential of your WordPress website."
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Recommendations for next steps"
-msgstr "Recommendations for next steps"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Helpful links and shortcuts"
-msgstr "Helpful links and shortcuts"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Close"
@@ -641,24 +619,66 @@ msgstr "Preview maintenance page"
 #. Plugin URI of the plugin
 #: ionos-essentials.php
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
-msgstr ""
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
+
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Welcome to your new %s Hub"
+msgstr "Welcome to your new %s Hub"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "You're now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features."
+msgstr "You're now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features."
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Get familiar with the new layout"
+msgstr "Get familiar with the new layout"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Explore redesigned sections and discover new functionalities"
+msgstr "Explore redesigned sections and discover new functionalities"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Stay tuned for upcoming feature releases and enhancements"
+msgstr "Stay tuned for upcoming feature releases and enhancements"
+
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Welcome to your %s Hub"
+msgstr "Welcome to your %s Hub"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
+msgstr "This overview is your gateway to unlocking the full potential of your WordPress website."
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Recommendations for next steps"
+msgstr "Recommendations for next steps"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Helpful links and shortcuts"
+msgstr "Helpful links and shortcuts"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
+msgstr "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your Feedback is important to us"
-msgstr ""
+msgstr "Your Feedback is important to us"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
-msgstr ""
+msgstr "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Take the survey"
-msgstr ""
+msgstr "Take the survey"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
-msgstr ""
+msgstr "Your %s Hub Just Got a Powerful Upgrade!"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
-msgstr ""
+msgstr "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."

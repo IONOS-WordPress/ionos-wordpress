@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: sv\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-04-23 08:52+0200\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-04-23 08:52+0200\n"
-"Language: sv\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.4.2\n"
 
@@ -308,28 +308,6 @@ msgstr "Lås upp din webbplats fulla potential"
 #: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Din webbplats är live – men resan har bara börjat. Utforska våra rekommenderade nästa steg för att växa, förbättra prestandan och nå dina digitala mål."
-
-#. translators: %s: Brand name
-#: inc/dashboard/blocks/welcome/index.php
-#, php-format
-msgid "Welcome to your %s Hub"
-msgstr "Välkommen till din %s Hub"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "Den här översikten är din startpunkt för att utnyttja hela potentialen i din WordPress-webbplats."
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Recommendations for next steps"
-msgstr "Rekommenderade nästa steg"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Helpful links and shortcuts"
-msgstr "Hjälpsamma länkar och genvägar"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr "Omfattande hjälpsektion – med AI-chatt, guidade turer och en gedigen kunskapsbank"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Close"
@@ -643,6 +621,46 @@ msgstr "Förhandsgranska underhållssidan"
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Welcome to your new %s Hub"
+msgstr "Välkommen till din nya %s Hub"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "You're now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features."
+msgstr "Du använder nu vår senaste version av kontrollpanelen – utformad för att göra din arbetsdag enklare och ge dig bättre koll på din digitala närvaro. Den här nya startsidan ersätter din tidigare vy, med en fräschare design, smartare verktyg och flera nya möjligheter."
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Get familiar with the new layout"
+msgstr "Bekanta dig med den nya layouten"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Explore redesigned sections and discover new functionalities"
+msgstr "Upptäck förbättrade sektioner och nya funktioner"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Stay tuned for upcoming feature releases and enhancements"
+msgstr "Håll utkik efter fler nyheter och uppdateringar som snart lanseras"
+
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php
+#, php-format
+msgid "Welcome to your %s Hub"
+msgstr "Välkommen till din %s Hub"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
+msgstr "Den här översikten är din startpunkt för att utnyttja hela potentialen i din WordPress-webbplats."
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Recommendations for next steps"
+msgstr "Rekommenderade nästa steg"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Helpful links and shortcuts"
+msgstr "Hjälpsamma länkar och genvägar"
+
+#: inc/dashboard/blocks/welcome/index.php
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your Feedback is important to us"
 msgstr "Din feedback är viktig för oss"

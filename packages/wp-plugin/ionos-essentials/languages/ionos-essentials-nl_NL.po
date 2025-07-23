@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: nl\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-04-16 10:47+0200\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-04-16 10:47+0200\n"
-"Language: nl\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -308,28 +308,6 @@ msgstr "Haal nog meer uit je website"
 #: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Je website is live, maar je reis begint pas net. Ontdek onze tips om sneller te groeien, de performance te verbeteren en je online doelen te bereiken."
-
-#. translators: %s: Brand name
-#: inc/dashboard/blocks/welcome/index.php
-#, php-format
-msgid "Welcome to your %s Hub"
-msgstr "Welkom bij je %s Hub"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "Via dit overzicht kun je het volledige potentieel van je WordPress website benutten."
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Recommendations for next steps"
-msgstr "Tips voor volgende stappen"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Helpful links and shortcuts"
-msgstr "Handige links en shortcuts"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr "Overzichtelijk helpcentrum met een AI-chatbot, rondleidingen en een uitgebreide kennisbank"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Close"
@@ -643,6 +621,46 @@ msgstr "Voorbeeld onderhoudspagina"
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Welcome to your new %s Hub"
+msgstr "Welkom bij je nieuwe %s hub"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "You're now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features."
+msgstr "Ervaar nu de nieuwste versie van ons dashboard, ontworpen om je workflow te stroomlijnen en het online beheer makkelijker te maken. Deze nieuwe hub vervangt het vorige dashboard en biedt je een moderne interface, verbeterde tools en handige nieuwe functies."
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Get familiar with the new layout"
+msgstr "Ontdek de nieuwe lay-out"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Explore redesigned sections and discover new functionalities"
+msgstr "Verken opnieuw vormgegeven secties en nieuwe functies"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Stay tuned for upcoming feature releases and enhancements"
+msgstr "Blijf op de hoogte van nieuwe versies en verbeteringen"
+
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php
+#, php-format
+msgid "Welcome to your %s Hub"
+msgstr "Welkom bij je %s Hub"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
+msgstr "Via dit overzicht kun je het volledige potentieel van je WordPress website benutten."
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Recommendations for next steps"
+msgstr "Tips voor volgende stappen"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Helpful links and shortcuts"
+msgstr "Handige links en shortcuts"
+
+#: inc/dashboard/blocks/welcome/index.php
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your Feedback is important to us"
 msgstr "Jouw feedback is belangrijk voor ons"
