@@ -52,7 +52,7 @@ function get_brand_config(): array|null
     return $config;
   }
 
-  $brand_config = __DIR__ . '/configs/' . get_option('ionos_group_brands', 'ionos') . '.php';
+  $brand_config = __DIR__ . '/configs/' . get_option('ionos_group_brand', 'ionos') . '.php';
   if (! file_exists($brand_config)) {
     return null;
   }
