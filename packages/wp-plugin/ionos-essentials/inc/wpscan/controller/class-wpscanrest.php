@@ -30,8 +30,10 @@ class WPScanRest
     if (empty($slug)) {
       \wp_send_json_error(null, 500);
     }
-    \wp_send_json_success( 'criticals_found', 200 );
 
+    // toDo: implement the actual check
+    // for now we simulate the response
+    \wp_send_json_success( 'criticals_found', 200 );
   }
 
 
