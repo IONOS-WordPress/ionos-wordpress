@@ -169,20 +169,80 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  dashboard.querySelectorAll('[data-tooltip]').forEach((element) => {
+  window.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      dashboard.querySelector('.dialog-closer')?.click();
+    }
+});
+
+  dashboard.querySelectorAll('.dialog-closer').forEach((element) => {
     element.addEventListener('click', function () {
-     alert(element.dataset.tooltip);
+      dashboard.querySelector('.static-overlay__blocker--active')?.classList.remove('static-overlay__blocker--active');
+      dashboard.querySelector('.static-overlay__container--active')?.classList.remove('static-overlay__container--active');
     });
   });
 
-  dashboard.querySelector('#dialog-closer').addEventListener('click', function () {
-    dashboard.querySelector('.static-overlay__blocker--active').classList.remove('static-overlay__blocker--active');
-    dashboard.querySelector('.static-overlay__container--active').classList.remove('static-overlay__container--active');
+  dashboard.querySelector('#learn-more').addEventListener('click', function () {
+    dashboard.querySelector('.static-overlay__blocker').classList.add('static-overlay__blocker--active');
+    dashboard.querySelector('#learn-more-overlay').classList.add('static-overlay__container--active');
+  })
+
+  dashboard.querySelectorAll('[data-slug]').forEach((element) => {
+    element.addEventListener('click', function (event) {
+      const overlay = dashboard.querySelector('#plugin-install-overlay');
+
+      dashboard.querySelector('.static-overlay__blocker').classList.add('static-overlay__blocker--active');
+      overlay.classList.add('static-overlay__container--active');
+
+      const iframe = document.createElement('iframe');
+      iframe.style.border = 'none';
+      iframe.style.width = '772px';
+      iframe.style.height = '554px';
+      iframe.style.display = 'none';
+
+      overlay.innerHTML = '<div id="plugin-information-waiting"><div class="loading-spin"></div><p class="paragraph paragraph--large paragraph--bold paragraph--align-center">' + wpData.i18n.loading + '</p></div>';
+      overlay.appendChild(iframe);
+      iframe.onload = function () {
+        overlay.querySelector('#plugin-information-waiting').remove();
+        iframe.style.display = 'block';
+      };
+      iframe.src = `${window.location.origin}/wp-admin/plugin-install.php?tab=plugin-information&section=changelog&plugin=${element.dataset.slug}&`;
+
+    });
   });
 
-  dashboard.querySelector('#learn-more').addEventListener('click', function () {
-    console.log('Learn more clicked');
-    dashboard.querySelector('.static-overlay__blocker').classList.add('static-overlay__blocker--active');
-    dashboard.querySelector('.static-overlay__container').classList.add('static-overlay__container--active');
-  })
+  dashboard.querySelectorAll('[data-wpscan]').forEach((element) => {
+    element.addEventListener('click', function (event) {
+      element.disabled = true;
+      element.innerText = wpData.i18n.updating;
+
+      event.preventDefault();
+      fetch(wpData.restUrl + 'ionos/essentials/wpscan/recommended-action', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-WP-Nonce': wpData.nonce,
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          data: element.dataset.wpscan,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            window.EXOS.snackbar.critical(response.statusText);
+            return Promise.reject();
+          }
+          return response.json();
+        })
+        .then((data) => {
+          element.parentElement.parentElement.remove();
+          window.EXOS.snackbar.success(data.data);
+
+          window.setTimeout(() => {
+            window.location.reload();
+          }, 10000);
+        });
+    });
+  });
 });

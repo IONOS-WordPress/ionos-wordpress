@@ -137,7 +137,6 @@ msgid "%s ago"
 msgstr "%s geleden"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-#: inc/wpscan/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiek probleem gevonden"
@@ -549,35 +548,23 @@ msgstr "Jij beslist hoe je je website maakt. Geen zorgen, je kunt de AI-creatie 
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr "Door gebruik te maken van AI-functies gaat u akkoord met de OpenAI %1$sGebruiksvoorwaarden%2$s en %3$sPrivacybeleid%4$s."
 
-#: inc/jetpack-flow/inc/class-manager.php
+#: inc/jetpack-flow/index.php
 msgid "Assistant"
 msgstr "Assistant"
 
-#: inc/jetpack-flow/inc/controllers/class-confirm.php
-msgid "Confirm Jetpack installation"
-msgstr "Jetpack installatie bevestigen"
-
-#: inc/jetpack-flow/inc/controllers/class-install.php
-msgid "Installing Jetpack"
-msgstr "Jetpack installeren"
-
-#: inc/jetpack-flow/inc/views/confirm.php
-msgid "Jetpack Backup"
-msgstr "Jetpack reservekopie"
-
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "We are going to install Jetpack Backup now."
 msgstr "We beginnen zo met de installatie van uw geselecteerde componenten."
 
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "Ok"
 msgstr "Ok"
 
-#: inc/jetpack-flow/inc/views/install.php
+#: inc/jetpack-flow/index.php
 msgid "Installing Jetpack Backup"
 msgstr "Jetpack back-up installeren"
 
-#: inc/jetpack-flow/inc/views/install.php
+#: inc/jetpack-flow/index.php
 msgid "Please wait a moment while we are installing Jetpack Backup for you."
 msgstr "Gelieve even te wachten terwijl wij Jetpack Backup voor u installeren."
 
@@ -585,7 +572,7 @@ msgstr "Gelieve even te wachten terwijl wij Jetpack Backup voor u installeren."
 msgid "Onboarding"
 msgstr "Onboarding"
 
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "No thanks"
 msgstr "Geen dank."
 
@@ -659,58 +646,155 @@ msgstr "Voorbeeld onderhoudspagina"
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
-#: inc/wpscan/index.php
+#: inc/wpscan/controller/class-wpscan.php
+#: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
 msgstr "Kwetsbaarheidsscan"
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/summary.php
 msgid "warnings found"
 msgstr "waarschuwingen gevonden"
 
-#: inc/wpscan/index.php
-msgid "Last scan ran"
-msgstr "Laatste scan uitgevoerd"
-
-#: inc/wpscan/index.php
-msgid "hours ago"
-msgstr "uren geleden"
-
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "View update details"
 msgstr "Details bijwerken"
-
-#: inc/wpscan/index.php
-msgid "Delete"
-msgstr "Verwijder"
-
-#: inc/wpscan/index.php
-msgid "Update"
-msgstr "Update"
 
 #: inc/dashboard/index.php
 msgid "Tools and security"
 msgstr "Gereedschap en beveiliging"
 
-#: inc/wpscan/index.php
-msgid "One critical issue"
-msgid_plural "%d critical issues"
-msgstr[0] "Een kritiek punt"
-msgstr[1] ""
-
-#: inc/wpscan/index.php
-msgid "One warning"
-msgid_plural "%d warnings"
-msgstr[0] "Eén waarschuwing"
-msgstr[1] ""
-
-#: inc/wpscan/index.php
-msgid "Critical website security issues, identified by a CVSS score of 8.0 or higher, require immediate attention."
-msgstr "Kritieke beveiligingsproblemen op websites, geïdentificeerd door een CVSS-score van 8.0 of hoger, vereisen onmiddellijke aandacht."
-
-#: inc/wpscan/index.php
-msgid "Website security warnings, identified by a CVSS score up to 7.9, require prompt attention."
-msgstr "Waarschuwingen voor de beveiliging van websites, geïdentificeerd door een CVSS-score tot 7,9, vereisen onmiddellijke aandacht."
-
 #: inc/dashboard/view.php
 msgid "Vulnerability scan information"
+msgstr "Informatie over het scannen van kwetsbaarheden"
+
+#: inc/wpscan/views/issues.php
+msgid "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
+msgstr "Kritieke beveiligingsproblemen van websites, geïdentificeerd door een CVSS-score van 7.0 of hoger, vereisen onmiddellijke aandacht."
+
+#: inc/wpscan/views/issues.php
+msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
+msgstr "Waarschuwingen voor de beveiliging van websites, geïdentificeerd door een CVSS-score tot 6,9, vereisen onmiddellijke aandacht."
+
+#: inc/wpscan/views/issues.php
+msgid "%d warning"
+msgid_plural "%d warnings"
+msgstr[0] "%d waarschuwing"
+msgstr[1] ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Vulnerabilities detected are being emailed to"
+msgstr "Ontdekte kwetsbaarheden worden per e-mail verzonden naar"
+
+#: inc/wpscan/views/summary.php
+msgid "critical issues found"
+msgstr "kritieke kwesties gevonden"
+
+#: inc/dashboard/blocks/vulnerability/index.php
+msgid "An error occurred while fetching the vulnerability data."
+msgstr "Er is een fout opgetreden bij het ophalen van de kwetsbaarheidsgegevens."
+
+#: inc/dashboard/index.php
+msgid "Updating..."
+msgstr "Bijwerken..."
+
+#: inc/dashboard/index.php
+msgid "Loading content ..."
+msgstr "Inhoud laden ..."
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "Active theme cannot be deleted"
+msgstr "Actief thema kan niet worden verwijderd"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "No scan has been performed yet."
+msgstr "Er is nog geen scan uitgevoerd."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "issue found"
+msgstr "probleem gevonden"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "issues found"
+msgstr "problemen gevonden"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "More information"
+msgstr "Meer informatie"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "The vulnerability scan has found issues for"
+msgstr "De kwetsbaarheidsscan heeft problemen gevonden voor"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Checking for vulnerabilities..."
+msgstr "Controleren op kwetsbaarheden..."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Warnings found. Installation is not recommended."
+msgstr "Waarschuwingen gevonden. Installatie wordt niet aanbevolen."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Critical vulnerabilities found! Installation is not possible."
+msgstr "Kritieke kwetsbaarheden gevonden! Installatie is niet mogelijk."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "No vulnerabilities found. You can safely install this theme."
+msgstr "Geen kwetsbaarheden gevonden. Je kunt dit thema veilig installeren."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "No vulnerabilities found. You can safely install this plugin."
+msgstr "Geen kwetsbaarheden gevonden. Je kunt deze plugin veilig installeren."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "The vulnerability scan has found issues"
+msgstr "De kwetsbaarheidsscan heeft problemen gevonden"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Activation is not recommended"
+msgstr "Activering wordt niet aanbevolen"
+
+#: inc/wpscan/views/issues.php
+msgid "This theme is active. Please activate another theme."
+msgstr "Dit thema is actief. Activeer een ander thema."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Temporarily block public access to your site with a maintenance page."
+msgstr "Blokkeer tijdelijk de publieke toegang tot je site met een onderhoudspagina."
+
+#: inc/wpscan/views/summary.php
+msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
+msgstr "We scannen automatisch dagelijks en wanneer er een nieuwe plugin of thema wordt geïnstalleerd, met behulp van de database met kwetsbaarheden van WPScan."
+
+#: inc/wpscan/views/summary.php
+msgid "Learn more"
+msgstr "Meer informatie"
+
+#: inc/wpscan/views/issues.php
+msgid "%d critical issue"
+msgid_plural "%d critical issues"
+msgstr[0] "%d kritiek probleem"
+msgstr[1] ""
+
+#: inc/dashboard/view.php
+msgid "We use the WPScan database to provide security risk scores for plugins and themes."
+msgstr "We gebruiken de WPScan-database om beveiligingsrisicoscores voor plugins en thema's te geven."
+
+#: inc/dashboard/view.php
+msgid "The scores are on a scale of 1 to 10, where a higher value indicates greater security risk."
+msgstr "De scores zijn op een schaal van 1 tot 10, waarbij een hogere waarde duidt op een groter beveiligingsrisico."
+
+#: inc/dashboard/view.php
+msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
+msgstr "Installaties van plugins en thema's zijn verboden als hun score hoger is dan 7,0."
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "was deleted"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "was updated"
+msgstr ""
+
+#: inc/wpscan/views/summary.php
+msgid "Website is safe and secure"
 msgstr ""

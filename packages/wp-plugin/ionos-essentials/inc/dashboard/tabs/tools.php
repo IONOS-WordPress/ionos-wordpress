@@ -26,7 +26,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
                       <span class="badge badge--warning-solid ionos-maintenance-only"><?php \esc_html_e('Active', 'ionos-essentials'); ?></span>
                 </h2>
                     <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
-                        <?php \esc_html_e('Temporarily block public access to your site with a maintenance page.', 'post'); ?>
+                        <?php \esc_html_e('Temporarily block public access to your site with a maintenance page.', 'ionos-essentials'); ?>
                     </p>
                     <a href="<?php echo \esc_url(
                       \plugins_url('ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)
@@ -52,72 +52,59 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
             </div>
         </div>
 
+        <?php if (! \ionos\essentials\wpscan\get_wpscan()->has_error()) { ?>
         <h3 class="headline headline--sub may-have-issue-dot"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
           <div class="sheet">
               <div class="grid">
                 <div class="grid-col grid-col--6 grid-col--small-12">
                   <section class="sheet__section">
-                    <?php \ionos\essentials\wpscan\render_summary(); ?>
+                    <?php \ionos\essentials\wpscan\views\summary(); ?>
                   </section>
                 </div>
                 <div class="grid-col grid-col--6 grid-col--small-12">
                 <?php
-                $description=  sprintf('<strong style="font-size: 1.2em">%s</strong>
-                      <br><br>
+                $description=  sprintf('
+                      <p class="paragraph paragraph--small paragraph--minor">%s</p>
+                      <p class="paragraph paragraph--large paragraph-bold">%s</p>
                       <a href="%s" class="link link--action">%s</a>',
-                  get_option('admin_email'),
+                  \esc_html__('Vulnerabilities detected are being emailed to', 'ionos-essentials'),
+                  \get_option('admin_email'),
                   admin_url('options-general.php'),
                   \esc_html__('Change email address', 'ionos-essentials')
                 );
 
-render_section([
-  'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
-  'id'           => IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY,
-  'description'  => $description,
-  'checked'      => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY) ? 'checked' : '',
-]);
-?>
+          render_section([
+            'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
+            'id'           => IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY,
+            'description'  => $description,
+            'checked'      => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY) ? 'checked' : '',
+          ]);
+          ?>
                 </div>
                    <?php
-                    $plugins = get_plugins();
-$themes                      = array_slice(wp_get_themes(), 0, 1, true);
-shuffle($plugins);
-shuffle($themes);
-$critical_issues = array_merge($plugins, $themes);
-
-$themes = array_slice(wp_get_themes(), 0, 2, true);
-shuffle($plugins);
-$plugins = array_slice($plugins, 0, 1, true);
-shuffle($themes);
-$warnings = array_merge($plugins, $themes);
-
-\ionos\essentials\wpscan\render_issues([
-  'type'      => 'high',
-  'exos_class'=>
-  'critical',
-  'issues' => $critical_issues,
-]);
-\ionos\essentials\wpscan\render_issues([
-  'type'      => 'medium',
-  'exos_class'=> 'warning',
-  'issues'    => $warnings,
-]);
-?>
+          \ionos\essentials\wpscan\views\issues([
+            'type'      => 'critical',
+          ]);
+          \ionos\essentials\wpscan\views\issues([
+            'type'      => 'warning',
+          ]);
+          ?>
               </div>
             </div>
+        <?php } ?>
 
         <div class="sheet">
             <div>
               <?php
-render_section([
-  'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
-  'id'          => IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING,
-  'description' => \esc_html__(
-    'Monitor password leaks. If a password is found in a data breach, you will be notified.',
-    'ionos-essentials',
-  ),
-  'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
-]);
+          render_section([
+            'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
+            'id'          => IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING,
+            'description' => \esc_html__(
+              'Monitor password leaks. If a password is found in a data breach, you will be notified.',
+              'ionos-essentials',
+            ),
+            'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
+          ]);
 
 if (! is_stretch()) {
   render_section([

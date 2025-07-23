@@ -124,30 +124,50 @@ use const ionos\essentials\PLUGIN_DIR;
 <?php blocks\welcome\render_callback(); ?>
 
 <div class="static-overlay__blocker"></div>
-<div class="static-overlay__container">
+<div class="static-overlay__container dialog-closer" id="learn-more-overlay">
   <div class="sheet static-overlay--closable static-overlay__content sheet--micro-effect" data-static-overlay-id="demo-overlay1" style="margin-top: inherit;">
     <section class="sheet__section">
       <div style="display: flex; justify-content: right;">
-        <i id="dialog-closer" class="exos-icon exos-icon-deleteinput-16"></i>
+        <i class="exos-icon exos-icon-deleteinput-16 dialog-closer"></i>
       </div>
       <h3 class="headline headline--sub"><?php \esc_html_e('Vulnerability scan information', 'ionos-essentials'); ?></h3>
       <ul class="bullet-list">
-        <li>We use the WPScan database to provide security risk scores for plugins and themes.</li>
-        <li>The scores are on a scale of 1 to 10, where a higher value indicates greater security risk.</li>
-        <li>Installations of plugins and themes are prohibited if their score exceeds 7.0.</li>
+        <li><?php esc_html_e(
+          'We use the WPScan database to provide security risk scores for plugins and themes.',
+          'ionos-essentials'
+        ); ?></li>
+        <li><?php esc_html_e(
+          'The scores are on a scale of 1 to 10, where a higher value indicates greater security risk.',
+          'ionos-essentials'
+        ); ?></li>
+        <li><?php esc_html_e(
+          'Installations of plugins and themes are prohibited if their score exceeds 7.0.',
+          'ionos-essentials'
+        ); ?></li>
       </ul>
     </section>
   </div>
 </div>
 
+<div class="static-overlay__container dialog-closer" id="plugin-install-overlay">
+  Showing update information
+</div>
 
-<main id="content" class="<?php \ionos\essentials\maintenance_mode\is_maintenance_mode() && printf('ionos-maintenance-mode'); ?> issues-found">
+<main id="content" class="
+  <?php
+  \ionos\essentials\maintenance_mode\is_maintenance_mode()                      && printf(
+    'ionos-maintenance-mode'
+  );
+! empty(\ionos\essentials\wpscan\get_wpscan()->get_issues())                    && printf(' issues-found');
+?>
+
+  ">
   <div class="page-section">
     <?php blocks\banner\render_callback(); ?>
   </div>
 
   <?php
-    require_once __DIR__ . '/tabs/overview.php';
+  require_once __DIR__ . '/tabs/overview.php';
 require_once __DIR__ . '/tabs/tools.php';
 ?>
 

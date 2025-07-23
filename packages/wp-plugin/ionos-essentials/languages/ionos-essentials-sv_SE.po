@@ -137,7 +137,6 @@ msgid "%s ago"
 msgstr "för %s sedan"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-#: inc/wpscan/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiskt fel hittades"
@@ -549,35 +548,23 @@ msgstr "Du bestämmer själv hur du vill skapa din webbplats. Oroa dig inte, du 
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr "Genom att använda AI-funktioner godkänner du OpenAI %1$sTerms of Use%2$s och %3$sPrivacy Policy%4$s"
 
-#: inc/jetpack-flow/inc/class-manager.php
+#: inc/jetpack-flow/index.php
 msgid "Assistant"
 msgstr "Assistant"
 
-#: inc/jetpack-flow/inc/controllers/class-confirm.php
-msgid "Confirm Jetpack installation"
-msgstr "Bekräfta installationen av Jetpack"
-
-#: inc/jetpack-flow/inc/controllers/class-install.php
-msgid "Installing Jetpack"
-msgstr "Installerar Jetpack"
-
-#: inc/jetpack-flow/inc/views/confirm.php
-msgid "Jetpack Backup"
-msgstr "Jetpack-Backup"
-
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "We are going to install Jetpack Backup now."
 msgstr "Nu kommer vi att installera Jetpack Backup."
 
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "Ok"
 msgstr "Ok"
 
-#: inc/jetpack-flow/inc/views/install.php
+#: inc/jetpack-flow/index.php
 msgid "Installing Jetpack Backup"
 msgstr "Installerar Jetpack Backup"
 
-#: inc/jetpack-flow/inc/views/install.php
+#: inc/jetpack-flow/index.php
 msgid "Please wait a moment while we are installing Jetpack Backup for you."
 msgstr "Vänta lite medan vi installerar Jetpack Backup åt dig."
 
@@ -585,7 +572,7 @@ msgstr "Vänta lite medan vi installerar Jetpack Backup åt dig."
 msgid "Onboarding"
 msgstr "Onboarding"
 
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "No thanks"
 msgstr "Nej tack"
 
@@ -659,58 +646,155 @@ msgstr "Förhandsgranska underhållssidan"
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
-#: inc/wpscan/index.php
+#: inc/wpscan/controller/class-wpscan.php
+#: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
 msgstr "Sårbarhetsskanning"
 
-#: inc/wpscan/index.php
+#: inc/wpscan/views/summary.php
 msgid "warnings found"
 msgstr "varningar hittades"
 
-#: inc/wpscan/index.php
-msgid "Last scan ran"
-msgstr "Senaste skanningen kördes"
-
-#: inc/wpscan/index.php
-msgid "hours ago"
-msgstr "timmar sedan"
-
-#: inc/wpscan/index.php
+#: inc/wpscan/views/issues.php
 msgid "View update details"
 msgstr "Visa uppdateringsinformation"
-
-#: inc/wpscan/index.php
-msgid "Delete"
-msgstr "Radera"
-
-#: inc/wpscan/index.php
-msgid "Update"
-msgstr "Uppdatering"
 
 #: inc/dashboard/index.php
 msgid "Tools and security"
 msgstr "Verktyg och säkerhet"
 
-#: inc/wpscan/index.php
-msgid "One critical issue"
-msgid_plural "%d critical issues"
-msgstr[0] "En kritisk fråga"
-msgstr[1] ""
-
-#: inc/wpscan/index.php
-msgid "One warning"
-msgid_plural "%d warnings"
-msgstr[0] "En varning"
-msgstr[1] ""
-
-#: inc/wpscan/index.php
-msgid "Critical website security issues, identified by a CVSS score of 8.0 or higher, require immediate attention."
-msgstr "Kritiska säkerhetsproblem på webbplatsen, som identifieras med en CVSS-poäng på 8,0 eller högre, kräver omedelbar uppmärksamhet."
-
-#: inc/wpscan/index.php
-msgid "Website security warnings, identified by a CVSS score up to 7.9, require prompt attention."
-msgstr "Säkerhetsvarningar på webbplatser, identifierade med en CVSS-poäng upp till 7,9, kräver omedelbar uppmärksamhet."
-
 #: inc/dashboard/view.php
 msgid "Vulnerability scan information"
+msgstr "Information om sårbarhetsskanning"
+
+#: inc/wpscan/views/issues.php
+msgid "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
+msgstr "Kritiska säkerhetsproblem på webbplatsen, som identifieras med en CVSS-poäng på 7,0 eller högre, kräver omedelbar uppmärksamhet."
+
+#: inc/wpscan/views/issues.php
+msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
+msgstr "Säkerhetsvarningar för webbplatser, identifierade med en CVSS-poäng upp till 6.9, kräver omedelbar uppmärksamhet."
+
+#: inc/wpscan/views/issues.php
+msgid "%d warning"
+msgid_plural "%d warnings"
+msgstr[0] "%d varning"
+msgstr[1] ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Vulnerabilities detected are being emailed to"
+msgstr "Sårbarheter som upptäcks skickas med e-post till"
+
+#: inc/wpscan/views/summary.php
+msgid "critical issues found"
+msgstr "kritiska frågor hittades"
+
+#: inc/dashboard/blocks/vulnerability/index.php
+msgid "An error occurred while fetching the vulnerability data."
+msgstr "Ett fel inträffade vid hämtning av sårbarhetsdata."
+
+#: inc/dashboard/index.php
+msgid "Updating..."
+msgstr "Uppdaterar..."
+
+#: inc/dashboard/index.php
+msgid "Loading content ..."
+msgstr "Laddar innehåll ..."
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "Active theme cannot be deleted"
+msgstr "Aktivt tema kan inte tas bort"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "No scan has been performed yet."
+msgstr "Ingen scanning har utförts ännu."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "issue found"
+msgstr "problem hittades"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "issues found"
+msgstr "problem hittades"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "More information"
+msgstr "Mer information"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "The vulnerability scan has found issues for"
+msgstr "Sårbarhetssökningen har hittat problem för"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Checking for vulnerabilities..."
+msgstr "Kollar efter sårbarheter..."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Warnings found. Installation is not recommended."
+msgstr "Varningar hittades. Installation rekommenderas inte."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Critical vulnerabilities found! Installation is not possible."
+msgstr "Kritiska sårbarheter har hittats! Installation är inte möjlig."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "No vulnerabilities found. You can safely install this theme."
+msgstr "Inga sårbarheter hittades. Du kan installera detta tema på ett säkert sätt."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "No vulnerabilities found. You can safely install this plugin."
+msgstr "Inga sårbarheter hittades. Du kan installera detta plugin på ett säkert sätt."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "The vulnerability scan has found issues"
+msgstr "Sårbarhetssökningen har hittat problem"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Activation is not recommended"
+msgstr "Aktivering rekommenderas inte"
+
+#: inc/wpscan/views/issues.php
+msgid "This theme is active. Please activate another theme."
+msgstr "Detta tema är aktivt. Vänligen aktivera ett annat tema."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Temporarily block public access to your site with a maintenance page."
+msgstr "Blockera tillfälligt allmänhetens åtkomst till din webbplats med en underhållssida."
+
+#: inc/wpscan/views/summary.php
+msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
+msgstr "Vi skannar automatiskt varje dag och när ett nytt plugin eller tema installeras, med hjälp av WPScans databas över sårbarheter."
+
+#: inc/wpscan/views/summary.php
+msgid "Learn more"
+msgstr "Läs mer om detta"
+
+#: inc/wpscan/views/issues.php
+msgid "%d critical issue"
+msgid_plural "%d critical issues"
+msgstr[0] "%d kritiskt problem"
+msgstr[1] ""
+
+#: inc/dashboard/view.php
+msgid "We use the WPScan database to provide security risk scores for plugins and themes."
+msgstr "Vi använder WPScan-databasen för att tillhandahålla säkerhetsriskpoäng för plugins och teman."
+
+#: inc/dashboard/view.php
+msgid "The scores are on a scale of 1 to 10, where a higher value indicates greater security risk."
+msgstr "Poängen anges på en skala från 1 till 10, där ett högre värde indikerar en större säkerhetsrisk."
+
+#: inc/dashboard/view.php
+msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
+msgstr "Installationer av plugins och teman är förbjudna om deras poäng överstiger 7,0."
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "was deleted"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanrest.php
+msgid "was updated"
+msgstr ""
+
+#: inc/wpscan/views/summary.php
+msgid "Website is safe and secure"
 msgstr ""
