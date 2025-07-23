@@ -96,9 +96,10 @@ class WPScan
 
     wp_localize_script(
       'ionos-wpscan-theme-install',
-      'ionosEssentialsThemeInstall',
+      'ionosWPScanThemes',
       [
         'issues' => $this->get_issues(),
+        'ajaxUrl' => admin_url('admin-ajax.php'),
         'i18n'   => [
           'checking'       => __('Checking for vulnerabilities...', 'ionos-essentials'),
           'warnings_found' => __('Warnings found. Installation is not recommended.', 'ionos-essentials'),
@@ -165,7 +166,7 @@ class WPScan
 
     wp_localize_script(
       'ionos-essentials-themes',
-      'ionosEssentialsThemes',
+      'ionosEssentialsThemeInstall',
       [
         'slugs' => array_column($issues, 'slug'),
         'brand' => strtolower(get_option('ionos_group_brand', 'ionos')),

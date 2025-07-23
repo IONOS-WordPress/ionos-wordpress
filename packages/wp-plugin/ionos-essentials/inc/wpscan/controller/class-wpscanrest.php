@@ -17,20 +17,20 @@ class WPScanRest
     });
 
     \add_action(
-      'wp_ajax_ionos-wpscan-immediate',
-      [$this, 'immediate'],
+      'wp_ajax_ionos-wpscan-instant-check',
+      [$this, 'instant_check'],
       10,
       1
     );
   }
 
-  public function immediate()
+  public function instant_check()
   {
     $slug = $_POST['slug'] ?? '';
     if (empty($slug)) {
       \wp_send_json_error(null, 500);
     }
-    \wp_send_json_success( 'warnings_found', 200 );
+    \wp_send_json_success( 'criticals_found', 200 );
 
   }
 

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
       pluginCard?.insertBefore(message, pluginCard.firstChild);
 
       jQuery.post(ionosWPScanPlugins.ajaxUrl, {
-        action: 'ionos-wpscan-immediate',
+        action: 'ionos-wpscan-instant-check',
         slug: event.target.dataset.slug,
         type: 'plugin'
       }).done(function(response) {
