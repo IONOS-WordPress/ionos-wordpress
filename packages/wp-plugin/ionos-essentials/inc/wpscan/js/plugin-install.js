@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       jQuery.post(ionosWPScanPlugins.ajaxUrl, {
         action: 'ionos-wpscan-instant-check',
+        _ajax_nonce: ionosWPScanPlugins.nonce,
         slug: event.target.dataset.slug,
         type: 'plugin'
       }).done(function(response) {

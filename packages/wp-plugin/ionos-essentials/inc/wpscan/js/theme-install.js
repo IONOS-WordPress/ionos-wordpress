@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
        jQuery.post(ionosWPScanThemes.ajaxUrl, {
         action: 'ionos-wpscan-instant-check',
+        _ajax_nonce: ionosWPScanThemes.nonce,
         slug: event.target.dataset.slug,
         type: 'theme'
       }).done(function(response) {

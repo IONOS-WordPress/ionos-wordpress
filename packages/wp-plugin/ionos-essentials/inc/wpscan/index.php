@@ -31,6 +31,7 @@ function get_wpscan(): WPScan
 
 function instant_check()
 {
+  \check_ajax_referer('ionos-wpscan-instant-check');
   $slug = $_POST['slug'] ?? '';
   $type = $_POST['type'] ?? '';
   if (empty($slug)) {
