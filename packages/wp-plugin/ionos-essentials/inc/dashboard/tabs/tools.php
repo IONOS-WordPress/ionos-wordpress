@@ -155,6 +155,9 @@ function render_section($args)
           </div>
           <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
               <span class="input-switch">
+                  <input id="<?php echo esc_attr($args['id']); ?>" data-option="<?php echo \esc_attr(
+                    IONOS_SECURITY_FEATURE_OPTION
+                  ); ?>" data-description="<?php echo esc_attr($args['title']); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
                   <input id="<?php echo esc_attr($args['id']); ?>" data-description="<?php \esc_attr_e('Dashboard mode', 'ionos-essentials'); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
                   <label>
                       <span class="input-switch__on"></span>
