@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
       }
 
-      const html = `<p>${ionosWPScanThemes.i18n.issues_found}. <span class="ionos-no-activation">${ionosWPScanThemes.i18n.no_activation}</span> <a href="admin.php?page=${ionosEssentialsThemes.i18n.brand}#tools" class="" type="button">${ionosWPScanThemes.i18n.more_info}</a></p>`;
+      const html = `<p>${ionosWPScanThemes.i18n.issues_found}. <span class="ionos-no-activation">${ionosWPScanThemes.i18n.no_activation}</span> <a href="admin.php?page=${ionosWPScanThemes.i18n.brand}#tools" class="" type="button">${ionosWPScanThemes.i18n.more_info}</a></p>`;
       // Prevent link click from bubbling
       setTimeout(() => {
         const link = theme.querySelector('a[href="admin.php?page=' + ionosWPScanThemes.i18n.brand + '#tools"]');

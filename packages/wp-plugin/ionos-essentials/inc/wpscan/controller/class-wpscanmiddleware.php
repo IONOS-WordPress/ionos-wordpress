@@ -6,12 +6,61 @@ class WPScanMiddleware
 {
   private const URL = 'https://webapps-vuln-scan.hosting.ionos.com/api/v1/vulnerabilities';
 
-  public function download_wpscan_data()
+  public function get_instant_data(string $type, string $slug): bool|string
+  {
+    $token = \get_option('ionos_security_wpscan_token', '');
+    if (empty($token)) {
+      return false;
+    }
+
+    $endpoint = self::URL . '/' . $type . 's/' . $slug;
+    $response = \wp_remote_get(
+      $endpoint,
+      [
+        'headers' => [
+          'Authorization' => 'API-Key ' . $token,
+          'User-Agent'    => 'Security-Plugin',
+        ],
+        'timeout' => 15,
+      ]
+    );
+    if (\is_wp_error($response)) {
+      error_log('WPScan middleware error: ' . $response->get_error_message());
+      return false;
+    }
+
+    $status_code = \wp_remote_retrieve_response_code($response);
+    if (200 !== $status_code) {
+      error_log('WPScan middleware error statuscode: ' . \wp_remote_retrieve_response_message($response));
+      return false;
+    }
+
+    $body = \wp_remote_retrieve_body($response);
+    if (empty($body)) {
+      return 'nothing_found';
+    }
+
+    $scores = json_decode($body);
+    if (! is_array($scores) || empty($scores)) {
+      return 'nothing_found';
+    }
+
+    $highest_score = 0;
+    foreach ($scores as $score) {
+      if (isset($score->score) && $score->score > $highest_score) {
+        $highest_score = $score->score;
+      }
+    }
+
+    return ($highest_score >= 7) ? 'criticals_found' : 'warnings_found';
+  }
+
+  public function download_wpscan_data(): bool|array
   {
     $url   = self::URL;
     $token = \get_option('ionos_security_wpscan_token', '');
     if (empty($token)) {
-      return;
+      return false;
     }
 
     $response = wp_remote_post(

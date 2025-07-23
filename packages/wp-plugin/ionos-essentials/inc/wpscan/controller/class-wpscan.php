@@ -30,8 +30,6 @@ class WPScan
     \add_action('upgrader_process_complete', function () {
       \delete_transient('ionos_wpscan_issues');
     }, 10, 2);
-
-    $api = new WPScanRest();
   }
 
   public function get_issues($filter = null)
@@ -96,9 +94,9 @@ class WPScan
       'ionos-wpscan-theme-install',
       'ionosWPScanThemes',
       [
-        'issues' => $this->get_issues(),
+        'issues'  => $this->get_issues(),
         'ajaxUrl' => admin_url('admin-ajax.php'),
-        'i18n'   => [
+        'i18n'    => [
           'checking'       => __('Checking for vulnerabilities...', 'ionos-essentials'),
           'warnings_found' => __('Warnings found. Installation is not recommended.', 'ionos-essentials'),
           'critical_found' => __('Critical vulnerabilities found! Installation is not possible.', 'ionos-essentials'),
@@ -127,9 +125,9 @@ class WPScan
       'ionos-wpscan-plugins',
       'ionosWPScanPlugins',
       [
-        'issues' => $this->get_issues(),
+        'issues'  => $this->get_issues(),
         'ajaxUrl' => admin_url('admin-ajax.php'),
-        'i18n'   => [
+        'i18n'    => [
           'checking'       => __('Checking for vulnerabilities...', 'ionos-essentials'),
           'warnings_found' => __('Warnings found. Installation is not recommended.', 'ionos-essentials'),
           'critical_found' => __('Critical vulnerabilities found! Installation is not possible.', 'ionos-essentials'),
@@ -232,7 +230,7 @@ class WPScan
   {
     $middleware   = new WPScanMiddleware();
     $data         = $middleware->download_wpscan_data();
-    if (empty($data)) {
+    if (empty($data) || ! is_array($data)) {
       error_log('WPScan middleware: No data received');
       $this->issues = [];
       $this->error  = true;
@@ -248,7 +246,7 @@ class WPScan
     $this->issues = $data;
   }
 
-  private function is_update_available($slug) : bool
+  private function is_update_available($slug): bool
   {
     $plugins_updates = \get_site_transient('update_plugins');
     $theme_updates   = \get_site_transient('update_themes');
