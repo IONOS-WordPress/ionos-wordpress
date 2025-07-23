@@ -74,6 +74,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
                 'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
                 'id'           => IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY,
                 'description'  => $description,
+                'data-option' => IONOS_SECURITY_FEATURE_OPTION,
                 'checked'      => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY) ? 'checked' : '',
               ]);
               ?>
@@ -91,6 +92,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
                 'Monitor password leaks. If a password is found in a data breach, you will be notified.',
                 'ionos-essentials',
               ),
+              'data-option' => IONOS_SECURITY_FEATURE_OPTION,
               'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
             ]);
 
@@ -102,6 +104,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
                   'Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website.',
                   'ionos-essentials'
                 ),
+                'data-option' => IONOS_SECURITY_FEATURE_OPTION,
                 'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_XMLRPC) ? 'checked' : '',
               ]);
             }
@@ -113,6 +116,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
                 'Security disables login with email addresses. This improves security by reducing the potential attack surface.',
                 'ionos-essentials'
               ),
+              'data-option' => IONOS_SECURITY_FEATURE_OPTION,
               'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_PEL) ? 'checked' : '',
             ]);
             ?>
@@ -131,6 +135,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
               'Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience.',
               'ionos-essentials',
             ), $brand_name),
+            'data-option' => '',
             'checked'   => \ionos\essentials\dashboard_mode\is_essentials_dashboard_mode() ? 'checked' : '',
             ]);
             ?>
@@ -155,9 +160,7 @@ function render_section($args)
           </div>
           <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
               <span class="input-switch">
-                  <input id="<?php echo esc_attr($args['id']); ?>" data-option="<?php echo \esc_attr(
-                    IONOS_SECURITY_FEATURE_OPTION
-                  ); ?>" data-description="<?php echo esc_attr($args['title']); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
+                  <input id="<?php echo esc_attr($args['id']); ?>" data-option="<?php echo \esc_attr($args['data-option']); ?>" data-description="<?php echo esc_attr($args['title']); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
                   <label>
                       <span class="input-switch__on"></span>
                       <span class="input-switch__toggle"></span>
