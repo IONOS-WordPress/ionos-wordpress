@@ -67,7 +67,7 @@ if (is_login()) {
               'To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to %1$s',
               'ionos-security'
             ),
-            '<b>' . get_current_user_mail() . '</b>'
+            '<b>' . get_scrambled_email_current_user() . '</b>'
           )
         );
       });
@@ -198,28 +198,29 @@ function is_valid_email($email)
 }
 
 
-function get_current_user_mail(){
+function get_scrambled_email_current_user()
+{
   $user = wp_get_current_user();
   $email = $user->user_email;
-  $email = hideEmail($email);
+  $email = scrambleEmail($email);
 
   return $email;
 }
 
-function hideEmail($email)
+function scrambleEmail($email)
 {
-   $mail_parts = explode("@", $email);
-    $length = strlen($mail_parts[0]);
+  $mail_parts = explode("@", $email);
+  $length = strlen($mail_parts[0]);
 
-    if($length <= 4 & $length > 1)
-    {
-        $show = 1;
-    } else {
-        $show = floor($length%2);
-    }
+  if($length <= 4 & $length > 1)
+  {
+    $show = 1;
+  } else {
+    $show = floor($length%2);
+  }
 
-    $hide = $length - $show;
-    $replace = str_repeat("*", $hide);
+  $hide = $length - $show;
+  $replace = str_repeat("*", $hide);
 
-    return substr_replace ( $mail_parts[0] , $replace , $show, $hide ) . "@" . $mail_parts[1];
+  return substr_replace ( $mail_parts[0] , $replace , $show, $hide ) . "@" . $mail_parts[1];
 }
