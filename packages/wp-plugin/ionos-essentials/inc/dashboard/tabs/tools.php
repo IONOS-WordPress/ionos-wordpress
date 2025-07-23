@@ -10,6 +10,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_PEL;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_HUB_AS_START_PAGE;
 
 ?>
  <div id="tools" class="page-section ionos-tab">
@@ -115,6 +116,26 @@ render_section([
     'ionos-essentials'
   ),
   'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_PEL) ? 'checked' : '',
+]);
+?>
+
+          </div>
+        </div>
+
+        <h3 class="headline headline--sub"><?php \esc_html_e('Advanced', 'ionos-essentials'); ?></h3>
+        <div class="sheet">
+            <div>
+              <?php
+                $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
+
+render_section([
+  'title'       => sprintf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), $brand_name),
+  'id'          => IONOS_SECURITY_FEATURE_OPTION_HUB_AS_START_PAGE,
+  'description' => sprintf(\esc_html__(
+    'Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience.',
+    'ionos-essentials',
+  ), $brand_name),
+  'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_HUB_AS_START_PAGE) ? 'checked' : '',
 ]);
 ?>
 
