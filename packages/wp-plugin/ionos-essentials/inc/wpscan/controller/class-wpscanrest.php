@@ -10,9 +10,7 @@ class WPScanRest
       \register_rest_route('ionos/essentials/wpscan', '/recommended-action', [
         'methods'             => 'POST',
         'callback'            => [$this, 'recommended_action'],
-        'permission_callback' => function () {
-          return current_user_can('update_plugins');
-        },
+        'permission_callback' => fn () => current_user_can('update_plugins'),
       ]);
     });
 
@@ -60,7 +58,7 @@ class WPScanRest
         $response = \delete_plugins([$path]);
         break;
       case 'plugin-update':
-        include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+        require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
         $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
 
         $upgrader->upgrade($path);
@@ -76,7 +74,6 @@ class WPScanRest
         require_once ABSPATH . 'wp-admin/includes/theme.php';
         $response = \delete_theme($slug);
         break;
-
       case 'theme-update':
         include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
         $upgrader = new \Theme_Upgrader(new \WP_Ajax_Upgrader_Skin());

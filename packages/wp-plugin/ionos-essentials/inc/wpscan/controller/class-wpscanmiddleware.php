@@ -58,7 +58,6 @@ class WPScanMiddleware
     // Leave the highest vulnerability for each plugin/theme, delete the rest
     foreach (['plugins', 'themes'] as $type) {
       foreach ($issues[$type] as &$item) {
-
         // Sort vulnerabilities by score, descending
         usort($item['vulnerabilities'], fn ($a, $b) => $b['score'] <=> $a['score']);
         // Keep only the highest vulnerability

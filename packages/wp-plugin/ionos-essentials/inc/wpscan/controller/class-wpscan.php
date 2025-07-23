@@ -8,7 +8,7 @@ class WPScan
 {
   private array|bool $issues;
 
-  private bool $error;
+  private bool $error = false;
 
   public function __construct()
   {
@@ -32,8 +32,6 @@ class WPScan
     }, 10, 2);
 
     $api = new WPScanRest();
-
-    $this->error = false;
   }
 
   public function get_issues($filter = null)
@@ -250,7 +248,7 @@ class WPScan
     $this->issues = $data;
   }
 
-  private function is_update_available($slug)
+  private function is_update_available($slug) : bool
   {
     $plugins_updates = \get_site_transient('update_plugins');
     $theme_updates   = \get_site_transient('update_themes');
