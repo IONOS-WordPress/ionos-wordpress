@@ -46,3 +46,7 @@ ul li#wp-admin-bar-ionos_maintenance_mode{
 .ionos-theme-issues p::before{
   content: unset;
 }
+
+#wpfooter {
+  display: none;
+}

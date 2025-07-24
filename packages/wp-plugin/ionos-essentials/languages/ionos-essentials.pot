@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-23T08:54:16+00:00\n"
+"POT-Creation-Date: 2025-07-24T09:32:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -356,7 +356,11 @@ msgid "deactivated."
 msgstr ""
 
 #: inc/dashboard/index.php
-msgid "Updating..."
+msgid "updating..."
+msgstr ""
+
+#: inc/dashboard/index.php
+msgid "deleting..."
 msgstr ""
 
 #: inc/dashboard/index.php
@@ -669,15 +673,37 @@ msgstr ""
 msgid "No scan has been performed yet."
 msgstr ""
 
-#: inc/wpscan/controller/class-wpscanrest.php
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Important Security Notification: Vulnerability detected in your WordPress website"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
+msgstr ""
+
+#. Translators: %1$s and %2$s is a placeholder for link.
+#: inc/wpscan/controller/class-wpscan.php
+msgid "%1$sTurn off this notification here%2$s."
+msgstr ""
+
+#. Translators: %s is the tenant name.
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Your %s plugin team"
+msgstr ""
+
+#: inc/wpscan/index.php
 msgid "Active theme cannot be deleted"
 msgstr ""
 
-#: inc/wpscan/controller/class-wpscanrest.php
+#: inc/wpscan/index.php
 msgid "was deleted"
 msgstr ""
 
-#: inc/wpscan/controller/class-wpscanrest.php
+#: inc/wpscan/index.php
 msgid "was updated"
 msgstr ""
 
