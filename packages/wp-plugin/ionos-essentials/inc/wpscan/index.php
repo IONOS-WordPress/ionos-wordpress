@@ -108,20 +108,20 @@ function recommended_action(\WP_REST_Request $request)
   \wp_send_json_success($message, 200);
 }
 
-\add_action( 'init', function(){
-  if ( ! wp_next_scheduled( 'ionos_wpscan' ) ) {
-      wp_schedule_event( time(), 'daily', 'ionos_wpscan' );
+\add_action('init', function () {
+  if (! wp_next_scheduled('ionos_wpscan')) {
+    wp_schedule_event(time(), 'daily', 'ionos_wpscan');
   }
 });
 
 \add_action('ionos_wpscan', function () {
   $wpscan = new WPScan();
-  error_log("Running WPScan cron job");
+  error_log('Running WPScan cron job');
 });
 
-\register_deactivation_hook(__FILE__,function() {
-    $timestamp = \wp_next_scheduled('ionos_wpscan');
-    if ($timestamp) {
-       \wp_unschedule_event($timestamp, 'ionos_wpscan');
-    }
+\register_deactivation_hook(__FILE__, function () {
+  $timestamp = \wp_next_scheduled('ionos_wpscan');
+  if ($timestamp) {
+    \wp_unschedule_event($timestamp, 'ionos_wpscan');
+  }
 });

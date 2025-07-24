@@ -231,20 +231,20 @@ class WPScan
     return $this->error;
   }
 
-  private function maybe_send_email()
+  public function maybe_send_email(): bool
   {
     if (empty(\get_option(IONOS_SECURITY_FEATURE_OPTION, [])[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY])) {
-      return;
+      return false;
     }
 
-    $user_knows_about = \get_transient('ionos_wpscan_slugs_sent_to_user') ?: [];
+    $user_knows_about = \get_transient('ionos_wpscan_issues_sent_to_user') ?: [];
 
     $type_and_slugs = array_map(fn ($issue) => $issue['type'] . ':' . $issue['slug'], $this->get_issues());
 
     $unknown_slugs = array_diff($type_and_slugs, $user_knows_about);
 
     if (empty($unknown_slugs)) {
-      return;
+      return false;
     }
 
     \set_transient('ionos_wpscan_issues_sent_to_user', $unknown_slugs, 6 * MONTH_IN_SECONDS);
@@ -262,8 +262,8 @@ class WPScan
     $message = $this->get_mail_content(array_values($unknown_names));
     $headers = ['Content-Type: text/html; charset=UTF-8'];
 
-    error_log('Mailed about ' . print_r($unknown_slugs, true) . print_r(array_values($unknown_names), true));
     wp_mail($to, $subject, $message, $headers);
+    return true;
   }
 
   private function get_new_middleware_data()
