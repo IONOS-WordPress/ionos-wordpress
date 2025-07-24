@@ -105,6 +105,13 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   accepted_args : 2
 );
 
+add_filter('admin_body_class', function ($classes) {
+  if (ADMIN_PAGE_HOOK === \get_current_screen()?->id) {
+    $classes .= ' ionos-dashboard';
+  }
+  return $classes;
+});
+
 \add_action('rest_api_init', function () {
   \register_rest_route(
     'ionos/essentials/dashboard/welcome/v1',
@@ -210,7 +217,8 @@ const REQUIRED_USER_CAPABILITIES = 'read';
       'installing'  => esc_html__('Installing...', 'ionos-essentials'),
       'activated'   => esc_html__('activated.', 'ionos-essentials'),
       'deactivated' => esc_html__('deactivated.', 'ionos-essentials'),
-      'updating'    => esc_html__('Updating...', 'ionos-essentials'),
+      'updating'    => esc_html__('updating...', 'ionos-essentials'),
+      'deleting'   => esc_html__('deleting...', 'ionos-essentials'),
       'loading'     => esc_html__('Loading content ...', 'ionos-essentials'),
     ],
   ]);

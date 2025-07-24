@@ -131,11 +131,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   dashboard.querySelectorAll('.input-switch').forEach((switchElement) => {
     switchElement.addEventListener('click', async function (event) {
-      
+
      if (!event.target.matches('input[type="checkbox"]')) {
       return;
      }
-     
+
      const option = event.target.dataset.option ?? '';
      const key = event.target.id;
      const value = event.target.checked;
@@ -219,7 +219,8 @@ document.addEventListener('DOMContentLoaded', function () {
   dashboard.querySelectorAll('[data-wpscan]').forEach((element) => {
     element.addEventListener('click', function (event) {
       element.disabled = true;
-      element.innerText = wpData.i18n.updating;
+      const payload = JSON.parse(element.dataset.wpscan);
+      element.innerText = (payload.action === 'delete') ? wpData.i18n.deleting : wpData.i18n.updating;
 
       event.preventDefault();
       fetch(wpData.restUrl + 'ionos/essentials/wpscan/recommended-action', {

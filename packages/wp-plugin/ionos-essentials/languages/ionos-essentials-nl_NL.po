@@ -678,14 +678,10 @@ msgid "An error occurred while fetching the vulnerability data."
 msgstr "Er is een fout opgetreden bij het ophalen van de kwetsbaarheidsgegevens."
 
 #: inc/dashboard/index.php
-msgid "Updating..."
-msgstr "Bijwerken..."
-
-#: inc/dashboard/index.php
 msgid "Loading content ..."
 msgstr "Inhoud laden ..."
 
-#: inc/wpscan/controller/class-wpscanrest.php
+#: inc/wpscan/index.php
 msgid "Active theme cannot be deleted"
 msgstr "Actief thema kan niet worden verwijderd"
 
@@ -771,11 +767,11 @@ msgstr "De scores zijn op een schaal van 1 tot 10, waarbij een hogere waarde dui
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "Installaties van plugins en thema's zijn verboden als hun score hoger is dan 7,0."
 
-#: inc/wpscan/controller/class-wpscanrest.php
+#: inc/wpscan/index.php
 msgid "was deleted"
 msgstr ""
 
-#: inc/wpscan/controller/class-wpscanrest.php
+#: inc/wpscan/index.php
 msgid "was updated"
 msgstr ""
 
@@ -803,4 +799,34 @@ msgstr ""
 
 #: inc/wpscan/views/summary.php
 msgid "Website is safe and secure"
+msgstr ""
+
+#: inc/dashboard/index.php
+msgid "updating..."
+msgstr ""
+
+#: inc/dashboard/index.php
+msgid "deleting..."
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Important Security Notification: Vulnerability detected in your WordPress website"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
+msgstr ""
+
+#. Translators: %1$s and %2$s is a placeholder for link.
+#: inc/wpscan/controller/class-wpscan.php
+msgid "%1$sTurn off this notification here%2$s."
+msgstr ""
+
+#. Translators: %s is the tenant name.
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Your %s plugin team"
 msgstr ""
