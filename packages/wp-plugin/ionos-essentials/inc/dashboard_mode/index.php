@@ -14,13 +14,3 @@ add_filter('login_redirect', function ($redirect_to, $requested_redirect_to, $us
 
     return admin_url('index.php');
 }, 10, 3);
-
-add_action('init', function () {
-  if (! is_essentials_dashboard_mode()) {
-    return;
-  }
-
-  if (\is_user_logged_in()) {
-    return;
-  }
-});
