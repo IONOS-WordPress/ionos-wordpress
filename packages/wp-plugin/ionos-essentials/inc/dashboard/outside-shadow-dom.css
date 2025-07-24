@@ -51,4 +51,13 @@ body.ionos-dashboard{
   #wpfooter {
     display: none;
   }
+
+  #wpbody{
+    margin-left: -20px;
+  }
+
+  #wpwrap{
+    background-color: var(--default-background-color, #f4f7fa);
+  }
+
 }
