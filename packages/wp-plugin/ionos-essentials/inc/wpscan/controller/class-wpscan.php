@@ -3,6 +3,8 @@
 namespace ionos\essentials\wpscan;
 
 use const ionos\essentials\PLUGIN_DIR;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
 
 class WPScan
 {
@@ -16,6 +18,7 @@ class WPScan
 
     if (false === $this->issues) {
       $this->get_new_middleware_data();
+      $this->maybe_send_email();
     }
 
     if (0 < count($this->get_issues())) {
@@ -228,6 +231,41 @@ class WPScan
     return $this->error;
   }
 
+  private function maybe_send_email()
+  {
+    if (empty(\get_option(IONOS_SECURITY_FEATURE_OPTION, [])[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY])) {
+      return;
+    }
+
+    $user_knows_about = \get_transient('ionos_wpscan_slugs_sent_to_user') ?: [];
+
+    $type_and_slugs = array_map(fn ($issue) => $issue['type'] . ':' . $issue['slug'], $this->get_issues());
+
+    $unknown_slugs = array_diff($type_and_slugs, $user_knows_about);
+
+    if (empty($unknown_slugs)) {
+      return;
+    }
+
+    \set_transient('ionos_wpscan_issues_sent_to_user', $unknown_slugs, 6 * MONTH_IN_SECONDS);
+
+    $unknown_names = [];
+    foreach ($this->get_issues() as $issue) {
+      $key = $issue['type'] . ':' . $issue['slug'];
+      if (in_array($key, $unknown_slugs, true)) {
+        $unknown_names[$key] = $issue['name'] ?? $issue['slug'];
+      }
+    }
+
+    $to      = get_option('admin_email');
+    $subject = __('Important Security Notification: Vulnerability detected in your WordPress website', 'ionos-essentials');
+    $message = $this->get_mail_content(array_values($unknown_names));
+    $headers = ['Content-Type: text/html; charset=UTF-8'];
+
+    error_log('Mailed about ' . print_r($unknown_slugs, true) . print_r(array_values($unknown_names), true));
+    wp_mail($to, $subject, $message, $headers);
+  }
+
   private function get_new_middleware_data()
   {
     $middleware   = new WPScanMiddleware();
@@ -269,5 +307,34 @@ class WPScan
     $theme_slugs = array_keys($themes);
 
     return array_merge($plugin_slugs, $theme_slugs);
+  }
+
+  private function get_mail_content(array $vulnerable_plugins): string
+  {
+    $tenant             = \get_option('ionos_group_brand', 'ionos');
+    $mail               = '<p>' . __('Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:', 'ionos-essentials') . '</p>';
+    $mail              .= '<ul>';
+    foreach ($vulnerable_plugins as $plugin) {
+      $mail .= '<li>' . $plugin . '</li>';
+    }
+    $mail .= '</ul>';
+
+    $mail .= '<p>' . __('To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:', 'ionos-essentials');
+    $mail .= '<br><a href="' . admin_url('admin.php?page=' . $tenant . '#tools') . '">' . admin_url() . '</a></p>';
+
+    $mail .= '<p>' . \sprintf(
+      // Translators: %1$s and %2$s is a placeholder for link.
+      __('%1$sTurn off this notification here%2$s.', 'ionos-essentials'),
+      '<a href="' . admin_url('admin.php?page=' . $tenant . '#tools') . '">',
+      '</a>'
+    ) . '</p>';
+
+    $mail .= \sprintf(
+      // Translators: %s is the tenant name.
+      __('Your %s plugin team', 'ionos-essentials'),
+      \get_option('ionos_group_brand_menu', 'Ionos')
+    );
+
+    return $mail;
   }
 }
