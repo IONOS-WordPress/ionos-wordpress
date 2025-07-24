@@ -105,6 +105,13 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   accepted_args : 2
 );
 
+add_filter('admin_body_class', function ($classes) {
+  if (ADMIN_PAGE_HOOK === \get_current_screen()?->id) {
+    $classes .= ' ionos-dashboard';
+  }
+  return $classes;
+});
+
 \add_action('rest_api_init', function () {
   \register_rest_route(
     'ionos/essentials/dashboard/welcome/v1',

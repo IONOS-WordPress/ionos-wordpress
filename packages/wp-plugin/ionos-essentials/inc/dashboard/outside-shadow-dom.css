@@ -47,6 +47,8 @@ ul li#wp-admin-bar-ionos_maintenance_mode{
   content: unset;
 }
 
-#wpfooter {
-  display: none;
+body.ionos-dashboard{
+  #wpfooter {
+    display: none;
+  }
 }
