@@ -202,12 +202,12 @@ function get_scrambled_email_current_user()
 {
   $user = wp_get_current_user();
   $email = $user->user_email;
-  $email = scrambleEmail($email);
+  $email = scramble_email($email);
 
   return $email;
 }
 
-function scrambleEmail($email)
+function scramble_email($email)
 {
   $mail_parts = explode("@", $email);
   $length = strlen($mail_parts[0]);
