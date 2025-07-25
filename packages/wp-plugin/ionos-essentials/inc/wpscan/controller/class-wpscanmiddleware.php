@@ -99,7 +99,7 @@ class WPScanMiddleware
 
   public function convert_middleware_data(array $issues): array
   {
-    // Filter out items without issues
+    // Delete items without issues
     foreach (['plugins', 'themes'] as $type) {
       $issues[$type] = array_values(array_filter($issues[$type], fn ($item) => ! empty($item['vulnerabilities'])));
     }
@@ -107,10 +107,10 @@ class WPScanMiddleware
     // Leave the highest vulnerability for each plugin/theme, delete the rest
     foreach (['plugins', 'themes'] as $type) {
       foreach ($issues[$type] as &$item) {
-        // Sort vulnerabilities by score, descending
-        usort($item['vulnerabilities'], fn ($a, $b) => $b['score'] <=> $a['score']);
-        // Keep only the highest vulnerability
-        $item['vulnerabilities'] = $item['vulnerabilities'][0];
+        $item['vulnerabilities'] = array_reduce(
+          $item['vulnerabilities'],
+          fn ($carry, $vuln) => ($carry === null || ($vuln['score'] ?? 0) > ($carry['score'] ?? 0)) ? $vuln : $carry
+        );
       }
       unset($item);
     }
