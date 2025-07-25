@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-21T08:19:43+00:00\n"
+"POT-Creation-Date: 2025-07-25T08:40:29+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ionos-essentials\n"
 
 #. Plugin Name of the plugin
@@ -283,11 +283,13 @@ msgstr ""
 
 #. translators: %s is replaced with the time since the last scan
 #: inc/dashboard/blocks/vulnerability/index.php
+#, php-format
 msgid "%s ago"
 msgstr ""
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php
+#, php-format
 msgid "Welcome to your new %s Hub"
 msgstr ""
 
@@ -309,6 +311,7 @@ msgstr ""
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php
+#, php-format
 msgid "Welcome to your %s Hub"
 msgstr ""
 
@@ -353,6 +356,7 @@ msgid "Take the survey"
 msgstr ""
 
 #: inc/dashboard/blocks/whats-new/index.php
+#, php-format
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
 msgstr ""
 
@@ -466,6 +470,7 @@ msgstr ""
 
 #. translators: s=link to control panel
 #: inc/descriptify/index.php
+#, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
 msgstr ""
 
@@ -527,6 +532,7 @@ msgstr ""
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: inc/switch-page/view.php
+#, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr ""
 
@@ -708,11 +714,13 @@ msgstr ""
 
 #. Translators: %1$s and %2$s is a placeholder for link.
 #: inc/wpscan/controller/class-wpscan.php
+#, php-format
 msgid "%1$sTurn off this notification here%2$s."
 msgstr ""
 
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
+#, php-format
 msgid "Your %s plugin team"
 msgstr ""
 
@@ -729,12 +737,14 @@ msgid "was updated"
 msgstr ""
 
 #: inc/wpscan/views/issues.php
+#, php-format
 msgid "%d critical issue"
 msgid_plural "%d critical issues"
 msgstr[0] ""
 msgstr[1] ""
 
 #: inc/wpscan/views/issues.php
+#, php-format
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] ""
@@ -774,74 +784,4 @@ msgstr ""
 
 #: inc/wpscan/views/summary.php
 msgid "Learn more"
-msgstr ""
-
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block title"
-msgid "Banner"
-msgstr ""
-
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block description"
-msgid "Banner"
-msgstr ""
-
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block title"
-msgid "Deep Links"
-msgstr ""
-
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block description"
-msgid "Show links to the Control Panel of your provider."
-msgstr ""
-
-#: build/dashboard/blocks/next-best-actions/block.json
-msgctxt "block title"
-msgid "NBA"
-msgstr ""
-
-#: build/dashboard/blocks/next-best-actions/block.json
-msgctxt "block description"
-msgid "Next Best Actions"
-msgstr ""
-
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block title"
-msgid "Quick Links"
-msgstr ""
-
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block description"
-msgid "Show links to common tasks in the WordPress backend."
-msgstr ""
-
-#: build/dashboard/blocks/vulnerability/block.json
-msgctxt "block title"
-msgid "Vulnerability"
-msgstr ""
-
-#: build/dashboard/blocks/vulnerability/block.json
-msgctxt "block description"
-msgid "Show wp scan data."
-msgstr ""
-
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block title"
-msgid "Welcome"
-msgstr ""
-
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block description"
-msgid "Welcome"
-msgstr ""
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block title"
-msgid "What's New"
-msgstr ""
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block description"
-msgid "What's New"
 msgstr ""
