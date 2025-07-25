@@ -408,7 +408,7 @@ msgid "Password monitoring"
 msgstr ""
 
 #: inc/dashboard/tabs/tools.php
-msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
+msgid "Monitor password leaks. If a password is suspected to be compromised, you will receive an immediate email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated."
 msgstr ""
 
 #: inc/dashboard/tabs/tools.php
@@ -416,7 +416,7 @@ msgid "Enable XML-RPC Guard"
 msgstr ""
 
 #: inc/dashboard/tabs/tools.php
-msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
+msgid "Block access to XML-RPC, for security purposes we recommend keeping this blocked if not in use."
 msgstr ""
 
 #: inc/dashboard/tabs/tools.php
@@ -424,7 +424,7 @@ msgid "Prohibit Email Login"
 msgstr ""
 
 #: inc/dashboard/tabs/tools.php
-msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
+msgid "Disable login with email addresses. This improves security by reducing the potential attack surface."
 msgstr ""
 
 #: inc/dashboard/view.php

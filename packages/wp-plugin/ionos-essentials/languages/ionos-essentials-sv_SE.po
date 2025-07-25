@@ -582,7 +582,7 @@ msgid "Password monitoring"
 msgstr "Övervakning av lösenord"
 
 #: inc/dashboard/tabs/tools.php
-msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
+msgid "Monitor password leaks. If a password is suspected to be compromised, you will receive an immediate email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated."
 msgstr "Övervaka lösenordsläckor. Om ett lösenord hittas i ett dataintrång kommer du att meddelas."
 
 #: inc/dashboard/tabs/tools.php
@@ -590,7 +590,7 @@ msgid "Enable XML-RPC Guard"
 msgstr "Aktivera XML-RPC Guard"
 
 #: inc/dashboard/tabs/tools.php
-msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
+msgid "Block access to XML-RPC, for security purposes we recommend keeping this blocked if not in use."
 msgstr "Säkerhet inaktiverar XML-RPC i WordPress. Detta förbättrar säkerheten genom att minska den potentiella attackytan. XML-RPC kan utnyttjas för att starta brute force-attacker, DDoS-attacker eller för att få obehörig åtkomst till en webbplats."
 
 #: inc/dashboard/tabs/tools.php
@@ -598,7 +598,7 @@ msgid "Prohibit Email Login"
 msgstr "Förbjuda inloggning via e-post"
 
 #: inc/dashboard/tabs/tools.php
-msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
+msgid "Disable login with email addresses. This improves security by reducing the potential attack surface."
 msgstr "Säkerhet inaktiverar inloggning med e-postadresser. Detta förbättrar säkerheten genom att minska den potentiella attackytan."
 
 #: inc/dashboard/tabs/tools.php
