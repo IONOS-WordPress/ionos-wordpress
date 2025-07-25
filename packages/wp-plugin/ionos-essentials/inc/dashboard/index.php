@@ -218,7 +218,7 @@ add_filter('admin_body_class', function ($classes) {
       'activated'   => esc_html__('activated.', 'ionos-essentials'),
       'deactivated' => esc_html__('deactivated.', 'ionos-essentials'),
       'updating'    => esc_html__('updating...', 'ionos-essentials'),
-      'deleting'   => esc_html__('deleting...', 'ionos-essentials'),
+      'deleting'    => esc_html__('deleting...', 'ionos-essentials'),
       'loading'     => esc_html__('Loading content ...', 'ionos-essentials'),
     ],
   ]);
