@@ -20,7 +20,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', \get_option('ionos_group_brand_menu', 'IONOS'));
-  define('ADMIN_PAGE_SLUG', strtolower(\get_option('ionos_group_brand_menu', 'IONOS')));
+  define('ADMIN_PAGE_SLUG', strtolower(\get_option('ionos_group_brand', 'IONOS')));
   define('ADMIN_PAGE_HOOK', 'toplevel_page_' . ADMIN_PAGE_SLUG);
 });
 
