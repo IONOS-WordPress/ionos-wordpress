@@ -554,67 +554,67 @@ msgstr "No, gracias"
 #: inc/dashboard/index.php
 #: inc/dashboard/tabs/tools.php
 msgid "Tools"
-msgstr "Herramientas"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Website security"
-msgstr "Seguridad del sitio web"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerability alerting"
-msgstr "Alerta de vulnerabilidad"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Change email address"
-msgstr "Cambiar la dirección de correo electrónico"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Password monitoring"
-msgstr "Supervisión de contraseñas"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
-msgstr "Supervise las filtraciones de contraseñas. Si se encuentra una contraseña en una filtración de datos, se le notificará."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Enable XML-RPC Guard"
-msgstr "Activar XML-RPC Guard"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
-msgstr "Security desactiva XML-RPC en WordPress. Esto mejora la seguridad al reducir la superficie potencial de ataque. XML-RPC puede ser explotado para lanzar ataques de fuerza bruta, ataques DDoS u obtener acceso no autorizado a un sitio web."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Prohibit Email Login"
-msgstr "Prohibir el inicio de sesión por correo electrónico"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
-msgstr "Seguridad desactiva el inicio de sesión con direcciones de correo electrónico. Esto mejora la seguridad al reducir la superficie potencial de ataque."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance page"
-msgstr "Página de mantenimiento"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Active"
-msgstr "Activo"
+msgstr ""
 
 #: inc/dashboard/index.php
 msgid "activated."
-msgstr "activado."
+msgstr ""
 
 #: inc/dashboard/index.php
 msgid "deactivated."
-msgstr "desactivado."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance mode"
-msgstr "Modo de mantenimiento"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Preview maintenance page"
-msgstr "Vista previa de la página de mantenimiento"
+msgstr ""
 
 #. Plugin URI of the plugin
 #: ionos-essentials.php

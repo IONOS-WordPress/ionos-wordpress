@@ -554,67 +554,67 @@ msgstr "Nej tack"
 #: inc/dashboard/index.php
 #: inc/dashboard/tabs/tools.php
 msgid "Tools"
-msgstr "Verktyg"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Website security"
-msgstr "Webbplatsens säkerhet"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerability alerting"
-msgstr "Sårbarhetsvarning"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Change email address"
-msgstr "Ändra e-postadress"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Password monitoring"
-msgstr "Övervakning av lösenord"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
-msgstr "Övervaka lösenordsläckor. Om ett lösenord hittas i ett dataintrång kommer du att meddelas."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Enable XML-RPC Guard"
-msgstr "Aktivera XML-RPC Guard"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
-msgstr "Säkerhet inaktiverar XML-RPC i WordPress. Detta förbättrar säkerheten genom att minska den potentiella attackytan. XML-RPC kan utnyttjas för att starta brute force-attacker, DDoS-attacker eller för att få obehörig åtkomst till en webbplats."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Prohibit Email Login"
-msgstr "Förbjuda inloggning via e-post"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
-msgstr "Säkerhet inaktiverar inloggning med e-postadresser. Detta förbättrar säkerheten genom att minska den potentiella attackytan."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance page"
-msgstr "Underhållssida"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Active"
-msgstr "Aktiv"
+msgstr ""
 
 #: inc/dashboard/index.php
 msgid "activated."
-msgstr "aktiverad."
+msgstr ""
 
 #: inc/dashboard/index.php
 msgid "deactivated."
-msgstr "avaktiverad."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance mode"
-msgstr "Underhållsläge"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Preview maintenance page"
-msgstr "Förhandsgranska underhållssidan"
+msgstr ""
 
 #. Plugin URI of the plugin
 #: ionos-essentials.php
