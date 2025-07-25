@@ -85,22 +85,22 @@ render_section([
         <div class="sheet">
             <div>
               <?php
-render_section([
-  'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
-  'id'          => IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING,
-  'description' => \esc_html__(
-    'Monitor password leaks. If a password is found in a data breach, you will be notified.',
-    'ionos-essentials',
-  ),
-  'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
-]);
+          render_section([
+            'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
+            'id'          => IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING,
+            'description' => \esc_html__(
+              'Monitor password leaks. If a password is suspected to be compromised, you will receive an immediate email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated.',
+              'ionos-essentials',
+            ),
+            'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
+          ]);
 
 if (! is_stretch()) {
   render_section([
-    'title'       => \esc_html__('Enable XML-RPC Guard', 'ionos-essentials'),
+    'title'       => \esc_html__('Block XML-RPC access', 'ionos-essentials'),
     'id'          => IONOS_SECURITY_FEATURE_OPTION_XMLRPC,
     'description' => \esc_html__(
-      'Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website.',
+      'Block access to XML-RPC, for security purposes we recommend keeping this blocked if not in use.',
       'ionos-essentials'
     ),
     'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_XMLRPC) ? 'checked' : '',
@@ -108,10 +108,10 @@ if (! is_stretch()) {
 }
 
 render_section([
-  'title'       => \esc_html__('Prohibit Email Login', 'ionos-essentials'),
+  'title'       => \esc_html__('Prohibit email login', 'ionos-essentials'),
   'id'          => IONOS_SECURITY_FEATURE_OPTION_PEL,
   'description' => \esc_html__(
-    'Security disables login with email addresses. This improves security by reducing the potential attack surface.',
+    'Disable login with email addresses. This improves security by reducing the potential attack surface.',
     'ionos-essentials'
   ),
   'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_PEL) ? 'checked' : '',
