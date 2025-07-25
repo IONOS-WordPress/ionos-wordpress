@@ -89,7 +89,7 @@ render_section([
             'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
             'id'          => IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING,
             'description' => \esc_html__(
-              'Monitor password leaks. If a password is suspected to be compromised, you will receive an immediate email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated.',
+              'Monitor password leaks. If a password is suspected to be compromised, you will receive an email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated.',
               'ionos-essentials',
             ),
             'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
