@@ -4,7 +4,7 @@ import { execTestCLI } from '../../../../../../../playwright/wp-env.js';
 test.describe('options', () => {
   test.beforeAll(async () => {
     execTestCLI(`
-      wp eval 'set_transient("ionos_wpscan_issues", [["name"=>"Essentials","slug"=>"ionos-essentials","type"=>"plugin","score"=>8,"update"=>false, "path"=>"ionos-essentials/ionos-essentials.php"]]);' --skip-plugins --skip-themes
+      wp eval 'set_transient("ionos_wpscan_issues", [["name"=>"Essentials","slug"=>"ionos-essentials","type"=>"plugin","score"=>8,"update"=>false,"path"=>"ionos-essentials/ionos-essentials.php"]]);' --skip-plugins --skip-themes
     `);
   });
 
