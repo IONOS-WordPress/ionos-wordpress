@@ -4,7 +4,7 @@ namespace ionos\essentials\dashboard_mode;
 
 function is_essentials_dashboard_mode()
 {
-  return \get_option('ionos_essentials_dashboard_mode', false);
+  return \get_option('ionos_essentials_dashboard_mode', true);
 }
 
 add_filter('login_redirect', function ($redirect_to, $requested_redirect_to, $user) {
