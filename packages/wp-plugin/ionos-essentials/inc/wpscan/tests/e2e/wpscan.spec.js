@@ -14,6 +14,19 @@ test.describe('options', () => {
 
     await expect(body).toContainText('1 critical issue');
     await expect(page.getByRole('button', { name: 'Delete' })).toBeVisible();
+  });
 
+  test('is there an admin notice', async ({ admin, page }) => {
+    await admin.visitAdminPage('edit.php');
+    const body = page.locator('body');
+
+    await expect(body).toContainText('Vulnerability scan');
+  });
+
+  test('is there a notice in plugin overview', async ({ admin, page }) => {
+    await admin.visitAdminPage('plugins.php');
+    const body = page.locator('body');
+
+    await expect(body).toContainText('The vulnerability scan has found issues for Essentials.');
   });
 });
