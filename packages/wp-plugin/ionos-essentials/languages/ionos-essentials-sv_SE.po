@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: sv\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-04-23 08:52+0200\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-04-23 08:52+0200\n"
-"Language: sv\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.4.2\n"
 
@@ -309,28 +309,6 @@ msgstr "Lås upp din webbplats fulla potential"
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Din webbplats är live – men resan har bara börjat. Utforska våra rekommenderade nästa steg för att växa, förbättra prestandan och nå dina digitala mål."
 
-#. translators: %s: Brand name
-#: inc/dashboard/blocks/welcome/index.php
-#, php-format
-msgid "Welcome to your %s Hub"
-msgstr "Välkommen till din %s Hub"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "Den här översikten är din startpunkt för att utnyttja hela potentialen i din WordPress-webbplats."
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Recommendations for next steps"
-msgstr "Rekommenderade nästa steg"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Helpful links and shortcuts"
-msgstr "Hjälpsamma länkar och genvägar"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr "Omfattande hjälpsektion – med AI-chatt, guidade turer och en gedigen kunskapsbank"
-
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Close"
 msgstr "Stäng"
@@ -563,218 +541,113 @@ msgstr "Nej tack"
 #: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/tabs/tools.php
 msgid "Tools"
-msgstr "Verktyg"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Website security"
-msgstr "Webbplatsens säkerhet"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerability alerting"
-msgstr "Sårbarhetsvarning"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Change email address"
-msgstr "Ändra e-postadress"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Password monitoring"
-msgstr "Övervakning av lösenord"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
-msgid "Monitor password leaks. If a password is found in a data breach, you will be notified."
-msgstr "Övervaka lösenordsläckor. Om ett lösenord hittas i ett dataintrång kommer du att meddelas."
+msgid "Monitor password leaks. If a password is suspected to be compromised, you will receive an email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
-msgid "Enable XML-RPC Guard"
-msgstr "Aktivera XML-RPC Guard"
+msgid "Block XML-RPC access"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
-msgid "Security disables XML-RPC in WordPress. This improves security by reducing the potential attack surface. XML-RPC can be exploited to launch brute force attacks, DDoS attacks, or gain unauthorized access to a website."
-msgstr "Säkerhet inaktiverar XML-RPC i WordPress. Detta förbättrar säkerheten genom att minska den potentiella attackytan. XML-RPC kan utnyttjas för att starta brute force-attacker, DDoS-attacker eller för att få obehörig åtkomst till en webbplats."
+msgid "Block access to XML-RPC, for security purposes we recommend keeping this blocked if not in use."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
-msgid "Prohibit Email Login"
-msgstr "Förbjuda inloggning via e-post"
+msgid "Prohibit email login"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
-msgid "Security disables login with email addresses. This improves security by reducing the potential attack surface."
-msgstr "Säkerhet inaktiverar inloggning med e-postadresser. Detta förbättrar säkerheten genom att minska den potentiella attackytan."
+msgid "Disable login with email addresses. This improves security by reducing the potential attack surface."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance page"
-msgstr "Underhållssida"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Active"
-msgstr "Aktiv"
+msgstr ""
 
 #: inc/dashboard/index.php
 msgid "activated."
-msgstr "aktiverad."
+msgstr ""
 
 #: inc/dashboard/index.php
 msgid "deactivated."
-msgstr "avaktiverad."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance mode"
-msgstr "Underhållsläge"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Preview maintenance page"
-msgstr "Förhandsgranska underhållssidan"
+msgstr ""
 
 #. Plugin URI of the plugin
 #: ionos-essentials.php
 msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
-#: inc/wpscan/controller/class-wpscan.php
-#: inc/wpscan/views/summary.php
-msgid "Vulnerability scan"
-msgstr "Sårbarhetsskanning"
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Welcome to your new %s Hub"
+msgstr "Välkommen till din nya %s Hub"
 
-#: inc/wpscan/views/summary.php
-msgid "warnings found"
-msgstr "varningar hittades"
+#: inc/dashboard/blocks/welcome/index.php
+msgid "You're now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features."
+msgstr "Du använder nu vår senaste version av kontrollpanelen – utformad för att göra din arbetsdag enklare och ge dig bättre koll på din digitala närvaro. Den här nya startsidan ersätter din tidigare vy, med en fräschare design, smartare verktyg och flera nya möjligheter."
 
-#: inc/wpscan/views/issues.php
-msgid "View update details"
-msgstr "Visa uppdateringsinformation"
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Get familiar with the new layout"
+msgstr "Bekanta dig med den nya layouten"
 
-#: inc/dashboard/index.php
-msgid "Tools and security"
-msgstr "Verktyg och säkerhet"
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Explore redesigned sections and discover new functionalities"
+msgstr "Upptäck förbättrade sektioner och nya funktioner"
 
-#: inc/dashboard/view.php
-msgid "Vulnerability scan information"
-msgstr "Information om sårbarhetsskanning"
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Stay tuned for upcoming feature releases and enhancements"
+msgstr "Håll utkik efter fler nyheter och uppdateringar som snart lanseras"
 
-#: inc/wpscan/views/issues.php
-msgid "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
-msgstr "Kritiska säkerhetsproblem på webbplatsen, som identifieras med en CVSS-poäng på 7,0 eller högre, kräver omedelbar uppmärksamhet."
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php
+#, php-format
+msgid "Welcome to your %s Hub"
+msgstr "Välkommen till din %s Hub"
 
-#: inc/wpscan/views/issues.php
-msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
-msgstr "Säkerhetsvarningar för webbplatser, identifierade med en CVSS-poäng upp till 6.9, kräver omedelbar uppmärksamhet."
+#: inc/dashboard/blocks/welcome/index.php
+msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
+msgstr "Den här översikten är din startpunkt för att utnyttja hela potentialen i din WordPress-webbplats."
 
-#: inc/wpscan/views/issues.php
-msgid "%d warning"
-msgid_plural "%d warnings"
-msgstr[0] "%d varning"
-msgstr[1] ""
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Recommendations for next steps"
+msgstr "Rekommenderade nästa steg"
 
-#: inc/dashboard/tabs/tools.php
-msgid "Vulnerabilities detected are being emailed to"
-msgstr "Sårbarheter som upptäcks skickas med e-post till"
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Helpful links and shortcuts"
+msgstr "Hjälpsamma länkar och genvägar"
 
-#: inc/wpscan/views/summary.php
-msgid "critical issues found"
-msgstr "kritiska frågor hittades"
-
-#: inc/dashboard/blocks/vulnerability/index.php
-msgid "An error occurred while fetching the vulnerability data."
-msgstr "Ett fel inträffade vid hämtning av sårbarhetsdata."
-
-#: inc/dashboard/index.php
-msgid "Loading content ..."
-msgstr "Laddar innehåll ..."
-
-#: inc/wpscan/index.php
-msgid "Active theme cannot be deleted"
-msgstr "Aktivt tema kan inte tas bort"
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "No scan has been performed yet."
-msgstr "Ingen scanning har utförts ännu."
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "issue found"
-msgstr "problem hittades"
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "issues found"
-msgstr "problem hittades"
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "More information"
-msgstr "Mer information"
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "The vulnerability scan has found issues for"
-msgstr "Sårbarhetssökningen har hittat problem för"
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "Checking for vulnerabilities..."
-msgstr "Kollar efter sårbarheter..."
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "Warnings found. Installation is not recommended."
-msgstr "Varningar hittades. Installation rekommenderas inte."
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "Critical vulnerabilities found! Installation is not possible."
-msgstr "Kritiska sårbarheter har hittats! Installation är inte möjlig."
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "No vulnerabilities found. You can safely install this theme."
-msgstr "Inga sårbarheter hittades. Du kan installera detta tema på ett säkert sätt."
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "No vulnerabilities found. You can safely install this plugin."
-msgstr "Inga sårbarheter hittades. Du kan installera detta plugin på ett säkert sätt."
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "The vulnerability scan has found issues"
-msgstr "Sårbarhetssökningen har hittat problem"
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "Activation is not recommended"
-msgstr "Aktivering rekommenderas inte"
-
-#: inc/wpscan/views/issues.php
-msgid "This theme is active. Please activate another theme."
-msgstr "Detta tema är aktivt. Vänligen aktivera ett annat tema."
-
-#: inc/dashboard/tabs/tools.php
-msgid "Temporarily block public access to your site with a maintenance page."
-msgstr "Blockera tillfälligt allmänhetens åtkomst till din webbplats med en underhållssida."
-
-#: inc/wpscan/views/summary.php
-msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
-msgstr "Vi skannar automatiskt varje dag och när ett nytt plugin eller tema installeras, med hjälp av WPScans databas över sårbarheter."
-
-#: inc/wpscan/views/summary.php
-msgid "Learn more"
-msgstr "Läs mer om detta"
-
-#: inc/wpscan/views/issues.php
-msgid "%d critical issue"
-msgid_plural "%d critical issues"
-msgstr[0] "%d kritiskt problem"
-msgstr[1] ""
-
-#: inc/dashboard/view.php
-msgid "We use the WPScan database to provide security risk scores for plugins and themes."
-msgstr "Vi använder WPScan-databasen för att tillhandahålla säkerhetsriskpoäng för plugins och teman."
-
-#: inc/dashboard/view.php
-msgid "The scores are on a scale of 1 to 10, where a higher value indicates greater security risk."
-msgstr "Poängen anges på en skala från 1 till 10, där ett högre värde indikerar en större säkerhetsrisk."
-
-#: inc/dashboard/view.php
-msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
-msgstr "Installationer av plugins och teman är förbjudna om deras poäng överstiger 7,0."
-
-#: inc/wpscan/index.php
-msgid "was deleted"
-msgstr ""
-
-#: inc/wpscan/index.php
-msgid "was updated"
-msgstr ""
-
+#: inc/dashboard/blocks/welcome/index.php
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your Feedback is important to us"
 msgstr "Din feedback är viktig för oss"
