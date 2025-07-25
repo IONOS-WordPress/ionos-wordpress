@@ -563,27 +563,27 @@ msgstr "No, gracias"
 #: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/tabs/tools.php
 msgid "Tools"
-msgstr "Herramientas"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Website security"
-msgstr "Seguridad del sitio web"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerability alerting"
-msgstr "Alerta de vulnerabilidad"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Change email address"
-msgstr "Cambiar la dirección de correo electrónico"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Password monitoring"
-msgstr "Supervisión de contraseñas"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Monitor password leaks. If a password is suspected to be compromised, you will receive an immediate email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated."
-msgstr "Supervise las filtraciones de contraseñas. Si se encuentra una contraseña en una filtración de datos, se le notificará."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Block XML-RPC access"
@@ -591,7 +591,7 @@ msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Block access to XML-RPC, for security purposes we recommend keeping this blocked if not in use."
-msgstr "Security desactiva XML-RPC en WordPress. Esto mejora la seguridad al reducir la superficie potencial de ataque. XML-RPC puede ser explotado para lanzar ataques de fuerza bruta, ataques DDoS u obtener acceso no autorizado a un sitio web."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Prohibit email login"
@@ -599,31 +599,31 @@ msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Disable login with email addresses. This improves security by reducing the potential attack surface."
-msgstr "Seguridad desactiva el inicio de sesión con direcciones de correo electrónico. Esto mejora la seguridad al reducir la superficie potencial de ataque."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance page"
-msgstr "Página de mantenimiento"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Active"
-msgstr "Activo"
+msgstr ""
 
 #: inc/dashboard/index.php
 msgid "activated."
-msgstr "activado."
+msgstr ""
 
 #: inc/dashboard/index.php
 msgid "deactivated."
-msgstr "desactivado."
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance mode"
-msgstr "Modo de mantenimiento"
+msgstr ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Preview maintenance page"
-msgstr "Vista previa de la página de mantenimiento"
+msgstr ""
 
 #. Plugin URI of the plugin
 #: ionos-essentials.php
@@ -667,7 +667,7 @@ msgstr[1] ""
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerabilities detected are being emailed to"
-msgstr "Las vulnerabilidades detectadas se envían por correo electrónico a"
+msgstr ""
 
 #: inc/wpscan/views/summary.php
 msgid "critical issues found"
@@ -739,7 +739,7 @@ msgstr "Este tema está activo. Por favor, active otro tema."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Temporarily block public access to your site with a maintenance page."
-msgstr "Bloquee temporalmente el acceso público a su sitio con una página de mantenimiento."
+msgstr ""
 
 #: inc/wpscan/views/summary.php
 msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
