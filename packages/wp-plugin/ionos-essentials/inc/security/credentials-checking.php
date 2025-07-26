@@ -42,6 +42,8 @@ if (is_login()) {
 
     if ('icc_leak_detected' === $action) {
       \add_action('login_header', function () {
+        $mail = filter_input(INPUT_GET, 'mail', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
         printf(
           '<div class="wrapper">
             <div class="header">
@@ -59,7 +61,7 @@ if (is_login()) {
             'inc/dashboard/data/tenant-logos/' . \get_option('ionos_group_brand', 'ionos') . '.svg',
             PLUGIN_FILE
           ),
-          \esc_html__('Security Notice', 'ionos-security'),
+          $mail . \esc_html__('Security Notice', 'ionos-security'),
           \esc_html__(
             "It looks like your password has been compromised. To protect the security of your account, it's crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password.",
             'ionos-security'
@@ -120,7 +122,7 @@ if (is_login()) {
 
       \add_filter(
         hook_name : 'ionos_login_redirect_to',
-        callback : function () {
+        callback : function () use ($user) {
           \wp_logout();
 
           $user_login = filter_input(INPUT_POST, 'log');
@@ -132,6 +134,7 @@ if (is_login()) {
 
           $url = \add_query_arg([
             'action' => 'icc_leak_detected',
+            'mail'   => obfuscate_email($user->user_email),
           ], wp_login_url());
 
           \wp_safe_redirect($url);
@@ -162,6 +165,22 @@ if (is_login()) {
   }
 });
 
+function obfuscate_email($email)
+{
+  list($user, $domain) = explode('@', $email);
+  $domain_parts        = explode('.', $domain);
+  $tld                 = array_pop($domain_parts);
+  $domain_name         = implode('.', $domain_parts);
+
+  $user =  (strlen($user) > 3) ? substr($user, 0, 2) . str_repeat('*', max(0, strlen($user) - 2)) : '***';
+  $domain_name = (strlen($domain_name) > 3) ? str_repeat('*', max(0, strlen($domain_name) - 2)) . substr(
+    $domain_name,
+    -1
+  ) : '***';
+
+  return $user . '@' . $domain_name . '.' . $tld;
+}
+
 function is_leaked($password)
 {
   $hash   = strtoupper(sha1($password));
@@ -179,6 +198,7 @@ function is_leaked($password)
 
 function has_leaked_flag($user_id)
 {
+  return true;
   return (bool) \get_user_meta($user_id, LEAKED_CREDENTIALS_FLAG_NAME, true);
 }
 
