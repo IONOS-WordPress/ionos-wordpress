@@ -3,6 +3,8 @@
 namespace ionos\essentials\security;
 
 use function ionos\essentials\is_stretch;
+use const ionos\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_FILE;
 
 // exit if accessed directly
 if (! defined('ABSPATH')) {
@@ -59,3 +61,49 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
   //   require_once __DIR__ . '/vulnerability-scan.php';
   // }
 });
+
+\add_action('admin_enqueue_scripts', function () {
+  wp_enqueue_script(
+    'ionos-security-js',
+    plugins_url('inc/security/security.js', PLUGIN_FILE),
+    [],
+    filemtime(PLUGIN_DIR . '/inc/security/security.js'),
+    true
+  );
+
+  wp_localize_script('ionos-security-js', 'ionosSecurityWpData', [
+    'nonce'              => wp_create_nonce('wp_rest'),
+    'ajaxUrl'            => admin_url('admin-ajax.php'),
+  ]);
+});
+
+if (\get_transient('ionos_security_migrated_notice_show')) {
+
+  \add_action('admin_notices', function () {
+    // do not show notice on our dashboard
+    $current_screen = \get_current_screen();
+    $brand          = strtolower(get_option('ionos_group_brand', 'ionos'));
+    if (! isset($current_screen->id) || in_array($current_screen->id, ['toplevel_page_' . $brand], true)) {
+      return;
+    }
+
+    $notice = sprintf(
+      __('The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href="%s">Tools & Security</a> of our new Hub.', 'ionos-security'),
+      \esc_url(\admin_url() . '?page=' . \get_option('ionos_group_brand', 'ionos') . '#tools')
+    );
+
+    printf(
+      '<div class="ionos-security-migrated notice notice-warning is-dismissible"><p>%s</p></div>',
+      \wp_kses($notice, [
+        'a' => [
+          'href' => [],
+        ],
+      ]),
+    );
+  });
+
+  \add_action(
+    'wp_ajax_ionos-security-migrated-notice',
+    fn () => (\delete_transient('ionos_security_migrated_notice_show') && wp_die())
+  );
+}

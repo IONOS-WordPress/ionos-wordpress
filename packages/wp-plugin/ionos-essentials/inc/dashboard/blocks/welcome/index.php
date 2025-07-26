@@ -22,41 +22,41 @@ function render_callback()
         </header>
         <div class="horizontal-card__content">
             <section class="horizontal-card__section" style="flex-grow: 0;">
-              <?php if ( \get_option('ionos_essentials_bk_rollout', false) ) { ?>
+              <?php if (\get_option('ionos_essentials_bk_rollout', false)) { ?>
                 <h2 class="headline">
                     <?php
                       // translators: %s: Brand name
                       printf(\esc_html__('Welcome to your new %s Hub', 'ionos-essentials'), $brand_name);
-  ?>
+                ?>
                 </h2>
                 <p class="paragraph">
                     <?php
-    \esc_html_e(
-      'You\'re now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features.',
-      'ionos-essentials'
-    );
-  ?>
+                  \esc_html_e(
+                    'You\'re now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features.',
+                    'ionos-essentials'
+                  );
+                ?>
                 </p>
 
                 <ul class="check-list">
                     <li><?php \esc_html_e('Get familiar with the new layout', 'ionos-essentials'); ?></li>
                     <li><?php \esc_html_e('Explore redesigned sections and discover new functionalities', 'ionos-essentials'); ?></li>
-                    <li><?php \esc_html_e('Stay tuned for upcoming feature releases and enhancements','ionos-essentials'); ?></li>
+                    <li><?php \esc_html_e('Stay tuned for upcoming feature releases and enhancements', 'ionos-essentials'); ?></li>
                 </ul>
-              <?php }  else { ?>
+              <?php } else { ?>
                 <h2 class="headline">
                     <?php
-                      // translators: %s: Brand name
-                      printf(\esc_html__('Welcome to your %s Hub', 'ionos-essentials'), $brand_name);
-  ?>
+                                    // translators: %s: Brand name
+                                    printf(\esc_html__('Welcome to your %s Hub', 'ionos-essentials'), $brand_name);
+                ?>
                 </h2>
                 <p class="paragraph">
                     <?php
-    \esc_html_e(
-      'This overview is your gateway to unlocking the full potential of your WordPress website.',
-      'ionos-essentials'
-    );
-  ?>
+                  \esc_html_e(
+                    'This overview is your gateway to unlocking the full potential of your WordPress website.',
+                    'ionos-essentials'
+                  );
+                ?>
                 </p>
 
                 <ul class="check-list">
