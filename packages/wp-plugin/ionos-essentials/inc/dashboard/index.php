@@ -80,18 +80,20 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 
 // we want to be presented as "default page" in wp-admin
 // redirect to our custom dashboard page if /wp-admin/ is requested
-\add_action('load-index.php', function () {
-  if (\current_user_can(REQUIRED_USER_CAPABILITIES)) {
-    $current_url = \home_url($_SERVER['REQUEST_URI']);
-    $admin_url   = \get_admin_url();
+if (\get_option('ionos_essentials_dashboard_mode', true)) {
+  \add_action('load-index.php', function () {
+    if (\current_user_can(REQUIRED_USER_CAPABILITIES)) {
+      $current_url = \home_url($_SERVER['REQUEST_URI']);
+      $admin_url   = \get_admin_url();
 
-    if ($current_url !== $admin_url) { // only redirect if we are on empty /wp-admin/
-      return;
+      if ($current_url !== $admin_url) { // only redirect if we are on empty /wp-admin/
+        return;
+      }
+
+      \wp_safe_redirect(\menu_page_url(ADMIN_PAGE_SLUG, false));
     }
-
-    \wp_safe_redirect(\menu_page_url(ADMIN_PAGE_SLUG, false));
-  }
-});
+  });
+}
 
 // fixes the displayed page title for our custom admin page.
 \add_filter(

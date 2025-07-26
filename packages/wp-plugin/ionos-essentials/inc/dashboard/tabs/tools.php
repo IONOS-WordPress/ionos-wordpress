@@ -131,6 +131,46 @@ render_section([
 
           </div>
         </div>
+
+        <h3 class="headline headline--sub"><?php \esc_html_e('Advanced', 'ionos-essentials'); ?></h3>
+                <div class="sheet">
+          <section class="sheet__section">
+            <div class="grid">
+                <div class="grid-col grid-col--8 grid-col--small-12">
+                    <h2 class="headline headline--sub headline--cropped">
+                      <?php
+                      $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
+printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), $brand_name);
+?>
+
+                </h2>
+                    <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
+                        <?php
+  printf(\esc_html__(
+    'Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience.',
+    'ionos-essentials',
+  ), $brand_name);
+?>
+                    </p>
+                </div>
+                <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
+                    <span class="input-switch">
+                        <input id="ionos_essentials_dashboard_mode" type="checkbox" data-description="<?php printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), $brand_name); ?>"
+                        <?php if (\get_option('ionos_essentials_dashboard_mode', true)) {
+                          echo 'checked';
+                        } ?>
+                        >
+                        <label>
+                            <span class="input-switch__on"></span>
+                            <span class="input-switch__toggle"></span>
+                            <span class="input-switch__off"></span>
+                        </label>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
       </div>
     </div>
   </div>

@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
      const option = event.target.dataset.option ?? '';
      const key = event.target.id;
-     const value = event.target.checked;
+     const value = event.target.checked ? 1 : 0; // as false results in a null value in the database
      const description = event.target.dataset.description ?? '';
 
      try {
