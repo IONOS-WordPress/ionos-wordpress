@@ -198,7 +198,7 @@ function is_leaked($password)
 
 function has_leaked_flag($user_id)
 {
-  return true;
+  return true; // todo: remove this line when the feature is stable
   return (bool) \get_user_meta($user_id, LEAKED_CREDENTIALS_FLAG_NAME, true);
 }
 
