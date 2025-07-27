@@ -26,13 +26,13 @@ class WPScanMiddleware
     );
     if (\is_wp_error($response)) {
       error_log('WPScan middleware error: ' . $response->get_error_message());
-      return false;
+      return 'nothing_found';
     }
 
     $status_code = \wp_remote_retrieve_response_code($response);
     if (200 !== $status_code) {
       error_log('WPScan middleware error statuscode: ' . \wp_remote_retrieve_response_message($response));
-      return false;
+      return 'nothing_found';
     }
 
     $body = \wp_remote_retrieve_body($response);
