@@ -612,3 +612,15 @@ msgstr "Onboarding"
 #: inc/jetpack-flow/inc/views/confirm.php
 msgid "No thanks"
 msgstr "Geen dank."
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "Your Feedback is important to us"
+msgstr "Jouw feedback is belangrijk voor ons"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
+msgstr "We zoeken altijd naar manieren om je ervaring met WordPress hosting nog beter te maken. Neem een paar minuten de tijd om een korte enquête in te vullen."
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "Take the survey"
+msgstr "Deelnemen aan enquête"
