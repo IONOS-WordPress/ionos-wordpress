@@ -13,6 +13,26 @@ use const ionos\essentials\PLUGIN_DIR;
   );
 });
 
+function get_survey_url() {
+  $survey_links = [
+    'de' => 'https://feedback.ionos.com/nmdopgnfds?l=de',
+    'en_us' => 'https://feedback.ionos.com/nmdopgnfds?l=en-us',
+    'en' => 'https://feedback.ionos.com/nmdopgnfds?l=en',
+    'fr' => 'https://feedback.ionos.com/nmdopgnfds?l=fr',
+    'es' => 'https://feedback.ionos.com/nmdopgnfds?l=es',
+    'it' => 'https://feedback.ionos.com/nmdopgnfds?l=it',
+  ];
+  $locale = determine_locale();
+  if ($locale === 'en_US') {
+   return $survey_links['en_us'];
+  }
+  $lang = strtolower(preg_split('/[_-]/', $locale)[0]);
+  if (isset($survey_links[$lang])) {
+    return $survey_links[$lang];
+  }
+  return $survey_links['en'];
+}
+
 function render_callback()
 {
   if (strtolower(\get_option('ionos_group_brand', 'ionos')) === 'ionos') {
@@ -42,9 +62,9 @@ function render_callback()
 
 </li>
 <div class="wp-block-button">
-  <button id="ionos_essentials_install_security" class="wp-block-button__link wp-element-button">
-  '. \esc_html__('Take the survey', 'ionos-essentials') .
-  '</button>
+  <a id="ionos_essentials_install_security" href="'. \esc_html(get_survey_url()) .'" target="_blank" class="wp-block-button__link wp-element-button">
+    '. \esc_html__('Take the survey', 'ionos-essentials') .'
+  </a>
   </div>
 </ul>
 </content>
