@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-25T08:40:29+00:00\n"
+"POT-Creation-Date: 2025-07-28T11:33:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
 
 #. Plugin Name of the plugin
@@ -39,328 +39,324 @@ msgstr ""
 msgid "https://www.ionos-group.com/brands.html"
 msgstr ""
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 msgid "View Site"
 msgstr ""
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 #: inc/dashboard/index.php
 msgid "Overview"
 msgstr ""
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 #: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr ""
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 msgid "Start AI Sitebuilder"
 msgstr ""
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 msgid "Rebuild Website"
 msgstr ""
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr ""
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/elements/my-account/index.php
 msgid "Webmail Login"
 msgstr ""
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/elements/my-account/index.php
 msgid "Account Management"
 msgstr ""
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/elements/my-account/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr ""
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/elements/my-account/index.php
 msgid "Manage Hosting"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Connect a Domain"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Connect Domain"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Edit & Complete Your Website"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Edit Website"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Discover Help Center"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Open Help Center"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Set Up Email"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Set up your included email account and integrate it with your website."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Setup Email Account"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Set Up Contact Form"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Create a contact form to stay connected with your visitors."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Set Up Your WooCommerce Store"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Launch your online store now with a guided setup wizard."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Start Setup"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Legally compliant selling with German Market Light"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Install now"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Add Logo"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Create a Page"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Create and publish a page and share your story with the world."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Create Page"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Social Media Setup"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Connect Social Media"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Add Favicon"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/index.php
+#: inc/dashboard/elements/next-best-actions/index.php
 msgid "Dismiss"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/index.php
+#: inc/dashboard/elements/next-best-actions/index.php
 msgid "Unlock Your Website's Potential"
 msgstr ""
 
-#: inc/dashboard/blocks/next-best-actions/index.php
+#: inc/dashboard/elements/next-best-actions/index.php
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Add new page"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Add new post"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Edit site Navigation"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Change Styles"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Edit Header"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Edit Footer"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Add Plugins"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Upload Media files"
 msgstr ""
 
-#: inc/dashboard/blocks/quick-links/index.php
+#: inc/dashboard/elements/quick-links/index.php
 msgid "Quick Links"
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "An error occurred while fetching the vulnerability data."
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "Issues found"
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "Show full scan report"
 msgstr ""
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "Last scan"
 msgstr ""
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
-#, php-format
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "%s ago"
 msgstr ""
 
 #. translators: %s: Brand name
-#: inc/dashboard/blocks/welcome/index.php
-#, php-format
+#: inc/dashboard/elements/welcome/index.php
 msgid "Welcome to your new %s Hub"
 msgstr ""
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "You're now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features."
 msgstr ""
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Get familiar with the new layout"
 msgstr ""
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Explore redesigned sections and discover new functionalities"
 msgstr ""
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Stay tuned for upcoming feature releases and enhancements"
 msgstr ""
 
 #. translators: %s: Brand name
-#: inc/dashboard/blocks/welcome/index.php
-#, php-format
+#: inc/dashboard/elements/welcome/index.php
 msgid "Welcome to your %s Hub"
 msgstr ""
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
 msgstr ""
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Recommendations for next steps"
 msgstr ""
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Helpful links and shortcuts"
 msgstr ""
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr ""
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Close"
 msgstr ""
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "What’s New"
 msgstr ""
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "Get an overview of the latest updates and enhancements."
 msgstr ""
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "Your Feedback is important to us"
 msgstr ""
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
 msgstr ""
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "Take the survey"
 msgstr ""
 
-#: inc/dashboard/blocks/whats-new/index.php
-#, php-format
+#: inc/dashboard/elements/whats-new/index.php
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
 msgstr ""
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
 msgstr ""
 
@@ -452,6 +448,18 @@ msgstr ""
 msgid "Disable login with email addresses. This improves security by reducing the potential attack surface."
 msgstr ""
 
+#: inc/dashboard/tabs/tools.php
+msgid "Advanced"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "%s Hub as WordPress Admin start page"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
+msgstr ""
+
 #: inc/dashboard/view.php
 msgid "Vulnerability scan information"
 msgstr ""
@@ -470,7 +478,6 @@ msgstr ""
 
 #. translators: s=link to control panel
 #: inc/descriptify/index.php
-#, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
 msgstr ""
 
@@ -532,7 +539,6 @@ msgstr ""
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: inc/switch-page/view.php
-#, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr ""
 
@@ -714,13 +720,11 @@ msgstr ""
 
 #. Translators: %1$s and %2$s is a placeholder for link.
 #: inc/wpscan/controller/class-wpscan.php
-#, php-format
 msgid "%1$sTurn off this notification here%2$s."
 msgstr ""
 
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
-#, php-format
 msgid "Your %s plugin team"
 msgstr ""
 
@@ -737,14 +741,12 @@ msgid "was updated"
 msgstr ""
 
 #: inc/wpscan/views/issues.php
-#, php-format
 msgid "%d critical issue"
 msgid_plural "%d critical issues"
 msgstr[0] ""
 msgstr[1] ""
 
 #: inc/wpscan/views/issues.php
-#, php-format
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] ""

@@ -2,13 +2,13 @@
 
 namespace ionos\essentials\dashboard;
 
-require_once __DIR__ . '/blocks/banner/index.php';
-require_once __DIR__ . '/blocks/welcome/index.php';
-require_once __DIR__ . '/blocks/vulnerability/index.php';
-require_once __DIR__ . '/blocks/next-best-actions/index.php';
-require_once __DIR__ . '/blocks/my-account/index.php';
-require_once __DIR__ . '/blocks/whats-new/index.php';
-require_once __DIR__ . '/blocks/quick-links/index.php';
+require_once __DIR__ . '/elements/banner/index.php';
+require_once __DIR__ . '/elements/welcome/index.php';
+require_once __DIR__ . '/elements/vulnerability/index.php';
+require_once __DIR__ . '/elements/next-best-actions/index.php';
+require_once __DIR__ . '/elements/my-account/index.php';
+require_once __DIR__ . '/elements/whats-new/index.php';
+require_once __DIR__ . '/elements/quick-links/index.php';
 
 use const ionos\essentials\PLUGIN_DIR;
 

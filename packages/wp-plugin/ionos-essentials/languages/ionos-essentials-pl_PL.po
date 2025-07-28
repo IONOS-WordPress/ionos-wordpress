@@ -88,228 +88,228 @@ msgstr "Twoja umowa"
 msgid "Current offers"
 msgstr "Aktualne oferty"
 
-#: inc/dashboard/blocks/quick-links/index.php
+#: inc/dashboard/elements/quick-links/index.php
 msgid "Quick Links"
 msgstr "Szybkie łącza"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "Show full scan report"
 msgstr "Pokaż pełny raport skanowania"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "Last scan"
 msgstr "Ostatnie skanowanie"
 
 #. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 #, php-format
 msgid "%s ago"
 msgstr "%s temu"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "znaleziony krytyczny problem"
 msgstr[1] "znalezione krytyczne problemy"
 msgstr[2] "znalezione krytyczne problemy"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "znalezione ostrzeżenie"
 msgstr[1] "znalezione ostrzeżenia"
 msgstr[2] "znalezione ostrzeżenia"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "Issues found"
 msgstr "znalezione problemy"
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 msgid "View Site"
 msgstr "Wyświetl stronę"
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 msgid "Start AI Sitebuilder"
 msgstr "Uruchom AI Sitebuilder"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/elements/my-account/index.php
 msgid "Manage Hosting"
 msgstr "Zarządzanie hostingiem"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/elements/my-account/index.php
 msgid "Account Management"
 msgstr "Zarządzanie kontem"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/elements/my-account/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Dostęp do konta klienta, zabezpieczeń logowania i subskrypcji jednym kliknięciem."
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 #: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Przegląd"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Create Page"
 msgstr "Utwórz stronę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Add Logo"
 msgstr "Dodaj logo"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Upewnij się, że Twoja witryna jest oznaczona unikalnym logo, aby uzyskać profesjonalny wygląd."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Connect Domain"
 msgstr "Połącz domenę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Edit & Complete Your Website"
 msgstr "Edytuj i uzupełnij swoją witrynę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
 msgstr "Dodawaj strony, tekst i obrazy, dostosuj swoją witrynę za pomocą narzędzi opartych na sztucznej inteligencji lub dostosuj kolory i czcionki."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Edit Website"
 msgstr "Edytuj stronę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Discover Help Center"
 msgstr "Centrum pomocy Discover"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
 msgstr "Uzyskaj natychmiastowe wsparcie dzięki Co-Pilot AI, zapoznaj się z naszą bazą wiedzy lub skorzystaj z wycieczek z przewodnikiem."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Open Help Center"
 msgstr "Otwórz Centrum pomocy"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Set Up Email"
 msgstr "Konfiguracja poczty e-mail"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Set up your included email account and integrate it with your website."
 msgstr "Skonfiguruj dołączone konto e-mail i zintegruj je ze swoją witryną."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Set Up Contact Form"
 msgstr "Konfiguracja formularza kontaktowego"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Create a contact form to stay connected with your visitors."
 msgstr "Utwórz formularz kontaktowy, aby pozostać w kontakcie z odwiedzającymi."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Set Up Your WooCommerce Store"
 msgstr "Konfiguracja sklepu WooCommerce"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Launch your online store now with a guided setup wizard."
 msgstr "Uruchom swój sklep internetowy już teraz dzięki kreatorowi konfiguracji z przewodnikiem."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Start Setup"
 msgstr "Konfiguracja początkowa"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Social Media Setup"
 msgstr "Konfiguracja mediów społecznościowych"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Połącz swoje profile w mediach społecznościowych z witryną i zwiększ swoją obecność online."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Connect Social Media"
 msgstr "Połącz media społecznościowe"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Add Favicon"
 msgstr "Dodaj Favicon"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Dodaj favicon (ikonę witryny) do swojej witryny, aby zwiększyć rozpoznawalność i widoczność marki."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Create a Page"
 msgstr "Utwórz stronę"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Create and publish a page and share your story with the world."
 msgstr "Utwórz i opublikuj stronę i podziel się swoją historią ze światem."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
 msgstr "Połącz swoją domenę z witryną, aby zwiększyć widoczność i przyciągnąć więcej odwiedzających."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Connect a Domain"
 msgstr "Podłącz domenę"
 
-#: inc/dashboard/blocks/next-best-actions/index.php
+#: inc/dashboard/elements/next-best-actions/index.php
 msgid "Unlock Your Website's Potential"
 msgstr "Uwolnij potencjał swojej strony internetowej"
 
-#: inc/dashboard/blocks/next-best-actions/index.php
+#: inc/dashboard/elements/next-best-actions/index.php
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Twoja witryna już działa, ale Twoja podróż dopiero się zaczyna. Zapoznaj się z zalecanymi kolejnymi działaniami, aby przyspieszyć rozwój, poprawić wydajność i osiągnąć swoje cele online."
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Close"
 msgstr "Zamknij"
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "What’s New"
 msgstr "Co nowego"
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Add new page"
 msgstr "Dodaj nową stronę"
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Add new post"
 msgstr "Dodaj nowy post"
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Edit Header"
 msgstr "Edytuj nagłówek"
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Edit Footer"
 msgstr "Edytuj stopkę"
 
-#: inc/dashboard/blocks/next-best-actions/index.php
+#: inc/dashboard/elements/next-best-actions/index.php
 msgid "Dismiss"
 msgstr "Odrzucić"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Skanowanie w poszukiwaniu zagrożeń i luk w zabezpieczeniach WordPress"
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Edit site Navigation"
 msgstr "Edycja nawigacji w witrynie"
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Change Styles"
 msgstr "Zmiana stylów"
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Add Plugins"
 msgstr "Dodaj wtyczki"
 
-#: inc/dashboard/blocks/quick-links/config.php
+#: inc/dashboard/elements/quick-links/config.php
 msgid "Upload Media files"
 msgstr "Przesyłanie plików multimedialnych"
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Przegląd najnowszych aktualizacji i ulepszeń."
 
@@ -329,7 +329,7 @@ msgstr "Zarządzanie domenami i SSL"
 msgid "Add more products"
 msgstr "Dodaj więcej produktów"
 
-#: inc/dashboard/blocks/my-account/index.php
+#: inc/dashboard/elements/my-account/index.php
 msgid "Webmail Login"
 msgstr "Logowanie do poczty internetowej"
 
@@ -365,7 +365,7 @@ msgstr "SSL"
 msgid "Markenschutz"
 msgstr "Markenschutz"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Setup Email Account"
 msgstr "Konfiguracja konta e-mail"
 
@@ -382,23 +382,23 @@ msgstr "Instalacja..."
 msgid "Essentials"
 msgstr "Essentials"
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 msgid "Rebuild Website"
 msgstr "Przebudowa strony internetowej"
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr "Możliwe jest odbudowanie witryny stworzonej przez sztuczną inteligencję w ciągu 72 godzin."
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Legally compliant selling with German Market Light"
 msgstr "Sprzedaż zgodna z prawem dzięki German Market Light"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Install now"
 msgstr "Zainstaluj teraz"
 
-#: inc/dashboard/blocks/next-best-actions/class-nba.php
+#: inc/dashboard/elements/next-best-actions/class-nba.php
 msgid "Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner."
 msgstr "Skorzystaj z bezpłatnego rozszerzenia dla WooCommerce, aby prowadzić swój sklep internetowy w Niemczech i Austrii w sposób zgodny z prawem."
 
@@ -470,7 +470,7 @@ msgstr "Onboarding"
 msgid "No thanks"
 msgstr "Nie, dziękuję"
 
-#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/elements/banner/index.php
 #: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr ""
@@ -541,71 +541,71 @@ msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-
 msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
 
 #. translators: %s: Brand name
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 #, php-format
 msgid "Welcome to your new %s Hub"
 msgstr "Witamy w nowym %s Hub"
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "You're now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features."
 msgstr "Korzystasz teraz z najnowszej wersji naszego pulpitu nawigacyjnego, zaprojektowanego w celu usprawnienia przepływu pracy i ulepszenia zarządzania online. To nowe centrum zastępuje poprzedni pulpit nawigacyjny, oferując odświeżony interfejs, ulepszone narzędzia i ekscytujące nowe funkcje."
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Get familiar with the new layout"
 msgstr "Zapoznanie się z nowym układem"
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Explore redesigned sections and discover new functionalities"
 msgstr "Poznaj przeprojektowane sekcje i odkryj nowe funkcje"
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Stay tuned for upcoming feature releases and enhancements"
 msgstr "Bądź na bieżąco z nadchodzącymi funkcjami i ulepszeniami"
 
 #. translators: %s: Brand name
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 #, php-format
 msgid "Welcome to your %s Hub"
 msgstr "Witamy w %s Hub"
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
 msgstr "Ten przegląd jest bramą do odblokowania pełnego potencjału witryny WordPress."
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Recommendations for next steps"
 msgstr "Zalecenia dotyczące kolejnych kroków"
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Helpful links and shortcuts"
 msgstr "Pomocne łącza i skróty"
 
-#: inc/dashboard/blocks/welcome/index.php
+#: inc/dashboard/elements/welcome/index.php
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Kompleksowa sekcja pomocy, w tym: Wsparcie czatu AI, Wycieczki z przewodnikiem i obszerną bazę wiedzy"
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "Your Feedback is important to us"
 msgstr "Twoja opinia jest dla nas ważna"
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
 msgstr "Zawsze szukamy sposobów, aby uczynić Twój hosting WordPress jeszcze lepszym. Poświęć kilka minut na wypełnienie krótkiej ankiety online."
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "Take the survey"
 msgstr "Weź udział w ankiecie"
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 #, php-format
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
 msgstr "Twój %s Hub właśnie otrzymał potężną aktualizację!"
 
-#: inc/dashboard/blocks/whats-new/index.php
+#: inc/dashboard/elements/whats-new/index.php
 msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
 msgstr "Właśnie wprowadziliśmy zupełnie nową zakładkę \"Narzędzia i bezpieczeństwo\"! Wszystkie funkcje i interfejsy użytkownika z poprzedniej wtyczki bezpieczeństwa znalazły tutaj swój nowy dom, dzięki czemu wszystko jest bardziej scentralizowane i łatwiejsze w zarządzaniu. Ponadto dostępna jest nowa funkcja strony konserwacji, którą można włączyć w dowolnym momencie."
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/dashboard/elements/vulnerability/index.php
 msgid "An error occurred while fetching the vulnerability data."
 msgstr ""
 
@@ -788,4 +788,16 @@ msgstr ""
 
 #: inc/wpscan/views/summary.php
 msgid "Learn more"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Advanced"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "%s Hub as WordPress Admin start page"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
 msgstr ""

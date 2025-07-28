@@ -23,8 +23,8 @@ class ClassNBATest extends \WP_UnitTestCase {
     parent::setUp();
 
     \activate_plugin('ionos-essentials/ionos-essentials.php');
-    require_once PLUGIN_DIR . '/inc/dashboard/blocks/my-account/index.php';
-    require_once PLUGIN_DIR . '/inc/dashboard/blocks/next-best-actions/class-nba.php';
+    require_once PLUGIN_DIR . '/inc/dashboard/elements/my-account/index.php';
+    require_once PLUGIN_DIR . '/inc/dashboard/elements/next-best-actions/class-nba.php';
   }
 
   function test_nba_action() : void {
