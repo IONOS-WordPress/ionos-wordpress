@@ -2,8 +2,6 @@
 
 namespace ionos\essentials\security;
 
-use const ionos\essentials\PLUGIN_FILE;
-
 const LEAKED_CREDENTIALS_FLAG_NAME = 'ionos_compromised_credentials_check_leak_detected_v2';
 const IONOS_NOREPLY_EMAIL          = 'no-reply@wpservice.io';
 
@@ -41,39 +39,9 @@ if (is_login()) {
     $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     if ('icc_leak_detected' === $action) {
-      \add_action('login_header', function () {
-        printf(
-          '<div class="wrapper">
-            <div class="header">
-                <img class="logo" src="%s" />
-            </div>
-            <div class="container">
-                <div class="content">
-                    <h1 class="headline">%s</h1>
-                    <p>%s</p>
-                    <p><em>%s</em> %s</p>
-                </div>
-            </div>
-        </div>',
-          \plugins_url(
-            'inc/dashboard/data/tenant-logos/' . \get_option('ionos_group_brand', 'ionos') . '.svg',
-            PLUGIN_FILE
-          ),
-          \esc_html__('Security Notice', 'ionos-security'),
-          \esc_html__(
-            "It looks like your password has been compromised. To protect the security of your account, it's crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password.",
-            'ionos-security'
-          ),
-          \esc_html__('Additional Information:', 'ionos-security'),
-          sprintf(
-            \esc_html__(
-              'To check if your password has been compromised we are using the free service %1$s. For that we encrypt your password and send parts of the encryption to the service.',
-              'ionos-security'
-            ),
-            '<a href="https://haveibeenpwned.com/Passwords" target="_blank" rel="nofollow noopener noreferrer">Have I Been Pwned</a>'
-          )
-        );
-      });
+      $mail = filter_input(INPUT_GET, 'mail', FILTER_SANITIZE_EMAIL);
+      include __DIR__ . '/views/password-reset-necessary.php';
+      exit;
     }
   });
 
@@ -120,7 +88,7 @@ if (is_login()) {
 
       \add_filter(
         hook_name : 'ionos_login_redirect_to',
-        callback : function () {
+        callback : function () use ($user) {
           \wp_logout();
 
           $user_login = filter_input(INPUT_POST, 'log');
@@ -132,6 +100,7 @@ if (is_login()) {
 
           $url = \add_query_arg([
             'action' => 'icc_leak_detected',
+            'mail'   => obfuscate_email($user->user_email),
           ], wp_login_url());
 
           \wp_safe_redirect($url);
@@ -161,6 +130,34 @@ if (is_login()) {
     printf('<div class="%s"><p>%s %s</p></div>', \esc_attr($class), \esc_html($message), \esc_url($link));
   }
 });
+
+function obfuscate_email($email)
+{
+  list($user, $domain) = explode('@', $email);
+  $domain_parts        = explode('.', $domain);
+  $tld                 = array_pop($domain_parts);
+  $domain_name         = implode('.', $domain_parts);
+
+  foreach ([&$user, &$domain_name] as &$string) {
+    switch(strlen($string)) {
+      case 1:
+          $string = '*';
+          break;
+      case 2:
+      case 3:
+        $string = substr($string, 0, 1) . str_repeat('*', strlen($string) - 1);
+        break;
+      default:
+        $string = substr($string, 0, 1) . str_repeat('*', max(0, strlen($string) - 2)) . substr($string, -1);
+        break;
+    }
+    unset($string);
+  }
+
+
+
+  return $user . '@' . $domain_name . '.' . $tld;
+}
 
 function is_leaked($password)
 {
