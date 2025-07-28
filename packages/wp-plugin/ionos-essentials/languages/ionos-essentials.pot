@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-25T08:40:29+00:00\n"
+"POT-Creation-Date: 2025-07-28T11:56:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
 
 #. Plugin Name of the plugin
@@ -283,13 +283,11 @@ msgstr ""
 
 #. translators: %s is replaced with the time since the last scan
 #: inc/dashboard/blocks/vulnerability/index.php
-#, php-format
 msgid "%s ago"
 msgstr ""
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php
-#, php-format
 msgid "Welcome to your new %s Hub"
 msgstr ""
 
@@ -311,7 +309,6 @@ msgstr ""
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php
-#, php-format
 msgid "Welcome to your %s Hub"
 msgstr ""
 
@@ -356,7 +353,6 @@ msgid "Take the survey"
 msgstr ""
 
 #: inc/dashboard/blocks/whats-new/index.php
-#, php-format
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
 msgstr ""
 
@@ -452,6 +448,18 @@ msgstr ""
 msgid "Disable login with email addresses. This improves security by reducing the potential attack surface."
 msgstr ""
 
+#: inc/dashboard/tabs/tools.php
+msgid "Advanced"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "%s Hub as WordPress Admin start page"
+msgstr ""
+
+#: inc/dashboard/tabs/tools.php
+msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
+msgstr ""
+
 #: inc/dashboard/view.php
 msgid "Vulnerability scan information"
 msgstr ""
@@ -470,7 +478,6 @@ msgstr ""
 
 #. translators: s=link to control panel
 #: inc/descriptify/index.php
-#, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
 msgstr ""
 
@@ -496,6 +503,22 @@ msgstr ""
 
 #: inc/jetpack-flow/index.php
 msgid "Please wait a moment while we are installing Jetpack Backup for you."
+msgstr ""
+
+#: inc/security/views/password-reset-necessary.php
+msgid "Password Reset Necessary"
+msgstr ""
+
+#: inc/security/views/password-reset-necessary.php
+msgid "Security alert"
+msgstr ""
+
+#: inc/security/views/password-reset-necessary.php
+msgid "We have detected that the password for this WordPress Admin user matches one found in an online database of known compromised passwords. As a precaution, we have disabled access to this account to keep it secure."
+msgstr ""
+
+#: inc/security/views/password-reset-necessary.php
+msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
 msgstr ""
 
 #: inc/switch-page/index.php
@@ -532,7 +555,6 @@ msgstr ""
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: inc/switch-page/view.php
-#, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr ""
 
@@ -714,13 +736,11 @@ msgstr ""
 
 #. Translators: %1$s and %2$s is a placeholder for link.
 #: inc/wpscan/controller/class-wpscan.php
-#, php-format
 msgid "%1$sTurn off this notification here%2$s."
 msgstr ""
 
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
-#, php-format
 msgid "Your %s plugin team"
 msgstr ""
 
@@ -737,14 +757,12 @@ msgid "was updated"
 msgstr ""
 
 #: inc/wpscan/views/issues.php
-#, php-format
 msgid "%d critical issue"
 msgid_plural "%d critical issues"
 msgstr[0] ""
 msgstr[1] ""
 
 #: inc/wpscan/views/issues.php
-#, php-format
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] ""
