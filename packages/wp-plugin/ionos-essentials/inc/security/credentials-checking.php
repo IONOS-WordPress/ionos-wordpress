@@ -2,8 +2,6 @@
 
 namespace ionos\essentials\security;
 
-use const ionos\essentials\PLUGIN_FILE;
-
 const LEAKED_CREDENTIALS_FLAG_NAME = 'ionos_compromised_credentials_check_leak_detected_v2';
 const IONOS_NOREPLY_EMAIL          = 'no-reply@wpservice.io';
 
@@ -41,41 +39,9 @@ if (is_login()) {
     $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     if ('icc_leak_detected' === $action) {
-      \add_action('login_header', function () {
-        $mail = filter_input(INPUT_GET, 'mail', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-        printf(
-          '<div class="wrapper">
-            <div class="header">
-                <img class="logo" src="%s" />
-            </div>
-            <div class="container">
-                <div class="content">
-                    <h1 class="headline">%s</h1>
-                    <p>%s</p>
-                    <p><em>%s</em> %s</p>
-                </div>
-            </div>
-        </div>',
-          \plugins_url(
-            'inc/dashboard/data/tenant-logos/' . \get_option('ionos_group_brand', 'ionos') . '.svg',
-            PLUGIN_FILE
-          ),
-          $mail . \esc_html__('Security Notice', 'ionos-security'),
-          \esc_html__(
-            "It looks like your password has been compromised. To protect the security of your account, it's crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password.",
-            'ionos-security'
-          ),
-          \esc_html__('Additional Information:', 'ionos-security'),
-          sprintf(
-            \esc_html__(
-              'To check if your password has been compromised we are using the free service %1$s. For that we encrypt your password and send parts of the encryption to the service.',
-              'ionos-security'
-            ),
-            '<a href="https://haveibeenpwned.com/Passwords" target="_blank" rel="nofollow noopener noreferrer">Have I Been Pwned</a>'
-          )
-        );
-      });
+      $mail = filter_input(INPUT_GET, 'mail', FILTER_SANITIZE_EMAIL);
+      include __DIR__ . '/views/password-leaked.php';
+      exit;
     }
   });
 
@@ -172,7 +138,7 @@ function obfuscate_email($email)
   $tld                 = array_pop($domain_parts);
   $domain_name         = implode('.', $domain_parts);
 
-  $user =  (strlen($user) > 3) ? substr($user, 0, 2) . str_repeat('*', max(0, strlen($user) - 2)) : '***';
+  $user        =  (strlen($user) > 3) ? substr($user, 0, 2) . str_repeat('*', max(0, strlen($user) - 2)) : '***';
   $domain_name = (strlen($domain_name) > 3) ? str_repeat('*', max(0, strlen($domain_name) - 2)) . substr(
     $domain_name,
     -1
@@ -198,7 +164,6 @@ function is_leaked($password)
 
 function has_leaked_flag($user_id)
 {
-  return true; // todo: remove this line when the feature is stable
   return (bool) \get_user_meta($user_id, LEAKED_CREDENTIALS_FLAG_NAME, true);
 }
 

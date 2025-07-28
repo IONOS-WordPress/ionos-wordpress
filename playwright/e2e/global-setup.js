@@ -15,7 +15,7 @@ async function globalSetup(config) {
 
   // Reset the test environment before running the tests.
   await Promise.all([
-    requestUtils.activateTheme('twentytwentyfive'),
+    //requestUtils.activateTheme('twentytwentyfive'),
     // @FIXME: activate all plugins
     requestUtils.activatePlugin('essentials'),
     // // Disable this test plugin as it's conflicting with some of the tests.
