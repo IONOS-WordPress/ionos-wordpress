@@ -138,11 +138,23 @@ function obfuscate_email($email)
   $tld                 = array_pop($domain_parts);
   $domain_name         = implode('.', $domain_parts);
 
-  $user        =  (strlen($user) > 3) ? substr($user, 0, 2) . str_repeat('*', max(0, strlen($user) - 2)) : '***';
-  $domain_name = (strlen($domain_name) > 3) ? str_repeat('*', max(0, strlen($domain_name) - 2)) . substr(
-    $domain_name,
-    -1
-  ) : '***';
+  foreach ([&$user, &$domain_name] as &$string) {
+    switch(strlen($string)) {
+      case 1:
+          $string = '*';
+          break;
+      case 2:
+      case 3:
+        $string = substr($string, 0, 1) . str_repeat('*', strlen($string) - 1);
+        break;
+      default:
+        $string = substr($string, 0, 1) . str_repeat('*', max(0, strlen($string) - 2)) . substr($string, -1);
+        break;
+    }
+    unset($string);
+  }
+
+
 
   return $user . '@' . $domain_name . '.' . $tld;
 }

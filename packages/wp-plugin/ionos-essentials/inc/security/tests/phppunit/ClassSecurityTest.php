@@ -29,7 +29,7 @@ class ClassSecurityTest extends \WP_UnitTestCase
     $this->assertEquals('w*******s@e*****e.com', obfuscate_email('wordpress@example.com'));
     $this->assertEquals('h***z@k*****p.de', obfuscate_email('heinz@ketchup.de'));
     $this->assertEquals('m*@h*******r.org', obfuscate_email('me@hpbaxxter.org'));
-    $this->assertEquals('e**a@m***o.uk', obfuscate_email('erika@me.co.uk'));
+    $this->assertEquals('e***a@m***o.uk', obfuscate_email('erika@me.co.uk'));
     $this->assertEquals('a*@c*.com', obfuscate_email('ab@cd.com'));
     $this->assertEquals('m**@m********n.de', obfuscate_email('max@mustermann.de'));
     $this->assertEquals('m**@m**.de', obfuscate_email('min@max.de'));
