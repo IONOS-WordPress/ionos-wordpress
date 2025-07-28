@@ -74,7 +74,7 @@ class WPScan
       count($this->get_issues()),
       (1 === count($this->get_issues())) ? esc_html__('issue found', 'ionos-essentials') :
       esc_html__('issues found', 'ionos-essentials'),
-      esc_url(admin_url('admin.php?page=' . $brand . '#tools')),
+      esc_url(admin_url('admin.php?page==brandhub#tools')),
       esc_html__('More information', 'ionos-essentials')
     );
   }
@@ -170,7 +170,6 @@ class WPScan
       'ionosWPScanThemes',
       [
         'slugs' => array_column($issues, 'slug'),
-        'brand' => strtolower(get_option('ionos_group_brand', 'ionos')),
         'i18n'  => [
           'issues_found'  => __('The vulnerability scan has found issues', 'ionos-essentials'),
           'no_activation' => __('Activation is not recommended', 'ionos-essentials'),
@@ -212,7 +211,7 @@ class WPScan
       esc_attr('notice-error'),
       esc_html__('The vulnerability scan has found issues for', 'ionos-essentials'),
       esc_html($plugin_data['Name']),
-      esc_url(admin_url('admin.php?page=' . $brand . '#tools')),
+      esc_url(admin_url('admin.php?page=brandhub#tools')),
       esc_html__('More information', 'ionos-essentials')
     );
   }
@@ -311,7 +310,6 @@ class WPScan
 
   private function get_mail_content(array $vulnerable_plugins): string
   {
-    $tenant             = \get_option('ionos_group_brand', 'ionos');
     $mail               = '<p>' . __('Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:', 'ionos-essentials') . '</p>';
     $mail              .= '<ul>';
     foreach ($vulnerable_plugins as $plugin) {
@@ -320,12 +318,12 @@ class WPScan
     $mail .= '</ul>';
 
     $mail .= '<p>' . __('To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:', 'ionos-essentials');
-    $mail .= '<br><a href="' . admin_url('admin.php?page=' . $tenant . '#tools') . '">' . admin_url() . '</a></p>';
+    $mail .= '<br><a href="' . admin_url('admin.php?page=brandhub#tools') . '">' . admin_url() . '</a></p>';
 
     $mail .= '<p>' . \sprintf(
       // Translators: %1$s and %2$s is a placeholder for link.
       __('%1$sTurn off this notification here%2$s.', 'ionos-essentials'),
-      '<a href="' . admin_url('admin.php?page=' . $tenant . '#tools') . '">',
+      '<a href="' . admin_url('admin.php?page=brandhub#tools') . '">',
       '</a>'
     ) . '</p>';
 

@@ -9,7 +9,7 @@ test.describe('options', () => {
   });
 
   test('expect issues to be displayed', async ({ admin, page }) => {
-    await admin.visitAdminPage('?page=ionos#tools');
+    await admin.visitAdminPage('?page=brandhub#tools');
     const body = page.locator('body');
 
     await expect(body).toContainText('1 critical issue');

@@ -89,7 +89,7 @@ if (\get_transient('ionos_security_migrated_notice_show')) {
 
     $notice = sprintf(
       __('The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href="%s">Tools & Security</a> of our new Hub.', 'ionos-security'),
-      \esc_url(\admin_url() . '?page=' . \get_option('ionos_group_brand', 'ionos') . '#tools')
+      \esc_url(\admin_url() . '?page=brandhub#tools')
     );
 
     printf(

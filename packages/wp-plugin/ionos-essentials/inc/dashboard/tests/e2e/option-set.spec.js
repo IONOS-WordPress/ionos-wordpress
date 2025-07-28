@@ -9,7 +9,7 @@ test.describe('options', () => {
   });
 
   test('user can set option', async ({ admin, page }) => {
-    await admin.visitAdminPage('?page=ionos#tools');
+    await admin.visitAdminPage('?page=brandhub#tools');
     const body = page.locator('body');
     const toggle = body.locator('#IONOS_SECURITY_FEATURE_OPTION_PEL');
 

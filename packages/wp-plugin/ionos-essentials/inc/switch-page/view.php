@@ -69,7 +69,7 @@ $config = $configs[$tenant] ?? reset($configs);
         </div>
         <div class="option">
           <a href="<?php echo \esc_attr(
-            \admin_url('admin.php?page=' . strtolower(\get_option('ionos_group_brand_menu', 'ionos')))
+            \admin_url('admin.php?page=brandhub')
           ); ?>" class="link-btn">
             <div class="option-content">
               <img src="<?php echo \esc_url(\plugins_url('assets/user-interface.png', __FILE__)); ?>" alt="User Interface Illustration"/>
