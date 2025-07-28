@@ -1,0 +1,287 @@
+@import 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.css';
+
+.with-issues-only, .with-issues-only-flex{
+  display: none;
+}
+.without-issues-only{
+  display: block;
+}
+
+main{
+  scrollbar-gutter: stable;
+
+  &.issues-found{
+    .may-have-issue-dot{
+      position: relative;
+      &::after{
+        content: '';
+        display: inline-block;
+        width: 0.6em;
+        height: 0.6em;
+        border-radius: 50%;
+        background: #cc1818;
+        position: relative;
+        top: -0.5em;
+        left: 0.2em;
+      }
+    }
+    .with-issues-only{
+      display: block;
+    }
+    .with-issues-only-flex{
+      display: flex;
+    }
+    .without-issues-only{
+      display: none;
+    }
+  }
+}
+
+.color--success{
+  color: var(--success-text-color, #096b35);
+}
+
+.button{
+  white-space: nowrap;
+  margin-bottom: 5px;
+}
+
+.grid-col:empty{
+  display: none !important;
+}
+
+.sheet__section{
+  border-bottom: 1px solid #DBE2E8;
+  &:last-child{
+    border-bottom: none;
+  }
+}
+
+
+.ionos-tab{
+  display: none;
+
+  &.active{
+    display: block;
+  }
+}
+
+#essentials-welcome_block{
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.95);
+  border: 0;
+  padding: 0;
+
+  .dialog__content{
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+    height: 100%;
+  }
+
+  .welcome-card{
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 800px;
+    height: fit-content;
+    display: flex;
+    border: 2px solid black;
+  }
+
+  @media (max-width: 666px) {
+    .welcome-card{
+      height: 600px;;
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+
+.ionos_next_best_actions{
+  background: white;
+  margin-bottom: 2em;
+  border-radius: 16px;
+  padding-top: 2em;
+  margin-left: 15px;
+
+  .card{
+    background: rgb(244, 247, 250);
+  }
+  & > *:nth-child(n+8) {
+    display: none;
+  }
+
+  .nba-card{
+    .card__section{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+  }
+
+  .ionos_nba_dismissed{
+    transform: scale(0.7);
+    opacity: 0;
+    transition: all 0.75s ease-in-out;
+  }
+}
+
+.ionos_vulnerability{
+  container-type: inline-size !important;
+  container: ionos_vulnerability;
+  background-color: #edfaef;
+
+  .ionos_vulnerability__content{
+    flex-direction: column;
+    justify-content: space-between;
+    background-image: url('assets/security/none.svg');
+    background-repeat: no-repeat;
+    background-position: top right;
+    gap: 18px;
+  }
+
+  .bubble{
+    background-color: #4ab866;
+    color: #000;
+    border-radius: 50%;
+    padding: 0.2em 0.5em;
+    font-size: 0.8em;
+    margin-right: 0.5em;
+  }
+
+  /* Respect the order of this definition, as high overwrites medium */
+  &.medium{
+    background-color: #fcf9e8;
+    .ionos_vulnerability__content{
+      background-image: url('assets/security/medium.svg');
+    }
+  }
+  &.high{
+    background-color: #fcf0f1;
+    .ionos_vulnerability__content{
+      background-image: url('assets/security/high.svg');
+    }
+  }
+
+  .issue-row.high .bubble{
+    background-color: #cc1818;
+    color: white;
+  }
+  .issue-row.medium .bubble{
+    background-color: #f0b849;
+  }
+}
+
+@container ionos_vulnerability (max-width: 400px) {
+  .ionos_vulnerability .ionos_vulnerability__content{
+    background-image: none;
+  }
+}
+
+.ionos_buttons_same_width{
+  container-type: inline-size !important;
+  container: ionos_buttons_same_width;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  a{
+    min-width: 27%;
+    justify-content: flex-start;
+  }
+  a:nth-child(3n) {
+    margin-right: 0;
+  }
+}
+@container ionos_buttons_same_width (max-width: 800px) {
+  .ionos_buttons_same_width{
+    a{
+      min-width: 40%;
+    }
+    a:nth-child(2n) {
+      margin-right: 0;
+    }
+    a:nth-child(3n) {
+      margin-right: 12px;
+    }
+  }
+}
+@container ionos_buttons_same_width (max-width: 500px) {
+  .ionos_buttons_same_width{
+    a{
+      width: 100%;
+      margin-right: 0 !important;
+    }
+  }
+}
+
+.ionos_banner_buttons{
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 1024px) {
+  .ionos_banner_buttons{
+    flex-direction: column;
+    .button{
+      margin-right: 0;
+    }
+  }
+}
+
+.ionos-maintenance-only {
+  display: none;
+}
+main.ionos-maintenance-mode .ionos-maintenance-only{
+  display: inline-block;
+}
+
+.et-has-tooltip {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+
+  .et-tooltip-anchor {
+    cursor: help;
+  }
+  .et-tooltip-content{
+    background-color: var(--tertiary-background-color-inverted,#718095);
+    border-radius: var(--small-border-radius,8px);
+    box-shadow: var(--primary-shadow,0 2px 8px 0 #71809580);
+    color: var(--white,#fff);
+    cursor: default;
+    line-height: 1.538em;
+    margin-top: 18px;
+    font-size: 14px;
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    text-align: center;
+    transition: margin-top .2s ease-out .25s,opacity .15s ease-out .25s;
+    position: absolute;
+    left: 40px;
+    z-index: 100;
+    width: 300px;
+  }
+
+  &:hover .et-tooltip-content {
+    visibility: visible;
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+
+.sheet{
+  overflow: visible;
+}
+
+.static-overlay__blocker, .static-overlay__container {
+  display: none;
+}
+
+.static-overlay__blocker--active, .static-overlay__container--active {
+  display: flex;
+}

@@ -30,7 +30,7 @@ class NBA
     // actions can be active (and thus shown to the user) for multiple reasons: they are not completed, they are not dismissed, they are not active yet, ...
     if ('active' === $property) {
       $status = $this->_get_status();
-      if (isset($status['completed']) && $status['completed'] || isset($status['dismissed']) && $status['dismissed']) {
+      if (($status['completed'] ?? false) || ($status['dismissed'] ?? false)) {
         return false;
       }
       return ! $this->completed;
@@ -83,7 +83,7 @@ class NBA
   }
 }
 
-$data = \ionos\essentials\dashboard\blocks\deep_links\get_deep_links_data();
+$data = \ionos\essentials\dashboard\blocks\my_account\get_account_data();
 
 if (null !== $data) {
 
@@ -252,3 +252,14 @@ NBA::register(
   anchor: \__('Add Favicon', 'ionos-essentials'),
   completed: 0 < intval(\get_option('site_icon', 0))
 );
+
+// for($i = 1; $i <= 12; $i++) {
+//   NBA::register(
+//     id: 'dosth' . $i,
+//     title: 'Do something ' . $i,
+//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+//     link: '#',
+//     anchor: 'Hier klicken',
+//     completed: false
+//   );
+// }

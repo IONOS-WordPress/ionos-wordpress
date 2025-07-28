@@ -13,6 +13,11 @@
 namespace ionos\essentials\migration;
 
 use const ionos\essentials\PLUGIN_FILE;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_PEL;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
 
 /*
  * wp option where the installation data is stored
@@ -64,6 +69,10 @@ function _install()
       return;
 
     case version_compare($last_installed_version, '1.0.0', '<'):
+
+      // keep consent for ionos loop to use it later on in dashboard
+      $ionos_loop_consent_given = \get_option('ionos_loop_consent', false);
+
       $plugins_to_remove = [
         'ionos-loop/ionos-loop.php',
         'ionos-journey/ionos-journey.php',
@@ -71,6 +80,9 @@ function _install()
       ];
       \deactivate_plugins($plugins_to_remove);
       \delete_plugins($plugins_to_remove);
+
+      // re add ionos loop consent data
+      \add_option('ionos_loop_consent', $ionos_loop_consent_given);
       // no break because we want to run all migrations sequentially
     case version_compare($last_installed_version, '1.0.4', '<'):
       \update_option('ionos_migration_step', 1);
@@ -81,30 +93,46 @@ function _install()
       \delete_plugins(['ionos-assistant/ionos-assistant.php']);
       update_plugin('ionos-marketplace/ionos-marketplace.php', false);
       \update_option('ionos_migration_step', 2);
+      // no break
+    case version_compare($last_installed_version, '1.1.0', '<'):
+      \deactivate_plugins('ionos-security/ionos-security.php');
+      \delete_plugins(['ionos-security/ionos-security.php']);
+      \set_transient('ionos_security_migrated_notice_show', true, 3 * MONTH_IN_SECONDS);
+
+      $xmlrpc_guard_enabled      = 1 === \get_option('xmlrpc_guard_enabled', 1);
+      $pel_enabled               = 1 === get_option('pel_enabled', 1);
+      $credentials_check_enabled = 1 === get_option('credentials_check_enabled', 1);
+
+      \delete_option('xmlrpc_guard_enabled');
+      \delete_option('pel_enabled');
+      \delete_option('credentials_check_enabled');
+
+      // @TODO: migrate wpscan option for mail notification
+
+      $security_options                                                     = IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
+      $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]               = $xmlrpc_guard_enabled;
+      $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL]                  = $pel_enabled;
+      $security_options[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING] = $credentials_check_enabled;
+
+      \add_option(IONOS_SECURITY_FEATURE_OPTION, $security_options, '', true);
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }
 
 function update_plugin($plugin_slug, $activate = true)
 {
-  if (current_user_can('update_plugins')) {
+  if (\current_user_can('update_plugins')) {
     include_once ABSPATH . 'wp-admin/includes/plugin.php';
     include_once ABSPATH . 'wp-admin/includes/update.php';
     include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 
-    wp_update_plugins();
+    \wp_update_plugins();
 
-    $upgrader = new \Plugin_Upgrader(
-      new class() extends \Automatic_Upgrader_Skin {
-        public function feedback($string, ...$args)
-        {
-        }
-      }
-    );
+    $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
 
     $upgrader->upgrade($plugin_slug);
     if ($activate) {
-      activate_plugin($plugin_slug);
+      \activate_plugin($plugin_slug);
     }
   }
 }

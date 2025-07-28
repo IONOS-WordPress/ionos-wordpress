@@ -1,0 +1,63 @@
+.ionos-maintenance-only {
+  display: none;
+
+  body.ionos-maintenance-mode & {
+    display: block;
+  }
+}
+
+ul li#wp-admin-bar-ionos_maintenance_mode{
+  padding-top: 6px;
+
+  a,
+  &:hover a {
+    background-color: rgb(255, 170, 0) !important;
+    color: rgb(0, 27, 65) !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    border-radius: 2px;
+  }
+}
+
+.has-red-dot{
+  position: relative;
+  &::after{
+    content: '';
+    display: inline-block;
+    width: 0.6em;
+    height: 0.6em;
+    border-radius: 50%;
+    background: #cc1818;
+    position: relative;
+    top: -0.5em;
+    left: 0.2em;
+  }
+}
+
+.ionos-plugin-noshadow {
+  box-shadow: none !important;
+}
+
+
+.active .ionos-no-activation{
+  display: none !important;
+}
+
+.ionos-theme-issues p::before{
+  content: unset;
+}
+
+body.ionos-dashboard{
+  #wpfooter {
+    display: none;
+  }
+
+  #wpbody{
+    margin-left: -20px;
+  }
+
+  #wpwrap{
+    background-color: var(--default-background-color, #f4f7fa);
+  }
+
+}

@@ -12,7 +12,6 @@
   > Organizing packages by _flavor_ makes it easy to decide hwo to build the workspace package.
 
 - a workspace package contains just the code and a `package.json`. The `package.json` is used for
-
   - workspace dependencies declaration
 
   - manage semantic versioning
@@ -64,7 +63,6 @@
 # Let's build a new plugin
 
 - create a new directory `foo` in `./packages/wp-plugin` :
-
   - create a new plugin `foo` :
 
     ```php

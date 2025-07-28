@@ -5,21 +5,17 @@ test.describe('essentials:dashboard next-best-actions block', () => {
   test.beforeAll(async () => {
     try {
       execTestCLI(
-        `wp rewrite structure /%postname% --hard
-      wp user meta delete 1 ionos_essentials_welcome`
+        `wp user meta delete 1 ionos_essentials_welcome`
       );
     } catch (error) {}
   });
 
   test('test welcome banner', async ({ admin, page }) => {
-    // show dashboard and click on dismiss button of "create-page" action
     await admin.visitAdminPage('/');
-    // get the iframe element
-    let iframeLocator = await page.locator('iframe');
-    // get the iframe's body element
-    let iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
 
-    let dialogBox = await iframeBodyLocator.locator('#essentials-welcome_block');
+    const body = await page.locator('body');
+
+    const dialogBox = await body.locator('#essentials-welcome_block');
     await expect(dialogBox).toHaveCount(1);
     await expect(dialogBox).toHaveAttribute('open');
 
@@ -28,13 +24,11 @@ test.describe('essentials:dashboard next-best-actions block', () => {
   });
 
   test('test welcome is still closed', async ({ admin, page }) => {
-    // show dashboard and click on dismiss button of "create-page" action
     await admin.visitAdminPage('/');
 
-    let iframeLocator = await page.locator('iframe');
-    let iframeBodyLocator = await iframeLocator.contentFrame().locator('body');
+    const body = await page.locator('body');
 
-    let dialogBox = await iframeBodyLocator.locator('#essentials-welcome_block');
+    const dialogBox = await body.locator('#essentials-welcome_block');
     await expect(dialogBox).toHaveCount(0);
   });
 });

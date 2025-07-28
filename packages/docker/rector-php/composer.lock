@@ -60,16 +60,16 @@
     },
     {
       "name": "phpstan/phpstan",
-      "version": "2.1.20",
+      "version": "2.1.18",
       "source": {
         "type": "git",
         "url": "https://github.com/phpstan/phpstan.git",
-        "reference": "a9ccfef95210f92ba6feea6e8d1eef42b5605499"
+        "reference": "ee1f390b7a70cdf74a2b737e554f68afea885db7"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a9ccfef95210f92ba6feea6e8d1eef42b5605499",
-        "reference": "a9ccfef95210f92ba6feea6e8d1eef42b5605499",
+        "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ee1f390b7a70cdf74a2b737e554f68afea885db7",
+        "reference": "ee1f390b7a70cdf74a2b737e554f68afea885db7",
         "shasum": ""
       },
       "require": {
@@ -114,7 +114,7 @@
           "type": "github"
         }
       ],
-      "time": "2025-07-26T20:45:26+00:00"
+      "time": "2025-07-17T17:22:31+00:00"
     },
     {
       "name": "rector/rector",
@@ -177,12 +177,75 @@
       "time": "2025-07-17T19:30:06+00:00"
     }
   ],
-  "aliases": [],
-  "minimum-stability": "stable",
-  "stability-flags": {},
-  "prefer-stable": false,
-  "prefer-lowest": false,
-  "platform": {},
-  "platform-dev": {},
-  "plugin-api-version": "2.6.0"
+  "time": "2025-07-26T20:45:26+00:00"
+},
+{
+  "name": "rector/rector",
+  "version": "2.1.2",
+  "source": {
+    "type": "git",
+    "url": "https://github.com/rectorphp/rector.git",
+    "reference": "40a71441dd73fa150a66102f5ca1364c44fc8fff"
+  },
+  "dist": {
+    "type": "zip",
+    "url": "https://api.github.com/repos/rectorphp/rector/zipball/40a71441dd73fa150a66102f5ca1364c44fc8fff",
+    "reference": "40a71441dd73fa150a66102f5ca1364c44fc8fff",
+    "shasum": ""
+  },
+  "require": {
+    "php": "^7.4|^8.0",
+    "phpstan/phpstan": "^2.1.18"
+  },
+  "conflict": {
+    "rector/rector-doctrine": "*",
+    "rector/rector-downgrade-php": "*",
+    "rector/rector-phpunit": "*",
+    "rector/rector-symfony": "*"
+  },
+  "suggest": {
+    "ext-dom": "To manipulate phpunit.xml via the custom-rule command"
+  },
+  "bin": [
+    "bin/rector"
+  ],
+  "type": "library",
+  "autoload": {
+    "files": [
+      "bootstrap.php"
+    ]
+  },
+  "notification-url": "https://packagist.org/downloads/",
+  "license": [
+    "MIT"
+  ],
+  "description": "Instant Upgrade and Automated Refactoring of any PHP code",
+  "homepage": "https://getrector.com/",
+  "keywords": [
+    "automation",
+    "dev",
+    "migration",
+    "refactoring"
+  ],
+  "support": {
+    "issues": "https://github.com/rectorphp/rector/issues",
+    "source": "https://github.com/rectorphp/rector/tree/2.1.2"
+  },
+  "funding": [
+    {
+      "url": "https://github.com/tomasvotruba",
+      "type": "github"
+    }
+  ],
+  "time": "2025-07-17T19:30:06+00:00"
+}
+],
+"aliases": [],
+"minimum-stability": "stable",
+"stability-flags": {},
+"prefer-stable": false,
+"prefer-lowest": false,
+"platform": {},
+"platform-dev": {},
+"plugin-api-version": "2.6.0"
 }
