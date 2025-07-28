@@ -2,17 +2,12 @@
 
 namespace ionos\essentials\security;
 
-use const ionos\essentials\PLUGIN_DIR;
-use const ionos\essentials\PLUGIN_FILE;
-
 // exit if accessed directly
 if (! defined('ABSPATH')) {
   exit();
 }
 
-const IONOS_SSL_CHECK_NOTICE_DISMISSED = 'ionos-ssl-check-notice-dismissed';
-
-if (! \get_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED)) {
+if (! \get_transient('ionos-ssl-check-notice-dismissed')) {
   \add_action('admin_notices', function () {
     if (is_ssl()) {
       return;
@@ -33,24 +28,9 @@ if (! \get_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED)) {
       $button
     );
   });
-
-  \add_action(
-    'wp_ajax_ionos-ssl-check-dismiss-notice',
-    fn () => (\set_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED, true, 0) && wp_die())
-  );
-
-  \add_action('admin_enqueue_scripts', function () {
-    wp_enqueue_script(
-      'ionos-security-js',
-      plugins_url('inc/security/security.js', PLUGIN_FILE),
-      [],
-      filemtime(PLUGIN_DIR . '/inc/security/security.js'),
-      true
-    );
-
-    wp_localize_script('ionos-security-js', 'ionosSecurityWpData', [
-      'nonce'              => wp_create_nonce('wp_rest'),
-      'ajaxUrl'            => admin_url('admin-ajax.php'),
-    ]);
-  });
 }
+
+\add_action(
+  'wp_ajax_ionos-ssl-check-dismiss-notice',
+  fn () => (\set_transient('ionos-ssl-check-notice-dismissed', true, 0) && wp_die())
+);
