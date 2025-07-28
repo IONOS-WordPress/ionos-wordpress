@@ -95,7 +95,7 @@ class WPScan
 
     wp_localize_script(
       'ionos-wpscan-theme-install',
-      'ionosWPScanThemes',
+      'ionosWPScanThemesInstall',
       [
         'issues'  => $this->get_issues(),
         'ajaxUrl' => admin_url('admin-ajax.php'),
