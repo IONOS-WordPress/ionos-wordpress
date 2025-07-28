@@ -225,6 +225,8 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
 
     wp --quiet option update WPLANG 'en_US'
 
+    wp option set ionos_security_wpscan_token REUsc3RyYXRvLDk3MmVjMTVjLWIxODktNDFjYy05NDc5LTc1MDBjZGEwNzE3Ng==.DSYUDXypGgaCuHJCOJCIzLQr56FEQAA/laElkceoQCa4QpyE09CKrpjmkF48iIg0An523lrKXIU8OC9Q4Tdqkw==
+
     # set the default admin password to the password defined in .env file
     wp --quiet user update admin --user_pass="${WP_PASSWORD}"
     # reset the user meta for compromised credentials check (in case of wp-env restart)

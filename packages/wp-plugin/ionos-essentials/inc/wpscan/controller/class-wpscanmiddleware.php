@@ -60,6 +60,7 @@ class WPScanMiddleware
     $url   = self::URL;
     $token = \get_option('ionos_security_wpscan_token', '');
     if (empty($token)) {
+      error_log('WPScan middleware error: No API token found');
       return false;
     }
 
