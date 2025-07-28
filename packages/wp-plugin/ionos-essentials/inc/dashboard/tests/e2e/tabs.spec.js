@@ -2,7 +2,7 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 test.describe('Tabs', () => {
 
-  test.skip('user can switch between tabs', async ({ admin, page }) => {
+  test('user can switch between tabs', async ({ admin, page }) => {
     await admin.visitAdminPage('/');
 
     const body = await page.locator('body');

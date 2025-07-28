@@ -8,7 +8,7 @@ test.describe('options', () => {
     `);
   });
 
-  test.skip('user can set option', async ({ admin, page }) => {
+  test('user can set option', async ({ admin, page }) => {
     await admin.visitAdminPage('?page=ionos#tools');
     const body = page.locator('body');
     const toggle = body.locator('#IONOS_SECURITY_FEATURE_OPTION_PEL');

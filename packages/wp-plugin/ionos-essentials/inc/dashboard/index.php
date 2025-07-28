@@ -58,8 +58,8 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 
   \add_submenu_page(
     parent_slug: ADMIN_PAGE_SLUG,
-    page_title : __('Tools', 'ionos-essentials'),
-    menu_title : __('Tools', 'ionos-essentials'),
+    page_title : __('Tools and security', 'ionos-essentials'),
+    menu_title : __('Tools and security', 'ionos-essentials'),
     capability : REQUIRED_USER_CAPABILITIES,
     menu_slug  : 'admin.php?page=' . ADMIN_PAGE_SLUG . '#tools'
   );
@@ -80,18 +80,20 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 
 // we want to be presented as "default page" in wp-admin
 // redirect to our custom dashboard page if /wp-admin/ is requested
-\add_action('load-index.php', function () {
-  if (\current_user_can(REQUIRED_USER_CAPABILITIES)) {
-    $current_url = \home_url($_SERVER['REQUEST_URI']);
-    $admin_url   = \get_admin_url();
+if (\get_option('ionos_essentials_dashboard_mode', true)) {
+  \add_action('load-index.php', function () {
+    if (\current_user_can(REQUIRED_USER_CAPABILITIES)) {
+      $current_url = \home_url($_SERVER['REQUEST_URI']);
+      $admin_url   = \get_admin_url();
 
-    if ($current_url !== $admin_url) { // only redirect if we are on empty /wp-admin/
-      return;
+      if ($current_url !== $admin_url) { // only redirect if we are on empty /wp-admin/
+        return;
+      }
+
+      \wp_safe_redirect(\menu_page_url(ADMIN_PAGE_SLUG, false));
     }
-
-    \wp_safe_redirect(\menu_page_url(ADMIN_PAGE_SLUG, false));
-  }
-});
+  });
+}
 
 // fixes the displayed page title for our custom admin page.
 \add_filter(
@@ -104,6 +106,13 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   },
   accepted_args : 2
 );
+
+add_filter('admin_body_class', function ($classes) {
+  if (ADMIN_PAGE_HOOK === \get_current_screen()?->id) {
+    $classes .= ' ionos-dashboard';
+  }
+  return $classes;
+});
 
 \add_action('rest_api_init', function () {
   \register_rest_route(
@@ -210,6 +219,9 @@ const REQUIRED_USER_CAPABILITIES = 'read';
       'installing'  => esc_html__('Installing...', 'ionos-essentials'),
       'activated'   => esc_html__('activated.', 'ionos-essentials'),
       'deactivated' => esc_html__('deactivated.', 'ionos-essentials'),
+      'updating'    => esc_html__('updating...', 'ionos-essentials'),
+      'deleting'    => esc_html__('deleting...', 'ionos-essentials'),
+      'loading'     => esc_html__('Loading content ...', 'ionos-essentials'),
     ],
   ]);
 });
@@ -245,5 +257,14 @@ const REQUIRED_USER_CAPABILITIES = 'read';
     ]
   );
 }, 1);
+
+add_action('admin_enqueue_scripts', function () {
+  wp_enqueue_style(
+    'ionos-maintenance-mode-admin',
+    plugin_dir_url(__FILE__) . 'outside-shadow-dom.css',
+    [],
+    filemtime(plugin_dir_path(__FILE__) . 'outside-shadow-dom.css')
+  );
+});
 
 require_once __DIR__ . '/blocks/quick-links/index.php';

@@ -7,9 +7,7 @@ if (! defined('ABSPATH')) {
   exit();
 }
 
-const IONOS_SSL_CHECK_NOTICE_DISMISSED = 'ionos-ssl-check-notice-dismissed';
-
-if (! \get_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED)) {
+if (! \get_transient('ionos-ssl-check-notice-dismissed')) {
   \add_action('admin_notices', function () {
     if (is_ssl()) {
       return;
@@ -30,9 +28,9 @@ if (! \get_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED)) {
       $button
     );
   });
-
-  \add_action(
-    'wp_ajax_ionos-ssl-check-dismiss-notice',
-    fn () => \set_transient(IONOS_SSL_CHECK_NOTICE_DISMISSED, true, 0)
-  );
 }
+
+\add_action(
+  'wp_ajax_ionos-ssl-check-dismiss-notice',
+  fn () => (\set_transient('ionos-ssl-check-notice-dismissed', true, 0) && wp_die())
+);

@@ -26,7 +26,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
                       <span class="badge badge--warning-solid ionos-maintenance-only"><?php \esc_html_e('Active', 'ionos-essentials'); ?></span>
                 </h2>
                     <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
-                        <?php \esc_html_e('Temporarily block public access to your site with a maintenance page.', 'post'); ?>
+                        <?php \esc_html_e('Temporarily block public access to your site with a maintenance page.', 'ionos-essentials'); ?>
                     </p>
                     <a href="<?php echo \esc_url(
                       \plugins_url('ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)
@@ -50,37 +50,48 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
                     </span>
                 </div>
             </div>
-          </section>
         </div>
 
-        <h3 class="headline headline--sub"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
+        <?php if (! \ionos\essentials\wpscan\get_wpscan()->has_error()) { ?>
+        <h3 class="headline headline--sub may-have-issue-dot"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
           <div class="sheet">
               <div class="grid">
-                <div class="grid-col grid-col--4 grid-col--small-12">
+                <div class="grid-col grid-col--6 grid-col--small-12">
                   <section class="sheet__section">
-                    <?php blocks\vulnerability\render_callback(); ?>
+                    <?php \ionos\essentials\wpscan\views\summary(); ?>
                   </section>
                 </div>
-                <div class="grid-col grid-col--8 grid-col--small-12">
+                <div class="grid-col grid-col--6 grid-col--small-12">
                 <?php
-                $description=  sprintf('<strong style="font-size: 1.2em">%s</strong>
-                      <br><br>
+                $description=  sprintf('
+                      <p class="paragraph paragraph--small paragraph--minor">%s</p>
+                      <p class="paragraph paragraph--large paragraph-bold">%s</p>
                       <a href="%s" class="link link--action">%s</a>',
-                  get_option('admin_email'),
+                  \esc_html__('Vulnerabilities detected are being emailed to', 'ionos-essentials'),
+                  \get_option('admin_email'),
                   admin_url('options-general.php'),
                   \esc_html__('Change email address', 'ionos-essentials')
                 );
 
-render_section([
-  'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
-  'id'           => IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY,
-  'description'  => $description,
-  'checked'      => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY) ? 'checked' : '',
-]);
-?>
+          render_section([
+            'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
+            'id'           => IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY,
+            'description'  => $description,
+            'checked'      => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY) ? 'checked' : '',
+          ]);
+          ?>
                 </div>
+                   <?php
+          \ionos\essentials\wpscan\views\issues([
+            'type'      => 'critical',
+          ]);
+          \ionos\essentials\wpscan\views\issues([
+            'type'      => 'warning',
+          ]);
+          ?>
               </div>
             </div>
+        <?php } ?>
 
         <div class="sheet">
             <div>
@@ -120,6 +131,46 @@ render_section([
 
           </div>
         </div>
+
+        <h3 class="headline headline--sub"><?php \esc_html_e('Advanced', 'ionos-essentials'); ?></h3>
+                <div class="sheet">
+          <section class="sheet__section">
+            <div class="grid">
+                <div class="grid-col grid-col--8 grid-col--small-12">
+                    <h2 class="headline headline--sub headline--cropped">
+                      <?php
+                      $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
+printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), $brand_name);
+?>
+
+                </h2>
+                    <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
+                        <?php
+  printf(\esc_html__(
+    'Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience.',
+    'ionos-essentials',
+  ), $brand_name);
+?>
+                    </p>
+                </div>
+                <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
+                    <span class="input-switch">
+                        <input id="ionos_essentials_dashboard_mode" type="checkbox" data-description="<?php printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), $brand_name); ?>"
+                        <?php if (\get_option('ionos_essentials_dashboard_mode', true)) {
+                          echo 'checked';
+                        } ?>
+                        >
+                        <label>
+                            <span class="input-switch__on"></span>
+                            <span class="input-switch__toggle"></span>
+                            <span class="input-switch__off"></span>
+                        </label>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
       </div>
     </div>
   </div>
@@ -161,4 +212,3 @@ function get_settings_value($key)
 
   return $options[$key] ?? false;
 }
-?>
