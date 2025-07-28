@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php esc_html_e('Password Leaked', 'ionos-essentials'); ?></title>
+  <title><?php esc_html_e('Password Reset Necessary', 'ionos-essentials'); ?></title>
   <?php
   use const ionos\essentials\PLUGIN_DIR;
 

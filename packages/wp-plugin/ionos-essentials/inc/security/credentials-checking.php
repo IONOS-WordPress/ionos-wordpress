@@ -40,7 +40,7 @@ if (is_login()) {
 
     if ('icc_leak_detected' === $action) {
       $mail = filter_input(INPUT_GET, 'mail', FILTER_SANITIZE_EMAIL);
-      include __DIR__ . '/views/password-leaked.php';
+      include __DIR__ . '/views/password-reset-necessary.php';
       exit;
     }
   });
