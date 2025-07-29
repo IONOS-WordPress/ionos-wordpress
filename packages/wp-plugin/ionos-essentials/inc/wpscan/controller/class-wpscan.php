@@ -10,13 +10,13 @@ class WPScan
 {
   private array|bool $issues;
 
-  private bool $error = false;
+  private array $error = [];
 
   public function __construct()
   {
     $this->issues = \get_transient('ionos_wpscan_issues');
 
-    if (false === $this->issues) {
+    if (false === $this->issues || ! is_array($this->issues)) {
       $this->get_new_middleware_data();
       $this->maybe_send_email();
     }
@@ -226,7 +226,7 @@ class WPScan
     return human_time_diff($last_run, time());
   }
 
-  public function has_error()
+  public function get_error()
   {
     return $this->error;
   }
@@ -270,10 +270,11 @@ class WPScan
   {
     $middleware   = new WPScanMiddleware();
     $data         = $middleware->download_wpscan_data();
+
     if (empty($data) || ! is_array($data)) {
       error_log('WPScan middleware: No data received');
-      $this->issues = [];
-      $this->error  = true;
+      $this->issues           = [];
+      $this->error['message'] = $middleware->get_error_message();
       return;
     }
     $data         = $middleware->convert_middleware_data($data);

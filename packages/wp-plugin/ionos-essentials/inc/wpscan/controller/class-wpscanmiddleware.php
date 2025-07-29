@@ -6,10 +6,13 @@ class WPScanMiddleware
 {
   private const URL = 'https://webapps-vuln-scan.hosting.ionos.com/api/v1/vulnerabilities';
 
+  private ?string $error = null;
+
   public function get_instant_data(string $type, string $slug): bool|string
   {
     $token = \get_option('ionos_security_wpscan_token', '');
     if (empty($token)) {
+      $this->error = \esc_html__('Vulnerability Scan not possible. Please contact Customer Care.', 'ionos-essentials');
       return false;
     }
 
@@ -59,7 +62,9 @@ class WPScanMiddleware
   {
     $url   = self::URL;
     $token = \get_option('ionos_security_wpscan_token', '');
+
     if (empty($token)) {
+      $this->error = __('Vulnerability Scan not possible. Please contact Customer Care.', 'ionos-essentials');
       return false;
     }
 
@@ -131,6 +136,11 @@ class WPScanMiddleware
     }
 
     return $converted;
+  }
+
+  public function get_error_message(): string
+  {
+    return $this->error ?? __('An error occurred while fetching the vulnerability data.', 'ionos-essentials');
   }
 
   /**
