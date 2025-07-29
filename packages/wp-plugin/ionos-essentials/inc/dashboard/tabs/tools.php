@@ -52,8 +52,9 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
             </div>
         </div>
 
-        <?php if (! \ionos\essentials\wpscan\get_wpscan()->has_error()) { ?>
         <h3 class="headline headline--sub may-have-issue-dot"><?php \esc_html_e('Website security', 'ionos-essentials'); ?></h3>
+
+        <?php if (! \ionos\essentials\wpscan\get_wpscan()->has_error()) { ?>
           <div class="sheet">
               <div class="grid">
                 <div class="grid-col grid-col--6 grid-col--small-12">
