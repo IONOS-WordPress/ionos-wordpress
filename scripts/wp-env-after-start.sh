@@ -222,6 +222,7 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
 
     # emulate ionos brand by default
     wp --quiet option update ionos_group_brand ionos
+    wp --quiet option update ionos_group_brand_menu Ionos
 
     wp --quiet option update WPLANG 'en_US'
 
