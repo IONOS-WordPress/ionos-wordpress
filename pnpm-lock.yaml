@@ -132,7 +132,7 @@ importers:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
       storybook:
-        specifier: ^9.0.17
+        specifier: ^9.0.16
         version: 9.0.17(@testing-library/dom@10.4.0)(prettier@3.6.2)
       stylelint:
         specifier: ^16.21.1
