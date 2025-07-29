@@ -1,12 +1,5 @@
 # @ionos-wordpress/essentials
 
-## 1.0.10
-
-### Patch Changes
-
-- f5fb5b9: add survey for IONOS customers
-- f5fb5b9: correctly brand login page
-
 ## 1.0.9
 
 ### Patch Changes
