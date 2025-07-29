@@ -67,7 +67,6 @@ class WPScanMiddleware
       $this->error = __('Vulnerability Scan not possible. Please contact Customer Care.', 'ionos-essentials');
       return false;
     }
-
     $response = wp_remote_post(
       $url,
       [

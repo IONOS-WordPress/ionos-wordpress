@@ -10,7 +10,7 @@ class WPScan
 {
   private array|bool $issues;
 
-  private array $error = [];
+  private ?string $error = null;
 
   public function __construct()
   {
@@ -270,11 +270,10 @@ class WPScan
   {
     $middleware   = new WPScanMiddleware();
     $data         = $middleware->download_wpscan_data();
-
     if (empty($data) || ! is_array($data)) {
       error_log('WPScan middleware: No data received');
       $this->issues           = [];
-      $this->error['message'] = $middleware->get_error_message();
+      $this->error            = $middleware->get_error_message();
       return;
     }
     $data         = $middleware->convert_middleware_data($data);

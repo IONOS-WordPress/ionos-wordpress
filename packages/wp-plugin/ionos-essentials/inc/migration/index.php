@@ -95,7 +95,7 @@ function _install()
       \update_option('ionos_migration_step', 2);
       // no break
     case version_compare($last_installed_version, '1.1.0', '<'):
-      if( array_key_exists('ionos-security/ionos-security.php', \get_plugins())) {
+      if (array_key_exists('ionos-security/ionos-security.php', \get_plugins())) {
         \deactivate_plugins('ionos-security/ionos-security.php');
         \delete_plugins(['ionos-security/ionos-security.php']);
         \set_transient('ionos_security_migrated_notice_show', true, 3 * MONTH_IN_SECONDS);
