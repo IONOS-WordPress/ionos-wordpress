@@ -224,6 +224,10 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     wp --quiet option update ionos_group_brand ionos
     wp --quiet option update ionos_group_brand_menu IONOS
 
+    if [[ -n "${WPSCAN_TOKEN:-}" ]]; then
+      wp --quiet option update ionos_security_wpscan_token "${WPSCAN_TOKEN}"
+    fi
+
     wp --quiet option update WPLANG 'en_US'
 
     # set the default admin password to the password defined in .env file
