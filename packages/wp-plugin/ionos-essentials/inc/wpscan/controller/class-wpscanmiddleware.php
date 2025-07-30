@@ -6,7 +6,7 @@ class WPScanMiddleware
 {
   private const URL = 'https://webapps-vuln-scan.hosting.ionos.com/api/v1/vulnerabilities';
 
-  private ?string $error = null;
+  private string $error = '';
 
   public function get_instant_data(string $type, string $slug): bool|string
   {
