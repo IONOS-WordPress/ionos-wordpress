@@ -247,7 +247,7 @@ class WPScan
       return false;
     }
 
-    \set_transient('ionos_wpscan_issues_sent_to_user', $unknown_slugs, 6 * MONTH_IN_SECONDS);
+    \set_transient('ionos_wpscan_issues_sent_to_user', $type_and_slugs, 6 * MONTH_IN_SECONDS);
 
     $unknown_names = [];
     foreach ($this->get_issues() as $issue) {
