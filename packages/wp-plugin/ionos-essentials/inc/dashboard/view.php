@@ -105,7 +105,7 @@ use const ionos\essentials\PLUGIN_DIR;
 
 <?php
 if(true){
-  $tenant = 'strato'; //\get_option('ionos_group_brand', 'ionos');
+  $tenant = \get_option('ionos_group_brand', 'ionos');
   $theme_file = PLUGIN_DIR . '/inc/dashboard/exos-themes/' . $tenant . '.css';
   if (file_exists($theme_file)) {
     \wp_register_style(
