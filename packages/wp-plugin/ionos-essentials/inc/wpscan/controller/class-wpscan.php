@@ -17,7 +17,10 @@ class WPScan
     $this->issues = \get_transient('ionos_wpscan_issues');
 
     if (false === $this->issues || ! is_array($this->issues)) {
-      $this->get_new_middleware_data();
+      if( ! $this->get_new_middleware_data()){
+        $this->error = __('An error occurred while fetching the vulnerability data.', 'ionos-essentials');
+        return false;
+      }
       $this->maybe_send_email();
     }
 
@@ -266,7 +269,7 @@ class WPScan
     return true;
   }
 
-  private function get_new_middleware_data()
+  private function get_new_middleware_data() : bool
   {
     $middleware   = new WPScanMiddleware();
     $data         = $middleware->download_wpscan_data();
@@ -274,7 +277,7 @@ class WPScan
       error_log('WPScan middleware: No data received');
       $this->issues           = [];
       $this->error            = $middleware->get_error_message();
-      return;
+      return false;
     }
     $data         = $middleware->convert_middleware_data($data);
 
@@ -284,6 +287,7 @@ class WPScan
     \set_transient('ionos_wpscan_issues', $data, $next_run);
 
     $this->issues = $data;
+    return true;
   }
 
   private function is_update_available($slug): bool
