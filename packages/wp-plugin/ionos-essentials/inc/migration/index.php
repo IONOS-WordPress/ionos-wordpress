@@ -95,9 +95,11 @@ function _install()
       \update_option('ionos_migration_step', 2);
       // no break
     case version_compare($last_installed_version, '1.1.0', '<'):
-      \deactivate_plugins('ionos-security/ionos-security.php');
-      \delete_plugins(['ionos-security/ionos-security.php']);
-      \set_transient('ionos_security_migrated_notice_show', true, 3 * MONTH_IN_SECONDS);
+      if (array_key_exists('ionos-security/ionos-security.php', \get_plugins())) {
+        \deactivate_plugins('ionos-security/ionos-security.php');
+        \delete_plugins(['ionos-security/ionos-security.php']);
+        \set_transient('ionos_security_migrated_notice_show', true, 3 * MONTH_IN_SECONDS);
+      }
 
       $xmlrpc_guard_enabled      = 1 === \get_option('xmlrpc_guard_enabled', 1);
       $pel_enabled               = 1 === get_option('pel_enabled', 1);

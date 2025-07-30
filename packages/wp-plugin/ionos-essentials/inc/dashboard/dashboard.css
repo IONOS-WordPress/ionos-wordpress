@@ -166,6 +166,12 @@ main{
       background-image: url('assets/security/high.svg');
     }
   }
+  &.error{
+    background-color: white;
+    .ionos_vulnerability__content{
+      background-image: none;
+    }
+  }
 
   .issue-row.high .bubble{
     background-color: #cc1818;
