@@ -101,7 +101,7 @@ use const ionos\essentials\PLUGIN_DIR;
 }
 </style>
 
-<template id="ionos_dashboard" shadowrootmode="open" data-exos-theme="strato">
+<template id="ionos_dashboard" shadowrootmode="open">
 
 <?php
 if(true){
