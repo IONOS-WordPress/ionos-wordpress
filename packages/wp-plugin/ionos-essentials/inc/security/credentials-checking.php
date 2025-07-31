@@ -13,7 +13,7 @@ if (! defined('ABSPATH')) {
 \add_action(
   hook_name: 'check_passwords',
   callback: function ($user_login, $pass1, $pass2) {
-    if ($pass1 !== $pass2) {
+    if (empty($pass1) || $pass1 !== $pass2) {
       return;
     }
 
