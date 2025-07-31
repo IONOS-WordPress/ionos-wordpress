@@ -1,18 +1,23 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
+"Project-Id-Version: d0ea35719cfc2d6665fc78926561ea60\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-07-31 07:15+0200\n"
 "Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"Language-Team: Dutch\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-04-16 10:47+0200\n"
-"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
+"X-Crowdin-Project: d0ea35719cfc2d6665fc78926561ea60\n"
+"X-Crowdin-Project-ID: 49\n"
+"X-Crowdin-Language: nl\n"
+"X-Crowdin-File: LOC-8157_NL.po\n"
+"X-Crowdin-File-ID: 524\n"
 
 #. Description of the plugin
 #: ionos-essentials.php
@@ -29,8 +34,7 @@ msgstr "IONOS Groep"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: inc/tenants/config/arsys.php
-#: inc/tenants/config/piensa.php
+#: inc/tenants/config/arsys.php inc/tenants/config/piensa.php
 msgid "My offers"
 msgstr "Mijn aanbiedingen"
 
@@ -46,8 +50,7 @@ msgstr "Mijn producten"
 msgid "My invoices"
 msgstr "Mijn facturen"
 
-#: inc/tenants/config/arsys.php
-#: inc/tenants/config/fasthosts.php
+#: inc/tenants/config/arsys.php inc/tenants/config/fasthosts.php
 #: inc/tenants/config/piensa.php
 msgid "Control Panel"
 msgstr "Bedieningspaneel"
@@ -142,8 +145,7 @@ msgstr "Accountbeheer"
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Toegang tot je klantaccount, beveiligingsinstellingen en pakketten met één klik."
 
-#: inc/dashboard/blocks/banner/index.php
-#: inc/dashboard/index.php
+#: inc/dashboard/blocks/banner/index.php inc/dashboard/index.php
 msgid "Overview"
 msgstr "Overzicht"
 
@@ -468,18 +470,17 @@ msgstr "Onboarding"
 msgid "No thanks"
 msgstr "Geen dank."
 
-#: inc/dashboard/blocks/banner/index.php
-#: inc/dashboard/tabs/tools.php
+#: inc/dashboard/blocks/banner/index.php inc/dashboard/tabs/tools.php
 msgid "Tools"
-msgstr ""
+msgstr "Tools"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Website security"
-msgstr ""
+msgstr "Websitebeveiliging"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerability alerting"
-msgstr ""
+msgstr "Waarschuwing bij kwetsbaarheden"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Change email address"
@@ -487,51 +488,51 @@ msgstr "E-mailadres wijzigen"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Password monitoring"
-msgstr ""
+msgstr "Wachtwoordcontrole"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Monitor password leaks. If a password is suspected to be compromised, you will receive an email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated."
-msgstr ""
+msgstr "Houd gelekte wachtwoorden in de gaten. Als een wachtwoord waarschijnlijk is gelekt, ontvang je een e-mail met instructies om het te wijzigen. Als extra voorzorgsmaatregel wordt het account vergrendeld totdat het wachtwoord is gewijzigd."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Block XML-RPC access"
-msgstr ""
+msgstr "Toegang tot XML-RPC blokkeren"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Block access to XML-RPC, for security purposes we recommend keeping this blocked if not in use."
-msgstr ""
+msgstr "Blokkeer toegang tot XML-RPC. Uit veiligheidsoverwegingen raden we aan dit geblokkeerd te houden als het niet in gebruik is."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Prohibit email login"
-msgstr ""
+msgstr "Inloggen met e-mailadres verbieden"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Disable login with email addresses. This improves security by reducing the potential attack surface."
-msgstr ""
+msgstr "Het inloggen met een e-mailadres wordt niet toegestaan. Dit verbetert de beveiliging door het aantal aanvalsmogelijkheden te verkleinen."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance page"
-msgstr ""
+msgstr "Onderhoudspagina"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Active"
-msgstr ""
+msgstr "Actief"
 
 #: inc/dashboard/index.php
 msgid "activated."
-msgstr ""
+msgstr "geactiveerd."
 
 #: inc/dashboard/index.php
 msgid "deactivated."
-msgstr ""
+msgstr "gedeactiveerd."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance mode"
-msgstr ""
+msgstr "Onderhoudsmodus"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Preview maintenance page"
-msgstr ""
+msgstr "Voorbeeld onderhoudspagina"
 
 #. Plugin URI of the plugin
 #: ionos-essentials.php
@@ -597,21 +598,19 @@ msgstr "Je %s hub heeft een upgrade gekregen!"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
-msgstr ""
-"We hebben een nieuw tabblad \"Tools & beveiliging\" toegevoegd! Alle functies van de vorige beveiligingsplug-in zijn nu hier te vinden, zodat je alles vanuit een plek kunt beheren. Bovendien vind je een nieuwe functie voor onderhoudspagina's, die je kunt inschakelen wanneer nodig.\n"
-"develop"
+msgstr "We hebben een nieuw tabblad \"Tools & beveiliging\" toegevoegd! Alle functies van de vorige beveiligingsplug-in zijn nu hier te vinden, zodat je alles vanuit een plek kunt beheren. Bovendien vind je een nieuwe functie voor onderhoudspagina's, die je kunt inschakelen wanneer nodig."
 
 #: inc/wpscan/views/summary.php
 msgid "Website is safe and secure"
-msgstr ""
+msgstr "Website is veilig"
 
 #: inc/dashboard/index.php
 msgid "updating..."
-msgstr ""
+msgstr "bijwerken..."
 
 #: inc/dashboard/index.php
 msgid "deleting..."
-msgstr ""
+msgstr "verwijderen..."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Important Security Notification: Vulnerability detected in your WordPress website"
@@ -623,19 +622,19 @@ msgstr "Beste gebruiker,<br />We willen je informeren dat onze recente scan éé
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
-msgstr ""
+msgstr "Bekijk de resultaten van de scan en neem eventueel maatregelen om ervoor te zorgen dat je website veilig is en blijft. Bezoek de volgende pagina voor meer informatie over de gevonden kwetsbaarheden:"
 
 #. Translators: %1$s and %2$s is a placeholder for link.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
 msgid "%1$sTurn off this notification here%2$s."
-msgstr ""
+msgstr "%1$sZet deze melding hier uit%2$s."
 
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
 msgid "Your %s plugin team"
-msgstr ""
+msgstr "%s plug-in team"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "More information"
@@ -647,171 +646,170 @@ msgstr "problemen gevonden"
 
 #: inc/dashboard/blocks/vulnerability/index.php
 msgid "An error occurred while fetching the vulnerability data."
-msgstr ""
+msgstr "Er is een fout opgetreden bij het ophalen van de gegevens."
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr ""
+msgstr "Overzichtelijk helpcentrum met een AI-chatbot, rondleidingen en een uitgebreide kennisbank"
 
 #: inc/dashboard/index.php
 msgid "Tools and security"
-msgstr ""
+msgstr "Tools en beveiliging"
 
 #: inc/dashboard/index.php
 msgid "Loading content ..."
-msgstr ""
+msgstr "Inhoud laden ..."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Temporarily block public access to your site with a maintenance page."
-msgstr ""
+msgstr "Maak je website tijdelijk ontoegankelijk met een onderhoudspagina."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerabilities detected are being emailed to"
-msgstr ""
+msgstr "Kwetsbaarheden die zijn gedetecteerd, worden gemaild naar"
 
 #: inc/dashboard/view.php
 msgid "Vulnerability scan information"
-msgstr ""
+msgstr "Informatie over kwetsbaarheidsscan"
 
 #: inc/dashboard/view.php
 msgid "We use the WPScan database to provide security risk scores for plugins and themes."
-msgstr ""
+msgstr "We gebruiken de WPScan-database om risicoscores voor plug-ins en thema's te bieden."
 
 #: inc/dashboard/view.php
 msgid "The scores are on a scale of 1 to 10, where a higher value indicates greater security risk."
-msgstr ""
+msgstr "De scores zijn op een schaal van 1 tot 10, waarbij een hogere waarde een groter risico betekent."
 
 #: inc/dashboard/view.php
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
-msgstr ""
+msgstr "Installaties van plug-ins en thema's zijn niet mogelijk als hun score hoger dan 7 is."
 
-#: inc/wpscan/controller/class-wpscan.php
-#: inc/wpscan/views/summary.php
+#: inc/wpscan/controller/class-wpscan.php inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
-msgstr ""
+msgstr "Kwetsbaarheidsscan"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "issue found"
-msgstr ""
+msgstr "probleem gevonden"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Checking for vulnerabilities..."
-msgstr ""
+msgstr "Controleren op kwetsbaarheden..."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Warnings found. Installation is not recommended."
-msgstr ""
+msgstr "Waarschuwingen gevonden. Installatie wordt niet aanbevolen."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Critical vulnerabilities found! Installation is not possible."
-msgstr ""
+msgstr "Kritieke kwetsbaarheden gevonden! Installatie is niet mogelijk."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this theme."
-msgstr ""
+msgstr "Geen kwetsbaarheden gevonden. Je kunt dit thema veilig installeren."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this plugin."
-msgstr ""
+msgstr "Geen kwetsbaarheden gevonden. Je kunt deze plug-in veilig installeren."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues"
-msgstr ""
+msgstr "De kwetsbaarheidsscan heeft problemen gevonden"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Activation is not recommended"
-msgstr ""
+msgstr "Activatie wordt niet aanbevolen"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues for"
-msgstr ""
+msgstr "De kwetsbaarheidsscan heeft problemen gevonden voor"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No scan has been performed yet."
-msgstr ""
+msgstr "Er is nog geen scan uitgevoerd."
 
 #: inc/wpscan/index.php
 msgid "Active theme cannot be deleted"
-msgstr ""
+msgstr "Actief thema kan niet worden verwijderd"
 
 #: inc/wpscan/index.php
 msgid "was deleted"
-msgstr ""
+msgstr "is verwijderd"
 
 #: inc/wpscan/index.php
 msgid "was updated"
-msgstr ""
+msgstr "is bijgewerkt"
 
 #: inc/wpscan/views/issues.php
 #, php-format
 msgid "%d critical issue"
 msgid_plural "%d critical issues"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d kritiek probleem"
+msgstr[1] "%d kritieke problemen"
 
 #: inc/wpscan/views/issues.php
 #, php-format
 msgid "%d warning"
 msgid_plural "%d warnings"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d waarschuwing"
+msgstr[1] "%d waarschuwingen"
 
 #: inc/wpscan/views/issues.php
 msgid "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
-msgstr ""
+msgstr "Kritieke beveiligingsproblemen, geïdentificeerd door een score van 7 of hoger, vereisen onmiddellijke aandacht."
 
 #: inc/wpscan/views/issues.php
 msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
-msgstr ""
+msgstr "Beveiligingswaarschuwingen, geïdentificeerd door een score tot en met 6,9, vereisen snelle aandacht."
 
 #: inc/wpscan/views/issues.php
 msgid "View update details"
-msgstr ""
+msgstr "Details van update bekijken"
 
 #: inc/wpscan/views/issues.php
 msgid "This theme is active. Please activate another theme."
-msgstr ""
+msgstr "Dit thema is actief. Activeer een ander thema."
 
 #: inc/wpscan/views/summary.php
 msgid "critical issues found"
-msgstr ""
+msgstr "kritieke problemen gevonden"
 
 #: inc/wpscan/views/summary.php
 msgid "warnings found"
-msgstr ""
+msgstr "waarschuwingen gevonden"
 
 #: inc/wpscan/views/summary.php
 msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
-msgstr ""
+msgstr "We scannen dagelijks én wanneer nieuwe plug-ins of thema's worden geïnstalleerd met behulp van de WPScan-database."
 
 #: inc/wpscan/views/summary.php
 msgid "Learn more"
-msgstr ""
+msgstr "Meer informatie"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Advanced"
-msgstr ""
+msgstr "Geavanceerd"
 
 #: inc/dashboard/tabs/tools.php
 msgid "%s Hub as WordPress Admin start page"
-msgstr ""
+msgstr "%s Hub als startpagina voor het beheer van WordPress"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
-msgstr ""
+msgstr "Activeer de %s Hub als startpagina in je WordPress beheerpaneel voor een meer gepersonaliseerde en overzichtelijke ervaring."
 
 #: inc/security/views/password-reset-necessary.php
 msgid "Password Reset Necessary"
-msgstr ""
+msgstr "Wachtwoordherstel nodig"
 
 #: inc/security/views/password-reset-necessary.php
 msgid "Security alert"
-msgstr ""
+msgstr "Beveiligingswaarschuwing"
 
 #: inc/security/views/password-reset-necessary.php
 msgid "We have detected that the password for this WordPress Admin user matches one found in an online database of known compromised passwords. As a precaution, we have disabled access to this account to keep it secure."
-msgstr ""
+msgstr "We hebben vastgesteld dat het wachtwoord voor deze WordPress admin-gebruiker overeenkomt met een wachtwoord in een online database met gelekte wachtwoorden. Uit voorzorg hebben we de toegang tot dit account geblokkeerd om het veilig te houden."
 
 #: inc/security/views/password-reset-necessary.php
 msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
-msgstr ""
+msgstr "Om weer toegang tot dit account te krijgen, moet het wachtwoord worden hersteld. We hebben een e-mail met instructies voor het opnieuw instellen verzonden naar"
