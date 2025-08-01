@@ -459,3 +459,7 @@
   --global-navigation-border1: rgb(11, 89, 168);
   --global-navigation-border2: rgb(4, 31, 66);
 }
+
+.input-switch label{
+  border-radius: 0px !important;
+}
