@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
-  dashboard.querySelector('#ionos_essentials_maintenance_mode').addEventListener('click', function () {
+  dashboard.querySelector('#ionos_essentials_maintenance_mode')?.addEventListener('click', function () {
     if (this.checked) {
         body.classList.add('ionos-maintenance-mode');
         dashboard.querySelector('main').classList.add('ionos-maintenance-mode');
