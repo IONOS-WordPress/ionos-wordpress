@@ -104,17 +104,15 @@ use const ionos\essentials\PLUGIN_DIR;
 <template id="ionos_dashboard" shadowrootmode="open">
 
 <?php
-if(true){
-  $tenant = \get_option('ionos_group_brand', 'ionos');
-  $theme_file = PLUGIN_DIR . '/inc/dashboard/exos-themes/' . $tenant . '.css';
-  if (file_exists($theme_file)) {
-    \wp_register_style(
-      handle: 'exos-theme',
-      src: \plugins_url($tenant . '.css',$theme_file),
-      ver: filemtime($theme_file)
-    );
-    \wp_print_styles(['exos-theme']);
-  }
+$tenant     = \get_option('ionos_group_brand', 'ionos');
+$theme_file = PLUGIN_DIR . '/inc/dashboard/exos-themes/' . $tenant . '.css';
+if (file_exists($theme_file)) {
+  \wp_register_style(
+    handle: 'exos-theme',
+    src: \plugins_url($tenant . '.css', $theme_file),
+    ver: filemtime($theme_file)
+  );
+  \wp_print_styles(['exos-theme']);
 }
 
 \wp_register_style(
