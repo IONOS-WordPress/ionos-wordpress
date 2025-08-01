@@ -1,0 +1,461 @@
+*{
+
+  /* MAIN SETTINGS AND VALUES */
+
+  /* default font family */
+  --default-font-regular: 'OpenSansRegular', arial, arial narrow, sans-serif;
+  --default-font-bold: 'OpenSansSemibold', arial, sans-serif;
+
+  /* corporate font family */
+  --corporate-font-regular: var(--default-font-regular);
+  --corporate-font-bold: var(--default-font-bold);
+
+  /* default text settings */
+  --default-text-size: 14px;
+  --default-text-line-height: 20px;
+  --large-text-size: 16px;
+  --large-text-line-height: 22px;
+  --small-text-size: 12px;
+  --small-text-line-height: 18px;
+
+  /* default border radiuses */
+  --default-border-radius: 16px;
+  --small-border-radius: 8px;
+  --xsmall-border-radius: 4px;
+  --xxsmall-border-radius: 2px;
+
+  /* default border widths */
+  --default-border-width: 1px;
+  --thick-border-width: 2px;
+
+  /* default headline settings */
+  --first-level-headline-family: var(--corporate-font-regular);
+  --first-level-headline-size: 30px;
+  --first-level-headline-line-height: 38px;
+  --second-level-headline-family: var(--corporate-font-bold);
+  --second-level-headline-size: 20px;
+  --second-level-headline-line-height: 28px;
+  --third-level-headline-family: var(--default-font-bold);
+  --third-level-headline-size: 16px;
+  --third-level-headline-line-height: 24px;
+  --fourth-level-headline-family: var(--default-font-bold);
+  --fourth-level-headline-size: 14px;
+  --fourth-level-headline-line-height: 20px;
+
+  /* mobile screen headline settings */
+  --first-level-mobile-headline-family: var(--corporate-font-bold);
+  --first-level-mobile-headline-size: 22px;
+  --first-level-mobile-headline-line-height: 30px;
+  --second-level-mobile-headline-family: var(--corporate-font-bold);
+  --second-level-mobile-headline-size: 16px;
+  --second-level-mobile-headline-line-height: 24px;
+  --third-level-mobile-headline-family: var(--default-font-bold);
+  --third-level-mobile-headline-size: 16px;
+  --third-level-mobile-headline-line-height: 24px;
+  --fourth-level-mobile-headline-family: var(--default-font-bold);
+  --fourth-level-mobile-headline-size: 14px;
+  --fourth-level-mobile-headline-line-height: 20px;
+
+  /* default button settings */
+  --button-font-size: var(--default-text-size);
+  --button-font-family: var(--default-font-bold);
+  --button-border-width: 1px;
+  --button-border-radius: var(--small-border-radius);
+  --button-padding: 10px 18px;
+
+  /* FULL COLOR PALETTE */
+
+  /* black and white */
+  --palette-black: rgb(0, 0, 0);
+  --palette-white: rgb(255, 255, 255);
+
+  /* corporate color palette (STRATO orange) */
+  --palette-corporate-1: rgb(255, 246, 235); /* generated */
+  --palette-corporate-2: rgb(255, 234, 211); /* brand container background, active tab background, active nav background */
+  --palette-corporate-3: rgb(255, 202, 153); /* generated */
+  --palette-corporate-4: rgb(255, 176, 103); /* generated */
+  --palette-corporate-5: rgb(255, 136, 0); /* brand header background */
+  --palette-corporate-6: rgb(238, 95, 3); /* moderate */
+  --palette-corporate-7: rgb(141, 75, 1); /* tbd */
+  --palette-corporate-8: rgb(109, 58, 1); /* tbd */
+  --palette-corporate-9: rgb(63, 34, 3); /* tbd */
+
+  /* success color palette (green) */
+  --palette-success-1: rgb(224, 250, 221); /* generated */
+  --palette-success-2: rgb(184, 242, 179); /* success container background */
+  --palette-success-3: rgb(103, 205, 122); /* generated */
+  --palette-success-4: rgb(46, 133, 64); /* success container border color */
+  --palette-success-5: rgb(25, 135, 84); /* success icon color */
+  --palette-success-6: rgb(28, 87, 39); /* generated */
+  --palette-success-7: rgb(20, 64, 29); /* generated */
+
+  /* warning color palette (orange) */
+  --palette-warning-1: rgb(254, 246, 209); /* warning badge background, warning table row background */
+  --palette-warning-2: rgb(255, 218, 117); /* generated */
+  --palette-warning-3: rgb(255, 193, 7); /* warning icon color */
+  --palette-warning-4: rgb(251, 192, 0); /* warning border color */
+  --palette-warning-5: rgb(194, 141, 1); /* generated */
+  --palette-warning-6: rgb(142, 105, 1); /* generated */
+  --palette-warning-7: rgb(97, 70, 1); /* generated */
+
+  /* error color palette (red) */
+  --palette-critical-1: rgb(255, 226, 227); /* error background */
+  --palette-critical-2: rgb(255, 163, 168); /* generated */
+  --palette-critical-3: rgb(255, 88, 99); /* generated */
+  --palette-critical-4: rgb(226, 0, 7); /* error border, red badge background */
+  --palette-critical-5: rgb(204, 0, 0); /* error icon color */
+  --palette-critical-6: rgb(156, 1, 9); /* generated */
+  --palette-critical-7: rgb(111, 0, 6); /* generated */
+
+  /* neutral color palette (grey) */
+  --palette-neutral-1: rgb(249, 249, 249); /* main background color, lightest grey */
+  --palette-neutral-2: rgb(243, 243, 243); /* table row hover background, nav hover background */
+  --palette-neutral-3: rgb(221, 221, 221); /* quota bar background, feeback box background, fills in visuals */
+  --palette-neutral-4: rgb(187, 187, 187); /* input border color */
+  --palette-neutral-5: rgb(136, 136, 136); /* small text color, secondary infos */
+  --palette-neutral-6: rgb(85, 85, 85); /* default text color, default icon color, secondary button background */
+  --palette-neutral-7: rgb(60, 60, 60); /* generated */
+  --palette-neutral-8: rgb(43, 43, 43); /* generated */
+  --palette-neutral-9: rgb(21, 21, 21); /* generated */
+
+  /* activating color palette (blue) */
+  --palette-activating-1: rgb(229, 241, 248); /* blue container background */
+  --palette-activating-2: rgb(134, 183, 254); /* input focus border color */
+  --palette-activating-3: rgb(51, 122, 183); /* activating icon color, icons of links */
+  --palette-activating-4: rgb(0, 119, 187); /* primary button background, link text color */
+  --palette-activating-5: rgb(0, 100, 165); /* link hover color */
+  --palette-activating-6: rgb(0, 62, 118); /* blue container border color */
+  --palette-activating-7: rgb(0, 48, 143); /* primary button hover background */
+
+  /* promotion color palette (purple) */
+  --palette-promoting-1: rgb(253, 233, 244); /* generated */
+  --palette-promoting-2: rgb(245, 189, 218); /* generated */
+  --palette-promoting-3: rgb(238, 138, 190); /* generated */
+  --palette-promoting-4: rgb(232, 84, 162); /* generated */
+  --palette-promoting-5: rgb(215, 32, 125); /* generated */
+  --palette-promoting-6: rgb(186, 27, 109); /* generated */
+  --palette-promoting-7: rgb(133, 19, 78); /* generated */
+
+  /* COMMON COLOR VARIABLES (Reduced color set for uniform basic color scheme across components) */
+
+  /* black and white (tbd) */
+  --black: var(--palette-black);
+  --white: var(--palette-white);
+
+  /* dark default text colors (for light backgrounds) */
+  --primary-text-color: var(--palette-neutral-9);
+  --default-text-color: var(--palette-neutral-8);
+  --secondary-text-color: var(--palette-neutral-6);
+  --tertiary-text-color: var(--palette-neutral-5);
+
+  /* light default text colors (for dark backgrounds - aka dark mode) */
+  --primary-text-color-inverted: var(--palette-neutral-1);
+  --default-text-color-inverted: var(--palette-neutral-2);
+  --secondary-text-color-inverted: var(--palette-neutral-3);
+
+  /* dark default shape colors (for light and white backgrounds) */
+  --primary-shape-color: var(--palette-neutral-7);
+  --default-shape-color: var(--palette-neutral-7);
+  --secondary-shape-color: var(--palette-neutral-4);
+  --tertiary-shape-color: var(--palette-neutral-3);
+
+  /* light default backgrounds */
+  --primary-background-color: var(--palette-white);
+  --default-background-color: var(--palette-neutral-1);
+  --secondary-background-color: var(--palette-neutral-2);
+  --tertiary-background-color: var(--palette-neutral-3);
+  --quaternary-background-color: var(--palette-neutral-4);
+
+  /* dark default backgrounds (aka darkmode) */
+  --primary-background-color-inverted: var(--palette-corporate-8);
+  --default-background-color-inverted: var(--palette-neutral-6);
+  --secondary-background-color-inverted: var(--palette-neutral-6);
+  --tertiary-background-color-inverted: var(--palette-neutral-5);
+
+  /* semantic text and shape colors (to align borders and icons of different elements) */
+  --success-text-color: var(--palette-success-6);
+  --success-shape-color: var(--palette-success-4);
+  --caution-text-color: var(--palette-warning-5);
+  --caution-shape-color: var(--palette-warning-2);
+  --warning-text-color: var(--palette-warning-6);
+  --warning-shape-color: var(--palette-warning-3);
+  --critical-text-color: var(--palette-critical-5);
+  --critical-shape-color: var(--palette-critical-4);
+  --neutral-text-color: var(--palette-neutral-7);
+  --neutral-shape-color: var(--palette-neutral-6);
+  --activating-text-color: var(--palette-activating-5);
+  --activating-shape-color: var(--palette-activating-6);
+  --promoting-text-color: var(--palette-promoting-7);
+  --promoting-shape-color: var(--palette-promoting-5);
+  --corporate-text-color: var(--palette-neutral-7);
+  --corporate-shape-color: var(--palette-neutral-6);
+  --inactive-success-text-color: var(--palette-success-3);
+  --inactive-success-shape-color: var(--palette-success-3);
+  --inactive-warning-text-color: var(--palette-warning-2);
+  --inactive-warning-shape-color: var(--palette-warning-2);
+  --inactive-critical-text-color: var(--palette-critical-2);
+  --inactive-critical-shape-color: var(--palette-critical-2);
+  --inactive-neutral-text-color: var(--palette-neutral-3);
+  --inactive-neutral-shape-color: var(--palette-neutral-3);
+  --inactive-activating-text-color: var(--palette-activating-2);
+  --inactive-activating-shape-color: var(--palette-activating-2);
+  --inactive-promoting-text-color: var(--palette-promoting-2);
+  --inactive-promoting-shape-color: var(--palette-promoting-2);
+  --inactive-corporate-text-color: var(--palette-corporate-2);
+  --inactive-corporate-shape-color: var(--palette-corporate-2);
+
+  /* semantic colored solid backgrounds (to align background colors of different elements) */
+  --solid-success-background-color: var(--palette-success-4);
+  --solid-caution-background-color: var(--palette-warning-2);
+  --solid-warning-background-color: var(--palette-warning-3);
+  --solid-critical-background-color: var(--palette-critical-4);
+  --solid-neutral-background-color: var(--palette-neutral-6);
+  --solid-activating-background-color: var(--palette-activating-3);
+  --solid-promoting-background-color: var(--palette-promoting-3);
+  --solid-corporate-background-color: var(--palette-neutral-6); /* on brand container */
+  --solid-bright-background-color: var(--palette-white);
+
+  /* semantic colored light backgrounds (right now all mapped to white) */
+  --success-background-color: var(--palette-success-1);
+  --hovered-success-background-color: var(--palette-white);
+  --warning-background-color: var(--palette-warning-1);
+  --hovered-warning-background-color: var(--palette-white);
+  --critical-background-color: var(--palette-critical-1);
+  --hovered-critical-background-color: var(--palette-white);
+  --neutral-background-color: var(--palette-neutral-1);
+  --hovered-neutral-background-color: var(--palette-white);
+  --activating-background-color: var(--palette-activating-1);
+  --hovered-activating-background-color: var(--palette-white);
+  --promoting-background-color: var(--palette-promoting-1);
+  --hovered-promoting-background-color: var(--palette-white);
+  --corporate-background-color: var(--palette-corporate-1);
+  --hovered-corporate-background-color: var(--palette-white);
+  --advertising-background-gradient-start: var(--palette-corporate-6);
+  --advertising-background-gradient-end: var(--palette-corporate-4);
+  --hovered-advertising-background-gradient-start: var(--palette-corporate-8);
+  --hovered-advertising-background-gradient-end: var(--palette-corporate-6);
+
+  /* interactive color for links (tabs, tiles, hoverable elements) */
+  --interactive-text-color: var(--palette-activating-4);
+  --interactive-shape-color: var(--palette-activating-3);
+  --hovered-interactive-text-color: var(--palette-activating-3);
+
+  /* shadows */
+  --default-shadow-color: rgba(85, 85, 85, 0.2);
+  --default-shadow: 0 2px 8px 0 var(--default-shadow-color);
+  --primary-shadow: 0 2px 8px 0 var(--default-shadow-color);
+  --secondary-shadow: 0 2px 8px 0 var(--default-shadow-color);
+
+  /* semantic border mixins */
+  --semantic-container-border-width: var(--thick-border-width);
+  --semantic-section-border-width: var(--thick-border-width);
+
+  /* CUSTOM COLOR VARIABLES AND SETTINGS (Individual styling of specific elements) */
+
+  /* primary button color mapping */
+  --primary-button-background-color: var(--palette-activating-4);
+  --primary-button-border-color: var(--palette-activating-4);
+  --primary-button-text-color: var(--palette-white);
+  --hovered-primary-button-background-color: var(--palette-activating-7);
+  --hovered-primary-button-border-color: var(--palette-activating-7);
+  --hovered-primary-button-text-color: var(--palette-white);
+  --bright-primary-button-background-color: var(--palette-white);
+  --bright-primary-button-border-color: var(--palette-white);
+  --bright-primary-button-text-color: var(--palette-activating-6);
+  --hovered-bright-primary-button-background-color: var(--palette-activating-1);
+  --hovered-bright-primary-button-border-color: var(--palette-activating-1);
+  --hovered-bright-primary-button-text-color: var(--palette-activating-6);
+  --activating-primary-button-background-color: var(--palette-activating-4);
+  --activating-primary-button-border-color: var(--palette-activating-4);
+  --activating-primary-button-text-color: var(--palette-white);
+  --hovered-activating-primary-button-background-color: var(--palette-activating-3);
+  --hovered-activating-primary-button-border-color: var(--palette-activating-3);
+  --hovered-activating-primary-button-text-color: var(--palette-white);
+  --promoting-primary-button-background-color: var(--palette-promoting-3);
+  --promoting-primary-button-border-color: var(--palette-promoting-3);
+  --promoting-primary-button-text-color: var(--palette-white);
+  --hovered-promoting-primary-button-background-color: var(--palette-promoting-2);
+  --hovered-promoting-primary-button-border-color: var(--palette-promoting-2);
+  --hovered-promoting-primary-button-text-color: var(--palette-white);
+  --disabled-primary-button-background-color: var(--palette-neutral-4);
+  --disabled-primary-button-border-color: var(--palette-neutral-4);
+  --disabled-primary-button-text-color: var(--palette-white);
+
+  /* secondary button color mapping */
+  --secondary-button-background-color: transparent;
+  --secondary-button-border-color: var(--palette-neutral-6);
+  --secondary-button-text-color: var(--palette-neutral-6);
+  --hovered-secondary-button-background-color: var(--palette-neutral-6);
+  --hovered-secondary-button-border-color: var(--palette-neutral-6);
+  --hovered-secondary-button-text-color: var(--palette-white);
+  --bright-secondary-button-background-color: transparent;
+  --bright-secondary-button-border-color: var(--palette-white);
+  --bright-secondary-button-text-color: var(--palette-white);
+  --hovered-bright-secondary-button-background-color: var(--palette-white);
+  --hovered-bright-secondary-button-border-color: var(--palette-white);
+  --hovered-bright-secondary-button-text-color: var(--palette-neutral-7);
+  --activating-secondary-button-background-color: transparent;
+  --activating-secondary-button-border-color: var(--palette-activating-4);
+  --activating-secondary-button-text-color: var(--palette-activating-4);
+  --hovered-activating-secondary-button-background-color: var(--palette-activating-4);
+  --hovered-activating-secondary-button-border-color: var(--palette-activating-4);
+  --hovered-activating-secondary-button-text-color: var(--palette-white);
+  --promoting-secondary-button-background-color: transparent;
+  --promoting-secondary-button-border-color: var(--palette-promoting-3);
+  --promoting-secondary-button-text-color: var(--palette-promoting-3);
+  --hovered-promoting-secondary-button-background-color: var(--palette-promoting-3);
+  --hovered-promoting-secondary-button-border-color: var(--palette-promoting-3);
+  --hovered-promoting-secondary-button-text-color: var(--palette-white);
+  --disabled-secondary-button-background-color: transparent;
+  --disabled-secondary-button-border-color: var(--palette-neutral-4);
+  --disabled-secondary-button-text-color: var(--palette-neutral-4);
+
+  /* ghost button color mapping */
+  --ghost-button-background-color: transparent;
+  --ghost-button-text-color: var(--palette-activating-4);
+  --hovered-ghost-button-background-color: var(--palette-neutral-6);
+  --hovered-ghost-button-text-color: var(--white);
+  --bright-ghost-button-background-color: transparent;
+  --bright-ghost-button-text-color: var(--palette-neutral-2);
+  --hovered-bright-ghost-button-background-color: var(--palette-neutral-5);
+  --hovered-bright-ghost-button-text-color: var(--white);
+  --activating-ghost-button-background-color: transparent;
+  --activating-ghost-button-text-color: var(--palette-neutral-2);
+  --hovered-activating-ghost-button-background-color: var(--palette-neutral-6);
+  --hovered-activating-ghost-button-text-color: var(--white);
+  --promoting-ghost-button-background-color: transparent;
+  --promoting-ghost-button-text-color: var(--palette-neutral-2);
+  --hovered-promoting-ghost-button-background-color: var(--palette-neutral-6);
+  --hovered-promoting-ghost-button-text-color: var(--white);
+  --disabled-ghost-button-background-color: transparent;
+  --disabled-ghost-button-text-color: var(--palette-neutral-4);
+
+  /* table */
+  --table-background-color: var(--palette-white);
+  --table-border: 0 none transparent;
+  --table-border-radius: var(--default-border-radius);
+  --table-shadow: var(--default-shadow);
+  --table-row-shadow: inset 0 -1px 0 0 var(--tertiary-shape-color);
+  --table-header-background-color: rgb(229, 241, 248);
+  --table-footer-background-color: rgb(229, 241, 248);
+  --hovered-table-row-background-color: rgb(229, 241, 248);
+  --highlighted-table-cell-background-color: rgba(0, 100, 165, 0.7);
+
+  /* table search */
+  --table-search-background-color: rgb(229, 241, 248);
+  --secondary-table-search-background-color: rgb(229, 241, 248);
+  --table-search-border: var(--table-border);
+  --table-search-shadow: none;
+  --table-search-separator: 1px solid var(--tertiary-shape-color);
+
+  /* table toolbar */
+  --table-toolbar-background-color: transparent;
+  --table-toolbar-border: var(--table-border);
+  --table-toolbar-border-bottom: 1px solid var(--tertiary-shape-color);
+  --table-toolbar-shadow: none;
+  --table-toolbar-padding: 16px 1px;
+  --table-toolbar-bottom-spacing: 0;
+
+  /* badges */
+  --price-badge-background-color: var(--solid-warning-background-color);
+  --price-badge-text-color: var(--default-text-color);
+
+  /* card */
+  --card-background: var(--palette-white);
+  --card-border: 0 none transparent;
+  --card-shadow: var(--default-shadow);
+  --distinct-card-background-color: var(--default-background-color);
+  --distinct-card-footer-background-color: var(--default-background-color);
+  --hovered-card-background-color: var(--palette-white);
+  --hovered-card-border: none;
+  --hovered-card-shadow: var(--primary-shadow);
+  --hovered-card-visual-filter: none;
+
+  /* sheet */
+  --sheet-background-color: var(--palette-white);
+  --sheet-border: 0 none transparent;
+  --sheet-shadow: var(--default-shadow);
+  --distinct-sheet-background-color: var(--default-background-color);
+  --sheet-header-background-color: var(--default-background-color);
+
+  /* page message */
+  --page-message-background-color: var(--sheet-background-color);
+  --page-message-border: var(--thick-border-width) solid var(--sheet-border);
+  --page-message-border-width: var(--thick-border-width);
+  --page-message-shadow: var(--shadow);
+
+  /* accordion */
+  --accordion-border: 0 none transparent;
+  --accordion-item-background-color: var(--white);
+  --accordion-item-border: 1px solid var(--tertiary-shape-color);
+  --hovered-accordion-shadow: var(--primary-shadow);
+  --hovered-panel-headline-color: inherit;
+
+  /* panel */
+  --panel-background-color: var(--white);
+  --panel-border: 0 none transparent;
+  --panel-shadow: var(--default-shadow);
+  --hovered-panel-border: 0 none transparent;
+  --hovered-panel-shadow: var(--primary-shadow);
+
+  /* tile */
+  --tile-background-color: transparent;
+  --tile-border: 0 none transparent;
+  --tile-shadow: none;
+  --hovered-tile-background-color: var(--white);
+  --hovered-tile-border: 0 none transparent;
+  --hovered-tile-shadow: var(--primary-shadow);
+  --filled-tile-background-color: var(--white);
+  --filled-tile-border: 0 none transparent;
+  --filled-tile-shadow: var(--default-shadow);
+  --hovered-filled-tile-background-color: var(--white);
+  --hovered-filled-tile-border: 0 none transparent;
+  --hovered-filled-tile-shadow: var(--primary-shadow);
+  --outlined-tile-background-color: transparent;
+  --outlined-tile-border: 1px solid var(--corporate-text-color);
+  --outlined-tile-shadow: none;
+  --hovered-outlined-tile-background-color: var(--white);
+  --hovered-outlined-tile-border: 1px solid var(--corporate-text-color);
+  --hovered-outlined-tile-shadow: none;
+  --bright-tile-background-color: var(--white);
+  --bright-tile-border: 1px solid var(--white);
+  --bright-tile-shadow: none;
+  --hovered-bright-tile-background-color: rgba(255, 255, 255, 0.15);
+  --hovered-bright-tile-border: 1px solid var(--white);
+  --hovered-bright-tile-shadow: none;
+
+  /* form elements */
+  --checkbox-border-width: 2px;
+  --checkbox-square-size: 14px;
+  --input-text-border-width: var(--thick-border-width);
+  --input-text-group-height: 42px;
+  --input-text-group-line-height: 42px;
+  --input-text-height: 46px;
+  --input-select-height: 46px;
+  --secondary-textarea-background-color: var(--palette-neutral-2);
+  --hovered-textarea-background-color: var(--palette-corporate-1);
+
+  /* list types */
+  --check-list-icon-background-color: var(--palette-corporate-2);
+  --check-list-icon-color: var(--palette-corporate-6);
+  --inverted-check-list-icon-background-color: rgba(255, 255, 255, 0.2);
+  --inverted-check-list-icon-color: var(--white);
+
+  /* context menu */
+  --context-menu-border: 0 none transparent;
+  --context-menu-separator: 1px solid var(--tertiary-shape-color);
+
+  /* page tabbar */
+  --page-tabbar-bottom-border: 0 none transparent;
+
+  /* page footer */
+  --page-footer-border: 1px solid var(--tertiary-shape-color);
+
+  /* left navigation */
+  --leftnav-text-size: 14.1px;
+
+  /* global navigation colors */
+  --global-navigation-background-color: var(--palette-corporate-6);
+  --global-navigation-border1: rgb(11, 89, 168);
+  --global-navigation-border2: rgb(4, 31, 66);
+}
