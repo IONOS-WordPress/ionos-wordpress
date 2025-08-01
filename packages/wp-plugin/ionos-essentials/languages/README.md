@@ -1,19 +1,21 @@
-# Translation process
+# Translation Process
 
-The translations are made by our _translation office_.
-We have to seperate queues
+Translations are handled by our _translation office_.  
+For more information, visit: https://confluence.united-internet.org/spaces/WPDEV/pages/372311734/translation+processes
+
+We have two separate queues:
 
 ## NL and SV
-Create one ticket for both languages on that board
-https://hosting-jira.1and1.org/secure/RapidBoard.jspa?rapidView=666&view=detail&selectedIssue=HPSMKTLOC-8157#
-- as brand use "Strato" only
+Create a single ticket for both languages on this board:  
+https://hosting-jira.1and1.org/secure/RapidBoard.jspa?rapidView=666&view=detail&selectedIssue=HPSMKTLOC-8157#  
+- Use "Strato" as the brand
 
-Here is an example ticket: https://hosting-jira.1and1.org/browse/HPSMKTLOC-8157
+Example ticket: https://hosting-jira.1and1.org/browse/HPSMKTLOC-8157
 
 ## DE, ES/MX, FR, IT
-Create one single ticket for all languates like this example: https://hosting-jira.1and1.org/browse/CCLOC-10232
+Create one ticket for all these languages, as shown in this example:  
+https://hosting-jira.1and1.org/browse/CCLOC-10232
 
-## Ticket requirements (for all languages)
-- due date one week later
-- append po-files to the ticket
-
+## Ticket Requirements (All Languages)
+- Set the due date to one week later
+- Attach the PO files to the ticket
