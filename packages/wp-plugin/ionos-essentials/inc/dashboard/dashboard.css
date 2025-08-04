@@ -179,7 +179,7 @@ main{
 
 @container ionos_vulnerability (max-width: 400px) {
   .ionos_vulnerability .ionos_vulnerability__content{
-    background-image: none;
+    background-image: none !important;
   }
 }
 
