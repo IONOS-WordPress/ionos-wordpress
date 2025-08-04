@@ -14,5 +14,15 @@ test.describe(
       const body = await page.locator('body');
       await expect(body).toHaveText(/My Account/);
     });
+
+    test('/dashboard visual regression', async ({ admin, page }) => {
+      await admin.visitAdminPage('/');
+      const screenshot = await page.screenshot({ fullPage: true });
+      expect(screenshot).toMatchSnapshot('dashboard-overview.png');
+
+      await page.getByRole('button', { name: 'Tools' }).click();
+      const toolsScreenshot = await page.screenshot({ fullPage: true });
+      expect(toolsScreenshot).toMatchSnapshot('dashboard-tools-tab.png');
+    });
   }
 );
