@@ -355,6 +355,15 @@ EOF
               msginit -i "$LANGUAGES_DIR/${text_domain}.pot" -l ${locale} -o "$LANGUAGES_DIR/${text_domain}-${locale}.po" --no-translator
             done
           fi
+
+          if [[ -n "${LANGUAGE_MAPPINGS[*]}" ]]; then
+            for mapping in ${LANGUAGE_MAPPINGS[@]}; do
+              src="${mapping%%=*}"
+              dest="${mapping#*=}"
+              cp "$LANGUAGES_DIR/ionos-essentials-${src}.po" "$LANGUAGES_DIR/ionos-essentials-${dest}.po"
+            done
+          fi
+
         done
       done
 
