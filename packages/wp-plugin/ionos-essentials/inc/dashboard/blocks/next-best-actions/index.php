@@ -63,8 +63,8 @@ function render_callback()
 
   ?>
 
-        <div class="headline"><?php echo \esc_html__("Unlock Your Website's Potential", 'ionos-essentials'); ?></div>
-        <div class="paragraph"><?php echo \esc_html__(
+        <div class="headline"><?php \esc_html_e("Unlock Your Website's Potential", 'ionos-essentials'); ?></div>
+        <div class="paragraph"><?php \esc_html_e(
           'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
           'ionos-essentials'
         ); ?></div>

@@ -35,7 +35,7 @@ function issues($args)
                         'Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention.',
                         'ionos-essentials'
                       )
-                      : esc_html__(
+                      : \esc_html__(
                         'Website security warnings, identified by a CVSS score up to 6.9, require prompt attention.',
                         'ionos-essentials'
                       )

@@ -25,7 +25,7 @@ function summary()
           <i class="exos-icon exos-icon-firmationmessage-32 without-issues-only color--success" ></i>
         </div>
         <div>
-          <h2 class="headline headline--sub"><?php echo \esc_html__('Vulnerability scan', 'ionos-essentials'); ?></h2>
+          <h2 class="headline headline--sub"><?php \esc_html_e('Vulnerability scan', 'ionos-essentials'); ?></h2>
           <div class="ionos_vulnerability__content with-issues-only-flex">
             <div class="issue-row high">
               <span class="bubble high"><?php echo count($wpscan->get_issues('critical'));
