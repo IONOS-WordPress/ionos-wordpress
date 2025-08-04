@@ -26,6 +26,7 @@ test.describe(
     });
 
     test('/dashboard visual regression', async ({ admin, page }) => {
+      await page.setViewportSize({ width: 1280, height: 900 });
       await admin.visitAdminPage('/');
       const screenshot = await page.screenshot({ fullPage: true });
       expect(screenshot).toMatchSnapshot('dashboard-overview.png');
