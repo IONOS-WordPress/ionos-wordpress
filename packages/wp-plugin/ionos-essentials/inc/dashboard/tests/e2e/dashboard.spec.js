@@ -14,6 +14,9 @@ test.describe(
         execTestCLI(
           `wp user meta set 1 ionos_essentials_welcome true`
         );
+        execTestCLI(`
+          wp eval 'set_transient("ionos_wpscan_issues", [["name"=>"Essentials","slug"=>"ionos-essentials","type"=>"plugin","score"=>8,"update"=>false,"path"=>"ionos-essentials/ionos-essentials.php"]]);' --skip-plugins --skip-themes
+        `);
       } catch (error) {}
     });
 
@@ -25,7 +28,7 @@ test.describe(
       await expect(body).toHaveText(/My Account/);
     });
 
-    test.skip('/dashboard visual regression', async ({ admin, page }) => {
+    test('/dashboard visual regression', async ({ admin, page }) => {
       await page.setViewportSize({ width: 1280, height: 900 });
       await admin.visitAdminPage('/');
       const screenshot = await page.screenshot({ fullPage: true });
