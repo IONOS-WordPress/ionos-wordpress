@@ -14,7 +14,7 @@ function summary()
   $class = $wpscan->get_issues('critical') ? 'high' : $class;
 
   ?>
-  <div class="card ionos_vulnerability ionos-wpscan-summary <?php echo esc_attr($class); ?>">
+  <div class="card ionos_vulnerability ionos-wpscan-summary <?php echo \esc_attr($class); ?>">
     <div class="card__content">
       <section class="card__section">
 

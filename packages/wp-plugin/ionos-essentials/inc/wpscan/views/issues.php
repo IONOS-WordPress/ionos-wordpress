@@ -13,11 +13,11 @@ function issues($args)
   }
   ?>
 <div class="grid-col grid-col--12">
-  <div class="sheet ionos-wpscan <?php echo esc_attr($args['type']); ?>">
+  <div class="sheet ionos-wpscan <?php echo \esc_attr($args['type']); ?>">
     <section class="sheet__section">
       <div class="grid">
           <div class="grid-col grid-col--12">
-              <h2 class="headline headline--sub headline--<?php echo esc_attr($args['type']); ?>">
+              <h2 class="headline headline--sub headline--<?php echo \esc_attr($args['type']); ?>">
                 <?php
                   echo \esc_html(sprintf(
                     'critical' === $args['type'] ?
@@ -63,8 +63,8 @@ function issues($args)
 function issue_line($issue)
 {
   ?>
- <li class="settings-stripe settings-stripe--link  <?php echo esc_attr($issue['type']); ?>">
-    <div class="settings-stripe__label"><strong><?php echo esc_html($issue['name']); ?></strong></div>
+ <li class="settings-stripe settings-stripe--link  <?php echo \esc_attr($issue['type']); ?>">
+    <div class="settings-stripe__label"><strong><?php echo \esc_html($issue['name']); ?></strong></div>
     <div class="settings-stripe__action">
 
       <?php
