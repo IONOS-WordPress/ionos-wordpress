@@ -27,7 +27,7 @@ class Tenant {
     };
   }
 
-  public static function getInstance(): Tenant {
+  public static function get_instance(): Tenant {
     if (null === self::$instance) {
       self::$instance = new self(strtolower(\get_option('ionos_group_brand', 'ionos')));
     }

@@ -52,10 +52,10 @@ if (! defined('ABSPATH')) {
         </section>
 EOF,
         \esc_attr(\plugins_url(
-        'inc/dashboard/data/tenant-logos/' . Tenant::getInstance()->name . '.svg',
+        'inc/dashboard/data/tenant-logos/' . Tenant::get_instance()->name . '.svg',
         PLUGIN_FILE
         )),
-        \esc_attr(Tenant::getInstance()->label)
+        \esc_attr(Tenant::get_instance()->label)
       );
     }
   );

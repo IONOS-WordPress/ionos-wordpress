@@ -12,7 +12,7 @@ function is_maintenance_mode()
 }
 
 \add_action('admin_bar_menu', function ($wp_admin_bar) {
-  $brand = Tenant::getInstance()->name;
+  $brand = Tenant::get_instance()->name;
 
   $args = [
     'id'    => 'ionos_maintenance_mode',

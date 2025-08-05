@@ -181,7 +181,7 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
   );
 }
 
-$tenant        = Tenant::getInstance()->name;
+$tenant        = Tenant::get_instance()->name;
 $market        = strtolower(\get_option($tenant . '_market', 'de'));
 
 if ('de' === $market && is_plugin_active('woocommerce/woocommerce.php') && ! is_plugin_active(

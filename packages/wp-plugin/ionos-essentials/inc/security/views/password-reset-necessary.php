@@ -31,8 +31,8 @@
 
         printf(
           '<img src="%s" alt="%s" style="width: 118px; height: auto; margin-bottom: 16px;">',
-          esc_url(\plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::getInstance()->name . '.svg', PLUGIN_DIR)),
-          Tenant::getInstance()->label
+          esc_url(\plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_instance()->name . '.svg', PLUGIN_DIR)),
+          Tenant::get_instance()->label
         );
 
         ?>

@@ -32,7 +32,7 @@ function render_callback(): void
   ), $button_list));
 
   $tenant_logo = \plugins_url(
-    'data/tenant-logos/' . Tenant::getInstance()->name . '.svg',
+    'data/tenant-logos/' . Tenant::get_instance()->name . '.svg',
     dirname(__DIR__)
   );
 
@@ -44,7 +44,7 @@ function render_callback(): void
           <div class="grid-col grid-col--6  grid-col--medium-12 grid-col--small-12" style="display: flex; align-items: center; justify-content: center;">
             <img class=""
             src="<?php echo \esc_attr($tenant_logo); ?>"
-            alt="<?php echo \esc_attr(Tenant::getInstance()->label); ?> Logo"
+            alt="<?php echo \esc_attr(Tenant::get_instance()->label); ?> Logo"
             style="width: 150px; padding: 50px;"
           >
 

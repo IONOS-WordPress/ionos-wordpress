@@ -21,7 +21,7 @@ function get_account_data()
     return $data;
   }
 
-  $tenant      = Tenant::getInstance()->name;
+  $tenant      = Tenant::get_instance()->name;
   $config_file = PLUGIN_DIR . '/inc/tenants/config/' . $tenant . '.php';
 
   if (! $tenant || ! file_exists($config_file)) {

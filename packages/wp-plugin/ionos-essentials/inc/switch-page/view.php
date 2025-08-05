@@ -35,7 +35,7 @@ $configs = [
   ],
 ];
 
-$tenant = Tenant::getInstance()->name;
+$tenant = Tenant::get_instance()->name;
 $config = $configs[$tenant] ?? reset($configs);
 ?>
 
@@ -71,7 +71,7 @@ $config = $configs[$tenant] ?? reset($configs);
         </div>
         <div class="option">
           <a href="<?php echo \esc_attr(
-            \admin_url('admin.php?page=' . Tenant::getInstance()->name)
+            \admin_url('admin.php?page=' . Tenant::get_instance()->name)
           ); ?>" class="link-btn">
             <div class="option-content">
               <img src="<?php echo \esc_url(\plugins_url('assets/user-interface.png', __FILE__)); ?>" alt="User Interface Illustration"/>
