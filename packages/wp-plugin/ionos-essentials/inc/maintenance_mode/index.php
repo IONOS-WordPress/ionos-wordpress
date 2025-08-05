@@ -2,13 +2,15 @@
 
 namespace ionos\essentials\maintenance_mode;
 
+use ionos\essentials\Tenant;
+
 function is_maintenance_mode()
 {
   return \get_option('ionos_essentials_maintenance_mode', false);
 }
 
-add_action('admin_bar_menu', function ($wp_admin_bar) {
-  $brand = strtolower(get_option('ionos_group_brand', 'ionos'));
+\add_action('admin_bar_menu', function ($wp_admin_bar) {
+  $brand = Tenant::getInstance()->name;
 
   $args = [
     'id'    => 'ionos_maintenance_mode',

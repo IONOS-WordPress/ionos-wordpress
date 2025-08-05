@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\my_account;
 
+use ionos\essentials\Tenant;
+
 use const ionos\essentials\PLUGIN_DIR;
 
 /**
@@ -17,7 +19,7 @@ function get_account_data()
     return $data;
   }
 
-  $tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
+  $tenant      = Tenant::getInstance()->name;
   $config_file = PLUGIN_DIR . '/inc/tenants/config/' . $tenant . '.php';
 
   if (! $tenant || ! file_exists($config_file)) {

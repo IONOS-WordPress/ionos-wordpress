@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php esc_html_e('Password Reset Necessary', 'ionos-essentials'); ?></title>
+  <title>
+  <?php
+
+  use ionos\essentials\Tenant;
   <?php
   use const ionos\essentials\PLUGIN_DIR;
 
@@ -24,15 +27,14 @@
       <section class="sheet__section">
         <?php
 
-        $tenant      = \get_option('ionos_group_brand', 'ionos');
-  $tenant_name       = \get_option('ionos_group_brand_name', 'IONOS');
-  printf(
-    '<img src="%s" alt="%s" style="width: 118px; height: auto; margin-bottom: 16px;">',
-    esc_url(\plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . $tenant . '.svg', PLUGIN_DIR)),
-    $tenant_name
-  );
-  ?>
-        <h3 class="headline"><?php esc_html_e('Security alert', 'ionos-essentials'); ?></h3>
+        printf(
+          '<img src="%s" alt="%s" style="width: 118px; height: auto; margin-bottom: 16px;">',
+          esc_url(\plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::getInstance()->name . '.svg', PLUGIN_DIR)),
+          Tenant::getInstance()->label
+        );
+
+        ?>
+        <h3 class="headline"><?php \esc_html_e('Security alert', 'ionos-essentials'); ?></h3>
         <p class="paragraph">
         <?php
     esc_html_e(

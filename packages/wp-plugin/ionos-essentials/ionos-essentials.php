@@ -28,6 +28,7 @@ defined('ABSPATH') || exit();
   fn () => \load_plugin_textdomain(domain: 'ionos-essentials', plugin_rel_path: basename(__DIR__) . '/languages/')
 );
 
+require_once __DIR__ . '/inc/class-tenant.php';
 require_once __DIR__ . '/inc/update/index.php';
 
 // soc plugin components

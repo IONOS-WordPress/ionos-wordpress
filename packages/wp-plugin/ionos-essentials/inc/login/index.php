@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\login;
 
+use ionos\essentials\Tenant;
+
 use const ionos\essentials\PLUGIN_FILE;
 
 // exit if accessed directly
@@ -50,10 +52,10 @@ if (! defined('ABSPATH')) {
         </section>
 EOF,
         \esc_attr(\plugins_url(
-        'inc/dashboard/data/tenant-logos/' . \get_option('ionos_group_brand', 'ionos') . '.svg',
+        'inc/dashboard/data/tenant-logos/' . Tenant::getInstance()->name . '.svg',
         PLUGIN_FILE
         )),
-        \esc_attr(\get_option('ionos_group_brand_menu', 'IONOS'))
+        \esc_attr(Tenant::getInstance()->label)
       );
     }
   );

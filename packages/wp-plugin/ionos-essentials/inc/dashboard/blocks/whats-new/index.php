@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\whatsnew;
 
+use ionos\essentials\Tenant;
+
 function get_survey_url()
 {
   $survey_links = [
@@ -25,8 +27,6 @@ function get_survey_url()
 
 function render_callback()
 {
-  $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
-
   ?>
 
 <div class="card">
@@ -39,7 +39,7 @@ function render_callback()
 
         <ul class="check-list">
           <li>
-            <h3 class="headline headline--sub"><?php printf(\esc_html__('Your %s Hub Just Got a Powerful Upgrade!', 'ionos-essentials'), $brand_name); ?></h3>
+            <h3 class="headline headline--sub"><?php printf(\esc_html__('Your %s Hub Just Got a Powerful Upgrade!', 'ionos-essentials'), Tenant::getInstance()->label); ?></h3>
             <p><?php \esc_html_e(
               "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it.",
               'ionos-essentials'

@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard;
 
+use ionos\essentials\Tenant;
+
 use function ionos\essentials\is_stretch;
 use const ionos\essentials\PLUGIN_DIR;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
@@ -179,10 +181,7 @@ render_section([
             <div class="grid">
                 <div class="grid-col grid-col--8 grid-col--small-12">
                     <h2 class="headline headline--sub headline--cropped">
-                      <?php
-                      $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
-                      printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), $brand_name);
-                      ?>
+                      <?php printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), Tenant::getInstance()->label); ?>
                 </h2>
                     <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
                         <?php

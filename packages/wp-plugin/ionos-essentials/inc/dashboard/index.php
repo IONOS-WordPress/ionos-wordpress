@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard;
 
+use ionos\essentials\Tenant;
+
 if (! defined('ABSPATH')) {
   exit();
 }
@@ -19,16 +21,15 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 const REQUIRED_USER_CAPABILITIES = 'read';
 
 \add_action('init', function () {
-  define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', \get_option('ionos_group_brand_menu', 'IONOS'));
-  define('ADMIN_PAGE_SLUG', strtolower(\get_option('ionos_group_brand', 'IONOS')));
+  define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', Tenant::getInstance()->label);
+  define('ADMIN_PAGE_SLUG', Tenant::getInstance()->name);
   define('ADMIN_PAGE_HOOK', 'toplevel_page_' . ADMIN_PAGE_SLUG);
 });
 
 \add_action('admin_menu', function () {
-  $tenant_name = \get_option('ionos_group_brand', 'ionos');
   $tenant_icon = '';
 
-  $file_path = __DIR__ . "/data/tenant-icons/{$tenant_name}.svg";
+  $file_path = __DIR__ . '/data/tenant-icons/' . Tenant::getInstance()->name . '.svg';
   if (file_exists($file_path)) {
     $svg         = file_get_contents($file_path);
     $tenant_icon = 'data:image/svg+xml;base64,' . base64_encode($svg);

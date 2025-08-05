@@ -6,6 +6,8 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
+use ionos\essentials\Tenant;
+
 class NBA
 {
   public const OPTION_NAME = 'ionos_nba_status';
@@ -177,7 +179,7 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
   );
 }
 
-$tenant        = strtolower(\get_option('ionos_group_brand', 'ionos'));
+$tenant        = Tenant::getInstance()->name;
 $market        = strtolower(\get_option($tenant . '_market', 'de'));
 
 if ('de' === $market && is_plugin_active('woocommerce/woocommerce.php') && ! is_plugin_active(
