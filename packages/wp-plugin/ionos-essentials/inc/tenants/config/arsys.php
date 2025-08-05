@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos\essentials\dashboard\blocks\deep_links;
+namespace ionos\essentials\tenants\config;
 
 defined('ABSPATH') || exit();
 
