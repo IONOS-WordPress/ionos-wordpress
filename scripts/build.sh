@@ -361,7 +361,7 @@ EOF
             for mapping in ${LANGUAGE_MAPPINGS[@]}; do
               src="${mapping%%=*}"
               dest="${mapping#*=}"
-              cp "$LANGUAGES_DIR/ionos-essentials-${src}.po" "$LANGUAGES_DIR/ionos-essentials-${dest}.po"
+              cp "$LANGUAGES_DIR/$PLUGIN_NAME-${src}.po" "$LANGUAGES_DIR/$PLUGIN_NAME-${dest}.po"
             done
           fi
 
@@ -391,7 +391,7 @@ EOF
         for mapping in ${LANGUAGE_MAPPINGS[@]}; do
           src="${mapping%%=*}"
           dest="${mapping#*=}"
-          rm "$LANGUAGES_DIR/ionos-essentials-${dest}.po"
+          rm "$LANGUAGES_DIR/$PLUGIN_NAME-${dest}.po"
         done
       fi
     )
