@@ -5,10 +5,7 @@ namespace ionos\essentials\security;
 const LEAKED_CREDENTIALS_FLAG_NAME = 'ionos_compromised_credentials_check_leak_detected_v2';
 const IONOS_NOREPLY_EMAIL          = 'no-reply@wpservice.io';
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 \add_action(
   hook_name: 'check_passwords',

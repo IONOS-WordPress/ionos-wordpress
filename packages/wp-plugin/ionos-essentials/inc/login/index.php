@@ -6,10 +6,7 @@ use ionos\essentials\Tenant;
 
 use const ionos\essentials\PLUGIN_FILE;
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 \add_action('init', function () {
   if (false === in_array($GLOBALS['pagenow'], ['wp-login.php', 'wp-register.php'], true)) {

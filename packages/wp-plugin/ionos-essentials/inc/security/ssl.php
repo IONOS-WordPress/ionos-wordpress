@@ -2,10 +2,7 @@
 
 namespace ionos\essentials\security;
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 if (! \get_transient('ionos-ssl-check-notice-dismissed')) {
   \add_action('admin_notices', function () {

@@ -4,10 +4,7 @@ namespace ionos\essentials\descriptify;
 
 use ionos\essentials\Tenant;
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 add_action(
   'admin_print_footer_scripts',

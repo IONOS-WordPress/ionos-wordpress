@@ -4,9 +4,7 @@ namespace ionos\essentials\switch_page;
 
 use ionos\essentials\Tenant;
 
-if (! defined('ABSPATH')) {
-  exit;
-}
+defined('ABSPATH') || exit();
 
 $configs = [
   'ionos' => [

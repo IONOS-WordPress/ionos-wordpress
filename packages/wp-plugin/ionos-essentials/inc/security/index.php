@@ -8,10 +8,7 @@ use function ionos\essentials\is_stretch;
 use const ionos\essentials\PLUGIN_DIR;
 use const ionos\essentials\PLUGIN_FILE;
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 const IONOS_SECURITY_FEATURE_OPTION                      = 'IONOS_SECURITY_FEATURE_OPTION';
 const IONOS_SECURITY_FEATURE_OPTION_XMLRPC               = 'IONOS_SECURITY_FEATURE_OPTION_XMLRPC';

@@ -2,10 +2,7 @@
 
 namespace ionos\essentials\security;
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 const IONOS_SECURITY_ALLOW_LIST_IP4 = [
   "122.248.245.244\/32",

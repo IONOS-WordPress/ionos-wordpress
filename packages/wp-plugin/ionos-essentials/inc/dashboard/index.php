@@ -4,9 +4,7 @@ namespace ionos\essentials\dashboard;
 
 use ionos\essentials\Tenant;
 
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';

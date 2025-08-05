@@ -6,10 +6,7 @@ use ionos\essentials\Tenant;
 
 use const ionos\essentials\PLUGIN_DIR;
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 /**
  * Add onboarding menu page.
