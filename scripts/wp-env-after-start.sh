@@ -201,7 +201,7 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     set -x
 
     # this wp-cli configuration file needs to be created to enable wp-cli to work with the apache mod_rewrite module
-    echo -e "apache_modules:\n  - mod_rewrite" > /var/www/html/wp-cli.yml
+    # echo -e "apache_modules:\n  - mod_rewrite" > /var/www/html/wp-cli.yml
 
     # The wp rewrite structure command updates the permalink structure. --hard also updates the .htaccess file
     wp --quiet rewrite structure '/%postname%' --hard
