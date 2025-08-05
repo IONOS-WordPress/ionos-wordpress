@@ -3,7 +3,6 @@
 namespace ionos\essentials\security;
 
 use ionos\essentials\Tenant;
-
 use function ionos\essentials\is_stretch;
 use const ionos\essentials\PLUGIN_DIR;
 use const ionos\essentials\PLUGIN_FILE;

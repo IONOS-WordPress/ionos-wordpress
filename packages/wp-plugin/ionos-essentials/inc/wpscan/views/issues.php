@@ -24,24 +24,23 @@ function issues(array $args): void
                   echo \esc_html(sprintf(
                     'critical' === $args['type'] ?
                       \_n('%d critical issue', '%d critical issues', $count, 'ionos-essentials')
-                      : \_n('%d warning', '%d warnings', $count, 'ionos-essentials')
-                    , $count
+                      : \_n('%d warning', '%d warnings', $count, 'ionos-essentials'), $count
                   ));
-                ?>
+  ?>
                 <span class="et-has-tooltip">
                   <span class="paragraph--cropped paragraph--activating paragraph--exos-icon exos-icon-info-1 et-tooltip-anchor"></span>
                   <span class="et-tooltip-content">
                     <?php
-                    echo 'critical' === $args['type']
-                      ? \esc_html__(
-                        'Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention.',
-                        'ionos-essentials'
-                      )
-                      : \esc_html__(
-                        'Website security warnings, identified by a CVSS score up to 6.9, require prompt attention.',
-                        'ionos-essentials'
-                      )
-                    ?>
+      echo 'critical' === $args['type']
+        ? \esc_html__(
+          'Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention.',
+          'ionos-essentials'
+        )
+        : \esc_html__(
+          'Website security warnings, identified by a CVSS score up to 6.9, require prompt attention.',
+          'ionos-essentials'
+        )
+  ?>
                   </span>
                 </span>
               </h2>

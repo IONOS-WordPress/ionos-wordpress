@@ -7,6 +7,7 @@
   <?php
 
   use ionos\essentials\Tenant;
+
   \esc_html_e('Password Reset Necessary', 'ionos-essentials'); ?></title>
 
   <?php
@@ -31,11 +32,13 @@
 
         printf(
           '<img src="%s" alt="%s" style="width: 118px; height: auto; margin-bottom: 16px;">',
-          \esc_url(\plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_instance()->name . '.svg', PLUGIN_DIR)),
+          \esc_url(
+            \plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_instance()->name . '.svg', PLUGIN_DIR)
+          ),
           Tenant::get_instance()->label
         );
 
-        ?>
+  ?>
         <h3 class="headline"><?php \esc_html_e('Security alert', 'ionos-essentials'); ?></h3>
         <p class="paragraph">
         <?php

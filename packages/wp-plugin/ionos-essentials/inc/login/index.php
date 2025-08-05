@@ -3,7 +3,6 @@
 namespace ionos\essentials\login;
 
 use ionos\essentials\Tenant;
-
 use const ionos\essentials\PLUGIN_FILE;
 
 defined('ABSPATH') || exit();
@@ -39,7 +38,8 @@ defined('ABSPATH') || exit();
         return;
       }
 
-      printf( <<<EOF
+      printf(
+        <<<EOF
         <section class="header">
           <img
             src="%s"
@@ -47,10 +47,11 @@ defined('ABSPATH') || exit();
             class="logo"
           >
         </section>
-EOF,
+EOF
+        ,
         \esc_attr(\plugins_url(
-        'inc/dashboard/data/tenant-logos/' . Tenant::get_instance()->name . '.svg',
-        PLUGIN_FILE
+          'inc/dashboard/data/tenant-logos/' . Tenant::get_instance()->name . '.svg',
+          PLUGIN_FILE
         )),
         \esc_attr(Tenant::get_instance()->label)
       );

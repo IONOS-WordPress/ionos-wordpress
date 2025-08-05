@@ -19,11 +19,11 @@ class NBA
   private static array $actions = [];
 
   private function __construct(
-    readonly string $id,
-    readonly string $title,
-    readonly string $description,
-    readonly string $link,
-    readonly string $anchor,
+    public readonly string $id,
+    public readonly string $title,
+    public readonly string $description,
+    public readonly string $link,
+    public readonly string $anchor,
     private readonly bool $completed
   ) {
     self::$actions[$this->id] = $this;

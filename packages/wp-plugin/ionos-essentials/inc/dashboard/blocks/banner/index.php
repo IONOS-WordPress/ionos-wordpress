@@ -31,10 +31,7 @@ function render_callback(): void
     \esc_html($button['text'] ?? '')
   ), $button_list));
 
-  $tenant_logo = \plugins_url(
-    'data/tenant-logos/' . Tenant::get_instance()->name . '.svg',
-    dirname(__DIR__)
-  );
+  $tenant_logo = \plugins_url('data/tenant-logos/' . Tenant::get_instance()->name . '.svg', dirname(__DIR__));
 
   ?>
 <div class="card">

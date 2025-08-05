@@ -5,7 +5,6 @@ namespace ionos\essentials\dashboard;
 defined('ABSPATH') || exit();
 
 use ionos\essentials\Tenant;
-
 use function ionos\essentials\is_stretch;
 use const ionos\essentials\PLUGIN_DIR;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
@@ -33,7 +32,7 @@ function render_section(array $args): void
                     data-option="<?php echo \esc_attr(IONOS_SECURITY_FEATURE_OPTION); ?>"
                     data-description="<?php echo \esc_attr($args['title']); ?>"
                     type="checkbox"
-                    <?php printf( $args['checked']); ?>
+                    <?php printf($args['checked']); ?>
                   >
                   <label>
                       <span class="input-switch__on"></span>
@@ -118,12 +117,12 @@ function get_settings_value($key)
                   \esc_html__('Change email address', 'ionos-essentials')
                 );
 
-                render_section([
-                  'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
-                  'id'           => IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY,
-                  'description'  => $description,
-                  'checked'      => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY) ? 'checked' : '',
-                ]);
+          render_section([
+            'title'        => \esc_html__('Vulnerability alerting', 'ionos-essentials'),
+            'id'           => IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY,
+            'description'  => $description,
+            'checked'      => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY) ? 'checked' : '',
+          ]);
           ?>
                 </div>
                    <?php

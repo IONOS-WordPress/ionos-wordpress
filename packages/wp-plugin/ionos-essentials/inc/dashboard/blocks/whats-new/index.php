@@ -41,7 +41,10 @@ function render_callback(): void
 
         <ul class="check-list">
           <li>
-            <h3 class="headline headline--sub"><?php printf(\esc_html__('Your %s Hub Just Got a Powerful Upgrade!', 'ionos-essentials'), Tenant::get_instance()->label); ?></h3>
+            <h3 class="headline headline--sub"><?php printf(
+              \esc_html__('Your %s Hub Just Got a Powerful Upgrade!', 'ionos-essentials'),
+              Tenant::get_instance()->label
+            ); ?></h3>
             <p><?php \esc_html_e(
               "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it.",
               'ionos-essentials'

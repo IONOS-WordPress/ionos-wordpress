@@ -15,7 +15,7 @@ function render_callback(): void
   }
 
   $brand_label         = Tenant::get_instance()->label;
-  $welcome_banner_url = \plugins_url('data/welcome-banner.png', dirname(__DIR__));
+  $welcome_banner_url  = \plugins_url('data/welcome-banner.png', dirname(__DIR__));
 
   ?>
 <dialog id="essentials-welcome_block" open>

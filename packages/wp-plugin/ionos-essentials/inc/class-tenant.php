@@ -3,36 +3,37 @@
 namespace ionos\essentials;
 
 /*
-
   utilkity class to get precomputed tenant information
-
-*/
+ */
 
 defined('ABSPATH') || exit();
 
-class Tenant {
+class Tenant
+{
+  public readonly string $label;
+
   private static ?Tenant $instance = null;
 
-  readonly string $label;
-
-  private function __construct(readonly string $name) {
-    $this->label = match($name) {
-      'ionos' => 'IONOS',
+  private function __construct(
+    public readonly string $name
+  ) {
+    $this->label = match ($name) {
+      'ionos'     => 'IONOS',
       'fasthosts' => 'Fasthosts',
-      'homepl' => 'home.pl',
-      'arsys' => 'Arsys',
-      'piensa' => 'Piensa Solutions',
-      'strato'  => 'STRATO',
-      'udag' => 'UDAG',
+      'homepl'    => 'home.pl',
+      'arsys'     => 'Arsys',
+      'piensa'    => 'Piensa Solutions',
+      'strato'    => 'STRATO',
+      'udag'      => 'UDAG',
     };
   }
 
-  public static function get_instance(): Tenant {
-    if (!self::$instance instanceof \ionos\essentials\Tenant) {
+  public static function get_instance(): self
+  {
+    if (! self::$instance instanceof self) {
       self::$instance = new self(strtolower(\get_option('ionos_group_brand', 'ionos')));
     }
 
     return self::$instance;
   }
 }
-

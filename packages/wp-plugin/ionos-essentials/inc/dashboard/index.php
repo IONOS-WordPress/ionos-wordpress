@@ -50,7 +50,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
     menu_title : __('Overview', 'ionos-essentials'),
     capability : REQUIRED_USER_CAPABILITIES,
     menu_slug  : ADMIN_PAGE_SLUG,
-    callback   : fn() => require_once PLUGIN_DIR . '/inc/dashboard/view.php',
+    callback   : fn () => require_once PLUGIN_DIR . '/inc/dashboard/view.php',
   );
 
   \add_submenu_page(

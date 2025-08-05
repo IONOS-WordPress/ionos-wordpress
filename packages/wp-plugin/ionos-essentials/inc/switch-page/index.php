@@ -3,7 +3,6 @@
 namespace ionos\essentials\switch_page;
 
 use ionos\essentials\Tenant;
-
 use const ionos\essentials\PLUGIN_DIR;
 
 defined('ABSPATH') || exit();
