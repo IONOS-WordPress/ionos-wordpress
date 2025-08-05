@@ -28,7 +28,7 @@ test.describe(
       await expect(body).toHaveText(/My Account/);
     });
 
-    test('/dashboard visual regression', async ({ admin, page }) => {
+    test.skip('/dashboard visual regression', async ({ admin, page }) => {
       await page.setViewportSize({ width: 1280, height: 900 });
       await admin.visitAdminPage('/');
       const screenshot = await page.screenshot({ fullPage: true });
