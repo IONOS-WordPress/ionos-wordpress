@@ -163,6 +163,7 @@ EOF
     "**/dist/**": true,
     "**/node_modules/**": true,
     "**/vendor/**": true,
+    "**/ionos-wordpress.sbom.syft.json": true,
   },
   // Ensure VSCode uses pnpm instead of npm
   "npm.packageManager": "pnpm",
