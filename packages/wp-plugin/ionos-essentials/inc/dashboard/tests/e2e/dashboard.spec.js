@@ -14,6 +14,5 @@ test.describe(
       const body = await page.locator('body');
       await expect(body).toHaveText(/My Account/);
     });
-
   }
 );
