@@ -44,7 +44,10 @@ function summary()
 
           <p class="paragraph paragraph--neutral">
             <?php
-    echo \esc_html(sprintf('Last scan ran %s ago', $wpscan->get_lastscan()));
+            $last_scan = $wpscan->get_lastscan();
+  echo (! $last_scan) ? \esc_html('No scan has been performed yet.', 'ionos-essentials') : \esc_html(
+    sprintf('Last scan ran %s ago', $last_scan)
+  );
   ?>
           </p>
         </div>
