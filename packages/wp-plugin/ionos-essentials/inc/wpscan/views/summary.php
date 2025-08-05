@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\wpscan\views;
 
+defined('ABSPATH') || exit();
+
 function summary()
 {
   global $wpscan;

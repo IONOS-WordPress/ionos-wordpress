@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\wpscan;
 
+defined('ABSPATH') || exit();
+
 require_once __DIR__ . '/controller/class-wpscan.php';
 require_once __DIR__ . '/controller/class-wpscanmiddleware.php';
 require_once __DIR__ . '/views/summary.php';

@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard;
 
+defined('ABSPATH') || exit();
+
 use ionos\essentials\Tenant;
 
 use function ionos\essentials\is_stretch;

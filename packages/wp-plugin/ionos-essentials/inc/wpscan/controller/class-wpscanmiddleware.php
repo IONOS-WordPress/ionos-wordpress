@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\wpscan;
 
+defined('ABSPATH') || exit();
+
 class WPScanMiddleware
 {
   private const URL = 'https://webapps-vuln-scan.hosting.ionos.com/api/v1/vulnerabilities';

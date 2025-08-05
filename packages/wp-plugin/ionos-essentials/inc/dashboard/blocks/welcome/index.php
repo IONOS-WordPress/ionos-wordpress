@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\welcome;
 
+defined('ABSPATH') || exit();
+
 use ionos\essentials\Tenant;
 
 function render_callback()

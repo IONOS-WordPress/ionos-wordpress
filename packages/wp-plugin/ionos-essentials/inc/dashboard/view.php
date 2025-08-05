@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard;
 
+defined('ABSPATH') || exit();
+
 require_once __DIR__ . '/blocks/banner/index.php';
 require_once __DIR__ . '/blocks/welcome/index.php';
 require_once __DIR__ . '/blocks/vulnerability/index.php';

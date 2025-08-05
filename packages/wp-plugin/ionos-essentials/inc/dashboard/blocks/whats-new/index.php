@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\whatsnew;
 
+defined('ABSPATH') || exit();
+
 use ionos\essentials\Tenant;
 
 function get_survey_url()

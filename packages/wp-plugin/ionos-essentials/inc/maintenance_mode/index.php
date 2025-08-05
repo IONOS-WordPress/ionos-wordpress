@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\maintenance_mode;
 
+defined('ABSPATH') || exit();
+
 use ionos\essentials\Tenant;
 
 function is_maintenance_mode()
@@ -23,18 +25,18 @@ function is_maintenance_mode()
   ];
   $wp_admin_bar->add_node($args);
 
-  wp_enqueue_style(
+  \wp_enqueue_style(
     'ionos-maintenance-mode-admin',
-    plugin_dir_url(__FILE__) . 'maintenance.css',
+    \plugin_dir_url(__FILE__) . 'maintenance.css',
     [],
     filemtime(plugin_dir_path(__FILE__) . 'maintenance.css')
   );
 }, 31);
 
-add_action('admin_enqueue_scripts', function () {
-  wp_enqueue_script(
+\add_action('admin_enqueue_scripts', function () {
+  \wp_enqueue_script(
     'ionos-maintenance-mode-admin',
-    plugin_dir_url(__FILE__) . 'maintenance.js',
+    \plugin_dir_url(__FILE__) . 'maintenance.js',
     ['jquery'],
     filemtime(plugin_dir_path(__FILE__) . 'maintenance.js'),
     true

@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\quick_links;
 
+defined('ABSPATH') || exit();
+
 function get_config()
 {
   $blog_url = \get_bloginfo('url');

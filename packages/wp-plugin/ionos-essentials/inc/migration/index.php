@@ -12,6 +12,8 @@
 
 namespace ionos\essentials\migration;
 
+defined('ABSPATH') || exit();
+
 use const ionos\essentials\PLUGIN_FILE;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;

@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\banner;
 
+defined('ABSPATH') || exit();
+
 use ionos\essentials\Tenant;
 
 const BUTTON_TEMPLATE = '<a href="%s" class="button %s" title="%s">%s</a>';

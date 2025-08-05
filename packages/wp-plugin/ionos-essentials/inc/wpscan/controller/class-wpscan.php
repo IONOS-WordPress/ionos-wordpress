@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\wpscan;
 
+defined('ABSPATH') || exit();
+
 use ionos\essentials\Tenant;
 
 use const ionos\essentials\PLUGIN_DIR;

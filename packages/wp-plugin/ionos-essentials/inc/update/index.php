@@ -6,6 +6,8 @@
 
 namespace ionos\essentials;
 
+defined('ABSPATH') || exit();
+
 /*
 // @DEBUG: ENABLE ONLY WHEN DEBUGGING PLUGIN UPDATE CHECKS
 if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true)) {

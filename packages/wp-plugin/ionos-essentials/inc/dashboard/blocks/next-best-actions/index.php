@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
+defined('ABSPATH') || exit();
+
 function render_callback()
 {
   require_once __DIR__ . '/class-nba.php';

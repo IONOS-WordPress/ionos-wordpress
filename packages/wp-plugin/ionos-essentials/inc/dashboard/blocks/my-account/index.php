@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\my_account;
 
+defined('ABSPATH') || exit();
+
 use ionos\essentials\Tenant;
 
 use const ionos\essentials\PLUGIN_DIR;

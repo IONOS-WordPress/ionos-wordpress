@@ -7,6 +7,8 @@
   <?php
 
   use ionos\essentials\Tenant;
+  \esc_html_e('Password Reset Necessary', 'ionos-essentials'); ?></title>
+
   <?php
   use const ionos\essentials\PLUGIN_DIR;
 
@@ -43,12 +45,12 @@
     );
 
   echo '</p><p class="paragraph">';
-  esc_html_e(
+  \esc_html_e(
     'To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to',
     'ionos-essentials'
   );
 
-  printf(' <strong>%s</strong>', esc_html($mail));
+  printf(' <strong>%s</strong>', \esc_html($mail));
   ?>
         </p>
       </section>

@@ -6,6 +6,8 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
+defined('ABSPATH') || exit();
+
 use ionos\essentials\Tenant;
 
 class NBA

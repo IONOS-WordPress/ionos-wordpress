@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard\blocks\deep_links;
 
+defined('ABSPATH') || exit();
+
 $links = [
   [
     'url'    => '',
