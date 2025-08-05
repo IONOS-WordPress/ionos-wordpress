@@ -69,7 +69,7 @@ class WPScanMiddleware
       $this->error = __('Vulnerability Scan not possible. Please contact Customer Care.', 'ionos-essentials');
       return false;
     }
-    $response = wp_remote_post(
+    $response = \wp_remote_post(
       $url,
       [
         'headers' => [
@@ -170,7 +170,7 @@ class WPScanMiddleware
         ];
       }
     }
-    $installed_themes = wp_get_themes();
+    $installed_themes = \wp_get_themes();
     foreach ($installed_themes as $theme) {
       $version = $theme->get('Version');
       if (! empty($version)) {
@@ -195,7 +195,7 @@ class WPScanMiddleware
         return $data['Name'] ?? $slug;
       }
     }
-    $themes = wp_get_themes();
+    $themes = \wp_get_themes();
     foreach ($themes as $theme_slug => $theme_obj) {
       if ($theme_slug === $slug) {
         return $theme_obj->get('Name') ?? $slug;

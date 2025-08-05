@@ -77,10 +77,10 @@ add_action('init', function () {
   }
   global $wp_rewrite;
   if ($wp_rewrite->using_permalinks()) {
-    wp_redirect(home_url('/maintenance'), 302);
+    \wp_redirect(home_url('/maintenance'), 302);
     exit;
   }
-  wp_redirect('index.php?ionos_maintenance_mode=1', 302);
+  \wp_redirect('index.php?ionos_maintenance_mode=1', 302);
   exit;
 });
 

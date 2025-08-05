@@ -25,13 +25,13 @@ class WPScan
     }
 
     if (0 < count($this->get_issues())) {
-      add_action('admin_notices', [$this, 'admin_notice']);
-      add_action('after_plugin_row', [$this, 'add_plugin_issue_notice'], 10, 3);
+      \add_action('admin_notices', [$this, 'admin_notice']);
+      \add_action('after_plugin_row', [$this, 'add_plugin_issue_notice'], 10, 3);
     }
 
-    add_action('admin_footer', [$this, 'add_theme_issues_notice']);
-    add_action('admin_footer', [$this, 'add_issue_on_plugin_install']);
-    add_action('admin_footer', [$this, 'add_issue_on_theme_install']);
+    \add_action('admin_footer', [$this, 'add_theme_issues_notice']);
+    \add_action('admin_footer', [$this, 'add_issue_on_plugin_install']);
+    \add_action('admin_footer', [$this, 'add_issue_on_theme_install']);
 
     \add_action('upgrader_process_complete', function () {
       \delete_transient('ionos_wpscan_issues');
@@ -76,12 +76,12 @@ class WPScan
     printf(
       '<div class="notice notice-alt ionos-issues-found-adminbar %s"><p>%s: %d %s. <a href="%s">%s.</a></p></div>',
       (0 < count($this->get_issues('critical'))) ? 'notice-error' : 'notice-warning',
-      esc_html__('Vulnerability scan', 'ionos-essentials'),
+      \esc_html__('Vulnerability scan', 'ionos-essentials'),
       count($this->get_issues()),
-      (1 === count($this->get_issues())) ? esc_html__('issue found', 'ionos-essentials') :
-      esc_html__('issues found', 'ionos-essentials'),
-      esc_url(admin_url('admin.php?page=' . $brand . '#tools')),
-      esc_html__('More information', 'ionos-essentials')
+      (1 === count($this->get_issues())) ? \esc_html__('issue found', 'ionos-essentials') :
+      \esc_html__('issues found', 'ionos-essentials'),
+      \esc_url(admin_url('admin.php?page=' . $brand . '#tools')),
+      \esc_html__('More information', 'ionos-essentials')
     );
   }
 
@@ -91,15 +91,15 @@ class WPScan
     if (! $screen || 'theme-install' !== $screen->id) {
       return;
     }
-    wp_enqueue_script(
+    \wp_enqueue_script(
       'ionos-wpscan-theme-install',
-      plugins_url('ionos-essentials/inc/wpscan/js/theme-install.js', PLUGIN_DIR),
+      \plugins_url('ionos-essentials/inc/wpscan/js/theme-install.js', PLUGIN_DIR),
       [],
       filemtime(PLUGIN_DIR . '/inc/wpscan/js/theme-install.js'),
       true
     );
 
-    wp_localize_script(
+    \wp_localize_script(
       'ionos-wpscan-theme-install',
       'ionosWPScanThemes',
       [
@@ -123,15 +123,15 @@ class WPScan
     if (! $screen || 'plugin-install' !== $screen->id) {
       return;
     }
-    wp_enqueue_script(
+    \wp_enqueue_script(
       'ionos-wpscan-plugins',
-      plugins_url('ionos-essentials/inc/wpscan/js/plugin-install.js', PLUGIN_DIR),
+      \plugins_url('ionos-essentials/inc/wpscan/js/plugin-install.js', PLUGIN_DIR),
       [],
       filemtime(PLUGIN_DIR . '/inc/wpscan/js/plugin-install.js'),
       true
     );
 
-    wp_localize_script(
+    \wp_localize_script(
       'ionos-wpscan-plugins',
       'ionosWPScanPlugins',
       [
@@ -163,15 +163,15 @@ class WPScan
       return;
     }
 
-    wp_enqueue_script(
+    \wp_enqueue_script(
       'ionos-essentials-themes',
-      plugins_url('ionos-essentials/inc/wpscan/js/theme-overview.js', PLUGIN_DIR),
+      \plugins_url('ionos-essentials/inc/wpscan/js/theme-overview.js', PLUGIN_DIR),
       [],
       filemtime(PLUGIN_DIR . '/inc/wpscan/js/theme-overview.js'),
       true
     );
 
-    wp_localize_script(
+    \wp_localize_script(
       'ionos-essentials-themes',
       'ionosWPScanThemes',
       [
@@ -199,7 +199,7 @@ class WPScan
     }
     echo '<script>
       document.addEventListener("DOMContentLoaded", function() {
-        const row = document.querySelector("tr[data-plugin=\'' . esc_js($plugin_file) . '\']");
+        const row = document.querySelector("tr[data-plugin=\'' . \esc_js($plugin_file) . '\']");
         if (row) {
           row.classList.add("update");
         }
@@ -268,7 +268,7 @@ class WPScan
     $message = $this->get_mail_content(array_values($unknown_names));
     $headers = ['Content-Type: text/html; charset=UTF-8'];
 
-    wp_mail($to, $subject, $message, $headers);
+    \wp_mail($to, $subject, $message, $headers);
     return true;
   }
 

@@ -31,7 +31,7 @@
 
         printf(
           '<img src="%s" alt="%s" style="width: 118px; height: auto; margin-bottom: 16px;">',
-          esc_url(\plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_instance()->name . '.svg', PLUGIN_DIR)),
+          \esc_url(\plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_instance()->name . '.svg', PLUGIN_DIR)),
           Tenant::get_instance()->label
         );
 
@@ -39,7 +39,7 @@
         <h3 class="headline"><?php \esc_html_e('Security alert', 'ionos-essentials'); ?></h3>
         <p class="paragraph">
         <?php
-    esc_html_e(
+    \esc_html_e(
       'We have detected that the password for this WordPress Admin user matches one found in an online database of known compromised passwords. As a precaution, we have disabled access to this account to keep it secure.',
       'ionos-essentials'
     );

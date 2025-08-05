@@ -41,7 +41,7 @@ function summary(): void
           </div>
 
           <p class="paragraph paragraph--large paragraph--bold without-issues-only">
-            <?php esc_html_e('Website is safe and secure', 'ionos-essentials'); ?>
+            <?php \esc_html_e('Website is safe and secure', 'ionos-essentials'); ?>
           </p>
 
           <p class="paragraph paragraph--neutral">
@@ -53,10 +53,10 @@ function summary(): void
       </div>
 
       <p class="paragraph">
-        <?php esc_html_e(
+        <?php \esc_html_e(
           'We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database.',
           'ionos-essentials'
-        ); ?> <span class="link link--lookup" id="learn-more"><?php esc_html_e('Learn more', 'ionos-essentials'); ?></span>
+        ); ?> <span class="link link--lookup" id="learn-more"><?php \esc_html_e('Learn more', 'ionos-essentials'); ?></span>
       </p>
 
       </section>

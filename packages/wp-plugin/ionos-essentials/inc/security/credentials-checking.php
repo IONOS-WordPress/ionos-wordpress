@@ -98,7 +98,7 @@ if (is_login()) {
           $url = \add_query_arg([
             'action' => 'icc_leak_detected',
             'mail'   => obfuscate_email($user->user_email),
-          ], wp_login_url());
+          ], \wp_login_url());
 
           \wp_safe_redirect($url);
           exit;

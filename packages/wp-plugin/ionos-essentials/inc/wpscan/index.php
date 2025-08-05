@@ -111,8 +111,8 @@ function recommended_action(\WP_REST_Request $request)
 }
 
 \add_action('init', function () {
-  if (! wp_next_scheduled('ionos_wpscan')) {
-    wp_schedule_event(time(), 'daily', 'ionos_wpscan');
+  if (! \wp_next_scheduled('ionos_wpscan')) {
+    \wp_schedule_event(time(), 'daily', 'ionos_wpscan');
   }
 });
 

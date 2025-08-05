@@ -31,7 +31,7 @@ function get_config(): array
       'icon' => 'digitalisation-48',
     ],
     [
-      'url'  => $blog_url . '/wp-admin/site-editor.php?path=%2Fwp_global_styles',
+      'url'  => $blog_url . '/wp-admin/site-editor.php?path=%2F\wp_global_styles',
       'text' => __(
         'Change Styles',
         'ionos-essentials'

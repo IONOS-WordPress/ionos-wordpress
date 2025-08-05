@@ -62,7 +62,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   );
 
   // we stop ionos-library from removing our submenu item
-  add_action('admin_menu', function () {
+  \add_action('admin_menu', function () {
     global $wp_filter;
     // ionos-library uses a priority of 999 to remove the submenu item
     if (isset($wp_filter['admin_menu']->callbacks[999])) {
@@ -200,25 +200,25 @@ add_filter('admin_body_class', function ($classes) {
   if (ADMIN_PAGE_HOOK !== $hook) {
     return;
   }
-  wp_enqueue_script(
+  \wp_enqueue_script(
     'ionos-essentials-dashboard-js',
-    plugins_url('ionos-essentials/inc/dashboard/dashboard.js', PLUGIN_DIR),
+    \plugins_url('ionos-essentials/inc/dashboard/dashboard.js', PLUGIN_DIR),
     [],
     filemtime(PLUGIN_DIR . '/inc/dashboard/dashboard.js'),
     true
   );
 
-  wp_localize_script('ionos-essentials-dashboard-js', 'wpData', [
-    'nonce'              => wp_create_nonce('wp_rest'),
-    'restUrl'            => esc_url_raw(rest_url()),
+  \wp_localize_script('ionos-essentials-dashboard-js', 'wpData', [
+    'nonce'              => \wp_create_nonce('wp_rest'),
+    'restUrl'            => \esc_url_raw(rest_url()),
     'securityOptionName' => IONOS_SECURITY_FEATURE_OPTION,
     'i18n'               => [
-      'installing'  => esc_html__('Installing...', 'ionos-essentials'),
-      'activated'   => esc_html__('activated.', 'ionos-essentials'),
-      'deactivated' => esc_html__('deactivated.', 'ionos-essentials'),
-      'updating'    => esc_html__('updating...', 'ionos-essentials'),
-      'deleting'    => esc_html__('deleting...', 'ionos-essentials'),
-      'loading'     => esc_html__('Loading content ...', 'ionos-essentials'),
+      'installing'  => \esc_html__('Installing...', 'ionos-essentials'),
+      'activated'   => \esc_html__('activated.', 'ionos-essentials'),
+      'deactivated' => \esc_html__('deactivated.', 'ionos-essentials'),
+      'updating'    => \esc_html__('updating...', 'ionos-essentials'),
+      'deleting'    => \esc_html__('deleting...', 'ionos-essentials'),
+      'loading'     => \esc_html__('Loading content ...', 'ionos-essentials'),
     ],
   ]);
 });
@@ -256,9 +256,9 @@ add_filter('admin_body_class', function ($classes) {
 }, 1);
 
 add_action('admin_enqueue_scripts', function () {
-  wp_enqueue_style(
+  \wp_enqueue_style(
     'ionos-maintenance-mode-admin',
-    plugin_dir_url(__FILE__) . 'outside-shadow-dom.css',
+    \plugin_dir_url(__FILE__) . 'outside-shadow-dom.css',
     [],
     filemtime(plugin_dir_path(__FILE__) . 'outside-shadow-dom.css')
   );

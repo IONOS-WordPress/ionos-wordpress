@@ -62,16 +62,16 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
 });
 
 \add_action('admin_enqueue_scripts', function () {
-  wp_enqueue_script(
+  \wp_enqueue_script(
     'ionos-security-js',
-    plugins_url('inc/security/security.js', PLUGIN_FILE),
+    \plugins_url('inc/security/security.js', PLUGIN_FILE),
     [],
     filemtime(PLUGIN_DIR . '/inc/security/security.js'),
     true
   );
 
-  wp_localize_script('ionos-security-js', 'ionosSecurityWpData', [
-    'nonce'              => wp_create_nonce('wp_rest'),
+  \wp_localize_script('ionos-security-js', 'ionosSecurityWpData', [
+    'nonce'              => \wp_create_nonce('wp_rest'),
     'ajaxUrl'            => admin_url('admin-ajax.php'),
   ]);
 });
@@ -103,6 +103,6 @@ if (\get_transient('ionos_security_migrated_notice_show')) {
 
   \add_action(
     'wp_ajax_ionos-security-migrated-notice',
-    fn () => (\delete_transient('ionos_security_migrated_notice_show') && wp_die())
+    fn () => (\delete_transient('ionos_security_migrated_notice_show') && \wp_die())
   );
 }
