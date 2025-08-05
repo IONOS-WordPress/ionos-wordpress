@@ -460,6 +460,7 @@
   --global-navigation-border2: rgb(4, 31, 66);
 }
 
+/* tweaked by plugin team */
 .input-switch label{
   border-radius: 0px !important;
 }
