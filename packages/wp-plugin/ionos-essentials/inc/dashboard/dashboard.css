@@ -41,11 +41,6 @@ main{
   color: var(--success-text-color, #096b35);
 }
 
-.button{
-  white-space: nowrap;
-  margin-bottom: 5px;
-}
-
 .grid-col:empty{
   display: none !important;
 }
@@ -184,7 +179,7 @@ main{
 
 @container ionos_vulnerability (max-width: 400px) {
   .ionos_vulnerability .ionos_vulnerability__content{
-    background-image: none;
+    background-image: none !important;
   }
 }
 
@@ -227,6 +222,7 @@ main{
 .ionos_banner_buttons{
   display: flex;
   justify-content: flex-end;
+  gap: 5px;
 }
 
 @media (max-width: 1024px) {
