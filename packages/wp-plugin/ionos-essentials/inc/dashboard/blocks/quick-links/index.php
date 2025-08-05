@@ -4,7 +4,7 @@ namespace ionos\essentials\dashboard\blocks\quick_links;
 
 defined('ABSPATH') || exit();
 
-function render_callback()
+function render_callback(): void
 {
   $config_file = __DIR__ . '/config.php';
 

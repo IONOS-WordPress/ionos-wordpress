@@ -54,7 +54,7 @@ function get_account_data()
   return $data;
 }
 
-function render_callback()
+function render_callback(): void
 {
   $data = get_account_data();
 

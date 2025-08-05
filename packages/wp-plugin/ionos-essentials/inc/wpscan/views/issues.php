@@ -4,7 +4,7 @@ namespace ionos\essentials\wpscan\views;
 
 defined('ABSPATH') || exit();
 
-function issues($args)
+function issues(array $args): void
 {
   global $wpscan;
 
@@ -62,7 +62,7 @@ function issues($args)
 </div>
 <?php }
 
-function issue_line($issue)
+function issue_line(array $issue): void
 {
   ?>
  <li class="settings-stripe settings-stripe--link  <?php echo \esc_attr($issue['type']); ?>">

@@ -38,7 +38,10 @@ class WPScan
     }, 10, 2);
   }
 
-  public function get_issues($filter = null)
+  /**
+   * @return mixed[]
+   */
+  public function get_issues($filter = null): array
   {
     // Filter out issues for plugins/themes that are not installed
     $all_slugs    = $this->get_installed_slugs();
@@ -61,7 +64,7 @@ class WPScan
     );
   }
 
-  public function admin_notice()
+  public function admin_notice(): void
   {
     global $current_screen;
 
@@ -82,7 +85,7 @@ class WPScan
     );
   }
 
-  public function add_issue_on_theme_install()
+  public function add_issue_on_theme_install(): void
   {
     $screen = get_current_screen();
     if (! $screen || 'theme-install' !== $screen->id) {
@@ -113,7 +116,7 @@ class WPScan
     );
   }
 
-  public function add_issue_on_plugin_install()
+  public function add_issue_on_plugin_install(): void
   {
 
     $screen = get_current_screen();
@@ -145,7 +148,7 @@ class WPScan
     );
   }
 
-  public function add_theme_issues_notice()
+  public function add_theme_issues_notice(): void
   {
     $screen = get_current_screen();
     if (! $screen || 'themes' !== $screen->id) {
@@ -183,7 +186,7 @@ class WPScan
     );
   }
 
-  public function add_plugin_issue_notice($plugin_file, $plugin_data, $status)
+  public function add_plugin_issue_notice($plugin_file, array $plugin_data, $status): void
   {
 
     $screen = get_current_screen();
@@ -229,7 +232,7 @@ class WPScan
     return human_time_diff($last_run, time());
   }
 
-  public function get_error()
+  public function get_error(): ?string
   {
     return $this->error;
   }
@@ -269,7 +272,7 @@ class WPScan
     return true;
   }
 
-  private function get_new_middleware_data()
+  private function get_new_middleware_data(): void
   {
     $middleware   = new WPScanMiddleware();
     $data         = $middleware->download_wpscan_data();

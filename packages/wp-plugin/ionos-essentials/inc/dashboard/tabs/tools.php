@@ -15,7 +15,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_PEL;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
 
-function render_section($args)
+function render_section(array $args): void
 {
   ?>
 <section class="sheet__section">

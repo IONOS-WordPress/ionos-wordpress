@@ -6,7 +6,7 @@ defined('ABSPATH') || exit();
 
 use ionos\essentials\Tenant;
 
-function get_survey_url()
+function get_survey_url(): string
 {
   $survey_links = [
     'de'    => 'https://feedback.ionos.com/nmdopgnfds?l=de',
@@ -27,7 +27,7 @@ function get_survey_url()
   return $survey_links['en'];
 }
 
-function render_callback()
+function render_callback(): void
 {
   ?>
 

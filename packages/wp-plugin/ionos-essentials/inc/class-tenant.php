@@ -28,9 +28,10 @@ class Tenant {
   }
 
   public static function get_instance(): Tenant {
-    if (null === self::$instance) {
+    if (!self::$instance instanceof \ionos\essentials\Tenant) {
       self::$instance = new self(strtolower(\get_option('ionos_group_brand', 'ionos')));
     }
+
     return self::$instance;
   }
 }

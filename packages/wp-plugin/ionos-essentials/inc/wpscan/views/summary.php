@@ -4,11 +4,11 @@ namespace ionos\essentials\wpscan\views;
 
 defined('ABSPATH') || exit();
 
-function summary()
+function summary(): void
 {
   global $wpscan;
 
-  if (count($wpscan->get_issues())) {
+  if (count($wpscan->get_issues()) !== 0) {
     echo '<script>document.querySelector(\'a[href$="tools"]\').classList.add("has-red-dot");</script>';
   }
 

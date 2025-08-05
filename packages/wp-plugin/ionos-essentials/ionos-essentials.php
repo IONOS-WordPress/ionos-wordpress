@@ -47,7 +47,7 @@ require_once __DIR__ . '/inc/wpscan/index.php';
 // soc plugin components
 require_once __DIR__ . '/inc/migration/index.php';
 
-function is_stretch()
+function is_stretch(): bool
 {
   return str_starts_with(getcwd(), '/home/www/public');
 }

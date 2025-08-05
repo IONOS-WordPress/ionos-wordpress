@@ -28,7 +28,7 @@ class ClassWPScanTest extends \WP_UnitTestCase {
     require_once PLUGIN_DIR . '/inc/wpscan/controller/class-wpscanmiddleware.php';
   }
 
-  function test_data_conversion() : void {
+  public function test_data_conversion() : void {
     $wp_scan = new WPScanMiddleware();
     $data = [
       'plugins' => [
@@ -93,7 +93,7 @@ class ClassWPScanTest extends \WP_UnitTestCase {
     $this->assertEquals($expected, $converted_data);
   }
 
-  function test_sending_email() : void {
+  public function test_sending_email() : void {
     update_option('IONOS_SECURITY_FEATURE_OPTION', ['IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY' => true]);
     set_transient('ionos_wpscan_issues', [
       [
