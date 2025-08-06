@@ -17,7 +17,7 @@ msgstr ""
 #. Description of the plugin
 #: ionos-essentials.php
 msgid "The essentials plugin provides IONOS hosting specific functionality."
-msgstr "El plugin essentials proporciona funcionalidades específicas para el alojamiento de IONOS."
+msgstr "El plugin Essentials proporciona funcionalidades específicas para el hosting de IONOS."
 
 #. Author of the plugin
 #: ionos-essentials.php
@@ -58,11 +58,11 @@ msgstr "Mi usuario"
 
 #: inc/tenants/config/fasthosts.php
 msgid "WordPress Websites"
-msgstr "Sitios web WordPress"
+msgstr "Páginas web WordPress"
 
 #: inc/tenants/config/strato.php
 msgid "Package overview"
-msgstr "Vista general de paquetes"
+msgstr "Vista general del panel"
 
 #: inc/tenants/config/strato.php
 msgid "Your invoices"
@@ -109,14 +109,14 @@ msgstr "hace %s"
 #: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
-msgstr[0] "Problema crítico detectado"
-msgstr[1] "Problemas críticos detectados"
+msgstr[0] "problema crítico detectado"
+msgstr[1] "problemas críticos detectados"
 
 #: inc/dashboard/blocks/vulnerability/index.php
 msgid "warning found"
 msgid_plural "warnings found"
-msgstr[0] "Alerta detectada"
-msgstr[1] "Alertas detectadas"
+msgstr[0] "alerta detectada"
+msgstr[1] "alertas detectadas"
 
 #: inc/dashboard/blocks/vulnerability/index.php
 msgid "Issues found"
@@ -124,23 +124,23 @@ msgstr "Problemas detectados"
 
 #: inc/dashboard/blocks/banner/index.php
 msgid "View Site"
-msgstr "Ver el sitio"
+msgstr "Ver la página"
 
 #: inc/dashboard/blocks/banner/index.php
 msgid "Start AI Sitebuilder"
-msgstr "Iniciar Creador de sitios con IA"
+msgstr "Iniciar el creador de páginas web con IA"
 
 #: inc/dashboard/blocks/my-account/index.php
 msgid "Manage Hosting"
-msgstr "Gestionar el hosting"
+msgstr "Gestionar hosting"
 
 #: inc/dashboard/blocks/my-account/index.php
 msgid "Account Management"
-msgstr "Mi cuenta"
+msgstr "Gestión de cuenta"
 
 #: inc/dashboard/blocks/my-account/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
-msgstr "Accede con un solo clic a tu cuenta de cliente, seguridad de inicio de sesión y productos."
+msgstr "Acceso a tu cuenta de cliente en un solo clic, con seguridad para el inicio de sesión y tus servicios."
 
 #: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/index.php
@@ -153,11 +153,11 @@ msgstr "Crear página"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Logo"
-msgstr "Añadir logotipo"
+msgstr "Añadir logo"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Ensure your website is branded with your unique logo for a professional look."
-msgstr "Asegúrate de que tu sitio web muestra tu logotipo para darle un aspecto profesional."
+msgstr "Asegúrate de que tu página web muestra tu logo para darle un aspecto profesional."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect Domain"
@@ -165,35 +165,35 @@ msgstr "Conectar dominio"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Edit & Complete Your Website"
-msgstr "Editar y completar su sitio web"
+msgstr "Editar y completar tu página web"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
-msgstr "Añade páginas, texto e imágenes, ajusta tu sitio web con herramientas de inteligencia artifial o modifica los colores y el tipo de letra."
+msgstr "Añade páginas, texto e imágenes, ajusta tu página web con herramientas de inteligencia artificial o modifica los colores y el tipo de letra."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Edit Website"
-msgstr "Editar sitio web"
+msgstr "Editar página web"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Discover Help Center"
-msgstr "Descubre el Centro de ayuda"
+msgstr "Explorar el Centro de Ayuda"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
-msgstr "Recibe ayuda al instante con Co-Pilot AI, explora nuestra base de conocimientos o haz visitas guiadas."
+msgstr "Recibe ayuda al instante con la asistencia de la IA, explora nuestra base de conocimientos o haz un recorrido guiado."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Open Help Center"
-msgstr "Abrir el Centro de ayuda"
+msgstr "Acceder al Centro de Ayuda"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set Up Email"
-msgstr "Configurar el correo electrónico"
+msgstr "Configurar correo electrónico"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set up your included email account and integrate it with your website."
-msgstr "Configure su cuenta de correo electrónico incluida e intégrela con su sitio web."
+msgstr "Configura tu cuenta de correo electrónico incluida e intégrala con tu página web."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set Up Contact Form"
@@ -201,15 +201,15 @@ msgstr "Configurar formulario de contacto"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Create a contact form to stay connected with your visitors."
-msgstr "Crea un formulario para mantener el contacto con tus visitantes."
+msgstr "Crea un formulario para mantener el contacto con tus visitas."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Set Up Your WooCommerce Store"
-msgstr "Configura tu tienda WooCommerce"
+msgstr "Configurar tu tienda de WooCommerce"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Launch your online store now with a guided setup wizard."
-msgstr "Comienza ahora tu tienda online con un asistente de configuración guiado."
+msgstr "Pon en marcha tu tienda online con un asistente de configuración guiado."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Start Setup"
@@ -217,23 +217,23 @@ msgstr "Iniciar configuración"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Social Media Setup"
-msgstr "Configuración de redes sociales"
+msgstr "Configurar redes sociales"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect your social media profiles to your website and expand your online presence."
-msgstr "Conecta tus perfiles en las redes sociales a tu sitio web y amplía tu presencia en línea."
+msgstr "Conecta a tus perfiles de redes sociales a tu página web y amplía tu presencia online."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect Social Media"
-msgstr "Conectar las redes sociales"
+msgstr "Conectar redes sociales"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Favicon"
-msgstr "Añadir favicono"
+msgstr "Añadir favicon"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
-msgstr "Añade un favicono (icono de sitio web) a tu sitio web para mejorar el reconocimiento y la visibilidad de tu marca."
+msgstr "Integra un favicon (icono de página web) en tu web para mejorar el reconocimiento y la visibilidad de tu marca."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Create a Page"
@@ -245,19 +245,19 @@ msgstr "Crea y publica una página y comparte tu historia con el mundo."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
-msgstr "Conecta tu dominio a tu sitio web para aumentar la visibilidad y atraer más visitantes."
+msgstr "Conecta tu dominio a tu web para aumentar la visibilidad y atraer a más visitas."
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect a Domain"
-msgstr "Asociar un dominio"
+msgstr "Conectar un dominio"
 
 #: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Unlock Your Website's Potential"
-msgstr "Libera el potencial de tu sitio web"
+msgstr "Explota todo el potencial de tu página web"
 
 #: inc/dashboard/blocks/next-best-actions/index.php
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-msgstr "Tu sitio web ya está en línea, pero esto acaba de comenzar. Explora las acciones recomendadas para crecer, mejorar el rendimiento y alcanzar tus objetivos en línea."
+msgstr "Tu página web ya está online, pero el viaje todavía acaba de comenzar. Explora las acciones recomendadas para crecer, mejorar el rendimiento y alcanzar tus objetivos online."
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Close"
@@ -273,7 +273,7 @@ msgstr "Añadir nueva página"
 
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Add new post"
-msgstr "Añadir nueva entrada"
+msgstr "Añadir nueva publicación"
 
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Edit Header"
@@ -289,11 +289,11 @@ msgstr "No volver a mostrar"
 
 #: inc/dashboard/blocks/vulnerability/index.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
-msgstr "Escaneo de vulnerabilidades"
+msgstr "Búsqueda de amenazas y vulnerabilidades específicas de WordPress"
 
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Edit site Navigation"
-msgstr "Editar la navegación del sitio"
+msgstr "Editar navegación de la página"
 
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Change Styles"
@@ -305,7 +305,7 @@ msgstr "Añadir plugins"
 
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Upload Media files"
-msgstr "Añadir archivos de medios"
+msgstr "Subir archivos multimedia"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Get an overview of the latest updates and enhancements."
@@ -317,7 +317,7 @@ msgstr "Mis productos"
 
 #: inc/tenants/config/ionos.php
 msgid "Project Overview"
-msgstr "Listado de proyectos"
+msgstr "Vista general de proyectos"
 
 #: inc/tenants/config/ionos.php
 msgid "Domains and SSL management"
@@ -329,7 +329,7 @@ msgstr "Añadir más productos"
 
 #: inc/dashboard/blocks/my-account/index.php
 msgid "Webmail Login"
-msgstr "Acceso al webmail"
+msgstr "Acceso a Webmail"
 
 #: inc/tenants/config/udag.php
 msgid "Meine Daten"
@@ -337,15 +337,15 @@ msgstr "Mis datos"
 
 #: inc/tenants/config/udag.php
 msgid "WordPress verwalten "
-msgstr "Actualizar WordPress"
+msgstr "Gestionar WordPress"
 
 #: inc/tenants/config/udag.php
 msgid "Domains verwalten"
-msgstr "Dominios cancelados"
+msgstr "Gestionar dominios"
 
 #: inc/tenants/config/udag.php
 msgid "E-Mail verwalten"
-msgstr "Enviar correo electrónico"
+msgstr "Gestionar correo electrónico"
 
 #: inc/tenants/config/udag.php
 msgid "Webspace "
@@ -361,11 +361,11 @@ msgstr "SSL"
 
 #: inc/tenants/config/udag.php
 msgid "Markenschutz"
-msgstr "Markenschutz"
+msgstr "Protección de marca"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Setup Email Account"
-msgstr "Crear correo electrónico"
+msgstr "Configurar correo electrónico"
 
 #: inc/tenants/config/ionos.php
 msgid "My Account"
@@ -382,15 +382,15 @@ msgstr "Essentials"
 
 #: inc/dashboard/blocks/banner/index.php
 msgid "Rebuild Website"
-msgstr "Reconstruir el sitio web"
+msgstr "Rehacer la página web"
 
 #: inc/dashboard/blocks/banner/index.php
 msgid "It is possible to rebuild your AI-created website within 72 hours"
-msgstr "Es posible reconstruir su sitio web creado con IA en 72 horas"
+msgstr "Es posible volver a confeccionar tu página web creada con IA en 72 horas"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Legally compliant selling with German Market Light"
-msgstr "Venta conforme a la ley con German Market Light"
+msgstr "Venta conforme a la legislación con German Market Light"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Install now"
@@ -398,21 +398,21 @@ msgstr "Instalar ahora"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner."
-msgstr "Utilice la extensión gratuita para WooCommerce para gestionar su tienda online en Alemania y Austria de forma legalmente compatible."
+msgstr "Utiliza la extensión gratuita para WooCommerce con el fin de gestionar tu tienda online en Alemania y Austria de forma legalmente compatible."
 
 #. translators: s=link to control panel
 #: inc/descriptify/index.php
 #, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
-msgstr "Puede personalizar y gestionar su URL (dominio) fácilmente en <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
+msgstr "Puedes personalizar y gestionar tu URL (dominio) fácilmente en <a href=\"%1$s\" target=\"_blank\">%2$s Centro de Aplicaciones</a>."
 
 #: inc/switch-page/view.php
 msgid "How do you want to create your new website?"
-msgstr "¿Cómo quiere crear su nuevo sitio web?"
+msgstr "¿Cómo quieres crear tu nueva página web?"
 
 #: inc/switch-page/view.php
 msgid "Online in a few minutes"
-msgstr "En línea en unos minutos"
+msgstr "Online en unos minutos"
 
 #: inc/switch-page/view.php
 msgid "With AI"
@@ -420,7 +420,7 @@ msgstr "Con IA"
 
 #: inc/switch-page/view.php
 msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
-msgstr "Creación automática de sitios web basada en sus preferencias y requisitos. Incluye textos e imágenes listos para usar."
+msgstr "Creación automática de páginas web en función de tus preferencias y requisitos. Incluye textos e imágenes listos para usar."
 
 #: inc/switch-page/view.php
 msgid "100% WordPress"
@@ -428,33 +428,33 @@ msgstr "100% WordPress"
 
 #: inc/switch-page/view.php
 msgid "Do it yourself"
-msgstr "Hazlo tú mismo"
+msgstr "Confecciona tu web de forma autónoma"
 
 #: inc/switch-page/view.php
 msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
-msgstr "Tú decides cómo crear tu sitio web. No se preocupe, también puede iniciar la creación de AI desde el panel de WordPress más tarde."
+msgstr "Tú decides cómo crear tu página web. No te preocupes, también podrás iniciar la funcionalidad para confeccionarla con IA desde el panel de WordPress más tarde."
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: inc/switch-page/view.php
 #, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
-msgstr "Al utilizar las funciones de IA, usted acepta las %1$sCondiciones de uso%2$s y la %3$sPolítica de privacidad%4$s de OpenAI."
+msgstr "Al utilizar las funciones de IA, aceptas las %1$sCondiciones de Uso%2$s y la %3$sPolítica de Privacidad%4$s de OpenAI."
 
 #: inc/jetpack-flow/index.php
 msgid "Assistant"
-msgstr "Assistant"
+msgstr "Asistente"
 
 #: inc/jetpack-flow/index.php
 msgid "We are going to install Jetpack Backup now."
-msgstr "Ahora vamos a instalar Jetpack Backup."
+msgstr "Vamos a instalar Jetpack Backup."
 
 #: inc/jetpack-flow/index.php
 msgid "Ok"
-msgstr "Ok"
+msgstr "Aceptar"
 
 #: inc/jetpack-flow/index.php
 msgid "Installing Jetpack Backup"
-msgstr "Instalación de la copia de seguridad de Jetpack"
+msgstr "Instalando Jetpack Backup"
 
 #: inc/jetpack-flow/index.php
 msgid "Please wait a moment while we are installing Jetpack Backup for you."
@@ -462,7 +462,7 @@ msgstr "Por favor, espera un momento mientras instalamos Jetpack Backup para ti.
 
 #: inc/switch-page/index.php
 msgid "Onboarding"
-msgstr "Onboarding"
+msgstr "Comenzar a usar la función"
 
 #: inc/jetpack-flow/index.php
 msgid "No thanks"
@@ -471,67 +471,67 @@ msgstr "No, gracias"
 #: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/tabs/tools.php
 msgid "Tools"
-msgstr ""
+msgstr "Herramientas"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Website security"
-msgstr ""
+msgstr "Seguridad de la página web"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerability alerting"
-msgstr ""
+msgstr "Alertas de vulnerabilidad"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Change email address"
-msgstr "Cambiar la dirección de correo electrónico"
+msgstr "Cambiar dirección de correo electrónico"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Password monitoring"
-msgstr ""
+msgstr "Monitorización de contraseña"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Monitor password leaks. If a password is suspected to be compromised, you will receive an email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated."
-msgstr ""
+msgstr "Monitoriza la filtración de contraseñas. Si existen sospechas de que una contraseña esté comprometida, recibirás una notificación por correo electrónico con instrucciones para cambiarla. Como medida de precaución adicional, la cuenta se bloqueará hasta que la contraseña se actualice."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Block XML-RPC access"
-msgstr ""
+msgstr "Bloquear acceso a XML-RPC"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Block access to XML-RPC, for security purposes we recommend keeping this blocked if not in use."
-msgstr ""
+msgstr "Bloquea el acceso a XML-RPC. Por motivos de seguridad, te recomendamos mantenerlo bloqueado si no está en uso."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Prohibit email login"
-msgstr ""
+msgstr "Deshabilitar inicio de sesión por correo electrónico"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Disable login with email addresses. This improves security by reducing the potential attack surface."
-msgstr ""
+msgstr "Desactiva el inicio de sesión con direcciones de correo electrónico. Esto mejora la seguridad porque reduce la superficie de ataque potencial."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance page"
-msgstr ""
+msgstr "Página de mantenimiento"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Active"
-msgstr ""
+msgstr "Función activa"
 
 #: inc/dashboard/index.php
 msgid "activated."
-msgstr ""
+msgstr "activada."
 
 #: inc/dashboard/index.php
 msgid "deactivated."
-msgstr ""
+msgstr "desactivada"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Maintenance mode"
-msgstr ""
+msgstr "Modo de mantenimiento"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Preview maintenance page"
-msgstr ""
+msgstr "Vista previa de la página de mantenimiento"
 
 #. Plugin URI of the plugin
 #: ionos-essentials.php
@@ -564,11 +564,11 @@ msgstr "¡No te pierdas los próximos lanzamientos y actualizaciones de funcione
 #: inc/dashboard/blocks/welcome/index.php
 #, php-format
 msgid "Welcome to your %s Hub"
-msgstr "Bienvenido a su %s Hub"
+msgstr "Te damos la bienvenida a tu nuevo hub %s"
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "Esta visión general es su puerta de entrada para liberar todo el potencial de su sitio web WordPress."
+msgstr "Esta vista general es tu puerta de entrada para sacar el máximo partido de todo el potencial de tu página web de WordPress."
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Recommendations for next steps"
@@ -584,7 +584,7 @@ msgstr "Tu opinión nos importa"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
-msgstr "Siempre estamos buscando formas de mejorar tu experiencia con Hosting WordPress. Por favor, dedica unos minutos a realizar una breve encuesta online."
+msgstr "Siempre estamos buscando formas de mejorar tu experiencia con el hosting de WordPress. Por favor, dedica unos minutos a realizar una breve encuesta online."
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Take the survey"
@@ -597,25 +597,24 @@ msgstr "¡Hemos actualizado tu hub %s con potentes novedades!"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
-msgstr ""
-"¡Acabamos de habilitar la nueva pestaña «Herramientas y Seguridad»! Todas las funciones e interfaces de uso de tu anterior plugin de seguridad se encuentran ahora aquí para una gestión centralizada y más sencilla. Además, también tienes disponible una nueva función de página de mantenimiento que puedes activar cuando lo necesites.\n"
+msgstr "¡Acabamos de habilitar la nueva pestaña «Herramientas y seguridad»! Todas las funciones e interfaces de uso de tu anterior plugin de seguridad se encuentran ahora aquí para una gestión centralizada y más sencilla. Además, también tienes disponible una nueva función de página de mantenimiento que puedes activar cuando lo necesites."
 "develop"
 
 #: inc/wpscan/views/summary.php
 msgid "Website is safe and secure"
-msgstr ""
+msgstr "La página web está segura y protegida"
 
 #: inc/dashboard/index.php
 msgid "updating..."
-msgstr ""
+msgstr "actualizando..."
 
 #: inc/dashboard/index.php
 msgid "deleting..."
-msgstr ""
+msgstr "eliminando..."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Important Security Notification: Vulnerability detected in your WordPress website"
-msgstr "Notificación de seguridad importante: detección de vulnerabilidades en tu página web de WordPress."
+msgstr "Notificación de seguridad importante: vulnerabilidades detectadas en tu página web de WordPress."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:"
@@ -623,19 +622,19 @@ msgstr "Hola,<br />queremos informarte de que nuestro último escaneo de vulnera
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
-msgstr ""
+msgstr "Para garantizar la seguridad de tu página web, te recomendamos revisar los resultados del análisis y tomar las medidas oportunas. Para obtener información más detallada sobre las vulnerabilidades específicas identificadas, visita el siguiente enlace:"
 
 #. Translators: %1$s and %2$s is a placeholder for link.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
 msgid "%1$sTurn off this notification here%2$s."
-msgstr ""
+msgstr "%1$sDesactivar esta notificación aquí%2$s."
 
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
 msgid "Your %s plugin team"
-msgstr ""
+msgstr "Tu equipo de plugins %s"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "More information"
@@ -647,171 +646,172 @@ msgstr "Problemas detectados"
 
 #: inc/dashboard/blocks/vulnerability/index.php
 msgid "An error occurred while fetching the vulnerability data."
-msgstr ""
+msgstr "Se ha producido un error al recuperar los datos de vulnerabilidad."
 
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr ""
+msgstr "Sección de ayuda completa, que incluye: asistencia por chat con IA, recorridos guiados y una amplia base de datos de conocimientos."
 
 #: inc/dashboard/index.php
 msgid "Tools and security"
-msgstr ""
+msgstr "Herramientas y seguridad"
 
 #: inc/dashboard/index.php
 msgid "Loading content ..."
-msgstr ""
+msgstr "Cargando contenido..."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Temporarily block public access to your site with a maintenance page."
-msgstr ""
+msgstr "Bloquea temporalmente el acceso público a tu página web con una página de mantenimiento."
 
 #: inc/dashboard/tabs/tools.php
 msgid "Vulnerabilities detected are being emailed to"
-msgstr ""
+msgstr "Las vulnerabilidades detectadas son enviadas por correo electrónico a"
 
 #: inc/dashboard/view.php
 msgid "Vulnerability scan information"
-msgstr ""
+msgstr "Información del escáner de vulnerabilidades"
 
 #: inc/dashboard/view.php
 msgid "We use the WPScan database to provide security risk scores for plugins and themes."
-msgstr ""
+msgstr "Utilizamos la base de datos de WPScan para proporcionar puntuaciones acerca del riesgo de seguridad para plugins y temas."
 
 #: inc/dashboard/view.php
 msgid "The scores are on a scale of 1 to 10, where a higher value indicates greater security risk."
-msgstr ""
+msgstr "En una escala del 1 al 10, las puntuaciones más altas suponen más riesgos para la seguridad."
 
 #: inc/dashboard/view.php
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
-msgstr ""
+msgstr "No se permite la instalación de plugins y temas que superen la puntuación 7.0."
 
 #: inc/wpscan/controller/class-wpscan.php
 #: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
-msgstr ""
+msgstr "Escáner de vulnerabilidades"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "issue found"
-msgstr ""
+msgstr "problema detectado"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Checking for vulnerabilities..."
-msgstr ""
+msgstr "Buscando vulnerabilidades..."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Warnings found. Installation is not recommended."
-msgstr ""
+msgstr "Alertas detectadas. No se recomienda la instalación."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Critical vulnerabilities found! Installation is not possible."
-msgstr ""
+msgstr "¡Vulnerabilidades críticas detectadas! La instalación no es posible."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this theme."
-msgstr ""
+msgstr "No se han encontrado vulnerabilidades. Puedes instalar este tema de forma segura."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No vulnerabilities found. You can safely install this plugin."
-msgstr ""
+msgstr "No se han encontrado vulnerabilidades. Puedes instalar este plugin de forma segura."
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues"
-msgstr ""
+msgstr "El escáner de vulnerabilidades ha detectado problemas"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Activation is not recommended"
-msgstr ""
+msgstr "La activación no es recomendable"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "The vulnerability scan has found issues for"
-msgstr ""
+msgstr "El escáner de vulnerabilidades ha detectado problemas para"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "No scan has been performed yet."
-msgstr ""
+msgstr "Todavía no se ha llevado a cabo ningún escaneo."
 
 #: inc/wpscan/index.php
 msgid "Active theme cannot be deleted"
-msgstr ""
+msgstr "No es posible eliminar el tema activo"
 
 #: inc/wpscan/index.php
 msgid "was deleted"
-msgstr ""
+msgstr "fue eliminado"
 
 #: inc/wpscan/index.php
 msgid "was updated"
-msgstr ""
+msgstr "fue actualizado"
 
 #: inc/wpscan/views/issues.php
 #, php-format
 msgid "%d critical issue"
 msgid_plural "%d critical issues"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d problema crítico"
+msgstr[1] "%d problemas críticos"
 
 #: inc/wpscan/views/issues.php
 #, php-format
 msgid "%d warning"
 msgid_plural "%d warnings"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d alerta"
+msgstr[1] "%d alertas"
 
 #: inc/wpscan/views/issues.php
 msgid "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
-msgstr ""
+msgstr "Los problemas de seguridad críticos de la página web, identificados con una puntuación CVSS de 7.0 o superior, requieren atención inmediata."
 
 #: inc/wpscan/views/issues.php
 msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
-msgstr ""
+msgstr "Las alertas de seguridad de la página web, identificadas con puntuaciones CVSS de hasta 6.9, requieren atención inmediata."
 
 #: inc/wpscan/views/issues.php
 msgid "View update details"
-msgstr ""
+msgstr "Ver detalles de la actualización"
 
 #: inc/wpscan/views/issues.php
 msgid "This theme is active. Please activate another theme."
-msgstr ""
+msgstr "Este tema está activo. Por favor, activa otro tema."
 
 #: inc/wpscan/views/summary.php
 msgid "critical issues found"
-msgstr ""
+msgstr "problemas críticos detectados"
 
 #: inc/wpscan/views/summary.php
 msgid "warnings found"
-msgstr ""
+msgstr "alertas detectadas"
 
 #: inc/wpscan/views/summary.php
 msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
-msgstr ""
+msgstr "Escaneamos automáticamente a diario y cada vez que se instala un nuevo plugin o tema, utilizando la base de datos de vulnerabilidades de WPScan."
 
 #: inc/wpscan/views/summary.php
 msgid "Learn more"
-msgstr ""
+msgstr "Más información"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Advanced"
-msgstr ""
+msgstr "Configuración avanzada"
 
 #: inc/dashboard/tabs/tools.php
 msgid "%s Hub as WordPress Admin start page"
-msgstr ""
+msgstr "Hub %s como página de inicio del administrador de WordPress"
 
 #: inc/dashboard/tabs/tools.php
 msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
-msgstr ""
+msgstr "Habilita el hub %s como página de inicio en tu panel de WordPress para una experiencia más personalizada y eficiente."
+
 
 #: inc/security/views/password-reset-necessary.php
 msgid "Password Reset Necessary"
-msgstr ""
+msgstr "Restablecimiento de contraseña requerido"
 
 #: inc/security/views/password-reset-necessary.php
 msgid "Security alert"
-msgstr ""
+msgstr "Alerta de seguridad"
 
 #: inc/security/views/password-reset-necessary.php
 msgid "We have detected that the password for this WordPress Admin user matches one found in an online database of known compromised passwords. As a precaution, we have disabled access to this account to keep it secure."
-msgstr ""
+msgstr "Hemos detectado que la contraseña de este usuario de WordPress Admin coincide con una que se encuentra en una base de datos online de contraseñas comprometidas conocidas. Como medida de precaución, hemos deshabilitado el acceso a esta cuenta para mantenerla segura."
 
 #: inc/security/views/password-reset-necessary.php
 msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
-msgstr ""
+msgstr "Para reactivar el acceso a esta cuenta, la contraseña debe ser actualizada. Hemos enviado un correo electrónico con las instrucciones de restablecimiento a"
