@@ -48,10 +48,9 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     dashboard.querySelector('[data-tab]')?.click();
   }
+
   window.addEventListener('hashchange', ionosEssentialsMarkActiveWordPressMenuItem);
   window.addEventListener('load', ionosEssentialsMarkActiveWordPressMenuItem);
-
-
   function ionosEssentialsMarkActiveWordPressMenuItem() {
     const hash = window.location.hash.substring(1);
     if (!hash) {
@@ -59,12 +58,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     dashboard.querySelector(`[data-tab="${hash}"]`)?.click();
-    const tabs = Array.from(dashboard.querySelectorAll('[data-tab]'));
-    const activeTab = dashboard.querySelector('.page-tabbar__link--active[data-tab]');
-    const activeTabIndex = tabs.indexOf(activeTab);
 
     document.querySelector('li.current')?.classList.remove('current')
-    document.querySelector('[id^="toplevel_page_"] .wp-submenu li:nth-child(' + (activeTabIndex + 2) + ')').classList.add('current')
+    const selector = `admin.php?page=${wpData.tenant}` + (hash === 'overview' ? '' : `#${hash}`);
+    document.querySelector(`#adminmenu .wp-submenu a[href="${selector}"]`).parentElement.classList.add('current');
   }
 
   // NBA
