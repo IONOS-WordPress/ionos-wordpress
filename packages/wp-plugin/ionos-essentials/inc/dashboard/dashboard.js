@@ -48,18 +48,24 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     dashboard.querySelector('[data-tab]')?.click();
   }
-  window.addEventListener('hashchange', () => {
-    const newHash = window.location.hash.substring(1);
-    if (newHash) {
-      dashboard.querySelector(`[data-tab="${newHash}"]`)?.click();
-      const tabs = Array.from(dashboard.querySelectorAll('[data-tab]'));
-      const activeTab = dashboard.querySelector('.page-tabbar__link--active[data-tab]');
-      const activeTabIndex = tabs.indexOf(activeTab);
+  window.addEventListener('hashchange', ionosEssentialsMarkActiveWordPressMenuItem);
+  window.addEventListener('load', ionosEssentialsMarkActiveWordPressMenuItem);
 
-      document.querySelector('li.current')?.classList.remove('current')
-      document.querySelector('[id^="toplevel_page_"] .wp-submenu li:nth-child(' + (activeTabIndex + 2) + ')').classList.add('current')
+
+  function ionosEssentialsMarkActiveWordPressMenuItem() {
+    const hash = window.location.hash.substring(1);
+    if (!hash) {
+      return;
     }
-  });
+
+    dashboard.querySelector(`[data-tab="${hash}"]`)?.click();
+    const tabs = Array.from(dashboard.querySelectorAll('[data-tab]'));
+    const activeTab = dashboard.querySelector('.page-tabbar__link--active[data-tab]');
+    const activeTabIndex = tabs.indexOf(activeTab);
+
+    document.querySelector('li.current')?.classList.remove('current')
+    document.querySelector('[id^="toplevel_page_"] .wp-submenu li:nth-child(' + (activeTabIndex + 2) + ')').classList.add('current')
+  }
 
   // NBA
   dashboard.querySelectorAll('.ionos-dismiss-nba').forEach((el) => {
