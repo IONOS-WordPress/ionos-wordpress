@@ -3,7 +3,7 @@
 namespace ionos\essentials;
 
 /*
-  utilkity class to get precomputed tenant information
+  utility class to get precomputed tenant information
  */
 
 defined('ABSPATH') || exit();
