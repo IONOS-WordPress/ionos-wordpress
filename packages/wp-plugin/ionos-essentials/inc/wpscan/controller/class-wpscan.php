@@ -221,7 +221,7 @@ class WPScan
   {
     $last_run = \get_transient('ionos_wpscan_last_scan');
     if (false === $last_run) {
-      return \__('No scan has been performed yet.', 'ionos-essentials');
+      return false;
     }
     return human_time_diff($last_run, time());
   }
