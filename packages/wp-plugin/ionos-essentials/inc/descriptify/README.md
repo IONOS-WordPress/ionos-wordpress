@@ -3,6 +3,7 @@
 This features add a link to the options-panel, where you can change the blogurl.
 
 At the time of writing, just for
+
 - ionos
 - piensa
 
