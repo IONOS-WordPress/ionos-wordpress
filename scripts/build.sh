@@ -355,6 +355,16 @@ EOF
               msginit -i "$LANGUAGES_DIR/${text_domain}.pot" -l ${locale} -o "$LANGUAGES_DIR/${text_domain}-${locale}.po" --no-translator
             done
           fi
+
+          # copy po files to other locales
+          if [[ -n "${LANGUAGE_MAPPINGS[*]}" ]]; then
+            for mapping in ${LANGUAGE_MAPPINGS[@]}; do
+              src="${mapping%%=*}"
+              dest="${mapping#*=}"
+              cp "$LANGUAGES_DIR/$PLUGIN_NAME-${src}.po" "$LANGUAGES_DIR/$PLUGIN_NAME-${dest}.po"
+            done
+          fi
+
         done
       done
 
@@ -375,6 +385,15 @@ EOF
         ionos.wordpress.log_warn "no po files found : consider creating one using '\$(cd $path/$LANGUAGES_DIR && msginit -i [pot_file] -l [locale] -o [pot_file_basename]-[locale].po --no-translator)'
         "
       fi
+
+      # remove po files for locales from LANGUAGE_MAPPINGS
+      if [[ -n "${LANGUAGE_MAPPINGS[*]}" ]]; then
+        for mapping in ${LANGUAGE_MAPPINGS[@]}; do
+          src="${mapping%%=*}"
+          dest="${mapping#*=}"
+          rm "$LANGUAGES_DIR/$PLUGIN_NAME-${dest}.po"
+        done
+      fi
     )
 
     # strip line numbers from comments in .pot and .po files
@@ -385,7 +404,7 @@ EOF
 
     # make-pot regenerates the pot file even if no localization changes are
     # present in source files with a new creation date so that git always
-    # notices a changed pot pot file
+    # notices a changed pot file
     #
     # solution:
     #   revert generated pot file to git version if only one line

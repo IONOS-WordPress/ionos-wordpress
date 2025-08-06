@@ -106,6 +106,17 @@ use const ionos\essentials\PLUGIN_DIR;
 <template id="ionos_dashboard" shadowrootmode="open">
 
 <?php
+$tenant     = \get_option('ionos_group_brand', 'ionos');
+$theme_file = PLUGIN_DIR . '/inc/dashboard/exos-themes/' . $tenant . '.css';
+if (file_exists($theme_file)) {
+  \wp_register_style(
+    handle: 'exos-theme',
+    src: \plugins_url($tenant . '.css', $theme_file),
+    ver: filemtime($theme_file)
+  );
+  \wp_print_styles(['exos-theme']);
+}
+
 \wp_register_style(
   handle: 'ionos-essentials-dashboard',
   src: \plugins_url('ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR),
@@ -124,7 +135,6 @@ use const ionos\essentials\PLUGIN_DIR;
 ?>
 
 <?php blocks\welcome\render_callback(); ?>
-
 <div class="static-overlay__blocker"></div>
 <div class="static-overlay__container dialog-closer" id="learn-more-overlay">
   <div class="sheet static-overlay--closable static-overlay__content sheet--micro-effect" data-static-overlay-id="demo-overlay1" style="margin-top: inherit;">
