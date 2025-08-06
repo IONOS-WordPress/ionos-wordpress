@@ -215,6 +215,7 @@ add_filter('admin_body_class', function ($classes) {
     'nonce'              => wp_create_nonce('wp_rest'),
     'restUrl'            => esc_url_raw(rest_url()),
     'securityOptionName' => IONOS_SECURITY_FEATURE_OPTION,
+    'tenant'             => \get_option('ionos_group_brand', 'ionos'),
     'i18n'               => [
       'installing'  => esc_html__('Installing...', 'ionos-essentials'),
       'activated'   => esc_html__('activated.', 'ionos-essentials'),
