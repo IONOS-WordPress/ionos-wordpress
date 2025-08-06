@@ -59,15 +59,9 @@ fi
     ],
     "env": {
       "development": {
-         "config": {
-          "IONOS_WP_ENV_MODE": "development"
-        },
         "phpmyadminPort": $([[ "${CI:-}" != "true" ]] && echo '9000' || echo 'null')
       },
       "tests": {
-        "config": {
-          "IONOS_WP_ENV_MODE": "test"
-        },
         "phpmyadminPort": $([[ "${CI:-}" != "true" ]] && echo '9001' || echo 'null')
       }
     },

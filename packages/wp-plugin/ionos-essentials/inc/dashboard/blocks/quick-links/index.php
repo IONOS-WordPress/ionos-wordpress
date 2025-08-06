@@ -2,7 +2,9 @@
 
 namespace ionos\essentials\dashboard\blocks\quick_links;
 
-function render_callback()
+defined('ABSPATH') || exit();
+
+function render_callback(): void
 {
   $config_file = __DIR__ . '/config.php';
 
@@ -13,7 +15,7 @@ function render_callback()
 <div class="card">
   <div class="card__content">
     <section class="card__section">
-      <h2 class="headline headline--sub"><?php echo \esc_html__('Quick Links', 'ionos-essentials'); ?></h2>
+      <h2 class="headline headline--sub"><?php \esc_html_e('Quick Links', 'ionos-essentials'); ?></h2>
       <div class="ionos_quick_links_buttons ionos_buttons_same_width">
         <?php
               foreach (get_config() as $link) {

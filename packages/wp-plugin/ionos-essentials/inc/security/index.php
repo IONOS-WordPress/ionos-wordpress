@@ -2,14 +2,12 @@
 
 namespace ionos\essentials\security;
 
+use ionos\essentials\Tenant;
 use function ionos\essentials\is_stretch;
 use const ionos\essentials\PLUGIN_DIR;
 use const ionos\essentials\PLUGIN_FILE;
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 const IONOS_SECURITY_FEATURE_OPTION                      = 'IONOS_SECURITY_FEATURE_OPTION';
 const IONOS_SECURITY_FEATURE_OPTION_XMLRPC               = 'IONOS_SECURITY_FEATURE_OPTION_XMLRPC';
@@ -63,16 +61,16 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
 });
 
 \add_action('admin_enqueue_scripts', function () {
-  wp_enqueue_script(
+  \wp_enqueue_script(
     'ionos-security-js',
-    plugins_url('inc/security/security.js', PLUGIN_FILE),
+    \plugins_url('inc/security/security.js', PLUGIN_FILE),
     [],
     filemtime(PLUGIN_DIR . '/inc/security/security.js'),
     true
   );
 
-  wp_localize_script('ionos-security-js', 'ionosSecurityWpData', [
-    'nonce'              => wp_create_nonce('wp_rest'),
+  \wp_localize_script('ionos-security-js', 'ionosSecurityWpData', [
+    'nonce'              => \wp_create_nonce('wp_rest'),
     'ajaxUrl'            => admin_url('admin-ajax.php'),
   ]);
 });
@@ -82,14 +80,14 @@ if (\get_transient('ionos_security_migrated_notice_show')) {
   \add_action('admin_notices', function () {
     // do not show notice on our dashboard
     $current_screen = \get_current_screen();
-    $brand          = strtolower(get_option('ionos_group_brand', 'ionos'));
+    $brand          = Tenant::get_slug();
     if (! isset($current_screen->id) || in_array($current_screen->id, ['toplevel_page_' . $brand], true)) {
       return;
     }
 
     $notice = sprintf(
       __('The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href="%s">Tools & Security</a> of our new Hub.', 'ionos-security'),
-      \esc_url(\admin_url() . '?page=' . \get_option('ionos_group_brand', 'ionos') . '#tools')
+      \esc_url(\admin_url() . '?page=' . Tenant::get_slug() . '#tools')
     );
 
     printf(
@@ -104,6 +102,6 @@ if (\get_transient('ionos_security_migrated_notice_show')) {
 
   \add_action(
     'wp_ajax_ionos-security-migrated-notice',
-    fn () => (\delete_transient('ionos_security_migrated_notice_show') && wp_die())
+    fn () => (\delete_transient('ionos_security_migrated_notice_show') && \wp_die())
   );
 }

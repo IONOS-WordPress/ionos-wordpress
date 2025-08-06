@@ -2,10 +2,7 @@
 
 namespace ionos\essentials\security;
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 const IONOS_SECURITY_ALLOW_LIST_IP4 = [
   "122.248.245.244\/32",
@@ -18,7 +15,7 @@ const IONOS_SECURITY_ALLOW_LIST_IP4 = [
 
 const IONOS_SECURITY_ALLOW_LIST_IP6 = [];
 
-function _ipv4_in_cidr($ipv4, $cidr)
+function _ipv4_in_cidr($ipv4, $cidr): bool
 {
   list($subnet, $mask)    = explode('/', $cidr);
   $subnet_addr            = ip2long($subnet);
@@ -27,7 +24,7 @@ function _ipv4_in_cidr($ipv4, $cidr)
   return ($subnet_addr & $mask_addr) === ($ip_addr & $mask_addr);
 }
 
-function _ipv6_in_cidr($ipv6, $cidr)
+function _ipv6_in_cidr($ipv6, $cidr): bool
 {
   list($subnet, $mask)    = explode('/', $cidr);
   $subnet_addr            = inet_pton($subnet);
@@ -38,12 +35,12 @@ function _ipv6_in_cidr($ipv6, $cidr)
   return ($subnet_addr & $mask_addr) === ($ip_addr & $mask_addr);
 }
 
-function _disable_xmlrpc_methods()
+function _disable_xmlrpc_methods(): void
 {
   \add_filter('xmlrpc_methods', '__return_empty_array');
 }
 
-(function () {
+(function (): void {
   if (! (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST)) {
     return;
   }

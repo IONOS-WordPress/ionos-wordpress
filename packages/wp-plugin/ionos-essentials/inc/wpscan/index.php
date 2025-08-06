@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\wpscan;
 
+defined('ABSPATH') || exit();
+
 require_once __DIR__ . '/controller/class-wpscan.php';
 require_once __DIR__ . '/controller/class-wpscanmiddleware.php';
 require_once __DIR__ . '/views/summary.php';
@@ -109,8 +111,8 @@ function recommended_action(\WP_REST_Request $request)
 }
 
 \add_action('init', function () {
-  if (! wp_next_scheduled('ionos_wpscan')) {
-    wp_schedule_event(time(), 'daily', 'ionos_wpscan');
+  if (! \wp_next_scheduled('ionos_wpscan')) {
+    \wp_schedule_event(time(), 'daily', 'ionos_wpscan');
   }
 });
 

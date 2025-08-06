@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php esc_html_e('Password Reset Necessary', 'ionos-essentials'); ?></title>
+  <title>
+  <?php
+
+  use ionos\essentials\Tenant;
+
+  \esc_html_e('Password Reset Necessary', 'ionos-essentials'); ?></title>
+
   <?php
   use const ionos\essentials\PLUGIN_DIR;
 
@@ -24,29 +30,30 @@
       <section class="sheet__section">
         <?php
 
-        $tenant      = \get_option('ionos_group_brand', 'ionos');
-  $tenant_name       = \get_option('ionos_group_brand_name', 'IONOS');
-  printf(
-    '<img src="%s" alt="%s" style="width: 118px; height: auto; margin-bottom: 16px;">',
-    esc_url(\plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . $tenant . '.svg', PLUGIN_DIR)),
-    $tenant_name
-  );
+        printf(
+          '<img src="%s" alt="%s" style="width: 118px; height: auto; margin-bottom: 16px;">',
+          \esc_url(
+            \plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_slug() . '.svg', PLUGIN_DIR)
+          ),
+          Tenant::get_label()
+        );
+
   ?>
-        <h3 class="headline"><?php esc_html_e('Security alert', 'ionos-essentials'); ?></h3>
+        <h3 class="headline"><?php \esc_html_e('Security alert', 'ionos-essentials'); ?></h3>
         <p class="paragraph">
         <?php
-    esc_html_e(
+    \esc_html_e(
       'We have detected that the password for this WordPress Admin user matches one found in an online database of known compromised passwords. As a precaution, we have disabled access to this account to keep it secure.',
       'ionos-essentials'
     );
 
   echo '</p><p class="paragraph">';
-  esc_html_e(
+  \esc_html_e(
     'To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to',
     'ionos-essentials'
   );
 
-  printf(' <strong>%s</strong>', esc_html($mail));
+  printf(' <strong>%s</strong>', \esc_html($mail));
   ?>
         </p>
       </section>

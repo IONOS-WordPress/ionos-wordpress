@@ -2,6 +2,9 @@
 
 namespace ionos\essentials\dashboard;
 
+defined('ABSPATH') || exit();
+
+use ionos\essentials\Tenant;
 use function ionos\essentials\is_stretch;
 use const ionos\essentials\PLUGIN_DIR;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
@@ -10,6 +13,46 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_PEL;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
+
+function render_section(array $args): void
+{
+  ?>
+<section class="sheet__section">
+      <div class="grid">
+          <div class="grid-col grid-col--8 grid-col--small-12">
+              <h2 class="headline headline--sub headline--cropped"><?php echo \esc_html($args['title']); ?></h2>
+              <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
+                  <?php echo \wp_kses($args['description'], 'post'); ?>
+              </p>
+          </div>
+          <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
+              <span class="input-switch">
+                  <input
+                    id="<?php echo \esc_attr($args['id']); ?>"
+                    data-option="<?php echo \esc_attr(IONOS_SECURITY_FEATURE_OPTION); ?>"
+                    data-description="<?php echo \esc_attr($args['title']); ?>"
+                    type="checkbox"
+                    <?php printf($args['checked']); ?>
+                  >
+                  <label>
+                      <span class="input-switch__on"></span>
+                      <span class="input-switch__toggle"></span>
+                      <span class="input-switch__off"></span>
+                  </label>
+              </span>
+          </div>
+      </div>
+  </section>
+<?php
+}
+
+function get_settings_value($key)
+{
+
+  $options = \get_option(IONOS_SECURITY_FEATURE_OPTION, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
+
+  return $options[$key] ?? false;
+}
 
 ?>
  <div id="tools" class="page-section ionos-tab">
@@ -139,11 +182,7 @@ render_section([
             <div class="grid">
                 <div class="grid-col grid-col--8 grid-col--small-12">
                     <h2 class="headline headline--sub headline--cropped">
-                      <?php
-                      $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
-printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), $brand_name);
-?>
-
+                      <?php printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), Tenant::get_label()); ?>
                 </h2>
                     <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
                         <?php
@@ -170,46 +209,6 @@ printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), 
                 </div>
             </div>
         </div>
-
-
       </div>
     </div>
   </div>
-
-
-<?php
-function render_section($args)
-{
-  ?>
-<section class="sheet__section">
-      <div class="grid">
-          <div class="grid-col grid-col--8 grid-col--small-12">
-              <h2 class="headline headline--sub headline--cropped"><?php echo esc_html($args['title']); ?></h2>
-              <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
-                  <?php echo \wp_kses($args['description'], 'post'); ?>
-              </p>
-          </div>
-          <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
-              <span class="input-switch">
-                  <input id="<?php echo esc_attr($args['id']); ?>" data-option="<?php echo \esc_attr(
-                    IONOS_SECURITY_FEATURE_OPTION
-                  ); ?>" data-description="<?php echo esc_attr($args['title']); ?>" type="checkbox" <?php echo esc_attr($args['checked']); ?>>
-                  <label>
-                      <span class="input-switch__on"></span>
-                      <span class="input-switch__toggle"></span>
-                      <span class="input-switch__off"></span>
-                  </label>
-              </span>
-          </div>
-      </div>
-  </section>
-<?php
-}
-
-function get_settings_value($key)
-{
-
-  $options = \get_option(IONOS_SECURITY_FEATURE_OPTION, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
-
-  return $options[$key] ?? false;
-}

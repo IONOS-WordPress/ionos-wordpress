@@ -2,11 +2,13 @@
 
 namespace ionos\essentials\wpscan\views;
 
-function summary()
+defined('ABSPATH') || exit();
+
+function summary(): void
 {
   global $wpscan;
 
-  if (count($wpscan->get_issues())) {
+  if (count($wpscan->get_issues()) !== 0) {
     echo '<script>document.querySelector(\'a[href$="tools"]\').classList.add("has-red-dot");</script>';
   }
 
@@ -14,7 +16,7 @@ function summary()
   $class = $wpscan->get_issues('critical') ? 'high' : $class;
 
   ?>
-  <div class="card ionos_vulnerability ionos-wpscan-summary <?php echo esc_attr($class); ?>">
+  <div class="card ionos_vulnerability ionos-wpscan-summary <?php echo \esc_attr($class); ?>">
     <div class="card__content">
       <section class="card__section">
 
@@ -25,7 +27,7 @@ function summary()
           <i class="exos-icon exos-icon-firmationmessage-32 without-issues-only color--success" ></i>
         </div>
         <div>
-          <h2 class="headline headline--sub"><?php echo \esc_html__('Vulnerability scan', 'ionos-essentials'); ?></h2>
+          <h2 class="headline headline--sub"><?php \esc_html_e('Vulnerability scan', 'ionos-essentials'); ?></h2>
           <div class="ionos_vulnerability__content with-issues-only-flex">
             <div class="issue-row high">
               <span class="bubble high"><?php echo count($wpscan->get_issues('critical'));
@@ -39,7 +41,7 @@ function summary()
           </div>
 
           <p class="paragraph paragraph--large paragraph--bold without-issues-only">
-            <?php esc_html_e('Website is safe and secure', 'ionos-essentials'); ?>
+            <?php \esc_html_e('Website is safe and secure', 'ionos-essentials'); ?>
           </p>
 
           <p class="paragraph paragraph--neutral">
@@ -56,10 +58,10 @@ function summary()
       </div>
 
       <p class="paragraph">
-        <?php esc_html_e(
+        <?php \esc_html_e(
           'We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database.',
           'ionos-essentials'
-        ); ?> <span class="link link--lookup" id="learn-more"><?php esc_html_e('Learn more', 'ionos-essentials'); ?></span>
+        ); ?> <span class="link link--lookup" id="learn-more"><?php \esc_html_e('Learn more', 'ionos-essentials'); ?></span>
       </p>
 
       </section>

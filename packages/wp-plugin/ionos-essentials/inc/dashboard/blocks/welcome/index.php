@@ -2,7 +2,11 @@
 
 namespace ionos\essentials\dashboard\blocks\welcome;
 
-function render_callback()
+defined('ABSPATH') || exit();
+
+use ionos\essentials\Tenant;
+
+function render_callback(): void
 {
   $user_meta = \get_user_meta(user_id: \get_current_user_id(), key: 'ionos_essentials_welcome', single: true);
 
@@ -10,8 +14,8 @@ function render_callback()
     return;
   }
 
-  $brand_name         = \get_option('ionos_group_brand_menu', 'IONOS');
-  $welcome_banner_url = \plugins_url('data/welcome-banner.png', dirname(__DIR__));
+  $brand_label         = Tenant::get_label();
+  $welcome_banner_url  = \plugins_url('data/welcome-banner.png', dirname(__DIR__));
 
   ?>
 <dialog id="essentials-welcome_block" open>
@@ -26,7 +30,7 @@ function render_callback()
                 <h2 class="headline">
                     <?php
                       // translators: %s: Brand name
-                      printf(\esc_html__('Welcome to your new %s Hub', 'ionos-essentials'), $brand_name);
+                      printf(\esc_html__('Welcome to your new %s Hub', 'ionos-essentials'), $brand_label);
                 ?>
                 </h2>
                 <p class="paragraph">
@@ -47,7 +51,7 @@ function render_callback()
                 <h2 class="headline">
                     <?php
                                     // translators: %s: Brand name
-                                    printf(\esc_html__('Welcome to your %s Hub', 'ionos-essentials'), $brand_name);
+                                    printf(\esc_html__('Welcome to your %s Hub', 'ionos-essentials'), $brand_label);
                 ?>
                 </h2>
                 <p class="paragraph">

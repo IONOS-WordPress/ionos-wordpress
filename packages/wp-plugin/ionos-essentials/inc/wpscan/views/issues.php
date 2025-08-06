@@ -2,7 +2,9 @@
 
 namespace ionos\essentials\wpscan\views;
 
-function issues($args)
+defined('ABSPATH') || exit();
+
+function issues(array $args): void
 {
   global $wpscan;
 
@@ -13,30 +15,31 @@ function issues($args)
   }
   ?>
 <div class="grid-col grid-col--12">
-  <div class="sheet ionos-wpscan <?php echo esc_attr($args['type'] ?? ''); ?>">
+  <div class="sheet ionos-wpscan <?php echo \esc_attr($args['type']); ?>">
     <section class="sheet__section">
       <div class="grid">
           <div class="grid-col grid-col--12">
-              <h2 class="headline headline--sub headline--<?php echo esc_attr($args['type'] ?? ''); ?>">
+              <h2 class="headline headline--sub headline--<?php echo \esc_attr($args['type']); ?>">
                 <?php
-  ('critical' === $args['type'])
-  ? printf(\_n('%d critical issue', '%d critical issues', $count, 'ionos-essentials'), $count)
-  : printf(\_n('%d warning', '%d warnings', $count, 'ionos-essentials'), $count);
+                  echo \esc_html(sprintf(
+                    'critical' === $args['type'] ?
+                      \_n('%d critical issue', '%d critical issues', $count, 'ionos-essentials')
+                      : \_n('%d warning', '%d warnings', $count, 'ionos-essentials'), $count
+                  ));
   ?>
-
                 <span class="et-has-tooltip">
                   <span class="paragraph--cropped paragraph--activating paragraph--exos-icon exos-icon-info-1 et-tooltip-anchor"></span>
                   <span class="et-tooltip-content">
                     <?php
-                    echo ('critical' === $args['type'])
-                      ? esc_html__(
-                        'Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention.',
-                        'ionos-essentials'
-                      )
-                      : esc_html__(
-                        'Website security warnings, identified by a CVSS score up to 6.9, require prompt attention.',
-                        'ionos-essentials'
-                      );
+      echo 'critical' === $args['type']
+        ? \esc_html__(
+          'Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention.',
+          'ionos-essentials'
+        )
+        : \esc_html__(
+          'Website security warnings, identified by a CVSS score up to 6.9, require prompt attention.',
+          'ionos-essentials'
+        )
   ?>
                   </span>
                 </span>
@@ -58,11 +61,11 @@ function issues($args)
 </div>
 <?php }
 
-function issue_line($issue)
+function issue_line(array $issue): void
 {
   ?>
- <li class="settings-stripe settings-stripe--link  <?php echo esc_attr($issue['type']); ?>">
-    <div class="settings-stripe__label"><strong><?php echo esc_html($issue['name']); ?></strong></div>
+ <li class="settings-stripe settings-stripe--link  <?php echo \esc_attr($issue['type']); ?>">
+    <div class="settings-stripe__label"><strong><?php echo \esc_html($issue['name']); ?></strong></div>
     <div class="settings-stripe__action">
 
       <?php
@@ -86,8 +89,8 @@ function issue_line($issue)
 
     printf(
       '<button class="button button-primary" data-wpscan="%s">%s</button>',
-      esc_attr($payload),
-      esc_html('Update', 'ionos-essentials')
+      \esc_attr($payload),
+      \esc_html('Update', 'ionos-essentials')
     );
   } else {
     $active_theme = \wp_get_theme();
@@ -101,8 +104,8 @@ function issue_line($issue)
       $payload           = \wp_json_encode($payload);
       printf(
         '<button class="button delete" data-wpscan="%s">%s</button>',
-        esc_attr($payload),
-        esc_html('Delete', 'ionos-essentials')
+        \esc_attr($payload),
+        \esc_html('Delete', 'ionos-essentials')
       );
     }
   }

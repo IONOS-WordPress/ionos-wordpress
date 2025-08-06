@@ -2,6 +2,10 @@
 
 namespace ionos\essentials\dashboard\blocks\banner;
 
+defined('ABSPATH') || exit();
+
+use ionos\essentials\Tenant;
+
 const BUTTON_TEMPLATE = '<a href="%s" class="button %s" title="%s">%s</a>';
 function render_callback(): void
 {
@@ -27,11 +31,7 @@ function render_callback(): void
     \esc_html($button['text'] ?? '')
   ), $button_list));
 
-  $tenant_name = \get_option('ionos_group_brand_menu', 'IONOS');
-  $tenant_logo = \plugins_url(
-    'data/tenant-logos/' . \get_option('ionos_group_brand', 'ionos') . '.svg',
-    dirname(__DIR__)
-  );
+  $tenant_logo = \plugins_url('data/tenant-logos/' . Tenant::get_slug() . '.svg', dirname(__DIR__));
 
   ?>
 <div class="card">
@@ -41,7 +41,7 @@ function render_callback(): void
           <div class="grid-col grid-col--6  grid-col--medium-12 grid-col--small-12" style="display: flex; align-items: center; justify-content: center;">
             <img class=""
             src="<?php echo \esc_attr($tenant_logo); ?>"
-            alt="<?php echo \esc_attr($tenant_name); ?> Logo"
+            alt="<?php echo \esc_attr(Tenant::get_label()); ?> Logo"
             style="width: 150px; padding: 50px;"
           >
 

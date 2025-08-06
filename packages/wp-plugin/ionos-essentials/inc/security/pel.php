@@ -2,10 +2,7 @@
 
 namespace ionos\essentials\security;
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 \add_action('login_init', function () {
   \remove_filter('authenticate', 'wp_authenticate_email_password', 20);

@@ -2,13 +2,17 @@
 
 namespace ionos\essentials\maintenance_mode;
 
+defined('ABSPATH') || exit();
+
+use ionos\essentials\Tenant;
+
 function is_maintenance_mode()
 {
   return \get_option('ionos_essentials_maintenance_mode', false);
 }
 
-add_action('admin_bar_menu', function ($wp_admin_bar) {
-  $brand = strtolower(get_option('ionos_group_brand', 'ionos'));
+\add_action('admin_bar_menu', function ($wp_admin_bar) {
+  $brand = Tenant::get_slug();
 
   $args = [
     'id'    => 'ionos_maintenance_mode',
@@ -21,18 +25,18 @@ add_action('admin_bar_menu', function ($wp_admin_bar) {
   ];
   $wp_admin_bar->add_node($args);
 
-  wp_enqueue_style(
+  \wp_enqueue_style(
     'ionos-maintenance-mode-admin',
-    plugin_dir_url(__FILE__) . 'maintenance.css',
+    \plugin_dir_url(__FILE__) . 'maintenance.css',
     [],
     filemtime(plugin_dir_path(__FILE__) . 'maintenance.css')
   );
 }, 31);
 
-add_action('admin_enqueue_scripts', function () {
-  wp_enqueue_script(
+\add_action('admin_enqueue_scripts', function () {
+  \wp_enqueue_script(
     'ionos-maintenance-mode-admin',
-    plugin_dir_url(__FILE__) . 'maintenance.js',
+    \plugin_dir_url(__FILE__) . 'maintenance.js',
     ['jquery'],
     filemtime(plugin_dir_path(__FILE__) . 'maintenance.js'),
     true
@@ -73,10 +77,10 @@ add_action('init', function () {
   }
   global $wp_rewrite;
   if ($wp_rewrite->using_permalinks()) {
-    wp_redirect(home_url('/maintenance'), 302);
+    \wp_redirect(home_url('/maintenance'), 302);
     exit;
   }
-  wp_redirect('index.php?ionos_maintenance_mode=1', 302);
+  \wp_redirect('index.php?ionos_maintenance_mode=1', 302);
   exit;
 });
 

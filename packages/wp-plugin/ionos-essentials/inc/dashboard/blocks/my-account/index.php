@@ -2,6 +2,9 @@
 
 namespace ionos\essentials\dashboard\blocks\my_account;
 
+defined('ABSPATH') || exit();
+
+use ionos\essentials\Tenant;
 use const ionos\essentials\PLUGIN_DIR;
 
 /**
@@ -17,7 +20,7 @@ function get_account_data()
     return $data;
   }
 
-  $tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
+  $tenant      = Tenant::get_slug();
   $config_file = PLUGIN_DIR . '/inc/tenants/config/' . $tenant . '.php';
 
   if (! $tenant || ! file_exists($config_file)) {
@@ -50,7 +53,7 @@ function get_account_data()
   return $data;
 }
 
-function render_callback()
+function render_callback(): void
 {
   $data = get_account_data();
 
@@ -79,8 +82,8 @@ function render_callback()
   <div class="card ionos_my_account">
     <div class="card__content">
       <section class="card__section">
-        <h2 class="headline headline--sub"><?php echo \esc_html__('Account Management', 'ionos-essentials'); ?></h2>
-        <p class="paragraph"><?php echo \esc_html__(
+        <h2 class="headline headline--sub"><?php \esc_html_e('Account Management', 'ionos-essentials'); ?></h2>
+        <p class="paragraph"><?php \esc_html_e(
           'One-click access to your customer account, login security and subscriptions.',
           'ionos-essentials'
         ); ?></p>

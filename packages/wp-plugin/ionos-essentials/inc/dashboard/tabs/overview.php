@@ -2,6 +2,7 @@
 
 namespace ionos\essentials\dashboard;
 
+defined('ABSPATH') || exit();
 ?>
 
 <div id="overview" class="page-section ionos-tab">

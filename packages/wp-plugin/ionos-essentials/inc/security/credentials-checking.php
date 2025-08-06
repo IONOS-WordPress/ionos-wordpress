@@ -5,10 +5,7 @@ namespace ionos\essentials\security;
 const LEAKED_CREDENTIALS_FLAG_NAME = 'ionos_compromised_credentials_check_leak_detected_v2';
 const IONOS_NOREPLY_EMAIL          = 'no-reply@wpservice.io';
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
+defined('ABSPATH') || exit();
 
 \add_action(
   hook_name: 'check_passwords',
@@ -101,7 +98,7 @@ if (is_login()) {
           $url = \add_query_arg([
             'action' => 'icc_leak_detected',
             'mail'   => obfuscate_email($user->user_email),
-          ], wp_login_url());
+          ], \wp_login_url());
 
           \wp_safe_redirect($url);
           exit;
@@ -118,7 +115,7 @@ if (is_login()) {
   );
 }
 
-\add_action('admin_notices', function () {
+\add_action('admin_notices', function (): void {
   if (has_leaked_flag(get_current_user_id())) {
     $class   = 'notice notice-error';
     $message = __('We detected that your password has been leaked and suggest that you change it as soon as possible.', 'ionos-security');
@@ -131,7 +128,7 @@ if (is_login()) {
   }
 });
 
-function obfuscate_email($email)
+function obfuscate_email($email): string
 {
   list($user, $domain) = explode('@', $email);
   $domain_parts        = explode('.', $domain);
@@ -151,13 +148,14 @@ function obfuscate_email($email)
         $string = substr($string, 0, 1) . str_repeat('*', max(0, strlen($string) - 2)) . substr($string, -1);
         break;
     }
+
     unset($string);
   }
 
   return $user . '@' . $domain_name . '.' . $tld;
 }
 
-function is_leaked($password)
+function is_leaked($password): ?bool
 {
   $hash   = strtoupper(sha1($password));
   $prefix = substr($hash, 0, 5);
@@ -172,12 +170,12 @@ function is_leaked($password)
   return str_contains(\wp_remote_retrieve_body($response), $suffix);
 }
 
-function has_leaked_flag($user_id)
+function has_leaked_flag($user_id): bool
 {
   return (bool) \get_user_meta($user_id, LEAKED_CREDENTIALS_FLAG_NAME, true);
 }
 
-\add_action('login_enqueue_scripts', function () {
+\add_action('login_enqueue_scripts', function (): void {
   $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
   if ('icc_leak_detected' === $action) {
@@ -190,7 +188,7 @@ function has_leaked_flag($user_id)
   }
 });
 
-function is_valid_email($email)
+function is_valid_email($email): bool
 {
   return IONOS_NOREPLY_EMAIL !== $email && is_email($email);
 }

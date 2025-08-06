@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\jetpack_flow;
 
+defined('ABSPATH') || exit();
+
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 use const ionos\essentials\PLUGIN_DIR;
@@ -209,7 +211,7 @@ function _install_jetpack_plugin(): void
         return;
       }
 
-      // Ignore failures on accessing SSL "https://api.wordpress.org/plugins/update-check/1.1/" in `wp_update_plugins()` which seem to occur intermittently.
+      // Ignore failures on accessing SSL "https://api.wordpress.org/plugins/update-check/1.1/" in `\wp_update_plugins()` which seem to occur intermittently.
       set_error_handler(null, E_USER_WARNING | E_USER_NOTICE);
 
       $plugin_upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());

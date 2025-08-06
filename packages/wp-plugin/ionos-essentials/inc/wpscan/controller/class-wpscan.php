@@ -2,6 +2,9 @@
 
 namespace ionos\essentials\wpscan;
 
+defined('ABSPATH') || exit();
+
+use ionos\essentials\Tenant;
 use const ionos\essentials\PLUGIN_DIR;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
@@ -22,20 +25,23 @@ class WPScan
     }
 
     if (0 < count($this->get_issues())) {
-      add_action('admin_notices', [$this, 'admin_notice']);
-      add_action('after_plugin_row', [$this, 'add_plugin_issue_notice'], 10, 3);
+      \add_action('admin_notices', [$this, 'admin_notice']);
+      \add_action('after_plugin_row', [$this, 'add_plugin_issue_notice'], 10, 3);
     }
 
-    add_action('admin_footer', [$this, 'add_theme_issues_notice']);
-    add_action('admin_footer', [$this, 'add_issue_on_plugin_install']);
-    add_action('admin_footer', [$this, 'add_issue_on_theme_install']);
+    \add_action('admin_footer', [$this, 'add_theme_issues_notice']);
+    \add_action('admin_footer', [$this, 'add_issue_on_plugin_install']);
+    \add_action('admin_footer', [$this, 'add_issue_on_theme_install']);
 
     \add_action('upgrader_process_complete', function () {
       \delete_transient('ionos_wpscan_issues');
     }, 10, 2);
   }
 
-  public function get_issues($filter = null)
+  /**
+   * @return mixed[]
+   */
+  public function get_issues($filter = null): array
   {
     // Filter out issues for plugins/themes that are not installed
     $all_slugs    = $this->get_installed_slugs();
@@ -58,11 +64,11 @@ class WPScan
     );
   }
 
-  public function admin_notice()
+  public function admin_notice(): void
   {
     global $current_screen;
 
-    $brand = strtolower(get_option('ionos_group_brand', 'ionos'));
+    $brand = Tenant::get_slug();
     if (! isset($current_screen->id) || in_array($current_screen->id, ['toplevel_page_' . $brand], true)) {
       return;
     }
@@ -70,30 +76,30 @@ class WPScan
     printf(
       '<div class="notice notice-alt ionos-issues-found-adminbar %s"><p>%s: %d %s. <a href="%s">%s.</a></p></div>',
       (0 < count($this->get_issues('critical'))) ? 'notice-error' : 'notice-warning',
-      esc_html__('Vulnerability scan', 'ionos-essentials'),
+      \esc_html__('Vulnerability scan', 'ionos-essentials'),
       count($this->get_issues()),
-      (1 === count($this->get_issues())) ? esc_html__('issue found', 'ionos-essentials') :
-      esc_html__('issues found', 'ionos-essentials'),
-      esc_url(admin_url('admin.php?page=' . $brand . '#tools')),
-      esc_html__('More information', 'ionos-essentials')
+      (1 === count($this->get_issues())) ? \esc_html__('issue found', 'ionos-essentials') :
+      \esc_html__('issues found', 'ionos-essentials'),
+      \esc_url(admin_url('admin.php?page=' . $brand . '#tools')),
+      \esc_html__('More information', 'ionos-essentials')
     );
   }
 
-  public function add_issue_on_theme_install()
+  public function add_issue_on_theme_install(): void
   {
     $screen = get_current_screen();
     if (! $screen || 'theme-install' !== $screen->id) {
       return;
     }
-    wp_enqueue_script(
+    \wp_enqueue_script(
       'ionos-wpscan-theme-install',
-      plugins_url('ionos-essentials/inc/wpscan/js/theme-install.js', PLUGIN_DIR),
+      \plugins_url('ionos-essentials/inc/wpscan/js/theme-install.js', PLUGIN_DIR),
       [],
       filemtime(PLUGIN_DIR . '/inc/wpscan/js/theme-install.js'),
       true
     );
 
-    wp_localize_script(
+    \wp_localize_script(
       'ionos-wpscan-theme-install',
       'ionosWPScanThemes',
       [
@@ -110,22 +116,22 @@ class WPScan
     );
   }
 
-  public function add_issue_on_plugin_install()
+  public function add_issue_on_plugin_install(): void
   {
 
     $screen = get_current_screen();
     if (! $screen || 'plugin-install' !== $screen->id) {
       return;
     }
-    wp_enqueue_script(
+    \wp_enqueue_script(
       'ionos-wpscan-plugins',
-      plugins_url('ionos-essentials/inc/wpscan/js/plugin-install.js', PLUGIN_DIR),
+      \plugins_url('ionos-essentials/inc/wpscan/js/plugin-install.js', PLUGIN_DIR),
       [],
       filemtime(PLUGIN_DIR . '/inc/wpscan/js/plugin-install.js'),
       true
     );
 
-    wp_localize_script(
+    \wp_localize_script(
       'ionos-wpscan-plugins',
       'ionosWPScanPlugins',
       [
@@ -142,7 +148,7 @@ class WPScan
     );
   }
 
-  public function add_theme_issues_notice()
+  public function add_theme_issues_notice(): void
   {
     $screen = get_current_screen();
     if (! $screen || 'themes' !== $screen->id) {
@@ -157,20 +163,20 @@ class WPScan
       return;
     }
 
-    wp_enqueue_script(
+    \wp_enqueue_script(
       'ionos-essentials-themes',
-      plugins_url('ionos-essentials/inc/wpscan/js/theme-overview.js', PLUGIN_DIR),
+      \plugins_url('ionos-essentials/inc/wpscan/js/theme-overview.js', PLUGIN_DIR),
       [],
       filemtime(PLUGIN_DIR . '/inc/wpscan/js/theme-overview.js'),
       true
     );
 
-    wp_localize_script(
+    \wp_localize_script(
       'ionos-essentials-themes',
       'ionosWPScanThemes',
       [
         'slugs' => array_column($issues, 'slug'),
-        'brand' => strtolower(get_option('ionos_group_brand', 'ionos')),
+        'brand' => Tenant::get_slug(),
         'i18n'  => [
           'issues_found'  => __('The vulnerability scan has found issues', 'ionos-essentials'),
           'no_activation' => __('Activation is not recommended', 'ionos-essentials'),
@@ -180,7 +186,7 @@ class WPScan
     );
   }
 
-  public function add_plugin_issue_notice($plugin_file, $plugin_data, $status)
+  public function add_plugin_issue_notice($plugin_file, array $plugin_data, $status): void
   {
 
     $screen = get_current_screen();
@@ -193,7 +199,7 @@ class WPScan
     }
     echo '<script>
       document.addEventListener("DOMContentLoaded", function() {
-        const row = document.querySelector("tr[data-plugin=\'' . esc_js($plugin_file) . '\']");
+        const row = document.querySelector("tr[data-plugin=\'' . \esc_js($plugin_file) . '\']");
         if (row) {
           row.classList.add("update");
         }
@@ -203,17 +209,17 @@ class WPScan
     $updates       = get_site_transient('update_plugins');
     $noshadowclass = isset($updates->response[$plugin_file]) ? 'ionos-plugin-noshadow' : '';
 
-    $brand = strtolower(get_option('ionos_group_brand', 'ionos'));
+    $brand = Tenant::get_label();
 
     printf(
       '<tr class="plugin-update-tr %s ionos-wpscan-notice"><td colspan="4" class="plugin-update colspanchange %s"><div class="update-message notice inline %s notice-alt">%s %s. <a href="%s">%s.</a></div></td></tr>',
       \is_plugin_active($plugin_file) ? 'active' : 'inactive',
-      esc_attr($noshadowclass ?? ''),
-      esc_attr('notice-error'),
-      esc_html__('The vulnerability scan has found issues for', 'ionos-essentials'),
-      esc_html($plugin_data['Name']),
-      esc_url(admin_url('admin.php?page=' . $brand . '#tools')),
-      esc_html__('More information', 'ionos-essentials')
+      \esc_attr($noshadowclass ?? ''),
+      \esc_attr('notice-error'),
+      \esc_html__('The vulnerability scan has found issues for', 'ionos-essentials'),
+      \esc_html($plugin_data['Name']),
+      \esc_url(admin_url('admin.php?page=' . $brand . '#tools')),
+      \esc_html__('More information', 'ionos-essentials')
     );
   }
 
@@ -226,7 +232,7 @@ class WPScan
     return human_time_diff($last_run, time());
   }
 
-  public function get_error()
+  public function get_error(): ?string
   {
     return $this->error;
   }
@@ -262,11 +268,11 @@ class WPScan
     $message = $this->get_mail_content(array_values($unknown_names));
     $headers = ['Content-Type: text/html; charset=UTF-8'];
 
-    wp_mail($to, $subject, $message, $headers);
+    \wp_mail($to, $subject, $message, $headers);
     return true;
   }
 
-  private function get_new_middleware_data()
+  private function get_new_middleware_data(): void
   {
     $middleware   = new WPScanMiddleware();
     $data         = $middleware->download_wpscan_data();
@@ -311,7 +317,7 @@ class WPScan
 
   private function get_mail_content(array $vulnerable_plugins): string
   {
-    $tenant             = \get_option('ionos_group_brand', 'ionos');
+    $tenant             = Tenant::get_slug();
     $mail               = '<p>' . __('Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:', 'ionos-essentials') . '</p>';
     $mail              .= '<ul>';
     foreach ($vulnerable_plugins as $plugin) {
@@ -332,7 +338,7 @@ class WPScan
     $mail .= \sprintf(
       // Translators: %s is the tenant name.
       __('Your %s plugin team', 'ionos-essentials'),
-      \get_option('ionos_group_brand_menu', 'Ionos')
+      Tenant::get_label()
     );
 
     return $mail;

@@ -2,17 +2,10 @@
 
 namespace ionos\essentials\switch_page;
 
+use ionos\essentials\Tenant;
 use const ionos\essentials\PLUGIN_DIR;
 
-// exit if accessed directly
-if (! defined('ABSPATH')) {
-  exit();
-}
-
-function get_brand_lowercase(): string
-{
-  return strtolower(\get_option('ionos_group_brand', 'ionos'));
-}
+defined('ABSPATH') || exit();
 
 /**
  * Add onboarding menu page.
@@ -26,7 +19,7 @@ function get_brand_lowercase(): string
       'Assistant',
       'Assistant',
       'manage_options',
-      get_brand_lowercase() . '-onboarding',
+      Tenant::get_slug() . '-onboarding',
       fn () => \load_template(__DIR__ . '/view.php')
     );
     \remove_menu_page('extendify-assist');
@@ -43,9 +36,9 @@ function get_brand_lowercase(): string
   'wp_redirect',
   function ($location) {
     if (\admin_url('admin.php?page=extendify-launch') === $location) {
-      return \admin_url('admin.php?page=' . get_brand_lowercase() . '-onboarding');
+      return \admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding');
     } elseif (\admin_url('admin.php?page=extendify-assist') === $location) {
-      return \admin_url('admin.php?page=' . strtolower(\get_option('ionos_group_brand_menu', 'ionos')));
+      return \admin_url('admin.php?page=' . Tenant::get_slug());
     }
 
     return $location;
@@ -56,14 +49,14 @@ function get_brand_lowercase(): string
 
 \add_action(
   'load-toplevel_page_extendify-assist',
-  fn () => \wp_safe_redirect(\admin_url('admin.php?page=' . strtolower(\get_option('ionos_group_brand_menu', 'ionos'))))
+  fn () => \wp_safe_redirect(\admin_url('admin.php?page=' . Tenant::get_slug()))
 );
 
 \add_filter(
   'admin_title',
   function ($title) {
-    if (isset($_GET['page']) && get_brand_lowercase() . '-onboarding' === $_GET['page']) {
-      return \get_option('ionos_group_brand_menu', 'IONOS') . ' ' . __('Onboarding', 'ionos-essentials');
+    if (isset($_GET['page']) && Tenant::get_slug() . '-onboarding' === $_GET['page']) {
+      return Tenant::get_label() . ' ' . __('Onboarding', 'ionos-essentials');
     }
     return $title;
   },
@@ -73,7 +66,7 @@ function get_brand_lowercase(): string
 \add_action(
   'admin_enqueue_scripts',
   function ($hook_suffix) {
-    if (! str_contains($hook_suffix, '_page_' . get_brand_lowercase() . '-onboarding')) {
+    if (! str_contains($hook_suffix, '_page_' . Tenant::get_slug() . '-onboarding')) {
       return;
     }
     \wp_enqueue_style(

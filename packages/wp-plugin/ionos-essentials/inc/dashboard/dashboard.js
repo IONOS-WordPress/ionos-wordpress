@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const activeTabs = dashboard.querySelectorAll('.ionos-tab.active, .page-tabbar__link--active');
       activeTabs.forEach((tab) => {
-        tab.classList.remove('active','page-tabbar__link--active');
+        tab.classList.remove('active', 'page-tabbar__link--active');
       });
 
       tabButton.classList.add('page-tabbar__link--active');
@@ -134,17 +134,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   dashboard.querySelectorAll('.input-switch').forEach((switchElement) => {
     switchElement.addEventListener('click', async function (event) {
+      if (!event.target.matches('input[type="checkbox"]')) {
+        return;
+      }
 
-     if (!event.target.matches('input[type="checkbox"]')) {
-      return;
-     }
+      const option = event.target.dataset.option ?? '';
+      const key = event.target.id;
+      const value = event.target.checked ? 1 : 0; // as false results in a null value in the database
+      const description = event.target.dataset.description ?? '';
 
-     const option = event.target.dataset.option ?? '';
-     const key = event.target.id;
-     const value = event.target.checked ? 1 : 0; // as false results in a null value in the database
-     const description = event.target.dataset.description ?? '';
-
-     try {
+      try {
         const response = await fetch(wpData.restUrl + 'ionos/essentials/option/set', {
           method: 'POST',
           headers: {
@@ -159,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         if (!response.ok) {
-          window.EXOS.snackbar.warning("Error updating option " + key);
+          window.EXOS.snackbar.warning('Error updating option ' + key);
           return;
         }
 
@@ -171,9 +170,8 @@ document.addEventListener('DOMContentLoaded', function () {
           window.EXOS.snackbar.critical(description + ' ' + wpData.i18n.deactivated);
         }
       } catch (error) {
-        window.EXOS.snackbar.warning("Network error updating option " + key);
+        window.EXOS.snackbar.warning('Network error updating option ' + key);
       }
-
     });
   });
 
@@ -181,19 +179,21 @@ document.addEventListener('DOMContentLoaded', function () {
     if (event.key === 'Escape') {
       dashboard.querySelector('.dialog-closer')?.click();
     }
-});
+  });
 
   dashboard.querySelectorAll('.dialog-closer').forEach((element) => {
     element.addEventListener('click', function () {
       dashboard.querySelector('.static-overlay__blocker--active')?.classList.remove('static-overlay__blocker--active');
-      dashboard.querySelector('.static-overlay__container--active')?.classList.remove('static-overlay__container--active');
+      dashboard
+        .querySelector('.static-overlay__container--active')
+        ?.classList.remove('static-overlay__container--active');
     });
   });
 
-  dashboard.querySelector('#learn-more').addEventListener('click', function () {
+  dashboard.querySelector('#learn-more')?.addEventListener('click', function () {
     dashboard.querySelector('.static-overlay__blocker').classList.add('static-overlay__blocker--active');
     dashboard.querySelector('#learn-more-overlay').classList.add('static-overlay__container--active');
-  })
+  });
 
   dashboard.querySelectorAll('[data-slug]').forEach((element) => {
     element.addEventListener('click', function (event) {
@@ -208,14 +208,16 @@ document.addEventListener('DOMContentLoaded', function () {
       iframe.style.height = '554px';
       iframe.style.display = 'none';
 
-      overlay.innerHTML = '<div id="plugin-information-waiting"><div class="loading-spin"></div><p class="paragraph paragraph--large paragraph--bold paragraph--align-center">' + wpData.i18n.loading + '</p></div>';
+      overlay.innerHTML =
+        '<div id="plugin-information-waiting"><div class="loading-spin"></div><p class="paragraph paragraph--large paragraph--bold paragraph--align-center">' +
+        wpData.i18n.loading +
+        '</p></div>';
       overlay.appendChild(iframe);
       iframe.onload = function () {
         overlay.querySelector('#plugin-information-waiting').remove();
         iframe.style.display = 'block';
       };
       iframe.src = `${window.location.origin}/wp-admin/plugin-install.php?tab=plugin-information&section=changelog&plugin=${element.dataset.slug}&`;
-
     });
   });
 
@@ -223,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
     element.addEventListener('click', function (event) {
       element.disabled = true;
       const payload = JSON.parse(element.dataset.wpscan);
-      element.innerText = (payload.action === 'delete') ? wpData.i18n.deleting : wpData.i18n.updating;
+      element.innerText = payload.action === 'delete' ? wpData.i18n.deleting : wpData.i18n.updating;
 
       event.preventDefault();
       fetch(wpData.restUrl + 'ionos/essentials/wpscan/recommended-action', {
