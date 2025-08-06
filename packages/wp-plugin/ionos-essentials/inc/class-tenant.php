@@ -28,6 +28,16 @@ class Tenant
     };
   }
 
+  public static function get_slug(): string
+  {
+    return self::_get_instance()->_slug;
+  }
+
+  public static function get_label(): string
+  {
+    return self::_get_instance()->_label;
+  }
+
   private static function _get_instance(): self
   {
     if (! self::$instance instanceof self) {
@@ -35,15 +45,5 @@ class Tenant
     }
 
     return self::$instance;
-  }
-
-  public static function get_slug(): string
-   {
-    return self::_get_instance()->_slug;
-  }
-
-  public static function get_label(): string
-  {
-    return self::_get_instance()->_label;
   }
 }
