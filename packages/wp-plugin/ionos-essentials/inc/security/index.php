@@ -80,14 +80,14 @@ if (\get_transient('ionos_security_migrated_notice_show')) {
   \add_action('admin_notices', function () {
     // do not show notice on our dashboard
     $current_screen = \get_current_screen();
-    $brand          = Tenant::get_instance()->name;
+    $brand          = Tenant::get_slug();
     if (! isset($current_screen->id) || in_array($current_screen->id, ['toplevel_page_' . $brand], true)) {
       return;
     }
 
     $notice = sprintf(
       __('The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href="%s">Tools & Security</a> of our new Hub.', 'ionos-security'),
-      \esc_url(\admin_url() . '?page=' . Tenant::get_instance()->name . '#tools')
+      \esc_url(\admin_url() . '?page=' . Tenant::get_slug() . '#tools')
     );
 
     printf(

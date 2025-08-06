@@ -68,7 +68,7 @@ class WPScan
   {
     global $current_screen;
 
-    $brand = Tenant::get_instance()->name;
+    $brand = Tenant::get_slug();
     if (! isset($current_screen->id) || in_array($current_screen->id, ['toplevel_page_' . $brand], true)) {
       return;
     }
@@ -176,7 +176,7 @@ class WPScan
       'ionosWPScanThemes',
       [
         'slugs' => array_column($issues, 'slug'),
-        'brand' => Tenant::get_instance()->name,
+        'brand' => Tenant::get_slug(),
         'i18n'  => [
           'issues_found'  => __('The vulnerability scan has found issues', 'ionos-essentials'),
           'no_activation' => __('Activation is not recommended', 'ionos-essentials'),
@@ -209,7 +209,7 @@ class WPScan
     $updates       = get_site_transient('update_plugins');
     $noshadowclass = isset($updates->response[$plugin_file]) ? 'ionos-plugin-noshadow' : '';
 
-    $brand = Tenant::get_instance()->label;
+    $brand = Tenant::get_label();
 
     printf(
       '<tr class="plugin-update-tr %s ionos-wpscan-notice"><td colspan="4" class="plugin-update colspanchange %s"><div class="update-message notice inline %s notice-alt">%s %s. <a href="%s">%s.</a></div></td></tr>',
@@ -317,7 +317,7 @@ class WPScan
 
   private function get_mail_content(array $vulnerable_plugins): string
   {
-    $tenant             = Tenant::get_instance()->name;
+    $tenant             = Tenant::get_slug();
     $mail               = '<p>' . __('Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:', 'ionos-essentials') . '</p>';
     $mail              .= '<ul>';
     foreach ($vulnerable_plugins as $plugin) {
@@ -338,7 +338,7 @@ class WPScan
     $mail .= \sprintf(
       // Translators: %s is the tenant name.
       __('Your %s plugin team', 'ionos-essentials'),
-      Tenant::get_instance()->label
+      Tenant::get_label()
     );
 
     return $mail;

@@ -14,7 +14,7 @@ function render_callback(): void
     return;
   }
 
-  $brand_label         = Tenant::get_instance()->label;
+  $brand_label         = Tenant::get_label();
   $welcome_banner_url  = \plugins_url('data/welcome-banner.png', dirname(__DIR__));
 
   ?>

@@ -10,30 +10,40 @@ defined('ABSPATH') || exit();
 
 class Tenant
 {
-  public readonly string $label;
+  private readonly string $_label;
 
   private static ?Tenant $instance = null;
 
   private function __construct(
-    public readonly string $name
+    private readonly string $_slug
   ) {
-    $this->label = match ($name) {
+    $this->_label = match ($_slug) {
       'ionos'     => 'IONOS',
       'fasthosts' => 'Fasthosts',
       'homepl'    => 'home.pl',
       'arsys'     => 'Arsys',
       'piensa'    => 'Piensa Solutions',
       'strato'    => 'STRATO',
-      'udag'      => 'UDAG',
+      'udag'      => 'United Domains',
     };
   }
 
-  public static function get_instance(): self
+  private static function _get_instance(): self
   {
     if (! self::$instance instanceof self) {
       self::$instance = new self(strtolower(\get_option('ionos_group_brand', 'ionos')));
     }
 
     return self::$instance;
+  }
+
+  public static function get_slug(): string
+   {
+    return self::_get_instance()->_slug;
+  }
+
+  public static function get_label(): string
+  {
+    return self::_get_instance()->_label;
   }
 }

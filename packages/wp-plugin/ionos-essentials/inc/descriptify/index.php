@@ -17,7 +17,7 @@ add_action(
       return;
     }
 
-    $tenant  = Tenant::get_instance()->name;
+    $tenant  = Tenant::get_slug();
     $market  = strtolower(\get_option($tenant . '_market', ''));
 
     $control_panel_links = [
@@ -47,7 +47,7 @@ add_action(
     $website_url_description = sprintf( /* translators: s=link to control panel */
       __('You can customize and manage your URL (domain) easily at <a href="%1$s" target="_blank">%2$s App Center</a>.', 'ionos-essentials'),
       $control_panel_link,
-      Tenant::get_instance()->label,
+      Tenant::get_label(),
     );
     ?>
       <style>

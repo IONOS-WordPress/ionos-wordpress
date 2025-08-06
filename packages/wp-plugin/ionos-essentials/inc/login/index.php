@@ -50,10 +50,10 @@ defined('ABSPATH') || exit();
 EOF
         ,
         \esc_attr(\plugins_url(
-          'inc/dashboard/data/tenant-logos/' . Tenant::get_instance()->name . '.svg',
+          'inc/dashboard/data/tenant-logos/' . Tenant::get_slug() . '.svg',
           PLUGIN_FILE
         )),
-        \esc_attr(Tenant::get_instance()->label)
+        \esc_attr(Tenant::get_label())
       );
     }
   );

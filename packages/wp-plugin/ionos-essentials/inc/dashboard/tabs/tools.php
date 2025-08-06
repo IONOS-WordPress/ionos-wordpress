@@ -182,7 +182,7 @@ render_section([
             <div class="grid">
                 <div class="grid-col grid-col--8 grid-col--small-12">
                     <h2 class="headline headline--sub headline--cropped">
-                      <?php printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), Tenant::get_instance()->label); ?>
+                      <?php printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), Tenant::get_label()); ?>
                 </h2>
                     <p class="paragraph paragraph--neutral" style="margin-bottom: 0;">
                         <?php

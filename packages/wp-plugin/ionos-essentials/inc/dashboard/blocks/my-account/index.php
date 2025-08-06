@@ -20,7 +20,7 @@ function get_account_data()
     return $data;
   }
 
-  $tenant      = Tenant::get_instance()->name;
+  $tenant      = Tenant::get_slug();
   $config_file = PLUGIN_DIR . '/inc/tenants/config/' . $tenant . '.php';
 
   if (! $tenant || ! file_exists($config_file)) {

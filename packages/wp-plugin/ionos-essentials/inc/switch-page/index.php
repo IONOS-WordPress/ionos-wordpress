@@ -19,7 +19,7 @@ defined('ABSPATH') || exit();
       'Assistant',
       'Assistant',
       'manage_options',
-      Tenant::get_instance()->name . '-onboarding',
+      Tenant::get_slug() . '-onboarding',
       fn () => \load_template(__DIR__ . '/view.php')
     );
     \remove_menu_page('extendify-assist');
@@ -36,9 +36,9 @@ defined('ABSPATH') || exit();
   'wp_redirect',
   function ($location) {
     if (\admin_url('admin.php?page=extendify-launch') === $location) {
-      return \admin_url('admin.php?page=' . Tenant::get_instance()->name . '-onboarding');
+      return \admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding');
     } elseif (\admin_url('admin.php?page=extendify-assist') === $location) {
-      return \admin_url('admin.php?page=' . Tenant::get_instance()->name);
+      return \admin_url('admin.php?page=' . Tenant::get_slug());
     }
 
     return $location;
@@ -49,14 +49,14 @@ defined('ABSPATH') || exit();
 
 \add_action(
   'load-toplevel_page_extendify-assist',
-  fn () => \wp_safe_redirect(\admin_url('admin.php?page=' . Tenant::get_instance()->name))
+  fn () => \wp_safe_redirect(\admin_url('admin.php?page=' . Tenant::get_slug()))
 );
 
 \add_filter(
   'admin_title',
   function ($title) {
-    if (isset($_GET['page']) && Tenant::get_instance()->name . '-onboarding' === $_GET['page']) {
-      return Tenant::get_instance()->label . ' ' . __('Onboarding', 'ionos-essentials');
+    if (isset($_GET['page']) && Tenant::get_slug() . '-onboarding' === $_GET['page']) {
+      return Tenant::get_label() . ' ' . __('Onboarding', 'ionos-essentials');
     }
     return $title;
   },
@@ -66,7 +66,7 @@ defined('ABSPATH') || exit();
 \add_action(
   'admin_enqueue_scripts',
   function ($hook_suffix) {
-    if (! str_contains($hook_suffix, '_page_' . Tenant::get_instance()->name . '-onboarding')) {
+    if (! str_contains($hook_suffix, '_page_' . Tenant::get_slug() . '-onboarding')) {
       return;
     }
     \wp_enqueue_style(

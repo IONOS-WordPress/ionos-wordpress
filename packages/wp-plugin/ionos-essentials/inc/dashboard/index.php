@@ -19,15 +19,15 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 const REQUIRED_USER_CAPABILITIES = 'read';
 
 \add_action('init', function () {
-  define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', Tenant::get_instance()->label);
-  define('ADMIN_PAGE_SLUG', Tenant::get_instance()->name);
+  define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', Tenant::get_label());
+  define('ADMIN_PAGE_SLUG', Tenant::get_slug());
   define('ADMIN_PAGE_HOOK', 'toplevel_page_' . ADMIN_PAGE_SLUG);
 });
 
 \add_action('admin_menu', function () {
   $tenant_icon = '';
 
-  $file_path = __DIR__ . '/data/tenant-icons/' . Tenant::get_instance()->name . '.svg';
+  $file_path = __DIR__ . '/data/tenant-icons/' . Tenant::get_slug() . '.svg';
   if (file_exists($file_path)) {
     $svg         = file_get_contents($file_path);
     $tenant_icon = 'data:image/svg+xml;base64,' . base64_encode($svg);
