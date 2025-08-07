@@ -35,6 +35,7 @@ msgid "My offers"
 msgstr "Mes offres"
 
 #: inc/tenants/config/arsys.php
+#: inc/tenants/config/udag.php
 msgid "My data"
 msgstr "Mes données"
 
@@ -323,16 +324,8 @@ msgid "Webmail Login"
 msgstr "Connexion à Webmail"
 
 #: inc/tenants/config/udag.php
-msgid "My data"
-msgstr "Mes données"
-
-#: inc/tenants/config/udag.php
 msgid "Manage WordPress"
 msgstr "Gérer WordPress"
-
-#: inc/tenants/config/udag.php
-msgid "Manage domains"
-msgstr "Gérer les domaines"
 
 #: inc/tenants/config/udag.php
 msgid "Manage e-mail"
@@ -349,10 +342,6 @@ msgstr "rankingCoach"
 #: inc/tenants/config/udag.php
 msgid "SSL"
 msgstr "SSL"
-
-#: inc/tenants/config/udag.php
-msgid "Trademark protection
-msgstr "Protection des marques"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Setup Email Account"
@@ -614,12 +603,6 @@ msgstr "Cher utilisateur,<br />Nous souhaitons vous informer que notre récente 
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
 msgstr "Pour garantir la sécurité et la sûreté de votre site Web, nous vous recommandons d'examiner les résultats de l'analyse et de prendre les mesures appropriées. Pour plus d'informations relatives aux vulnérabilités spécifiques identifiées, veuillez consulter le lien suivant :"
 
-#. Translators: %1$s and %2$s is a placeholder for link.
-#: inc/wpscan/controller/class-wpscan.php
-#, php-format
-msgid "Turn off this notification here."
-msgstr "Désactivez cette notification ici."
-
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
@@ -811,3 +794,15 @@ msgstr ""
 #: inc/wpscan/views/summary.php
 msgid "Last scan: %s ago"
 msgstr "Dernière analyse: il y a %s"
+
+#: inc/tenants/config/udag.php
+msgid "Manage Domains"
+msgstr ""
+
+#: inc/tenants/config/udag.php
+msgid "Trademark protection"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Turn off notification here"
+msgstr ""

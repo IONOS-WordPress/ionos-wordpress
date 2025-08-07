@@ -35,6 +35,7 @@ msgid "My offers"
 msgstr "Mis ofertas"
 
 #: inc/tenants/config/arsys.php
+#: inc/tenants/config/udag.php
 msgid "My data"
 msgstr "Mis datos"
 
@@ -323,16 +324,8 @@ msgid "Webmail Login"
 msgstr "Acceso a Webmail"
 
 #: inc/tenants/config/udag.php
-msgid "My data"
-msgstr "Mis datos"
-
-#: inc/tenants/config/udag.php
 msgid "Manage WordPress"
 msgstr "Gestionar WordPress"
-
-#: inc/tenants/config/udag.php
-msgid "Manage domains"
-msgstr "Gestionar dominios"
 
 #: inc/tenants/config/udag.php
 msgid "Manage e-mail"
@@ -349,10 +342,6 @@ msgstr "RankingCoach"
 #: inc/tenants/config/udag.php
 msgid "SSL"
 msgstr "SSL"
-
-#: inc/tenants/config/udag.php
-msgid "Trademark protection
-msgstr "Protección de marca"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Setup Email Account"
@@ -614,12 +603,6 @@ msgstr "Hola,<br />queremos informarte de que nuestro último escaneo de vulnera
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
 msgstr "Para garantizar la seguridad de tu página web, te recomendamos revisar los resultados del análisis y tomar las medidas oportunas. Para obtener información más detallada sobre las vulnerabilidades específicas identificadas, visita el siguiente enlace:"
 
-#. Translators: %1$s and %2$s is a placeholder for link.
-#: inc/wpscan/controller/class-wpscan.php
-#, php-format
-msgid "Turn off this notification here."
-msgstr "Desactivar esta notificación aquí."
-
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
@@ -811,3 +794,15 @@ msgstr ""
 #: inc/wpscan/views/summary.php
 msgid "Last scan: %s ago"
 msgstr "Último escaneo hace %s"
+
+#: inc/tenants/config/udag.php
+msgid "Manage Domains"
+msgstr ""
+
+#: inc/tenants/config/udag.php
+msgid "Trademark protection"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Turn off notification here"
+msgstr ""

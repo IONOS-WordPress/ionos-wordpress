@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-07T07:59:30+00:00\n"
+"POT-Creation-Date: 2025-08-07T08:42:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -563,6 +563,7 @@ msgid "My offers"
 msgstr ""
 
 #: inc/tenants/config/arsys.php
+#: inc/tenants/config/udag.php
 msgid "My data"
 msgstr ""
 
@@ -637,15 +638,11 @@ msgid "Current offers"
 msgstr ""
 
 #: inc/tenants/config/udag.php
-msgid "My data"
-msgstr ""
-
-#: inc/tenants/config/udag.php
 msgid "Manage WordPress"
 msgstr ""
 
 #: inc/tenants/config/udag.php
-msgid "Manage domains"
+msgid "Manage Domains"
 msgstr ""
 
 #: inc/tenants/config/udag.php
@@ -665,7 +662,7 @@ msgid "SSL"
 msgstr ""
 
 #: inc/tenants/config/udag.php
-msgid "Trademark protection
+msgid "Trademark protection"
 msgstr ""
 
 #: inc/wpscan/controller/class-wpscan.php
@@ -725,9 +722,8 @@ msgstr ""
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
 msgstr ""
 
-#. Translators: %1$s and %2$s is a placeholder for link.
 #: inc/wpscan/controller/class-wpscan.php
-msgid "Turn off this notification here."
+msgid "Turn off notification here"
 msgstr ""
 
 #. Translators: %s is the tenant name.

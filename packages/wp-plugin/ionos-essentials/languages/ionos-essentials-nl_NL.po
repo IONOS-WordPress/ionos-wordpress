@@ -40,6 +40,7 @@ msgid "My offers"
 msgstr "Mijn aanbiedingen"
 
 #: inc/tenants/config/arsys.php
+#: inc/tenants/config/udag.php
 msgid "My data"
 msgstr "Mijn gegevens"
 
@@ -328,16 +329,8 @@ msgid "Webmail Login"
 msgstr "Inloggen Webmail"
 
 #: inc/tenants/config/udag.php
-msgid "My data"
-msgstr "Mijn gegevens"
-
-#: inc/tenants/config/udag.php
 msgid "Manage WordPress"
 msgstr "WordPress verwalten"
-
-#: inc/tenants/config/udag.php
-msgid "Manage domains"
-msgstr "Domeinen verwalten"
 
 #: inc/tenants/config/udag.php
 msgid "Manage e-mail"
@@ -354,10 +347,6 @@ msgstr "RanglijstCoach"
 #: inc/tenants/config/udag.php
 msgid "SSL"
 msgstr "SSL"
-
-#: inc/tenants/config/udag.php
-msgid "Trademark protection
-msgstr "Markenschutz"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Setup Email Account"
@@ -619,12 +608,6 @@ msgstr "Beste gebruiker,<br />We willen je informeren dat onze recente scan éé
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
 msgstr "Bekijk de resultaten van de scan en neem eventueel maatregelen om ervoor te zorgen dat je website veilig is en blijft. Bezoek de volgende pagina voor meer informatie over de gevonden kwetsbaarheden:"
 
-#. Translators: %1$s and %2$s is a placeholder for link.
-#: inc/wpscan/controller/class-wpscan.php
-#, php-format
-msgid "Turn off this notification here."
-msgstr "Zet deze melding hier uit."
-
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
@@ -816,3 +799,15 @@ msgstr ""
 #: inc/wpscan/views/summary.php
 msgid "Last scan: %s ago"
 msgstr "Laatste scan: %s geleden"
+
+#: inc/tenants/config/udag.php
+msgid "Manage Domains"
+msgstr ""
+
+#: inc/tenants/config/udag.php
+msgid "Trademark protection"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Turn off notification here"
+msgstr ""

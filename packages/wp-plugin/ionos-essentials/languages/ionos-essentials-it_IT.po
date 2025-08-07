@@ -35,6 +35,7 @@ msgid "My offers"
 msgstr "Le mie offerte"
 
 #: inc/tenants/config/arsys.php
+#: inc/tenants/config/udag.php
 msgid "My data"
 msgstr "I miei dati"
 
@@ -323,16 +324,8 @@ msgid "Webmail Login"
 msgstr "Accesso a Webmail"
 
 #: inc/tenants/config/udag.php
-msgid "My data"
-msgstr "I miei dati"
-
-#: inc/tenants/config/udag.php
 msgid "Manage WordPress"
 msgstr "Gestisci WordPress"
-
-#: inc/tenants/config/udag.php
-msgid "Manage domains"
-msgstr "Gestisci i domini"
 
 #: inc/tenants/config/udag.php
 msgid "Manage e-mail"
@@ -349,10 +342,6 @@ msgstr "RankingCoach"
 #: inc/tenants/config/udag.php
 msgid "SSL"
 msgstr "SSL"
-
-#: inc/tenants/config/udag.php
-msgid "Trademark protection
-msgstr "Protezione del marchio"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Setup Email Account"
@@ -614,12 +603,6 @@ msgstr "Gentile utente,<br />vogliamo informarti che la nostra recente scansione
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
 msgstr "Per garantire la sicurezza e la protezione del tuo sito web, ti consigliamo di esaminare i risultati della scansione e di adottare le misure appropriate. Per informazioni più dettagliate sulle vulnerabilità specifiche individuate, visita il seguente link:"
 
-#. Translators: %1$s and %2$s is a placeholder for link.
-#: inc/wpscan/controller/class-wpscan.php
-#, php-format
-msgid "Turn off this notification here."
-msgstr "Disattiva questa notifica qui."
-
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
@@ -811,3 +794,15 @@ msgstr ""
 #: inc/wpscan/views/summary.php
 msgid "Last scan: %s ago"
 msgstr "Ultima scansione: %s fa"
+
+#: inc/tenants/config/udag.php
+msgid "Manage Domains"
+msgstr ""
+
+#: inc/tenants/config/udag.php
+msgid "Trademark protection"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Turn off notification here"
+msgstr ""

@@ -55,6 +55,7 @@ msgid "My offers"
 msgstr "My offers"
 
 #: inc/tenants/config/arsys.php
+#: inc/tenants/config/udag.php
 msgid "My data"
 msgstr "My data"
 
@@ -323,16 +324,8 @@ msgid "Webmail Login"
 msgstr "Webmail Login"
 
 #: inc/tenants/config/udag.php
-msgid "My data"
-msgstr "Meine Daten"
-
-#: inc/tenants/config/udag.php
 msgid "Manage WordPress"
 msgstr "WordPress verwalten"
-
-#: inc/tenants/config/udag.php
-msgid "Manage domains"
-msgstr "Domains verwalten"
 
 #: inc/tenants/config/udag.php
 msgid "Manage e-mail"
@@ -349,10 +342,6 @@ msgstr "RankingCoach"
 #: inc/tenants/config/udag.php
 msgid "SSL"
 msgstr "SSL"
-
-#: inc/tenants/config/udag.php
-msgid "Trademark protection
-msgstr "Markenschutz"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Setup Email Account"
@@ -701,12 +690,6 @@ msgstr ""
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
 msgstr ""
 
-#. Translators: %1$s and %2$s is a placeholder for link.
-#: inc/wpscan/controller/class-wpscan.php
-#, php-format
-msgid "Turn off this notification here."
-msgstr ""
-
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
@@ -810,4 +793,16 @@ msgstr ""
 #: inc/dashboard/blocks/vulnerability/index.php
 #: inc/wpscan/views/summary.php
 msgid "Last scan: %s ago"
+msgstr ""
+
+#: inc/tenants/config/udag.php
+msgid "Manage Domains"
+msgstr ""
+
+#: inc/tenants/config/udag.php
+msgid "Trademark protection"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Turn off notification here"
 msgstr ""
