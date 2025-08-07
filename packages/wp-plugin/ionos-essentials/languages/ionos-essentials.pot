@@ -652,7 +652,7 @@ msgid "E-Mail verwalten"
 msgstr ""
 
 #: inc/tenants/config/udag.php
-msgid "Webspace "
+msgid "Webspace"
 msgstr ""
 
 #: inc/tenants/config/udag.php

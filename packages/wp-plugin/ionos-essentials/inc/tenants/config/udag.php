@@ -23,7 +23,7 @@ $links = [
   ],
   [
     'url'    => 'a/webspace',
-    'anchor' => __('Webspace ', 'ionos-essentials'),
+    'anchor' => __('Webspace', 'ionos-essentials'),
   ],
   [
     'url'    => 'a/ranking-coach',

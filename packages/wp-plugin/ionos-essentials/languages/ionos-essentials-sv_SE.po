@@ -343,7 +343,7 @@ msgid "E-Mail verwalten"
 msgstr "Förvalta e-post"
 
 #: inc/tenants/config/udag.php
-msgid "Webspace "
+msgid "Webspace"
 msgstr "Webbutrymme"
 
 #: inc/tenants/config/udag.php

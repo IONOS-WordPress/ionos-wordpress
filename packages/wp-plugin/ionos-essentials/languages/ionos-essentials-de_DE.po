@@ -803,7 +803,7 @@ msgid "To re-enable access to this account, the password must be updated. We hav
 msgstr "Um wieder auf dieses Konto zugreifen zu können, müssen Sie Ihr Passwort ändern. Wir haben Ihnen eine E-Mail mit den Anweisungen zum Zurücksetzen geschickt."
 
 #: inc/tenants/config/udag.php
-msgid "Webspace "
+msgid "Webspace"
 msgstr ""
 
 #: inc/wpscan/controller/class-wpscanmiddleware.php

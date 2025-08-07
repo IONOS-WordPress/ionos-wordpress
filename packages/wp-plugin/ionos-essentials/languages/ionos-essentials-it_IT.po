@@ -338,7 +338,7 @@ msgid "E-Mail verwalten"
 msgstr "Gestisci le e-mail"
 
 #: inc/tenants/config/udag.php
-msgid "Webspace "
+msgid "Webspace"
 msgstr "Spazio web"
 
 #: inc/tenants/config/udag.php
