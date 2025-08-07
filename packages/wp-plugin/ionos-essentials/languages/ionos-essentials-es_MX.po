@@ -218,8 +218,8 @@ msgstr[0] "advertencia encontrada"
 msgstr[1] "alertas detectadas"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Issues found"
-msgstr "Problemas detectados"
+msgid "issues found"
+msgstr "problemas detectados"
 
 #: inc/dashboard/blocks/vulnerability/index.php
 msgid "Show full scan report"

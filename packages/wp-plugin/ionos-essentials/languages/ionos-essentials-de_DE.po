@@ -109,7 +109,7 @@ msgstr[0] "Warnung gefunden"
 msgstr[1] "Warnungen gefunden"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Issues found"
+msgid "issues found"
 msgstr "Probleme gefunden"
 
 #: inc/dashboard/blocks/banner/index.php

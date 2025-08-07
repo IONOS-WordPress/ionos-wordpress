@@ -109,8 +109,8 @@ msgstr[0] "Alerte détectée"
 msgstr[1] "Alertes détectées"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Issues found"
-msgstr "Problèmes trouvés"
+msgid "issues found"
+msgstr "problèmes trouvés"
 
 #: inc/dashboard/blocks/banner/index.php
 msgid "View Site"

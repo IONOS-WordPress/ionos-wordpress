@@ -114,7 +114,7 @@ msgstr[0] "waarschuwing gevonden"
 msgstr[1] "waarschuwingen gevonden"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Issues found"
+msgid "issues found"
 msgstr "problemen gevonden"
 
 #: inc/dashboard/blocks/banner/index.php

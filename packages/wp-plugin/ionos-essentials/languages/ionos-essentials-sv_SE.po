@@ -114,7 +114,7 @@ msgstr[0] "varning hittad"
 msgstr[1] "varningar hittade"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Issues found"
+msgid "issues found"
 msgstr "fel hittade"
 
 #: inc/dashboard/blocks/banner/index.php
