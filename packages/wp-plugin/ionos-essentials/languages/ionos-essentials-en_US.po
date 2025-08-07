@@ -97,16 +97,6 @@ msgid "Show full scan report"
 msgstr "Show full scan report"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Last scan"
-msgstr "Last scan"
-
-#. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
-#, php-format
-msgid "%s ago"
-msgstr "%s ago"
-
-#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "critical issue found"
@@ -619,7 +609,7 @@ msgstr "Important Security Notification: Vulnerability detected in your WordPres
 msgid "Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:"
 msgstr "Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An error occurred while fetching the vulnerability data."
 msgstr ""
 
@@ -704,7 +694,9 @@ msgstr ""
 msgid "The vulnerability scan has found issues for"
 msgstr ""
 
-#: inc/wpscan/controller/class-wpscan.php
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
 msgstr ""
 
@@ -812,4 +804,13 @@ msgstr ""
 
 #: inc/security/views/password-reset-necessary.php
 msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
+msgid "Last scan: %s ago"
 msgstr ""

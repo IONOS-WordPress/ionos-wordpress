@@ -97,16 +97,6 @@ msgid "Show full scan report"
 msgstr "Vollständigen Scanbericht anzeigen"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Last scan"
-msgstr "Letzter Scan"
-
-#. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
-#, php-format
-msgid "%s ago"
-msgstr "vor %s"
-
-#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Kritisches Problem gefunden"
@@ -346,10 +336,6 @@ msgstr "Domains verwalten"
 #: inc/tenants/config/udag.php
 msgid "E-Mail verwalten"
 msgstr "E-Mail verwalten"
-
-#: inc/tenants/config/udag.php
-msgid "Webspace"
-msgstr "Webspace"
 
 #: inc/tenants/config/udag.php
 msgid "RankingCoach"
@@ -647,7 +633,7 @@ msgstr "Weitere Informationen"
 msgid "issues found"
 msgstr "Probleme gefunden"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An error occurred while fetching the vulnerability data."
 msgstr "Beim Abrufen der Daten zu den Sicherheitslücken ist ein Fehler aufgetreten."
 
@@ -724,7 +710,9 @@ msgstr "Die Aktivierung wird nicht empfohlen."
 msgid "The vulnerability scan has found issues for"
 msgstr "Der Schwachstellen-Scan hat Probleme gefunden für"
 
-#: inc/wpscan/controller/class-wpscan.php
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
 msgstr "Es wurde noch kein Scan ausgeführt."
 
@@ -813,3 +801,16 @@ msgstr "Wir haben festgestellt, dass das Passwort für diesen WordPress-Admin-Be
 #: inc/security/views/password-reset-necessary.php
 msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
 msgstr "Um wieder auf dieses Konto zugreifen zu können, müssen Sie Ihr Passwort ändern. Wir haben Ihnen eine E-Mail mit den Anweisungen zum Zurücksetzen geschickt."
+
+#: inc/tenants/config/udag.php
+msgid "Webspace "
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
+msgid "Last scan: %s ago"
+msgstr "Letzter Scan: vor %s"

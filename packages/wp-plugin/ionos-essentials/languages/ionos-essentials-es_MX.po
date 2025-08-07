@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ionos-essentials 0.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"POT-Creation-Date: 2025-04-09T08:51:38+00:00\n"
-"PO-Revision-Date: 2025-08-05 22:39+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: es_MX\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-04-09T08:51:38+00:00\n"
+"PO-Revision-Date: 2025-08-05 22:39+0200\n"
+"Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
@@ -222,16 +222,6 @@ msgid "Issues found"
 msgstr "Problemas detectados"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Last scan"
-msgstr "Último escaneo"
-
-#. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
-#, php-format
-msgid "%s ago"
-msgstr "hace %s"
-
-#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Show full scan report"
 msgstr "Mostrar informe completo del escaneo"
 
@@ -247,11 +237,13 @@ msgstr "Novedades"
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Obtén una visión general de las últimas actualizaciones y mejoras."
 
-#: inc/dashboard/blocks/banner/index.php inc/dashboard/index.php
+#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Vista general"
 
-#: inc/tenants/config/arsys.php inc/tenants/config/piensa.php
+#: inc/tenants/config/arsys.php
+#: inc/tenants/config/piensa.php
 msgid "My offers"
 msgstr "Mis ofertas"
 
@@ -267,7 +259,8 @@ msgstr "Mis productos"
 msgid "My invoices"
 msgstr "Mis facturas"
 
-#: inc/tenants/config/arsys.php inc/tenants/config/fasthosts.php
+#: inc/tenants/config/arsys.php
+#: inc/tenants/config/fasthosts.php
 #: inc/tenants/config/piensa.php
 msgid "Control Panel"
 msgstr "Panel de control"
@@ -457,7 +450,8 @@ msgstr "Comenzar a usar la función"
 msgid "No thanks"
 msgstr "No, gracias"
 
-#: inc/dashboard/blocks/banner/index.php inc/dashboard/tabs/tools.php
+#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr "Herramientas"
 
@@ -631,7 +625,7 @@ msgstr "Más información"
 msgid "issues found"
 msgstr "Problemas detectados"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An error occurred while fetching the vulnerability data."
 msgstr "Hubo un error al recuperar los datos de vulnerabilidad."
 
@@ -671,7 +665,8 @@ msgstr "En una escala del 1 al 10, las puntuaciones más altas suponen más ries
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "No se permite la instalación de plugins y temas que superen la puntuación 7.0."
 
-#: inc/wpscan/controller/class-wpscan.php inc/wpscan/views/summary.php
+#: inc/wpscan/controller/class-wpscan.php
+#: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
 msgstr "Escáner de vulnerabilidades"
 
@@ -711,7 +706,9 @@ msgstr "La activación no es recomendable"
 msgid "The vulnerability scan has found issues for"
 msgstr "El escáner de vulnerabilidades detectó problemas para"
 
-#: inc/wpscan/controller/class-wpscan.php
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
 msgstr "Todavía no se llevó a cabo ningún escaneo."
 
@@ -800,3 +797,20 @@ msgstr "Detectamos que la contraseña de este usuario de WordPress Admin coincid
 #: inc/security/views/password-reset-necessary.php
 msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
 msgstr "Para reactivar el acceso a esta cuenta, la contraseña debe ser actualizada. Enviamos un e-mail con las instrucciones de restablecimiento a"
+
+#: inc/jetpack-flow/index.php
+msgid "Installing Jetpack Backup"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "Do it yourself"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
+msgid "Last scan: %s ago"
+msgstr "Último escaneo hace %s"

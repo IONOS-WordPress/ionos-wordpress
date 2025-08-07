@@ -97,16 +97,6 @@ msgid "Show full scan report"
 msgstr "Visualizza report completo della scansione"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Last scan"
-msgstr "Ultima scansione"
-
-#. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
-#, php-format
-msgid "%s ago"
-msgstr "%s fa"
-
-#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problema critico rilevato"
@@ -599,7 +589,6 @@ msgstr "Il tuo hub %s ha appena ricevuto un potente aggiornamento!"
 msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
 msgstr "Abbiamo appena introdotto una nuova sezione \"Strumenti e sicurezza\". Tutte le funzionalità e le interfacce utente del tuo precedente plugin di sicurezza ora si trovano qui, rendendo tutto più centralizzato e facile da gestire. Inoltre, troverai una nuova funzione di pagina di manutenzione che puoi attivare ogni volta che ne hai bisogno."
 
-
 #: inc/wpscan/views/summary.php
 msgid "Website is safe and secure"
 msgstr "Il sito web è sicuro e protetto."
@@ -644,7 +633,7 @@ msgstr "Maggiori informazioni"
 msgid "issues found"
 msgstr "Problemi rilevati"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An error occurred while fetching the vulnerability data."
 msgstr "Si è verificato un errore durante il recupero dei dati sulla vulnerabilità."
 
@@ -725,7 +714,9 @@ msgstr "L'attivazione non è consigliata."
 msgid "The vulnerability scan has found issues for"
 msgstr "La scansione delle vulnerabilità ha rilevato dei problemi per"
 
-#: inc/wpscan/controller/class-wpscan.php
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
 msgstr "Non è stata ancora eseguita alcuna scansione."
 
@@ -814,3 +805,12 @@ msgstr "Abbiamo rilevato che la password per questo utente amministratore di Wor
 #: inc/security/views/password-reset-necessary.php
 msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
 msgstr "Per riattivare l'accesso a questo account, è necessario aggiornare la password. Ti abbiamo inviato un'e-mail con le istruzioni per reimpostare la password a"
+
+#: inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
+msgid "Last scan: %s ago"
+msgstr "Ultima scansione: %s fa"

@@ -97,16 +97,6 @@ msgid "Show full scan report"
 msgstr "Afficher le rapport d'analyse complet"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Last scan"
-msgstr "Dernière analyse"
-
-#. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
-#, php-format
-msgid "%s ago"
-msgstr "il y a %s"
-
-#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problème critique détecté"
@@ -643,7 +633,7 @@ msgstr "En savoir plus"
 msgid "issues found"
 msgstr "Problèmes trouvés"
 
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An error occurred while fetching the vulnerability data."
 msgstr "Une erreur s'est produite lors de la récupération des données relatives à la vulnérabilité."
 
@@ -724,7 +714,9 @@ msgstr "L'activation n'est pas recommandée"
 msgid "The vulnerability scan has found issues for"
 msgstr "L'analyse de vulnérabilité a détecté des problèmes pour"
 
-#: inc/wpscan/controller/class-wpscan.php
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
 msgstr "Aucune analyse n'a encore été effectuée."
 
@@ -813,3 +805,12 @@ msgstr "Nous avons détecté que le mot de passe de cet utilisateur WordPress Ad
 #: inc/security/views/password-reset-necessary.php
 msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
 msgstr "Pour réactiver l'accès à ce compte, le mot de passe doit être mis à jour. Nous vous avons envoyé un e-mail contenant les instructions de réinitialisation à"
+
+#: inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgstr ""
+
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
+msgid "Last scan: %s ago"
+msgstr "Dernière analyse: il y a %s"
