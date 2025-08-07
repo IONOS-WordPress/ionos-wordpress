@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-07T08:42:28+00:00\n"
+"POT-Creation-Date: 2025-08-07T08:51:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -280,6 +280,7 @@ msgstr ""
 msgid "No scan has been performed yet."
 msgstr ""
 
+#. translators: %s is placeholder for the time since the last scan
 #: inc/dashboard/blocks/vulnerability/index.php
 #: inc/wpscan/views/summary.php
 msgid "Last scan: %s ago"
@@ -339,6 +340,7 @@ msgstr ""
 msgid "Get an overview of the latest updates and enhancements."
 msgstr ""
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
 msgstr ""
@@ -451,10 +453,12 @@ msgstr ""
 msgid "Advanced"
 msgstr ""
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/tabs/tools.php
 msgid "%s Hub as WordPress Admin start page"
 msgstr ""
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/tabs/tools.php
 msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
 msgstr ""
@@ -751,12 +755,14 @@ msgstr ""
 msgid "was updated"
 msgstr ""
 
+#. translators: %d is the number of critical issues
 #: inc/wpscan/views/issues.php
 msgid "%d critical issue"
 msgid_plural "%d critical issues"
 msgstr[0] ""
 msgstr[1] ""
 
+#. translators: %d is the number of warnings
 #: inc/wpscan/views/issues.php
 msgid "%d warning"
 msgid_plural "%d warnings"

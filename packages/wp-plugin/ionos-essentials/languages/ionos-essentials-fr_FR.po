@@ -570,6 +570,7 @@ msgstr "Nous cherchons de nouveaux moyens pour améliorer votre expérience d'h�
 msgid "Take the survey"
 msgstr "Répondre à l'enquête"
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/blocks/whats-new/index.php
 #, php-format
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
@@ -712,6 +713,7 @@ msgstr "a été supprimé"
 msgid "was updated"
 msgstr "a été mis à jour"
 
+#. translators: %d is the number of critical issues
 #: inc/wpscan/views/issues.php
 #, php-format
 msgid "%d critical issue"
@@ -719,6 +721,7 @@ msgid_plural "%d critical issues"
 msgstr[0] "%d problème critique"
 msgstr[1] "%d problèmes critiques"
 
+#. translators: %d is the number of warnings
 #: inc/wpscan/views/issues.php
 #, php-format
 msgid "%d warning"
@@ -762,10 +765,12 @@ msgstr "En apprendre plus"
 msgid "Advanced"
 msgstr "Avancé"
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/tabs/tools.php
 msgid "%s Hub as WordPress Admin start page"
 msgstr "Hub %s comme page d'accueil de l'administrateur WordPress"
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/tabs/tools.php
 msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
 msgstr "Activez le Hub %s comme page d'accueil dans votre panneau d'administration WordPress pour une expérience plus personnalisée et plus efficace."
@@ -790,6 +795,7 @@ msgstr "Pour réactiver l'accès à ce compte, le mot de passe doit être mis à
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
 msgstr ""
 
+#. translators: %s is placeholder for the time since the last scan
 #: inc/dashboard/blocks/vulnerability/index.php
 #: inc/wpscan/views/summary.php
 msgid "Last scan: %s ago"
