@@ -328,19 +328,19 @@ msgid "Webmail Login"
 msgstr "Inloggen Webmail"
 
 #: inc/tenants/config/udag.php
-msgid "Meine Daten"
+msgid "My data"
 msgstr "Mijn gegevens"
 
 #: inc/tenants/config/udag.php
-msgid "WordPress verwalten "
+msgid "Manage WordPress"
 msgstr "WordPress verwalten"
 
 #: inc/tenants/config/udag.php
-msgid "Domains verwalten"
+msgid "Manage domains"
 msgstr "Domeinen verwalten"
 
 #: inc/tenants/config/udag.php
-msgid "E-Mail verwalten"
+msgid "Manage e-mail"
 msgstr "E-mail verwalten"
 
 #: inc/tenants/config/udag.php
@@ -356,7 +356,7 @@ msgid "SSL"
 msgstr "SSL"
 
 #: inc/tenants/config/udag.php
-msgid "Markenschutz"
+msgid "Trademark protection
 msgstr "Markenschutz"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php

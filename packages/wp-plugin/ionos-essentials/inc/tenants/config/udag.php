@@ -7,19 +7,19 @@ defined('ABSPATH') || exit();
 $links = [
   [
     'url'    => 'a/user/data',
-    'anchor' => __('Meine Daten', 'ionos-essentials'),
+    'anchor' => __('My data', 'ionos-essentials'),
   ],
   [
     'url'    => 'a/wordpress-hosting',
-    'anchor' => __('WordPress verwalten ', 'ionos-essentials'),
+    'anchor' => __('Manage WordPress', 'ionos-essentials'),
   ],
   [
     'url'    => 'a/domain-list',
-    'anchor' => __('Domains verwalten', 'ionos-essentials'),
+    'anchor' => __('Manage Domains', 'ionos-essentials'),
   ],
   [
     'url'    => 'a/mail-domains',
-    'anchor' => __('E-Mail verwalten', 'ionos-essentials'),
+    'anchor' => __('Manage e-mail', 'ionos-essentials'),
   ],
   [
     'url'    => 'a/webspace',
@@ -35,7 +35,7 @@ $links = [
   ],
   [
     'url'    => 'a/marken/markenschutz',
-    'anchor' => __('Markenschutz', 'ionos-essentials'),
+    'anchor' => __('Trademark protection', 'ionos-essentials'),
   ],
 ];
 

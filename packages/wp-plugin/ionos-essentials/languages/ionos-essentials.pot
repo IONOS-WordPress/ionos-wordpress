@@ -637,19 +637,19 @@ msgid "Current offers"
 msgstr ""
 
 #: inc/tenants/config/udag.php
-msgid "Meine Daten"
+msgid "My data"
 msgstr ""
 
 #: inc/tenants/config/udag.php
-msgid "WordPress verwalten "
+msgid "Manage WordPress"
 msgstr ""
 
 #: inc/tenants/config/udag.php
-msgid "Domains verwalten"
+msgid "Manage domains"
 msgstr ""
 
 #: inc/tenants/config/udag.php
-msgid "E-Mail verwalten"
+msgid "Manage e-mail"
 msgstr ""
 
 #: inc/tenants/config/udag.php
@@ -665,7 +665,7 @@ msgid "SSL"
 msgstr ""
 
 #: inc/tenants/config/udag.php
-msgid "Markenschutz"
+msgid "Trademark protection
 msgstr ""
 
 #: inc/wpscan/controller/class-wpscan.php
