@@ -196,13 +196,13 @@ render_section([
   printf(\esc_html__(
     'Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience.',
     'ionos-essentials',
-  ), $brand_name);
+  ), Tenant::get_label());
 ?>
                     </p>
                 </div>
                 <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
                     <span class="input-switch">
-                        <input id="ionos_essentials_dashboard_mode" type="checkbox" data-description="<?php printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), $brand_name); ?>"
+                        <input id="ionos_essentials_dashboard_mode" type="checkbox" data-description="<?php printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), Tenant::get_label()); ?>"
                         <?php if (\get_option('ionos_essentials_dashboard_mode', true)) {
                           echo 'checked';
                         } ?>
