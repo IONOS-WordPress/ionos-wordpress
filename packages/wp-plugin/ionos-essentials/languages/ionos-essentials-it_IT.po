@@ -109,6 +109,7 @@ msgstr[0] "Allarme rilevato"
 msgstr[1] "Allarmi rilevati"
 
 #: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "issues found"
 msgstr "problemi rilevati"
 
@@ -628,10 +629,6 @@ msgstr "Il team plugin %s"
 #: inc/wpscan/controller/class-wpscan.php
 msgid "More information"
 msgstr "Maggiori informazioni"
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "issues found"
-msgstr "Problemi rilevati"
 
 #: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An error occurred while fetching the vulnerability data."

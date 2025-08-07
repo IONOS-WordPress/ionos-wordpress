@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-07T07:48:35+00:00\n"
+"POT-Creation-Date: 2025-08-07T07:59:30+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -266,6 +266,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "issues found"
 msgstr ""
 
@@ -674,10 +675,6 @@ msgstr ""
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "issue found"
-msgstr ""
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "issues found"
 msgstr ""
 
 #: inc/wpscan/controller/class-wpscan.php

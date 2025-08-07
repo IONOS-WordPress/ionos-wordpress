@@ -109,6 +109,7 @@ msgstr[0] "Warnung gefunden"
 msgstr[1] "Warnungen gefunden"
 
 #: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "issues found"
 msgstr "Probleme gefunden"
 
@@ -628,10 +629,6 @@ msgstr "Ihr %s-Plugin Team"
 #: inc/wpscan/controller/class-wpscan.php
 msgid "More information"
 msgstr "Weitere Informationen"
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "issues found"
-msgstr "Probleme gefunden"
 
 #: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An error occurred while fetching the vulnerability data."

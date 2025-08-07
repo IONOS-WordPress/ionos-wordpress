@@ -114,6 +114,7 @@ msgstr[0] "varning hittad"
 msgstr[1] "varningar hittade"
 
 #: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "issues found"
 msgstr "fel hittade"
 
@@ -633,10 +634,6 @@ msgstr "Ditt %s plugin-team"
 #: inc/wpscan/controller/class-wpscan.php
 msgid "More information"
 msgstr "Mer information"
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "issues found"
-msgstr "fel hittade"
 
 #: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An error occurred while fetching the vulnerability data."

@@ -109,6 +109,7 @@ msgstr[0] "warning found"
 msgstr[1] "warnings found"
 
 #: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscan.php
 msgid "issues found"
 msgstr "issues found"
 
@@ -596,10 +597,6 @@ msgstr "We've just rolled out a brand-new \"Tools & Security\" tab! All the feat
 #: inc/wpscan/controller/class-wpscan.php
 msgid "More information"
 msgstr "More information"
-
-#: inc/wpscan/controller/class-wpscan.php
-msgid "issues found"
-msgstr "issues found"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Important Security Notification: Vulnerability detected in your WordPress website"
