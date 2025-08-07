@@ -617,8 +617,8 @@ msgstr "Pour garantir la sécurité et la sûreté de votre site Web, nous vous 
 #. Translators: %1$s and %2$s is a placeholder for link.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
-msgid "%1$sTurn off this notification here%2$s."
-msgstr "%1$sDésactivez cette notification ici%2$s."
+msgid "Turn off this notification here."
+msgstr "Désactivez cette notification ici."
 
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
