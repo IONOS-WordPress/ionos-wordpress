@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: d0ea35719cfc2d6665fc78926561ea60\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-07-31 07:15+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: Dutch\n"
-"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-07-31 07:15+0200\n"
+"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
@@ -34,11 +34,13 @@ msgstr "IONOS Groep"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: inc/tenants/config/arsys.php inc/tenants/config/piensa.php
+#: inc/tenants/config/arsys.php
+#: inc/tenants/config/piensa.php
 msgid "My offers"
 msgstr "Mijn aanbiedingen"
 
 #: inc/tenants/config/arsys.php
+#: inc/tenants/config/udag.php
 msgid "My data"
 msgstr "Mijn gegevens"
 
@@ -50,7 +52,8 @@ msgstr "Mijn producten"
 msgid "My invoices"
 msgstr "Mijn facturen"
 
-#: inc/tenants/config/arsys.php inc/tenants/config/fasthosts.php
+#: inc/tenants/config/arsys.php
+#: inc/tenants/config/fasthosts.php
 #: inc/tenants/config/piensa.php
 msgid "Control Panel"
 msgstr "Bedieningspaneel"
@@ -100,16 +103,6 @@ msgid "Show full scan report"
 msgstr "Volledig scanrapport tonen"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Last scan"
-msgstr "Laatste scan"
-
-#. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
-#, php-format
-msgid "%s ago"
-msgstr "%s geleden"
-
-#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiek probleem gevonden"
@@ -122,7 +115,8 @@ msgstr[0] "waarschuwing gevonden"
 msgstr[1] "waarschuwingen gevonden"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Issues found"
+#: inc/wpscan/controller/class-wpscan.php
+msgid "issues found"
 msgstr "problemen gevonden"
 
 #: inc/dashboard/blocks/banner/index.php
@@ -145,7 +139,8 @@ msgstr "Accountbeheer"
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Toegang tot je klantaccount, beveiligingsinstellingen en pakketten met één klik."
 
-#: inc/dashboard/blocks/banner/index.php inc/dashboard/index.php
+#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Overzicht"
 
@@ -334,23 +329,15 @@ msgid "Webmail Login"
 msgstr "Inloggen Webmail"
 
 #: inc/tenants/config/udag.php
-msgid "Meine Daten"
-msgstr "Mijn gegevens"
-
-#: inc/tenants/config/udag.php
-msgid "WordPress verwalten "
+msgid "Manage WordPress"
 msgstr "WordPress verwalten"
 
 #: inc/tenants/config/udag.php
-msgid "Domains verwalten"
-msgstr "Domeinen verwalten"
-
-#: inc/tenants/config/udag.php
-msgid "E-Mail verwalten"
+msgid "Manage e-mail"
 msgstr "E-mail verwalten"
 
 #: inc/tenants/config/udag.php
-msgid "Webspace "
+msgid "Webspace"
 msgstr "Webruimte"
 
 #: inc/tenants/config/udag.php
@@ -360,10 +347,6 @@ msgstr "RanglijstCoach"
 #: inc/tenants/config/udag.php
 msgid "SSL"
 msgstr "SSL"
-
-#: inc/tenants/config/udag.php
-msgid "Markenschutz"
-msgstr "Markenschutz"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Setup Email Account"
@@ -470,7 +453,8 @@ msgstr "Onboarding"
 msgid "No thanks"
 msgstr "Geen dank."
 
-#: inc/dashboard/blocks/banner/index.php inc/dashboard/tabs/tools.php
+#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr "Tools"
 
@@ -591,6 +575,7 @@ msgstr "We zoeken altijd naar manieren om je ervaring met WordPress hosting nog 
 msgid "Take the survey"
 msgstr "Deelnemen aan enquête"
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/blocks/whats-new/index.php
 #, php-format
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
@@ -624,12 +609,6 @@ msgstr "Beste gebruiker,<br />We willen je informeren dat onze recente scan éé
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
 msgstr "Bekijk de resultaten van de scan en neem eventueel maatregelen om ervoor te zorgen dat je website veilig is en blijft. Bezoek de volgende pagina voor meer informatie over de gevonden kwetsbaarheden:"
 
-#. Translators: %1$s and %2$s is a placeholder for link.
-#: inc/wpscan/controller/class-wpscan.php
-#, php-format
-msgid "%1$sTurn off this notification here%2$s."
-msgstr "%1$sZet deze melding hier uit%2$s."
-
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
@@ -640,11 +619,7 @@ msgstr "%s plug-in team"
 msgid "More information"
 msgstr "Meer informatie"
 
-#: inc/wpscan/controller/class-wpscan.php
-msgid "issues found"
-msgstr "problemen gevonden"
-
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An error occurred while fetching the vulnerability data."
 msgstr "Er is een fout opgetreden bij het ophalen van de gegevens."
 
@@ -684,7 +659,8 @@ msgstr "De scores zijn op een schaal van 1 tot 10, waarbij een hogere waarde een
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "Installaties van plug-ins en thema's zijn niet mogelijk als hun score hoger dan 7 is."
 
-#: inc/wpscan/controller/class-wpscan.php inc/wpscan/views/summary.php
+#: inc/wpscan/controller/class-wpscan.php
+#: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
 msgstr "Kwetsbaarheidsscan"
 
@@ -724,7 +700,9 @@ msgstr "Activatie wordt niet aanbevolen"
 msgid "The vulnerability scan has found issues for"
 msgstr "De kwetsbaarheidsscan heeft problemen gevonden voor"
 
-#: inc/wpscan/controller/class-wpscan.php
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
 msgstr "Er is nog geen scan uitgevoerd."
 
@@ -740,6 +718,7 @@ msgstr "is verwijderd"
 msgid "was updated"
 msgstr "is bijgewerkt"
 
+#. translators: %d is the number of critical issues
 #: inc/wpscan/views/issues.php
 #, php-format
 msgid "%d critical issue"
@@ -747,6 +726,7 @@ msgid_plural "%d critical issues"
 msgstr[0] "%d kritiek probleem"
 msgstr[1] "%d kritieke problemen"
 
+#. translators: %d is the number of warnings
 #: inc/wpscan/views/issues.php
 #, php-format
 msgid "%d warning"
@@ -790,10 +770,12 @@ msgstr "Meer informatie"
 msgid "Advanced"
 msgstr "Geavanceerd"
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/tabs/tools.php
 msgid "%s Hub as WordPress Admin start page"
 msgstr "%s Hub als startpagina voor het beheer van WordPress"
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/tabs/tools.php
 msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
 msgstr "Activeer de %s Hub als startpagina in je WordPress beheerpaneel voor een meer gepersonaliseerde en overzichtelijke ervaring."
@@ -813,3 +795,25 @@ msgstr "We hebben vastgesteld dat het wachtwoord voor deze WordPress admin-gebru
 #: inc/security/views/password-reset-necessary.php
 msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
 msgstr "Om weer toegang tot dit account te krijgen, moet het wachtwoord worden hersteld. We hebben een e-mail met instructies voor het opnieuw instellen verzonden naar"
+
+#: inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgstr ""
+
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
+msgid "Last scan: %s ago"
+msgstr "Laatste scan: %s geleden"
+
+#: inc/tenants/config/udag.php
+msgid "Manage Domains"
+msgstr ""
+
+#: inc/tenants/config/udag.php
+msgid "Trademark protection"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Turn off notification here"
+msgstr ""

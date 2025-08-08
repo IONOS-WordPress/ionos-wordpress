@@ -328,12 +328,8 @@ class WPScan
     $mail .= '<p>' . __('To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:', 'ionos-essentials');
     $mail .= '<br><a href="' . admin_url('admin.php?page=' . $tenant . '#tools') . '">' . admin_url() . '</a></p>';
 
-    $mail .= '<p>' . \sprintf(
-      // Translators: %1$s and %2$s is a placeholder for link.
-      __('%1$sTurn off this notification here%2$s.', 'ionos-essentials'),
-      '<a href="' . admin_url('admin.php?page=' . $tenant . '#tools') . '">',
-      '</a>'
-    ) . '</p>';
+    $mail .= '<p><a href="' . admin_url('admin.php?page=' . $tenant . '#tools') . '">';
+    $mail .= __('Turn off notification here', 'ionos-essentials') . '</a></p>';
 
     $mail .= \sprintf(
       // Translators: %s is the tenant name.
