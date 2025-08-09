@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\dashboard;
 
+use ionos\essentials\Tenant;
+
 defined('ABSPATH') || exit();
 
 require_once __DIR__ . '/blocks/banner/index.php';
@@ -106,7 +108,7 @@ use const ionos\essentials\PLUGIN_DIR;
 <template id="ionos_dashboard" shadowrootmode="open">
 
 <?php
-$tenant     = \get_option('ionos_group_brand', 'ionos');
+$tenant     =  Tenant::get_slug();
 $theme_file = PLUGIN_DIR . '/inc/dashboard/exos-themes/' . $tenant . '.css';
 if (file_exists($theme_file)) {
   \wp_register_style(
