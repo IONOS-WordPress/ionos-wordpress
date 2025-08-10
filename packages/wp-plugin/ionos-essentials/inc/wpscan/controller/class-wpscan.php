@@ -91,28 +91,26 @@ class WPScan
     if (! $screen || 'theme-install' !== $screen->id) {
       return;
     }
+
     \wp_enqueue_script(
       'ionos-wpscan-theme-install',
-      \plugins_url('ionos-essentials/inc/wpscan/js/theme-install.js', PLUGIN_DIR),
+      \plugins_url('ionos-essentials/inc/wpscan/src/theme-install.js', PLUGIN_DIR),
       [],
-      filemtime(PLUGIN_DIR . '/inc/wpscan/js/theme-install.js'),
+      filemtime(PLUGIN_DIR . 'inc/wpscan/src/theme-install.js'),
       true
     );
+    // TODO: make js translations work
+    \wp_set_script_translations('ionos-wpscan-theme-install', 'ionos-security', PLUGIN_DIR . '/languages');
 
-    \wp_localize_script(
-      'ionos-wpscan-theme-install',
-      'ionosWPScanThemes',
-      [
-        'issues'  => $this->get_issues(),
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'nonce'   => \wp_create_nonce('ionos-wpscan-instant-check'),
-        'i18n'    => [
-          'checking'       => __('Checking for vulnerabilities...', 'ionos-essentials'),
-          'warnings_found' => __('Warnings found. Installation is not recommended.', 'ionos-essentials'),
-          'critical_found' => __('Critical vulnerabilities found! Installation is not possible.', 'ionos-essentials'),
-          'nothing_found'  => __('No vulnerabilities found. You can safely install this theme.', 'ionos-essentials'),
-        ],
-      ]
+    \wp_add_inline_script(
+      'wpscan-theme-install',
+      sprintf(
+        'const adminUrl=%s;
+					window.wpScan=%s;',
+        \wp_json_encode(\admin_url('admin.php?page=ionos_security&tab=wpscan')),
+        \wp_json_encode($this->get_summary()['themes'])
+      ),
+      'before'
     );
   }
 
@@ -162,27 +160,31 @@ class WPScan
     if (0 === count($issues)) {
       return;
     }
+    \wp_enqueue_style(
+      'ionos-wpscan-themes',
+      \plugins_url('ionos-essentials/inc/wpscan/js/theme-overview.css', PLUGIN_DIR),
+      [],
+      filemtime(PLUGIN_DIR . '/inc/wpscan/js/theme-overview.css'),
+    );
 
     \wp_enqueue_script(
-      'ionos-essentials-themes',
+      'ionos-wpscan-themes',
       \plugins_url('ionos-essentials/inc/wpscan/js/theme-overview.js', PLUGIN_DIR),
       [],
       filemtime(PLUGIN_DIR . '/inc/wpscan/js/theme-overview.js'),
       true
     );
 
-    \wp_localize_script(
-      'ionos-essentials-themes',
-      'ionosWPScanThemes',
-      [
-        'slugs' => array_column($issues, 'slug'),
-        'brand' => Tenant::get_slug(),
-        'i18n'  => [
-          'issues_found'  => __('The vulnerability scan has found issues', 'ionos-essentials'),
-          'no_activation' => __('Activation is not recommended', 'ionos-essentials'),
-          'more_info'     => __('More information', 'ionos-essentials'),
-        ],
-      ]
+    \wp_add_inline_script(
+      'wpscan-themes',
+      sprintf(
+        'const adminUrl=%s;
+        window.wpScan=%s;
+        window.brand=%s',
+        \wp_json_encode(\admin_url('admin.php?page=ionos_security&tab=wpscan')),
+        \wp_json_encode($this->get_summary()['themes'])
+      ),
+      'before'
     );
   }
 

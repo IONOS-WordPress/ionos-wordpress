@@ -1,0 +1,17 @@
+
+/*
+we add a div in plugin-card which flexes the top card to the middle
+this moves it back to the top
+*/
+.plugin-card .plugin-card-top {
+	margin-bottom: auto;
+}
+
+.notice.wpscan {
+	margin: 20px 20px 0 20px;
+	padding: 12px;
+}
+
+.noclick {
+	pointer-events: none;
+}
