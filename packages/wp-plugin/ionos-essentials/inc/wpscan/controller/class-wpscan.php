@@ -284,7 +284,7 @@ class WPScan
     }
     $data         = $middleware->convert_middleware_data($data);
 
-    $next_run = (strpos(json_encode($data), 'UNKNOWN')) ? 5 * MINUTE_IN_SECONDS : 6 * HOUR_IN_SECONDS;
+    $next_run = (strpos(json_encode($data), 'UNKNOWN')) ? 5 * MINUTE_IN_SECONDS : 23 * HOUR_IN_SECONDS;
 
     \set_transient('ionos_wpscan_last_scan', time(), $next_run);
     \set_transient('ionos_wpscan_issues', $data, $next_run);
