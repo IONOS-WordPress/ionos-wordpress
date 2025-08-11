@@ -905,3 +905,127 @@ msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] "%d warning"
 msgstr[1] "%d warnings"
+
+#: inc/wpscan/views/issues.php
+msgid "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
+msgstr "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
+
+#: inc/wpscan/views/issues.php
+msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
+msgstr "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
+
+#: inc/wpscan/views/issues.php
+msgid "View update details"
+msgstr "View update details"
+
+#: inc/wpscan/views/issues.php
+msgid "This theme is active. Please activate another theme."
+msgstr "This theme is active. Please activate another theme."
+
+#: inc/wpscan/views/summary.php
+msgid "critical issues found"
+msgstr "critical issues found"
+
+#: inc/wpscan/views/summary.php
+msgid "warnings found"
+msgstr "warnings found"
+
+#: inc/wpscan/views/summary.php
+msgid "Website is safe and secure"
+msgstr "Website is safe and secure"
+
+#: inc/wpscan/views/summary.php
+msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
+msgstr "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
+
+#: inc/wpscan/views/summary.php
+msgid "Learn more"
+msgstr "Learn more"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Advanced"
+msgstr "Advanced"
+
+#. translators: %s is placeholder for the tenant name
+#: inc/dashboard/tabs/tools.php
+msgid "%s Hub as WordPress Admin start page"
+msgstr "%s Hub as WordPress Admin start page"
+
+#. translators: %s is placeholder for the tenant name
+#: inc/dashboard/tabs/tools.php
+msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
+msgstr "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
+
+#: inc/security/views/password-reset-necessary.php
+msgid "Password Reset Necessary"
+msgstr "Password Reset Necessary"
+
+#: inc/security/views/password-reset-necessary.php
+msgid "Security alert"
+msgstr "Security alert"
+
+#: inc/security/views/password-reset-necessary.php
+msgid "We have detected that the password for this WordPress Admin user matches one found in an online database of known compromised passwords. As a precaution, we have disabled access to this account to keep it secure."
+msgstr "We have detected that the password for this WordPress Admin user matches one found in an online database of known compromised passwords. As a precaution, we have disabled access to this account to keep it secure."
+
+#: inc/security/views/password-reset-necessary.php
+msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
+msgstr "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
+
+#: inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgstr "Vulnerability Scan not possible. Please contact Customer Care."
+
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
+msgid "Last scan: %s ago"
+msgstr "Last scan: %s ago"
+
+#: inc/tenants/config/udag.php
+msgid "Manage Domains"
+msgstr "Manage Domains"
+
+#: inc/tenants/config/udag.php
+msgid "Trademark protection"
+msgstr "Trademark protection"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Turn off notification here"
+msgstr "Turn off notification here"
+
+#: inc/security/index.php
+msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
+msgstr "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
+
+#: inc/security/credentials-checking.php
+msgid "The entered password has already been leaked. Please choose another one."
+msgstr "The entered password has already been leaked. Please choose another one."
+
+#: inc/security/credentials-checking.php
+msgid "It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password."
+msgstr "It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password."
+
+#: inc/security/credentials-checking.php
+msgid "We detected that your password has been leaked and suggest that you change it as soon as possible."
+msgstr "We detected that your password has been leaked and suggest that you change it as soon as possible."
+
+#: inc/security/credentials-checking.php
+msgid "Click here to edit your profile settings."
+msgstr "Click here to edit your profile settings."
+
+#: inc/security/pel.php
+msgid "<strong>Error</strong>: The login with an email address is deactivated for this website. Please use your username instead."
+msgstr "<strong>Error</strong>: The login with an email address is deactivated for this website. Please use your username instead."
+
+#: inc/security/ssl.php
+msgid "Your WordPress website is currently <strong>without SSL</strong>, which means that the connection between your website and users' browsers is not encrypted. It is highly <strong>recommended to activate SSL</strong> to protect sensitive information and to provide a secure browsing."
+msgstr "Your WordPress website is currently <strong>without SSL</strong>, which means that the connection between your website and users' browsers is not encrypted. It is highly <strong>recommended to activate SSL</strong> to protect sensitive information and to provide a secure browsing."
+
+#: inc/security/ssl.php
+msgid "https://ionos.com/help"
+msgstr "https://ionos.com/help"
+
+#: inc/security/ssl.php
+msgid "Learn more about SSL and how to activate it."
+msgstr "Learn more about SSL and how to activate it."
