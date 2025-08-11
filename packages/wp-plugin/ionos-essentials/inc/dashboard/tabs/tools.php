@@ -20,8 +20,8 @@ function render_section(array $args): void
 <section class="sheet__section">
       <div class="grid">
           <div class="grid-col grid-col--8 grid-col--small-12">
-              <h2 class="headline headline--sub" style="margin-bottom: 8px;"><?php echo \esc_html($args['title']); ?></h2>
-              <p class="paragraph paragraph--neutral" style="margin-bottom: 8px;">
+              <h2 class="headline headline--sub"><?php echo \esc_html($args['title']); ?></h2>
+              <p class="paragraph paragraph--neutral">
                   <?php echo \wp_kses($args['description'], 'post'); ?>
               </p>
           </div>
@@ -64,18 +64,17 @@ function get_settings_value($key)
           <section class="sheet__section">
             <div class="grid">
                 <div class="grid-col grid-col--8 grid-col--small-12">
-                    <h2 class="headline headline--sub" style="margin-bottom: 8px;">
+                    <h2 class="headline headline--sub">
                       <?php \esc_html_e('Maintenance page', 'ionos-essentials'); ?>
                       <span class="badge badge--warning-solid ionos-maintenance-only"><?php \esc_html_e('Active', 'ionos-essentials'); ?></span>
                 </h2>
-                    <p class="paragraph paragraph--neutral" style="margin-bottom: 8px;">
+                    <p class="paragraph paragraph--neutral">
                         <?php \esc_html_e('Temporarily block public access to your site with a maintenance page.', 'ionos-essentials'); ?>
                     </p>
                     <a href="<?php echo \esc_url(
                       \plugins_url('ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)
                     ); ?>" target="_blank"
-                       class="link link--action"
-                       style="margin-bottom: 8px;"><?php \esc_html_e('Preview maintenance page', 'ionos-essentials'); ?></a>
+                       class="link link--action"><?php \esc_html_e('Preview maintenance page', 'ionos-essentials'); ?></a>
                 </div>
                 <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
                     <span class="input-switch">
@@ -182,7 +181,7 @@ render_section([
           <section class="sheet__section">
             <div class="grid">
                 <div class="grid-col grid-col--8 grid-col--small-12">
-                    <h2 class="headline headline--sub" style="margin-bottom: 8px;">
+                    <h2 class="headline headline--sub">
                       <?php
                         printf(
                           // translators: %s is placeholder for the tenant name
@@ -191,7 +190,7 @@ render_section([
                         );
 ?>
                 </h2>
-                    <p class="paragraph paragraph--neutral" style="margin-bottom: 8px;">
+                    <p class="paragraph paragraph--neutral">
                         <?php
   // translators: %s is placeholder for the tenant name
   printf(\esc_html__(
