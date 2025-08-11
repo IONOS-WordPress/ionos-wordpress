@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   function addInstallListener(){
-    document.querySelectorAll('.theme-install').forEach(function (button) {
+    document.querySelectorAll('.theme-actions .theme-install').forEach(function (button) {
       button.addEventListener('click', function (event) {
 
        if(!event.target.dataset.safe) {
