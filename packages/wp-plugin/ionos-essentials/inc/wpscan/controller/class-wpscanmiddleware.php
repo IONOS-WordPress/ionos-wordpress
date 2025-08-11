@@ -35,6 +35,9 @@ class WPScanMiddleware
     }
 
     $status_code = \wp_remote_retrieve_response_code($response);
+    if (404 === $status_code) {
+      return 'nothing_found';
+    }
     if (200 !== $status_code) {
       error_log('WPScan middleware error statuscode: ' . \wp_remote_retrieve_response_message($response));
       return false;
