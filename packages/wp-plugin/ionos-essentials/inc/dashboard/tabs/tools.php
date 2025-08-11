@@ -20,7 +20,7 @@ function render_section(array $args): void
 <section class="sheet__section">
       <div class="grid">
           <div class="grid-col grid-col--8 grid-col--small-12">
-              <h2 class="headline headline--sub headline--cropped" style="margin-bottom: 8px;"><?php echo \esc_html($args['title']); ?></h2>
+              <h2 class="headline headline--sub" style="margin-bottom: 8px;"><?php echo \esc_html($args['title']); ?></h2>
               <p class="paragraph paragraph--neutral" style="margin-bottom: 8px;">
                   <?php echo \wp_kses($args['description'], 'post'); ?>
               </p>
