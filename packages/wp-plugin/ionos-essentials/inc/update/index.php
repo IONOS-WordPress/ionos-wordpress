@@ -90,11 +90,13 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
 
       // abort gracefully
       // show error message including link in the changelog section
-      $result->sections['changelog'] = sprintf(
-        'Failed to download <a href=\"%s\">%s-info.json</a>(response status=%s)',
-        $plugin_data['UpdateURI'],
-        $plugin_data['Name'],
-        print_r(\wp_remote_retrieve_response_code($res), true),
+      $result->sections['changelog'] = \esc_html(
+        sprintf(
+          \__('Failed to download <a href=\"%1$s\">%2$s-info.json</a>(response status=%3$s)', 'ionos-essentials'),
+          $plugin_data['UpdateURI'],
+          $plugin_data['Name'],
+          print_r(\wp_remote_retrieve_response_code($res), true),
+        )
       );
 
       return $result;

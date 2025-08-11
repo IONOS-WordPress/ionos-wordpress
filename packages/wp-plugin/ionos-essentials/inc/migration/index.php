@@ -18,9 +18,9 @@ use const ionos\essentials\PLUGIN_FILE;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
+use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_PEL;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
-use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
 
 /*
  * wp option where the installation data is stored
@@ -104,11 +104,11 @@ function _install()
         \set_transient('ionos_security_migrated_notice_show', true, 3 * MONTH_IN_SECONDS);
       }
 
-      $ionos_security =  \get_option('ionos-security', []);
-      $xmlrpc_guard_enabled      = 1 === $ionos_security['xmlrpc_guard_enabled'] ?? 1;
-      $pel_enabled               = 1 === $ionos_security['pel_enabled'] ?? 1;
-      $credentials_check_enabled = 1 === $ionos_security['credentials_check_enabled'] ?? 1;
-      $wpscan_mail_notification  = 1 === $ionos_security['wpscan_mail_notification'] ?? 1;
+      $ionos_security            = \get_option('ionos-security', []);
+      $xmlrpc_guard_enabled      = 1 === ($ionos_security['xmlrpc_guard_enabled'] ?? 1);
+      $pel_enabled               = 1 === ($ionos_security['pel_enabled'] ?? 1);
+      $credentials_check_enabled = 1 === ($ionos_security['credentials_check_enabled'] ?? 1);
+      $wpscan_mail_notification  = 1 === ($ionos_security['wpscan_mail_notification'] ?? 1);
       \delete_option('ionos-security');
 
       $security_options                                                     = IONOS_SECURITY_FEATURE_OPTION_DEFAULT;

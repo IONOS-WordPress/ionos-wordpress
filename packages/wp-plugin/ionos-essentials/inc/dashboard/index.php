@@ -123,7 +123,7 @@ add_filter('admin_body_class', function ($classes) {
 
         if (false === $meta) {
           return rest_ensure_response(new \WP_REST_Response([
-            'error' => 'failed to update user meta',
+            'error' => \__('failed to update user meta', 'ionos-essentials'),
           ], 500));
         }
 
@@ -154,7 +154,7 @@ add_filter('admin_body_class', function ($classes) {
       $res = $nba->set_status('dismissed', true);
       if ($res) {
         return new \WP_REST_Response([
-          'status' => 'success',
+          'status' => \__('success', 'ionos-essentials'),
           'res'    => $res,
         ], 200);
       }
@@ -189,7 +189,7 @@ add_filter('admin_body_class', function ($classes) {
         \activate_plugin($plugin_slug, '', false, true);
 
         return new \WP_REST_Response([
-          'status' => 'success',
+          'status' => \__('success', 'ionos-essentials'),
         ], 200);
       },
     ]
