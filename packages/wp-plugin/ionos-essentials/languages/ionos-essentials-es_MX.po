@@ -785,11 +785,11 @@ msgstr "Para reactivar el acceso a esta cuenta, la contraseña debe ser actualiz
 
 #: inc/jetpack-flow/index.php
 msgid "Installing Jetpack Backup"
-msgstr ""
+msgstr "Instalando Jetpack Backup"
 
 #: inc/switch-page/view.php
 msgid "Do it yourself"
-msgstr ""
+msgstr "Confecciona tu web de forma autónoma"
 
 #: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
