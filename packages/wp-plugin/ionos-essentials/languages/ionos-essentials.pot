@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-11T07:45:55+00:00\n"
+"POT-Creation-Date: 2025-08-07T08:51:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
@@ -506,10 +506,6 @@ msgstr ""
 
 #: inc/jetpack-flow/index.php
 msgid "Please wait a moment while we are installing Jetpack Backup for you."
-msgstr ""
-
-#: inc/security/index.php
-msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
 msgstr ""
 
 #: inc/security/views/password-reset-necessary.php
