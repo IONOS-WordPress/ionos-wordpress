@@ -817,3 +817,7 @@ msgstr ""
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Turn off notification here"
 msgstr ""
+
+#: inc/security/index.php
+msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
+msgstr ""
