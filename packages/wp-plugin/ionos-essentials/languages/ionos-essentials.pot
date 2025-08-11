@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-11T08:18:58+00:00\n"
+"POT-Creation-Date: 2025-08-11T13:26:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ionos-essentials\n"
 
 #. Plugin Name of the plugin
@@ -283,11 +283,13 @@ msgstr ""
 #. translators: %s is placeholder for the time since the last scan
 #: inc/dashboard/blocks/vulnerability/index.php
 #: inc/wpscan/views/summary.php
+#, php-format
 msgid "Last scan: %s ago"
 msgstr ""
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php
+#, php-format
 msgid "Welcome to your new %s Hub"
 msgstr ""
 
@@ -309,6 +311,7 @@ msgstr ""
 
 #. translators: %s: Brand name
 #: inc/dashboard/blocks/welcome/index.php
+#, php-format
 msgid "Welcome to your %s Hub"
 msgstr ""
 
@@ -342,6 +345,7 @@ msgstr ""
 
 #. translators: %s is placeholder for the tenant name
 #: inc/dashboard/blocks/whats-new/index.php
+#, php-format
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
 msgstr ""
 
@@ -363,6 +367,10 @@ msgstr ""
 
 #: inc/dashboard/index.php
 msgid "Tools and security"
+msgstr ""
+
+#: inc/dashboard/index.php
+msgid "failed to update user meta"
 msgstr ""
 
 #: inc/dashboard/index.php
@@ -455,11 +463,13 @@ msgstr ""
 
 #. translators: %s is placeholder for the tenant name
 #: inc/dashboard/tabs/tools.php
+#, php-format
 msgid "%s Hub as WordPress Admin start page"
 msgstr ""
 
 #. translators: %s is placeholder for the tenant name
 #: inc/dashboard/tabs/tools.php
+#, php-format
 msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
 msgstr ""
 
@@ -481,6 +491,7 @@ msgstr ""
 
 #. translators: s=link to control panel
 #: inc/descriptify/index.php
+#, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
 msgstr ""
 
@@ -509,6 +520,7 @@ msgid "Please wait a moment while we are installing Jetpack Backup for you."
 msgstr ""
 
 #: inc/security/index.php
+#, php-format
 msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
 msgstr ""
 
@@ -533,11 +545,19 @@ msgid "Onboarding"
 msgstr ""
 
 #: inc/switch-page/view.php
+msgid "Logo"
+msgstr ""
+
+#: inc/switch-page/view.php
 msgid "How do you want to create your new website?"
 msgstr ""
 
 #: inc/switch-page/view.php
 msgid "Online in a few minutes"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "Artificial Intelligence Illustration"
 msgstr ""
 
 #: inc/switch-page/view.php
@@ -553,6 +573,10 @@ msgid "100% WordPress"
 msgstr ""
 
 #: inc/switch-page/view.php
+msgid "User Interface Illustration"
+msgstr ""
+
+#: inc/switch-page/view.php
 msgid "Do it yourself"
 msgstr ""
 
@@ -562,6 +586,7 @@ msgstr ""
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: inc/switch-page/view.php
+#, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr ""
 
@@ -673,6 +698,11 @@ msgstr ""
 msgid "Trademark protection"
 msgstr ""
 
+#: inc/update/index.php
+#, php-format
+msgid "Failed to download <a href=\\\"%1$s\\\">%2$s-info.json</a>(response status=%3$s)"
+msgstr ""
+
 #: inc/wpscan/controller/class-wpscan.php
 #: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
@@ -736,6 +766,7 @@ msgstr ""
 
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
+#, php-format
 msgid "Your %s plugin team"
 msgstr ""
 
@@ -761,6 +792,7 @@ msgstr ""
 
 #. translators: %d is the number of critical issues
 #: inc/wpscan/views/issues.php
+#, php-format
 msgid "%d critical issue"
 msgid_plural "%d critical issues"
 msgstr[0] ""
@@ -768,6 +800,7 @@ msgstr[1] ""
 
 #. translators: %d is the number of warnings
 #: inc/wpscan/views/issues.php
+#, php-format
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] ""

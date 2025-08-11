@@ -123,7 +123,7 @@ add_filter('admin_body_class', function ($classes) {
 
         if (false === $meta) {
           return rest_ensure_response(new \WP_REST_Response([
-            'error' => 'failed to update user meta',
+            'error' => \__('failed to update user meta', 'ionos-essentials'),
           ], 500));
         }
 

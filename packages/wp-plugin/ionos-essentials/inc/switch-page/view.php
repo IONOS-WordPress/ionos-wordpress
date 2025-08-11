@@ -45,7 +45,9 @@ $config = $configs[$tenant] ?? reset($configs);
 
 <div class="wrapper">
   <div class="header">
-    <img class="logo" src="<?php echo \esc_attr(\plugins_url('assets/logos/' . $config['logo'], __FILE__)); ?>" alt="Logo"/>
+    <img class="logo" src="<?php echo \esc_attr(
+      \plugins_url('assets/logos/' . $config['logo'], __FILE__)
+    ); ?>" alt="<?php \esc_attr_e('Logo', 'ionos-essentials'); ?>"/>
   </div>
   <div class="onboardingpage">
     <h1 class="headline"><?php \esc_html_e('How do you want to create your new website?', 'ionos-essentials'); ?></h1>
@@ -57,7 +59,7 @@ $config = $configs[$tenant] ?? reset($configs);
               <span class="info-text" style="background-color: <?php echo \esc_attr($config['color']); ?>;"><?php \esc_html_e('Online in a few minutes', 'ionos-essentials'); ?></span>
               <img src="<?php echo \esc_url(
                 \plugins_url('assets/artificial-intelligence.png', __FILE__)
-              ); ?>" alt="Artificial Intelligence Illustration"/>
+              ); ?>" alt="<?php \esc_attr_e('Artificial Intelligence Illustration', 'ionos-essentials'); ?>"/>
               <h3><?php \esc_html_e('With AI', 'ionos-essentials'); ?></h3>
               <p><?php \esc_html_e(
                 'Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images.',
@@ -72,7 +74,10 @@ $config = $configs[$tenant] ?? reset($configs);
             \admin_url('admin.php?page=' . Tenant::get_slug())
           ); ?>" class="link-btn">
             <div class="option-content">
-              <img src="<?php echo \esc_url(\plugins_url('assets/user-interface.png', __FILE__)); ?>" alt="User Interface Illustration"/>
+              <img
+                src="<?php echo \esc_attr(\plugins_url('assets/user-interface.png', __FILE__)); ?>"
+                alt="<?php \esc_attr_e('User Interface Illustration', 'ionos-essentials'); ?>"
+              />
               <h3><?php \esc_html_e('Do it yourself', 'ionos-essentials'); ?></h3>
               <p><?php \esc_html_e(
                 'You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later.',
