@@ -789,11 +789,11 @@ msgstr "Um wieder auf dieses Konto zugreifen zu können, müssen Sie Ihr Passwor
 
 #: inc/tenants/config/udag.php
 msgid "Webspace"
-msgstr ""
+msgstr "Webspace"
 
 #: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
-msgstr ""
+msgstr "Vulnerability Scan nicht möglich. Bitte kontaktieren Sie den Kundenservice."
 
 #. translators: %s is placeholder for the time since the last scan
 #: inc/dashboard/blocks/vulnerability/index.php
@@ -803,12 +803,16 @@ msgstr "Letzter Scan: vor %s"
 
 #: inc/tenants/config/udag.php
 msgid "Manage Domains"
-msgstr ""
+msgstr "Domains verwalten"
 
 #: inc/tenants/config/udag.php
 msgid "Trademark protection"
-msgstr ""
+msgstr "Markenschutz"
 
 #: inc/wpscan/controller/class-wpscan.php
 msgid "Turn off notification here"
+msgstr "Benachrichtigung hier deaktivieren"
+
+#: inc/security/index.php
+msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
 msgstr ""
