@@ -23,7 +23,9 @@ function issues(array $args): void
                 <?php
                   echo \esc_html(sprintf(
                     'critical' === $args['type'] ?
+                      // translators: %d is the number of critical issues
                       \_n('%d critical issue', '%d critical issues', $count, 'ionos-essentials')
+                      // translators: %d is the number of warnings
                       : \_n('%d warning', '%d warnings', $count, 'ionos-essentials'), $count
                   ));
   ?>

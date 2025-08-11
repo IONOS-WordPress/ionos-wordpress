@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ionos-essentials 0.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"POT-Creation-Date: 2025-04-09T08:51:38+00:00\n"
-"PO-Revision-Date: 2025-08-05 22:39+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: es_MX\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-04-09T08:51:38+00:00\n"
+"PO-Revision-Date: 2025-08-05 22:39+0200\n"
+"Language: es_MX\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
@@ -218,18 +218,9 @@ msgstr[0] "advertencia encontrada"
 msgstr[1] "alertas detectadas"
 
 #: inc/dashboard/blocks/vulnerability/index.php
-msgid "Issues found"
-msgstr "Problemas detectados"
-
-#: inc/dashboard/blocks/vulnerability/index.php
-msgid "Last scan"
-msgstr "Último escaneo"
-
-#. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/index.php
-#, php-format
-msgid "%s ago"
-msgstr "hace %s"
+#: inc/wpscan/controller/class-wpscan.php
+msgid "issues found"
+msgstr "problemas detectados"
 
 #: inc/dashboard/blocks/vulnerability/index.php
 msgid "Show full scan report"
@@ -247,15 +238,18 @@ msgstr "Novedades"
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Obtén una visión general de las últimas actualizaciones y mejoras."
 
-#: inc/dashboard/blocks/banner/index.php inc/dashboard/index.php
+#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Vista general"
 
-#: inc/tenants/config/arsys.php inc/tenants/config/piensa.php
+#: inc/tenants/config/arsys.php
+#: inc/tenants/config/piensa.php
 msgid "My offers"
 msgstr "Mis ofertas"
 
 #: inc/tenants/config/arsys.php
+#: inc/tenants/config/udag.php
 msgid "My data"
 msgstr "Mis datos"
 
@@ -267,7 +261,8 @@ msgstr "Mis productos"
 msgid "My invoices"
 msgstr "Mis facturas"
 
-#: inc/tenants/config/arsys.php inc/tenants/config/fasthosts.php
+#: inc/tenants/config/arsys.php
+#: inc/tenants/config/fasthosts.php
 #: inc/tenants/config/piensa.php
 msgid "Control Panel"
 msgstr "Panel de control"
@@ -329,23 +324,15 @@ msgid "Webmail Login"
 msgstr "Acceso a webmail"
 
 #: inc/tenants/config/udag.php
-msgid "Meine Daten"
-msgstr "Mis datos"
-
-#: inc/tenants/config/udag.php
-msgid "WordPress verwalten "
+msgid "Manage WordPress"
 msgstr "Gestionar WordPress"
 
 #: inc/tenants/config/udag.php
-msgid "Domains verwalten"
-msgstr "Gestionar dominios"
-
-#: inc/tenants/config/udag.php
-msgid "E-Mail verwalten"
+msgid "Manage e-mail"
 msgstr "Gestionar e-mails"
 
 #: inc/tenants/config/udag.php
-msgid "Webspace "
+msgid "Webspace"
 msgstr "Espacio web"
 
 #: inc/tenants/config/udag.php
@@ -355,10 +342,6 @@ msgstr "RankingCoach"
 #: inc/tenants/config/udag.php
 msgid "SSL"
 msgstr "SSL"
-
-#: inc/tenants/config/udag.php
-msgid "Markenschutz"
-msgstr "Protección de marca"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Setup Email Account"
@@ -457,7 +440,8 @@ msgstr "Comenzar a usar la función"
 msgid "No thanks"
 msgstr "No, gracias"
 
-#: inc/dashboard/blocks/banner/index.php inc/dashboard/tabs/tools.php
+#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr "Herramientas"
 
@@ -578,6 +562,7 @@ msgstr "Siempre estamos buscando formas de mejorar tu experiencia con el hosting
 msgid "Take the survey"
 msgstr "Participa en la encuesta"
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/blocks/whats-new/index.php
 #, php-format
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
@@ -611,12 +596,6 @@ msgstr "Hola,<br />queremos informarte de que nuestro último escaneo de vulnera
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
 msgstr "Para garantizar la seguridad de tu página web, te recomendamos revisar los resultados del análisis y tomar las medidas oportunas. Para obtener información más detallada sobre las vulnerabilidades específicas identificadas, visita el siguiente enlace:"
 
-#. Translators: %1$s and %2$s is a placeholder for link.
-#: inc/wpscan/controller/class-wpscan.php
-#, php-format
-msgid "%1$sTurn off this notification here%2$s."
-msgstr "%1$sDesactivar esta notificación aquí%2$s."
-
 #. Translators: %s is the tenant name.
 #: inc/wpscan/controller/class-wpscan.php
 #, php-format
@@ -627,11 +606,7 @@ msgstr "Tu equipo de plugins %s"
 msgid "More information"
 msgstr "Más información"
 
-#: inc/wpscan/controller/class-wpscan.php
-msgid "issues found"
-msgstr "Problemas detectados"
-
-#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An error occurred while fetching the vulnerability data."
 msgstr "Hubo un error al recuperar los datos de vulnerabilidad."
 
@@ -671,7 +646,8 @@ msgstr "En una escala del 1 al 10, las puntuaciones más altas suponen más ries
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "No se permite la instalación de plugins y temas que superen la puntuación 7.0."
 
-#: inc/wpscan/controller/class-wpscan.php inc/wpscan/views/summary.php
+#: inc/wpscan/controller/class-wpscan.php
+#: inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
 msgstr "Escáner de vulnerabilidades"
 
@@ -711,7 +687,9 @@ msgstr "La activación no es recomendable"
 msgid "The vulnerability scan has found issues for"
 msgstr "El escáner de vulnerabilidades detectó problemas para"
 
-#: inc/wpscan/controller/class-wpscan.php
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
 msgstr "Todavía no se llevó a cabo ningún escaneo."
 
@@ -727,6 +705,7 @@ msgstr "fue eliminado"
 msgid "was updated"
 msgstr "fue actualizado"
 
+#. translators: %d is the number of critical issues
 #: inc/wpscan/views/issues.php
 #, php-format
 msgid "%d critical issue"
@@ -734,6 +713,7 @@ msgid_plural "%d critical issues"
 msgstr[0] "%d problema crítico"
 msgstr[1] "%d problemas críticos"
 
+#. translators: %d is the number of warnings
 #: inc/wpscan/views/issues.php
 #, php-format
 msgid "%d warning"
@@ -777,10 +757,12 @@ msgstr "Más información"
 msgid "Advanced"
 msgstr "Configuración avanzada"
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/tabs/tools.php
 msgid "%s Hub as WordPress Admin start page"
 msgstr "Tu hub %s como página de inicio del administrador de WordPress"
 
+#. translators: %s is placeholder for the tenant name
 #: inc/dashboard/tabs/tools.php
 msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
 msgstr "Habilita el hub %s como página de inicio en tu panel de WordPress para una experiencia más personalizada y eficiente."
@@ -800,3 +782,33 @@ msgstr "Detectamos que la contraseña de este usuario de WordPress Admin coincid
 #: inc/security/views/password-reset-necessary.php
 msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
 msgstr "Para reactivar el acceso a esta cuenta, la contraseña debe ser actualizada. Enviamos un e-mail con las instrucciones de restablecimiento a"
+
+#: inc/jetpack-flow/index.php
+msgid "Installing Jetpack Backup"
+msgstr ""
+
+#: inc/switch-page/view.php
+msgid "Do it yourself"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgstr ""
+
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
+msgid "Last scan: %s ago"
+msgstr "Último escaneo hace %s"
+
+#: inc/tenants/config/udag.php
+msgid "Manage Domains"
+msgstr ""
+
+#: inc/tenants/config/udag.php
+msgid "Trademark protection"
+msgstr ""
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Turn off notification here"
+msgstr ""

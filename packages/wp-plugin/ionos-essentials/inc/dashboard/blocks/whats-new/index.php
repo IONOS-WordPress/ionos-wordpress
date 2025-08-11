@@ -42,6 +42,7 @@ function render_callback(): void
         <ul class="check-list">
           <li>
             <h3 class="headline headline--sub"><?php printf(
+              // translators: %s is placeholder for the tenant name
               \esc_html__('Your %s Hub Just Got a Powerful Upgrade!', 'ionos-essentials'),
               Tenant::get_label()
             ); ?></h3>
