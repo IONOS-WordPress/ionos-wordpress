@@ -1,5 +1,17 @@
 # @ionos-wordpress/essentials
 
+## 1.1.0
+
+### Minor Changes
+
+- fdb95b1: Tools & Security Tab
+
+### Patch Changes
+
+- 6770bcf: migrate ionos-security plugin
+- f9df612: add maintenance mode
+- 4300b03: added quicklinks to header, footer template part and navigation view of site editor
+
 ## 1.0.10
 
 ### Patch Changes
