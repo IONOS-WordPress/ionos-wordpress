@@ -155,9 +155,15 @@ EOF
     "**/dist/**",
     "**/build/**",
   ],
+  "search.useIgnoreFiles": true,
   "search.exclude": {
     // Avoid polluting search results with lockfile content
     "pnpm-lock.yaml": true,
+    "**/build/**": true,
+    "**/dist/**": true,
+    "**/node_modules/**": true,
+    "**/vendor/**": true,
+    "**/*.sbom.syft.json": true,
   },
   // Ensure VSCode uses pnpm instead of npm
   "npm.packageManager": "pnpm",
@@ -217,6 +223,18 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
 
     # emulate ionos brand by default
     wp --quiet option update ionos_group_brand ionos
+    wp --quiet option update ionos_group_brand_menu IONOS
+
+    if [[ -n "${WPSCAN_TOKEN:-}" ]]; then
+      wp --quiet option update ionos_security_wpscan_token "${WPSCAN_TOKEN}"
+    fi
+
+    wp --quiet option update WPLANG 'en_US'
+
+    # set the default admin password to the password defined in .env file
+    wp --quiet user update admin --user_pass="${WP_PASSWORD}"
+    # reset the user meta for compromised credentials check (in case of wp-env restart)
+    wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2 &>/dev/null || true
 
     # fix permissions for mu-plugins folder if any
     # (leaving the permisions as-is will result in an error on destroy restart wp-env)
@@ -228,3 +246,5 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     sudo chmod a+w -R /var/www/html/bootstrap.php 2>/dev/null || true
 EOF
 done
+
+

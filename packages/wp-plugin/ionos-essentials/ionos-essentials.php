@@ -8,7 +8,7 @@
  * Requires PHP:      8.3
  * Version:           1.0.10
  * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json
- * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials
+ * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials
  * License:           GPL-2.0-or-later
  * Author:            IONOS Group
  * Author URI:        https://www.ionos-group.com/brands.html
@@ -28,7 +28,11 @@ defined('ABSPATH') || exit();
   fn () => \load_plugin_textdomain(domain: 'ionos-essentials', plugin_rel_path: basename(__DIR__) . '/languages/')
 );
 
+require_once __DIR__ . '/inc/class-tenant.php';
 require_once __DIR__ . '/inc/update/index.php';
+
+// soc plugin components
+require_once __DIR__ . '/inc/migration/index.php';
 
 // features
 require_once __DIR__ . '/inc/switch-page/index.php';
@@ -36,9 +40,17 @@ require_once __DIR__ . '/inc/dashboard/index.php';
 require_once __DIR__ . '/inc/descriptify/index.php';
 require_once __DIR__ . '/inc/jetpack-flow/index.php';
 require_once __DIR__ . '/inc/login/index.php';
+require_once __DIR__ . '/inc/security/index.php';
+require_once __DIR__ . '/inc/maintenance_mode/index.php';
+require_once __DIR__ . '/inc/wpscan/index.php';
 
 // soc plugin components
 require_once __DIR__ . '/inc/migration/index.php';
+
+function is_stretch(): bool
+{
+  return str_starts_with(getcwd(), '/home/www/public');
+}
 
 // TODO: evaluate for other tenants than IONOS
 

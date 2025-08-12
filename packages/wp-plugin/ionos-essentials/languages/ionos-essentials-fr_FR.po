@@ -14,15 +14,10 @@ msgstr ""
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
-#. Plugin URI of the plugin
-#: ionos-essentials.php
-msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
-msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/essentials"
-
 #. Description of the plugin
 #: ionos-essentials.php
 msgid "The essentials plugin provides IONOS hosting specific functionality."
-msgstr "Le plugin essentials offre des fonctionnalités spécifiques à l'hébergement IONOS."
+msgstr "L'extension essentials offre des fonctionnalités spécifiques à l'hébergement IONOS."
 
 #. Author of the plugin
 #: ionos-essentials.php
@@ -40,6 +35,7 @@ msgid "My offers"
 msgstr "Mes offres"
 
 #: inc/tenants/config/arsys.php
+#: inc/tenants/config/udag.php
 msgid "My data"
 msgstr "Mes données"
 
@@ -55,7 +51,7 @@ msgstr "Mes factures"
 #: inc/tenants/config/fasthosts.php
 #: inc/tenants/config/piensa.php
 msgid "Control Panel"
-msgstr "Panneau de contrôle"
+msgstr "Espace Client"
 
 #: inc/tenants/config/fasthosts.php
 msgid "My User"
@@ -63,7 +59,7 @@ msgstr "Mon utilisateur"
 
 #: inc/tenants/config/fasthosts.php
 msgid "WordPress Websites"
-msgstr "Sites web WordPress"
+msgstr "Sites Web WordPress"
 
 #: inc/tenants/config/piensa.php
 msgid "Data of customer"
@@ -79,7 +75,7 @@ msgstr "Factures"
 
 #: inc/tenants/config/strato.php
 msgid "Package overview"
-msgstr "Vue d'ensemble du paquet"
+msgstr "Vue d'ensemble du pack"
 
 #: inc/tenants/config/strato.php
 msgid "Your invoices"
@@ -93,118 +89,52 @@ msgstr "Votre contrat"
 msgid "Current offers"
 msgstr "Offres actuelles"
 
-#: inc/dashboard/blocks/quick-links/render.php
+#: inc/dashboard/blocks/quick-links/index.php
 msgid "Quick Links"
 msgstr "Liens rapides"
 
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block title"
-msgid "Deep Links"
-msgstr "Liens profonds"
-
-#: build/dashboard/blocks/deep-links/block.json
-msgctxt "block description"
-msgid "Show links to the Control Panel of your provider."
-msgstr "Afficher des liens vers le panneau de configuration de votre fournisseur."
-
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block title"
-msgid "Quick Links"
-msgstr "Liens rapides"
-
-#: build/dashboard/blocks/quick-links/block.json
-msgctxt "block description"
-msgid "Show links to common tasks in the WordPress backend."
-msgstr "Afficher des liens vers des tâches courantes dans le backend de WordPress."
-
-#: build/dashboard/blocks/vulnerability/block.json
-msgctxt "block title"
-msgid "Vulnerability"
-msgstr "Vulnérabilité"
-
-#: build/dashboard/blocks/vulnerability/block.json
-msgctxt "block description"
-msgid "Show wp scan data."
-msgstr "Afficher les données de balayage wp."
-
-#: inc/dashboard/index.php
-msgid "Brand Logo"
-msgstr "Brand Logo"
-
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Show full scan report"
 msgstr "Afficher le rapport d'analyse complet"
 
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Last scan"
-msgstr "Dernière analyse"
-
-#. translators: %s is replaced with the time since the last scan
-#: inc/dashboard/blocks/vulnerability/render.php
-#, php-format
-msgid "%s ago"
-msgstr "il y a %s"
-
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problème critique détecté"
 msgstr[1] "Problèmes critiques détectés"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "Alerte détectée"
 msgstr[1] "Alertes détectées"
 
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Issues found"
-msgstr "Problèmes trouvés"
-
-#: build/dashboard/blocks/next-best-actions/block.json
-msgctxt "block title"
-msgid "NBA"
-msgstr "NBA"
-
-#: build/dashboard/blocks/next-best-actions/block.json
-msgctxt "block description"
-msgid "Next Best Actions"
-msgstr "Prochaines actions Best"
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/controller/class-wpscan.php
+msgid "issues found"
+msgstr "problèmes trouvés"
 
 #: inc/dashboard/blocks/banner/index.php
 msgid "View Site"
-msgstr "Visualiser le site"
+msgstr "Afficher le site"
 
 #: inc/dashboard/blocks/banner/index.php
 msgid "Start AI Sitebuilder"
 msgstr "Démarrer l'outil de création IA"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Manage Hosting"
 msgstr "Gérer l'hébergement"
 
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block title"
-msgid "Banner"
-msgstr "Bannière"
-
-#: build/dashboard/blocks/banner/block.json
-msgctxt "block description"
-msgid "Banner"
-msgstr "Bannière"
-
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Account Management"
 msgstr "Gestion des comptes"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "One-click access to your customer account, login security and subscriptions."
 msgstr "Accès en un clic à votre compte client, à votre sécurité de connexion et à vos abonnements."
 
-#: inc/dashboard/blocks/quick-links/render.php
-msgid "Easily navigate to frequently used features and tools."
-msgstr "Naviguez facilement vers les fonctions et les outils les plus fréquemment utilisés."
-
+#: inc/dashboard/blocks/banner/index.php
 #: inc/dashboard/index.php
 msgid "Overview"
 msgstr "Vue d'ensemble"
@@ -223,7 +153,7 @@ msgstr "Veillez à ce que votre site Web porte votre logo unique pour un aspect 
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect Domain"
-msgstr "Connecter le Domaine"
+msgstr "Connecter le domaine"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Edit & Complete Your Website"
@@ -291,7 +221,7 @@ msgstr "Connecter les médias sociaux"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add Favicon"
-msgstr "Ajouter un Favicon"
+msgstr "Ajouter un favicon"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
@@ -321,67 +251,13 @@ msgstr "Libérer le potentiel de votre site Web"
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Votre site Web est en ligne, mais votre voyage ne fait que commencer. Explorez les prochaines actions recommandées pour stimuler votre croissance, améliorer vos performances et atteindre vos objectifs en ligne."
 
-#. translators: %s: Brand name
-#: inc/dashboard/blocks/welcome/index.php
-#, php-format
-msgid "Welcome to your %s Hub"
-msgstr "Bienvenue sur votre Hub %s"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
-msgstr "Cette vue d'ensemble est votre passerelle pour débloquer tout le potentiel de votre site Web WordPress."
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Recommendations for next steps"
-msgstr "Recommandations pour les prochaines étapes"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Helpful links and shortcuts"
-msgstr "Liens et raccourcis utiles"
-
-#: inc/dashboard/blocks/welcome/index.php
-msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr "Section d'aide complète, comprenant: support Chat IA, visites guidées et une vaste base de connaissances"
-
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Close"
 msgstr "Fermer"
 
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block title"
-msgid "Welcome"
-msgstr "Bienvenue"
-
-#: build/dashboard/blocks/welcome/block.json
-msgctxt "block description"
-msgid "Welcome"
-msgstr "Bienvenue"
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block title"
-msgid "What's New"
-msgstr "Nouveautés"
-
-#: build/dashboard/blocks/whats-new/block.json
-msgctxt "block description"
-msgid "What's New"
-msgstr "Nouveautés"
-
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "What’s New"
 msgstr "Nouveautés"
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "Featuring a completely new design and an improved user experience, making managing your website easier than ever."
-msgstr "Grâce à un design complètement nouveau et une expérience utilisateur améliorée, la gestion de votre site Web n'a jamais été aussi facile."
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "Vulnerability Scan Results"
-msgstr "Résultats de l'analyse de vulnérabilités"
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "We've added scan results directly to your dashboard, giving you instant visibility into potential security risks."
-msgstr "Nous avons ajouté les résultats des analyses directement à votre tableau de bord, vous offrant une visibilité instantanée sur les risques de sécurité potentiels."
 
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Add new page"
@@ -403,7 +279,7 @@ msgstr "Modifier le bas de page"
 msgid "Dismiss"
 msgstr "Ignorer"
 
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/blocks/vulnerability/index.php
 msgid "Scan for WordPress specific threats and vulnerabilities"
 msgstr "Analyse des menaces et vulnérabilités spécifiques à WordPress"
 
@@ -417,7 +293,7 @@ msgstr "Modifier les styles"
 
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Add Plugins"
-msgstr "Ajouter des plugins"
+msgstr "Ajouter des extensions"
 
 #: inc/dashboard/blocks/quick-links/config.php
 msgid "Upload Media files"
@@ -426,10 +302,6 @@ msgstr "Télécharger des fichiers multimédias"
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Obtenez un aperçu des mises à jour et améliorations les plus récentes."
-
-#: inc/dashboard/blocks/whats-new/index.php
-msgid "New User Interface"
-msgstr "Nouvelle Interface Utilisateur"
 
 #: inc/tenants/config/ionos.php
 msgid "My Products"
@@ -447,41 +319,29 @@ msgstr "Gestion des domaines et SSL"
 msgid "Add more products"
 msgstr "Ajouter des produits"
 
-#: inc/dashboard/blocks/deep-links/index.php
+#: inc/dashboard/blocks/my-account/index.php
 msgid "Webmail Login"
-msgstr "Connexion au webmail"
+msgstr "Connexion à Webmail"
 
 #: inc/tenants/config/udag.php
-msgid "Meine Daten"
-msgstr "Mes données"
+msgid "Manage WordPress"
+msgstr "Gérer WordPress"
 
 #: inc/tenants/config/udag.php
-msgid "WordPress verwalten "
-msgstr "WordPress verwalten"
+msgid "Manage e-mail"
+msgstr "Gérer les e-mails"
 
 #: inc/tenants/config/udag.php
-msgid "Domains verwalten"
-msgstr "Les domaines sont gérés"
-
-#: inc/tenants/config/udag.php
-msgid "E-Mail verwalten"
-msgstr "Courrier électronique"
-
-#: inc/tenants/config/udag.php
-msgid "Webspace "
-msgstr "Espace web"
+msgid "Webspace"
+msgstr "Espace Web"
 
 #: inc/tenants/config/udag.php
 msgid "RankingCoach"
-msgstr "RankingCoach"
+msgstr "rankingCoach"
 
 #: inc/tenants/config/udag.php
 msgid "SSL"
 msgstr "SSL"
-
-#: inc/tenants/config/udag.php
-msgid "Markenschutz"
-msgstr "Markenschutz"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Setup Email Account"
@@ -491,22 +351,9 @@ msgstr "Créer un compte e-mail"
 msgid "My Account"
 msgstr "Mon compte"
 
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "The required Security plugin is missing."
-msgstr "Le plugin de sécurité requis est manquant."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Install Security plugin"
-msgstr "Installer le plugin de sécurité"
-
-#: inc/dashboard/blocks/next-best-actions/index.php
-#: inc/dashboard/blocks/vulnerability/render.php
+#: inc/dashboard/index.php
 msgid "Installing..."
-msgstr "Installer..."
-
-#: inc/dashboard/blocks/vulnerability/render.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
-msgstr "L'analyse de vulnérabilité n'est pas possible. Veuillez contacter le service clientèle."
+msgstr "En cours d'installation..."
 
 #. Plugin Name of the plugin
 #: ionos-essentials.php
@@ -515,7 +362,7 @@ msgstr "Essentials"
 
 #: inc/dashboard/blocks/banner/index.php
 msgid "Rebuild Website"
-msgstr "Reconstruire le site web"
+msgstr "Reconstruire le site Web"
 
 #: inc/dashboard/blocks/banner/index.php
 msgid "It is possible to rebuild your AI-created website within 72 hours"
@@ -527,7 +374,7 @@ msgstr "Vente conforme à la législation avec German Market Light"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Install now"
-msgstr "Installer maintenant"
+msgstr "Installer"
 
 #: inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner."
@@ -541,7 +388,7 @@ msgstr "Vous pouvez personnaliser et gérer votre URL (domaine) facilement sur <
 
 #: inc/switch-page/view.php
 msgid "How do you want to create your new website?"
-msgstr "Comment voulez-vous créer votre nouveau site web ?"
+msgstr "Comment voulez-vous créer votre nouveau site Web ?"
 
 #: inc/switch-page/view.php
 msgid "Online in a few minutes"
@@ -553,7 +400,7 @@ msgstr "Avec l'IA"
 
 #: inc/switch-page/view.php
 msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
-msgstr "Création automatique d'un site web en fonction de vos préférences et de vos besoins. Incluant des textes et des images prêts à l'emploi."
+msgstr "Création automatique d'un site Web en fonction de vos préférences et de vos besoins. Incluant des textes et des images prêts à l'emploi."
 
 #: inc/switch-page/view.php
 msgid "100% WordPress"
@@ -561,47 +408,35 @@ msgstr "100% WordPress"
 
 #: inc/switch-page/view.php
 msgid "Do it yourself"
-msgstr "Faites-le vous-même"
+msgstr "Do it yourself"
 
 #: inc/switch-page/view.php
 msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
-msgstr "C'est vous qui décidez comment créer votre site web. Ne vous inquiétez pas, vous pouvez également commencer la création de l'IA à partir du tableau de bord de WordPress plus tard."
+msgstr "C'est vous qui décidez comment créer votre site Web. Ne vous inquiétez pas, vous pouvez également commencer la création de l'IA à partir du tableau de bord de WordPress plus tard."
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: inc/switch-page/view.php
 #, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
-msgstr "En utilisant les fonctions d'IA, vous acceptez les %1$sTerms of Use%2$s et %3$sPrivacy Policy%4$s de l'OpenAI."
+msgstr "En utilisant les fonctions d'IA, vous acceptez les %1$sConditions d'utilisation%2$s et la %3$sPolitique de confidentialitéP%4$s de OpenAI."
 
-#: inc/jetpack-flow/inc/class-manager.php
+#: inc/jetpack-flow/index.php
 msgid "Assistant"
 msgstr "Assistant"
 
-#: inc/jetpack-flow/inc/controllers/class-confirm.php
-msgid "Confirm Jetpack installation"
-msgstr "Confirmez l’installation de Jetpack"
-
-#: inc/jetpack-flow/inc/controllers/class-install.php
-msgid "Installing Jetpack"
-msgstr "Installation de Jetpack"
-
-#: inc/jetpack-flow/inc/views/confirm.php
-msgid "Jetpack Backup"
-msgstr "Jetpack Backup"
-
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "We are going to install Jetpack Backup now."
 msgstr "Nous allons installer Jetpack Backup maintenant."
 
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "Ok"
 msgstr "Ok"
 
-#: inc/jetpack-flow/inc/views/install.php
+#: inc/jetpack-flow/index.php
 msgid "Installing Jetpack Backup"
 msgstr "Installation de Jetpack Backup"
 
-#: inc/jetpack-flow/inc/views/install.php
+#: inc/jetpack-flow/index.php
 msgid "Please wait a moment while we are installing Jetpack Backup for you."
 msgstr "Veuillez patienter un moment pendant que nous installons Jetpack Backup pour vous."
 
@@ -609,9 +444,119 @@ msgstr "Veuillez patienter un moment pendant que nous installons Jetpack Backup 
 msgid "Onboarding"
 msgstr "Onboarding"
 
-#: inc/jetpack-flow/inc/views/confirm.php
+#: inc/jetpack-flow/index.php
 msgid "No thanks"
 msgstr "Non merci."
+
+#: inc/dashboard/blocks/banner/index.php
+#: inc/dashboard/tabs/tools.php
+msgid "Tools"
+msgstr "Outils"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Website security"
+msgstr "Sécurité du site Web"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Vulnerability alerting"
+msgstr "Alerte de vulnérabilité"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Change email address"
+msgstr "Modifier votre adresse e-mail"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Password monitoring"
+msgstr "Surveillance des mots de passe"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Monitor password leaks. If a password is suspected to be compromised, you will receive an email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated."
+msgstr "Surveiller les fuites de mots de passe. Si un mot de passe est soupçonné d'avoir été compromis, vous recevrez une notification par e-mail avec des instructions pour le modifier. Par mesure de précaution supplémentaire, le compte sera verrouillé jusqu'à ce que le mot de passe soit mis à jour."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Block XML-RPC access"
+msgstr "Bloquez l'accès à XML-RPC"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Block access to XML-RPC, for security purposes we recommend keeping this blocked if not in use."
+msgstr "Bloquez l'accès à XML-RPC. Pour des raisons de sécurité, nous vous recommandons de maintenir ce blocage si vous ne l'utilisez pas."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Prohibit email login"
+msgstr "Interdire la connexion par e-mail"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Disable login with email addresses. This improves security by reducing the potential attack surface."
+msgstr "Désactivez la connexion avec les adresses e-mail. Cela améliore la sécurité en réduisant la surface d'attaque potentielle."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Maintenance page"
+msgstr "Page de maintenance"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Active"
+msgstr "Actif"
+
+#: inc/dashboard/index.php
+msgid "activated."
+msgstr "activé"
+
+#: inc/dashboard/index.php
+msgid "deactivated."
+msgstr "désactivé"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Maintenance mode"
+msgstr "Mode maintenance"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Preview maintenance page"
+msgstr "Aperçu de la page de maintenance"
+
+#. Plugin URI of the plugin
+#: ionos-essentials.php
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
+msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials"
+
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php
+#, php-format
+msgid "Welcome to your new %s Hub"
+msgstr "Bienvenue dans votre nouveau Hub %s"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "You're now experiencing the latest evolution of our dashboard, designed to streamline your workflow and enhance your online management. This new hub replaces your previous dashboard, bringing you a fresher interface, improved tools, and exciting new features."
+msgstr "Vous découvrez maintenant la toute dernière évolution de notre tableau de bord, conçue pour simplifier votre flux de travail et améliorer votre gestion en ligne. Ce nouveau centre remplace votre ancien tableau de bord, vous offrant une interface plus moderne, des outils améliorés et de nouvelles fonctionnalités passionnantes."
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Get familiar with the new layout"
+msgstr "Familiarisez-vous avec la nouvelle mise en page"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Explore redesigned sections and discover new functionalities"
+msgstr "Explorez le design amélioré des sections et découvrez de nouvelles fonctionnalités"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Stay tuned for upcoming feature releases and enhancements"
+msgstr "Restez à l'affut des nouvelles fonctionnalités et des améliorations à venir."
+
+#. translators: %s: Brand name
+#: inc/dashboard/blocks/welcome/index.php
+#, php-format
+msgid "Welcome to your %s Hub"
+msgstr "Bienvenue sur votre Hub %s"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "This overview is your gateway to unlocking the full potential of your WordPress website."
+msgstr "Cette vue d'ensemble est votre passerelle pour débloquer tout le potentiel de votre site Web WordPress."
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Recommendations for next steps"
+msgstr "Recommandations pour les prochaines étapes"
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Helpful links and shortcuts"
+msgstr "Liens et raccourcis utiles"
 
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your Feedback is important to us"
@@ -624,3 +569,316 @@ msgstr "Nous cherchons de nouveaux moyens pour améliorer votre expérience d'h�
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Take the survey"
 msgstr "Répondre à l'enquête"
+
+#. translators: %s is placeholder for the tenant name
+#: inc/dashboard/blocks/whats-new/index.php
+#, php-format
+msgid "Your %s Hub Just Got a Powerful Upgrade!"
+msgstr "Votre Hub %s vient de recevoir une puissante mise à niveau !"
+
+#: inc/dashboard/blocks/whats-new/index.php
+msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
+msgstr "Nous venons de déployer un tout nouvel onglet \"Outils et sécurité\". Toutes les fonctionnalités et les interfaces utilisateur de votre ancienne extension de sécurité se trouvent maintenant ici, rendant le tout plus centralisé et plus facile à gérer. De plus, vous trouverez une nouvelle fonction de page de maintenance que vous pourrez activer dès que vous en aurez besoin."
+
+#: inc/wpscan/views/summary.php
+msgid "Website is safe and secure"
+msgstr "Le site Web est sûr et sécurisé."
+
+#: inc/dashboard/index.php
+msgid "updating..."
+msgstr "En cours d'actualisation..."
+
+#: inc/dashboard/index.php
+msgid "deleting..."
+msgstr "En cours de suppression..."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Important Security Notification: Vulnerability detected in your WordPress website"
+msgstr "Notification de sécurité importante : Une vulnérabilité a été détectée dans votre site Web WordPress."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:"
+msgstr "Cher utilisateur,<br />Nous souhaitons vous informer que notre récente analyse de vulnérabilité a détecté un ou plusieurs problèmes qui requièrent votre attention :"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
+msgstr "Pour garantir la sécurité et la sûreté de votre site Web, nous vous recommandons d'examiner les résultats de l'analyse et de prendre les mesures appropriées. Pour plus d'informations relatives aux vulnérabilités spécifiques identifiées, veuillez consulter le lien suivant :"
+
+#. Translators: %s is the tenant name.
+#: inc/wpscan/controller/class-wpscan.php
+#, php-format
+msgid "Your %s plugin team"
+msgstr "Votre équipe extension %s"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "More information"
+msgstr "En savoir plus"
+
+#: inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "An error occurred while fetching the vulnerability data."
+msgstr "Une erreur s'est produite lors de la récupération des données relatives à la vulnérabilité."
+
+#: inc/dashboard/blocks/welcome/index.php
+msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
+msgstr "Section d'aide complète, comprenant : assistance par chat IA, visites guidées et base de connaissances exhaustive."
+
+#: inc/dashboard/index.php
+msgid "Tools and security"
+msgstr "Outils et sécurité"
+
+#: inc/dashboard/index.php
+msgid "Loading content ..."
+msgstr "Chargement du contenu..."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Temporarily block public access to your site with a maintenance page."
+msgstr "Bloquez temporairement l'accès public à votre site à l'aide d'une page de maintenance."
+
+#: inc/dashboard/tabs/tools.php
+msgid "Vulnerabilities detected are being emailed to"
+msgstr "Les vulnérabilités détectées sont envoyées par e-mail à"
+
+#: inc/dashboard/view.php
+msgid "Vulnerability scan information"
+msgstr "Informations relatives à l'analyse des vulnérabilités"
+
+#: inc/dashboard/view.php
+msgid "We use the WPScan database to provide security risk scores for plugins and themes."
+msgstr "Nous utilisons la base de données WPScan pour fournir des scores de risque de sécurité pour les extensions et les thèmes."
+
+#: inc/dashboard/view.php
+msgid "The scores are on a scale of 1 to 10, where a higher value indicates greater security risk."
+msgstr "Les notes sont attribuées sur une échelle de 1 à 10, où une valeur élevée indique un risque de sécurité plus important."
+
+#: inc/dashboard/view.php
+msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
+msgstr "L'installation d'extensions et de thèmes est interdite si leur note dépasse 7,0."
+
+#: inc/wpscan/controller/class-wpscan.php
+#: inc/wpscan/views/summary.php
+msgid "Vulnerability scan"
+msgstr "Analyse des vulnérabilités"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "issue found"
+msgstr "Problème détecté"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Checking for vulnerabilities..."
+msgstr "Recherche de vulnérabilités..."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Warnings found. Installation is not recommended."
+msgstr "Avertissements détectés. L'installation n'est pas recommandée."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Critical vulnerabilities found! Installation is not possible."
+msgstr "Vulnérabilités critiques détectées ! L'installation n'est pas possible."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "No vulnerabilities found. You can safely install this theme."
+msgstr "Aucune vulnérabilité détectée. Vous pouvez installer ce thème en toute sécurité."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "No vulnerabilities found. You can safely install this plugin."
+msgstr "Aucune vulnérabilité détectée. Vous pouvez installer cette extension en toute sécurité."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "The vulnerability scan has found issues"
+msgstr "L'analyse de vulnérabilité a détecté des problèmes."
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "Activation is not recommended"
+msgstr "L'activation n'est pas recommandée"
+
+#: inc/wpscan/controller/class-wpscan.php
+msgid "The vulnerability scan has found issues for"
+msgstr "L'analyse de vulnérabilité a détecté des problèmes pour"
+
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
+msgid "No scan has been performed yet."
+msgstr "Aucune analyse n'a encore été effectuée."
+
+#: inc/wpscan/index.php
+msgid "Active theme cannot be deleted"
+msgstr "Le thème actif ne peut pas être supprimé"
+
+#: inc/wpscan/index.php
+msgid "was deleted"
+msgstr "a été supprimé"
+
+#: inc/wpscan/index.php
+msgid "was updated"
+msgstr "a été mis à jour"
+
+#. translators: %d is the number of critical issues
+#: inc/wpscan/views/issues.php
+#, php-format
+msgid "%d critical issue"
+msgid_plural "%d critical issues"
+msgstr[0] "%d problème critique"
+msgstr[1] "%d problèmes critiques"
+
+#. translators: %d is the number of warnings
+#: inc/wpscan/views/issues.php
+#, php-format
+msgid "%d warning"
+msgid_plural "%d warnings"
+msgstr[0] "%d avertissement"
+msgstr[1] "%d avertissements"
+
+#: inc/wpscan/views/issues.php
+msgid "Critical website security issues, identified by a CVSS score of 7.0 or higher, require immediate attention."
+msgstr "Les problèmes critiques de sécurité des sites Web, identifiés par un score CVSS de 7,0 ou plus, nécessitent une attention immédiate."
+
+#: inc/wpscan/views/issues.php
+msgid "Website security warnings, identified by a CVSS score up to 6.9, require prompt attention."
+msgstr "Les avertissements de sécurité des sites Web, identifiés par un score CVSS allant jusqu'à 6,9, nécessitent une attention rapide."
+
+#: inc/wpscan/views/issues.php
+msgid "View update details"
+msgstr "Afficher les détails de la mise à jour"
+
+#: inc/wpscan/views/issues.php
+msgid "This theme is active. Please activate another theme."
+msgstr "Ce thème est actif. Veuillez activer un autre theme."
+
+#: inc/wpscan/views/summary.php
+msgid "critical issues found"
+msgstr "Problèmes critiques trouvés"
+
+#: inc/wpscan/views/summary.php
+msgid "warnings found"
+msgstr "Avertissements trouvés"
+
+#: inc/wpscan/views/summary.php
+msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
+msgstr "Nous effectuons automatiquement des analyses quotidiennes ainsi que chaque fois qu'une nouvelle extension ou un nouveau thème est installé, à l'aide de la base de données de vulnérabilités WPScan."
+
+#: inc/wpscan/views/summary.php
+msgid "Learn more"
+msgstr "En apprendre plus"
+
+#: inc/dashboard/tabs/tools.php
+msgid "Advanced"
+msgstr "Avancé"
+
+#. translators: %s is placeholder for the tenant name
+#: inc/dashboard/tabs/tools.php
+#, php-format
+msgid "%s Hub as WordPress Admin start page"
+msgstr "Hub %s comme page d'accueil de l'administrateur WordPress"
+
+#. translators: %s is placeholder for the tenant name
+#: inc/dashboard/tabs/tools.php
+#, php-format
+msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
+msgstr "Activez le Hub %s comme page d'accueil dans votre panneau d'administration WordPress pour une expérience plus personnalisée et plus efficace."
+
+#: inc/security/views/password-reset-necessary.php
+msgid "Password Reset Necessary"
+msgstr "Réinitialisation du mot de passe nécessaire"
+
+#: inc/security/views/password-reset-necessary.php
+msgid "Security alert"
+msgstr "Alerte de sécurité"
+
+#: inc/security/views/password-reset-necessary.php
+msgid "We have detected that the password for this WordPress Admin user matches one found in an online database of known compromised passwords. As a precaution, we have disabled access to this account to keep it secure."
+msgstr "Nous avons détecté que le mot de passe de cet utilisateur WordPress Admin correspond à celui trouvé dans une base de données en ligne de mots de passe compromis connus. Par mesure de précaution et pour en garantir la sécurité, nous avons désactivé l'accès à ce compte."
+
+#: inc/security/views/password-reset-necessary.php
+msgid "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
+msgstr "Pour réactiver l'accès à ce compte, le mot de passe doit être mis à jour. Nous vous avons envoyé un e-mail contenant les instructions de réinitialisation à"
+
+#: inc/wpscan/controller/class-wpscanmiddleware.php
+#, generated by deepl
+msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgstr "L'analyse de vulnérabilité n'est pas possible. Veuillez contacter le service clientèle."
+
+#. translators: %s is placeholder for the time since the last scan
+#: inc/dashboard/blocks/vulnerability/index.php
+#: inc/wpscan/views/summary.php
+#, php-format
+msgid "Last scan: %s ago"
+msgstr "Dernière analyse: il y a %s"
+
+#: inc/tenants/config/udag.php
+#, generated by deepl
+msgid "Manage Domains"
+msgstr "Gérer les domaines"
+
+#: inc/tenants/config/udag.php
+#, generated by deepl
+msgid "Trademark protection"
+msgstr "Protection de la marque"
+
+#: inc/wpscan/controller/class-wpscan.php
+#, generated by deepl
+msgid "Turn off notification here"
+msgstr "Désactiver la notification ici"
+
+#: inc/security/index.php
+#, generated by deepl,php-format
+msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
+msgstr "L'ancien plugin Security fait désormais partie du nouveau plugin essentials. Vous trouverez toutes les fonctionnalités sous <a href=\"%s\">Tools & Security</a> de notre nouveau Hub."
+
+#: inc/dashboard/index.php
+#, generated by deepl
+msgid "failed to update user meta"
+msgstr "échec de la mise à jour des méta utilisateurs"
+
+#: inc/switch-page/view.php
+#, generated by deepl
+msgid "Logo"
+msgstr "Logo"
+
+#: inc/switch-page/view.php
+#, generated by deepl
+msgid "Artificial Intelligence Illustration"
+msgstr "Illustration de l'intelligence artificielle"
+
+#: inc/switch-page/view.php
+#, generated by deepl
+msgid "User Interface Illustration"
+msgstr "Illustration de l'interface utilisateur"
+
+#. translators: first placeholder for the url, second for the plugin name, last one for the response code
+#: inc/update/index.php
+#, generated by deepl,php-format
+msgid "Failed to download <a href=\\\"%1$s\\\">%2$s-info.json</a>(response status=%3$s)"
+msgstr "Échec du téléchargement de <a href=\\\"%1$s\\\">%2$s-info.json</a>(response status=%3$s)"
+
+#: inc/security/credentials-checking.php
+msgid "The entered password has already been leaked. Please choose another one."
+msgstr "Le mot de passe saisi a déjà été divulgué. Veuillez en choisir un autre."
+
+#: inc/security/credentials-checking.php
+msgid "It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password."
+msgstr "Il semble que votre mot de passe ait été compromis. Pour protéger la sécurité de votre compte, il est essentiel que vous changiez immédiatement votre mot de passe. Ainsi, vos informations personnelles et sensibles resteront en sécurité. Un e-mail a été envoyé à votre adresse e-mail. Veuillez suivre les instructions pour réinitialiser votre mot de passe."
+
+#: inc/security/credentials-checking.php
+msgid "We detected that your password has been leaked and suggest that you change it as soon as possible."
+msgstr "Nous avons détecté une divulgation de votre mot de passe et vous suggérons de le modifier dès que possible."
+
+#: inc/security/credentials-checking.php
+msgid "Click here to edit your profile settings."
+msgstr "Cliquez ici pour modifier les paramètres de votre profil."
+
+#: inc/security/pel.php
+msgid "<strong>Error</strong>: The login with an email address is deactivated for this website. Please use your username instead."
+msgstr "<strong>Erreur</strong> : Le login avec une adresse e-mail est désactivé pour ce site Web. Veuillez utiliser votre nom d'utilisateur à la place."
+
+#: inc/security/ssl.php
+msgid "Your WordPress website is currently <strong>without SSL</strong>, which means that the connection between your website and users' browsers is not encrypted. It is highly <strong>recommended to activate SSL</strong> to protect sensitive information and to provide a secure browsing."
+msgstr "Votre site Web WordPress est actuellement <strong>sans SSL</strong>, ce qui signifie que la connexion entre votre site web et les navigateurs des utilisateurs n'est pas chiffrée. Il est fortement <strong>recommandé d'activer SSL</strong> afin de protéger les informations sensibles et de fournir une navigation sécurisée."
+
+#: inc/security/ssl.php
+msgid "https://ionos.com/help"
+msgstr "https://www.ionos.fr/assistance"
+
+#: inc/security/ssl.php
+msgid "Learn more about SSL and how to activate it."
+msgstr "En savoir plus sur SSL et comment l'activer."

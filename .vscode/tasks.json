@@ -18,7 +18,7 @@
           "pattern": [
             /*
     ------------------------------------------------------------------------
-    packages/wp-plugin/essentials/src/dashboard/blocks/vulnerability/render.php:52
+    packages/wp-plugin/ionos-essentials/src/dashboard/blocks/vulnerability/render.php:52
     ------------------------------------------------------------------------
     Use Yoda Condition checks, you must.
 
@@ -66,7 +66,7 @@
           "pattern": [
             /*
     ------------------------------------------------------------------------
-    packages/wp-plugin/essentials/src/dashboard/blocks/vulnerability/render.php:52
+    packages/wp-plugin/ionos-essentials/src/dashboard/blocks/vulnerability/render.php:52
     ------------------------------------------------------------------------
     Use Yoda Condition checks, you must.
 
@@ -198,7 +198,7 @@
           "fileLocation": ["relative", "${workspaceFolder}"],
           "pattern": [
             /*
->>> Working on: ./packages/wp-plugin/essentials/languages/ionos-essentials-es_ES.po
+>>> Working on: ./packages/wp-plugin/ionos-essentials/languages/ionos-essentials-es_ES.po
 118:msgid "Add new page"
 211:msgid "Some other string"
                 */
@@ -234,7 +234,7 @@
           "fileLocation": ["relative", "${workspaceFolder}"],
           "pattern": [
             /*
->>> Working on: ./packages/wp-plugin/essentials/languages/ionos-essentials-es_ES.po
+>>> Working on: ./packages/wp-plugin/ionos-essentials/languages/ionos-essentials-es_ES.po
 118:msgid "Add new page"
 211:msgid "Some other string"
                 */

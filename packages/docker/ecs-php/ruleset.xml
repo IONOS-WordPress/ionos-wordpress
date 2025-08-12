@@ -56,6 +56,7 @@
     <exclude name="WordPress.Arrays.ArrayKeySpacingRestrictions"/>
     <exclude name="PSR2.ControlStructures.SwitchDeclaration"/>
     <exclude name="PSR12.Files.FileHeader"/>
+    <exclude name="WordPress.PHP.YodaConditions"/>
   </rule>
 
   <!-- <rule ref="WordPress-Core">

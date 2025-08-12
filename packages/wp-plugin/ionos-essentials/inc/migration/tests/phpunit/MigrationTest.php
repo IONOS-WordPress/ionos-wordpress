@@ -25,7 +25,7 @@ class MigrationTest extends \WP_UnitTestCase {
     \activate_plugin('ionos-essentials/ionos-essentials.php');
   }
 
-  function test_initial() : void {
+  public function test_initial() : void {
     $this->assertFalse(get_option(WP_OPTION_LAST_INSTALL_DATA), 'initial install data should not exist');
     _install();
     $install_data = \get_option(WP_OPTION_LAST_INSTALL_DATA);

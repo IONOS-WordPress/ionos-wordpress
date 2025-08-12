@@ -1,6 +1,8 @@
 <?php
 
-namespace ionos\essentials\dashboard\blocks\deep_links;
+namespace ionos\essentials\tenants\config;
+
+defined('ABSPATH') || exit();
 
 $links = [
   [
@@ -17,7 +19,7 @@ $links = [
   ],
 ];
 
-// Trainling slash
+// Trailing slash
 // The first market is the default market
 $market_domains = [
   'en' => 'https://admin.fasthosts.co.uk/',

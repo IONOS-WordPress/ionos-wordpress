@@ -6,6 +6,10 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
+defined('ABSPATH') || exit();
+
+use ionos\essentials\Tenant;
+
 class NBA
 {
   public const OPTION_NAME = 'ionos_nba_status';
@@ -15,11 +19,11 @@ class NBA
   private static array $actions = [];
 
   private function __construct(
-    readonly string $id,
-    readonly string $title,
-    readonly string $description,
-    readonly string $link,
-    readonly string $anchor,
+    public readonly string $id,
+    public readonly string $title,
+    public readonly string $description,
+    public readonly string $link,
+    public readonly string $anchor,
     private readonly bool $completed
   ) {
     self::$actions[$this->id] = $this;
@@ -30,7 +34,7 @@ class NBA
     // actions can be active (and thus shown to the user) for multiple reasons: they are not completed, they are not dismissed, they are not active yet, ...
     if ('active' === $property) {
       $status = $this->_get_status();
-      if (isset($status['completed']) && $status['completed'] || isset($status['dismissed']) && $status['dismissed']) {
+      if (($status['completed'] ?? false) || ($status['dismissed'] ?? false)) {
         return false;
       }
       return ! $this->completed;
@@ -83,7 +87,7 @@ class NBA
   }
 }
 
-$data = \ionos\essentials\dashboard\blocks\deep_links\get_deep_links_data();
+$data = \ionos\essentials\dashboard\blocks\my_account\get_account_data();
 
 if (null !== $data) {
 
@@ -177,7 +181,7 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
   );
 }
 
-$tenant        = strtolower(\get_option('ionos_group_brand', 'ionos'));
+$tenant        = Tenant::get_slug();
 $market        = strtolower(\get_option($tenant . '_market', 'de'));
 
 if ('de' === $market && is_plugin_active('woocommerce/woocommerce.php') && ! is_plugin_active(
@@ -197,7 +201,7 @@ if ('de' === $market && is_plugin_active('woocommerce/woocommerce.php') && ! is_
 
 if ('extendable' === get_stylesheet()) {
   $custom_logo_id           = get_theme_mod('custom_logo');
-  $logo                     = wp_get_attachment_image_src($custom_logo_id, 'full');
+  $logo                     = \wp_get_attachment_image_src($custom_logo_id, 'full');
   $logo_src                 = $logo ? $logo[0] : '';
   $is_default_or_empty_logo = false !== strpos($logo_src, 'extendify-demo-logo.png') || '' === $logo_src;
 
@@ -209,7 +213,7 @@ if ('extendable' === get_stylesheet()) {
       'ionos-essentials'
     ),
     link: \admin_url(
-      'site-editor.php?postId=extendable%2F%2Fheader&postType=wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'
+      'site-editor.php?postId=extendable%2F%2Fheader&postType=\wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'
     ),
     anchor: \__('Add Logo', 'ionos-essentials'),
     completed: ! $is_default_or_empty_logo
@@ -234,7 +238,7 @@ if ('extendable' === get_stylesheet()) {
       'ionos-essentials'
     ),
     link: \admin_url(
-      'site-editor.php?postId=extendable%2F%2Ffooter&postType=wp_template_part&focusMode=true&canvas=edit&complete_nba=social-media'
+      'site-editor.php?postId=extendable%2F%2Ffooter&postType=\wp_template_part&focusMode=true&canvas=edit&complete_nba=social-media'
     ),
     anchor: \__('Connect Social Media', 'ionos-essentials'),
     completed: false
@@ -252,3 +256,14 @@ NBA::register(
   anchor: \__('Add Favicon', 'ionos-essentials'),
   completed: 0 < intval(\get_option('site_icon', 0))
 );
+
+// for($i = 1; $i <= 12; $i++) {
+//   NBA::register(
+//     id: 'dosth' . $i,
+//     title: 'Do something ' . $i,
+//     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+//     link: '#',
+//     anchor: 'Hier klicken',
+//     completed: false
+//   );
+// }

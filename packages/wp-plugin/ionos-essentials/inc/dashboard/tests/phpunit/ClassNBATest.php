@@ -22,10 +22,12 @@ class ClassNBATest extends \WP_UnitTestCase {
 
     parent::setUp();
 
+    \activate_plugin('ionos-essentials/ionos-essentials.php');
+    require_once PLUGIN_DIR . '/inc/dashboard/blocks/my-account/index.php';
     require_once PLUGIN_DIR . '/inc/dashboard/blocks/next-best-actions/class-nba.php';
   }
 
-  function test_nba_action() : void {
+  public function test_nba_action() : void {
     $this->assertNotNull(NBA::get_actions());
     $nba_count = count(NBA::get_actions());
 
@@ -41,7 +43,7 @@ class ClassNBATest extends \WP_UnitTestCase {
     );
 
     $new_nba_count = count(NBA::get_actions());
-    $this->assertEquals($nba_count + 1, $new_nba_count, 'registered nbas should contain our newly radded nba');
+    $this->assertEquals($nba_count + 1, $new_nba_count, 'registered nbas should contain our newly added nba');
 
     $nba = NBA::get_nba($ID);
     $this->assertTrue($nba->active);
@@ -50,7 +52,7 @@ class ClassNBATest extends \WP_UnitTestCase {
     $this->assertFalse($nba->active);
   }
 
-  function test_nba_status() : void {
+  public function test_nba_status() : void {
     $ID = 'my-test-action-2';
 
     NBA::register(
@@ -68,7 +70,7 @@ class ClassNBATest extends \WP_UnitTestCase {
     $this->assertFalse($nba->active);
   }
 
-  function test_nba_not_active_by_registration() : void {
+  public function test_nba_not_active_by_registration() : void {
     $ID = 'my-test-action-3';
 
     NBA::register(

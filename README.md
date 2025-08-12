@@ -32,6 +32,8 @@ It enables developers to maintain all of our IONOS WordPress hosting related plu
 
 # Development
 
+The default password for wp-env wordpress containers is defined in environment variable `WP_PASSWORD`. The environment variable is defined in `.env`.
+
 The repository contains all the code, configuration and tools needed to maintain our IONOS WordPress Hosting specific artifacts.
 
 The repository provides
@@ -55,7 +57,6 @@ if there is a Jira ticket that this branch implements, append it to the end of y
 ## Directory layout
 
 - The top level directory contains configuration files
-
   - `pnpm-workspace.yaml` is used to configure where [pnpm](https://pnpm.io/) will find sub packages like WordPress plugins
 
   - `.npmrc` ist used to configure [pnpm](https://pnpm.io/) behaviour like the automatically provided NodeJS version and the package cache location.
@@ -69,7 +70,6 @@ if there is a Jira ticket that this branch implements, append it to the end of y
   - see [Customization](#customization) for details to `.env`, `.secrets` and `.env.local` files.
 
 - Directory `packages/` contains all the sub projects sorted by category.
-
   - `packages/wp-plugin/` contains WordPress plugin sub projects
 
   - `packages/npm/` contains npm package sub projects
@@ -91,7 +91,6 @@ if there is a Jira ticket that this branch implements, append it to the end of y
   Actually vscode is _not really_ required but it makes working with the repository much easier.
 
   _You can use [DevContainer](https://containers.dev/) even on other IDEs like PHPStorm but this repository takes only care for `vscode` for now._
-
   - Install the [`ms-vscode-remote.remote-containers` extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) to use the [DevContainer](https://containers.dev/) feature.
 
 - a modern `docker` version (including `docker compose` sub command)
@@ -106,7 +105,6 @@ All other tools are located in a [DevContainer](https://containers.dev/) providi
 Software detailed here will be automatically provided in the project specfic [DevContainer](https://containers.dev/).
 
 - [pnpm](https://pnpm.io/) is used as package manager in favor of npm because of it's excellent monorepo support plus
-
   - it's much faster than npm and yarn
 
   - it caches once downloaded packages and reuses them across projects
@@ -124,7 +122,6 @@ Software detailed here will be automatically provided in the project specfic [De
 ## Setup
 
 - checkout the repository
-
   - switch to branch `develop` if you want to work on the latest development version : `git switch develop`
 
 - open the repository in `vscode`
@@ -151,7 +148,6 @@ The command scripts in `./scripts/` contain even some advanced example usages.
 - `pnpm start` : starts the [@wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/) environment
 
   Command will generate
-
   - the [@wordpress/env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/) configuration file `.wp-env.json` registering all WordPress plugins and themes declared in the repository
 
   - `vscode` related `settings.json` to enable PHP autocompletion and hyperlinking support
@@ -196,7 +192,6 @@ The command scripts in `./scripts/` contain even some advanced example usages.
 - `pnpm distclean` : will clean up **ANY** generated Monorepo resources (like `./node_modules` and so on).
 
   This command will revert the project repository to a clean state like you've just checked out the repository. The only thing it keeps are
-
   - files that are under version control
   - `.code-workspace` file
   - `.wp-env.override.json` file
