@@ -519,9 +519,41 @@ msgstr ""
 msgid "Please wait a moment while we are installing Jetpack Backup for you."
 msgstr ""
 
+#: inc/security/credentials-checking.php
+msgid "The entered password has already been leaked. Please choose another one."
+msgstr ""
+
+#: inc/security/credentials-checking.php
+msgid "It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password."
+msgstr ""
+
+#: inc/security/credentials-checking.php
+msgid "We detected that your password has been leaked and suggest that you change it as soon as possible."
+msgstr ""
+
+#: inc/security/credentials-checking.php
+msgid "Click here to edit your profile settings."
+msgstr ""
+
 #: inc/security/index.php
 #, php-format
 msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
+msgstr ""
+
+#: inc/security/pel.php
+msgid "<strong>Error</strong>: The login with an email address is deactivated for this website. Please use your username instead."
+msgstr ""
+
+#: inc/security/ssl.php
+msgid "Your WordPress website is currently <strong>without SSL</strong>, which means that the connection between your website and users' browsers is not encrypted. It is highly <strong>recommended to activate SSL</strong> to protect sensitive information and to provide a secure browsing."
+msgstr ""
+
+#: inc/security/ssl.php
+msgid "https://ionos.com/help"
+msgstr ""
+
+#: inc/security/ssl.php
+msgid "Learn more about SSL and how to activate it."
 msgstr ""
 
 #: inc/security/views/password-reset-necessary.php

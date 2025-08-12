@@ -10,11 +10,11 @@ if (! \get_transient('ionos-ssl-check-notice-dismissed')) {
       return;
     }
 
-    $notice = __('Your WordPress website is currently <strong>without SSL</strong>, which means that the connection between your website and users\' browsers is not encrypted. It is highly <strong>recommended to activate SSL</strong> to protect sensitive information and to provide a secure browsing.', 'ionos-security');
+    $notice = __('Your WordPress website is currently <strong>without SSL</strong>, which means that the connection between your website and users\' browsers is not encrypted. It is highly <strong>recommended to activate SSL</strong> to protect sensitive information and to provide a secure browsing.', 'ionos-essentials');
     $button = sprintf(
       '<a href="%s" class="button" target="_blank">%s</a>',
-      \esc_url(__('https://ionos.com/help', 'ionos-security')),
-      \esc_html__('Learn more about SSL and how to activate it.', 'ionos-security')
+      \esc_url(__('https://ionos.com/help', 'ionos-essentials')),
+      \esc_html__('Learn more about SSL and how to activate it.', 'ionos-essentials')
     );
     printf(
       '<div class="ionos-ssl-check notice notice-warning is-dismissible"><p>%s<br>%s</p></div>',

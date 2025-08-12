@@ -24,7 +24,7 @@ defined('ABSPATH') || exit();
       'user_profile_update_errors',
       fn (\WP_Error $errors) => $errors->add(
         'password_leaked',
-        __('The entered password has already been leaked. Please choose another one.', 'ionos-security')
+        __('The entered password has already been leaked. Please choose another one.', 'ionos-essentials')
       )
     );
   },
@@ -55,7 +55,7 @@ if (is_login()) {
       if (true === is_leaked($pass1)) {
         $errors->add(
           'password_leaked',
-          __('The entered password has already been leaked. Please choose another one.', 'ionos-security')
+          __('The entered password has already been leaked. Please choose another one.', 'ionos-essentials')
         );
       } else {
         \update_user_meta($user->ID, LEAKED_CREDENTIALS_FLAG_NAME, false);
@@ -107,7 +107,7 @@ if (is_login()) {
       );
       return new \WP_Error(
         'ionos_password_leaked',
-        __('It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password.', 'ionos-security')
+        __('It looks like your password has been compromised. To protect the security of your account, it‘s crucial that you change your password immediately. This will ensure that your personal and sensitive information remains safe and secure. An email was sent to your email address. Please follow the instruction to reset your password.', 'ionos-essentials')
       );
     },
     priority : 100,
@@ -118,11 +118,11 @@ if (is_login()) {
 \add_action('admin_notices', function (): void {
   if (has_leaked_flag(get_current_user_id())) {
     $class   = 'notice notice-error';
-    $message = __('We detected that your password has been leaked and suggest that you change it as soon as possible.', 'ionos-security');
+    $message = __('We detected that your password has been leaked and suggest that you change it as soon as possible.', 'ionos-essentials');
     $link    = sprintf(
       '<a href="%s">%s</a>',
       \esc_url(\get_edit_profile_url()),
-      \esc_html__('Click here to edit your profile settings.', 'ionos-security')
+      \esc_html__('Click here to edit your profile settings.', 'ionos-essentials')
     );
     printf('<div class="%s"><p>%s %s</p></div>', \esc_attr($class), \esc_html($message), \esc_url($link));
   }

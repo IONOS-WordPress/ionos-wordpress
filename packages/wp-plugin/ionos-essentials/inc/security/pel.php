@@ -12,7 +12,7 @@ defined('ABSPATH') || exit();
       if (str_contains($username, '@')) {
         return new \WP_Error(
           'email_login_inactive',
-          __('<strong>Error</strong>: The login with an email address is deactivated for this website. Please use your username instead.', 'ionos-security')
+          __('<strong>Error</strong>: The login with an email address is deactivated for this website. Please use your username instead.', 'ionos-essentials')
         );
       }
 
