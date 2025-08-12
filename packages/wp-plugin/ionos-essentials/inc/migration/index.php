@@ -82,7 +82,7 @@ function _install()
         'ionos-navigation/ionos-navigation.php',
       ];
       \deactivate_plugins($plugins_to_remove);
-      \delete_plugins($plugins_to_remove);
+      \add_action('shutdown', fn () => \delete_plugins($plugins_to_remove));
 
       // re add ionos loop consent data
       \add_option('ionos_loop_consent', $ionos_loop_consent_given);
@@ -93,14 +93,14 @@ function _install()
     case version_compare($last_installed_version, '1.0.9', '<'):
       // deactivate and uninstall the ionos-assistant plugin
       \deactivate_plugins('ionos-assistant/ionos-assistant.php');
-      \delete_plugins(['ionos-assistant/ionos-assistant.php']);
+      \add_action('shutdown', fn () => \delete_plugins(['ionos-assistant/ionos-assistant.php']));
       update_plugin('ionos-marketplace/ionos-marketplace.php', false);
       \update_option('ionos_migration_step', 2);
       // no break
     case version_compare($last_installed_version, '1.1.0', '<'):
       if (array_key_exists('ionos-security/ionos-security.php', \get_plugins())) {
         \deactivate_plugins('ionos-security/ionos-security.php');
-        \delete_plugins(['ionos-security/ionos-security.php']);
+        \add_action('shutdown', fn () => \delete_plugins(['ionos-security/ionos-security.php']));
         \set_transient('ionos_security_migrated_notice_show', true, 3 * MONTH_IN_SECONDS);
       }
 
