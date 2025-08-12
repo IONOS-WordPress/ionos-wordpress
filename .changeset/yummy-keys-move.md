@@ -2,4 +2,4 @@
 '@ionos-wordpress/essentials': minor
 ---
 
-Static dashboard
+Tools & Security Tab
