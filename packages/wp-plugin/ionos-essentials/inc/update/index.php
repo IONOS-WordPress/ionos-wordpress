@@ -93,7 +93,7 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
       $result->sections['changelog'] = \esc_html(
         sprintf(
           // translators: first placeholder for the url, second for the plugin name, last one for the response code
-          \__('Failed to download <a href=\"%s\">%s-info.json</a>(response status=%s)', 'ionos-essentials'),
+          \__('Failed to download <a href=\"%1$s\">%2$s-info.json</a>(response status=%3$s)', 'ionos-essentials'),
           $plugin_data['UpdateURI'],
           $plugin_data['Name'],
           print_r(\wp_remote_retrieve_response_code($res), true),
