@@ -37,6 +37,12 @@ main{
   }
 }
 
+@media (max-width: 666px) {
+  main{
+    margin: 0 20px;
+  }
+}
+
 .color--success{
   color: var(--success-text-color, #096b35);
 }
