@@ -96,10 +96,9 @@ main{
 
 .ionos_next_best_actions{
   background: white;
-  margin-bottom: 2em;
   border-radius: 16px;
   padding-top: 2em;
-  margin-left: 15px;
+  margin: 0 15px 2em;
 
   .card{
     background: rgb(244, 247, 250);
