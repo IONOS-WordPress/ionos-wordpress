@@ -61,7 +61,7 @@ main{
   }
 }
 
-#essentials-welcome_block{
+.ionos-essentials-popup{
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -76,7 +76,7 @@ main{
     height: 100%;
   }
 
-  .welcome-card{
+  .popup-card{
     flex-wrap: wrap;
     width: 90%;
     max-width: 800px;
@@ -86,7 +86,7 @@ main{
   }
 
   @media (max-width: 666px) {
-    .welcome-card{
+    .popup-card{
       height: 600px;;
       flex-wrap: nowrap;
     }

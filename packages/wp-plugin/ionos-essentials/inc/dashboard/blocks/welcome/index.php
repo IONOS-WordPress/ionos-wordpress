@@ -18,9 +18,9 @@ function render_callback(): void
   $welcome_banner_url  = \plugins_url('data/welcome-banner.png', dirname(__DIR__));
 
   ?>
-<dialog id="essentials-welcome_block" open>
+<dialog id="essentials-welcome_block" class="ionos-essentials-popup" open>
   <div class="dialog__content">
-    <div class="horizontal-card welcome-card">
+    <div class="horizontal-card popup-card">
         <header class="horizontal-card__header" style="justify-content: center;">
             <img src="<?php echo \esc_url($welcome_banner_url); ?>" alt="Welcome Banner">
         </header>
