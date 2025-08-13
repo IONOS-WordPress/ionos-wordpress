@@ -77,7 +77,7 @@ function render_callback(): void
              </section>
         </div>
         <footer class="horizontal-card__footer horizontal-card__content--vertical-align-center" style="width: 100%;display: flex; justify-content: center;">
-            <button class="button button--primary">
+            <button class="button button--primary" id="ionos-welcome-close">
                 <?php \esc_html_e('Close', 'ionos-essentials'); ?>
             </button>
         </footer>

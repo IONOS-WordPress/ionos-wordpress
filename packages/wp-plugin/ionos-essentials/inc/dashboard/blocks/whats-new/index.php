@@ -57,7 +57,7 @@ function render_callback(): void
               'We\'re always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.',
               'ionos-essentials'
             ); ?></p>
-            <a href="<?php echo \esc_html(get_survey_url()); ?>" target="_blank" class="link link--action">
+            <a href="<?php echo \esc_attr(get_survey_url()); ?>" target="_blank" class="link link--action">
               <?php \esc_html_e('Take the survey', 'ionos-essentials'); ?>
             </a>
           </li>

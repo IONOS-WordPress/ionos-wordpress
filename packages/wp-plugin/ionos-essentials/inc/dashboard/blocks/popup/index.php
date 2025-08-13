@@ -18,7 +18,7 @@ function render_callback(): void
   }
 
   ?>
-<dialog class="ionos-essentials-popup" open>
+<dialog id="ionos-essentials-popup" class="ionos-essentials-popup" open>
   <div class="dialog__content">
     <div class="horizontal-card popup-card">
 
@@ -36,12 +36,14 @@ function render_callback(): void
              </section>
         </div>
         <footer class="horizontal-card__footer horizontal-card__content--vertical-align-center" style="width: 100%;display: flex; justify-content: center;">
-            <button class="button button--secondary">
+            <button class="button button--secondary ionos-popup-dismiss">
                 <?php \esc_html_e('Close', 'ionos-essentials'); ?>
             </button>
-            <button class="button button--primary">
-                <?php \esc_html_e('Take the survey', 'ionos-essentials'); ?>
-            </button>
+            <a href="<?php echo \esc_attr(
+              \ionos\essentials\dashboard\blocks\whatsnew\get_survey_url()
+            ); ?>" class="button button--primary ionos-popup-dismiss" target="_blank">
+              <?php \esc_html_e('Take the survey', 'ionos-essentials'); ?>
+            </a>
         </footer>
     </div>
   </div>

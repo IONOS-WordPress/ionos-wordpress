@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Welcome dialog
   const dashboard = document.querySelector('#wpbody-content').shadowRoot;
-  const dialog = dashboard.querySelector('#essentials-welcome_block');
-  const closeButton = dashboard.querySelector('.button--primary');
 
-  closeButton.addEventListener('click', function () {
-    dialog.close();
+  dashboard.querySelector('#ionos-welcome-close')?.addEventListener('click', function () {
+    dashboard.querySelector('#essentials-welcome_block').close();
     fetch(wpData.restUrl + 'ionos/essentials/dashboard/welcome/v1/closer', {
       method: 'GET',
       headers: {
@@ -13,6 +11,13 @@ document.addEventListener('DOMContentLoaded', function () {
         'X-WP-Nonce': wpData.nonce,
       },
       credentials: 'include',
+    });
+  });
+
+  dashboard.querySelectorAll('.ionos-popup-dismiss')?.forEach((button) => {
+    button.addEventListener('click', function () {
+      jQuery.post(wpData.ajaxUrl, {'action': 'ionos-popup-dismiss'});
+      dashboard.querySelector('#ionos-essentials-popup').close();
     });
   });
 
