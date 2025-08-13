@@ -125,7 +125,7 @@ function _install()
       ]);
 
       foreach ($users as $user) {
-        \update_user_meta($user->ID, 'ionos_popup_after_timestamp', time() + 7 * DAY_IN_SECONDS);
+        \update_user_meta($user->ID, 'ionos_popup_after_timestamp', time() );
       }
       // no break
   }
