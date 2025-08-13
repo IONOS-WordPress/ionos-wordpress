@@ -6,11 +6,16 @@ defined('ABSPATH') || exit();
 
 function render_callback(): void
 {
-  // $user_meta = \get_user_meta(user_id: \get_current_user_id(), key: 'ionos_essentials_popup', single: true);
+  // If the welcome message is being shown, exit early.
+  if (empty(\get_user_meta(\get_current_user_id(), 'ionos_essentials_welcome', true))) {
+    return;
+  }
 
-  // if (! empty($user_meta)) {
-  //   return;
-  // }
+  // If the popup was maybe dismissed or already shown, or if it's not time yet, exit early.
+  $ionos_popup_after_timestamp = (int) \get_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp', true);
+  if (empty($ionos_popup_after_timestamp) || $ionos_popup_after_timestamp > time()) {
+    return;
+  }
 
   ?>
 <dialog class="ionos-essentials-popup" open>

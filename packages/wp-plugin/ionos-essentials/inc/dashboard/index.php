@@ -119,16 +119,17 @@ add_filter('admin_body_class', function ($classes) {
       'methods'             => 'GET',
       'permission_callback' => fn () => 0 !== \get_current_user_id(),
       'callback'            => function () {
-        $meta = \update_user_meta(\get_current_user_id(), 'ionos_essentials_welcome', true);
+        $meta  = \update_user_meta(\get_current_user_id(), 'ionos_essentials_welcome', true);
+        $popup = \update_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp', time() + 7 * DAY_IN_SECONDS);
 
-        if (false === $meta) {
+        if (false === $meta || false === $popup) {
           return rest_ensure_response(new \WP_REST_Response([
             'error' => \__('failed to update user meta', 'ionos-essentials'),
           ], 500));
         }
 
         return rest_ensure_response(new \WP_REST_Response([
-          'status' => $meta,
+          'status' => $meta && $popup,
         ], 200));
       },
     ]
