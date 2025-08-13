@@ -39,10 +39,9 @@ function render_callback(): void
       <section class="card__section">
         <div class="grid grid--vertical-align-center">
           <div class="grid-col grid-col--6  grid-col--medium-12 grid-col--small-12" style="display: flex; align-items: center; justify-content: center;">
-            <img class=""
+            <img class="banner-logo"
             src="<?php echo \esc_attr($tenant_logo); ?>"
             alt="<?php echo \esc_attr(Tenant::get_label()); ?> Logo"
-            style="width: 150px; padding: 50px;"
           >
 
             <div class="page-tabbar__block">

@@ -219,10 +219,27 @@ main{
   }
 }
 
+.banner-logo {
+  width: 150px;
+  padding: 50px;
+}
+
+@media (max-width: 1075px) {
+  .banner-logo{
+      padding: 50px 30px;
+  }
+}
+
 .ionos_banner_buttons{
   display: flex;
   justify-content: flex-end;
   gap: 5px;
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 @media (max-width: 1024px) {
