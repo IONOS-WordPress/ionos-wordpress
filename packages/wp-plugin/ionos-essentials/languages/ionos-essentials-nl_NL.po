@@ -256,6 +256,7 @@ msgstr "Haal nog meer uit je website"
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Je website is live, maar je reis begint pas net. Ontdek onze tips om sneller te groeien, de performance te verbeteren en je online doelen te bereiken."
 
+#: inc/dashboard/blocks/popup/index.php
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Close"
 msgstr "Sluiten"
@@ -563,14 +564,17 @@ msgstr "Tips voor volgende stappen"
 msgid "Helpful links and shortcuts"
 msgstr "Handige links en shortcuts"
 
+#: inc/dashboard/blocks/popup/index.php
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your Feedback is important to us"
 msgstr "Jouw feedback is belangrijk voor ons"
 
+#: inc/dashboard/blocks/popup/index.php
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
 msgstr "We zoeken altijd naar manieren om je ervaring met WordPress hosting nog beter te maken. Neem een paar minuten de tijd om een korte enquête in te vullen."
 
+#: inc/dashboard/blocks/popup/index.php
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Take the survey"
 msgstr "Deelnemen aan enquête"
