@@ -154,7 +154,7 @@ EOF
       --arg package "$PACKAGE" \
       --arg last_updated "$LAST_UPDATED" \
       --arg changelog "$CHANGELOG_HTML" \
-      '{version: $version, slug: $slug, package: $package, last_updated: $last_updated, sections : { changelog: $changelog }}' > "$INFO_JSON_FILENAME"
+      '{version: $version, slug: $slug, package: $package, last_updated: $last_updated, requires_wp: "6.0", sections : { changelog: $changelog }}' > "$INFO_JSON_FILENAME"
 
     if ! gh release upload $LATEST_RELEASE_TAG $INFO_JSON_FILENAME --clobber; then
       $error_message="Failed to upload asset $INFO_JSON_FILENAME"
