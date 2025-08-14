@@ -27,10 +27,12 @@ function render_callback(): void
                 <h2 class="headline">
                     <?php \esc_html_e('Your Feedback is important to us', 'ionos-essentials'); ?>
                 </h2>
-                 <p><?php \esc_html_e(
-                   'We\'re always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.',
-                   'ionos-essentials'
-                 ); ?></p>
+                 <p class="paragraph">
+                  <?php \esc_html_e(
+                    'We\'re always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.',
+                    'ionos-essentials'
+                  ); ?>
+                 </p>
 
              </section>
         </div>
