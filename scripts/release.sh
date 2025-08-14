@@ -138,6 +138,8 @@ EOF
     SLUG="${PLUGIN}/${PLUGIN}.php"
     # example: https://github.com/lgersman/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.1.3/ionos-essentials-0.1.3-php7.4.zip
     PACKAGE="https://github.com/$GITHUB_OWNER_REPO/releases/download/$(printf $PRE_RELEASE | jq -Rrs '@uri')/$ASSET"
+
+    LAST_UPDATED=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
     # CHANGELOG is the release note of the pre-release (aka the changelog markdown of the release)
     CHANGELOG="$(gh release view $PRE_RELEASE --json body --jq '.body')"
 
@@ -150,8 +152,9 @@ EOF
       --arg version "$VERSION" \
       --arg slug "$SLUG" \
       --arg package "$PACKAGE" \
+      --arg last_updated "$LAST_UPDATED" \
       --arg changelog "$CHANGELOG_HTML" \
-      '{version: $version, slug: $slug, package: $package, sections : { changelog: $changelog }}' > "$INFO_JSON_FILENAME"
+      '{version: $version, slug: $slug, package: $package, last_updated: $last_updated, sections : { changelog: $changelog }}' > "$INFO_JSON_FILENAME"
 
     if ! gh release upload $LATEST_RELEASE_TAG $INFO_JSON_FILENAME --clobber; then
       $error_message="Failed to upload asset $INFO_JSON_FILENAME"
