@@ -92,7 +92,7 @@ function issue_line(array $issue): void
     printf(
       '<button class="button button-primary" data-wpscan="%s">%s</button>',
       \esc_attr($payload),
-      \esc_html('Update', 'ionos-essentials')
+      \esc_html__('Update', 'ionos-essentials')
     );
   } else {
     $active_theme = \wp_get_theme();
@@ -107,7 +107,7 @@ function issue_line(array $issue): void
       printf(
         '<button class="button delete" data-wpscan="%s">%s</button>',
         \esc_attr($payload),
-        \esc_html('Delete', 'ionos-essentials')
+        \esc_html__('Delete', 'ionos-essentials')
       );
     }
   }
