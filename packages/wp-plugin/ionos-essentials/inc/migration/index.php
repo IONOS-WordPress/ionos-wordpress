@@ -125,9 +125,8 @@ function _install()
       ]);
 
       foreach ($users as $user) {
-        \update_user_meta($user->ID, 'ionos_popup_after_timestamp', time() );
+        \update_user_meta($user->ID, 'ionos_popup_after_timestamp', time());
       }
-      // no break
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }
