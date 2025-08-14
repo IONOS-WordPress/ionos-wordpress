@@ -855,11 +855,19 @@ msgstr ""
 msgid "View update details"
 msgstr ""
 
-#: ionos-essentials/inc/wpscan/views/issues.php
+#: inc/wpscan/views/issues.php
+msgid "Update"
+msgstr ""
+
+#: inc/wpscan/views/issues.php
 msgid "This theme is active. Please activate another theme."
 msgstr ""
 
-#: ionos-essentials/inc/wpscan/views/summary.php
+#: inc/wpscan/views/issues.php
+msgid "Delete"
+msgstr ""
+
+#: inc/wpscan/views/summary.php
 msgid "critical issues found"
 msgstr ""
 
