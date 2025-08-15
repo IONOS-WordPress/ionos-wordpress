@@ -119,16 +119,17 @@ add_filter('admin_body_class', function ($classes) {
       'methods'             => 'GET',
       'permission_callback' => fn () => 0 !== \get_current_user_id(),
       'callback'            => function () {
-        $meta = \update_user_meta(\get_current_user_id(), 'ionos_essentials_welcome', true);
+        $meta  = \update_user_meta(\get_current_user_id(), 'ionos_essentials_welcome', true);
+        $popup = \update_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp', time() + 7 * DAY_IN_SECONDS);
 
-        if (false === $meta) {
+        if (false === $meta || false === $popup) {
           return rest_ensure_response(new \WP_REST_Response([
             'error' => \__('failed to update user meta', 'ionos-essentials'),
           ], 500));
         }
 
         return rest_ensure_response(new \WP_REST_Response([
-          'status' => $meta,
+          'status' => $meta && $popup,
         ], 200));
       },
     ]
@@ -211,6 +212,7 @@ add_filter('admin_body_class', function ($classes) {
   \wp_localize_script('ionos-essentials-dashboard-js', 'wpData', [
     'nonce'              => \wp_create_nonce('wp_rest'),
     'restUrl'            => \esc_url_raw(rest_url()),
+    'ajaxUrl'            => admin_url('admin-ajax.php'),
     'securityOptionName' => IONOS_SECURITY_FEATURE_OPTION,
     'tenant'             => Tenant::get_slug(),
     'i18n'               => [
@@ -266,3 +268,8 @@ add_action('admin_enqueue_scripts', function () {
 });
 
 require_once __DIR__ . '/blocks/quick-links/index.php';
+
+\add_action(
+  'wp_ajax_ionos-popup-dismiss',
+  fn () => (\delete_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp') && \wp_die())
+);

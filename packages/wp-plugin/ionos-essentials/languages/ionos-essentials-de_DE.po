@@ -251,6 +251,7 @@ msgstr "Nutzen Sie das volle Potenzial Ihrer Website"
 msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
 msgstr "Ihre Website ist online, aber die Reise hat gerade erst begonnen. Hier finden Sie empfohlene nächste Schritte, um Ihre Website erfolgreich zu machen und Ihre Online-Ziele zu erreichen."
 
+#: inc/dashboard/blocks/popup/index.php
 #: inc/dashboard/blocks/welcome/index.php
 msgid "Close"
 msgstr "Schließen"
@@ -558,14 +559,17 @@ msgstr "Hilfreiche Links und Shortcuts"
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Umfassender Hilfebereich mit: KI-Chat-Support, geführten Touren und einer riesigen Wissensdatenbank"
 
+#: inc/dashboard/blocks/popup/index.php
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Your Feedback is important to us"
 msgstr "Ihre Meinung ist uns wichtig!"
 
+#: inc/dashboard/blocks/popup/index.php
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
 msgstr "Wir sind ständig auf der Suche nach Möglichkeiten Ihr WordPress-Hosting-Erlebnis noch besser zu machen. Nehmen Sie sich bitte ein paar Minuten Zeit, um an einer kurzen Online-Umfrage teilzunehmen."
 
+#: inc/dashboard/blocks/popup/index.php
 #: inc/dashboard/blocks/whats-new/index.php
 msgid "Take the survey"
 msgstr "Zur Umfrage"

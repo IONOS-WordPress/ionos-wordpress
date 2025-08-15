@@ -13,6 +13,7 @@ require_once __DIR__ . '/blocks/next-best-actions/index.php';
 require_once __DIR__ . '/blocks/my-account/index.php';
 require_once __DIR__ . '/blocks/whats-new/index.php';
 require_once __DIR__ . '/blocks/quick-links/index.php';
+require_once __DIR__ . '/blocks/popup/index.php';
 
 use const ionos\essentials\PLUGIN_DIR;
 
@@ -136,7 +137,10 @@ if (file_exists($theme_file)) {
 
 ?>
 
-<?php blocks\welcome\render_callback(); ?>
+<?php
+  blocks\welcome\render_callback();
+blocks\popup\render_callback();
+?>
 <div class="static-overlay__blocker"></div>
 <div class="static-overlay__container dialog-closer" id="learn-more-overlay">
   <div class="sheet static-overlay--closable static-overlay__content sheet--micro-effect" data-static-overlay-id="demo-overlay1" style="margin-top: inherit;">
