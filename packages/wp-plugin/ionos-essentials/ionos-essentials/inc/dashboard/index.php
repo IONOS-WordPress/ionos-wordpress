@@ -146,8 +146,8 @@ add_filter('admin_body_class', function ($classes) {
   \register_rest_route('ionos/essentials/dashboard/nba/v1', '/dismiss/(?P<id>[a-zA-Z0-9-]+)', [
     'methods'  => 'POST',
     'callback' => function ($request) {
-      require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/my-account/index.php';
-      require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php';
+      require_once __DIR__ . '/blocks/my-account/index.php';
+      require_once __DIR__ . '/blocks/next-best-actions/class-nba.php';
       $params = $request->get_params();
       $nba_id = $params['id'];
 
