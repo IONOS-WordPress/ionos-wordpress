@@ -1,5 +1,5 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { execTestCLI } from '../../../../../../../playwright/wp-env.js';
+import { execTestCLI } from '../../../../../../../../playwright/wp-env.js';
 
 test.describe('options', () => {
   test.beforeAll(async () => {
