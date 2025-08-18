@@ -181,9 +181,9 @@ function has_leaked_flag($user_id): bool
   if ('icc_leak_detected' === $action) {
     \wp_enqueue_style(
       'ionos-credentials-checking',
-      \plugins_url('style.css', __FILE__),
+      \plugin_dir_url(__FILE__) . 'style.css',
       [],
-      filemtime(__DIR__ . '/style.css')
+      filemtime(\plugin_dir_path(__FILE__) . 'style.css')
     );
   }
 });

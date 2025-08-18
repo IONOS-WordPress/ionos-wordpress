@@ -203,9 +203,9 @@ add_filter('admin_body_class', function ($classes) {
   }
   \wp_enqueue_script(
     'ionos-essentials-dashboard-js',
-    \plugins_url('ionos-essentials/ionos-essentials/inc/dashboard/dashboard.js', PLUGIN_DIR),
+    \plugin_dir_url(__FILE__) . 'dashboard.js',
     [],
-    filemtime(PLUGIN_DIR . '/ionos-essentials/inc/dashboard/dashboard.js'),
+    filemtime(\plugin_dir_path(__FILE__) . 'dashboard.js'),
     true
   );
 

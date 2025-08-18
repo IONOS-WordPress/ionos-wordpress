@@ -93,9 +93,9 @@ class WPScan
     }
     \wp_enqueue_script(
       'ionos-wpscan-theme-install',
-      \plugins_url('ionos-essentials/inc/wpscan/js/theme-install.js', PLUGIN_DIR),
+      \plugin_dir_url(__FILE__) . 'js/theme-install.js',
       [],
-      filemtime(PLUGIN_DIR . '/ionos-essentials/inc/wpscan/js/theme-install.js'),
+      filemtime(\plugin_dir_path(__FILE__) . 'js/theme-install.js'),
       true
     );
 
@@ -125,9 +125,9 @@ class WPScan
     }
     \wp_enqueue_script(
       'ionos-wpscan-plugins',
-      \plugins_url('ionos-essentials/inc/wpscan/js/plugin-install.js', PLUGIN_DIR),
+      \plugin_dir_url(__FILE__) . 'js/plugin-install.js',
       [],
-      filemtime(PLUGIN_DIR . '/ionos-essentials/inc/wpscan/js/plugin-install.js'),
+      filemtime(\plugin_dir_path(__FILE__) . 'js/plugin-install.js'),
       true
     );
 
@@ -165,9 +165,9 @@ class WPScan
 
     \wp_enqueue_script(
       'ionos-essentials-themes',
-      \plugins_url('ionos-essentials/inc/wpscan/js/theme-overview.js', PLUGIN_DIR),
+      \plugin_dir_url(__FILE__) . 'js/theme-overview.js',
       [],
-      filemtime(PLUGIN_DIR . '/ionos-essentials/inc/wpscan/js/theme-overview.js'),
+      filemtime(\plugin_dir_path(__FILE__) . 'js/theme-overview.js'),
       true
     );
 

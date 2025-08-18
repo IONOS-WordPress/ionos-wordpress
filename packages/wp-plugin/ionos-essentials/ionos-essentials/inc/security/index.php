@@ -63,9 +63,9 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
 \add_action('admin_enqueue_scripts', function () {
   \wp_enqueue_script(
     'ionos-security-js',
-    \plugins_url('ionos-essentials/inc/security/security.js', PLUGIN_FILE),
+    \plugin_dir_url(__FILE__) . 'security.js',
     [],
-    filemtime(PLUGIN_DIR . '/ionos-essentials/inc/security/security.js'),
+    filemtime(\plugin_dir_path(__FILE__) . 'security.js'),
     true
   );
 

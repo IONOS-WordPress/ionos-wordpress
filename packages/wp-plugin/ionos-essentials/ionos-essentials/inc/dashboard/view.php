@@ -122,13 +122,8 @@ if (file_exists($theme_file)) {
 
 \wp_register_style(
   handle: 'ionos-essentials-dashboard',
-  src: \plugins_url('ionos-essentials/ionos-essentials/inc/dashboard/dashboard.css', PLUGIN_DIR),
-  ver: filemtime(PLUGIN_DIR . '/ionos-essentials/inc/dashboard/dashboard.css')
-);
-\wp_register_style(
-  handle: 'ionos-wpscan',
-  src: \plugins_url('ionos-essentials/ionos-essentials/inc/wpscan/wpscan.css', PLUGIN_DIR),
-  ver: filemtime(PLUGIN_DIR . '/ionos-essentials/inc/wpscan/wpscan.css')
+  src: \plugin_dir_url(__FILE__) . 'dashboard.css',
+  ver: filemtime(\plugin_dir_path(__FILE__) . 'dashboard.css')
 );
 \wp_print_styles(['ionos-essentials-dashboard', 'ionos-wpscan']);
 

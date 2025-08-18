@@ -71,9 +71,9 @@ defined('ABSPATH') || exit();
     }
     \wp_enqueue_style(
       'ionos-assistant-switch-page',
-      \plugins_url('style.css', __FILE__),
+      \plugin_dir_url(__FILE__) . 'style.css',
       [],
-      filemtime(__DIR__ . '/style.css')
+      filemtime(\plugin_dir_path(__FILE__) . 'style.css')
     );
   }
 );

@@ -72,7 +72,7 @@ function get_settings_value($key)
                         <?php \esc_html_e('Temporarily block public access to your site with a maintenance page.', 'ionos-essentials'); ?>
                     </p>
                     <a href="<?php echo \esc_url(
-                      \plugins_url('ionos-essentials/ionos-essentials/inc/maintenance_mode/assets/maintenance.html', PLUGIN_DIR)
+                      \plugin_dir_url(__FILE__) . '../../maintenance_mode/assets/maintenance.html'
                     ); ?>" target="_blank"
                        class="link link--action"><?php \esc_html_e('Preview maintenance page', 'ionos-essentials'); ?></a>
                 </div>

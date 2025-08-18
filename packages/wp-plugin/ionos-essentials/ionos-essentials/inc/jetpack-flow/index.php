@@ -140,9 +140,9 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 
     \wp_enqueue_style(
       'ionos-assistant-flow',
-      \plugins_url('/assets/flow.css', __FILE__),
+      \plugin_dir_url(__FILE__) . 'assets/flow.css',
       [],
-      filemtime(__DIR__ . '/assets/flow.css')
+      filemtime(\plugin_dir_path(__FILE__) . 'assets/flow.css')
     );
   });
 });
