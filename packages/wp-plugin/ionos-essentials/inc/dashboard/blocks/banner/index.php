@@ -38,7 +38,7 @@ function render_callback(): void
     <div class="card__content">
       <section class="card__section">
         <div class="grid grid--vertical-align-center">
-          <div class="grid-col grid-col--6  grid-col--medium-12 grid-col--small-12" style="display: flex; align-items: center; justify-content: center;">
+          <div class="grid-col grid-col--6 grid-col--medium-12 grid-col--small-12 banner-navigation" style="display: flex; align-items: center; justify-content: center;">
             <img class="banner-logo"
             src="<?php echo \esc_attr($tenant_logo); ?>"
             alt="<?php echo \esc_attr(Tenant::get_label()); ?> Logo"
@@ -61,8 +61,9 @@ function render_callback(): void
 
 
           </div>
+          <div class="grid-col grid-col--1"> </div>
 
-          <div class="grid-col grid-col--6 grid-col--medium-12 grid-col--small-12 ionos_banner_buttons">
+          <div class="grid-col grid-col--5 grid-col--medium-12 grid-col--small-12 ionos_banner_buttons">
             <?php echo \wp_kses($buttons, 'post'); ?>
           </div>
         </div>
@@ -76,12 +77,12 @@ function render_callback(): void
 
 function get_ai_button(): array
 {
-  if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
-    return [];
-  }
+  // if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
+  //   return [];
+  // }
 
   $launch_completed = \get_option('extendify_onboarding_completed', false);
-  if (false === $launch_completed) {
+  if (true) {
     return [
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),
