@@ -1,4 +1,4 @@
-# disable dashboard editor feature in production zip archives
+# exclude markdown files from plugin zip
 
 README.md
 CHANGELOG.md
