@@ -1,17 +1,8 @@
 node_modules
 /.pnpm-store
 /wp-env-home
-/packages/*/*/node_modules
 /packages/*/*/build
-# exclude wp-mu-plugin build dirs
-/packages/*/*/*/build
 /packages/*/*/dist
-# exclude wp-mu-plugin build dirs
-/packages/*/*/*/dist
-/packages/*/*/languages/*.json
-/packages/*/*/languages/*.mo
-/packages/*/*/languages/*.php
-# exclude wp-mu-plugin generated language files
 /packages/*/*/*/languages/*.json
 /packages/*/*/*/languages/*.mo
 /packages/*/*/*/languages/*.php
