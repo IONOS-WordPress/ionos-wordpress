@@ -37,6 +37,12 @@ main{
   }
 }
 
+@media (max-width: 666px) {
+  main{
+    margin: 0 20px;
+  }
+}
+
 .color--success{
   color: var(--success-text-color, #096b35);
 }
@@ -101,10 +107,7 @@ main{
 
 .ionos_next_best_actions{
   background: white;
-  margin-bottom: 2em;
-  border-radius: 16px;
-  padding-top: 2em;
-  margin-left: 15px;
+  padding: 2em 15px;
 
   .card{
     background: rgb(244, 247, 250);
