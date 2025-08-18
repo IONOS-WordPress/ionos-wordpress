@@ -5,7 +5,6 @@ namespace ionos\essentials\wpscan;
 defined('ABSPATH') || exit();
 
 use ionos\essentials\Tenant;
-use const ionos\essentials\PLUGIN_DIR;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
 

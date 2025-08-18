@@ -49,7 +49,9 @@ defined('ABSPATH') || exit();
         </section>
 EOF
         ,
-        \esc_attr(\plugins_url('/ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_slug() . '.svg', PLUGIN_FILE)),
+        \esc_attr(
+          \plugins_url('/ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_slug() . '.svg', PLUGIN_FILE)
+        ),
         \esc_attr(Tenant::get_label())
       );
     }

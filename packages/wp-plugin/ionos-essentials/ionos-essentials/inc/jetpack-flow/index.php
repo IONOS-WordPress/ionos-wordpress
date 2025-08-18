@@ -6,8 +6,6 @@ defined('ABSPATH') || exit();
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-use const ionos\essentials\PLUGIN_DIR;
-
 const HIDDEN_PAGE_SLUG            = 'ionos-assistant-jetpack-backup-flow';
 const INSTALL_JETPACK_OPTION_NAME = 'assistant_jetpack_backup_flow_pending';
 const SSO_ACTIONS                 = ['ionos_oauth_authenticate', 'ionos_oauth_register'];

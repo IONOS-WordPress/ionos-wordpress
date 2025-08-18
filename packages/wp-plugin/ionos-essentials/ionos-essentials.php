@@ -25,7 +25,10 @@ defined('ABSPATH') || exit();
 
 \add_action(
   'init',
-  fn () => \load_plugin_textdomain(domain: 'ionos-essentials', plugin_rel_path: basename(__DIR__) . '/ionos-essentials/languages/')
+  fn () => \load_plugin_textdomain(
+    domain: 'ionos-essentials',
+    plugin_rel_path: basename(__DIR__) . '/ionos-essentials/languages/'
+  )
 );
 
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';

@@ -15,8 +15,6 @@ require_once __DIR__ . '/blocks/whats-new/index.php';
 require_once __DIR__ . '/blocks/quick-links/index.php';
 require_once __DIR__ . '/blocks/popup/index.php';
 
-use const ionos\essentials\PLUGIN_DIR;
-
 // Fontface must be loaded before the template is rendered
 ?>
 <style>
