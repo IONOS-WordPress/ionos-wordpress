@@ -56,14 +56,12 @@
         "core_version": {
           "type": "string",
           "description": "WordPress core version",
-          "pattern": "^\\d+\\.\\d+(\\.\\d+)?$",
           "examples": ["6.8.1", "5.9.3"]
         },
         "php_version": {
           "type": "string",
           "description": "PHP version",
-          "pattern": "^\\d+\\.\\d+$",
-          "examples": ["8.1", "7.4", "8.2"]
+          "examples": ["8.1", "8.2", "7.4"]
         },
         "installed_themes": {
           "type": "integer",
@@ -105,8 +103,6 @@
     "active_theme": {
       "type": "array",
       "description": "Currently active theme information",
-      "minItems": 1,
-      "maxItems": 1,
       "items": {
         "type": "object",
         "required": ["id", "version", "auto_update"],
@@ -117,8 +113,7 @@
           },
           "version": {
             "type": "string",
-            "description": "Theme version",
-            "pattern": "^\\d+\\.\\d+(\\.\\d+)?$"
+            "description": "Theme version"
           },
           "parent_theme_slug": {
             "type": ["string", "null"],
