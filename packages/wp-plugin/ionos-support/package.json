@@ -1,0 +1,10 @@
+{
+  "name": "@ionos-wordpress/support",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@ionos-wordpress/rector-php": "workspace:*",
+    "@ionos-wordpress/ecs-php": "workspace:*",
+    "@ionos-wordpress/potrans": "workspace:*",
+    "@ionos-wordpress/dennis-i18n": "workspace:*"
+  }
+}
