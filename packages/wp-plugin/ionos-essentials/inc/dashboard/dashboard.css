@@ -200,18 +200,15 @@ main{
   }
 }
 
-.ionos_buttons_same_width{
-  container-type: inline-size !important;
-  container: ionos_buttons_same_width;
+.ionos_banner_buttons{
   display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  a{
-    min-width: 27%;
-    justify-content: flex-start;
-  }
-  a:nth-child(3n) {
-    margin-right: 0;
+  justify-content: flex-end;
+  gap: 5px;
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -250,18 +247,6 @@ main{
 
 .page-tabbar__items {
   margin-left: 0;
-}
-
-.ionos_banner_buttons{
-  display: flex;
-  justify-content: flex-end;
-  gap: 5px;
-
-  a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 }
 
 @media (max-width: 1024px) {
