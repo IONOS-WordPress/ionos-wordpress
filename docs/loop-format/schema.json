@@ -37,12 +37,7 @@
         "locale": {
           "type": "string",
           "description": "WordPress locale setting",
-          "examples": [
-            "fr_FR",
-            "en_US",
-            "de_DE",
-            "de_DE_formal"
-          ]
+          "examples": ["fr_FR", "en_US", "de_DE", "de_DE_formal"]
         },
         "blog_public": {
           "type": "boolean",
@@ -51,37 +46,24 @@
         "market": {
           "type": "string",
           "description": "Tenant market identifier",
-          "examples": [
-            "FR",
-            "US",
-            "DE"
-          ]
+          "examples": ["FR", "US", "DE"]
         },
         "tenant": {
           "type": "string",
           "description": "Tenant identifier",
-          "examples": [
-            "ionos"
-          ]
+          "examples": ["ionos"]
         },
         "core_version": {
           "type": "string",
           "description": "WordPress core version",
           "pattern": "^\\d+\\.\\d+(\\.\\d+)?$",
-          "examples": [
-            "6.8.1",
-            "5.9.3"
-          ]
+          "examples": ["6.8.1", "5.9.3"]
         },
         "php_version": {
           "type": "string",
           "description": "PHP version",
           "pattern": "^\\d+\\.\\d+$",
-          "examples": [
-            "8.1",
-            "7.4",
-            "8.2"
-          ]
+          "examples": ["8.1", "7.4", "8.2"]
         },
         "installed_themes": {
           "type": "integer",
@@ -102,10 +84,7 @@
         "permalink_structure": {
           "type": "string",
           "description": "WordPress permalink structure",
-          "examples": [
-            "/%postname%/",
-            "/%year%/%monthnum%/%postname%/"
-          ]
+          "examples": ["/%postname%/", "/%year%/%monthnum%/%postname%/"]
         },
         "siteurl": {
           "type": "string",
@@ -130,11 +109,7 @@
       "maxItems": 1,
       "items": {
         "type": "object",
-        "required": [
-          "id",
-          "version",
-          "auto_update"
-        ],
+        "required": ["id", "version", "auto_update"],
         "properties": {
           "id": {
             "type": "string",
@@ -146,10 +121,7 @@
             "pattern": "^\\d+\\.\\d+(\\.\\d+)?$"
           },
           "parent_theme_slug": {
-            "type": [
-              "string",
-              "null"
-            ],
+            "type": ["string", "null"],
             "description": "Parent theme slug for child themes"
           },
           "auto_update": {
@@ -165,11 +137,7 @@
       "description": "List of active plugins",
       "items": {
         "type": "object",
-        "required": [
-          "plugin_slug",
-          "version",
-          "auto_update"
-        ],
+        "required": ["plugin_slug", "version", "auto_update"],
         "properties": {
           "plugin_slug": {
             "type": "string",
@@ -197,18 +165,12 @@
       "description": "Post type statistics",
       "items": {
         "type": "object",
-        "required": [
-          "type",
-          "count"
-        ],
+        "required": ["type", "count"],
         "properties": {
           "type": {
             "type": "string",
             "description": "Post type",
-            "examples": [
-              "post",
-              "page"
-            ]
+            "examples": ["post", "page"]
           },
           "count": {
             "type": "integer",
@@ -221,10 +183,7 @@
     "comments": {
       "type": "object",
       "description": "Comment statistics and settings",
-      "required": [
-        "total",
-        "comments_active"
-      ],
+      "required": ["total", "comments_active"],
       "properties": {
         "total": {
           "type": "integer",
@@ -242,32 +201,16 @@
       "description": "Timeline of events",
       "items": {
         "type": "object",
-        "required": [
-          "name",
-          "payload",
-          "timestamp"
-        ],
+        "required": ["name", "payload", "timestamp"],
         "properties": {
           "name": {
             "type": "string",
             "description": "Event type",
-            "examples": [
-              "login",
-              "plugin install",
-              "theme change",
-              "post published"
-            ]
+            "examples": ["login", "plugin install", "theme change", "post published"]
           },
           "payload": {
             "description": "Event-specific payload data",
-            "type": [
-              "object",
-              "array",
-              "string",
-              "number",
-              "boolean",
-              "null"
-            ],
+            "type": ["object", "array", "string", "number", "boolean", "null"],
             "default": null
           },
           "timestamp": {
@@ -281,10 +224,7 @@
     "uploads": {
       "type": "object",
       "description": "Media library statistics",
-      "required": [
-        "file_count",
-        "file_size"
-      ],
+      "required": ["file_count", "file_size"],
       "properties": {
         "file_count": {
           "type": "integer",
