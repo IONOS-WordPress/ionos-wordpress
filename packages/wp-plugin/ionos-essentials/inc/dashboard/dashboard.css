@@ -37,6 +37,12 @@ main{
   }
 }
 
+@media (max-width: 666px) {
+  main{
+    margin: 0 20px;
+  }
+}
+
 .color--success{
   color: var(--success-text-color, #096b35);
 }
@@ -52,7 +58,6 @@ main{
   }
 }
 
-
 .ionos-tab{
   display: none;
 
@@ -61,7 +66,7 @@ main{
   }
 }
 
-#essentials-welcome_block{
+.ionos-essentials-popup{
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -76,7 +81,7 @@ main{
     height: 100%;
   }
 
-  .welcome-card{
+  .popup-card{
     flex-wrap: wrap;
     width: 90%;
     max-width: 800px;
@@ -86,7 +91,7 @@ main{
   }
 
   @media (max-width: 666px) {
-    .welcome-card{
+    .popup-card{
       height: 600px;;
       flex-wrap: nowrap;
     }
@@ -96,10 +101,7 @@ main{
 
 .ionos_next_best_actions{
   background: white;
-  margin-bottom: 2em;
-  border-radius: 16px;
-  padding-top: 2em;
-  margin-left: 15px;
+  padding: 2em 15px;
 
   .card{
     background: rgb(244, 247, 250);
@@ -197,6 +199,13 @@ main{
     margin-right: 0;
   }
 }
+
+.sheet__section .grid .grid-col h2,
+.sheet__section .grid .grid-col p,
+.sheet__section .grid .grid-col a {
+  margin-bottom: 8px;
+}
+
 @container ionos_buttons_same_width (max-width: 800px) {
   .ionos_buttons_same_width{
     a{
