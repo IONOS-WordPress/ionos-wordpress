@@ -98,6 +98,18 @@ main{
   }
 }
 
+.banner_wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
 
 .ionos_next_best_actions{
   background: white;
@@ -232,14 +244,12 @@ main{
 }
 
 .banner-logo {
-  width: 150px;
-  padding: 50px;
+  width: 100px;
+  padding: 20px;
 }
 
-@media (max-width: 1075px) {
-  .banner-logo{
-      padding: 50px 30px;
-  }
+.page-tabbar__items {
+  margin-left: 0;
 }
 
 .ionos_banner_buttons{
@@ -258,6 +268,7 @@ main{
   .ionos_banner_buttons{
     flex-direction: column;
     width: 200px;
+
     .button{
       margin-right: 0;
     }
@@ -269,6 +280,14 @@ main{
 }
 
 @media (max-width: 992px) {
+  .banner_wrapper {
+    flex-direction: column;;
+  }
+
+  .content {
+    width: 100%;
+  }
+
   .ionos_banner_buttons{
     width: 100%;
   }

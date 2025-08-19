@@ -35,40 +35,38 @@ function render_callback(): void
 
   ?>
 <div class="card">
-    <div class="card__content">
-      <section class="card__section">
-        <div class="grid grid--vertical-align-center">
-          <div class="grid-col grid-col--6 grid-col--medium-12 grid-col--small-12 banner-navigation" style="display: flex; align-items: center; justify-content: center;">
-            <img class="banner-logo"
-            src="<?php echo \esc_attr($tenant_logo); ?>"
-            alt="<?php echo \esc_attr(Tenant::get_label()); ?> Logo"
+  <div class="card__content">
+    <section class="card__section">
+      <div class="banner_wrapper">
+        <div class="content">
+          <img class="banner-logo"
+          src="<?php echo \esc_attr($tenant_logo); ?>"
+          alt="<?php echo \esc_attr(Tenant::get_label()); ?> Logo"
           >
-
-            <div class="page-tabbar__block">
-              <ul class="page-tabbar__items" role="menu">
-                <li class="page-tabbar__item" role="presentation">
-                  <a href="#" class="page-tabbar__link page-tabbar__link--active" data-tab="overview">
-                    <div class="page-tabbar__label"><?php \esc_html_e('Overview', 'ionos-essentials'); ?></div>
-                  </a>
-                </li>
-                <li class="page-tabbar__item" role="presentation">
-                  <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="tools">
-                    <div class="page-tabbar__label may-have-issue-dot"><?php \esc_html_e('Tools', 'ionos-essentials'); ?></div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-
-          </div>
-          <div class="grid-col grid-col--1"> </div>
-
-          <div class="grid-col grid-col--5 grid-col--medium-12 grid-col--small-12 ionos_banner_buttons">
-            <?php echo \wp_kses($buttons, 'post'); ?>
-          </div>
+          <ul class="page-tabbar__items" role="menu">
+            <li>
+              <a href="#" class="page-tabbar__link page-tabbar__link--active" data-tab="overview">
+                <div class="page-tabbar__label"><?php \esc_html_e('Overview', 'ionos-essentials'); ?></div>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="tools">
+                <div class="page-tabbar__label may-have-issue-dot"><?php \esc_html_e('Tools', 'ionos-essentials'); ?></div>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="tools">
+                <div class="page-tabbar__label may-have-issue-dot"><?php \esc_html_e('Tools', 'ionos-essentials'); ?></div>
+              </a>
+            </li>
+          </ul>
         </div>
-      </section>
-    </div>
+        <div class="ionos_banner_buttons">
+          <?php echo \wp_kses($buttons, 'post'); ?>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>
 
 
@@ -77,12 +75,12 @@ function render_callback(): void
 
 function get_ai_button(): array
 {
-  if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
-    return [];
-  }
+  // if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
+  //   return [];
+  // }
 
   $launch_completed = \get_option('extendify_onboarding_completed', false);
-  if (false === $launch_completed) {
+  if (true) {
     return [
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),
