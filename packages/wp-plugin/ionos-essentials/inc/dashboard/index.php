@@ -92,6 +92,20 @@ if (\get_option('ionos_essentials_dashboard_mode', true)) {
   });
 }
 
+\add_filter('login_redirect', function ($redirect_to, $requested_redirect_to, $user) {
+  // early return if not a valid wp user
+  if (! $user instanceof \WP_User) {
+    return $redirect_to;
+  }
+  if ($requested_redirect_to !== '') {
+    return $requested_redirect_to;
+  }
+  if (\get_option('ionos_essentials_dashboard_mode', true)) {
+    return \menu_page_url(ADMIN_PAGE_SLUG, false);
+  }
+  return \get_admin_url();
+}, 100, 3);
+
 // fixes the displayed page title for our custom admin page.
 \add_filter(
   hook_name: 'admin_title',
