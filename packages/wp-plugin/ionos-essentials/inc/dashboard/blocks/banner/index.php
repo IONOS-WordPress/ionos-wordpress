@@ -77,12 +77,12 @@ function render_callback(): void
 
 function get_ai_button(): array
 {
-  // if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
-  //   return [];
-  // }
+  if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
+    return [];
+  }
 
   $launch_completed = \get_option('extendify_onboarding_completed', false);
-  if (true) {
+  if (false === $launch_completed) {
     return [
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),
