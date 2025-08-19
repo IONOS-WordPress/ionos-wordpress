@@ -1,47 +1,53 @@
 import fetch from '@wordpress/api-fetch';
 
-const API_NAMESPACE = 'ionos/support/v1';
-
-async function runWPCLICommand(command) {
-  const response = await fetch(`/wp-json/${API_NAMESPACE}/run`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ command }),
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
-  }
-
-  return response.json();
-}
-
-async function execWPCLICommand(command) {
-  const response = await fetch(`/wp-json/${API_NAMESPACE}/exec`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ command }),
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
-  }
-
-  return response.json();
-}
-
 window.wp.cli = (config) => {
-  window.wp.cli = {
-    run: runWPCLICommand,
-    exec: execWPCLICommand,
-    version: config.version,
-  };
-};
+  window.wp.cli = async function (command) {
+    if (typeof command !== 'string' || command.trim() === '') {
+      console.error('Command must be a non-empty string');
+      window.wp.cli.help();
+      return;
+    }
 
-console.log(window.wp.cli.version);
+    try {
+      console.group(`wp ${command}`);
+
+      const response = await fetch({
+        path: `/${config.REST_NAMESPACE}${config.REST_ROUTE_EXEC}`,
+        method: 'POST',
+        data: { command },
+      });
+
+      response.data.stderr && console.error(response.data.stderr);
+
+      if (response.data.stdout) {
+        if (command.includes(' --json ')) {
+          try {
+            console.table(JSON.parse(response.data.stdout));
+          } catch (ex) {
+            console.info(response.data.stdout);
+          }
+        } else {
+          console.info(response.data.stdout);
+        }
+      }
+
+      return response.data.stdout;
+    } finally {
+      console.groupEnd();
+    }
+  };
+  window.wp.cli.VERSION = config.VERSION;
+  window.wp.cli.help = () =>
+    console.info(`
+    Usage: wp.cli( ...[options] [--] <command> [<args>...] )
+    Options:
+      -h, --help      Show this help message
+      -v, --version   Show the version
+
+    Example usage:
+      wp.cli('--help')
+      wp.cli('option list --json --search=ionos*')
+
+    ${config.VERSION}
+  `);
+};

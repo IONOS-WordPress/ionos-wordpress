@@ -36,22 +36,45 @@ const WPCLI_URL = 'https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar
   file_put_contents(WPCLI_PHAR, $response['body']);
 
   chmod(WPCLI_PHAR, 0755);
-
-  $phar = new \Phar(WPCLI_PHAR);
-  $phar->extractTo(WPCLI_DIR);
 });
 
-const WPCLI_REST_ENDPOINT = __NAMESPACE__ . '/v1';
-const WPCLI_REST_ENDPOINT_EXECUTE = '/execute';
-const WPCLI_REST_ENDPOINT_RUN = '/run';
+const WPCLI_REST_NAMESPACE = 'ionos/support/wpcli/v1';
+const WPCLI_REST_ROUTE_EXEC = '/exec';
 
-\add_action('rest_api_init', function() {
-  \register_rest_route(WPCLI_REST_ENDPOINT, WPCLI_REST_ENDPOINT_EXECUTE, [
+\add_action('rest_api_init', fn() =>
+  \register_rest_route(WPCLI_REST_NAMESPACE, WPCLI_REST_ROUTE_EXEC, [
     'methods' => 'POST',
-    'callback' => __NAMESPACE__ . '/_wpcli_exec',
-    'permission_callback' => function () {
-      return \current_user_can('manage_options');
+    'callback' => function (\WP_REST_Request $request) {
+      [ 'command' => $command ] = $request->get_json_params();
+
+      $descriptors = [
+        0 => ['pipe', 'r'],
+        1 => ['pipe', 'w'],
+        2 => ['pipe', 'w'],
+      ];
+
+      $process = proc_open("php " . WPCLI_PHAR . " $command", $descriptors, $pipes);
+
+      if (!is_resource($process)) {
+        \wp_send_json_error('Failed to execute command');
+        return;
+      }
+
+      $stdout = stream_get_contents($pipes[1]);
+      $stderr = stream_get_contents($pipes[2]);
+
+      fclose($pipes[0]);
+      fclose($pipes[1]);
+      fclose($pipes[2]);
+
+      proc_close($process);
+
+      \wp_send_json_success([
+        'stdout' => $stdout,
+        'stderr' => $stderr,
+      ]);
     },
+    'permission_callback' => fn () => \current_user_can('manage_options'),
     'args' => [
       'command' => [
         'required' => true,
@@ -64,47 +87,25 @@ const WPCLI_REST_ENDPOINT_RUN = '/run';
         },
       ],
     ],
-  ]);
+  ])
+);
 
-  \register_rest_route(WPCLI_REST_ENDPOINT, WPCLI_REST_ENDPOINT_RUN, [
-    'methods' => 'POST',
-    'callback' => __NAMESPACE__ . '/_wpcli_run',
-    'permission_callback' => function () {
-      return \current_user_can('manage_options');
-    },
-    'args' => [
-      'command' => [
-        'required' => true,
-        'validate_callback' => function ($param, $request, $key) {
-          if (!is_string($param)) {
-            \wp_send_json_error("Invalid parameter: $key must be a string", 400);
-            return false;
-          }
-          return true;
-        },
-      ],
-    ],
-  ]);
-});
+function _wpcli($command) {
+  $descriptors = [
+    0 => ['pipe', 'r'],
+    1 => ['pipe', 'w'],
+    2 => ['pipe', 'w'],
+  ];
 
-function _wpcli_exec(\WP_REST_Request $request) {
-  [ 'command' => $command ] = $request->get_json_params();
-
-  $descriptorspec = array(
-    0 => array('pipe', 'r'),
-    1 => array('pipe', 'w'),
-    2 => array('pipe', 'w'),
-  );
-
-  $process = proc_open("php " . WPCLI_PHAR . " $command", $descriptorspec, $pipes);
+  $process = proc_open("php " . WPCLI_PHAR . " $command", $descriptors, $pipes);
 
   if (!is_resource($process)) {
-    \wp_send_json_error('Failed to execute command');
+    \wp_die(sprintf('Failed to execute command "%s": %s', $command, \wp_json_encode($command)));
     return;
   }
 
-  $output = stream_get_contents($pipes[1]);
-  $error = stream_get_contents($pipes[2]);
+  $stdout = stream_get_contents($pipes[1]);
+  $stderr = stream_get_contents($pipes[2]);
 
   fclose($pipes[0]);
   fclose($pipes[1]);
@@ -112,42 +113,17 @@ function _wpcli_exec(\WP_REST_Request $request) {
 
   proc_close($process);
 
-  return \wp_send_json_success([
-    'output' => $output,
-    'error' => $error,
-  ]);
-}
-
-function _wpcli_run(\WP_REST_Request $request) {
-  [ 'command' => $command ] = $request->get_json_params();
-
-  require_once WPCLI_PHAR;
-
-  $output = [];
-  $error = [];
-
-  try {
-    $result = \WP_CLI::run_command($command, ['return' => true]);
-    $output = $result->getOutput();
-    $error = $result->getError();
-  } catch (\Exception $e) {
-    $error[] = $e->getMessage();
-  }
-
-  return \wp_send_json_success([
-    'output' => implode("\n", $output),
-    'error' => implode("\n", $error),
-  ]);
+  return [
+    'stdout' => $stdout,
+    'stderr' => $stderr,
+  ];
 }
 
 \add_action('admin_enqueue_scripts', function () {
   $WPCLI_VERSION = null;
 
-  if(file_exists(WPCLI_DIR . '/vendor/wp-cli/wp-cli/VERSION')) {
-    $WPCLI_VERSION = file_get_contents(WPCLI_DIR . '/vendor/wp-cli/wp-cli/VERSION');
-  }
-
-  # require_once WPCLI_DIR . '/vendor/autoload.php';
+  [ 'stdout' => $stdout, 'stderr' => $stderr ] = _wpcli('--version');
+  $WPCLI_VERSION = trim(strlen($stderr) > 0 ? $stderr : $stdout);
 
   $assets = require_once PLUGIN_DIR . '/build/wpcli/index.asset.php';
   \wp_enqueue_script(
@@ -160,6 +136,13 @@ function _wpcli_run(\WP_REST_Request $request) {
 
   \wp_add_inline_script(
     'ionos-support-wpcli',
-    sprintf('window.wp.cli({ version : %s});', \wp_json_encode($WPCLI_VERSION)),
+    sprintf(
+      'window.wp.cli(%s);',
+      \wp_json_encode([
+        'VERSION' => $WPCLI_VERSION,
+        'REST_NAMESPACE' => WPCLI_REST_NAMESPACE,
+        'REST_ROUTE_EXEC' => WPCLI_REST_ROUTE_EXEC,
+      ])
+    ),
   );
 });
