@@ -65,14 +65,18 @@ function render_callback(): void
 
   ?>
       <div class="card ionos_next_best_actions">
-        <div class="headline"><?php \esc_html_e("Unlock Your Website's Potential", 'ionos-essentials'); ?></div>
-        <div class="paragraph"><?php \esc_html_e(
-          'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
-          'ionos-essentials'
-        ); ?></div>
+        <div class="card__content">
+          <section class="card__section ionos_next_best_actions__section">
+            <div class="headline"><?php \esc_html_e("Unlock Your Website's Potential", 'ionos-essentials'); ?></div>
+            <div class="paragraph"><?php \esc_html_e(
+              'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
+              'ionos-essentials'
+            ); ?></div>
 
-        <div class="grid">
-          <?php echo \wp_kses($cards, 'post'); ?>
+            <div class="grid">
+              <?php echo \wp_kses($cards, 'post'); ?>
+            </div>
+          </section>
         </div>
       </div>
   <?php

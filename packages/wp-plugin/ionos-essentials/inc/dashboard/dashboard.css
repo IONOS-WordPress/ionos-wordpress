@@ -101,13 +101,16 @@ main{
 
 .ionos_next_best_actions{
   background: white;
-  padding: 2em 15px;
 
   .card{
     background: rgb(244, 247, 250);
   }
   & > *:nth-child(n+8) {
     display: none;
+  }
+
+  .ionos_next_best_actions__section{
+    padding-bottom: 0;
   }
 
   .nba-card{
