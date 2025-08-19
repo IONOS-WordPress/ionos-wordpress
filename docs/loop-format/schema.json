@@ -1,0 +1,307 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WordPress Site Configuration",
+  "description": "Schema for WordPress site configuration and telemetry data",
+  "type": "object",
+  "required": [
+    "generic",
+    "user",
+    "active_theme",
+    "active_plugins",
+    "posts",
+    "comments",
+    "events",
+    "uploads",
+    "timestamp"
+  ],
+  "properties": {
+    "generic": {
+      "type": "object",
+      "description": "General site configuration and metadata",
+      "required": [
+        "locale",
+        "blog_public",
+        "market",
+        "tenant",
+        "core_version",
+        "php_version",
+        "installed_themes",
+        "installed_plugins",
+        "instance_created",
+        "last_login",
+        "permalink_structure",
+        "siteurl",
+        "home"
+      ],
+      "properties": {
+        "locale": {
+          "type": "string",
+          "description": "WordPress locale setting",
+          "examples": [
+            "fr_FR",
+            "en_US",
+            "de_DE",
+            "de_DE_formal"
+          ]
+        },
+        "blog_public": {
+          "type": "boolean",
+          "description": "Whether the blog is public"
+        },
+        "market": {
+          "type": "string",
+          "description": "Tenant market identifier",
+          "examples": [
+            "FR",
+            "US",
+            "DE"
+          ]
+        },
+        "tenant": {
+          "type": "string",
+          "description": "Tenant identifier",
+          "examples": [
+            "ionos"
+          ]
+        },
+        "core_version": {
+          "type": "string",
+          "description": "WordPress core version",
+          "pattern": "^\\d+\\.\\d+(\\.\\d+)?$",
+          "examples": [
+            "6.8.1",
+            "5.9.3"
+          ]
+        },
+        "php_version": {
+          "type": "string",
+          "description": "PHP version",
+          "pattern": "^\\d+\\.\\d+$",
+          "examples": [
+            "8.1",
+            "7.4",
+            "8.2"
+          ]
+        },
+        "installed_themes": {
+          "type": "integer",
+          "description": "Number of installed themes"
+        },
+        "installed_plugins": {
+          "type": "integer",
+          "description": "Number of installed plugins"
+        },
+        "instance_created": {
+          "type": "integer",
+          "description": "UTC Unix timestamp when the instance was created"
+        },
+        "last_login": {
+          "type": "integer",
+          "description": "UTC Unix timestamp of the last login"
+        },
+        "permalink_structure": {
+          "type": "string",
+          "description": "WordPress permalink structure",
+          "examples": [
+            "/%postname%/",
+            "/%year%/%monthnum%/%postname%/"
+          ]
+        },
+        "siteurl": {
+          "type": "string",
+          "description": "WordPress site URL"
+        },
+        "home": {
+          "type": "string",
+          "description": "WordPress home URL"
+        }
+      },
+      "additionalProperties": true
+    },
+    "user": {
+      "type": "object",
+      "description": "User statistics and role distribution",
+      "additionalProperties": true
+    },
+    "active_theme": {
+      "type": "array",
+      "description": "Currently active theme information",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "version",
+          "auto_update"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Theme identifier/slug"
+          },
+          "version": {
+            "type": "string",
+            "description": "Theme version",
+            "pattern": "^\\d+\\.\\d+(\\.\\d+)?$"
+          },
+          "parent_theme_slug": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Parent theme slug for child themes"
+          },
+          "auto_update": {
+            "type": "boolean",
+            "description": "Whether auto-updates are enabled"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "active_plugins": {
+      "type": "array",
+      "description": "List of active plugins",
+      "items": {
+        "type": "object",
+        "required": [
+          "plugin_slug",
+          "version",
+          "auto_update"
+        ],
+        "properties": {
+          "plugin_slug": {
+            "type": "string",
+            "description": "Plugin slug/identifier"
+          },
+          "version": {
+            "type": "string",
+            "description": "Plugin version"
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Whether the plugin is active",
+            "default": true
+          },
+          "auto_update": {
+            "type": "boolean",
+            "description": "Whether auto-updates are enabled"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "posts": {
+      "type": "array",
+      "description": "Post type statistics",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "count"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Post type",
+            "examples": [
+              "post",
+              "page"
+            ]
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of posts of this type"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "comments": {
+      "type": "object",
+      "description": "Comment statistics and settings",
+      "required": [
+        "total",
+        "comments_active"
+      ],
+      "properties": {
+        "total": {
+          "type": "integer",
+          "description": "Total number of comments"
+        },
+        "comments_active": {
+          "type": "boolean",
+          "description": "Whether comments are enabled site-wide"
+        }
+      },
+      "additionalProperties": true
+    },
+    "events": {
+      "type": "array",
+      "description": "Timeline of events",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "payload",
+          "timestamp"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Event type",
+            "examples": [
+              "login",
+              "plugin install",
+              "theme change",
+              "post published"
+            ]
+          },
+          "payload": {
+            "description": "Event-specific payload data",
+            "type": [
+              "object",
+              "array",
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ],
+            "default": null
+          },
+          "timestamp": {
+            "type": "integer",
+            "description": "Unix timestamp when the event occurred"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "uploads": {
+      "type": "object",
+      "description": "Media library statistics",
+      "required": [
+        "file_count",
+        "file_size"
+      ],
+      "properties": {
+        "file_count": {
+          "type": "integer",
+          "description": "Number of uploaded files"
+        },
+        "file_size": {
+          "type": "string",
+          "description": "Total size of uploaded files in bytes. string used for large numbers",
+          "pattern": "^\\d+$"
+        }
+      },
+      "additionalProperties": true
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp when this data was collected"
+    }
+  },
+  "additionalProperties": true
+}
