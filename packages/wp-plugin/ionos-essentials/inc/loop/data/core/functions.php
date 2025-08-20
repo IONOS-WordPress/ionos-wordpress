@@ -2,9 +2,6 @@
 
 namespace ionos\essentials\loop;
 
-const SURVEYS_URL                       = 'https://s3-de-central.profitbricks.com/web-hosting/loop-surveys/ionos-standard.json';
-const SURVEYS_TRANSIENT_NAME            = 'ionos_loop_survey_collection';
-const SURVEYS_TRANSIENT_EXPIRATION_TIME = 10800; // 3h
 /**
  * Gets the plugin slug from a plugin filename.
  *
@@ -42,22 +39,6 @@ function normalize_version_string( $version_string, $long = false ) {
 	}
 
 	return preg_replace( $pattern, '$1', $version_string );
-}
-
-/**
- * Gets the URL of the Rest API.
- *
- * @return string The URL of the REST API.
- */
-function get_loop_rest_api() {
-	$api      = get_rest_url( null, 'ionos/v1' );
-	$find     = 'wp-json';
-	$position = strpos( $api, $find );
-	if ( $position === false ) {
-		return $api;
-	}
-
-	return substr( $api, $position + strlen( $find ) );
 }
 
 
