@@ -20,7 +20,7 @@ window.wp.cli = (config) => {
       response.data.stderr && console.error(response.data.stderr);
 
       if (response.data.stdout) {
-        if (command.includes(' --json ')) {
+        if (command.includes(' --json')) {
           try {
             console.table(JSON.parse(response.data.stdout));
           } catch (ex) {
