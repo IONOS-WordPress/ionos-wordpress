@@ -25,10 +25,19 @@ defined('ABSPATH') || exit();
 
 \add_action(
   'init',
-  fn () => \load_plugin_textdomain(
-    domain: 'ionos-essentials',
-    plugin_rel_path: basename(__DIR__) . '/ionos-essentials/languages/'
-  )
+  function () {
+    if(__DIR__ === WPMU_PLUGIN_DIR) {
+      \load_muplugin_textdomain(
+        domain: 'ionos-essentials',
+        mu_plugin_rel_path: '/ionos-essentials/languages/'
+      );
+    } else {
+      \load_plugin_textdomain(
+        domain: 'ionos-essentials',
+        plugin_rel_path: basename(__DIR__) . '/ionos-essentials/languages/'
+      );
+    }
+  }
 );
 
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';
