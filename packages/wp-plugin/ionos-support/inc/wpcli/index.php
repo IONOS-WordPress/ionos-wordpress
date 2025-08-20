@@ -40,8 +40,10 @@ const WPCLI_URL = 'https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar
 
 const WPCLI_REST_NAMESPACE = 'ionos/support/wpcli/v1';
 const WPCLI_REST_ROUTE_EXEC = '/exec';
+const WPCLI_REST_ROUTE_UNSERIALIZE = '/unserialize';
+const WPCLI_REST_ROUTE_SERIALIZE = '/serialize';
 
-\add_action('rest_api_init', fn() =>
+\add_action('rest_api_init', function() {
   \register_rest_route(WPCLI_REST_NAMESPACE, WPCLI_REST_ROUTE_EXEC, [
     'methods' => 'POST',
     'callback' => function (\WP_REST_Request $request) {
@@ -87,8 +89,20 @@ const WPCLI_REST_ROUTE_EXEC = '/exec';
         },
       ],
     ],
-  ])
-);
+  ]);
+
+\register_rest_route(WPCLI_REST_NAMESPACE, WPCLI_REST_ROUTE_SERIALIZE, [
+    'methods' => 'POST',
+    'callback' => function (\WP_REST_Request $request) {
+      $data = $request->get_json_params();
+
+      $serialized = serialize($data);
+
+      \wp_send_json_success($serialized);
+    },
+    'permission_callback' => '__return_true',
+  ]);
+});
 
 function _wpcli($command) {
   $descriptors = [
@@ -142,6 +156,8 @@ function _wpcli($command) {
         'VERSION' => $WPCLI_VERSION,
         'REST_NAMESPACE' => WPCLI_REST_NAMESPACE,
         'REST_ROUTE_EXEC' => WPCLI_REST_ROUTE_EXEC,
+        'REST_ROUTE_SERIALIZE' => WPCLI_REST_ROUTE_SERIALIZE,
+        'REST_ROUTE_UNSERIALIZE' => WPCLI_REST_ROUTE_UNSERIALIZE,
       ])
     ),
   );

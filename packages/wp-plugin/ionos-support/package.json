@@ -1,6 +1,7 @@
 {
   "name": "@ionos-wordpress/support",
   "version": "1.0.0",
+  "private": true,
   "devDependencies": {
     "@ionos-wordpress/rector-php": "workspace:*",
     "@ionos-wordpress/ecs-php": "workspace:*",

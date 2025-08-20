@@ -36,6 +36,26 @@ window.wp.cli = (config) => {
       console.groupEnd();
     }
   };
+
+  window.wp.cli.serialize = async function (data) {
+    if (data === undefined) {
+      console.error('Parameter "data" is required');
+      window.wp.cli.help();
+      return;
+    }
+
+    console.group(`serialize ${JSON.stringify(data)}`);
+
+    const response = await fetch({
+      path: `/${config.REST_NAMESPACE}${config.REST_ROUTE_SERIALIZE}`,
+      method: 'POST',
+      data,
+    });
+
+    console.info(response.data);
+    console.groupEnd();
+  };
+
   window.wp.cli.VERSION = config.VERSION;
   window.wp.cli.help = () =>
     console.info(`
@@ -47,6 +67,7 @@ window.wp.cli = (config) => {
     Example usage:
       wp.cli('--help')
       wp.cli('option list --json --search=ionos*')
+      wp.cli.serialize("huhu")
 
     ${config.VERSION}
   `);
