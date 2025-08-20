@@ -22,7 +22,14 @@ window.wp.cli = (config) => {
       if (response.data.stdout) {
         if (command.includes(' --json')) {
           try {
-            console.table(JSON.parse(response.data.stdout));
+            const json = JSON.parse(response.data.stdout);
+            if (Array.isArray(json)) {
+              console.table(json);
+            } else if (typeof json === 'object') {
+              console.dir(json);
+            } else {
+              console.info(response.data.stdout);
+            }
           } catch (ex) {
             console.info(response.data.stdout);
           }
