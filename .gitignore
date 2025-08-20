@@ -1,7 +1,7 @@
 node_modules
 /.pnpm-store
 /wp-env-home
-/packages/*/*/build
+/packages/*/*/*/build
 /packages/*/*/dist
 /packages/*/*/*/languages/*.json
 /packages/*/*/*/languages/*.mo
