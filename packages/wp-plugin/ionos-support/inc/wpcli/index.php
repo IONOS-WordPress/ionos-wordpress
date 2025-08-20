@@ -91,7 +91,7 @@ const WPCLI_REST_ROUTE_SERIALIZE = '/serialize';
     ],
   ]);
 
-\register_rest_route(WPCLI_REST_NAMESPACE, WPCLI_REST_ROUTE_SERIALIZE, [
+  \register_rest_route(WPCLI_REST_NAMESPACE, WPCLI_REST_ROUTE_SERIALIZE, [
     'methods' => 'POST',
     'callback' => function (\WP_REST_Request $request) {
       $data = $request->get_json_params();
@@ -102,7 +102,20 @@ const WPCLI_REST_ROUTE_SERIALIZE = '/serialize';
     },
     'permission_callback' => '__return_true',
   ]);
+
+  \register_rest_route(WPCLI_REST_NAMESPACE, WPCLI_REST_ROUTE_UNSERIALIZE, [
+    'methods' => 'POST',
+    'callback' => function (\WP_REST_Request $request) {
+      $data = $request->get_json_params();
+
+      $unserialized = unserialize($data);
+
+      \wp_send_json_success($unserialized);
+    },
+    'permission_callback' => '__return_true',
+  ]);
 });
+
 
 function _wpcli($command) {
   $descriptors = [

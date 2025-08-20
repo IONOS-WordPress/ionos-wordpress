@@ -56,6 +56,25 @@ window.wp.cli = (config) => {
     console.groupEnd();
   };
 
+  window.wp.cli.unserialize = async function (data) {
+    if (data === undefined) {
+      console.error('Parameter "data" is required');
+      window.wp.cli.help();
+      return;
+    }
+
+    console.group(`unserialize ${data}`);
+
+    const response = await fetch({
+      path: `/${config.REST_NAMESPACE}${config.REST_ROUTE_UNSERIALIZE}`,
+      method: 'POST',
+      data,
+    });
+
+    console.info(response.data);
+    console.groupEnd();
+  };
+
   window.wp.cli.VERSION = config.VERSION;
   window.wp.cli.help = () =>
     console.info(`
@@ -65,10 +84,17 @@ window.wp.cli = (config) => {
       -v, --version   Show the version
 
     Example usage:
+      # list wpcli commands
       wp.cli('--help')
+
+      # list all options starting with 'ionos'
       wp.cli('option list --json --search=ionos*')
+
+      # convert payload to serialized php
       wp.cli.serialize("huhu")
 
+      # unserialize php payload to json
+      wp.cli.unserialize('s:4:"huhu";')
     ${config.VERSION}
   `);
 };
