@@ -54,11 +54,6 @@ function render_callback(): void
                 <div class="page-tabbar__label may-have-issue-dot"><?php \esc_html_e('Tools', 'ionos-essentials'); ?></div>
               </a>
             </li>
-            <li>
-              <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="tools">
-                <div class="page-tabbar__label may-have-issue-dot"><?php \esc_html_e('Tools', 'ionos-essentials'); ?></div>
-              </a>
-            </li>
           </ul>
         </div>
         <div class="ionos_banner_buttons">
@@ -75,12 +70,12 @@ function render_callback(): void
 
 function get_ai_button(): array
 {
-  // if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
-  //   return [];
-  // }
+  if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
+    return [];
+  }
 
   $launch_completed = \get_option('extendify_onboarding_completed', false);
-  if (true) {
+  if (false === $launch_completed) {
     return [
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),
