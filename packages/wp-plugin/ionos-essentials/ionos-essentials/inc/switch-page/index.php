@@ -34,12 +34,16 @@ defined('ABSPATH') || exit();
 \add_filter(
   'wp_redirect',
   function ($location) {
+    // extendify-launch always opens switch page
     if (\admin_url('admin.php?page=extendify-launch') === $location) {
       return \admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding');
-    } elseif (\admin_url('admin.php?page=extendify-assist') === $location) {
-      return \admin_url('admin.php?page=' . Tenant::get_slug());
     }
-
+    // wp-admin and extendify dashboard redirect to our dashboard OR the default wp-admin dashboard
+    $redirects = ['wp-admin/', admin_url(), \admin_url('admin.php?page=extendify-assist')];
+    if (in_array($location, $redirects)) {
+      $show_ionos_dashboard = (\get_option('ionos_essentials_dashboard_mode', true));
+      return $show_ionos_dashboard ? \admin_url('admin.php?page=' . Tenant::get_slug()) : \admin_url();
+    }
     return $location;
   },
   10000,
