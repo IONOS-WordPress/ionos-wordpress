@@ -24,8 +24,21 @@ class Plugin {
 		if ( empty( get_option( 'ionos_loop_consent', null ) ) ) {
 			return;
 		}
+    \add_action('rest_api_init', function () {
+      \register_rest_route('ionos/essentials/loop', '/loop-data', [
+          'methods'             => 'GET',
+          'permission_callback' => function () {
+              return true;
+          },
+          'callback'            => function () {
+              $core_data = [
+                  'user' => count_users('memory')
+              ];
+              return rest_ensure_response($core_data);
+          },
+      ]);
+    });
 
-		\add_action( 'rest_api_init', [ __CLASS__, 'init_rest' ] );
 		\add_action( 'ionos_loop_init_custom_store', [ __CLASS__, 'register_custom_data_store_action' ] );
 	}
 
@@ -63,6 +76,7 @@ class Plugin {
 	 * Called on 'rest_api_init'
 	 */
 	public static function init_rest() {
+    var_dump("init_rest");
 		// $survey_controller = new SurveyApi();
 		// $survey_controller->register_rest_route();
 

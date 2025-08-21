@@ -1,16 +1,8 @@
 <?php
 
 namespace ionos\essentials\loop\rest;
+defined('ABSPATH') || exit();
 
-use ionos\essentials\loop\data\coreCommentData;
-use ionos\essentials\loop\data\coreGenericData;
-use ionos\essentials\loop\data\corePluginData;
-use ionos\essentials\loop\data\corePostData;
-use ionos\essentials\loop\data\coreThemeData;
-use ionos\essentials\loop\data\coreUserData;
-use ionos\essentials\loop\Data\CustomData;
-use ionos\essentials\loop\Data\DataProvider;
-use ionos\essentials\loop\Data\SurveyData;
 use Ionos\Library\Config;
 
 use WP_Error;
@@ -23,8 +15,8 @@ use WP_REST_Response;
  */
 class RestApiController {
 
-	const API_NAMESPACE = 'ionos/v1';
-	const API_ENDPOINT  = '/loop';
+	// const API_NAMESPACE = 'ionos/v1';
+	// const API_ENDPOINT  = '/loop';
 
 	/**
 	 * Gets the Rest API Endpoint URL.
@@ -38,67 +30,67 @@ class RestApiController {
 	/**
 	 * Registers the routes.
 	 */
-	public function register_routes() {
-		register_rest_route(
-			self::API_NAMESPACE,
-			self::API_ENDPOINT,
-			[
-				[
-					'methods'             => 'GET',
-					'callback'            => [ $this, 'get_loop' ],
-					'permission_callback' => [ $this, 'get_loop_permissions_check' ],
-				],
-				'schema' => [ $this, 'get_item_schema' ],
-			]
-		);
-	}
+	// public function register_routes() {
+	// 	register_rest_route(
+	// 		self::API_NAMESPACE,
+	// 		self::API_ENDPOINT,
+	// 		[
+	// 			[
+	// 				'methods'             => 'GET',
+	// 				'callback'            => [ $this, 'get_loop' ],
+	// 				'permission_callback' => [ $this, 'get_loop_permissions_check' ],
+	// 			],
+	// 			'schema' => [ $this, 'get_item_schema' ],
+	// 		]
+	// 	);
+	// }
 
 	/**
 	 * Checks permissions for API Endpoint.
 	 *
 	 * @param WP_REST_Request $request Current request.
 	 */
-	public function get_loop_permissions_check( $request ) {
-		if ( ! is_ssl() ) {
-			return new WP_Error( 'rest_forbidden_ssl', esc_html__( 'SSL required.' ), [ 'status' => 403 ] );
-		}
+	public static function get_loop_permissions_check( $request ) {
+		// if ( ! is_ssl() ) {
+		// 	return new WP_Error( 'rest_forbidden_ssl', esc_html__( 'SSL required.' ), [ 'status' => 403 ] );
+		// }
 
-		$remote_ip = $_SERVER['REMOTE_ADDR'];
+		// $remote_ip = $_SERVER['REMOTE_ADDR'];
 
-		// Checks if it is a valid IP address.
-		if ( filter_var( $remote_ip, FILTER_VALIDATE_IP ) === false ) {
-			return new WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
-		}
+		// // Checks if it is a valid IP address.
+		// if ( filter_var( $remote_ip, FILTER_VALIDATE_IP ) === false ) {
+		// 	return new WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
+		// }
 
-		// Checks if the request comes from IPv4.
-		if ( filter_var( $remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) !== false ) {
-			$ip_allowlist = Config::get( 'collector.allowlist.ipv4' );
+		// // Checks if the request comes from IPv4.
+		// if ( filter_var( $remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) !== false ) {
+		// 	$ip_allowlist = Config::get( 'collector.allowlist.ipv4' );
 
-			if ( is_array( $ip_allowlist ) === false || $this->ipv4_in_allowlist( $remote_ip, $ip_allowlist ) === false ) {
-				return new WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
-			}
-		}
+		// 	if ( is_array( $ip_allowlist ) === false || $this->ipv4_in_allowlist( $remote_ip, $ip_allowlist ) === false ) {
+		// 		return new WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
+		// 	}
+		// }
 
-		// Checks if the request comes from IPv6.
-		if ( filter_var( $remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) !== false ) {
-			$ip_allowlist = Config::get( 'collector.allowlist.ipv6' );
+		// // Checks if the request comes from IPv6.
+		// if ( filter_var( $remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) !== false ) {
+		// 	$ip_allowlist = Config::get( 'collector.allowlist.ipv6' );
 
-			if ( is_array( $ip_allowlist ) === false || $this->ipv6_in_allowlist( $remote_ip, $ip_allowlist ) === false ) {
-				return new WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
-			}
-		}
+		// 	if ( is_array( $ip_allowlist ) === false || $this->ipv6_in_allowlist( $remote_ip, $ip_allowlist ) === false ) {
+		// 		return new WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
+		// 	}
+		// }
 
-		// Checks if the Authorization header is set and public key is available.
-		$authorization_header = $request->get_header( 'X-Authorization' );
-		$public_key           = $this->get_public_key();
-		if ( $authorization_header === null || $public_key === null ) {
-			return new WP_Error( 'rest_forbidden', esc_html__( 'Unauthorized.' ), [ 'status' => 401 ] );
-		}
+		// // Checks if the Authorization header is set and public key is available.
+		// $authorization_header = $request->get_header( 'X-Authorization' );
+		// $public_key           = $this->get_public_key();
+		// if ( $authorization_header === null || $public_key === null ) {
+		// 	return new WP_Error( 'rest_forbidden', esc_html__( 'Unauthorized.' ), [ 'status' => 401 ] );
+		// }
 
-		// Checks if the given token is valid and not outdated.
-		if ( $this->is_valid_authorization_header( $authorization_header, $public_key ) === false ) {
-			return new WP_Error( 'rest_forbidden', esc_html__( 'Unauthorized.' ), [ 'status' => 401 ] );
-		}
+		// // Checks if the given token is valid and not outdated.
+		// if ( $this->is_valid_authorization_header( $authorization_header, $public_key ) === false ) {
+		// 	return new WP_Error( 'rest_forbidden', esc_html__( 'Unauthorized.' ), [ 'status' => 401 ] );
+		// }
 
 		return true;
 	}
@@ -267,43 +259,43 @@ class RestApiController {
 	 *
 	 * @return WP_Error|WP_HTTP_Response|WP_REST_Response
 	 */
-	public function get_loop() {
+	public static function get_loop() {
 		$core_data = [
-			'generic' => GenericData::class,
-			'user'    => UserData::class,
-			'theme'   => ThemeData::class,
-			'plugin'  => PluginData::class,
-			'post'    => PostData::class,
-			'comment' => CommentData::class,
-			'surveys' => SurveyData::class,
+			// 'generic' => GenericData::class,
+			'user'    => count_users('memory'),
+			// 'theme'   => ThemeData::class,
+			// 'plugin'  => PluginData::class,
+			// 'post'    => PostData::class,
+			// 'comment' => CommentData::class,
+			// 'surveys' => SurveyData::class,
 		];
 
-		$providers = [];
-		$data      = [];
+		// $providers = [];
+		// $data      = [];
 
-		foreach ( $core_data as $key => $data_provider ) {
-			$providers[ $key ] = new $data_provider();
-		}
+		// foreach ( $core_data as $key => $data_provider ) {
+		// 	$providers[ $key ] = new $data_provider();
+		// }
 
-		$option_keys = get_option( 'ionos_loop', [] );
+		// $option_keys = get_option( 'ionos_loop', [] );
 
-		if ( is_array( $option_keys ) ) {
-			foreach ( $option_keys as $option_key ) {
-				$providers[ $option_key ] = new CustomData( $option_key );
-			}
-		} else {
-			update_option( 'ionos_loop', [] );
-		}
+		// if ( is_array( $option_keys ) ) {
+		// 	foreach ( $option_keys as $option_key ) {
+		// 		$providers[ $option_key ] = new CustomData( $option_key );
+		// 	}
+		// } else {
+		// 	update_option( 'ionos_loop', [] );
+		// }
 
-		/**
-		 * Collecting the data of all Data Providers.
-		 *
-		 * @var DataProvider[] $providers
-		 */
-		foreach ( $providers as $key => $provider ) {
-			$data[ $key ] = $provider->get_data();
-		}
+		// /**
+		//  * Collecting the data of all Data Providers.
+		//  *
+		//  * @var DataProvider[] $providers
+		//  */
+		// foreach ( $providers as $key => $provider ) {
+		// 	$data[ $key ] = $provider->get_data();
+		// }
 
-		return rest_ensure_response( $data );
+		// return rest_ensure_response( $data );
 	}
 }
