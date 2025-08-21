@@ -12,8 +12,9 @@ require_once __DIR__ . '/class-plugin.php';
  * Add consent action on activation.
  */
 \add_action('init', function () {
-  if ( get_option( 'ionos_loop_consent' ) === false ) {
-    add_option( 'ionos_loop_consent', true );
+
+  if ( \get_option( 'ionos_loop_consent' ) != '1' ) {
+    add_option( 'ionos_loop_consent', '1' );
   }
 
   Plugin::init();
