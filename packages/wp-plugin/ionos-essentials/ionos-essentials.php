@@ -29,12 +29,12 @@ defined('ABSPATH') || exit();
     if(__DIR__ === WPMU_PLUGIN_DIR) {
       \load_muplugin_textdomain(
         domain: 'ionos-essentials',
-        mu_plugin_rel_path: '/ionos-essentials/languages/'
+        mu_plugin_rel_path: 'ionos-essentials/languages/'
       );
     } else {
       \load_plugin_textdomain(
         domain: 'ionos-essentials',
-        plugin_rel_path: basename(__DIR__) . '/ionos-essentials/languages/'
+        plugin_rel_path: 'ionos-essentials/ionos-essentials/languages/'
       );
     }
   }
