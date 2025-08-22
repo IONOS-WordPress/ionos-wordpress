@@ -1,0 +1,7 @@
+/*
+  disable "Site Assistant" tour in extendify helpcenter / tours
+  since it breaks access to the admin dashboard
+*/
+.extendify-help-center *[data-extendify-tour-id="site-assistant-tour"] {
+  display: none;
+}
