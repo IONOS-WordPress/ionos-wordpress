@@ -26,11 +26,8 @@ defined('ABSPATH') || exit();
 \add_action(
   'init',
   function () {
-    if(__DIR__ === WPMU_PLUGIN_DIR) {
-      \load_muplugin_textdomain(
-        domain: 'ionos-essentials',
-        mu_plugin_rel_path: 'ionos-essentials/languages/'
-      );
+    if (__DIR__ === WPMU_PLUGIN_DIR) {
+      \load_muplugin_textdomain(domain: 'ionos-essentials', mu_plugin_rel_path: 'ionos-essentials/languages/');
     } else {
       \load_plugin_textdomain(
         domain: 'ionos-essentials',
