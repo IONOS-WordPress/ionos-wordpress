@@ -1,0 +1,180 @@
+{
+  "generic": {
+    "locale": "fr_FR",
+    "blog_public": true,
+    "market": "FR",
+    "tenant": "ionos",
+    "core_version": "6.8.1",
+    "php_version": "8.1",
+    "installed_themes": 5,
+    "installed_plugins": 22,
+    "instance_created": 1753077000,
+    "last_login": 1753077657,
+    "permalink_structure": "/%postname%/",
+    "siteurl": "https://example.com",
+    "home": "https://example.com"
+  },
+  "user": {
+    "total_users": 1,
+    "avail_roles": {
+      "none": 0,
+      "administrator": 1
+    }
+  },
+  "active_theme": [
+    {
+      "id": "cityline",
+      "version": "1.0.16",
+      "parent_theme_slug": null,
+      "auto_update": true
+    }
+  ],
+  "active_plugins": [
+    {
+      "plugin_slug": "all-in-one-seo-pack\/all_in_one_seo_pack",
+      "version": "4.8.5",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "ionos-assistant",
+      "version": "9.1.3",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "cv-demo-importer",
+      "version": "1.0.6",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "elementor",
+      "version": "3.30.2",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "essential-addons-for-elementor-lite\/essential_adons_elementor",
+      "version": "6.2.1",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "essential-blocks",
+      "version": "5.5.3",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "extendify",
+      "version": "1.19.6",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "ionos-journey",
+      "version": "3.0.2",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "kubio\/plugin",
+      "version": "2.6.3",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "ionos-loop",
+      "version": "2.1.7",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "ionos-marketplace",
+      "version": "2.3.0",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "ionos-navigation",
+      "version": "2.1.6",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "ionos-performance",
+      "version": "3.0.2",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "royal-elementor-addons\/wpr-addons",
+      "version": "1.7.1027",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "ionos-security",
+      "version": "2.5.6",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "ionos-sso",
+      "version": "2.2.4",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "01-ext-ion2hs971",
+      "version": "1.0.0",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "astra-sites",
+      "version": "4.4.31",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "templately",
+      "version": "3.2.8",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "header-footer-elementor",
+      "version": "2.4.4",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "wpforms-lite\/wpforms",
+      "version": "1.9.6",
+      "auto_update": true
+    },
+    {
+      "plugin_slug": "yoast-test-helper",
+      "version": "1.18",
+      "auto_update": true
+    }
+  ],
+  "posts": [
+    {
+      "type": "post",
+      "count": 3
+    },
+    {
+      "type": "page",
+      "count": 9
+    }
+  ],
+  "comments": {
+    "total": 0,
+    "comments_active": true
+  },
+  "events": [
+    {
+      "name": "login",
+      "payload": {
+        "type": "sso"
+      },
+      "timestamp": 1753077657
+    },
+    {
+      "name": "plugin install",
+      "payload": {
+        "plugin_slug": "example-plugin",
+        "version": "1.0.0"
+      },
+      "timestamp": 1753077123
+    }
+  ],
+  "uploads": {
+    "file_count": 45,
+    "file_size": "2134123"
+  },
+  "timestamp": 1753077657
+}

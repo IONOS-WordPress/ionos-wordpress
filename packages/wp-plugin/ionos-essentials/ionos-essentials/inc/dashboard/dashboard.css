@@ -98,16 +98,31 @@ main{
   }
 }
 
+.banner_wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
 
 .ionos_next_best_actions{
   background: white;
-  padding: 2em 15px;
 
   .card{
     background: rgb(244, 247, 250);
   }
   & > *:nth-child(n+8) {
     display: none;
+  }
+
+  .ionos_next_best_actions__section{
+    padding-bottom: 0;
   }
 
   .nba-card{
@@ -185,18 +200,15 @@ main{
   }
 }
 
-.ionos_buttons_same_width{
-  container-type: inline-size !important;
-  container: ionos_buttons_same_width;
+.ionos_banner_buttons{
   display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  a{
-    min-width: 27%;
-    justify-content: flex-start;
-  }
-  a:nth-child(3n) {
-    margin-right: 0;
+  justify-content: flex-end;
+  gap: 5px;
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -228,18 +240,45 @@ main{
   }
 }
 
-.ionos_banner_buttons{
-  display: flex;
-  justify-content: flex-end;
-  gap: 5px;
+.banner-logo {
+  width: 100px;
+  padding: 20px;
+}
+
+.page-tabbar__items {
+  margin-left: 0;
 }
 
 @media (max-width: 1024px) {
   .ionos_banner_buttons{
     flex-direction: column;
+    width: 200px;
+
     .button{
       margin-right: 0;
     }
+  }
+
+  .banner-navigation {
+    width: 65%;
+  }
+}
+
+@media (max-width: 800px) {
+  .banner_wrapper {
+    flex-direction: column;;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .ionos_banner_buttons{
+    width: 100%;
+  }
+
+  .banner-navigation {
+    width: 100%;
   }
 }
 
