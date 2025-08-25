@@ -20,7 +20,7 @@ const IONOS_LOOP_DATACOLLECTOR_PUBLIC_KEY_URL = 'https://s3-de-central.profitbri
 
   @return bool true if registration was successful
 */
-function _register_datacollector_endpoint() : bool
+function _register_at_datacollector() : bool
 {
   // skip registration for wp-env/local/dev environments
   if (in_array(\wp_get_environment_type(), ['local', 'development'], true)) {

@@ -24,7 +24,7 @@ class LoopTest extends \WP_UnitTestCase {
     \activate_plugin('ionos-essentials/ionos-essentials.php');
   }
 
-  public function test_register_datacollector_endpoint() : void {
+  public function test_register_at_datacollector() : void {
     $this->markTestSkipped('to be implemented');
   }
 
