@@ -91,7 +91,7 @@ function _rest_permissions_check(WP_REST_Request $request) : bool|WP_Error {
   // Checks if the Authorization header is set and public key is available.
   $authorization_header = $request->get_header( 'X-Authorization' );
   $public_key           = _get_public_key();
-  if ( $authorization_header === null || $public_key === null ) {
+  if ( $authorization_header === null || \is_wp_error($public_key)) {
   	return new \WP_Error( 'rest_forbidden', esc_html__( 'Unauthorized.' ), [ 'status' => 401 ] );
   }
 
@@ -195,22 +195,21 @@ function _is_valid_authorization_header(string $authorization_header, string $pu
   return false;
 }
 
-function _get_public_key() : string|null
+function _get_public_key() : string|WP_Error
 {
   $cached_key = \get_transient('ionos_loop_public_key');
   if ($cached_key !== false) {
     return $cached_key;
   }
 
-  // TODO: Build the url with the selected mode/env and tenant. Implement in the library first.
   $request = \wp_remote_get(IONOS_LOOP_DATACOLLECTOR_PUBLIC_KEY_URL);
   if (\is_wp_error($request)) {
-    return null;
+    return $request;
   }
 
   $public_key = \wp_remote_retrieve_body($request);
   if (empty($public_key)) {
-    return null;
+    return new \WP_Error('no_public_key', 'empty body retrieved from ' . IONOS_LOOP_DATACOLLECTOR_PUBLIC_KEY_URL);
   }
   \set_transient('ionos_loop_public_key', $public_key, 86400);
 
