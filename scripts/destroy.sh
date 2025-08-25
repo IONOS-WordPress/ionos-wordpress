@@ -9,6 +9,10 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
+readonly WPENV_INSTALLPATH="$(realpath $(pnpm exec wp-env install-path))"
+docker run -it --rm -v $WPENV_INSTALLPATH/WordPress/wp-content/mu-plugins:/mu-plugins library/bash chmod -R a+w /mu-plugins
+docker run -it --rm -v $WPENV_INSTALLPATH/tests-WordPress/wp-content/mu-plugins:/mu-plugins library/bash chmod -R a+w /mu-plugins
+
 if find "$WP_ENV_HOME" -name "docker-compose.yml" 2>/dev/null | grep -q .; then
   echo 'y' | pnpm exec wp-env destroy
 fi
