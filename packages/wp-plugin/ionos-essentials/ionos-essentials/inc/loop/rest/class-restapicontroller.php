@@ -4,37 +4,36 @@ namespace ionos\essentials\loop\rest;
 
 defined('ABSPATH') || exit();
 
-use Ionos\Library\Config;
 use WP_Error;
 use WP_HTTP_Response;
 use WP_REST_Request;
 use WP_REST_Response;
+
+use const ionos\essentials\loop\IONOS_LOOP_REST_ENDPOINT;
+use const ionos\essentials\loop\IONOS_LOOP_REST_NAMESPACE;
 
 /**
  * Controller for the RestApi.
  */
 class RestApiController
 {
-  // const API_NAMESPACE = 'ionos/v1';
-  // const API_ENDPOINT  = '/loop';
-
-  /**
-   * Gets the Rest API Endpoint URL.
-   *
-   * @return string
-   */
-  public static function get_endpoint_url()
-  {
-    return get_home_url() . '/index.php?rest_route=/ionos/essentials/loop/v1/loop-data';
-  }
+  // /**
+  //  * Gets the Rest API Endpoint URL.
+  //  *
+  //  * @return string
+  //  */
+  // public static function get_endpoint_url()
+  // {
+  //   return get_home_url() . '/index.php?rest_route=' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_ENDPOINT;
+  // }
 
   /**
    * Registers the routes.
    */
   // public function register_routes() {
   // 	register_rest_route(
-  // 		self::API_NAMESPACE,
-  // 		self::API_ENDPOINT,
+  // 		IONOS_LOOP_REST_NAMESPACE,
+  // 		IONOS_LOOP_REST_ENDPOINT,
   // 		[
   // 			[
   // 				'methods'             => 'GET',

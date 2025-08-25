@@ -12,8 +12,11 @@
 
 namespace ionos\essentials\migration;
 
+use function ionos\essentials\loop\_register_datacollector_endpoint;
+
 defined('ABSPATH') || exit();
 
+use const ionos\essentials\loop\IONOS_LOOP_CONSENT_OPTION;
 use const ionos\essentials\PLUGIN_FILE;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;
@@ -127,6 +130,18 @@ function _install()
       foreach ($users as $user) {
         \update_user_meta($user->ID, 'ionos_popup_after_timestamp', time()+60);
       }
+
+      // migrate ionos_loop_consent option to a true bool value
+      $ionos_loop_consent_given = \get_option('ionos_loop_consent', false);
+      \delete_option('ionos_loop_consent');
+      \add_option(IONOS_LOOP_CONSENT_OPTION, $ionos_loop_consent_given === '1');
+
+      // @TODO: do we need to also migrate the ipv4* options of loop ?
+      // => were do they come from (=> installatron) ?
+      // are they the same as in sso ?
+
+      // since we changed the data collector url we need to tell that the datacollector once
+      _register_datacollector_endpoint();
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }

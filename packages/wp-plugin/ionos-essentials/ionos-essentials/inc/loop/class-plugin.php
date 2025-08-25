@@ -20,7 +20,7 @@ class Plugin
   public static function init()
   {
 
-    \add_action('ionos_loop_consent_given', [__CLASS__, 'register_at_data_collector']);
+    // \add_action('ionos_loop_consent_given', [__CLASS__, 'register_at_data_collector']);
 
     if (empty(get_option('ionos_loop_consent', null))) {
       return;
@@ -43,36 +43,36 @@ class Plugin
     \add_action('ionos_loop_init_custom_store', [__CLASS__, 'register_custom_data_store_action']);
   }
 
-  /**
-   * Registers at the data collector.
-   */
-  public static function register_at_data_collector()
-  {
-    update_option('ionos_loop_consent', true);
+  // /**
+  //  * Registers at the data collector.
+  //  */
+  // public static function register_at_data_collector()
+  // {
+  //   update_option('ionos_loop_consent', true);
 
-    if (in_array(wp_get_environment_type(), ['local', 'development'], true)) {
-      return;
-    }
+  //   if (in_array(wp_get_environment_type(), ['local', 'development'], true)) {
+  //     return;
+  //   }
 
-    $http_args = [
-      //phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
-      'body'    => json_encode([
-        'url' => RestApiController::get_endpoint_url(),
-      ]),
-      'headers' => [
-        'content-type' => 'application/json',
-      ],
-    ];
+  //   $http_args = [
+  //     //phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
+  //     'body'    => json_encode([
+  //       'url' => RestApiController::get_endpoint_url(),
+  //     ]),
+  //     'headers' => [
+  //       'content-type' => 'application/json',
+  //     ],
+  //   ];
 
-    $data_collector_url = "https:\/\/webapps-loop.hosting.ionos.com"; //Config::get( 'collector.url' )
-    if (is_string($data_collector_url)) {
-      $response = wp_remote_post($data_collector_url . '/api/register', $http_args);
+  //   $data_collector_url = "https:\/\/webapps-loop.hosting.ionos.com"; //Config::get( 'collector.url' )
+  //   if (is_string($data_collector_url)) {
+  //     $response = wp_remote_post($data_collector_url . '/api/register', $http_args);
 
-      if (is_wp_error($response)) {
-        echo esc_html($response->get_error_message());
-      }
-    }
-  }
+  //     if (is_wp_error($response)) {
+  //       echo esc_html($response->get_error_message());
+  //     }
+  //   }
+  // }
 
   /**
    * Inits the Rest API.
