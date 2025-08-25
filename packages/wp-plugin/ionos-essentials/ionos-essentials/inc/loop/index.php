@@ -10,7 +10,7 @@ defined('ABSPATH') || exit();
 
 // option to keep last datacollector access timestamp
 const IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS_OPTION = 'ionos-essentials-loop-datacollector-last-access';
-const IONOS_LOOP_REST_NAMESPACE = '/ionos/essentials/loop/v1';
+const IONOS_LOOP_REST_NAMESPACE = 'ionos/essentials/loop/v1';
 const IONOS_LOOP_REST_ENDPOINT = '/loop-data';
 const IONOS_LOOP_DATACOLLECTOR_REGISTRATION_URL = 'https://webapps-loop.hosting.ionos.com/api/register';
 const IONOS_LOOP_DATACOLLECTOR_PUBLIC_KEY_URL = 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/config/loop/public-key.pem';
@@ -47,7 +47,10 @@ function _register_at_datacollector() : bool
 }
 
 \add_action('rest_api_init', function () {
-  \register_rest_route('ionos/essentials/loop/v1', '/loop-data', [
+  \register_rest_route(
+    IONOS_LOOP_REST_NAMESPACE,
+    IONOS_LOOP_REST_ENDPOINT,
+    [
     'methods'             => WP_REST_Server::READABLE,
     'permission_callback' => '__return_true', //__NAMESPACE__ . '\_rest_permissions_check ',
     'callback'            => __NAMESPACE__ . '\_rest_loop_data',
