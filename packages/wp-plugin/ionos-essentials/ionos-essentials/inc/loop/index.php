@@ -53,30 +53,10 @@ function _register_at_datacollector() : bool
     [
     'methods'             => WP_REST_Server::READABLE,
     'permission_callback' => '__return_true', //__NAMESPACE__ . '\_rest_permissions_check ',
-    'callback'            => __NAMESPACE__ . '\_rest_loop_data',
-    // @TODO: do we want to apply the schema to the endpoint ?
-    // 'schema' => [ __NAMESPACE__ . '\_get_item_schema' ],
-  ]);
+    'callback'            => __NAMESPACE__ . '\_rest_loop_data'
+    ]
+  );
 });
-
-function _get_item_schema() : array {
-  // @TODO : implement schema
-
-  $schema = [
-    '$schema'    => 'http://json-schema.org/draft-04/schema#',
-    'title'      => 'loop_data',
-    'type'       => 'object',
-    'properties' => [
-      'user' => [
-        'description' => __('User data', 'ionos-essentials'),
-        'type'        => 'object',
-        'context'     => ['view', 'edit', 'embed'],
-      ],
-    ],
-  ];
-
-  return $schema;
-}
 
 function _rest_permissions_check(WP_REST_Request $request) : bool|WP_Error {
   // @TODO: users cannot disable ssl - do we need that check ??
