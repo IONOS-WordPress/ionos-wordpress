@@ -5,89 +5,14 @@ namespace ionos\essentials\loop;
 defined('ABSPATH') || exit();
 
 use ionos\essentials\loop\data\CustomDataStore;
-use ionos\essentials\loop\rest\RestApiController;
 
-/**
- * Main class of the plugin.
- */
 class Plugin
 {
-  /**
-   * Inits the plugin.
-   *
-   * Called on 'init'
-   */
   public static function init()
   {
-
-    // \add_action('ionos_loop_consent_given', [__CLASS__, 'register_at_data_collector']);
-
-    if (empty(get_option('ionos_loop_consent', null))) {
-      return;
-    }
-    \add_action('rest_api_init', function () {
-      \register_rest_route('ionos/essentials/loop/v1', '/loop-data', [
-        'methods'             => 'GET',
-        'permission_callback' => function () {
-          return true;
-        },
-        'callback'            => function () {
-          $core_data = [
-            'user' => count_users('memory'),
-          ];
-          return rest_ensure_response($core_data);
-        },
-      ]);
-    });
-
     \add_action('ionos_loop_init_custom_store', [__CLASS__, 'register_custom_data_store_action']);
   }
 
-  // /**
-  //  * Registers at the data collector.
-  //  */
-  // public static function register_at_data_collector()
-  // {
-  //   update_option('ionos_loop_consent', true);
-
-  //   if (in_array(wp_get_environment_type(), ['local', 'development'], true)) {
-  //     return;
-  //   }
-
-  //   $http_args = [
-  //     //phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
-  //     'body'    => json_encode([
-  //       'url' => RestApiController::get_endpoint_url(),
-  //     ]),
-  //     'headers' => [
-  //       'content-type' => 'application/json',
-  //     ],
-  //   ];
-
-  //   $data_collector_url = "https:\/\/webapps-loop.hosting.ionos.com"; //Config::get( 'collector.url' )
-  //   if (is_string($data_collector_url)) {
-  //     $response = wp_remote_post($data_collector_url . '/api/register', $http_args);
-
-  //     if (is_wp_error($response)) {
-  //       echo esc_html($response->get_error_message());
-  //     }
-  //   }
-  // }
-
-  /**
-   * Inits the Rest API.
-   *
-   * Called on 'rest_api_init'
-   */
-  public static function init_rest()
-  {
-    var_dump('init_rest');
-    // $survey_controller = new SurveyApi();
-    // $survey_controller->register_rest_route();
-
-    $controller = new RestApiController();
-    $controller->register_routes();
-  }
 
   /**
    * Registers a custom data store via action.

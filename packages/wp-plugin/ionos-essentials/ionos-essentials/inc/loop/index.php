@@ -2,9 +2,11 @@
 
 namespace ionos\essentials\loop;
 
-defined('ABSPATH') || exit();
+use WP_Error;
+use WP_REST_Request;
+use WP_REST_Server;
 
-require_once __DIR__ . '/class-plugin.php';
+defined('ABSPATH') || exit();
 
 // loop consent option (true|false) from user / legacy loop plugin
 const IONOS_LOOP_CONSENT_OPTION = 'ionos-essentials-loop-consent';
@@ -13,23 +15,7 @@ const IONOS_LOOP_LAST_DATACOLLECTOR_ACCESS_OPTION = 'ionos-essentials-loop-last-
 const IONOS_LOOP_REST_NAMESPACE = '/ionos/essentials/loop/v1';
 const IONOS_LOOP_REST_ENDPOINT = '/loop-data';
 const IONOS_LOOP_DATACOLLECTOR_REGISTRATION_URL = 'https://webapps-loop.hosting.ionos.com/api/register';
-
-/**
- * Add consent action on activation.
- */
-\add_action('init', function () {
-
-  if (\get_option('ionos_loop_consent') != '1') {
-    add_option('ionos_loop_consent', '1');
-  }
-
-  Plugin::init();
-
-  // \add_action('ionos_loop_consent_given', [Plugin::class, 'register_at_data_collector']);
-  if ( \get_option(IONOS_LOOP_CONSENT_OPTION, false) === true) {
-    _register_datacollector_endpoint();
-  }
-});
+const IONOS_LOOP_DATACOLLECTOR_PUBLIC_KEY_URL = 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/config/loop/public-key.pem';
 
 /*
   registers our endpoint at the data collector
@@ -62,4 +48,203 @@ function _register_datacollector_endpoint() : bool
   return ! \is_wp_error($response);
 }
 
-// register_activation_hook( __FILE__, '\ionos\essentials\loop\ionos_add_consent_action' );
+\add_action('rest_api_init', function () {
+  if ( \get_option(IONOS_LOOP_CONSENT_OPTION, false) === false) {
+    return;
+  }
+
+  \register_rest_route('ionos/essentials/loop/v1', '/loop-data', [
+    'methods'             => WP_REST_Server::READABLE,
+    'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
+    'callback'            => __NAMESPACE__ . '\_rest_loop_data',
+    // @TODO: do we want to apply the schema to the endpoint ?
+    // 'schema' => [ __NAMESPACE__ . '\_get_item_schema' ],
+  ]);
+});
+
+function _get_item_schema() : array {
+  // @TODO : implement schema
+
+  $schema = [
+    '$schema'    => 'http://json-schema.org/draft-04/schema#',
+    'title'      => 'loop_data',
+    'type'       => 'object',
+    'properties' => [
+      'user' => [
+        'description' => __('User data', 'ionos-essentials'),
+        'type'        => 'object',
+        'context'     => ['view', 'edit', 'embed'],
+      ],
+    ],
+  ];
+
+  return $schema;
+}
+
+function _rest_permissions_check(WP_REST_Request $request) : bool|WP_Error {
+  // @TODO: users cannot disable ssl - do we need that check ??
+  if ( ! is_ssl() ) {
+  	return new \WP_Error( 'rest_forbidden_ssl', esc_html__( 'SSL required.' ), [ 'status' => 403 ] );
+  }
+
+  $remote_ip = $_SERVER['REMOTE_ADDR'];
+
+  // Checks if it is a valid IP address.
+  if ( !filter_var( $remote_ip, FILTER_VALIDATE_IP ) ) {
+  	return new \WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
+  }
+
+  // Checks if the request comes from IPv4.
+  if ( !filter_var( $remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 )) {
+  	$ip_allowlist = \get_option( 'collector.allowlist.ipv4', [] );
+
+  	if ( !_ipv4_in_allowlist( $remote_ip, $ip_allowlist )) {
+  		return new \WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
+  	}
+  }
+
+  // Checks if the request comes from IPv6.
+  if ( !filter_var( $remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 )) {
+  	$ip_allowlist = \get_option( 'collector.allowlist.ipv6', [] );
+
+  	if ( !_ipv6_in_allowlist( $remote_ip, $ip_allowlist ) ) {
+  		return new \WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
+  	}
+  }
+
+  // Checks if the Authorization header is set and public key is available.
+  $authorization_header = $request->get_header( 'X-Authorization' );
+  $public_key           = _get_public_key();
+  if ( $authorization_header === null || $public_key === null ) {
+  	return new \WP_Error( 'rest_forbidden', esc_html__( 'Unauthorized.' ), [ 'status' => 401 ] );
+  }
+
+  // Checks if the given token is valid and not outdated.
+  if ( !_is_valid_authorization_header( $authorization_header, $public_key ) ) {
+  	return new \WP_Error( 'rest_forbidden', esc_html__( 'Unauthorized.' ), [ 'status' => 401 ] );
+  }
+
+  return true;
+}
+
+function _ipv4_in_allowlist(string $ipv4, array $allow_list) : bool
+{
+  foreach ($allow_list as $cidr) {
+    if (_ipv4_in_cidr($ipv4, $cidr) === true) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function _ipv6_in_allowlist(string $ipv6, array $allow_list) : bool
+{
+  foreach ($allow_list as $cidr) {
+    if (_ipv6_in_cidr($ipv6, $cidr) === true) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function _ipv4_in_cidr(string $ipv4, string $cidr) : bool
+{
+  list($subnet, $mask)    = explode('/', $cidr);
+  $subnet_addr            = ip2long($subnet);
+  $ip_addr                = ip2long($ipv4);
+  $mask_addr              = -1 << (32 - $mask);
+  return ($subnet_addr & $mask_addr) === ($ip_addr & $mask_addr);
+}
+
+function _ipv6_in_cidr(string $ipv6, string $cidr) : bool
+{
+  list($subnet_address, $subnet_mask) = explode('/', $cidr, 2);
+
+  if (filter_var(
+    $subnet_address,
+    FILTER_VALIDATE_IP,
+    FILTER_FLAG_IPV6
+  ) === false || $subnet_mask === null || $subnet_mask < 0 || $subnet_mask > 128) {
+    return false;
+  }
+
+  $subnet  = inet_pton($subnet_address);
+  $address = inet_pton($ipv6);
+
+  $binary_mask = str_repeat('f', $subnet_mask / 4);
+  $binary_mask = str_pad($binary_mask, 32, '0');
+  $binary_mask = pack('H*', $binary_mask);
+
+  $address = match($subnet_mask % 4) {
+    0 => $address,
+    1 => $address . '8',
+    2 => $address . 'c',
+    3 => $address . 'e',
+  };
+
+  return ($address & $binary_mask) === $subnet;
+}
+
+function _is_valid_authorization_header(string $authorization_header, string $public_key) : bool
+{
+  $auth_token = str_replace('Bearer ', '', $authorization_header);
+  $token_data = explode('.', $auth_token);
+
+  if (count($token_data) !== 2) {
+    return false;
+  }
+
+  // The given token contains the data and signature seperated with a '.'.
+  $data      = $token_data[0];
+  $signature = hex2bin($token_data[1]);
+
+  if ($signature === false) {
+    return false;
+  }
+
+  // Validate the given data using the signature and public key.
+  $valid = openssl_verify($data, $signature, $public_key, 'sha256WithRSAEncryption');
+
+  if ($valid === 1) {
+    $timestamp         = intval(base64_decode($data)); // phpcs:ignore
+    $current_timestamp = time();
+
+    // Checks if the key is not older than 60 seconds.
+    $time_difference = $current_timestamp - $timestamp;
+    if ($time_difference >= 0 && $time_difference < 60) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function _get_public_key() : string|null
+{
+  $cached_key = \get_transient('ionos_loop_public_key');
+  if ($cached_key !== false) {
+    return $cached_key;
+  }
+
+  // TODO: Build the url with the selected mode/env and tenant. Implement in the library first.
+  $request = \wp_remote_get(IONOS_LOOP_DATACOLLECTOR_PUBLIC_KEY_URL);
+  if (\is_wp_error($request)) {
+    return null;
+  }
+
+  $public_key = \wp_remote_retrieve_body($request);
+  if (empty($public_key)) {
+    return null;
+  }
+  \set_transient('ionos_loop_public_key', $public_key, 86400);
+
+  return $public_key;
+}
+
+function _rest_loop_data(WP_REST_Request $request) : \WP_REST_Response {
+  // @TODO: this is yours, Denise
+  $core_data = [
+    'user' => count_users('memory'),
+  ];
+  return \rest_ensure_response($core_data);
+}
