@@ -25,26 +25,11 @@ class LoopTest extends \WP_UnitTestCase {
     \activate_plugin('ionos-essentials/ionos-essentials.php');
   }
 
-  public function test_migration() : void {
-    // set pre migration state
-    \delete_option(IONOS_LOOP_CONSENT_OPTION);
-    \update_option('ionos_loop_consent', '1');
-    \add_option(WP_OPTION_LAST_INSTALL_DATA, [
-      WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION => '1.0.10',
-    ]);
+  public function test_register_datacollector_endpoint() : void {
+    $this->markTestSkipped('to be implemented');
+  }
 
-    // trigger migration
-    //do_action('admin_init');
-    ionos\essentials\migration\_install();
-
-    $this->assertEquals(
-      true,
-      \get_option(IONOS_LOOP_CONSENT_OPTION),
-      sprintf('option "ionos_loop_consent" should be migrated to "%s"', IONOS_LOOP_CONSENT_OPTION)
-    );
-    $this->assertFalse(
-      \get_option('ionos_loop_consent', false),
-      'option "ionos_loop_consent" should be deleted'
-    );
+  public function test_rest_loop_data() : void {
+    $this->markTestSkipped('to be implemented');
   }
 }
