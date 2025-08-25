@@ -9,11 +9,12 @@ namespace ionos\essentials\loop;
  *
  * @return string
  */
-function get_plugin_slug( $plugin_file ) {
-	if ( false === strpos( $plugin_file, '/' ) ) {
-		return basename( $plugin_file, '.php' );
-	}
-	return dirname( $plugin_file );
+function get_plugin_slug($plugin_file)
+{
+  if (false === strpos($plugin_file, '/')) {
+    return basename($plugin_file, '.php');
+  }
+  return dirname($plugin_file);
 }
 
 /**
@@ -25,20 +26,19 @@ function get_plugin_slug( $plugin_file ) {
  *
  * @return string|null The normalized version string or null if it does not match the format.
  */
-function normalize_version_string( $version_string, $long = false ) {
-	if ( $long === true ) {
-		$pattern = '/^(\d+\.\d+(?:\.\d+)?).*/';
-	} else {
-		$pattern = '/^(\d+\.\d+).*/';
-	}
+function normalize_version_string($version_string, $long = false)
+{
+  if ($long === true) {
+    $pattern = '/^(\d+\.\d+(?:\.\d+)?).*/';
+  } else {
+    $pattern = '/^(\d+\.\d+).*/';
+  }
 
-	$version_string = trim( $version_string );
+  $version_string = trim($version_string);
 
-	if ( ! preg_match( $pattern, $version_string ) ) {
-		return null;
-	}
+  if (! preg_match($pattern, $version_string)) {
+    return null;
+  }
 
-	return preg_replace( $pattern, '$1', $version_string );
+  return preg_replace($pattern, '$1', $version_string);
 }
-
-
