@@ -8,8 +8,6 @@ use WP_REST_Server;
 
 defined('ABSPATH') || exit();
 
-// loop consent option (true|false) from user / legacy loop plugin
-const IONOS_LOOP_CONSENT_OPTION = 'ionos_loop_consent';
 // option to keep last datacollector access timestamp
 const IONOS_LOOP_LAST_DATACOLLECTOR_ACCESS_OPTION = 'ionos-essentials-loop-last-datacollector-access';
 const IONOS_LOOP_REST_NAMESPACE = '/ionos/essentials/loop/v1';

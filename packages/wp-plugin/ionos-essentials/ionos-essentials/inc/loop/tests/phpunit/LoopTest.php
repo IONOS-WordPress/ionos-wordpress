@@ -2,7 +2,6 @@
 
 use ionos\essentials\loop;
 
-use const ionos\essentials\loop\IONOS_LOOP_CONSENT_OPTION;
 use const ionos\essentials\migration\WP_OPTION_LAST_INSTALL_DATA;
 use const ionos\essentials\migration\WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION;
 
