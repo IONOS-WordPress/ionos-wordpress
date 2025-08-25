@@ -61,14 +61,14 @@ function _register_at_datacollector() : bool
 
 function _rest_permissions_check(WP_REST_Request $request) : bool|WP_Error {
   if ( ! is_ssl() ) {
-  	return new \WP_Error( 'rest_forbidden_ssl', esc_html__( 'SSL required.' ), [ 'status' => 403 ] );
+  	return new \WP_Error( 'rest_forbidden_ssl', 'SSL required.', [ 'status' => 403 ] );
   }
 
   $remote_ip = $_SERVER['REMOTE_ADDR'];
 
   // Checks if it is a valid IP address.
   if ( !filter_var( $remote_ip, FILTER_VALIDATE_IP ) ) {
-  	return new \WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
+  	return new \WP_Error( 'rest_forbidden', 'Access forbidden.', [ 'status' => 403 ] );
   }
 
   // Checks if the request comes from IPv4.
@@ -76,7 +76,7 @@ function _rest_permissions_check(WP_REST_Request $request) : bool|WP_Error {
   	$ip_allowlist = \get_option( 'collector.allowlist.ipv4', [] );
 
   	if ( !_ipv4_in_allowlist( $remote_ip, $ip_allowlist )) {
-  		return new \WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
+  		return new \WP_Error( 'rest_forbidden', 'Access forbidden.', [ 'status' => 403 ] );
   	}
   }
 
@@ -85,7 +85,7 @@ function _rest_permissions_check(WP_REST_Request $request) : bool|WP_Error {
   	$ip_allowlist = \get_option( 'collector.allowlist.ipv6', [] );
 
   	if ( !_ipv6_in_allowlist( $remote_ip, $ip_allowlist ) ) {
-  		return new \WP_Error( 'rest_forbidden', esc_html__( 'Access forbidden.' ), [ 'status' => 403 ] );
+  		return new \WP_Error( 'rest_forbidden', 'Access forbidden.', [ 'status' => 403 ] );
   	}
   }
 
@@ -93,12 +93,12 @@ function _rest_permissions_check(WP_REST_Request $request) : bool|WP_Error {
   $authorization_header = $request->get_header( 'X-Authorization' );
   $public_key           = _get_public_key();
   if ( $authorization_header === null || \is_wp_error($public_key)) {
-  	return new \WP_Error( 'rest_forbidden', esc_html__( 'Unauthorized.' ), [ 'status' => 401 ] );
+  	return new \WP_Error( 'rest_forbidden', 'Unauthorized.', [ 'status' => 401 ] );
   }
 
   // Checks if the given token is valid and not outdated.
   if ( !_is_valid_authorization_header( $authorization_header, $public_key ) ) {
-  	return new \WP_Error( 'rest_forbidden', esc_html__( 'Unauthorized.' ), [ 'status' => 401 ] );
+  	return new \WP_Error( 'rest_forbidden', 'Unauthorized.', [ 'status' => 401 ] );
   }
 
   return true;
