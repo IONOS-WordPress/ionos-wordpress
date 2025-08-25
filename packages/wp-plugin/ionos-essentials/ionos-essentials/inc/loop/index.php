@@ -9,7 +9,7 @@ use WP_REST_Server;
 defined('ABSPATH') || exit();
 
 // loop consent option (true|false) from user / legacy loop plugin
-const IONOS_LOOP_CONSENT_OPTION = 'ionos-essentials-loop-consent';
+const IONOS_LOOP_CONSENT_OPTION = 'ionos_loop_consent';
 // option to keep last datacollector access timestamp
 const IONOS_LOOP_LAST_DATACOLLECTOR_ACCESS_OPTION = 'ionos-essentials-loop-last-datacollector-access';
 const IONOS_LOOP_REST_NAMESPACE = '/ionos/essentials/loop/v1';
@@ -55,7 +55,7 @@ function _register_datacollector_endpoint() : bool
 
   \register_rest_route('ionos/essentials/loop/v1', '/loop-data', [
     'methods'             => WP_REST_Server::READABLE,
-    'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
+    'permission_callback' => '__return_true', //__NAMESPACE__ . '\_rest_permissions_check ',
     'callback'            => __NAMESPACE__ . '\_rest_loop_data',
     // @TODO: do we want to apply the schema to the endpoint ?
     // 'schema' => [ __NAMESPACE__ . '\_get_item_schema' ],
@@ -245,6 +245,88 @@ function _rest_loop_data(WP_REST_Request $request) : \WP_REST_Response {
   // @TODO: this is yours, Denise
   $core_data = [
     'user' => count_users('memory'),
+    'theme'   => _get_themes_data(),
+    'plugin'  => _get_plugins_data(),
+    'post_and_pages'    => _get_posts_and_pages_data(),
+    'comment' => _get_comments_data(),
   ];
   return \rest_ensure_response($core_data);
+}
+
+function _get_themes_data() {
+  // Get all installed themes
+  $all_themes = wp_get_themes();
+  $total_themes = count($all_themes);
+
+  // Get the current active theme
+  $current_theme = wp_get_theme();
+
+  $parent_theme_slug = $current_theme->parent() ? $current_theme->parent()->get_stylesheet() : null;
+
+
+  $auto_update_themes = get_site_option('auto_update_themes', []);
+  $current_theme_slug = $current_theme->get_stylesheet();
+  $auto_update = in_array($current_theme_slug, $auto_update_themes, true);
+
+  return [
+      'total' => $total_themes,
+      'active_theme' => [
+          'id'                => $current_theme_slug,
+          'version'           => $current_theme->get('Version'),
+          'active'            => true,
+          'parent_theme_slug' => $parent_theme_slug,
+          'auto_update'       => $auto_update,
+          'requires_php'      => $current_theme->get('RequiresPHP') ?: null,
+          'requires_wp'       => $current_theme->get('RequiresWP') ?: null,
+      ],
+  ];
+}
+
+
+function _get_plugins_data() : array
+{
+  if ( ! function_exists('get_plugins') ) {
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+
+    $all_plugins = get_plugins();
+    $total_plugins = count($all_plugins);
+
+    $active_plugins = get_option('active_plugins', []);
+    $total_active_plugins = count($active_plugins);
+
+    return [
+        'total_installed' => $total_plugins,
+        'total_active'    => $total_active_plugins,
+    ];
+}
+
+function _get_posts_and_pages_data() : array
+{
+  $data = [];
+
+  $post_counts = wp_count_posts('post');
+  $page_counts = wp_count_posts('page');
+
+  $data['published_posts'] = isset($post_counts->publish) ? (int) $post_counts->publish : 0;
+  $data['published_pages'] = isset($page_counts->publish) ? (int) $page_counts->publish : 0;
+
+  return $data;
+}
+
+function _get_comments_data(): array
+{
+    $comments_data = [];
+
+    $comments_data['default_comment_status'] = get_option('default_comment_status');
+
+    $comment_counts = wp_count_comments();
+
+    if ($comment_counts && is_object($comment_counts)) {
+        $comments_data['total_comments'] = array_sum((array) $comment_counts);
+    } else {
+        $comments_data['total_comments'] = 0;
+    }
+
+    return $comments_data;
 }
