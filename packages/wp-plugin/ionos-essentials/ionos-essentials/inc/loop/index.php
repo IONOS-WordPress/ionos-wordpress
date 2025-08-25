@@ -51,15 +51,14 @@ function _register_at_datacollector() : bool
     IONOS_LOOP_REST_NAMESPACE,
     IONOS_LOOP_REST_ENDPOINT,
     [
-    'methods'             => WP_REST_Server::READABLE,
-    'permission_callback' => '__return_true', //__NAMESPACE__ . '\_rest_permissions_check ',
-    'callback'            => __NAMESPACE__ . '\_rest_loop_data'
+      'methods'             => WP_REST_Server::READABLE,
+      'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check ',
+      'callback'            => __NAMESPACE__ . '\_rest_loop_data'
     ]
   );
 });
 
 function _rest_permissions_check(WP_REST_Request $request) : bool|WP_Error {
-  // @TODO: users cannot disable ssl - do we need that check ??
   if ( ! is_ssl() ) {
   	return new \WP_Error( 'rest_forbidden_ssl', esc_html__( 'SSL required.' ), [ 'status' => 403 ] );
   }
