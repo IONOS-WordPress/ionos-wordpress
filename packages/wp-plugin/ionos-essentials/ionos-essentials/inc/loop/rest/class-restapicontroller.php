@@ -24,7 +24,7 @@ class RestApiController {
 	 * @return string
 	 */
 	public static function get_endpoint_url() {
-		return get_home_url() . '/index.php?rest_route=/ionos/v1/loop';
+		return get_home_url() . '/index.php?rest_route=/ionos/essentials/loop/v1/loop-data';
 	}
 
 	/**

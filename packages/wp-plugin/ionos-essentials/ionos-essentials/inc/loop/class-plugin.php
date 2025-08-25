@@ -25,7 +25,7 @@ class Plugin {
 			return;
 		}
     \add_action('rest_api_init', function () {
-      \register_rest_route('ionos/essentials/loop', '/loop-data', [
+      \register_rest_route('ionos/essentials/loop/v1', '/loop-data', [
           'methods'             => 'GET',
           'permission_callback' => function () {
               return true;
