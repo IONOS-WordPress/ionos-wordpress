@@ -8,6 +8,7 @@ use WP_REST_Server;
 
 defined('ABSPATH') || exit();
 
+const IONOS_LOOP_DATACOLLECTOR_PUBLICKEY_TRANSIENT = 'ionos-essentials-loop-datacollector-public-key';
 // option to keep last datacollector access timestamp
 const IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS_OPTION = 'ionos-essentials-loop-datacollector-last-access';
 const IONOS_LOOP_REST_NAMESPACE = 'ionos/essentials/loop/v1';
@@ -197,7 +198,7 @@ function _is_valid_authorization_header(string $authorization_header, string $pu
 
 function _get_public_key() : string|WP_Error
 {
-  $cached_key = \get_transient('ionos_loop_public_key');
+  $cached_key = \get_transient(IONOS_LOOP_DATACOLLECTOR_PUBLICKEY_TRANSIENT);
   if ($cached_key !== false) {
     return $cached_key;
   }
@@ -211,7 +212,7 @@ function _get_public_key() : string|WP_Error
   if (empty($public_key)) {
     return new \WP_Error('no_public_key', 'empty body retrieved from ' . IONOS_LOOP_DATACOLLECTOR_PUBLIC_KEY_URL);
   }
-  \set_transient('ionos_loop_public_key', $public_key, 86400);
+  \set_transient(IONOS_LOOP_DATACOLLECTOR_PUBLICKEY_TRANSIENT, $public_key, 86400);
 
   return $public_key;
 }
