@@ -70,7 +70,6 @@ if [[ "${USE[@]}" =~ e2e|react|all ]]; then
   fi
 
   # execute playwright browser installation if not already done
-  # [[ $(find ~/.cache/ms-playwright -path "*/chrome-linux/chrome" 2>/dev/null | wc -l) -eq "0" ]] && pnpm exec playwright install chromium
   pnpm exec playwright install chromium
 fi
 

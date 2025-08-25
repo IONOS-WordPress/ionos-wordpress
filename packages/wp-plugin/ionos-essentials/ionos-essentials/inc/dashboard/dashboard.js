@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     dashboard.querySelector(`[data-tab="${hash}"]`)?.click();
 
-    document.querySelector('li.current')?.classList.remove('current')
+    document.querySelector('li.current')?.classList.remove('current');
     const selector = `admin.php?page=${wpData.tenant}` + (hash === 'overview' ? '' : `#${hash}`);
     document.querySelector(`#adminmenu .wp-submenu a[href="${selector}"]`).parentElement.classList.add('current');
   }
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   }
 
-  const helpCenterLink = document.querySelector('a[data-nba-id="help-center"]');
+  const helpCenterLink = dashboard.querySelector('a[data-nba-id="help-center"]');
   if (helpCenterLink) {
     helpCenterLink.onclick = () => {
       document.querySelector('.extendify-help-center button').click();
