@@ -9,7 +9,7 @@ use WP_REST_Server;
 defined('ABSPATH') || exit();
 
 // option to keep last datacollector access timestamp
-const IONOS_LOOP_LAST_DATACOLLECTOR_ACCESS_OPTION = 'ionos-essentials-loop-last-datacollector-access';
+const IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS_OPTION = 'ionos-essentials-loop-datacollector-last-access';
 const IONOS_LOOP_REST_NAMESPACE = '/ionos/essentials/loop/v1';
 const IONOS_LOOP_REST_ENDPOINT = '/loop-data';
 const IONOS_LOOP_DATACOLLECTOR_REGISTRATION_URL = 'https://webapps-loop.hosting.ionos.com/api/register';
@@ -47,10 +47,6 @@ function _register_at_datacollector() : bool
 }
 
 \add_action('rest_api_init', function () {
-  if ( \get_option(IONOS_LOOP_CONSENT_OPTION, false) === false) {
-    return;
-  }
-
   \register_rest_route('ionos/essentials/loop/v1', '/loop-data', [
     'methods'             => WP_REST_Server::READABLE,
     'permission_callback' => '__return_true', //__NAMESPACE__ . '\_rest_permissions_check ',
@@ -240,7 +236,8 @@ function _get_public_key() : string|null
 }
 
 function _rest_loop_data(WP_REST_Request $request) : \WP_REST_Response {
-  // @TODO: this is yours, Denise
+  \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS_OPTION, time());
+
   $core_data = [
     'user' => count_users('memory'),
     'theme'   => _get_themes_data(),
