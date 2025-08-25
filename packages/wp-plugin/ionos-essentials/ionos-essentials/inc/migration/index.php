@@ -140,7 +140,7 @@ function _install()
       // => were do they come from (=> installatron) ?
       // are they the same as in sso ?
 
-      // since we changed the data collector url we need to tell that the datacollector once
+      // since we changed the data collector url we need to update tell that the datacollector once
       _register_datacollector_endpoint();
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);

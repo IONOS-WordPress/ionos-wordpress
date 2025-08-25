@@ -7,9 +7,9 @@ defined('ABSPATH') || exit();
 require_once __DIR__ . '/class-plugin.php';
 
 // loop consent option (true|false) from user / legacy loop plugin
-const IONOS_LOOP_CONSENT_OPTION = 'ionos_loop_consent';
+const IONOS_LOOP_CONSENT_OPTION = 'ionos-essentials-loop-consent';
 // option to keep last datacollector access timestamp
-const IONOS_LOOP_LAST_DATACOLLECTOR_ACCESS_OPTION = 'ionos_loop_last_datacollector_access';
+const IONOS_LOOP_LAST_DATACOLLECTOR_ACCESS_OPTION = 'ionos-essentials-loop-last-datacollector-access';
 const IONOS_LOOP_REST_NAMESPACE = '/ionos/essentials/loop/v1';
 const IONOS_LOOP_REST_ENDPOINT = '/loop-data';
 const IONOS_LOOP_DATACOLLECTOR_REGISTRATION_URL = 'https://webapps-loop.hosting.ionos.com/api/register';
