@@ -2,6 +2,10 @@
 
 namespace ionos\essentials\loop;
 
+/*
+  @TODO: describe how loop the feature works
+*/
+
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -10,7 +14,8 @@ defined('ABSPATH') || exit();
 
 const IONOS_LOOP_DATACOLLECTOR_PUBLICKEY_TRANSIENT = 'ionos-essentials-loop-datacollector-public-key';
 // option to keep last datacollector access timestamp
-const IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS_OPTION = 'ionos-essentials-loop-datacollector-last-access';
+// also used to name the cron job for re registration of our endpoint
+const IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS = 'ionos-essentials-loop-datacollector-last-access';
 const IONOS_LOOP_REST_NAMESPACE = 'ionos/essentials/loop/v1';
 const IONOS_LOOP_REST_ENDPOINT = '/loop-data';
 const IONOS_LOOP_DATACOLLECTOR_REGISTRATION_URL = 'https://webapps-loop.hosting.ionos.com/api/register';
@@ -218,7 +223,7 @@ function _get_public_key() : string|WP_Error
 }
 
 function _rest_loop_data(WP_REST_Request $request) : \WP_REST_Response {
-  \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS_OPTION, time());
+  \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $core_data = [
     'user' => count_users('memory'),
@@ -307,3 +312,5 @@ function _get_comments_data(): array
 
     return $comments_data;
 }
+
+require_once __DIR__ . '/cron.php';
