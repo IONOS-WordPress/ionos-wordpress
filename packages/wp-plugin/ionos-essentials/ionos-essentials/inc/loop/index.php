@@ -2,10 +2,7 @@
 
 namespace ionos\essentials\loop;
 
-/*
-  @TODO: describe how loop the feature works
-*/
-
+use ionos\essentials\Tenant;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -41,18 +38,17 @@ const IONOS_LOOP_ALLOW_LIST_IP6 = [
 const IONOS_LOOP_DATACOLLECTOR_PUBLICKEY_TRANSIENT = 'ionos-essentials-loop-datacollector-public-key';
 // option to keep last datacollector access timestamp
 // also used to name the cron job for re registration of our endpoint
-const IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS = 'ionos-essentials-loop-datacollector-last-access';
-const IONOS_LOOP_REST_NAMESPACE = 'ionos/essentials/loop/v1';
-const IONOS_LOOP_REST_ENDPOINT = '/loop-data';
+const IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS      = 'ionos-essentials-loop-datacollector-last-access';
+const IONOS_LOOP_REST_NAMESPACE                 = 'ionos/essentials/loop/v1';
+const IONOS_LOOP_REST_ENDPOINT                  = '/loop-data';
 const IONOS_LOOP_DATACOLLECTOR_REGISTRATION_URL = 'https://webapps-loop.hosting.ionos.com/api/register';
-const IONOS_LOOP_DATACOLLECTOR_PUBLIC_KEY_URL = 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/config/loop/public-key.pem';
+const IONOS_LOOP_DATACOLLECTOR_PUBLIC_KEY_URL   = 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/config/loop/public-key.pem';
 
 /*
   registers our endpoint at the data collector
-
   @return bool true if registration was successful
-*/
-function _register_at_datacollector() : bool
+ */
+function _register_at_datacollector(): bool
 {
   // skip registration for wp-env/local/dev environments
   if (in_array(\wp_get_environment_type(), ['local', 'development'], true)) {
@@ -62,13 +58,14 @@ function _register_at_datacollector() : bool
   $response = \wp_remote_post(
     IONOS_LOOP_DATACOLLECTOR_REGISTRATION_URL,
     [
-    'body'    => \wp_json_encode([
-      'url' => \get_home_url() . '/index.php?rest_route=' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_ENDPOINT,
-    ]),
-    'headers' => [
-      'content-type' => 'application/json',
-    ],
-  ]);
+      'body'    => \wp_json_encode([
+        'url' => \get_home_url() . '/index.php?rest_route=' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_ENDPOINT,
+      ]),
+      'headers' => [
+        'content-type' => 'application/json',
+      ],
+    ]
+  );
 
   if (! \is_wp_error($response)) {
     // @TODO : what should we do if registration failed ?
@@ -85,58 +82,71 @@ function _register_at_datacollector() : bool
     [
       'methods'             => WP_REST_Server::READABLE,
       'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
-      'callback'            => __NAMESPACE__ . '\_rest_loop_data'
+      'callback'            => __NAMESPACE__ . '\_rest_loop_data',
     ]
   );
 });
 
-function _rest_permissions_check(WP_REST_Request $request) : bool|WP_Error {
+function _rest_permissions_check(WP_REST_Request $request): bool|WP_Error
+{
   // skip permission check for wp-env/local/dev environments
   if (in_array(\wp_get_environment_type(), ['local', 'development'], true)) {
     return true;
   }
 
-  if ( ! is_ssl() ) {
-  	return new \WP_Error( 'rest_forbidden_ssl', 'SSL required.', [ 'status' => 403 ] );
+  if (! is_ssl()) {
+    return new \WP_Error('rest_forbidden_ssl', 'SSL required.', [
+      'status' => 403,
+    ]);
   }
 
   $remote_ip = $_SERVER['REMOTE_ADDR'];
 
   // Checks if it is a valid IP address.
-  if ( !filter_var( $remote_ip, FILTER_VALIDATE_IP ) ) {
-  	return new \WP_Error( 'rest_forbidden', 'Access forbidden.', [ 'status' => 403 ] );
+  if (! filter_var($remote_ip, FILTER_VALIDATE_IP)) {
+    return new \WP_Error('rest_forbidden', 'Access forbidden.', [
+      'status' => 403,
+    ]);
   }
 
   // Checks if the request comes from IPv4.
-  if ( !filter_var( $remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 )) {
-  	if ( !_ipv4_in_allowlist( $remote_ip, IONOS_LOOP_ALLOW_LIST_IP4)) {
-  		return new \WP_Error( 'rest_forbidden', 'Access forbidden.', [ 'status' => 403 ] );
-  	}
+  if (! filter_var($remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+    if (! _ipv4_in_allowlist($remote_ip, IONOS_LOOP_ALLOW_LIST_IP4)) {
+      return new \WP_Error('rest_forbidden', 'Access forbidden.', [
+        'status' => 403,
+      ]);
+    }
   }
 
   // Checks if the request comes from IPv6.
-  if ( !filter_var( $remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 )) {
-  	if ( !_ipv6_in_allowlist( $remote_ip, IONOS_LOOP_ALLOW_LIST_IP6 ) ) {
-  		return new \WP_Error( 'rest_forbidden', 'Access forbidden.', [ 'status' => 403 ] );
-  	}
+  if (! filter_var($remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+    if (! _ipv6_in_allowlist($remote_ip, IONOS_LOOP_ALLOW_LIST_IP6)) {
+      return new \WP_Error('rest_forbidden', 'Access forbidden.', [
+        'status' => 403,
+      ]);
+    }
   }
 
   // Checks if the Authorization header is set and public key is available.
-  $authorization_header = $request->get_header( 'X-Authorization' );
+  $authorization_header = $request->get_header('X-Authorization');
   $public_key           = _get_public_key();
-  if ( $authorization_header === null || \is_wp_error($public_key)) {
-  	return new \WP_Error( 'rest_forbidden', 'Unauthorized.', [ 'status' => 401 ] );
+  if ($authorization_header === null || \is_wp_error($public_key)) {
+    return new \WP_Error('rest_forbidden', 'Unauthorized.', [
+      'status' => 401,
+    ]);
   }
 
   // Checks if the given token is valid and not outdated.
-  if ( !_is_valid_authorization_header( $authorization_header, $public_key ) ) {
-  	return new \WP_Error( 'rest_forbidden', 'Unauthorized.', [ 'status' => 401 ] );
+  if (! _is_valid_authorization_header($authorization_header, $public_key)) {
+    return new \WP_Error('rest_forbidden', 'Unauthorized.', [
+      'status' => 401,
+    ]);
   }
 
   return true;
 }
 
-function _ipv4_in_allowlist(string $ipv4, array $allow_list) : bool
+function _ipv4_in_allowlist(string $ipv4, array $allow_list): bool
 {
   foreach ($allow_list as $cidr) {
     if (_ipv4_in_cidr($ipv4, $cidr) === true) {
@@ -146,7 +156,7 @@ function _ipv4_in_allowlist(string $ipv4, array $allow_list) : bool
   return false;
 }
 
-function _ipv6_in_allowlist(string $ipv6, array $allow_list) : bool
+function _ipv6_in_allowlist(string $ipv6, array $allow_list): bool
 {
   foreach ($allow_list as $cidr) {
     if (_ipv6_in_cidr($ipv6, $cidr) === true) {
@@ -156,7 +166,7 @@ function _ipv6_in_allowlist(string $ipv6, array $allow_list) : bool
   return false;
 }
 
-function _ipv4_in_cidr(string $ipv4, string $cidr) : bool
+function _ipv4_in_cidr(string $ipv4, string $cidr): bool
 {
   list($subnet, $mask)    = explode('/', $cidr);
   $subnet_addr            = ip2long($subnet);
@@ -165,7 +175,7 @@ function _ipv4_in_cidr(string $ipv4, string $cidr) : bool
   return ($subnet_addr & $mask_addr) === ($ip_addr & $mask_addr);
 }
 
-function _ipv6_in_cidr(string $ipv6, string $cidr) : bool
+function _ipv6_in_cidr(string $ipv6, string $cidr): bool
 {
   list($subnet_address, $subnet_mask) = explode('/', $cidr, 2);
 
@@ -184,7 +194,7 @@ function _ipv6_in_cidr(string $ipv6, string $cidr) : bool
   $binary_mask = str_pad($binary_mask, 32, '0');
   $binary_mask = pack('H*', $binary_mask);
 
-  $address = match($subnet_mask % 4) {
+  $address = match ($subnet_mask % 4) {
     0 => $address,
     1 => $address . '8',
     2 => $address . 'c',
@@ -194,7 +204,7 @@ function _ipv6_in_cidr(string $ipv6, string $cidr) : bool
   return ($address & $binary_mask) === $subnet;
 }
 
-function _is_valid_authorization_header(string $authorization_header, string $public_key) : bool
+function _is_valid_authorization_header(string $authorization_header, string $public_key): bool
 {
   $auth_token = str_replace('Bearer ', '', $authorization_header);
   $token_data = explode('.', $auth_token);
@@ -228,7 +238,7 @@ function _is_valid_authorization_header(string $authorization_header, string $pu
   return false;
 }
 
-function _get_public_key() : string|WP_Error
+function _get_public_key(): string|WP_Error
 {
   $cached_key = \get_transient(IONOS_LOOP_DATACOLLECTOR_PUBLICKEY_TRANSIENT);
   if ($cached_key !== false) {
@@ -249,95 +259,278 @@ function _get_public_key() : string|WP_Error
   return $public_key;
 }
 
-function _rest_loop_data(WP_REST_Request $request) : \WP_REST_Response {
+function _rest_loop_data(WP_REST_Request $request): \WP_REST_Response
+{
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $core_data = [
-    'user' => count_users('memory'),
-    'theme'   => _get_themes_data(),
-    'plugin'  => _get_plugins_data(),
-    'post_and_pages'    => _get_posts_and_pages_data(),
-    'comment' => _get_comments_data(),
+    'generic'       => _get_generic_data(),
+    'user'          => count_users('memory'),
+    'active_theme'  => _get_themes_data(),
+    'active_plugins'=> _get_plugins_data(),
+    'posts'         => _get_posts_and_pages_data(),
+    'comments'      => _get_comments_data(),
+    'events'        => _get_instance_events_data(),
+    'uploads'       => _get_uploads_data(),
+    'timestamp'     => _get_timestamp_of_data_collection(),
   ];
+
   return \rest_ensure_response($core_data);
 }
 
-function _get_themes_data() {
-  // Get all installed themes
-  $all_themes = wp_get_themes();
-  $total_themes = count($all_themes);
-
-  // Get the current active theme
-  $current_theme = wp_get_theme();
-
-  $parent_theme_slug = $current_theme->parent() ? $current_theme->parent()->get_stylesheet() : null;
-
-
-  $auto_update_themes = get_site_option('auto_update_themes', []);
-  $current_theme_slug = $current_theme->get_stylesheet();
-  $auto_update = in_array($current_theme_slug, $auto_update_themes, true);
-
+function _get_generic_data(): array
+{
   return [
-      'total' => $total_themes,
-      'active_theme' => [
-          'id'                => $current_theme_slug,
-          'version'           => $current_theme->get('Version'),
-          'active'            => true,
-          'parent_theme_slug' => $parent_theme_slug,
-          'auto_update'       => $auto_update,
-          'requires_php'      => $current_theme->get('RequiresPHP') ?: null,
-          'requires_wp'       => $current_theme->get('RequiresWP') ?: null,
-      ],
+    'locale'              => \get_locale(),
+    'blog_public'         => (bool) \get_option('blog_public'),
+    'market'              => _get_market(),
+    'tenant'              => Tenant::get_slug(),
+    'core_version'        => \get_bloginfo('version'),
+    'php_version'         => \PHP_VERSION,
+    'installed_themes'    => count(wp_get_themes()),
+    'installed_plugins'   => count(get_plugins()),
+    'instance_created'    => _get_instance_creation_date(),
+    'last_login'          => _get_last_login_date(),
+    'permalink_structure' => \get_option('permalink_structure', ''),
+    'siteurl'             => \get_option('siteurl', ''),
+    'home'                => \get_option('home', ''),
   ];
 }
 
-
-function _get_plugins_data() : array
+function _get_market(): string
 {
-  if ( ! function_exists('get_plugins') ) {
-        require_once ABSPATH . 'wp-admin/includes/plugin.php';
-    }
-
-    $all_plugins = get_plugins();
-    $total_plugins = count($all_plugins);
-
-    $active_plugins = get_option('active_plugins', []);
-    $total_active_plugins = count($active_plugins);
-
-    return [
-        'total_installed' => $total_plugins,
-        'total_active'    => $total_active_plugins,
-    ];
+  return strtolower(\get_option(Tenant::get_slug() . '_market', 'de'));
 }
 
-function _get_posts_and_pages_data() : array
+function _get_instance_creation_date(): ?int
 {
-  $data = [];
+  $saved_value = get_option('instance_creation_date');
 
+  if ($saved_value && is_numeric($saved_value) && $saved_value > 946684800) {
+    return (int) $saved_value;
+  }
+
+  $user = get_user_by('ID', 1);
+
+  if ($user) {
+    $timestamp = strtotime($user->user_registered . ' UTC');
+
+    if ($timestamp !== false) {
+      update_option('instance_creation_date', $timestamp);
+      return $timestamp;
+    }
+  }
+
+  return null;
+}
+
+function _get_last_login_date(): ?int
+{
+  $saved_timestamp = get_option('last_login_date');
+
+  if ($saved_timestamp && is_numeric($saved_timestamp) && $saved_timestamp > 946684800) {
+    return (int) $saved_timestamp;
+  }
+
+  global $wpdb;
+
+  $last_login = $wpdb->get_var("
+        SELECT meta_value
+        FROM {$wpdb->usermeta}
+        WHERE meta_key = 'last_login'
+        ORDER BY meta_value DESC
+        LIMIT 1
+    ");
+
+  if ($last_login) {
+    $timestamp = strtotime($last_login . ' UTC');
+
+    if ($timestamp !== false) {
+      update_option('last_login_date', $timestamp);
+      return $timestamp;
+    }
+  }
+
+  return null;
+}
+
+function _get_themes_data(): array
+{
+  $current_theme = wp_get_theme();
+
+  $parent_theme_slug = $current_theme->parent() ? $current_theme->parent()
+    ->get_stylesheet() : null;
+
+  $auto_update_themes = get_site_option('auto_update_themes', []);
+  $current_theme_slug = $current_theme->get_stylesheet();
+  $auto_update        = in_array($current_theme_slug, $auto_update_themes, true);
+
+  return [
+    [
+      'id'                => $current_theme_slug,
+      'version'           => $current_theme->get('Version'),
+      'parent_theme_slug' => $parent_theme_slug,
+      'auto_update'       => $auto_update,
+    ],
+  ];
+}
+
+function _get_plugins_data(): array
+{
+  if (! function_exists('get_plugins')) {
+    require_once ABSPATH . 'wp-admin/includes/plugin.php';
+  }
+
+  $all_plugins    = get_plugins();
+  $active_plugins = get_option('active_plugins', []);
+  $auto_updates   = get_site_option('auto_update_plugins', []);
+
+  $active_plugins_data = [];
+
+  foreach ($active_plugins as $plugin_slug) {
+    if (isset($all_plugins[$plugin_slug])) {
+      $plugin_data = $all_plugins[$plugin_slug];
+
+      $active_plugins_data[] = [
+        'plugin_slug' => $plugin_slug,
+        'version'     => $plugin_data['Version'],
+        'auto_update' => in_array($plugin_slug, $auto_updates),
+      ];
+    }
+  }
+
+  return $active_plugins_data;
+}
+
+function _get_posts_and_pages_data(): array
+{
   $post_counts = wp_count_posts('post');
   $page_counts = wp_count_posts('page');
 
-  $data['published_posts'] = isset($post_counts->publish) ? (int) $post_counts->publish : 0;
-  $data['published_pages'] = isset($page_counts->publish) ? (int) $page_counts->publish : 0;
+  $posts_data = [
+    [
+      'type'  => 'post',
+      'count' => isset($post_counts->publish) ? (int) $post_counts->publish : 0,
+    ],
+    [
+      'type'  => 'page',
+      'count' => isset($page_counts->publish) ? (int) $page_counts->publish : 0,
+    ],
+  ];
 
-  return $data;
+  return $posts_data;
 }
 
 function _get_comments_data(): array
 {
-    $comments_data = [];
+  $comments_data = [];
 
-    $comments_data['default_comment_status'] = get_option('default_comment_status');
+  $comment_counts = wp_count_comments();
 
-    $comment_counts = wp_count_comments();
+  if ($comment_counts && is_object($comment_counts)) {
+    $comments_data['total'] = array_sum((array) $comment_counts);
+  } else {
+    $comments_data['total'] = 0;
+  }
 
-    if ($comment_counts && is_object($comment_counts)) {
-        $comments_data['total_comments'] = array_sum((array) $comment_counts);
-    } else {
-        $comments_data['total_comments'] = 0;
-    }
+  $comments_data['comments_active'] = get_option('default_comment_status') ? true : false;
 
-    return $comments_data;
+  return $comments_data;
 }
 
 require_once __DIR__ . '/cron.php';
+
+function _get_instance_events_data(): array
+{
+  $events = get_option('instance_events', []);
+  if (! is_array($events)) {
+    return [];
+  }
+  return $events;
+}
+
+function _get_uploads_data(): array
+{
+  $uploads_dir = wp_get_upload_dir();
+  $basedir     = $uploads_dir['basedir'];
+
+  $file_count = 0;
+  $file_size  = 0;
+
+  if (! is_dir($basedir)) {
+    return [
+      'file_count' => 0,
+      'file_size'  => '0',
+    ];
+  }
+
+  $iterator = new \RecursiveIteratorIterator(
+    new \RecursiveDirectoryIterator($basedir, \RecursiveDirectoryIterator::SKIP_DOTS)
+  );
+
+  foreach ($iterator as $file) {
+    if ($file->isFile()) {
+      $file_count++;
+      $file_size += $file->getSize();
+    }
+  }
+
+  return [
+    'file_count' => $file_count,
+    'file_size'  => (string) $file_size,  // as string to match your example
+  ];
+}
+
+function _get_timestamp_of_data_collection(): int
+{
+  return time();
+}
+
+add_action('wp_login', function ($user_login, $user) {
+  // Log the login event
+  log_instance_event('login', [
+    'type' => 'default',
+  ]);  // Adjust 'type' if needed
+
+  // Update user meta with last login time in MySQL datetime format (local time)
+  $login_time = current_time('mysql');
+  update_user_meta($user->ID, 'last_login', $login_time);
+
+  // Update global last login date option (also MySQL datetime)
+  update_option('last_login_date', $login_time);
+}, 10, 2);
+
+function log_instance_event(string $name, array $payload = []): void
+{
+  $events = get_option('instance_events', []);
+
+  if (! is_array($events)) {
+    $events = [];
+  }
+
+  $events[] = [
+    'name'      => $name,
+    'payload'   => $payload,
+    'timestamp' => time(),  // current Unix timestamp (UTC)
+  ];
+
+  // Optional: limit stored events to last 100 to avoid bloating options table
+  $events = array_slice($events, -100);
+
+  update_option('instance_events', $events);
+}
+
+add_action('upgrader_process_complete', function ($upgrader_object, $options) {
+  if ($options['action'] === 'install' && $options['type'] === 'plugin') {
+    $plugin_slug = $options['plugin']; // e.g. "example-plugin/example-plugin.php"
+    $plugins     = get_plugins();
+
+    if (isset($plugins[$plugin_slug])) {
+      $plugin_data = $plugins[$plugin_slug];
+      log_instance_event('plugin install', [
+        'plugin_slug' => dirname($plugin_slug), // just folder name, e.g. "example-plugin"
+        'version'     => $plugin_data['Version'] ?? '',
+      ]);
+    }
+  }
+}, 10, 2);

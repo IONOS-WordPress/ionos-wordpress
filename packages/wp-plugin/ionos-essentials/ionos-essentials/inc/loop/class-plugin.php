@@ -13,7 +13,6 @@ class Plugin
     \add_action('ionos_loop_init_custom_store', [__CLASS__, 'register_custom_data_store_action']);
   }
 
-
   /**
    * Registers a custom data store via action.
    *
