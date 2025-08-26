@@ -62,7 +62,7 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
   \wp_enqueue_script(
     'ionos-security-js',
     \plugin_dir_url(__FILE__) . 'security.js',
-    [],
+    ["common"], // common renders the close button for dismissible notices
     filemtime(\plugin_dir_path(__FILE__) . 'security.js'),
     true
   );
