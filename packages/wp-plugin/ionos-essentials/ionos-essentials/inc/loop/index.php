@@ -350,7 +350,7 @@ function _get_last_login_date(): ?int
 
     if ($timestamp !== false) {
       update_option('last_login_date', $timestamp);
-      return $timestamp;
+      return (int) $timestamp;
     }
   }
 
