@@ -53,7 +53,7 @@ function _register_at_datacollector() : bool
     IONOS_LOOP_REST_ENDPOINT,
     [
       'methods'             => WP_REST_Server::READABLE,
-      'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check ',
+      'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
       'callback'            => __NAMESPACE__ . '\_rest_loop_data'
     ]
   );
