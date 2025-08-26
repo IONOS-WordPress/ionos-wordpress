@@ -413,11 +413,11 @@ function _get_posts_and_pages_data(): array
   $posts_data = [
     [
       'type'  => 'post',
-      'count' => isset($post_counts->publish) ? (int) $post_counts->publish : 0,
+      'count' => $post_counts->publish,
     ],
     [
       'type'  => 'page',
-      'count' => isset($page_counts->publish) ? (int) $page_counts->publish : 0,
+      'count' => $page_counts->publish,
     ],
   ];
 
@@ -430,7 +430,7 @@ function _get_comments_data(): array
 
   $comment_counts = wp_count_comments();
 
-  if ($comment_counts && is_object($comment_counts)) {
+  if ($comment_counts) {
     $comments_data['total'] = array_sum((array) $comment_counts);
   } else {
     $comments_data['total'] = 0;
