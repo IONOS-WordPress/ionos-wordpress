@@ -65,6 +65,11 @@ function _register_at_datacollector() : bool
 });
 
 function _rest_permissions_check(WP_REST_Request $request) : bool|WP_Error {
+  // skip permission check for wp-env/local/dev environments
+  if (in_array(\wp_get_environment_type(), ['local', 'development'], true)) {
+    return true;
+  }
+
   if ( ! is_ssl() ) {
   	return new \WP_Error( 'rest_forbidden_ssl', 'SSL required.', [ 'status' => 403 ] );
   }
