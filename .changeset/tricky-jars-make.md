@@ -1,5 +1,5 @@
 ---
-'@ionos-wordpress/essentials': patch
+'@ionos-wordpress/essentials': minor
 ---
 
 integrated ionos loop functionality
