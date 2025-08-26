@@ -413,11 +413,11 @@ function _get_posts_and_pages_data(): array
   $posts_data = [
     [
       'type'  => 'post',
-      'count' => $post_counts->publish,
+      'count' => (int) $post_counts->publish,
     ],
     [
       'type'  => 'page',
-      'count' => $page_counts->publish,
+      'count' => (int) $page_counts->publish,
     ],
   ];
 
