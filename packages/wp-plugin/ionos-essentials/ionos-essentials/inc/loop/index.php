@@ -12,6 +12,32 @@ use WP_REST_Server;
 
 defined('ABSPATH') || exit();
 
+// taken from https://web-hosting.s3-eu-central-1.ionoscloud.com/ionos/live/config/loop/default/config.json
+const IONOS_LOOP_ALLOW_LIST_IP4 = [
+  "10.67.48.0\/22",
+  "10.67.84.0\/22",
+  "100.68.0.0\/16",
+  "74.208.114.128\/26",
+  "74.208.114.192\/26",
+  "77.68.65.64\/26",
+  "82.165.226.0\/26",
+  "82.165.226.64\/26",
+  "88.208.254.128\/26",
+  "82.223.158.0\/26",
+  "213.171.202.197\/27",
+];
+
+const IONOS_LOOP_ALLOW_LIST_IP6 = [
+  "2607:f1c0:5c0:53::\/64",
+  "2607:f1c0:5c1:53::\/64",
+  "2001:8d8:5c0:453::\/64",
+  "2001:8d8:5c1:453::\/64",
+  "2001:ba0:5c0::\/64",
+  "2a00:da00:5c0::\/64",
+  "2a00:da00:5c0:3::\/64",
+  "2a00:da00:5c0:4::\/64",
+];
+
 const IONOS_LOOP_DATACOLLECTOR_PUBLICKEY_TRANSIENT = 'ionos-essentials-loop-datacollector-public-key';
 // option to keep last datacollector access timestamp
 // also used to name the cron job for re registration of our endpoint
@@ -83,18 +109,14 @@ function _rest_permissions_check(WP_REST_Request $request) : bool|WP_Error {
 
   // Checks if the request comes from IPv4.
   if ( !filter_var( $remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 )) {
-  	$ip_allowlist = \get_option( 'collector.allowlist.ipv4', [] );
-
-  	if ( !_ipv4_in_allowlist( $remote_ip, $ip_allowlist )) {
+  	if ( !_ipv4_in_allowlist( $remote_ip, IONOS_LOOP_ALLOW_LIST_IP4)) {
   		return new \WP_Error( 'rest_forbidden', 'Access forbidden.', [ 'status' => 403 ] );
   	}
   }
 
   // Checks if the request comes from IPv6.
   if ( !filter_var( $remote_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 )) {
-  	$ip_allowlist = \get_option( 'collector.allowlist.ipv6', [] );
-
-  	if ( !_ipv6_in_allowlist( $remote_ip, $ip_allowlist ) ) {
+  	if ( !_ipv6_in_allowlist( $remote_ip, IONOS_LOOP_ALLOW_LIST_IP6 ) ) {
   		return new \WP_Error( 'rest_forbidden', 'Access forbidden.', [ 'status' => 403 ] );
   	}
   }
