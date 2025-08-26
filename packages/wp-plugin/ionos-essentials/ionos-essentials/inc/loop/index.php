@@ -268,7 +268,7 @@ function _rest_loop_data(WP_REST_Request $request): \WP_REST_Response
 
   $core_data = [
     'generic'       => _get_generic_data(),
-    'user'          => count_users('memory'),
+    'user'          => \count_users('memory'),
     'active_theme'  => _get_themes_data(),
     'active_plugins'=> _get_plugins_data(),
     'posts'         => _get_posts_and_pages_data(),
@@ -290,8 +290,8 @@ function _get_generic_data(): array
     'tenant'              => Tenant::get_slug(),
     'core_version'        => \get_bloginfo('version'),
     'php_version'         => \PHP_VERSION,
-    'installed_themes'    => count(wp_get_themes()),
-    'installed_plugins'   => count(get_plugins()),
+    'installed_themes'    => count(\wp_get_themes()),
+    'installed_plugins'   => count(\get_plugins()),
     'instance_created'    => _get_instance_creation_date(),
     'last_login'          => _get_last_login_date(),
     'permalink_structure' => \get_option('permalink_structure', ''),
@@ -307,19 +307,19 @@ function _get_market(): string
 
 function _get_instance_creation_date(): ?int
 {
-  $saved_value = get_option('instance_creation_date');
+  $saved_value = \get_option('instance_creation_date');
 
   if ($saved_value && is_numeric($saved_value) && $saved_value > 946684800) {
     return (int) $saved_value;
   }
 
-  $user = get_user_by('ID', 1);
+  $user = \get_user_by('ID', 1);
 
   if ($user) {
     $timestamp = strtotime($user->user_registered . ' UTC');
 
     if ($timestamp !== false) {
-      update_option('instance_creation_date', $timestamp);
+      \update_option('instance_creation_date', $timestamp);
       return $timestamp;
     }
   }
@@ -329,7 +329,7 @@ function _get_instance_creation_date(): ?int
 
 function _get_last_login_date(): ?int
 {
-  $saved_timestamp = get_option('last_login_date');
+  $saved_timestamp = \get_option('last_login_date');
 
   if ($saved_timestamp && is_numeric($saved_timestamp) && $saved_timestamp > 946684800) {
     return (int) $saved_timestamp;
@@ -349,7 +349,7 @@ function _get_last_login_date(): ?int
     $timestamp = strtotime($last_login . ' UTC');
 
     if ($timestamp !== false) {
-      update_option('last_login_date', $timestamp);
+      \update_option('last_login_date', $timestamp);
       return (int) $timestamp;
     }
   }
@@ -359,12 +359,12 @@ function _get_last_login_date(): ?int
 
 function _get_themes_data(): array
 {
-  $current_theme = wp_get_theme();
+  $current_theme = \wp_get_theme();
 
   $parent_theme_slug = $current_theme->parent() ? $current_theme->parent()
     ->get_stylesheet() : null;
 
-  $auto_update_themes = get_site_option('auto_update_themes', []);
+  $auto_update_themes = \get_site_option('auto_update_themes', []);
   $current_theme_slug = $current_theme->get_stylesheet();
   $auto_update        = in_array($current_theme_slug, $auto_update_themes, true);
 
@@ -384,9 +384,9 @@ function _get_plugins_data(): array
     require_once ABSPATH . 'wp-admin/includes/plugin.php';
   }
 
-  $all_plugins    = get_plugins();
-  $active_plugins = get_option('active_plugins', []);
-  $auto_updates   = get_site_option('auto_update_plugins', []);
+  $all_plugins    = \get_plugins();
+  $active_plugins = \get_option('active_plugins', []);
+  $auto_updates   = \get_site_option('auto_update_plugins', []);
 
   $active_plugins_data = [];
 
@@ -407,8 +407,8 @@ function _get_plugins_data(): array
 
 function _get_posts_and_pages_data(): array
 {
-  $post_counts = wp_count_posts('post');
-  $page_counts = wp_count_posts('page');
+  $post_counts = \wp_count_posts('post');
+  $page_counts = \wp_count_posts('page');
 
   $posts_data = [
     [
@@ -428,15 +428,9 @@ function _get_comments_data(): array
 {
   $comments_data = [];
 
-  $comment_counts = wp_count_comments();
+  $comments_data['total'] = array_sum((array) \wp_count_comments());
 
-  if ($comment_counts) {
-    $comments_data['total'] = array_sum((array) $comment_counts);
-  } else {
-    $comments_data['total'] = 0;
-  }
-
-  $comments_data['comments_active'] = get_option('default_comment_status') ? true : false;
+  $comments_data['comments_active'] = \get_option('default_comment_status') ? true : false;
 
   return $comments_data;
 }
@@ -445,7 +439,7 @@ require_once __DIR__ . '/cron.php';
 
 function _get_instance_events_data(): array
 {
-  $events = get_option('instance_events', []);
+  $events = \get_option('instance_events', []);
   if (! is_array($events)) {
     return [];
   }
@@ -454,7 +448,7 @@ function _get_instance_events_data(): array
 
 function _get_uploads_data(): array
 {
-  $uploads_dir = wp_get_upload_dir();
+  $uploads_dir = \wp_get_upload_dir();
   $basedir     = $uploads_dir['basedir'];
 
   $file_count = 0;
@@ -489,23 +483,23 @@ function _get_timestamp_of_data_collection(): int
   return time();
 }
 
-add_action('wp_login', function ($user_login, $user) {
+\add_action('wp_login', function ($user_login, $user) {
   // Log the login event
   log_instance_event('login', [
     'type' => 'default',
   ]);  // Adjust 'type' if needed
 
   // Update user meta with last login time in MySQL datetime format (local time)
-  $login_time = current_time('mysql');
-  update_user_meta($user->ID, 'last_login', $login_time);
+  $login_time = \current_time('mysql');
+  \update_user_meta($user->ID, 'last_login', $login_time);
 
   // Update global last login date option (also MySQL datetime)
-  update_option('last_login_date', $login_time);
+  /update_option('last_login_date', $login_time);
 }, 10, 2);
 
 function log_instance_event(string $name, array $payload = []): void
 {
-  $events = get_option('instance_events', []);
+  $events = \get_option('instance_events', []);
 
   if (! is_array($events)) {
     $events = [];
@@ -520,13 +514,13 @@ function log_instance_event(string $name, array $payload = []): void
   // Optional: limit stored events to last 100 to avoid bloating options table
   $events = array_slice($events, -100);
 
-  update_option('instance_events', $events);
+  \update_option('instance_events', $events);
 }
 
 add_action('upgrader_process_complete', function ($upgrader_object, $options) {
   if ($options['action'] === 'install' && $options['type'] === 'plugin') {
     $plugin_slug = $options['plugin']; // e.g. "example-plugin/example-plugin.php"
-    $plugins     = get_plugins();
+    $plugins     = \get_plugins();
 
     if (isset($plugins[$plugin_slug])) {
       $plugin_data = $plugins[$plugin_slug];
