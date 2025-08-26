@@ -2,4 +2,4 @@
 
 ## to validate json against json schema:
 
-`npx ajv-cli validate -s docs/loop-format/schema.json -d docs/loop-format/example.json`
+`npx ajv-cli validate -s packages/wp-plugin/ionos-essentials/ionos-essentials/inc/loop/schema.json -d packages/wp-plugin/ionos-essentials/ionos-essentials/inc/loop/loop-data-example.json`
