@@ -1,6 +1,8 @@
 <?php
 
-use ionos\essentials\loop;
+namespace ionos\essentials\loop;
+
+use WP_REST_Server;
 
 use const ionos\essentials\loop\IONOS_LOOP_REST_ENDPOINT;
 use const ionos\essentials\loop\IONOS_LOOP_REST_NAMESPACE;
@@ -25,16 +27,33 @@ class LoopTest extends \WP_UnitTestCase  {
 
     $this->admin_user_id = \WP_UnitTestCase_Base::factory()->user->create(['role' => 'administrator', 'user_login' => 'test-admin']);
 
-    \activate_plugin('ionos-essentials/ionos-essentials.php');
-
     // Initiating the REST API.
     global $wp_rest_server;
     $this->server = $wp_rest_server = new \WP_REST_Server;
+
+    \activate_plugin('ionos-essentials/ionos-essentials.php');
+
+    // @TODO: for some reason the once required rest_api_init hooks are cleaned up at this point when all phpunit tests are runned.
+    \add_action('rest_api_init', function () {
+      \register_rest_route(
+        IONOS_LOOP_REST_NAMESPACE,
+        IONOS_LOOP_REST_ENDPOINT,
+        [
+          'methods'             => WP_REST_Server::READABLE,
+          'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
+          'callback'            => __NAMESPACE__ . '\_rest_loop_data',
+        ]
+      );
+    });
+
     \do_action( 'rest_api_init' );
   }
 
   public function test_rest_loop_endpoint() : void {
     \wp_set_current_user($this->admin_user_id);
+
+    $routes = $this->server->get_routes();
+    ksort($routes);
 
     // try to request the loop datacollector endpoint
     $response = $this->server->dispatch(new \WP_REST_Request('GET', '/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_ENDPOINT));
