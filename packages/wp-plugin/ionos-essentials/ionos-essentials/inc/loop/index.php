@@ -494,7 +494,7 @@ function _get_timestamp_of_data_collection(): int
   \update_user_meta($user->ID, 'last_login', $login_time);
 
   // Update global last login date option (also MySQL datetime)
-  /update_option('last_login_date', $login_time);
+  \update_option('last_login_date', $login_time);
 }, 10, 2);
 
 function log_instance_event(string $name, array $payload = []): void
