@@ -4,7 +4,9 @@ namespace ionos\essentials\loop;
 
 use ionos\essentials\Tenant;
 use WP_Error;
+use WP_HTTP_Response;
 use WP_REST_Request;
+use WP_REST_Response;
 use WP_REST_Server;
 
 defined('ABSPATH') || exit();
@@ -68,8 +70,11 @@ function _register_at_datacollector(): bool
   );
 
   if (! \is_wp_error($response)) {
-    // @TODO : what should we do if registration failed ?
-    // try again after a interval or what
+    error_log(sprintf(
+      "loop: Failed to register at loop datacollector(%s) : %s",
+      join(', ', $response->get_error_codes()),
+      join(PHP_EOL, $response->get_error_messages()),
+    ));
   }
 
   return ! \is_wp_error($response);
@@ -145,6 +150,26 @@ function _rest_permissions_check(WP_REST_Request $request): bool|WP_Error
 
   return true;
 }
+
+// log loop endpoint errors to error log
+\add_filter(
+  hook_name : 'rest_request_after_callbacks',
+  callback: function ($response, array $handler, WP_REST_Request $request) {
+    $loop_endpoint_path = '/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_ENDPOINT;
+
+    if( \is_wp_error($response) && $request->get_route() === $loop_endpoint_path ) {
+      error_log(sprintf(
+        "loop: Failed to process loop request(%s) : %s",
+        join(', ', $response->get_error_codes()),
+        join(PHP_EOL, $response->get_error_messages()),
+      ));
+    }
+
+    return $response;
+  },
+  accepted_args: 3
+);
+
 
 function _ipv4_in_allowlist(string $ipv4, array $allow_list): bool
 {
