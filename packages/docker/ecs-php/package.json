@@ -1,7 +1,7 @@
 {
   "name": "@ionos-wordpress/ecs-php",
   "description": "Docker image providing the most recent PHP easy-coding-standard in a docker image",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "keywords": [
     "php",
