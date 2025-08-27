@@ -23,4 +23,42 @@ defined('ABSPATH') || exit();
 const PLUGIN_DIR = __DIR__;
 const PLUGIN_FILE = __FILE__;
 
-require_once __DIR__ . '/ionos-support/inc/wpcli/index.php';
+require_once __DIR__ . '/ionos-support/build/wpcli/index.php';
+
+function custom_toolbar_link($wp_admin_bar) {
+    $args = array(
+        'id'    => 'mein-benutzerdefinierter-button', // Eindeutige ID für den Button
+        'title' => 'Mein Button',                     // Der sichtbare Text
+        'href'  => 'https://example.com',             // Der Link
+        'meta'  => array(
+            'class' => 'mein-benutzerdefinierter-button-klasse', // CSS-Klasse für Styling
+            'target' => '_blank'                                 // Link in neuem Tab öffnen
+        )
+    );
+    $wp_admin_bar->add_node($args);
+}
+add_action(
+  hook_name: 'admin_bar_menu',
+  callback: function($wp_admin_bar) {
+    $wp_admin_bar->add_node([
+        'id'    => 'mein-haupt-button',
+        'title' => 'IONOS Support',
+        'href'  => '#'
+    ]);
+
+    $wp_admin_bar->add_node([
+      'id'    => 'untermenue-link-1',
+      'title' => 'Link 1',
+      'href'  => "javascript:alert('Hello, World!');",
+      'parent'=> 'mein-haupt-button'
+    ]);
+
+    $wp_admin_bar->add_node([
+      'id'    => 'untermenue-link-2',
+      'title' => 'Link 2',
+      'href'  => 'https://wikipedia.org',
+      'parent'=> 'mein-haupt-button'
+    ]);
+  },
+  priority : 999
+);
