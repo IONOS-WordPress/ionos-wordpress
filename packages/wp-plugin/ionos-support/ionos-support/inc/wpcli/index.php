@@ -152,10 +152,10 @@ function _wpcli($command) {
   [ 'stdout' => $stdout, 'stderr' => $stderr ] = _wpcli('--version');
   $WPCLI_VERSION = trim(strlen($stderr) > 0 ? $stderr : $stdout);
 
-  $assets = require_once PLUGIN_DIR . '/build/wpcli/index.asset.php';
+  $assets = require_once PLUGIN_DIR . '/ionos-support/build/wpcli/index.asset.php';
   \wp_enqueue_script(
     'ionos-support-wpcli',
-    \plugin_dir_url(PLUGIN_FILE) . 'build/wpcli/index.js',
+    \plugin_dir_url(PLUGIN_FILE) . '/ionos-support/build/wpcli/index.js',
     $assets['dependencies'],
     $assets['version'],
     true
