@@ -25,27 +25,37 @@ defined('ABSPATH') || exit();
 
 \add_action(
   'init',
-  fn () => \load_plugin_textdomain(domain: 'ionos-essentials', plugin_rel_path: basename(__DIR__) . '/languages/')
+  function () {
+    if (__DIR__ === WPMU_PLUGIN_DIR) {
+      \load_muplugin_textdomain(domain: 'ionos-essentials', mu_plugin_rel_path: 'ionos-essentials/languages/');
+    } else {
+      \load_plugin_textdomain(
+        domain: 'ionos-essentials',
+        plugin_rel_path: 'ionos-essentials/ionos-essentials/languages/'
+      );
+    }
+  }
 );
 
-require_once __DIR__ . '/inc/class-tenant.php';
-require_once __DIR__ . '/inc/update/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';
+require_once __DIR__ . '/ionos-essentials/inc/update/index.php';
 
 // soc plugin components
-require_once __DIR__ . '/inc/migration/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/migration/index.php';
 
 // features
-require_once __DIR__ . '/inc/switch-page/index.php';
-require_once __DIR__ . '/inc/dashboard/index.php';
-require_once __DIR__ . '/inc/descriptify/index.php';
-require_once __DIR__ . '/inc/jetpack-flow/index.php';
-require_once __DIR__ . '/inc/login/index.php';
-require_once __DIR__ . '/inc/security/index.php';
-require_once __DIR__ . '/inc/maintenance_mode/index.php';
-require_once __DIR__ . '/inc/wpscan/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/switch-page/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/dashboard/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/descriptify/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/jetpack-flow/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/login/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/security/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/maintenance_mode/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/wpscan/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/extendify/index.php';
 
 // soc plugin components
-require_once __DIR__ . '/inc/migration/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/migration/index.php';
 
 function is_stretch(): bool
 {

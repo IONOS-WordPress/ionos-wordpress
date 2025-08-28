@@ -253,7 +253,6 @@ function ionos.wordpress.build_workspace_package_wp_plugin() {
   # (example : wp-plugin/essentials)
   local path="$(pwd)/packages/$1"
 
-  local IS_MU_PLUGIN=$([[ "$path" == *"/wp-mu-plugin/"* ]] && echo "true" || echo "false")
   local PLUGIN_NAME=$(basename $path)
 
   rm -rf $path/{dist,build-info,webpack.config.js}
@@ -272,7 +271,7 @@ function ionos.wordpress.build_workspace_package_wp_plugin() {
   done
 
   # transpile js/css scripts if src directory exists and --use flag is set
-  local JS_SRC_PATH=$path$($IS_MU_PLUGIN && echo "/$PLUGIN_NAME")/src
+  local JS_SRC_PATH=$path/$PLUGIN_NAME/src
   if [[ -d $JS_SRC_PATH ]] && [[ "${USE[@]}" =~ all|wp-plugin:wp-scripts ]]; then
     # generate webpack.config.js (see https://wordpress.stackexchange.com/a/425349)
     cat << EOF > $path/webpack.config.js
@@ -287,7 +286,7 @@ $(
   # add recursively all {index,*-index}.js files in src directory to webpack entry
   # ignore files with block.json in the same directory
   for js_file in $(find $JS_SRC_PATH -type f \( -name 'index.js' -o -name '*-index.js' \) ! -execdir test -f block.json \; -print | xargs -I {} realpath --relative-to $JS_SRC_PATH {}); do
-    echo "        '${js_file%.*}': '.$($IS_MU_PLUGIN && echo "/$PLUGIN_NAME")/src/$js_file',"
+    echo "        '${js_file%.*}': './$PLUGIN_NAME/src/$js_file',"
   done
 )
     },
@@ -300,7 +299,7 @@ EOF
 
     [[ "$VERBOSE" == 'yes' ]] && cat $path/webpack.config.js
 
-    local JS_BUILD_PATH=$path$($IS_MU_PLUGIN && echo "/$PLUGIN_NAME")/build
+    local JS_BUILD_PATH=$path/$PLUGIN_NAME/build
     # bundle js/css either in development or production mode depending on NODE_ENV
     pnpm \
       --filter "$PACKAGE_NAME" \
@@ -322,7 +321,7 @@ EOF
 
   # build localisation if WP_CLI_I18N_LOCALES is declared and enabled
   if [[ "${WP_CLI_I18N_LOCALES:-}" != '' ]] && [[ "${USE[@]}" =~ all|wp-plugin:i18n ]]; then
-    local LANGUAGES_DIR=.$($IS_MU_PLUGIN && echo "/$PLUGIN_NAME")/languages
+    local LANGUAGES_DIR="./$PLUGIN_NAME/languages"
 
     (
       # ionos.wordpress.build_workspace_package_wp_plugin.wp_cli assumes
@@ -439,7 +438,7 @@ EOF
       --exclude=languages/*.pot \
       --exclude=tests/ \
       --exclude=src/ \
-      --exclude=$($IS_MU_PLUGIN && echo "$PLUGIN_NAME/")src/ \
+      --exclude="$PLUGIN_NAME/src/" \
       --exclude=composer.* \
       --exclude=vendor/ \
       --exclude=.env \
