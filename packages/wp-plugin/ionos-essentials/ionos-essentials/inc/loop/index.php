@@ -253,11 +253,9 @@ function _is_valid_authorization_header(string $authorization_header, string $pu
   $valid = openssl_verify($data, $signature, $public_key, 'sha256WithRSAEncryption');
 
   if ($valid === 1) {
-    $timestamp         = intval(base64_decode($data)); // phpcs:ignore
-    $current_timestamp = time();
-
+    $timestamp         = intval(base64_decode($data));
     // Checks if the key is not older than 60 seconds.
-    $time_difference = $current_timestamp - $timestamp;
+    $time_difference = time() - $timestamp;
     if ($time_difference >= 0 && $time_difference < 60) {
       return true;
     }
@@ -287,7 +285,7 @@ function _get_public_key(): string|WP_Error
   return $public_key;
 }
 
-function _rest_loop_data(WP_REST_Request $request): \WP_REST_Response
+function _rest_loop_data(): \WP_REST_Response
 {
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
@@ -314,7 +312,7 @@ function _get_generic_data(): array
     'market'              => _get_market(),
     'tenant'              => Tenant::get_slug(),
     'core_version'        => \get_bloginfo('version'),
-    'php_version'         => \PHP_VERSION,
+    'php_version'         => PHP_VERSION,
     'installed_themes'    => count(\wp_get_themes()),
     'installed_plugins'   => count(\get_plugins()),
     'instance_created'    => _get_instance_creation_date(),
@@ -338,18 +336,11 @@ function _get_instance_creation_date(): ?int
     return (int) $saved_value;
   }
 
-  $user = \get_user_by('ID', 1);
+  $first_user        = get_users( [ 'number' => 1 ] );
+  $timestamp = strtotime($first_user[0]->user_registered . ' UTC');
+  \update_option('instance_creation_date', $timestamp);
+  return $timestamp;
 
-  if ($user) {
-    $timestamp = strtotime($user->user_registered . ' UTC');
-
-    if ($timestamp !== false) {
-      \update_option('instance_creation_date', $timestamp);
-      return $timestamp;
-    }
-  }
-
-  return null;
 }
 
 function _get_last_login_date(): ?int
@@ -359,27 +350,8 @@ function _get_last_login_date(): ?int
   if ($saved_timestamp && is_numeric($saved_timestamp) && $saved_timestamp > 946684800) {
     return (int) $saved_timestamp;
   }
+  return 0;
 
-  global $wpdb;
-
-  $last_login = $wpdb->get_var("
-        SELECT meta_value
-        FROM {$wpdb->usermeta}
-        WHERE meta_key = 'last_login'
-        ORDER BY meta_value DESC
-        LIMIT 1
-    ");
-
-  if ($last_login) {
-    $timestamp = strtotime($last_login . ' UTC');
-
-    if ($timestamp !== false) {
-      \update_option('last_login_date', $timestamp);
-      return (int) $timestamp;
-    }
-  }
-
-  return null;
 }
 
 function _get_themes_data(): array
@@ -499,7 +471,7 @@ function _get_uploads_data(): array
 
   return [
     'file_count' => $file_count,
-    'file_size'  => (string) $file_size,  // as string to match your example
+    'file_size'  => (string) $file_size,  // as string to allow big filesize numbers
   ];
 }
 
@@ -511,15 +483,10 @@ function _get_timestamp_of_data_collection(): int
 \add_action('wp_login', function ($user_login, $user) {
   // Log the login event
   log_instance_event('login', [
-    'type' => 'default',
-  ]);  // Adjust 'type' if needed
-
-  // Update user meta with last login time in MySQL datetime format (local time)
-  $login_time = \current_time('mysql');
-  \update_user_meta($user->ID, 'last_login', $login_time);
-
-  // Update global last login date option (also MySQL datetime)
-  \update_option('last_login_date', $login_time);
+    //TODO: larsify
+    'type' => isset($_GET['action']) && $_GET['action'] === 'ionos_oauth_authenticate' ? 'sso' : 'default',
+  ]);
+  \update_option('last_login_date', time());
 }, 10, 2);
 
 function log_instance_event(string $name, array $payload = []): void
@@ -536,23 +503,9 @@ function log_instance_event(string $name, array $payload = []): void
     'timestamp' => time(),  // current Unix timestamp (UTC)
   ];
 
+  // TODO: limit?
   // Optional: limit stored events to last 100 to avoid bloating options table
   $events = array_slice($events, -100);
 
   \update_option('instance_events', $events);
 }
-
-add_action('upgrader_process_complete', function ($upgrader_object, $options) {
-  if ($options['action'] === 'install' && $options['type'] === 'plugin') {
-    $plugin_slug = $options['plugin']; // e.g. "example-plugin/example-plugin.php"
-    $plugins     = \get_plugins();
-
-    if (isset($plugins[$plugin_slug])) {
-      $plugin_data = $plugins[$plugin_slug];
-      log_instance_event('plugin install', [
-        'plugin_slug' => dirname($plugin_slug), // just folder name, e.g. "example-plugin"
-        'version'     => $plugin_data['Version'] ?? '',
-      ]);
-    }
-  }
-}, 10, 2);
