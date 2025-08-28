@@ -440,6 +440,9 @@ function _get_instance_events_data(): array
   if (! is_array($events)) {
     return [];
   }
+  // TODO: more sophisticated handling
+  // empty after retrieval
+  \update_option('instance_events', []);
   return $events;
 }
 
