@@ -121,7 +121,7 @@ function _install()
 
       \add_option(IONOS_SECURITY_FEATURE_OPTION, $security_options, '', true);
       // no break
-    case version_compare($last_installed_version, '1.2.0', '<'):
+    case version_compare($last_installed_version, '1.3.0', '<'):
       $users = get_users([
         'fields' => ['ID'],
       ]);
