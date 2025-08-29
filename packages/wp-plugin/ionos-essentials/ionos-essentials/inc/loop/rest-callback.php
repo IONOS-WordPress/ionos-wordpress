@@ -3,13 +3,14 @@
 namespace ionos\essentials\loop;
 
 use ionos\essentials\Tenant;
+use WP_REST_Response;
 
 defined('ABSPATH') || exit();
 
 const IONOS_LOOP_EVENTS_OPTION = 'ionos-loop-events';
 const IONOS_LOOP_MAX_EVENTS    = 200;
 
-function _rest_loop_callback(): void
+function _rest_loop_callback(): \WP_REST_Response
 {
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
@@ -26,7 +27,7 @@ function _rest_loop_callback(): void
 
   // empty events after retrieval
   \delete_option(IONOS_LOOP_EVENTS_OPTION);
-  \wp_send_json_success($core_data);
+  return \rest_ensure_response($core_data);
 }
 
 function _get_generic(): array
