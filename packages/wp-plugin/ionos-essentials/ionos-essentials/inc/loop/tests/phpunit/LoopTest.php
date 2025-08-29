@@ -41,7 +41,7 @@ class LoopTest extends \WP_UnitTestCase  {
         [
           'methods'             => WP_REST_Server::READABLE,
           'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
-          'callback'            => __NAMESPACE__ . '\_rest_loop_data',
+          'callback'            => __NAMESPACE__ . '\_rest_loop_callback',
         ]
       );
     });

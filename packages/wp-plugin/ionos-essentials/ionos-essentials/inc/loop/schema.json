@@ -29,7 +29,6 @@
         "installed_themes",
         "installed_plugins",
         "instance_created",
-        "last_login",
         "permalink_structure",
         "siteurl",
         "home"
@@ -75,10 +74,6 @@
         "instance_created": {
           "type": "integer",
           "description": "UTC Unix timestamp when the instance was created"
-        },
-        "last_login": {
-          "type": ["integer", "null"],
-          "description": "UTC Unix timestamp of the last login"
         },
         "permalink_structure": {
           "type": "string",

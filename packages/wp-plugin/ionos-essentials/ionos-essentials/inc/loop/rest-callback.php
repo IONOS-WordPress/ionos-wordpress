@@ -6,25 +6,30 @@ use ionos\essentials\Tenant;
 
 defined('ABSPATH') || exit();
 
-function _rest_loop_data(): \WP_REST_Response
+const IONOS_LOOP_EVENTS_OPTION = 'ionos-loop-events';
+const IONOS_LOOP_MAX_EVENTS    = 200;
+
+function _rest_loop_callback(): void
 {
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $core_data = [
-    'generic'       => _get_generic_data(),
+    'generic'       => _get_generic(),
     'user'          => \count_users('memory'),
-    'active_theme'  => _get_themes_data(),
-    'active_plugins'=> _get_plugins_data(),
-    'posts'         => _get_posts_and_pages_data(),
-    'comments'      => _get_comments_data(),
-    'events'        => _get_instance_events_data(),
-    'uploads'       => _get_uploads_data(),
+    'active_theme'  => _get_themes(),
+    'active_plugins'=> _get_plugins(),
+    'posts'         => _get_posts_and_pages(),
+    'comments'      => _get_comments(),
+    'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
+    'uploads'       => _get_uploads(),
   ];
 
-  return \rest_ensure_response($core_data);
+  // empty events after retrieval
+  \delete_option(IONOS_LOOP_EVENTS_OPTION);
+  \wp_send_json_success($core_data);
 }
 
-function _get_generic_data(): array
+function _get_generic(): array
 {
   return [
     'locale'              => \get_locale(),
@@ -36,7 +41,6 @@ function _get_generic_data(): array
     'installed_themes'    => count(\wp_get_themes()),
     'installed_plugins'   => count(\get_plugins()),
     'instance_created'    => _get_instance_creation_date(),
-    'last_login'          => _get_last_login_date(),
     'permalink_structure' => \get_option('permalink_structure', ''),
     'siteurl'             => \get_option('siteurl', ''),
     'home'                => \get_option('home', ''),
@@ -64,17 +68,7 @@ function _get_instance_creation_date(): ?int
   return $timestamp;
 }
 
-function _get_last_login_date(): ?int
-{
-  $saved_timestamp = \get_option('last_login_date');
-
-  if ($saved_timestamp && is_numeric($saved_timestamp) && $saved_timestamp > 946684800) {
-    return (int) $saved_timestamp;
-  }
-  return 0;
-}
-
-function _get_themes_data(): array
+function _get_themes(): array
 {
   $current_theme = \wp_get_theme();
 
@@ -95,7 +89,7 @@ function _get_themes_data(): array
   ];
 }
 
-function _get_plugins_data(): array
+function _get_plugins(): array
 {
   if (! function_exists('get_plugins')) {
     require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -122,7 +116,7 @@ function _get_plugins_data(): array
   return $active_plugins_data;
 }
 
-function _get_posts_and_pages_data(): array
+function _get_posts_and_pages(): array
 {
   $post_counts = \wp_count_posts('post');
   $page_counts = \wp_count_posts('page');
@@ -141,7 +135,7 @@ function _get_posts_and_pages_data(): array
   return $posts_data;
 }
 
-function _get_comments_data(): array
+function _get_comments(): array
 {
   $comments_data = [];
 
@@ -152,19 +146,7 @@ function _get_comments_data(): array
   return $comments_data;
 }
 
-function _get_instance_events_data(): array
-{
-  $events = \get_option('instance_events', []);
-  if (! is_array($events)) {
-    return [];
-  }
-  // TODO: more sophisticated handling
-  // empty after retrieval
-  \update_option('instance_events', []);
-  return $events;
-}
-
-function _get_uploads_data(): array
+function _get_uploads(): array
 {
   $uploads_dir = \wp_get_upload_dir();
   $basedir     = $uploads_dir['basedir'];
@@ -196,18 +178,16 @@ function _get_uploads_data(): array
   ];
 }
 
-\add_action('wp_login', function ($user_login, $user) {
+\add_action('wp_login', function () {
   // Log the login event
-  log_instance_event('login', [
-    //TODO: larsify
-    'type' => isset($_GET['action']) && $_GET['action'] === 'ionos_oauth_authenticate' ? 'sso' : 'default',
+  log_loop_event('login', [
+    'type' => ($_GET['action'] ?? '') === 'ionos_oauth_authenticate' ? 'sso' : 'default',
   ]);
-  \update_option('last_login_date', time());
-}, 10, 2);
+});
 
-function log_instance_event(string $name, array $payload = []): void
+function log_loop_event(string $name, array $payload = []): void
 {
-  $events = \get_option('instance_events', []);
+  $events = \get_option(IONOS_LOOP_EVENTS_OPTION, []);
 
   if (! is_array($events)) {
     $events = [];
@@ -219,9 +199,8 @@ function log_instance_event(string $name, array $payload = []): void
     'timestamp' => time(),  // current Unix timestamp (UTC)
   ];
 
-  // TODO: limit?
-  // Optional: limit stored events to last 100 to avoid bloating options table
-  $events = array_slice($events, -100);
+  // Optional: limit stored events to avoid bloating options table
+  $events = array_slice($events, -IONOS_LOOP_MAX_EVENTS);
 
-  \update_option('instance_events', $events);
+  \update_option(IONOS_LOOP_EVENTS_OPTION, $events);
 }
