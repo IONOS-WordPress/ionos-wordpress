@@ -19,7 +19,6 @@ function _rest_loop_data(): \WP_REST_Response
     'comments'      => _get_comments_data(),
     'events'        => _get_instance_events_data(),
     'uploads'       => _get_uploads_data(),
-    'timestamp'     => _get_timestamp_of_data_collection(),
   ];
 
   return \rest_ensure_response($core_data);
@@ -195,11 +194,6 @@ function _get_uploads_data(): array
     'file_count' => $file_count,
     'file_size'  => (string) $file_size,  // as string to allow big filesize numbers
   ];
-}
-
-function _get_timestamp_of_data_collection(): int
-{
-  return time();
 }
 
 \add_action('wp_login', function ($user_login, $user) {

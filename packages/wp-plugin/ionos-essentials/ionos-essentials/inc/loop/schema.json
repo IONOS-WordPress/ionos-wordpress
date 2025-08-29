@@ -12,7 +12,8 @@
     "comments",
     "events",
     "uploads",
-    "timestamp"
+    "timestamp",
+    "instance"
   ],
   "properties": {
     "generic": {
@@ -235,7 +236,11 @@
     },
     "timestamp": {
       "type": "integer",
-      "description": "Unix timestamp when this data was collected"
+      "description": "timestamp of data collection - added by Loop Data Collector"
+    },
+    "instance": {
+      "type": "string",
+      "description": "instance ID - added by Loop Data Collector"
     }
   },
   "additionalProperties": true

@@ -60,6 +60,9 @@ class LoopTest extends \WP_UnitTestCase  {
     $this->assertEquals(200, $response->status, 'loop endpoint returned 200');
 
     $json = $response->data;
+    // enhance rest data similar to datacollector behavior
+    $json['timestamp'] = time(); // set timestamp for schema validation
+    $json['instance'] = '75b2707e45c147ea74e32c677ae7b12316acbdc37a70faa63cc2b675b53c3b6d'; // set fixed instance ID for schema validation
 
     $schema = json_decode(file_get_contents(__DIR__ . './../../schema.json'), true);
 
