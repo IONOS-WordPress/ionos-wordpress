@@ -41,7 +41,7 @@ function _register_at_datacollector(): bool
     ]
   );
 
-  if (! \is_wp_error($response)) {
+  if (\is_wp_error($response)) {
     error_log(sprintf(
       'loop: Failed to register at loop datacollector(%s) : %s',
       join(', ', $response->get_error_codes()),

@@ -142,7 +142,7 @@ function _install()
       }
     case version_compare($last_installed_version, '1.3.0', '<'):
       // since we changed the data collector url we need to update tell that the datacollector once
-      if (function_exists('_register_at_datacollector')) {
+      if (function_exists('ionos\essentials\loop\_register_at_datacollector')) {
         _register_at_datacollector();
       }
   }
