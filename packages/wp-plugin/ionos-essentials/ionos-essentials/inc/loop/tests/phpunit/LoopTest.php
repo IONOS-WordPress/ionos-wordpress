@@ -23,6 +23,10 @@ class LoopTest extends \WP_UnitTestCase  {
       define('WP_RUN_CORE_TESTS', true);
     }
 
+    if (! function_exists(__NAMESPACE__ . '\_register_at_datacollector')) {
+      $this->markTestSkipped('All tests in LoopTest are skipped.');
+    }
+
     parent::setUp();
 
     $this->admin_user_id = \WP_UnitTestCase_Base::factory()->user->create(['role' => 'administrator', 'user_login' => 'test-admin']);

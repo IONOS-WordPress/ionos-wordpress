@@ -142,7 +142,9 @@ function _install()
       }
 
       // since we changed the data collector url we need to update tell that the datacollector once
-      _register_at_datacollector();
+      if (function_exists('_register_at_datacollector')) {
+        _register_at_datacollector();
+      }
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }
