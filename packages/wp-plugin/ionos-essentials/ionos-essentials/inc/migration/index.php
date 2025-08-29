@@ -140,6 +140,7 @@ function _install()
       foreach ($users as $user) {
         \update_user_meta($user->ID, 'ionos_popup_after_timestamp', time()+60);
       }
+      // no break
     case version_compare($last_installed_version, '1.3.0', '<'):
       // since we changed the data collector url we need to update tell that the datacollector once
       if (function_exists('ionos\essentials\loop\_register_at_datacollector')) {
