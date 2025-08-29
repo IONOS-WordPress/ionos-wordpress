@@ -12,7 +12,8 @@
     "comments",
     "events",
     "uploads",
-    "timestamp"
+    "timestamp",
+    "instance"
   ],
   "properties": {
     "generic": {
@@ -28,7 +29,6 @@
         "installed_themes",
         "installed_plugins",
         "instance_created",
-        "last_login",
         "permalink_structure",
         "siteurl",
         "home"
@@ -74,10 +74,6 @@
         "instance_created": {
           "type": "integer",
           "description": "UTC Unix timestamp when the instance was created"
-        },
-        "last_login": {
-          "type": "integer",
-          "description": "UTC Unix timestamp of the last login"
         },
         "permalink_structure": {
           "type": "string",
@@ -235,7 +231,11 @@
     },
     "timestamp": {
       "type": "integer",
-      "description": "Unix timestamp when this data was collected"
+      "description": "timestamp of data collection - added by Loop Data Collector"
+    },
+    "instance": {
+      "type": "string",
+      "description": "instance ID - added by Loop Data Collector"
     }
   },
   "additionalProperties": true
