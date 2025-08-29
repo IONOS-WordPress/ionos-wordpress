@@ -3,7 +3,6 @@
 namespace ionos\essentials\loop;
 
 use ionos\essentials\Tenant;
-use WP_REST_Response;
 
 defined('ABSPATH') || exit();
 
