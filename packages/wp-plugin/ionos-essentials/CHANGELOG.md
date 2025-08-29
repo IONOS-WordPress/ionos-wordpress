@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.2.0
+
+### Minor Changes
+
+- ce9b65a: Add survey popup
+
 ## 1.1.0
 
 ### Minor Changes

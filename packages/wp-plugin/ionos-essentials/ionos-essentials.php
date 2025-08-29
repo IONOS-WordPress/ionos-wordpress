@@ -6,7 +6,7 @@
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
- * Version:           1.1.0
+ * Version:           1.2.0
  * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials
  * License:           GPL-2.0-or-later
@@ -53,6 +53,7 @@ require_once __DIR__ . '/ionos-essentials/inc/security/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/maintenance_mode/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/wpscan/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/loop/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/extendify/index.php';
 
 // soc plugin components
 require_once __DIR__ . '/ionos-essentials/inc/migration/index.php';

@@ -106,13 +106,24 @@ function _install()
         \set_transient('ionos_security_migrated_notice_show', true, 3 * MONTH_IN_SECONDS);
       }
 
-      $ionos_security            = \get_option('ionos-security', []);
-      $xmlrpc_guard_enabled      = 1 === ($ionos_security['xmlrpc_guard_enabled'] ?? 1);
-      $pel_enabled               = 1 === ($ionos_security['pel_enabled'] ?? 1);
-      $credentials_check_enabled = 1 === ($ionos_security['credentials_check_enabled'] ?? 1);
-      $wpscan_mail_notification  = 1 === ($ionos_security['wpscan_mail_notification'] ?? 1);
-      \delete_option('ionos-security');
+      // "ionos_essentials_security_off" is set for all bk customers that got essentials rolled out but they didnt have security plugin
+      // for them we want all security features to be disabled
 
+      if (\get_option('ionos_essentials_security_off')) {
+        $xmlrpc_guard_enabled      = false;
+        $pel_enabled               = false;
+        $credentials_check_enabled = false;
+        $wpscan_mail_notification  = false;
+        \delete_option('ionos_essentials_security_off');
+      } else {
+        $ionos_security            = \get_option('ionos-security', []);
+        $xmlrpc_guard_enabled      = (bool) ($ionos_security['xmlrpc_guard_enabled'] ?? IONOS_SECURITY_FEATURE_OPTION_DEFAULT[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]);
+        $pel_enabled               = (bool) ($ionos_security['pel_enabled'] ?? IONOS_SECURITY_FEATURE_OPTION_DEFAULT[IONOS_SECURITY_FEATURE_OPTION_PEL]);
+        $credentials_check_enabled = (bool) ($ionos_security['credentials_check_enabled'] ?? IONOS_SECURITY_FEATURE_OPTION_DEFAULT[IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING]);
+        $wpscan_mail_notification  = (bool) ($ionos_security['wpscan_mail_notification'] ?? IONOS_SECURITY_FEATURE_OPTION_DEFAULT[IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY]);
+      }
+
+      \delete_option('ionos-security');
       $security_options                                                     = IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
       $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]               = $xmlrpc_guard_enabled;
       $security_options[IONOS_SECURITY_FEATURE_OPTION_PEL]                  = $pel_enabled;
