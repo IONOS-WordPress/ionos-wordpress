@@ -140,7 +140,7 @@ EOF
   },
   "eslint.validate": ["javascript", "javascriptreact", "json", "jsonc", "json5"],
   // enable globally (here: format on save)
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "intelephense.files.exclude": [
     "**/.git/**",
     "**/.svn/**",
