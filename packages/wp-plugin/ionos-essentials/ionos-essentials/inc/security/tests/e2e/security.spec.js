@@ -1,6 +1,6 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
-import { execTestCLI } from '../../../../../../../../playwright/wp-env.js';
+import { execTestCLI } from '../../../../../../../../playwright/wp-env';
 
 test.beforeAll(async () => {
   try {
@@ -9,7 +9,8 @@ test.beforeAll(async () => {
       wp user meta delete admin ionos_compromised_credentials_check_leak_detected_v2
       wp option delete IONOS_SECURITY_FEATURE_OPTION
     `);
-  } catch (ex) {}
+    // eslint-disable-next-line no-empty
+  } catch {}
 });
 
 async function login(page) {
@@ -24,7 +25,7 @@ async function login(page) {
   try {
     await page.waitForSelector('button:has-text("Log In")', { timeout: 5000 });
     await page.click('button:has-text("Log In")');
-  } catch (error) {
+  } catch {
     // Silence is golden.
   }
 }

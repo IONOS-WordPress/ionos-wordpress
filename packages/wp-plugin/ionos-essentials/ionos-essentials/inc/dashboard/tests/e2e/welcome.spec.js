@@ -1,11 +1,12 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { execTestCLI } from '../../../../../../../../playwright/wp-env.js';
+import { execTestCLI } from '../../../../../../../../playwright/wp-env';
 
 test.describe('essentials:dashboard next-best-actions block', () => {
   test.beforeAll(async () => {
     try {
       execTestCLI(`wp user meta delete 1 ionos_essentials_welcome`);
-    } catch (error) {}
+      /* eslint-disable-next-line no-empty */
+    } catch {}
   });
 
   test('test welcome banner', async ({ admin, page }) => {
