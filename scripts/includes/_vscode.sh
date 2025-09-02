@@ -99,6 +99,8 @@ function ionos.wordpress.vscode.create_settings.json() {
     "editor.formatOnSave": false
   },
   "playwright.runGlobalSetupOnEachRun": true,
+  "files.trimTrailingWhitespace": false,
+  "files.trimTrailingWhitespaceInRegexAndStrings": false
 }
 EOF
 }
