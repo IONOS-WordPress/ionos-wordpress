@@ -1,42 +1,34 @@
-import prettier from 'eslint-plugin-prettier';
-import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import _import from 'eslint-plugin-import';
-import { fixupPluginRules, includeIgnoreFile } from '@eslint/compat';
+import js from '@eslint/js';
 import globals from 'globals';
+import { includeIgnoreFile } from '@eslint/compat';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
+import pluginReact from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import eslintPluginImportSort from 'eslint-plugin-simple-import-sort';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import eslintPluginImport from 'eslint-plugin-import';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
-
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const gitIgnorePath = path.resolve(__dirname, '.gitignore');
 const lintIgnorePath = path.resolve(__dirname, '.lintignore');
 
-export default [
+const configs = [
+  js.configs.recommended,
   includeIgnoreFile(gitIgnorePath),
   includeIgnoreFile(lintIgnorePath),
+  eslintPluginImport.flatConfigs.recommended,
+  pluginReact.configs.flat.recommended,
+  reactHooks.configs['recommended-latest'],
+  eslintPluginPrettierRecommended,
+  // {
+  //   ignores: ['**/*.md', '**/*.json', '**/*.code-workspace'],
+  // },
   {
-    ignores: ['**/*.md', '**/*.json', '**/*.code-workspace'],
-  },
-  ...compat.extends('prettier'),
-  {
+    files: ['**/*.{js,mjs,cjs,jsx}'],
     plugins: {
-      prettier,
-      react,
-      'react-hooks': fixupPluginRules(reactHooks),
-      'simple-import-sort': simpleImportSort,
-      import: fixupPluginRules(_import),
+      eslintPluginImportSort,
     },
-
     languageOptions: {
       globals: {
         ...globals['shared-node-browser'],
@@ -47,13 +39,12 @@ export default [
       ecmaVersion: 'latest',
       sourceType: 'module',
 
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
+      // parserOptions: {
+      //   ecmaFeatures: {
+      //     jsx: true,
+      //   },
+      // },
     },
-
     settings: {
       react: {
         version: 'detect',
@@ -65,7 +56,12 @@ export default [
       'react-hooks/rules-of-hooks': ['error'],
       'react-hooks/exhaustive-deps': ['warn'],
       'react/prop-types': ['off'],
-      'import/extensions': ['error', 'always'],
+      'import/extensions': [
+        'error',
+        {
+          ignore: ['eslint-plugin-prettier/recommended'],
+        },
+      ],
       'import/no-unresolved': [
         'error',
         {
@@ -86,6 +82,10 @@ export default [
         },
       ],
       'no-console': ['warn'],
+      // drop a warning if jQuery is used
+      'no-restricted-globals': ['warn', 'jQuery', '$'],
     },
   },
 ];
+
+export default configs;

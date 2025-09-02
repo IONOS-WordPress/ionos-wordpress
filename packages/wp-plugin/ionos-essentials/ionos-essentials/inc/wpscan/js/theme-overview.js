@@ -1,6 +1,8 @@
-document.addEventListener("DOMContentLoaded", function() {
+// tell eslint that the global variable exists when this file gets executed
+/* global ionosWPScanThemes:true */
+document.addEventListener('DOMContentLoaded', function () {
   function highlightThemes() {
-    const themes = document.querySelectorAll("[data-slug]");
+    const themes = document.querySelectorAll('[data-slug]');
     if (themes.length === 0) {
       // Retry after a short delay if no themes are found
       // I don't know why this is needed, but the themes are not loaded yet
@@ -8,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    themes.forEach(function(theme) {
+    themes.forEach(function (theme) {
       if (!ionosWPScanThemes.slugs.includes(theme.dataset.slug)) {
         return;
       }
@@ -18,20 +20,18 @@ document.addEventListener("DOMContentLoaded", function() {
       setTimeout(() => {
         const link = theme.querySelector('a[href="admin.php?page=' + ionosWPScanThemes.i18n.brand + '#tools"]');
         if (link) {
-          link.addEventListener('click', function(e) {
-        e.stopPropagation();
+          link.addEventListener('click', function (e) {
+            e.stopPropagation();
           });
         }
       }, 0);
 
       const notice = document.createElement('div');
       notice.innerHTML = html;
-      notice.classList.add('update-message', 'notice', 'inline', 'notice-warning', 'notice-alt','ionos-theme-issues');
+      notice.classList.add('update-message', 'notice', 'inline', 'notice-warning', 'notice-alt', 'ionos-theme-issues');
       theme.appendChild(notice);
     });
   }
 
-
   highlightThemes();
-
 });
