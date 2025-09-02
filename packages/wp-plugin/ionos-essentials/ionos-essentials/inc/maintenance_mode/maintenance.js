@@ -8,11 +8,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   dashboard.querySelector('#ionos_essentials_maintenance_mode')?.addEventListener('click', function () {
     if (this.checked) {
-        body.classList.add('ionos-maintenance-mode');
-        dashboard.querySelector('main').classList.add('ionos-maintenance-mode');
+      body.classList.add('ionos-maintenance-mode');
+      dashboard.querySelector('main').classList.add('ionos-maintenance-mode');
     } else {
-        body.classList.remove('ionos-maintenance-mode');
-        dashboard.querySelector('main').classList.remove('ionos-maintenance-mode');
+      body.classList.remove('ionos-maintenance-mode');
+      dashboard.querySelector('main').classList.remove('ionos-maintenance-mode');
     }
-  })
-})
+  });
+});
