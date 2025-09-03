@@ -386,7 +386,7 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     display: flex;
     flex-direction: row;
 
-    gap: 10px;
+    gap: 60px;
 }
 
 .ionos-site-health-overview__info-item{
