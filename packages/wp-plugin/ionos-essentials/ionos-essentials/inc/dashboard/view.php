@@ -9,6 +9,7 @@ defined('ABSPATH') || exit();
 require_once __DIR__ . '/blocks/banner/index.php';
 require_once __DIR__ . '/blocks/welcome/index.php';
 require_once __DIR__ . '/blocks/vulnerability/index.php';
+require_once __DIR__ . '/blocks/vulnerability2/index.php';
 require_once __DIR__ . '/blocks/next-best-actions/index.php';
 require_once __DIR__ . '/blocks/my-account/index.php';
 require_once __DIR__ . '/blocks/whats-new/index.php';

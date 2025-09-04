@@ -156,6 +156,21 @@ main{
     background-position: top right;
     gap: 18px;
   }
+}
+
+  .ionos_vulnerability2{
+  container-type: inline-size !important;
+  container: ionos_vulnerability;
+  background-color: #edfaef;
+  margin-bottom: 0;
+
+  .ionos_vulnerability2__content{
+    flex-direction: column;
+    justify-content: space-between;
+    background-repeat: no-repeat;
+    background-position: top right;
+  }
+}
 
   .bubble{
     background-color: #4ab866;
@@ -181,9 +196,6 @@ main{
   }
   &.error{
     background-color: white;
-    .ionos_vulnerability__content{
-      background-image: none;
-    }
   }
 
   .issue-row.high .bubble{
@@ -193,11 +205,20 @@ main{
   .issue-row.medium .bubble{
     background-color: #f0b849;
   }
-}
+  .issue-row2{
+    display: inline-flex;
+  }
+  .issue-row2.none .bubble{
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
 
-@container ionos_vulnerability (max-width: 400px) {
-  .ionos_vulnerability .ionos_vulnerability__content{
-    background-image: none !important;
+  .issue-row2.none .bubble i{
+    color: #ffffff;
   }
 }
 
