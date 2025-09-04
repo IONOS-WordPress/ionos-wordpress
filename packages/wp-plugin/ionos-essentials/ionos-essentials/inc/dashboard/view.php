@@ -9,11 +9,13 @@ defined('ABSPATH') || exit();
 require_once __DIR__ . '/blocks/banner/index.php';
 require_once __DIR__ . '/blocks/welcome/index.php';
 require_once __DIR__ . '/blocks/vulnerability/index.php';
+require_once __DIR__ . '/blocks/vulnerability2/index.php';
 require_once __DIR__ . '/blocks/next-best-actions/index.php';
 require_once __DIR__ . '/blocks/my-account/index.php';
 require_once __DIR__ . '/blocks/whats-new/index.php';
 require_once __DIR__ . '/blocks/quick-links/index.php';
 require_once __DIR__ . '/blocks/popup/index.php';
+require_once __DIR__ . '/blocks/site-health/index.php';
 
 // Fontface must be loaded before the template is rendered
 ?>
