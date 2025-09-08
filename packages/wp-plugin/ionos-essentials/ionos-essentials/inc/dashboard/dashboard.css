@@ -147,30 +147,14 @@ main{
   container-type: inline-size !important;
   container: ionos_vulnerability;
   background-color: #edfaef;
+  margin-bottom: 0;
 
   .ionos_vulnerability__content{
     flex-direction: column;
     justify-content: space-between;
-    background-image: url('assets/security/none.svg');
-    background-repeat: no-repeat;
-    background-position: top right;
-    gap: 18px;
-  }
-}
-
-  .ionos_vulnerability2{
-  container-type: inline-size !important;
-  container: ionos_vulnerability;
-  background-color: #edfaef;
-  margin-bottom: 0;
-
-  .ionos_vulnerability2__content{
-    flex-direction: column;
-    justify-content: space-between;
     background-repeat: no-repeat;
     background-position: top right;
   }
-}
 
   .bubble{
     background-color: #4ab866;
@@ -184,31 +168,35 @@ main{
   /* Respect the order of this definition, as high overwrites medium */
   &.medium{
     background-color: #fcf9e8;
-    .ionos_vulnerability__content{
-      background-image: url('assets/security/medium.svg');
-    }
+
   }
   &.high{
     background-color: #fcf0f1;
-    .ionos_vulnerability__content{
-      background-image: url('assets/security/high.svg');
-    }
+
   }
   &.error{
     background-color: white;
+
   }
 
-  .issue-row.high .bubble{
-    background-color: #cc1818;
-    color: white;
+  .ionos_vulnerability__problems{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-  .issue-row.medium .bubble{
-    background-color: #f0b849;
+
+  .issue-rows{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-wrap: wrap;
   }
-  .issue-row2{
+
+  .issue-row{
     display: inline-flex;
   }
-  .issue-row2.none .bubble{
+
+  .issue-row .bubble{
     width: 20px;
     height: 20px;
     display: flex;
@@ -217,8 +205,27 @@ main{
     padding: 0;
   }
 
-  .issue-row2.none .bubble i{
+ .issue-row .bubble i{
     color: #ffffff;
+  }
+
+  .issue-row .bubble{
+    color: white;
+  }
+
+  .issue-row.high .bubble{
+    background-color: #f50d00;
+  }
+
+  .issue-row.medium .bubble{
+    background-color: #ef8302;
+  }
+
+}
+
+@container ionos_vulnerability (max-width: 400px) {
+  .ionos_vulnerability .ionos_vulnerability__content{
+    background-image: none !important;
   }
 }
 
@@ -356,32 +363,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 
 .static-overlay__blocker--active, .static-overlay__container--active {
   display: flex;
-}
-
-.site-health-status {
-    display: inline-flex;
-    align-items: center;
-    font-weight: 600;
-}
-
-.site-health-status-icon {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-right: 6px;
-}
-
-.site-health-status-good .site-health-status-icon {
-    background-color: #46b450; /* green */
-}
-
-.site-health-status-recommended .site-health-status-icon {
-    background-color: #ffb900; /* yellow */
-}
-
-.site-health-status-critical .site-health-status-icon {
-    background-color: #dc3232; /* red */
 }
 
 .ionos-site-health {

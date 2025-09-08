@@ -4,7 +4,7 @@ namespace ionos\essentials\dashboard\blocks\site_health;
 
 use const ionos\essentials\PLUGIN_DIR;
 
-require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/vulnerability2/index.php';
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/vulnerability/index.php';
 require_once ABSPATH . 'wp-admin/includes/class-wp-site-health.php';
 
 defined('ABSPATH') || exit();
@@ -53,7 +53,7 @@ function render_callback(): void
           </div>
           </div>
         <div class="ionos-site-health-vulnerability">
-          <?php echo \ionos\essentials\dashboard\blocks\vulnerability2\render_callback()?>
+          <?php echo \ionos\essentials\dashboard\blocks\vulnerability\render_callback()?>
         </div>
       </section>
     </div>
