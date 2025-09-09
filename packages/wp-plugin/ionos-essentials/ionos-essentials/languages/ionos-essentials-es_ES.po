@@ -161,7 +161,7 @@ msgstr "Editar y completar tu página web"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
-msgstr "Añade páginas, texto e imágenes, ajusta tu página web con herramientas de inteligencia artificial o modifica los colores y el tipo de letra."
+msgstr "Añade páginas, texto e imágenes, ajusta tu página web con herramientas de IA o modifica los colores y el tipo de letra."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Edit Website"
@@ -213,7 +213,7 @@ msgstr "Configurar redes sociales"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect your social media profiles to your website and expand your online presence."
-msgstr "Conecta a tus perfiles de redes sociales a tu página web y amplía tu presencia online."
+msgstr "Conecta tus perfiles de redes sociales a tu página web y amplía tu presencia online."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
 msgid "Connect Social Media"
@@ -385,7 +385,7 @@ msgstr "Utiliza la extensión gratuita para WooCommerce con el fin de gestionar 
 #: ionos-essentials/inc/descriptify/index.php
 #, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
-msgstr "Puedes personalizar y gestionar tu URL (dominio) fácilmente en <a href=\"%1$s\" target=\"_blank\">%2$s Centro de Aplicaciones</a>."
+msgstr "Puedes personalizar y gestionar tu URL (dominio) fácilmente en el <a href=\"%1$s\" target=\"_blank\">%2$s Centro de Aplicaciones</a>."
 
 #: ionos-essentials/inc/switch-page/view.php
 msgid "How do you want to create your new website?"
@@ -472,7 +472,7 @@ msgstr "Monitorización de contraseña"
 
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Monitor password leaks. If a password is suspected to be compromised, you will receive an email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated."
-msgstr "Monitoriza la filtración de contraseñas. Si existen sospechas de que una contraseña esté comprometida, recibirás una notificación por correo electrónico con instrucciones para cambiarla. Como medida de precaución adicional, la cuenta se bloqueará hasta que la contraseña se actualice."
+msgstr "Monitoriza la filtración de contraseñas. Si existen sospechas de que una contraseña esté comprometida, recibirás una notificación por correo electrónico con las instrucciones para cambiarla. Como medida de precaución adicional, la cuenta se bloqueará hasta que la contraseña se actualice."
 
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Block XML-RPC access"
@@ -582,7 +582,7 @@ msgstr "¡Hemos actualizado tu hub %s con potentes novedades!"
 
 #: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
 msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
-msgstr "¡Acabamos de habilitar la nueva pestaña «Herramientas y seguridad»! Todas las funciones e interfaces de uso de tu anterior plugin de seguridad se encuentran ahora aquí para una gestión centralizada y más sencilla. Además, también tienes disponible una nueva función de página de mantenimiento que puedes activar cuando lo necesites.develop"
+msgstr "¡Acabamos de habilitar la nueva pestaña «Herramientas y seguridad»! Todas las funciones e interfaces de uso de tu anterior plugin de seguridad se encuentran ahora aquí para una gestión centralizada y más sencilla. Además, también tienes disponible una nueva función de página de mantenimiento que puedes activar cuando lo necesites."
 
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "Website is safe and secure"
@@ -620,11 +620,11 @@ msgstr "Más información"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An error occurred while fetching the vulnerability data."
-msgstr "Se ha producido un error al recuperar los datos de vulnerabilidad."
+msgstr "Se ha producido un error al recuperar los datos de vulnerabilidades."
 
 #: ionos-essentials/inc/dashboard/blocks/welcome/index.php
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
-msgstr "Sección de ayuda completa, que incluye: asistencia por chat con IA, recorridos guiados y una amplia base de datos de conocimientos."
+msgstr "Sección de ayuda completa, que incluye: asistencia por chat con IA, recorridos guiados y una amplia base de conocimientos."
 
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Tools and security"
@@ -798,9 +798,8 @@ msgid "To re-enable access to this account, the password must be updated. We hav
 msgstr "Para reactivar el acceso a esta cuenta, la contraseña debe ser actualizada. Hemos enviado un correo electrónico con las instrucciones de restablecimiento a"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-#, generated by deepl
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
-msgstr "No es posible la exploración de vulnerabilidades. Póngase en contacto con el servicio de atención al cliente."
+msgstr "El escaneo de vulnerabilidades no es posible. Ponte en contacto con Atención al Cliente."
 
 #. translators: %s is placeholder for the time since the last scan
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
@@ -810,42 +809,35 @@ msgid "Last scan: %s ago"
 msgstr "Último escaneo hace %s"
 
 #: ionos-essentials/inc/tenants/config/udag.php
-#, generated by deepl
 msgid "Manage Domains"
 msgstr "Gestionar dominios"
 
 #: ionos-essentials/inc/tenants/config/udag.php
-#, generated by deepl
 msgid "Trademark protection"
-msgstr "Protección de marcas"
+msgstr "Protección de marcas comerciales"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
-#, generated by deepl
 msgid "Turn off notification here"
-msgstr "Desactivar notificación aquí"
+msgstr "Desactiva la notificación aquí"
 
 #: ionos-essentials/inc/security/index.php
 #, generated by deepl,php-format
 msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
-msgstr "El antiguo plugin de Seguridad es ahora parte del nuevo plugin de Esenciales. Encontrará todas las funciones en <a href=\"%s\">Herramientas y seguridad</a> de nuestro nuevo Hub."
+msgstr "El antiguo plugin IONOS Security es ahora parte del nuevo plugin Essentials. Encontrarás todas las funcionalidades en la pestaña <a href=\"%s\">Herramientas y seguridad</a> de nuestro nuevo Hub."
 
 #: ionos-essentials/inc/dashboard/index.php
-#, generated by deepl
 msgid "failed to update user meta"
-msgstr "error al actualizar meta de usuario"
+msgstr "error al actualizar los metadatos del usuario"
 
 #: ionos-essentials/inc/switch-page/view.php
-#, generated by deepl
 msgid "Logo"
-msgstr "Logotipo"
+msgstr "Logo"
 
 #: ionos-essentials/inc/switch-page/view.php
-#, generated by deepl
 msgid "Artificial Intelligence Illustration"
-msgstr "Ilustración de Inteligencia Artificial"
+msgstr "Ilustración de IA"
 
 #: ionos-essentials/inc/switch-page/view.php
-#, generated by deepl
 msgid "User Interface Illustration"
 msgstr "Ilustración de la interfaz de usuario"
 
@@ -853,7 +845,7 @@ msgstr "Ilustración de la interfaz de usuario"
 #: ionos-essentials/inc/update/index.php
 #, generated by deepl,php-format
 msgid "Failed to download <a href=\\\"%1$s\\\">%2$s-info.json</a>(response status=%3$s)"
-msgstr "Error al descargar <a href=\"%1$s\\\">%2$s-info.json</a>(response status=%3$s)"
+msgstr "Error al descargar <a href=\"%1$s\\\">%2$s-info.json</a>(estado de respuesta=%3$s)"
 
 #: ionos-essentials/inc/security/credentials-checking.php
 msgid "The entered password has already been leaked. Please choose another one."
@@ -888,11 +880,9 @@ msgid "Learn more about SSL and how to activate it."
 msgstr "Más información sobre SSL y cómo activarlo."
 
 #: ionos-essentials/inc/wpscan/views/issues.php
-#, generated by deepl
 msgid "Update"
 msgstr "Actualización"
 
 #: ionos-essentials/inc/wpscan/views/issues.php
-#, generated by deepl
 msgid "Delete"
 msgstr "Borrar"
