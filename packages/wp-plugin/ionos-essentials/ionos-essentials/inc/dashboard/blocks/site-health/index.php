@@ -37,8 +37,14 @@ function render_callback(): void
             <div class="ionos-site-health-overview__info-item site-health-status">
               <p>Site health:</p>
               <strong id="site-health-status-text" >
-                <span class="site-health-status-circle"></span>
-                <?php echo esc_html_e('Results are still loading&hellip;'); ?>
+                <span class="site-health-status-circle">
+                  <svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <circle r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+                    <circle id="bar" r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+                </svg>
+
+                </span>
+                <span id="site-health-status-message"><?php echo esc_html_e('Results are still loading&hellip;'); ?></span>
               </strong>
             </div>
 

@@ -412,24 +412,30 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 
 }
 
+
 .site-health-status-circle {
-  display: inline-block;
   width: 12px;
   height: 12px;
-  border-radius: 50%;
-  margin-right: 8px;
-  vertical-align: middle;
-  border: 2px solid currentColor;
-  background-color: transparent;
-}
 
+  svg circle{
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+    stroke: #c3c4c7;
+    stroke-width: 2em;
+
+    &#bar{
+      stroke: #46b450;
+      stroke-dashoffset: 560px;
+    }
+  }
+}
 #site-health-status-text.green {
   color: #46b450;
 }
 
 #site-health-status-text.orange {
   color: #ffb900;
-
+}
 #site-health-status-text.red {
   color: #dc3232;
 }
@@ -438,4 +444,4 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   color: #888;
 }
 
-}
+

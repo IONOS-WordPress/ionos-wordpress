@@ -292,9 +292,9 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log( totalIssues, totalTests, goodTestsRatio);
 
     if( goodTestsRatio < 8 || wpData.siteHealthIssueCount.critical !== 0 ) {
-      dashboard.querySelector('#site-health-status-text').innerHTML = wpData.i18n.siteHealthImprovable
+      dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthImprovable
     } else {
-      dashboard.querySelector('#site-health-status-text').innerHTML = wpData.i18n.siteHealthGood
+      dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthGood
     }
   })();
 
