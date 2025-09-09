@@ -2,42 +2,15 @@
 
 namespace ionos\essentials\dashboard\blocks\site_health;
 
-use WP_Site_Health;
-
 use const ionos\essentials\PLUGIN_DIR;
 
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/vulnerability/index.php';
 
 defined('ABSPATH') || exit();
 
-
-
 function render_callback(): void
 {
-
-
-$status = get_option('custom_site_health_status', 'unknown');
-
-switch ($status) {
-    case 'good':
-        $text  = 'Good';
-        $class = 'green';
-        break;
-    case 'recommended':
-        $text  = 'Should be improved';
-        $class = 'orange';
-        break;
-    case 'critical':
-        $text  = 'Needs urgent attention';
-        $class = 'red';
-        break;
-    default:
-        $text  = 'Unknown';
-        $class = 'grey';
-}
-
-?>
-
+  ?>
   <div class="card">
     <div class="card__content">
       <section class="card__section ionos-site-health">
@@ -58,14 +31,14 @@ switch ($status) {
           <div class="ionos-site-health-overview__info">
             <div class="ionos-site-health-overview__info-homeurl">
               <i class="exos-icon exos-icon-password-16"></i>
-              <h2 class="headline headline--sub"><?php echo parse_url( \get_option('siteurl', ''), PHP_URL_HOST );?></h2>
+              <h2 class="headline headline--sub"><?php echo parse_url(\get_option('siteurl', ''), PHP_URL_HOST); ?></h2>
             </div>
             <div class="ionos-site-health-overview__info-items">
             <div class="ionos-site-health-overview__info-item site-health-status">
               <p>Site health:</p>
-              <strong id="site-health-status-text" class="<?php echo esc_attr($class); ?>">
+              <strong id="site-health-status-text" >
                 <span class="site-health-status-circle"></span>
-                <?php echo esc_html($text); ?>
+                <?php echo esc_html_e('Results are still loading&hellip;'); ?>
               </strong>
             </div>
 

@@ -261,4 +261,41 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
   });
+
+
+
+  const siteHealthTests = ['background-updates','loopback-requests','https-status','dotorg-communication','authorization-header'];
+  (async () => {
+    for (const test of siteHealthTests) {
+      try {
+        const response = await fetch(wpData.restUrl + 'wp-site-health/v1/tests/' + test, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-WP-Nonce': wpData.nonce,
+          },
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        wpData.siteHealthIssueCount[data.status] = parseInt((wpData.siteHealthIssueCount[data.status] ?? 0)) + 1;
+      } catch (error) {
+        console.error('Error fetching site health status for test ' + test);
+      }
+    }
+    // all tests are done, now update the UI
+    const totalIssues = (wpData.siteHealthIssueCount.critical ?? 0) + (wpData.siteHealthIssueCount.recommended ?? 0)
+    const totalTests =( wpData.siteHealthIssueCount.critical.length ?? 0) + ( wpData.siteHealthIssueCount.recommended.length ?? 0 )+ (wpData.siteHealthIssueCount.good ?? 0);
+    const goodTestsRatio = (totalTests > 0 ) ? totalIssues / totalTests : 1;
+    console.log( totalIssues, totalTests, goodTestsRatio);
+
+    if( goodTestsRatio < 8 || wpData.siteHealthIssueCount.critical !== 0 ) {
+      dashboard.querySelector('#site-health-status-text').innerHTML = wpData.i18n.siteHealthImprovable
+    } else {
+      dashboard.querySelector('#site-health-status-text').innerHTML = wpData.i18n.siteHealthGood
+    }
+  })();
+
 });
