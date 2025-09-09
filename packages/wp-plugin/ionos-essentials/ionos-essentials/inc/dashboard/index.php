@@ -3,6 +3,7 @@
 namespace ionos\essentials\dashboard;
 
 use ionos\essentials\Tenant;
+use WP_Site_Health;
 
 defined('ABSPATH') || exit();
 
@@ -11,6 +12,7 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/misc.php';
+require_once ABSPATH . 'wp-admin/includes/class-wp-site-health.php';
 
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
@@ -272,3 +274,123 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
   'wp_ajax_ionos-popup-dismiss',
   fn () => (\delete_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp') && \wp_die())
 );
+
+
+// \add_action('wp_ajax_get_site_health_status', function () {
+//     // ✅ Check permissions
+//     if (!\current_user_can('manage_options')) {
+//         \wp_send_json_error('Unauthorized');
+//         \wp_die();
+//     }
+
+//     // ✅ Load WP_Site_Health class if not already loaded
+//     if (!class_exists('WP_Site_Health')) {
+//         require_once ABSPATH . 'wp-admin/includes/class-wp-site-health.php';
+//     }
+
+//     $health = new WP_Site_Health();
+//     $tests  = $health->get_tests();
+//     $results = [];
+
+//     // ✅ Run direct tests
+//     foreach ($tests['direct'] as $test) {
+//         if (is_callable([$health, $test['test']])) {
+//             $result = call_user_func([$health, $test['test']]);
+//             $results[] = $result;
+//             \do_action('site_status_test_result', $result); // Optional hook
+//         }
+//     }
+
+//     // ✅ Run async-direct tests
+//     foreach ($tests['async'] as $test) {
+//         if (!empty($test['async_direct_test']) && is_callable($test['async_direct_test'])) {
+//             $result = call_user_func($test['async_direct_test']);
+//             $results[] = $result;
+//             \do_action('site_status_test_result', $result); // Optional hook
+//         }
+//     }
+
+//     // ✅ List of test labels to ignore (WordPress-like behavior)
+//     $excluded_tests = [
+//         'Your site could not complete a loopback request',
+//         'Background updates are not working as expected',
+//         'Debug mode is enabled',
+//         'You should remove inactive plugins',
+//         'You should remove inactive themes',
+//         'You should update your PHP version',
+//         'SQL server is outdated',
+//     ];
+
+//     // ✅ Calculate final status
+//     $final_status = 'good';
+
+//     foreach ($results as $result) {
+//         $label = $result['label'] ?? '';
+//         $status = $result['status'] ?? 'good';
+
+//         // Skip excluded tests
+//         if (in_array($label, $excluded_tests, true)) {
+//             continue;
+//         }
+
+//         if ($status === 'critical') {
+//             $final_status = 'critical';
+//             break;
+//         } elseif ($status === 'recommended' && $final_status !== 'critical') {
+//             $final_status = 'recommended';
+//         }
+//     }
+
+//     // ✅ Return JSON response
+//     \wp_send_json_success([
+//         'status' => $final_status,
+//         'tests'  => $results,
+//     ]);
+// });
+
+\add_action('wp_ajax_save_site_health_status', function () {
+    if (
+        !isset($_POST['nonce']) ||
+        !\wp_verify_nonce($_POST['nonce'], 'save_site_health_status_nonce')
+    ) {
+        \wp_send_json_error('Invalid nonce');
+    }
+
+    if (!\current_user_can('manage_options')) {
+        \wp_send_json_error('Unauthorized');
+    }
+
+    $status = \sanitize_text_field($_POST['status'] ?? '');
+
+    if (!in_array($status, ['good', 'recommended', 'critical'], true)) {
+        \wp_send_json_error('Invalid status');
+    }
+
+    \update_option('custom_site_health_status', $status);
+
+    \wp_send_json_success('Saved');
+});
+
+
+\add_action('admin_enqueue_scripts', function ($hook) {
+    if (!\current_user_can('manage_options')) {
+        return;
+    }
+
+    \wp_enqueue_script(
+        'site-health-admin-status',
+        \plugin_dir_url(__FILE__) . 'site-health-status.js',
+        ['jquery'],
+        filemtime(\plugin_dir_path(__FILE__) . 'site-health-status.js'),
+        true
+    );
+
+    \wp_localize_script('site-health-admin-status', 'SiteHealthData', [
+        'ajaxUrl'   => \admin_url('admin-ajax.php'),
+        'ajaxNonce' => \wp_create_nonce('save_site_health_status_nonce'),
+        'restNonce' => \wp_create_nonce('wp_rest')
+    ]);
+});
+
+
+

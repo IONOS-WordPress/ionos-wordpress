@@ -411,3 +411,31 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     color: #096B35;
 
 }
+
+.site-health-status-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+  border: 2px solid currentColor;
+  background-color: transparent;
+}
+
+#site-health-status-text.green {
+  color: #46b450;
+}
+
+#site-health-status-text.orange {
+  color: #ffb900;
+
+#site-health-status-text.red {
+  color: #dc3232;
+}
+
+#site-health-status-text.grey {
+  color: #888;
+}
+
+}

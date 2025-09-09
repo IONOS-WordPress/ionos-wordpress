@@ -2,15 +2,39 @@
 
 namespace ionos\essentials\dashboard\blocks\site_health;
 
+use WP_Site_Health;
+
 use const ionos\essentials\PLUGIN_DIR;
 
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/vulnerability/index.php';
-require_once ABSPATH . 'wp-admin/includes/class-wp-site-health.php';
 
 defined('ABSPATH') || exit();
 
+
+
 function render_callback(): void
 {
+
+
+$status = get_option('custom_site_health_status', 'unknown');
+
+switch ($status) {
+    case 'good':
+        $text  = 'Good';
+        $class = 'green';
+        break;
+    case 'recommended':
+        $text  = 'Should be improved';
+        $class = 'orange';
+        break;
+    case 'critical':
+        $text  = 'Needs urgent attention';
+        $class = 'red';
+        break;
+    default:
+        $text  = 'Unknown';
+        $class = 'grey';
+}
 
 ?>
 
@@ -37,10 +61,15 @@ function render_callback(): void
               <h2 class="headline headline--sub"><?php echo parse_url( \get_option('siteurl', ''), PHP_URL_HOST );?></h2>
             </div>
             <div class="ionos-site-health-overview__info-items">
-              <div class="ionos-site-health-overview__info-item">
-                <p>Site health</p>
+            <div class="ionos-site-health-overview__info-item site-health-status">
+              <p>Site health:</p>
+              <strong id="site-health-status-text" class="<?php echo esc_attr($class); ?>">
+                <span class="site-health-status-circle"></span>
+                <?php echo esc_html($text); ?>
+              </strong>
+            </div>
 
-              </div>
+
               <div class="ionos-site-health-overview__info-item">
                 <h3 class="ionos-site-health-overview__info-item-title">WordPress version</h3>
                 <h4 class="headline headline--sub"><?php echo \get_bloginfo('version'); ?></h4>
