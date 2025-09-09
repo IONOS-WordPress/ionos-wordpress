@@ -821,7 +821,6 @@ msgid "Turn off notification here"
 msgstr "Désactiver la notification ici"
 
 #: ionos-essentials/inc/security/index.php
-,php-format
 msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
 msgstr "L'ancienne extension Security fait désormais partie de la nouvelle extension essentials. Vous trouverez toutes les fonctionnalités sous <a href=\"%s\">Outils et sécurité</a> de notre nouveau Hub."
 
@@ -843,7 +842,6 @@ msgstr "Illustration de l'interface utilisateur"
 
 #. translators: first placeholder for the url, second for the plugin name, last one for the response code
 #: ionos-essentials/inc/update/index.php
-,php-format
 msgid "Failed to download <a href=\\\"%1$s\\\">%2$s-info.json</a>(response status=%3$s)"
 msgstr "Échec du téléchargement de <a href=\\\"%1$s\\\">%2$s-info.json</a>(response status=%3$s)"
 

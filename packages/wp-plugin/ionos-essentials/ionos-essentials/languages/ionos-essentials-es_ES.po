@@ -40,7 +40,6 @@ msgid "My data"
 msgstr "Mis datos"
 
 #: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/arsys.php
 msgid "My products"
 msgstr "Mis productos"
 
