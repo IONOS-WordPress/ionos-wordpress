@@ -286,15 +286,24 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
     // all tests are done, now update the UI
-    const totalIssues = (wpData.siteHealthIssueCount.critical ?? 0) + (wpData.siteHealthIssueCount.recommended ?? 0)
-    const totalTests =( wpData.siteHealthIssueCount.critical.length ?? 0) + ( wpData.siteHealthIssueCount.recommended.length ?? 0 )+ (wpData.siteHealthIssueCount.good ?? 0);
-    const goodTestsRatio = (totalTests > 0 ) ? totalIssues / totalTests : 1;
-    console.log( totalIssues, totalTests, goodTestsRatio);
+    //toDo: remove debug-code
+    wpData.siteHealthIssueCount = {
+      good: 10,
+      recommended: 10,
+      critical: 1
+    }
 
-    if( goodTestsRatio < 8 || wpData.siteHealthIssueCount.critical !== 0 ) {
+    const totalIssues = (wpData.siteHealthIssueCount.critical ?? 0) + (wpData.siteHealthIssueCount.recommended ?? 0)
+    const totalTests = totalIssues + (wpData.siteHealthIssueCount.good ?? 0);
+    const badTestsRatio = (totalTests > 0 ) ? totalIssues / totalTests : 1;
+    dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - (565.48 * (1 - badTestsRatio));
+
+    if( badTestsRatio >= 0.2 || wpData.siteHealthIssueCount.critical !== 0 ) {
       dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthImprovable
+      dashboard.querySelector('#bar').classList.add('site-health-color-orange');
     } else {
       dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthGood
+      dashboard.querySelector('#bar').classList.add('site-health-color-green');
     }
   })();
 
