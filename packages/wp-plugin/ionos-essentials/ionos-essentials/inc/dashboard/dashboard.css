@@ -293,23 +293,7 @@ main{
   }
 }
 
-@media (max-width: 800px) {
-  .banner_wrapper {
-    flex-direction: column;;
-  }
 
-  .content {
-    width: 100%;
-  }
-
-  .ionos_banner_buttons{
-    width: 100%;
-  }
-
-  .banner-navigation {
-    width: 100%;
-  }
-}
 
 .ionos-maintenance-only {
   display: none;
@@ -369,13 +353,19 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 152px;
-
+  /* height: 152px; */
 }
+
 .ionos-site-health-overview {
     display: flex;
     flex-direction: row;
     gap: 20px;
+}
+
+@media (max-width: 1200px) {
+  .ionos-site-health-overview__iframe {
+    display: none;
+  }
 }
 
 .ionos-site-health-overview__info {
@@ -387,8 +377,7 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 .ionos-site-health-overview__info-items {
     display: flex;
     flex-direction: row;
-
-    gap: 60px;
+    gap: 40px;
 }
 
 .ionos-site-health-overview__info-item{
@@ -444,4 +433,34 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 }
 
 
+@media (max-width: 800px) {
+  .banner_wrapper {
+    flex-direction: column;;
+  }
 
+  .content {
+    width: 100%;
+  }
+
+  .ionos_banner_buttons{
+    width: 100%;
+  }
+
+  .banner-navigation {
+    width: 100%;
+  }
+
+  .ionos-site-health {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .ionos-site-health-overview__info-items {
+    justify-content: space-between;
+  }
+
+  .ionos-site-health-overview, .ionos-site-health-overview__info, .ionos-site-health-vulnerability {
+    width: 100%;
+  }
+}
