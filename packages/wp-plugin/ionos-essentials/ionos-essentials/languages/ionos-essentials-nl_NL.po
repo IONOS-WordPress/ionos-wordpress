@@ -632,10 +632,6 @@ msgid "Comprehensive help section, including: AI chat support, Guided tours and 
 msgstr "Overzichtelijk helpcentrum met een AI-chatbot, rondleidingen en een uitgebreide kennisbank"
 
 #: ionos-essentials/inc/dashboard/index.php
-msgid "Tools and security"
-msgstr "Tools en beveiliging"
-
-#: ionos-essentials/inc/dashboard/index.php
 msgid "Loading content ..."
 msgstr "Inhoud laden ..."
 
@@ -889,3 +885,7 @@ msgstr "Update"
 #: ionos-essentials/inc/wpscan/views/issues.php
 msgid "Delete"
 msgstr "Verwijder"
+
+#: ionos-essentials/inc/dashboard/index.php
+msgid "Tools & Security"
+msgstr "Tools en Beveiliging"

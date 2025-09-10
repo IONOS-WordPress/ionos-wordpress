@@ -623,10 +623,6 @@ msgid "An error occurred while fetching the vulnerability data."
 msgstr "Beim Abrufen der Daten zu den Sicherheitslücken ist ein Fehler aufgetreten."
 
 #: ionos-essentials/inc/dashboard/index.php
-msgid "Tools and security"
-msgstr "Tools und Sicherheit"
-
-#: ionos-essentials/inc/dashboard/index.php
 msgid "Loading content ..."
 msgstr "Inhalte werden geladen..."
 
@@ -884,3 +880,7 @@ msgstr "Update"
 #: ionos-essentials/inc/wpscan/views/issues.php
 msgid "Delete"
 msgstr "Löschen"
+
+#: ionos-essentials/inc/dashboard/index.php
+msgid "Tools & Security"
+msgstr "Tools & Sicherheit"
