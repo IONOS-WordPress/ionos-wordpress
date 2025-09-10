@@ -15,16 +15,11 @@ const config = defineConfig({
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
-  /* Retry 2 times */
-  retries: 2,
+  retries: 0,
   // Opt out of parallel tests
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [
-    process.env.CI ? ['dot'] : ['list', { printSteps: true }],
-    ['html', { outputFolder: './playwright/storybook/.playwright-report', open: 'never' }],
-    ['line'],
-  ],
+  reporter: [['dot']],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -35,7 +30,7 @@ const config = defineConfig({
     ctPort: 3100,
 
     /* keep only videos for failed tests */
-    video: 'retain-on-failure',
+    video: 'off',
 
     launchOptions: {
       // https://playwright.dev/docs/test-use-options#more-browser-and-context-options

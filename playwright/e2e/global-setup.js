@@ -2,13 +2,13 @@ import { request } from '@playwright/test';
 
 import { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
 
+/* eslint-disable-next-line import/named */
+import {createRequestUtils} from './helpers'
+
+
 async function globalSetup(config) {
-  const { storageState, baseURL } = config.projects[0].use;
-  const storageStatePath = typeof storageState === 'string' ? storageState : undefined;
 
-  const requestContext = await request.newContext({ baseURL });
-
-  const requestUtils = new RequestUtils(requestContext, { storageStatePath });
+  const { requestContext, requestUtils } = await createRequestUtils(config);
 
   // Authenticate and save the storageState to disk.
   await requestUtils.setupRest();
@@ -29,6 +29,12 @@ async function globalSetup(config) {
   ]);
 
   await requestContext.dispose();
+
+   const myFunc = async (name) => {
+    console.log(`Hello from globalSetup function, ${name}!`);
+  };
+
+  return { hello: 'world', func: myFunc };
 }
 
 export default globalSetup;

@@ -16,7 +16,7 @@ const config = defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 1,
+  retries: 0,
   /* Opt out of parallel tests */
   workers: 1,
   webServer: {
@@ -33,12 +33,14 @@ const config = defineConfig({
     launchOptions: {
       executablePath: process.env.PLAYWRIGHT_CHROME_PATH,
     },
+     trace: 'on-first-retry',
   },
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    process.env.CI ? ['dot'] : ['list', { printSteps: true }],
-    ['html', { outputFolder: './playwright/storybook/.playwright-report', open: 'never' }],
-    ['line'],
+     // zeigt Fortschritt + gibt Logs direkt ins Terminal aus
+    ['list', { printSteps: true }],
+    // zusätzlich ein HTML-Report mit allen Logs
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
   ],
   globalSetup: './playwright/e2e/global-setup.js',
   projects: [
