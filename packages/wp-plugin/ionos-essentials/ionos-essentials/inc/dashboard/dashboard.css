@@ -398,36 +398,39 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 .ionos-site-health-overview__info-homeurl .exos-icon {
     font-size: 20px;
     color: #096B35;
+}
 
+#site-health-status-text{
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .site-health-status-circle {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-right: 8px;
-  vertical-align: middle;
-  border: 2px solid currentColor;
-  background-color: transparent;
-}
+  width: 18px;
+  height: 18px;
 
-#site-health-status-text.green {
-  color: #46b450;
-}
+  svg circle{
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+    stroke: #c3c4c7;
+    stroke-width: 2em;
 
-#site-health-status-text.orange {
-  color: #ffb900;
-}
+    &#bar{
+      stroke: #888888;
 
-#site-health-status-text.red {
-  color: #dc3232;
+      &.site-health-color-orange{
+        stroke: #ffb900;
+      }
+      &.site-health-color-green{
+        stroke: #46b450;
+      }
+      &.site-health-color-red{
+        stroke: #dc3232;
+      }
+    }
+  }
 }
-
-#site-health-status-text.grey {
-  color: #888;
-}
-
 
 
 @media (max-width: 800px) {
