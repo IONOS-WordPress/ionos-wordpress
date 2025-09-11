@@ -400,6 +400,10 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     color: #096B35;
 }
 
+.site-health-status {
+  width: 180px;
+}
+
 #site-health-status-text{
   display: flex;
   gap: 10px;

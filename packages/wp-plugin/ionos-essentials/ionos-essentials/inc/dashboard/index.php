@@ -292,74 +292,9 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
   fn () => (\delete_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp') && \wp_die())
 );
 
-// \add_action('wp_ajax_get_site_health_status', function () {
-//     // ✅ Check permissions
-//     if (!\current_user_can('manage_options')) {
-//         \wp_send_json_error('Unauthorized');
-//         \wp_die();
-//     }
-
-//     // ✅ Load WP_Site_Health class if not already loaded
-//     if (!class_exists('WP_Site_Health')) {
-//         require_once ABSPATH . 'wp-admin/includes/class-wp-site-health.php';
-//     }
-
-//     $health = new WP_Site_Health();
-//     $tests  = $health->get_tests();
-//     $results = [];
-
-//     // ✅ Run direct tests
-//     foreach ($tests['direct'] as $test) {
-//         if (is_callable([$health, $test['test']])) {
-//             $result = call_user_func([$health, $test['test']]);
-//             $results[] = $result;
-//             \do_action('site_status_test_result', $result); // Optional hook
-//         }
-//     }
-
-//     // ✅ Run async-direct tests
-//     foreach ($tests['async'] as $test) {
-//         if (!empty($test['async_direct_test']) && is_callable($test['async_direct_test'])) {
-//             $result = call_user_func($test['async_direct_test']);
-//             $results[] = $result;
-//             \do_action('site_status_test_result', $result); // Optional hook
-//         }
-//     }
-
-//     // ✅ List of test labels to ignore (WordPress-like behavior)
-//     $excluded_tests = [
-//         'Your site could not complete a loopback request',
-//         'Background updates are not working as expected',
-//         'Debug mode is enabled',
-//         'You should remove inactive plugins',
-//         'You should remove inactive themes',
-//         'You should update your PHP version',
-//         'SQL server is outdated',
-//     ];
-
-//     // ✅ Calculate final status
-//     $final_status = 'good';
-
-//     foreach ($results as $result) {
-//         $label = $result['label'] ?? '';
-//         $status = $result['status'] ?? 'good';
-
-//         // Skip excluded tests
-//         if (in_array($label, $excluded_tests, true)) {
-//             continue;
-//         }
-
-//         if ($status === 'critical') {
-//             $final_status = 'critical';
-//             break;
-//         } elseif ($status === 'recommended' && $final_status !== 'critical') {
-//             $final_status = 'recommended';
-//         }
-//     }
-
-//     // ✅ Return JSON response
-//     \wp_send_json_success([
-//         'status' => $final_status,
-//         'tests'  => $results,
-//     ]);
-// });
+add_filter('show_admin_bar', function($show) {
+    if (isset($_GET['hidetoolbar']) && $_GET['hidetoolbar'] == '1') {
+        return false;
+    }
+    return $show;
+});

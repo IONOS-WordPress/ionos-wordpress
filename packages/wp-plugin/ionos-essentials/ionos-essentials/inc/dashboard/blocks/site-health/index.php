@@ -17,25 +17,33 @@ function render_callback(): void
         <div class="ionos-site-health-overview">
           <div class="ionos-site-health-overview__iframe" style="width: 240px; height: 150px; overflow: hidden;">
             <iframe
-              src="<?php echo \get_option('siteurl', ''); ?>"
+              src="<?php echo get_option('siteurl', ''); ?>/?hidetoolbar=1"
               style="
                 width: 1440px;
                 height: 900px;
                 transform: scale(0.166); /* 240 / 1440 = 0.166 */
                 transform-origin: top left;
                 border: none;
+                pointer-events: none;
               "
               scrolling="no"
             ></iframe>
           </div>
           <div class="ionos-site-health-overview__info">
+            <?php if ( \ionos\essentials\maintenance_mode\is_maintenance_mode() ) { ?>
+              <span class="badge badge--warning-solid ionos-maintenance-only" style="width: 180px; margin-bottom: 10px;"><?php \esc_html_e('Maintenance page active', 'ionos-essentials'); ?></span>
+            <?php } ?>
             <div class="ionos-site-health-overview__info-homeurl">
-              <i class="exos-icon exos-icon-password-16"></i>
+              <?php if ( \is_ssl() ) { ?>
+                <i class="exos-icon exos-icon-nav-lock-close-16"></i>
+              <?php } else { ?>
+                <i class="exos-icon exos-icon-nav-lock-16" style="color: #c90a00;"></i>
+              <?php } ?>
               <h2 class="headline headline--sub"><?php echo parse_url(\get_option('siteurl', ''), PHP_URL_HOST); ?></h2>
             </div>
             <div class="ionos-site-health-overview__info-items">
             <div class="ionos-site-health-overview__info-item site-health-status">
-              <p>Site health:</p>
+              <p>Site health</p>
               <strong id="site-health-status-text" >
                 <div class="site-health-status-circle">
                   <svg aria-hidden="true" focusable="false" width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
