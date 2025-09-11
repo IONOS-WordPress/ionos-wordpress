@@ -239,7 +239,7 @@ add_filter('admin_body_class', function ($classes) {
       'deleting'    => \esc_html__('deleting...', 'ionos-essentials'),
       'loading'     => \esc_html__('Loading content ...', 'ionos-essentials'),
       'siteHealthImprovable'  => \esc_html__( 'Should be improved', 'ionos-essentials' ),
-      'siteHealthGood'       => \esc_html__( 'Good', 'ionos-essentials', 'ionos-essentials' ),
+      'siteHealthGood'       => \esc_html__( 'Good', 'ionos-essentials' ),
     ],
   ]);
 });
