@@ -292,6 +292,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
   fn () => (\delete_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp') && \wp_die())
 );
 
+/* hide admin bar, when query param /?hidetoolbar=1 is set */
 add_filter('show_admin_bar', function($show) {
     if (isset($_GET['hidetoolbar']) && $_GET['hidetoolbar'] == '1') {
         return false;
