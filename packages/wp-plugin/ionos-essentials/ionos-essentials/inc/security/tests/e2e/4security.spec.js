@@ -1,5 +1,5 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import {createRequestUtils} from '/home/tom/projects/ionos-wordpress/playwright/e2e/helpers'
+import {createRequestUtils} from '../../../../../../../../../ionos-wordpress/playwright/e2e/helpers.js'
 
 test('login 1', async ({ admin, page }) => {
   await admin.visitAdminPage('?page=ionos#tools');

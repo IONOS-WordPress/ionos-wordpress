@@ -37,10 +37,7 @@ const config = defineConfig({
   },
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-     // zeigt Fortschritt + gibt Logs direkt ins Terminal aus
     ['list', { printSteps: true }],
-    // zusätzlich ein HTML-Report mit allen Logs
-    ['html', { outputFolder: 'playwright-report', open: 'never' }],
   ],
   globalSetup: './playwright/e2e/global-setup.js',
   projects: [
