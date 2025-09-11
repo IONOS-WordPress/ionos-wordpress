@@ -15,10 +15,9 @@ test('logout', async ({ page }, testInfo) => {
 
 test('login 2', async ({ admin, page }, testInfo) => {
   const { requestContext, requestUtils } = await createRequestUtils(testInfo.config);
+
   await requestUtils.login();
-if (!requestUtils.restContext) {
-    throw new Error('requestUtils.restContext is undefined. login failed.');
-  }
+  await requestContext.dispose();
 
   await admin.visitAdminPage('?page=ionos#tools');
 

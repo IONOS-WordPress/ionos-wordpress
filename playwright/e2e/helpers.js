@@ -6,6 +6,7 @@ export async function createRequestUtils(config) {
   const storageStatePath = typeof storageState === 'string' ? storageState : undefined;
   const requestContext = await request.newContext({ baseURL });
   const requestUtils = new RequestUtils(requestContext, { storageStatePath });
+
   return { requestContext, requestUtils };
 }
 

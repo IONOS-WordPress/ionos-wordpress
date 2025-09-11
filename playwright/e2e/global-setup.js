@@ -16,25 +16,10 @@ async function globalSetup(config) {
   // Reset the test environment before running the tests.
   await Promise.all([
     requestUtils.activateTheme('twentytwentyfive'),
-    // @FIXME: activate all plugins
     requestUtils.activatePlugin('essentials'),
-    // // Disable this test plugin as it's conflicting with some of the tests.
-    // // We already have reduced motion enabled and Playwright will wait for most of the animations anyway.
-    // requestUtils.deactivatePlugin(
-    // 	'gutenberg-test-plugin-disables-the-css-animations'
-    // ),
-    // requestUtils.deleteAllPosts(),
-    // requestUtils.deleteAllBlocks(),
-    // requestUtils.resetPreferences(),
   ]);
 
   await requestContext.dispose();
-
-   const myFunc = async (name) => {
-    console.log(`Hello from globalSetup function, ${name}!`);
-  };
-
-  return { hello: 'world', func: myFunc };
 }
 
 export default globalSetup;
