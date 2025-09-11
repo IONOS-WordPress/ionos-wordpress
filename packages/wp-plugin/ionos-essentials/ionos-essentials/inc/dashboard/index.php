@@ -294,7 +294,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 
 /* hide admin bar, when query param /?hidetoolbar=1 is set */
 add_filter('show_admin_bar', function($show) {
-    if (isset($_GET['hidetoolbar']) && $_GET['hidetoolbar'] == '1') {
+    if (isset($_GET['hidetoolbar'])) {
         return false;
     }
     return $show;
