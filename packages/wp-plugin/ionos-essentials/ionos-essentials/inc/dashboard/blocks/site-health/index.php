@@ -43,7 +43,7 @@ function render_callback(): void
             </div>
             <div class="ionos-site-health-overview__info-items">
             <div class="ionos-site-health-overview__info-item site-health-status">
-              <p>Site health</p>
+              <p><?php \esc_html__('Site health', 'ionos-essentials')?></p>
               <strong id="site-health-status-text" >
                 <div class="site-health-status-circle">
                   <svg aria-hidden="true" focusable="false" width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -57,11 +57,11 @@ function render_callback(): void
 
 
               <div class="ionos-site-health-overview__info-item">
-                <h3 class="ionos-site-health-overview__info-item-title">WordPress version</h3>
+                <h3 class="ionos-site-health-overview__info-item-title"><?php \esc_html__('WordPress version', 'ionos-essentials')?></h3>
                 <h4 class="headline headline--sub"><?php echo \get_bloginfo('version'); ?></h4>
               </div>
               <div class="ionos-site-health-overview__info-item">
-                <h3 class="ionos-site-health-overview__info-item-title">PHP version</h3>
+                <h3 class="ionos-site-health-overview__info-item-title"><?php \esc_html__('PHP version', 'ionos-essentials')?></h3>
                 <h4 class="headline headline--sub"><?php echo PHP_VERSION; ?></h4>
               </div>
             </div>
