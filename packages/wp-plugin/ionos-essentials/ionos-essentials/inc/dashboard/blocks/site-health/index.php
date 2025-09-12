@@ -30,11 +30,11 @@ function render_callback(): void
             ></iframe>
           </div>
           <div class="ionos-site-health-overview__info">
-            <?php if ( \ionos\essentials\maintenance_mode\is_maintenance_mode() ) { ?>
+            <?php if (\ionos\essentials\maintenance_mode\is_maintenance_mode()) { ?>
               <span class="badge badge--warning-solid ionos-maintenance-only" style="width: 180px; margin-bottom: 10px;"><?php \esc_html_e('Maintenance page active', 'ionos-essentials'); ?></span>
             <?php } ?>
             <div class="ionos-site-health-overview__info-homeurl">
-              <?php if ( \is_ssl() ) { ?>
+              <?php if (\is_ssl()) { ?>
                 <i class="exos-icon exos-icon-nav-lock-close-16"></i>
               <?php } else { ?>
                 <i class="exos-icon exos-icon-nav-lock-16" style="color: #c90a00;"></i>

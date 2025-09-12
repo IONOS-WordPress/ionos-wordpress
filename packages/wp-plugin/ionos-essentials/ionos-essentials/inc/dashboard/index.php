@@ -3,7 +3,6 @@
 namespace ionos\essentials\dashboard;
 
 use ionos\essentials\Tenant;
-use WP_Site_Health;
 
 defined('ABSPATH') || exit();
 
@@ -232,14 +231,14 @@ add_filter('admin_body_class', function ($classes) {
     'tenant'              => Tenant::get_slug(),
     'siteHealthIssueCount'=> $issue_counts,
     'i18n'                => [
-      'installing'  => \esc_html__('Installing...', 'ionos-essentials'),
-      'activated'   => \esc_html__('activated.', 'ionos-essentials'),
-      'deactivated' => \esc_html__('deactivated.', 'ionos-essentials'),
-      'updating'    => \esc_html__('updating...', 'ionos-essentials'),
-      'deleting'    => \esc_html__('deleting...', 'ionos-essentials'),
-      'loading'     => \esc_html__('Loading content ...', 'ionos-essentials'),
-      'siteHealthImprovable'  => \esc_html__( 'Should be improved', 'ionos-essentials' ),
-      'siteHealthGood'       => \esc_html__( 'Good', 'ionos-essentials' ),
+      'installing'            => \esc_html__('Installing...', 'ionos-essentials'),
+      'activated'             => \esc_html__('activated.', 'ionos-essentials'),
+      'deactivated'           => \esc_html__('deactivated.', 'ionos-essentials'),
+      'updating'              => \esc_html__('updating...', 'ionos-essentials'),
+      'deleting'              => \esc_html__('deleting...', 'ionos-essentials'),
+      'loading'               => \esc_html__('Loading content ...', 'ionos-essentials'),
+      'siteHealthImprovable'  => \esc_html__('Should be improved', 'ionos-essentials'),
+      'siteHealthGood'        => \esc_html__('Good', 'ionos-essentials'),
     ],
   ]);
 });
@@ -293,9 +292,9 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 );
 
 /* hide admin bar, when query param /?hidetoolbar=1 is set */
-add_filter('show_admin_bar', function($show) {
-    if (isset($_GET['hidetoolbar'])) {
-        return false;
-    }
-    return $show;
+add_filter('show_admin_bar', function ($show) {
+  if (isset($_GET['hidetoolbar'])) {
+    return false;
+  }
+  return $show;
 });

@@ -20,7 +20,7 @@ function render_callback(): void
         <?php
               foreach (get_config() as $link) {
                 printf(
-                  '<a href="%s" class="ghost-button button--with-icon"><i class="button__icon exos-icon exos-icon-%s"></i>%s</a>',
+                  '<a href="%s"><i class="button__icon exos-icon exos-icon-%s"></i>%s</a>',
                   \esc_url($link['url']),
                   $link['icon'],
                   \esc_html($link['text'])
