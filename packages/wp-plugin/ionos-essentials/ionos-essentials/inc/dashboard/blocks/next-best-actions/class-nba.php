@@ -24,7 +24,9 @@ class NBA
     public readonly string $description,
     public readonly string $link,
     public readonly string $anchor,
-    private readonly bool $completed
+    private readonly bool $completed,
+    public readonly bool $dismiss_on_click,
+    public readonly array $categories,
   ) {
     self::$actions[$this->id] = $this;
   }
@@ -61,9 +63,17 @@ class NBA
     return self::$actions;
   }
 
-  public static function register($id, $title, $description, $link, $anchor, $completed = false): void
-  {
-    new self($id, $title, $description, $link, $anchor, $completed);
+  public static function register(
+    string $id,
+    string $title,
+    string $description,
+    string $link,
+    string $anchor,
+    bool $completed = false,
+    bool $dismiss_on_click = false,
+    array $categories = []
+  ): void {
+    new self($id, $title, $description, $link, $anchor, $completed, $dismiss_on_click, $categories);
   }
 
   private static function _get_option()
@@ -146,7 +156,7 @@ if (null !== $data) {
       ),
       link: $data['domain'] . $connectmail,
       anchor: \__('Setup Email Account', 'ionos-essentials'),
-      completed: false // handled by view.js because of external link
+      completed: 'onclick'
     );
   }
 }
@@ -263,7 +273,8 @@ NBA::register(
   description: \__("All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it.", 'ionos-essentials'),
   link: '#tools',
   anchor: \__('Visit Tools & Security', 'ionos-essentials'),
-  completed: false
+  completed: false,
+  dismiss_on_click: true
 );
 
 function get_survey_url(): string
@@ -293,7 +304,8 @@ NBA::register(
   description: \__("We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.", 'ionos-essentials'),
   link: get_survey_url(),
   anchor: \__('Take the survey', 'ionos-essentials'),
-  completed: false
+  completed: false,
+  dismiss_on_click: true
 );
 
 // for($i = 1; $i <= 12; $i++) {

@@ -77,12 +77,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  const emailAccountLink = dashboard.querySelector('a[data-nba-id="email-account"]');
-  if (emailAccountLink) {
-    emailAccountLink.onclick = () => {
-      dismissItem(emailAccountLink);
+  dashboard.querySelectorAll('a[data-dismiss-on-click="true"]').forEach((link) => {
+    link.onclick = () => {
+      dismissItem(link);
     };
-  }
+  });
 
   const helpCenterLink = dashboard.querySelector('a[data-nba-id="help-center"]');
   if (helpCenterLink) {

@@ -36,10 +36,11 @@ function render_callback(): void
     }
 
     $buttons = sprintf(
-      '<a data-nba-id="%s" href="%s" class="button button--secondary" target="%s">%s</a>',
+      '<a data-nba-id="%s" href="%s" class="button button--secondary" target="%s" data-dismiss-on-click="%s">%s</a>',
       $action->id,
       \esc_url($action->link),
       $target,
+      $action->dismiss_on_click ? 'true' : 'false',
       \esc_html($action->anchor)
     );
 
@@ -76,7 +77,29 @@ function render_callback(): void
             ); ?></div>
 
             <div class="grid">
-              <?php echo \wp_kses($cards, 'post'); ?>
+                <?php echo \wp_kses($cards, [
+                  'div'    => [
+                    'id'    => true,
+                    'class' => true,
+                  ],
+                  'section' => [
+                    'class' => true,
+                  ],
+                  'h2'    => [
+                    'class' => true,
+                  ],
+                  'p'     => [
+                    'class' => true,
+                  ],
+                  'a'     => [
+                    'href'                  => true,
+                    'class'                 => true,
+                    'id'                    => true,
+                    'target'                => true,
+                    'data-nba-id'           => true,
+                    'data-dismiss-on-click' => true,
+                  ],
+                ]); ?>
             </div>
           </section>
         </div>
