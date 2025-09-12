@@ -13,7 +13,7 @@ function render_callback(): void
   }
 
   $cards         = '';
-  $card_template = '<div id="%s" class="grid-col grid-col--4 grid-col--medium-6 grid-col--small-12">
+  $card_template = '<div id="%s" class="grid-col grid-col--12 grid-col--medium-6 grid-col--small-12">
   <div class="card nba-card">
     <div class="card__content">
       <section class="card__section">
@@ -63,7 +63,9 @@ function render_callback(): void
 
   }
 
+  printf('<h2 class="headline">%s</h2>', esc_html__( "What's important for today", 'ionos-essentials'));
   ?>
+
       <div class="card ionos_next_best_actions">
         <div class="card__content">
           <section class="card__section ionos_next_best_actions__section">
