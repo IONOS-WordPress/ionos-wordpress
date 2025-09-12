@@ -7,10 +7,20 @@ defined('ABSPATH') || exit();
 function render_callback(): void
 {
   require_once __DIR__ . '/class-nba.php';
-  $actions = NBA::get_actions();
-  if (empty($actions) || count(array_filter($actions, fn (NBA $action) => $action->active)) === 0) {
+
+  $category_to_show = 'setup-ai';
+  $actions = array_filter(NBA::get_actions(), fn (NBA $action) => in_array($category_to_show, $action->categories, true) && $action->active);
+
+  // No actions left, show misc category
+  if (empty($actions)) {
+    $category_to_show = 'misc';
+    $actions = array_filter(NBA::get_actions(), fn (NBA $action) => in_array($category_to_show, $action->categories, true) && $action->active);
+  }
+
+  if( empty($actions)) {
     return;
   }
+
 
   $cards         = '';
   $card_template = '<div id="%s" class="grid-col grid-col--12 grid-col--medium-6 grid-col--small-12">
@@ -25,11 +35,8 @@ function render_callback(): void
   </div>
 </div>';
 
-  foreach ($actions as $action) {
-    if (! $action->active) {
-      continue;
-    }
 
+  foreach ($actions as $action) {
     $target = false === strpos(\esc_url($action->link), home_url()) ? '_blank' : '_top';
     if ('#' === $action->link) {
       $target = '';

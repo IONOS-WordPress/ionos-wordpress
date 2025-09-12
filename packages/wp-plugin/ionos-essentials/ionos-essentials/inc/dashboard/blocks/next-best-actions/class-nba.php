@@ -113,6 +113,7 @@ if (null !== $data) {
     link: $data['domain'] . $connectdomain,
     anchor: \__('Connect Domain', 'ionos-essentials'),
     completed: false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost'),
+    categories: ['setup-ai', 'setup-noai']
   );
 }
 
@@ -126,7 +127,8 @@ NBA::register(
   link: \admin_url('post-new.php?post_type=page&ext-close'), //  /wp-admin/post-new.php?post_type=page&ext-close
   anchor: \__('Edit Website', 'ionos-essentials'),
   completed: 1 < \wp_count_posts('page')
-    ->publish
+    ->publish,
+  categories: ['setup-noai']
 );
 
 if (is_plugin_active('extendify/extendify.php')) {
@@ -156,7 +158,8 @@ if (null !== $data) {
       ),
       link: $data['domain'] . $connectmail,
       anchor: \__('Setup Email Account', 'ionos-essentials'),
-      completed: 'onclick'
+      completed: 'onclick',
+      categories: ['misc']
     );
   }
 }
@@ -174,6 +177,7 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
     link: \admin_url('admin.php?page=wpcf7-new&complete_nba=contact-form'),
     anchor: \__('Set Up Contact Form', 'ionos-essentials'),
     completed: false,
+    categories: ['misc']
   );
 }
 
@@ -188,6 +192,7 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
     link: \admin_url('admin.php?page=wc-admin&path=%2Fsetup-wizard'),
     anchor: \__('Start Setup', 'ionos-essentials'),
     completed: isset($woo_onboarding_status['completed']) || isset($woo_onboarding_status['skipped']), // when setup completed or cta is clicked
+    categories: ['misc']
   );
 }
 
@@ -206,6 +211,7 @@ if ('de' === $market && is_plugin_active('woocommerce/woocommerce.php') && ! is_
     completed: is_plugin_active(
       'woocommerce-german-market-light/WooCommerce-German-Market-Light.php'
     ), // when gml is installed and activate
+    categories: ['misc']
   );
 }
 
@@ -226,7 +232,8 @@ if ('extendable' === get_stylesheet()) {
       'site-editor.php?postId=extendable%2F%2Fheader&postType=\wp_template_part&focusMode=true&canvas=edit&essentials-nba=true'
     ),
     anchor: \__('Add Logo', 'ionos-essentials'),
-    completed: ! $is_default_or_empty_logo
+    completed: ! $is_default_or_empty_logo,
+    categories: ['misc']
   );
 }
 
@@ -236,7 +243,8 @@ NBA::register(
   description: \__('Create and publish a page and share your story with the world.', 'ionos-essentials'),
   link: \admin_url('post-new.php?post_type=page&complete_nba=create-page'),
   anchor: \__('Create Page', 'ionos-essentials'),
-  completed: false
+  completed: false,
+  categories: ['setup-ai','setup-noai']
 );
 
 if ('extendable' === get_stylesheet()) {
@@ -251,7 +259,8 @@ if ('extendable' === get_stylesheet()) {
       'site-editor.php?postId=extendable%2F%2Ffooter&postType=\wp_template_part&focusMode=true&canvas=edit&complete_nba=social-media'
     ),
     anchor: \__('Connect Social Media', 'ionos-essentials'),
-    completed: false
+    completed: false,
+    categories: ['misc']
   );
 }
 
@@ -264,7 +273,8 @@ NBA::register(
   ),
   link: \admin_url('options-general.php'),
   anchor: \__('Add Favicon', 'ionos-essentials'),
-  completed: 0 < intval(\get_option('site_icon', 0))
+  completed: 0 < intval(\get_option('site_icon', 0)),
+  categories: ['misc']
 );
 
 NBA::register(
@@ -274,7 +284,8 @@ NBA::register(
   link: '#tools',
   anchor: \__('Visit Tools & Security', 'ionos-essentials'),
   completed: false,
-  dismiss_on_click: true
+  dismiss_on_click: true,
+  categories: ['misc']
 );
 
 function get_survey_url(): string
@@ -305,7 +316,8 @@ NBA::register(
   link: get_survey_url(),
   anchor: \__('Take the survey', 'ionos-essentials'),
   completed: false,
-  dismiss_on_click: true
+  dismiss_on_click: true,
+  categories: ['misc']
 );
 
 // for($i = 1; $i <= 12; $i++) {
