@@ -141,6 +141,13 @@ main{
     opacity: 0;
     transition: all 0.75s ease-in-out;
   }
+
+  .nba-category-setup-ai,
+  .nba-category-setup-noai{
+    .ionos-dismiss-nba{
+      display: none;
+    }
+  }
 }
 
 .ionos_vulnerability{

@@ -83,7 +83,7 @@ function render_callback(): void
               'ionos-essentials'
             ); ?></div>
 
-            <div class="grid">
+            <div class="grid nba-category-<?php echo $category_to_show; ?>">
                 <?php echo \wp_kses($cards, [
                   'div'    => [
                     'id'    => true,
