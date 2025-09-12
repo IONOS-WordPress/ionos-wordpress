@@ -286,13 +286,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
     // all tests are done, now update the UI
-    //toDo: remove debug-code
-    wpData.siteHealthIssueCount = {
-      good: 10,
-      recommended: 10,
-      critical: 1
-    }
-
     const totalIssues = (wpData.siteHealthIssueCount.critical ?? 0) + (wpData.siteHealthIssueCount.recommended ?? 0)
     const totalTests = totalIssues + (wpData.siteHealthIssueCount.good ?? 0);
     const badTestsRatio = (totalTests > 0 ) ? totalIssues / totalTests : 1;
