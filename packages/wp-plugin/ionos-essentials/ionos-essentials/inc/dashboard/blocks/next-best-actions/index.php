@@ -63,7 +63,7 @@ function render_callback(): void
 
   }
 
-  printf('<h2 class="headline">%s</h2>', esc_html__( "What's important for today", 'ionos-essentials'));
+  printf('<h2 class="headline">%s</h2>', esc_html__("What's important for today", 'ionos-essentials'));
   ?>
 
       <div class="card ionos_next_best_actions">
