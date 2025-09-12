@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-11T13:44:28+00:00\n"
+"POT-Creation-Date: 2025-09-12T06:42:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ionos-essentials\n"
 
 #. Plugin Name of the plugin
@@ -319,13 +319,11 @@ msgstr ""
 #. translators: %s is placeholder for the time since the last scan
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
-#, php-format
 msgid "Last scan ran %s ago"
 msgstr ""
 
 #. translators: %s: Brand name
 #: ionos-essentials/inc/dashboard/blocks/welcome/index.php
-#, php-format
 msgid "Welcome to your new %s Hub"
 msgstr ""
 
@@ -347,7 +345,6 @@ msgstr ""
 
 #. translators: %s: Brand name
 #: ionos-essentials/inc/dashboard/blocks/welcome/index.php
-#, php-format
 msgid "Welcome to your %s Hub"
 msgstr ""
 
@@ -377,7 +374,6 @@ msgstr ""
 
 #. translators: %s is placeholder for the tenant name
 #: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
-#, php-format
 msgid "Your %s Hub Just Got a Powerful Upgrade!"
 msgstr ""
 
@@ -491,13 +487,11 @@ msgstr ""
 
 #. translators: %s is placeholder for the tenant name
 #: ionos-essentials/inc/dashboard/tabs/tools.php
-#, php-format
 msgid "%s Hub as WordPress Admin start page"
 msgstr ""
 
 #. translators: %s is placeholder for the tenant name
 #: ionos-essentials/inc/dashboard/tabs/tools.php
-#, php-format
 msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
 msgstr ""
 
@@ -519,7 +513,6 @@ msgstr ""
 
 #. translators: s=link to control panel
 #: ionos-essentials/inc/descriptify/index.php
-#, php-format
 msgid "You can customize and manage your URL (domain) easily at <a href=\"%1$s\" target=\"_blank\">%2$s App Center</a>."
 msgstr ""
 
@@ -564,7 +557,6 @@ msgid "Click here to edit your profile settings."
 msgstr ""
 
 #: ionos-essentials/inc/security/index.php
-#, php-format
 msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
 msgstr ""
 
@@ -646,7 +638,6 @@ msgstr ""
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: ionos-essentials/inc/switch-page/view.php
-#, php-format
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr ""
 
@@ -760,7 +751,6 @@ msgstr ""
 
 #. translators: first placeholder for the url, second for the plugin name, last one for the response code
 #: ionos-essentials/inc/update/index.php
-#, php-format
 msgid "Failed to download <a href=\\\"%1$s\\\">%2$s-info.json</a>(response status=%3$s)"
 msgstr ""
 
@@ -831,7 +821,6 @@ msgstr ""
 
 #. Translators: %s is the tenant name.
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
-#, php-format
 msgid "Your %s plugin team"
 msgstr ""
 
@@ -857,7 +846,6 @@ msgstr ""
 
 #. translators: %d is the number of critical issues
 #: ionos-essentials/inc/wpscan/views/issues.php
-#, php-format
 msgid "%d critical issue"
 msgid_plural "%d critical issues"
 msgstr[0] ""
@@ -865,7 +853,6 @@ msgstr[1] ""
 
 #. translators: %d is the number of warnings
 #: ionos-essentials/inc/wpscan/views/issues.php
-#, php-format
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] ""
