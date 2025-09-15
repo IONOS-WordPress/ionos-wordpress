@@ -8,8 +8,6 @@ namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
 defined('ABSPATH') || exit();
 
-use ionos\essentials\Tenant;
-
 class NBA
 {
   public const OPTION_NAME = 'ionos_nba_status';
@@ -98,8 +96,8 @@ class NBA
 }
 
 use const ionos\essentials\PLUGIN_DIR;
-require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php';
 
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php';
 
 if (! function_exists('is_plugin_active')) {
   include_once(ABSPATH . 'wp-admin/includes/plugin.php');

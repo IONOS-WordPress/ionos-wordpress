@@ -6,7 +6,6 @@ defined('ABSPATH') || exit();
 
 use ionos\essentials\Tenant;
 
-
 $data = \ionos\essentials\dashboard\blocks\my_account\get_account_data();
 
 if (null !== $data) {
@@ -126,8 +125,6 @@ if ('de' === $market && is_plugin_active('woocommerce/woocommerce.php') && ! is_
     categories: ['after-setup']
   );
 }
-
-
 
 if ('extendable' === get_stylesheet()) {
   NBA::register(
