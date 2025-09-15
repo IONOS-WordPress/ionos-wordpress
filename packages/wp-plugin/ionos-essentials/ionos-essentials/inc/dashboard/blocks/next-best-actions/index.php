@@ -123,7 +123,7 @@ function render_callback(): void
   if (\str_starts_with($category_to_show, 'setup')) {
     echo ' nba-setup';
   } ?>">
-                <?php echo $cards; ?>
+                <?php echo wp_kses( $cards, 'post' ); ?>
             </div>
 
             <?php

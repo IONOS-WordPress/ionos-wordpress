@@ -217,6 +217,7 @@ main{
   .issue-row .bubble{
     width: 20px;
     height: 20px;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -225,10 +226,6 @@ main{
 
  .issue-row .bubble i{
     color: #ffffff;
-  }
-
-  .issue-row .bubble{
-    color: white;
   }
 
   .issue-row.high .bubble{
