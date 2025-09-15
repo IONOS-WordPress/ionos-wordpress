@@ -55,8 +55,8 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 
   \add_submenu_page(
     parent_slug: ADMIN_PAGE_SLUG,
-    page_title : __('Tools and security', 'ionos-essentials'),
-    menu_title : __('Tools and security', 'ionos-essentials'),
+    page_title : __('Tools & Security', 'ionos-essentials'),
+    menu_title : __('Tools & Security', 'ionos-essentials'),
     capability : REQUIRED_USER_CAPABILITIES,
     menu_slug  : 'admin.php?page=' . ADMIN_PAGE_SLUG . '#tools'
   );

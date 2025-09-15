@@ -320,6 +320,45 @@ NBA::register(
   categories: ['always']
 );
 
+NBA::register(
+  id: 'tools-and-security',
+  title: \__('Tools & Security area', 'ionos-essentials'),
+  description: \__("All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it.", 'ionos-essentials'),
+  link: '#tools',
+  anchor: \__('Visit Tools & Security', 'ionos-essentials'),
+  completed: false
+);
+
+function get_survey_url(): string
+{
+  $survey_links = [
+    'de'    => 'https://feedback.ionos.com/nmdopgnfds?l=de',
+    'en_us' => 'https://feedback.ionos.com/nmdopgnfds?l=en-us',
+    'en'    => 'https://feedback.ionos.com/nmdopgnfds?l=en',
+    'fr'    => 'https://feedback.ionos.com/nmdopgnfds?l=fr',
+    'es'    => 'https://feedback.ionos.com/nmdopgnfds?l=es',
+    'it'    => 'https://feedback.ionos.com/nmdopgnfds?l=it',
+  ];
+  $locale = determine_locale();
+  if ($locale === 'en_US') {
+    return $survey_links['en_us'];
+  }
+  $lang = strtolower(preg_split('/[_-]/', $locale)[0]);
+  if (isset($survey_links[$lang])) {
+    return $survey_links[$lang];
+  }
+  return $survey_links['en'];
+}
+
+NBA::register(
+  id: 'survey',
+  title: \__('Help us shape WordPress for you', 'ionos-essentials'),
+  description: \__("We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.", 'ionos-essentials'),
+  link: get_survey_url(),
+  anchor: \__('Take the survey', 'ionos-essentials'),
+  completed: false
+);
+
 // for($i = 1; $i <= 12; $i++) {
 //   NBA::register(
 //     id: 'dosth' . $i,

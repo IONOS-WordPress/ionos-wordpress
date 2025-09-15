@@ -1,3 +1,4 @@
+/* eslint-disable-next-line import/named */
 import { request } from '@playwright/test';
 
 import { RequestUtils } from '@wordpress/e2e-test-utils-playwright';

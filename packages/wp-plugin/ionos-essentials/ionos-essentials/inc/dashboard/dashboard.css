@@ -217,11 +217,11 @@ main{
   .issue-row .bubble{
     width: 20px;
     height: 20px;
-    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
+    color: #ffffff;
   }
 
  .issue-row .bubble i{
@@ -253,6 +253,33 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+.ionos_buttons_same_width{
+  display: flex;
+  flex-wrap: wrap;
+  a{
+    padding-left: 0 !important;
+    flex: 1 1 35%;
+    justify-items: start;
+    margin: 0 0 12px 0;
+    text-decoration: none;
+
+    align-items: center;
+
+    color: var(--ghost-button-text-color,#1474c4);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: var(--button-font-family,"OpenSansSemibold",arial,sans-serif);
+    font-size: var(--button-font-size,14px);
+    justify-content: start;
+    gap: 8px;
+    min-height: 28px;
+
+    &:hover{
+      color: black;
+    }
   }
 }
 

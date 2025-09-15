@@ -15,6 +15,10 @@ if [[ "${CI:-}" == "true" ]]; then
   exit 0
 fi
 
+# recreate .vscode/settings.json with a valid WPENV_INSTALLPATH
+source "$(realpath $0 | xargs dirname)/includes/_vscode.sh"
+ionos.wordpress.vscode.create_settings.json
+
 # If you want to disable git hooks for some reason you can disable the git hooks by adding `--no-verify` to the git command.
 # Example : `git commit --no-verify`
 ionos.wordpress.log_info "Setting up git hooks"

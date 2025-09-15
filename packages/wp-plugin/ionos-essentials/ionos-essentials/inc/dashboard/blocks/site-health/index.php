@@ -17,7 +17,7 @@ function render_callback(): void
         <div class="ionos-site-health-overview">
           <div class="ionos-site-health-overview__iframe" style="width: 240px; height: 150px; overflow: hidden;">
             <iframe
-              src="<?php echo get_option('siteurl', ''); ?>/?hidetoolbar=1"
+              src="<?php echo \esc_url(\get_option('siteurl', '')); ?>/?hidetoolbar=1"
               style="
                 width: 1440px;
                 height: 900px;
@@ -39,7 +39,7 @@ function render_callback(): void
               <?php } else { ?>
                 <i class="exos-icon exos-icon-nav-lock-16" style="color: #c90a00;"></i>
               <?php } ?>
-              <h2 class="headline headline--sub"><?php echo parse_url(\get_option('siteurl', ''), PHP_URL_HOST); ?></h2>
+              <h2 class="headline headline--sub"><?php echo \esc_url(parse_url(\get_option('siteurl', ''), PHP_URL_HOST)); ?></h2>
             </div>
             <div class="ionos-site-health-overview__info-items">
             <div class="ionos-site-health-overview__info-item site-health-status">
@@ -58,7 +58,7 @@ function render_callback(): void
 
               <div class="ionos-site-health-overview__info-item">
                 <h3 class="ionos-site-health-overview__info-item-title"><?php \esc_html_e('WordPress version', 'ionos-essentials')?></h3>
-                <h4 class="headline headline--sub"><?php echo \get_bloginfo('version'); ?></h4>
+                <h4 class="headline headline--sub"><?php echo \esc_attr(\get_bloginfo('version')); ?></h4>
               </div>
               <div class="ionos-site-health-overview__info-item">
                 <h3 class="ionos-site-health-overview__info-item-title"><?php \esc_html_e('PHP version', 'ionos-essentials')?></h3>
