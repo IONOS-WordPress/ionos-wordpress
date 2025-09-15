@@ -24,6 +24,7 @@ function create_buttons($action)
     $buttons = '<a id="ionos_essentials_install_gml" class="button button--secondary">' . $action->anchor . '</a>';
   }
 
+  // Dismiss-Button
   $buttons .= '<a data-nba-id="' . $action->id . '" class="ghost-button ionos-dismiss-nba">' . \esc_html__(
     'Dismiss',
     'ionos-essentials'
