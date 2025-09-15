@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const nbaCount = dashboard.querySelectorAll('.nba-card').length;
         if (nbaCount === 0) {
-          dashboard.querySelector('.ionos_next_best_actions').remove();
+          location.reload();
         }
       }, 800);
     });
