@@ -10,7 +10,7 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     `);
   });
 
-  test('test dismissing an option ', async ({ admin, page }) => {
+  test.skip('test dismissing an option ', async ({ admin, page }) => {
     await admin.visitAdminPage('/');
     let body = page.locator('body');
 

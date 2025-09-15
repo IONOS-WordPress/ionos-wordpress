@@ -9,9 +9,7 @@ function render_callback(): void
   require_once __DIR__ . '/class-nba.php';
 
   if (! get_option('ionos_essentials_nba_setup_completed', false)) {
-    $category_to_show = ('extendable' === \get_option('stylesheet') && \is_plugin_active(
-      'extendify/extendify.php'
-    )) ? 'setup-ai' : 'setup-noai';
+    $category_to_show = (\get_option('extendify_onboarding_completed', false) ? 'setup-ai' : 'setup-noai');
     $actions = array_filter(
       NBA::get_actions(),
       fn (NBA $action) => in_array($category_to_show, $action->categories, true)
