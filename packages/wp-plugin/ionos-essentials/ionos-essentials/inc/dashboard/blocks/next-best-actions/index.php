@@ -193,16 +193,6 @@ function render_empty_element(): void
   echo 'all done for now!';
 }
 
-\add_action('admin_init', function () {
-  if (isset($_GET['complete_nba'])) {
-    require_once __DIR__ . '/class-nba.php';
-    $nba_id = $_GET['complete_nba'];
-
-    $nba = NBA::get_nba($nba_id);
-    $nba->set_status('completed', true);
-  }
-});
-
 \add_action('post_updated', function ($post_id, $post_after, $post_before) {
   if ('publish' !== $post_before->post_status || ('publish' !== $post_after->post_status && 'draft' !== $post_after->post_status)) {
     return;

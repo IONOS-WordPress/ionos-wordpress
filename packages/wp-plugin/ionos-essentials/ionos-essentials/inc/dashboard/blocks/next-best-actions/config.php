@@ -76,9 +76,10 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
     id: 'contact-form',
     title: \__('Set Up Contact Form', 'ionos-essentials'),
     description: \__('Create a contact form to stay connected with your visitors.', 'ionos-essentials'),
-    link: \admin_url('admin.php?page=wpcf7-new&complete_nba=contact-form'),
+    link: \admin_url('admin.php?page=wpcf7-new'),
     anchor: \__('Set Up Contact Form', 'ionos-essentials'),
     completed: false,
+    dismiss_on_click: true,
     categories: ['after-setup']
   );
 }
@@ -137,10 +138,11 @@ if ('extendable' === get_stylesheet()) {
       'ionos-essentials'
     ),
     link: \admin_url(
-      'site-editor.php?postId=extendable%2F%2Ffooter&postType=\wp_template_part&focusMode=true&canvas=edit&complete_nba=social-media'
+      'site-editor.php?postId=extendable%2F%2Ffooter&postType=\wp_template_part&focusMode=true&canvas=edit'
     ),
     anchor: \__('Connect Social Media', 'ionos-essentials'),
     completed: false,
+    dismiss_on_click: true,
     categories: ['after-setup']
   );
 
