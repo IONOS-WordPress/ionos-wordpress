@@ -1,3 +1,6 @@
+// tell eslint that the global variable exists when this file gets executed
+/* global wpData:true */
+/* global jQuery:true */
 document.addEventListener('DOMContentLoaded', function () {
   // Welcome dialog
   const dashboard = document.querySelector('#wpbody-content').shadowRoot;
@@ -16,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   dashboard.querySelectorAll('.ionos-popup-dismiss')?.forEach((button) => {
     button.addEventListener('click', function () {
-      jQuery.post(wpData.ajaxUrl, {'action': 'ionos-popup-dismiss'});
+      jQuery.post(wpData.ajaxUrl, { action: 'ionos-popup-dismiss' });
       dashboard.querySelector('#ionos-essentials-popup').close();
     });
   });
@@ -174,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
           window.EXOS.snackbar.critical(description + ' ' + wpData.i18n.deactivated);
         }
-      } catch (error) {
+      } catch {
         window.EXOS.snackbar.warning('Network error updating option ' + key);
       }
     });
@@ -201,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   dashboard.querySelectorAll('[data-slug]').forEach((element) => {
-    element.addEventListener('click', function (event) {
+    element.addEventListener('click', function () {
       const overlay = dashboard.querySelector('#plugin-install-overlay');
 
       dashboard.querySelector('.static-overlay__blocker').classList.add('static-overlay__blocker--active');

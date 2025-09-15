@@ -1,7 +1,8 @@
 // playwright config for wp-env based e2e tests
+/* eslint-disable-next-line import/named */
 import { defineConfig, devices } from '@playwright/test';
 
-import baseConfig from '@wordpress/scripts/config/playwright.config.js';
+import baseConfig from '@wordpress/scripts/config/playwright.config';
 
 const config = defineConfig({
   ...baseConfig,

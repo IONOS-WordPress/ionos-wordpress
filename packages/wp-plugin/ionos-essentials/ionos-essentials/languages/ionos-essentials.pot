@@ -382,7 +382,7 @@ msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the featu
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/index.php
-msgid "Tools and security"
+msgid "Tools & Security"
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/index.php
