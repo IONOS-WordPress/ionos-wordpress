@@ -98,12 +98,14 @@ function render_callback(): void
       <div class="card ionos_next_best_actions">
         <div class="card__content">
           <section class="card__section ionos_next_best_actions__section">
+
+            <?php if ($show_setup_actions): ?>
             <div class="headline"><?php \esc_html_e('🚀  Getting started with WordPress', 'ionos-essentials'); ?></div>
             <div class="paragraph"><?php \esc_html_e(
               'Ready to establish your online presence? Let\'s get the essentials sorted so your new site looks professional and is easy for people to find.',
               'ionos-essentials'
             ); ?></div>
-
+            <?php endif; ?>
             <?php if ($show_setup_actions): ?>
               <div style="width: 200px">
               <div class="quotabar">
