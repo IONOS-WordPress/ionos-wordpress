@@ -329,27 +329,6 @@ NBA::register(
   completed: false
 );
 
-function get_survey_url(): string
-{
-  $survey_links = [
-    'de'    => 'https://feedback.ionos.com/nmdopgnfds?l=de',
-    'en_us' => 'https://feedback.ionos.com/nmdopgnfds?l=en-us',
-    'en'    => 'https://feedback.ionos.com/nmdopgnfds?l=en',
-    'fr'    => 'https://feedback.ionos.com/nmdopgnfds?l=fr',
-    'es'    => 'https://feedback.ionos.com/nmdopgnfds?l=es',
-    'it'    => 'https://feedback.ionos.com/nmdopgnfds?l=it',
-  ];
-  $locale = determine_locale();
-  if ($locale === 'en_US') {
-    return $survey_links['en_us'];
-  }
-  $lang = strtolower(preg_split('/[_-]/', $locale)[0]);
-  if (isset($survey_links[$lang])) {
-    return $survey_links[$lang];
-  }
-  return $survey_links['en'];
-}
-
 NBA::register(
   id: 'survey',
   title: \__('Help us shape WordPress for you', 'ionos-essentials'),
