@@ -97,6 +97,8 @@ class NBA
   }
 }
 
+use const ionos\essentials\PLUGIN_DIR;
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php';
 $data = \ionos\essentials\dashboard\blocks\my_account\get_account_data();
 
 if (null !== $data) {
@@ -241,9 +243,10 @@ NBA::register(
   id: 'create-page',
   title: \__('Create a Page', 'ionos-essentials'),
   description: \__('Create and publish a page and share your story with the world.', 'ionos-essentials'),
-  link: \admin_url('post-new.php?post_type=page&complete_nba=create-page'),
+  link: \admin_url('post-new.php?post_type=page'),
   anchor: \__('Create Page', 'ionos-essentials'),
   completed: false,
+  dismiss_on_click: true,
   categories: ['setup-ai', 'setup-noai']
 );
 
@@ -312,7 +315,7 @@ function get_survey_url(): string
 NBA::register(
   id: 'survey',
   title: \__('Help us shape WordPress for you', 'ionos-essentials'),
-  description: \__("We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.", 'ionos-essentials'),
+  description: \__("We're alwayfs looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.", 'ionos-essentials'),
   link: get_survey_url(),
   anchor: \__('Take the survey', 'ionos-essentials'),
   completed: false,
@@ -320,23 +323,6 @@ NBA::register(
   categories: ['always']
 );
 
-NBA::register(
-  id: 'tools-and-security',
-  title: \__('Tools & Security area', 'ionos-essentials'),
-  description: \__("All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it.", 'ionos-essentials'),
-  link: '#tools',
-  anchor: \__('Visit Tools & Security', 'ionos-essentials'),
-  completed: false
-);
-
-NBA::register(
-  id: 'survey',
-  title: \__('Help us shape WordPress for you', 'ionos-essentials'),
-  description: \__("We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.", 'ionos-essentials'),
-  link: get_survey_url(),
-  anchor: \__('Take the survey', 'ionos-essentials'),
-  completed: false
-);
 
 // for($i = 1; $i <= 12; $i++) {
 //   NBA::register(

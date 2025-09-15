@@ -10,12 +10,13 @@ function render_callback(): void
   $show_setup_actions = false;
 
   if (! get_option('ionos_essentials_nba_setup_completed', false)) {
-    $category_to_show = (\get_option('extendify_onboarding_completed', false) ? 'setup-ai' : 'setup-noai');
+    $category_to_show = (\get_option('extendify_onboarding_completed', false) ? 'setup-noai' : 'setup-noai');
     $actions          = array_filter(
       NBA::get_actions(),
       fn (NBA $action) => in_array($category_to_show, $action->categories, true)
     );
     $show_setup_actions = true;
+    $ac = NBA::get_actions();
     $always_actions     = array_filter(
       NBA::get_actions(),
       fn (NBA $action) => in_array('always', $action->categories, true) && $action->active
