@@ -14,7 +14,7 @@ function render_callback(): void
     )) ? 'setup-ai' : 'setup-noai';
     $actions = array_filter(
       NBA::get_actions(),
-      fn (NBA $action) => in_array($category_to_show, $action->categories, true) && $action->active
+      fn (NBA $action) => in_array($category_to_show, $action->categories, true)
     );
   }
 
@@ -33,11 +33,14 @@ function render_callback(): void
   }
 
   $cards         = '';
-  $card_template = '<div id="%s" class="grid-col grid-col--12 grid-col--medium-6 grid-col--small-12">
+  $card_template = '<div id="%s" class="grid-col grid-col--12 grid-col--medium-6 grid-col--small-12 %s">
   <div class="card nba-card">
     <div class="card__content">
       <section class="card__section">
-        <h2 class="headline headline--sub">%s</h2>
+        <h2 class="headline headline--sub">
+          <span class="nba-is-active">DONE </span>
+          %s
+        </h2>
         <p class="paragraph">%s</p>
         <div>%s</div>
       </section>
@@ -73,6 +76,7 @@ function render_callback(): void
     $cards .= \sprintf(
       $card_template,
       \esc_attr($action->id),
+      \esc_attr($action->active ? 'nba-active' : 'nba-inactive'),
       \esc_html($action->title),
       \esc_html($action->description),
       $buttons
@@ -86,46 +90,43 @@ function render_callback(): void
       <div class="card ionos_next_best_actions">
         <div class="card__content">
           <section class="card__section ionos_next_best_actions__section">
-            <div class="headline"><?php \esc_html_e("Unlock Your Website's Potential", 'ionos-essentials'); ?></div>
+            <div class="headline"><?php \esc_html_e("🚀  Getting started with WordPress", 'ionos-essentials'); ?></div>
             <div class="paragraph"><?php \esc_html_e(
-              'Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals.',
+              'Ready to establish your online presence? Let\'s get the essentials sorted so your new site looks professional and is easy for people to find.',
               'ionos-essentials'
             ); ?></div>
 
-            <div class="grid nba-category-<?php \esc_attr($category_to_show);
+            <div style="width: 200px">
+              <?php
+                $completed_actions = count(array_filter($actions, fn($action) => $action->active === true));
+                $total_actions     = count($actions);
+              ?>
+              <div class="quotabar">
+                <div class="quotabar__bar quotabar__bar--small">
+                  <span class="quotabar__value" style="width: <?php echo ($completed_actions / $total_actions * 100); ?>%;"></span>
+                </div>
+                  <p class="quotabar__text">
+                    <?php
+                      // translators: 1: number of completed actions, 2: total number of actions
+                      printf(__(' %d of %d completed', 'ionos-essentials'), $completed_actions, $total_actions);
+                    ?>
+                </p>
+              </div>
+
+            </div>
+
+            <div class="grid nba-category-<?php echo \esc_attr($category_to_show);
   if (\str_starts_with($category_to_show, 'setup')) {
     echo ' nba-setup';
   } ?>">
-                <?php echo \wp_kses($cards, [
-        'div'    => [
-          'id'    => true,
-          'class' => true,
-        ],
-        'section' => [
-          'class' => true,
-        ],
-        'h2'    => [
-          'class' => true,
-        ],
-        'p'     => [
-          'class' => true,
-        ],
-        'a'     => [
-          'href'                  => true,
-          'class'                 => true,
-          'id'                    => true,
-          'target'                => true,
-          'data-nba-id'           => true,
-          'data-dismiss-on-click' => true,
-        ],
-      ]); ?>
+                <?php echo $cards; ?>
             </div>
 
             <?php
   if (\str_starts_with($category_to_show, 'setup')) {
     printf(
-      '<button class="button button--secondary" id="ionos_dismiss_all_nba">%s</button>',
-      \esc_html__('Dismiss', 'ionos-essentials')
+      '<button class="button ghost-button" id="ionos_dismiss_all_nba">%s</button>',
+      \esc_html__('Dismiss getting started guide', 'ionos-essentials')
     );
   }
   ?>

@@ -148,6 +148,17 @@ main{
       display: none;
     }
   }
+
+  .nba-is-active{
+    display: block;
+    color: green;
+  }
+
+  .nba-active{
+    .nba-is-active{
+      display: none;
+    }
+  }
 }
 
 .ionos_vulnerability{
