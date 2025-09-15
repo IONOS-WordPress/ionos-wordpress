@@ -7,6 +7,7 @@ defined('ABSPATH') || exit();
 function render_callback(): void
 {
   require_once __DIR__ . '/class-nba.php';
+  $show_setup_actions = false;
 
   if (! get_option('ionos_essentials_nba_setup_completed', false)) {
     $category_to_show = (\get_option('extendify_onboarding_completed', false) ? 'setup-ai' : 'setup-noai');
@@ -14,13 +15,16 @@ function render_callback(): void
       NBA::get_actions(),
       fn (NBA $action) => in_array($category_to_show, $action->categories, true)
     );
-  }
-
-  if (\get_option('ionos_essentials_nba_setup_completed', false)) {
-    $category_to_show = 'misc';
+    $show_setup_actions = true;
+    $always_actions= array_filter(
+      NBA::get_actions(),
+      fn (NBA $action) => in_array('always', $action->categories, true) && $action->active
+    );
+  } else {
+    $category_to_show = 'after-setup';
     $actions          = array_filter(
       NBA::get_actions(),
-      fn (NBA $action) => in_array($category_to_show, $action->categories, true) && $action->active
+      fn (NBA $action) => (in_array('after-setup', $action->categories, true) || in_array('always', $action->categories, true))  && $action->active
     );
   }
 
@@ -96,7 +100,7 @@ function render_callback(): void
               'ionos-essentials'
             ); ?></div>
 
-            <?php if (\str_starts_with($category_to_show, 'setup')): ?>
+            <?php if ($show_setup_actions): ?>
               <div style="width: 200px">
               <div class="quotabar">
                 <div class="quotabar__bar quotabar__bar--small">
@@ -118,14 +122,14 @@ function render_callback(): void
 
 
             <div class="grid nba-category-<?php echo \esc_attr($category_to_show);
-  if (\str_starts_with($category_to_show, 'setup')) {
-    echo ' nba-setup';
-  } ?>">
+            if ($show_setup_actions) {
+              echo ' nba-setup';
+            } ?>">
                 <?php echo wp_kses( $cards, 'post' ); ?>
             </div>
 
             <?php
-  if (\str_starts_with($category_to_show, 'setup')) {
+  if ($show_setup_actions) {
     if ($completed_actions === $total_actions) {
       // all done, show dismiss button
       printf(
@@ -141,9 +145,26 @@ function render_callback(): void
   }
   ?>
           </section>
-        </div>
-      </div>
+
   <?php
+
+if($show_setup_actions) {
+
+  $always_cards = '';
+  foreach ($always_actions as $action) {
+    $always_cards .= \sprintf(
+        $card_template,
+        \esc_attr($action->id),
+        \esc_attr($action->active ? 'nba-active' : 'nba-inactive'),
+        \esc_html($action->title),
+        \esc_html($action->description),
+        $buttons
+      );
+    }
+    echo $always_cards;
+}
+
+echo '</div></div>';
 }
 
 function render_empty_element(): void

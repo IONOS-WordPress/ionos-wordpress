@@ -201,13 +201,7 @@ add_filter('admin_body_class', function ($classes) {
   'wp_ajax_ionos-nba-setup-complete',
   function () {
     $status = (string) $_POST['status'] ?? 'unknown';
-    if (
-      ! isset($_POST['nonce']) ||
-      ! \wp_verify_nonce($_POST['nonce'], 'wp_rest')
-    ) {
-      \wp_send_json_error(['message' => 'Invalid nonce'], 403);
-      \wp_die();
-    }
+
     \update_option('ionos_essentials_nba_setup_completed', $status);
     \wp_die();
   }

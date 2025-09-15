@@ -159,7 +159,7 @@ if (null !== $data) {
       link: $data['domain'] . $connectmail,
       anchor: \__('Setup Email Account', 'ionos-essentials'),
       completed: 'onclick',
-      categories: ['misc']
+      categories: ['after-setup']
     );
   }
 }
@@ -177,7 +177,7 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
     link: \admin_url('admin.php?page=wpcf7-new&complete_nba=contact-form'),
     anchor: \__('Set Up Contact Form', 'ionos-essentials'),
     completed: false,
-    categories: ['misc']
+    categories: ['after-setup']
   );
 }
 
@@ -192,7 +192,7 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
     link: \admin_url('admin.php?page=wc-admin&path=%2Fsetup-wizard'),
     anchor: \__('Start Setup', 'ionos-essentials'),
     completed: isset($woo_onboarding_status['completed']) || isset($woo_onboarding_status['skipped']), // when setup completed or cta is clicked
-    categories: ['misc']
+    categories: ['after-setup']
   );
 }
 
@@ -211,7 +211,7 @@ if ('de' === $market && is_plugin_active('woocommerce/woocommerce.php') && ! is_
     completed: is_plugin_active(
       'woocommerce-german-market-light/WooCommerce-German-Market-Light.php'
     ), // when gml is installed and activate
-    categories: ['misc']
+    categories: ['after-setup']
   );
 }
 
@@ -233,7 +233,7 @@ if ('extendable' === get_stylesheet()) {
     ),
     anchor: \__('Add Logo', 'ionos-essentials'),
     completed: ! $is_default_or_empty_logo,
-    categories: ['misc']
+    categories: ['after-setup']
   );
 }
 
@@ -260,7 +260,7 @@ if ('extendable' === get_stylesheet()) {
     ),
     anchor: \__('Connect Social Media', 'ionos-essentials'),
     completed: false,
-    categories: ['misc']
+    categories: ['after-setup']
   );
 }
 
@@ -274,7 +274,7 @@ NBA::register(
   link: \admin_url('options-general.php'),
   anchor: \__('Add Favicon', 'ionos-essentials'),
   completed: 0 < intval(\get_option('site_icon', 0)),
-  categories: ['misc']
+  categories: ['after-setup']
 );
 
 NBA::register(
@@ -285,7 +285,7 @@ NBA::register(
   anchor: \__('Visit Tools & Security', 'ionos-essentials'),
   completed: false,
   dismiss_on_click: true,
-  categories: ['misc']
+  categories: ['always']
 );
 
 function get_survey_url(): string
@@ -317,7 +317,7 @@ NBA::register(
   anchor: \__('Take the survey', 'ionos-essentials'),
   completed: false,
   dismiss_on_click: true,
-  categories: ['misc']
+  categories: ['always']
 );
 
 // for($i = 1; $i <= 12; $i++) {
