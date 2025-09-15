@@ -20,31 +20,12 @@ function main_view($args): void
         <div class="card__content">
           <section class="card__section ionos_next_best_actions__section">
             <?php if ($show_setup_actions) {
-              render_setup_header($args);
+              setup_view($args);
+            } else {
+              after_setup_view($args);
             }
-  ?>
-            <div class="grid nba-category-<?php echo \esc_attr($category_to_show); ?> <?php echo ($show_setup_actions) ? 'nba-setup' : ''; ?>">
-              <?php
-      foreach ($actions as $action) {
-        single_view($action);
-      }
-  ?>
-            </div>
-
-            <?php
-  if ($show_setup_actions) {
-    render_setup_footer($args);
-  }
-  ?>
+            ?>
           </section>
-
-          <?php
-  if ($show_setup_actions) {
-    foreach ($always_actions as $action) {
-      single_view($action);
-    }
-  }
-  ?>
         </div>
       </div>
   <?php
