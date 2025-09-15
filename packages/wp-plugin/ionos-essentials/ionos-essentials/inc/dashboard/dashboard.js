@@ -88,14 +88,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   dashboard.querySelectorAll('.ionos_finish_setup')?.forEach((button) => {
     button.addEventListener('click', function (event) {
-      jQuery.post(wpData.ajaxUrl, {'action': 'ionos-nba-setup-complete', 'status': event.target.dataset.status ?? 'dismissed'});
+      jQuery.post(wpData.ajaxUrl, {
+        action: 'ionos-nba-setup-complete',
+        status: event.target.dataset.status ?? 'dismissed',
+      });
       dashboard.querySelector('.nba-setup').classList.add('ionos_nba_dismissed');
       setTimeout(() => {
-          dashboard.querySelector('.nba-setup').remove();
+        dashboard.querySelector('.nba-setup').remove();
         location.reload();
       }, 800);
+    });
   });
-});
 
   const helpCenterLink = dashboard.querySelector('a[data-nba-id="help-center"]');
   if (helpCenterLink) {
@@ -297,24 +300,24 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        wpData.siteHealthIssueCount[data.status] = parseInt((wpData.siteHealthIssueCount[data.status] ?? 0)) + 1;
+        wpData.siteHealthIssueCount[data.status] = parseInt(wpData.siteHealthIssueCount[data.status] ?? 0) + 1;
       } catch (error) {
         // silence is golden
+        console.error(error);
       }
     }
     // all tests are done, now update the UI
-    const totalIssues = (wpData.siteHealthIssueCount.critical ?? 0) + (wpData.siteHealthIssueCount.recommended ?? 0)
+    const totalIssues = (wpData.siteHealthIssueCount.critical ?? 0) + (wpData.siteHealthIssueCount.recommended ?? 0);
     const totalTests = totalIssues + (wpData.siteHealthIssueCount.good ?? 0);
-    const badTestsRatio = (totalTests > 0 ) ? totalIssues / totalTests : 1;
-    dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - (565.48 * (1 - badTestsRatio));
+    const badTestsRatio = totalTests > 0 ? totalIssues / totalTests : 1;
+    dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - 565.48 * (1 - badTestsRatio);
 
-    if( badTestsRatio >= 0.2 || wpData.siteHealthIssueCount.critical !== 0 ) {
-      dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthImprovable
+    if (badTestsRatio >= 0.2 || wpData.siteHealthIssueCount.critical !== 0) {
+      dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthImprovable;
       dashboard.querySelector('#bar').classList.add('site-health-color-orange');
     } else {
-      dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthGood
+      dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthGood;
       dashboard.querySelector('#bar').classList.add('site-health-color-green');
     }
   })();
-
 });

@@ -111,7 +111,7 @@ function render_callback(): void
               <div style="width: 200px">
               <div class="quotabar">
                 <div class="quotabar__bar quotabar__bar--small">
-                  <span class="quotabar__value" style="width: <?php echo $completed_actions / $total_actions * 100; ?>%;"></span>
+                  <span class="quotabar__value" style="width: <?php \esc_attr($completed_actions / $total_actions * 100); ?>%;"></span>
                 </div>
                   <p class="quotabar__text">
                     <?php
