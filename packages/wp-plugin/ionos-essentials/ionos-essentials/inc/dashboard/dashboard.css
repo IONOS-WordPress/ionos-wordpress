@@ -147,14 +147,13 @@ main{
   container-type: inline-size !important;
   container: ionos_vulnerability;
   background-color: #edfaef;
+  margin-bottom: 0;
 
   .ionos_vulnerability__content{
     flex-direction: column;
     justify-content: space-between;
-    background-image: url('assets/security/none.svg');
     background-repeat: no-repeat;
     background-position: top right;
-    gap: 18px;
   }
 
   .bubble{
@@ -169,30 +168,56 @@ main{
   /* Respect the order of this definition, as high overwrites medium */
   &.medium{
     background-color: #fcf9e8;
-    .ionos_vulnerability__content{
-      background-image: url('assets/security/medium.svg');
-    }
+
   }
   &.high{
     background-color: #fcf0f1;
-    .ionos_vulnerability__content{
-      background-image: url('assets/security/high.svg');
-    }
+
   }
   &.error{
     background-color: white;
-    .ionos_vulnerability__content{
-      background-image: none;
-    }
+
+  }
+
+  .ionos_vulnerability__problems{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .issue-rows{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .issue-row{
+    display: inline-flex;
+  }
+
+  .issue-row .bubble{
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #ffffff;
+  }
+
+ .issue-row .bubble i{
+    color: #ffffff;
   }
 
   .issue-row.high .bubble{
-    background-color: #cc1818;
-    color: white;
+    background-color: #f50d00;
   }
+
   .issue-row.medium .bubble{
-    background-color: #f0b849;
+    background-color: #ef8302;
   }
+
 }
 
 @container ionos_vulnerability (max-width: 400px) {
@@ -210,6 +235,33 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+.ionos_buttons_same_width{
+  display: flex;
+  flex-wrap: wrap;
+  a{
+    padding-left: 0 !important;
+    flex: 1 1 35%;
+    justify-items: start;
+    margin: 0 0 12px 0;
+    text-decoration: none;
+
+    align-items: center;
+
+    color: var(--ghost-button-text-color,#1474c4);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: var(--button-font-family,"OpenSansSemibold",arial,sans-serif);
+    font-size: var(--button-font-size,14px);
+    justify-content: start;
+    gap: 8px;
+    min-height: 28px;
+
+    &:hover{
+      color: black;
+    }
   }
 }
 
@@ -265,23 +317,7 @@ main{
   }
 }
 
-@media (max-width: 800px) {
-  .banner_wrapper {
-    flex-direction: column;;
-  }
 
-  .content {
-    width: 100%;
-  }
-
-  .ionos_banner_buttons{
-    width: 100%;
-  }
-
-  .banner-navigation {
-    width: 100%;
-  }
-}
 
 .ionos-maintenance-only {
   display: none;
@@ -335,4 +371,124 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 
 .static-overlay__blocker--active, .static-overlay__container--active {
   display: flex;
+}
+
+.ionos-site-health {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* height: 152px; */
+}
+
+.ionos-site-health-overview {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+@media (max-width: 1200px) {
+  .ionos-site-health-overview__iframe {
+    display: none;
+  }
+}
+
+.ionos-site-health-overview__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ionos-site-health-overview__info-items {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.ionos-site-health-overview__info-item{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.ionos-site-health-vulnerability {
+  width: 440px;
+}
+
+.ionos-site-health-overview__info-homeurl {
+    display: flex;
+    gap: 10px;
+}
+
+.ionos-site-health-overview__info-homeurl .exos-icon {
+    font-size: 20px;
+    color: #096B35;
+}
+
+.site-health-status {
+  width: 180px;
+}
+
+#site-health-status-text{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.site-health-status-circle {
+  width: 18px;
+  height: 18px;
+
+  svg circle{
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+    stroke: #c3c4c7;
+    stroke-width: 2em;
+
+    &#bar{
+      stroke: #888888;
+
+      &.site-health-color-orange{
+        stroke: #ffb900;
+      }
+      &.site-health-color-green{
+        stroke: #46b450;
+      }
+      &.site-health-color-red{
+        stroke: #dc3232;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 800px) {
+  .banner_wrapper {
+    flex-direction: column;;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .ionos_banner_buttons{
+    width: 100%;
+  }
+
+  .banner-navigation {
+    width: 100%;
+  }
+
+  .ionos-site-health {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .ionos-site-health-overview__info-items {
+    justify-content: space-between;
+  }
+
+  .ionos-site-health-overview, .ionos-site-health-overview__info, .ionos-site-health-vulnerability {
+    width: 100%;
+  }
 }

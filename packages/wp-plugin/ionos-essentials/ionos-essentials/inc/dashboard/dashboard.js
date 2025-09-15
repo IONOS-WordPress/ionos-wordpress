@@ -264,4 +264,54 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
   });
+
+  const siteHealthTests = [
+    'background-updates',
+    'loopback-requests',
+    'https-status',
+    'dotorg-communication',
+    'authorization-header',
+  ];
+  (async () => {
+    for (const test of siteHealthTests) {
+      try {
+        const response = await fetch(wpData.restUrl + 'wp-site-health/v1/tests/' + test, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-WP-Nonce': wpData.nonce,
+          },
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        wpData.siteHealthIssueCount[data.status] = parseInt(wpData.siteHealthIssueCount[data.status] ?? 0) + 1;
+        // eslint-disable-next-line no-unused-vars
+      } catch (error) {
+        console.error('Error fetching site health status for test ' + test);
+      }
+    }
+    // all tests are done, now update the UI
+    //toDo: remove debug-code
+    wpData.siteHealthIssueCount = {
+      good: 10,
+      recommended: 10,
+      critical: 1,
+    };
+
+    const totalIssues = (wpData.siteHealthIssueCount.critical ?? 0) + (wpData.siteHealthIssueCount.recommended ?? 0);
+    const totalTests = totalIssues + (wpData.siteHealthIssueCount.good ?? 0);
+    const badTestsRatio = totalTests > 0 ? totalIssues / totalTests : 1;
+    dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - 565.48 * (1 - badTestsRatio);
+
+    if (badTestsRatio >= 0.2 || wpData.siteHealthIssueCount.critical !== 0) {
+      dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthImprovable;
+      dashboard.querySelector('#bar').classList.add('site-health-color-orange');
+    } else {
+      dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthGood;
+      dashboard.querySelector('#bar').classList.add('site-health-color-green');
+    }
+  })();
 });

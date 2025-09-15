@@ -94,10 +94,6 @@ msgid "Quick Links"
 msgstr "Collegamenti rapidi"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-msgid "Show full scan report"
-msgstr "Visualizza report completo della scansione"
-
-#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Problema critico rilevato"
@@ -109,7 +105,6 @@ msgid_plural "warnings found"
 msgstr[0] "Allarme rilevato"
 msgstr[1] "Allarmi rilevati"
 
-#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 msgid "issues found"
 msgstr "problemi rilevati"
@@ -279,10 +274,6 @@ msgstr "Modifica il piè di pagina"
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/index.php
 msgid "Dismiss"
 msgstr "Ignora"
-
-#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-msgid "Scan for WordPress specific threats and vulnerabilities"
-msgstr "Analisi di minacce e vulnerabilità specifiche di WordPress"
 
 #: ionos-essentials/inc/dashboard/blocks/quick-links/config.php
 msgid "Edit site Navigation"
@@ -584,6 +575,7 @@ msgstr "Il tuo hub %s ha appena ricevuto un potente aggiornamento!"
 msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
 msgstr "Abbiamo appena introdotto una nuova sezione \"Strumenti e sicurezza\". Tutte le funzionalità e le interfacce utente del tuo precedente plugin di sicurezza ora si trovano qui, rendendo tutto più centralizzato e facile da gestire. Inoltre, troverai una nuova funzione di pagina di manutenzione che puoi attivare ogni volta che ne hai bisogno."
 
+#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "Website is safe and secure"
 msgstr "Il sito web è sicuro e protetto."
@@ -797,13 +789,6 @@ msgstr "Per riattivare l'accesso a questo account, è necessario aggiornare la p
 msgid "Vulnerability Scan not possible. Please contact Customer Care."
 msgstr "Non è possibile eseguire la scansione delle vulnerabilità. Contatta l'Assistenza Clienti."
 
-#. translators: %s is placeholder for the time since the last scan
-#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-#: ionos-essentials/inc/wpscan/views/summary.php
-#, php-format
-msgid "Last scan: %s ago"
-msgstr "Ultima scansione: %s fa"
-
 #: ionos-essentials/inc/tenants/config/udag.php
 msgid "Manage Domains"
 msgstr "Gestisci domini"
@@ -879,6 +864,46 @@ msgstr "Aggiorna"
 
 #: ionos-essentials/inc/wpscan/views/issues.php
 msgid "Delete"
+msgstr "Cancellare"
+
+#: ionos-essentials/inc/dashboard/blocks/site-health/index.php
+msgid "Maintenance page active"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/site-health/index.php
+msgid "Site health"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/site-health/index.php
+msgid "WordPress version"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/site-health/index.php
+msgid "PHP version"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+msgid "Vulnerability Scan"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+msgid "View details"
+msgstr ""
+
+#. translators: %s is placeholder for the time since the last scan
+#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
+#, php-format
+msgid "Last scan ran %s ago"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/index.php
+msgid "Should be improved"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/index.php
+msgid "Good"
+msgstr ""
 msgstr "Elimina"
 
 #: ionos-essentials/inc/dashboard/index.php

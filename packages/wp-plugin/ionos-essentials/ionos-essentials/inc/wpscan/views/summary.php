@@ -49,7 +49,7 @@ function summary(): void
             $last_scan = $wpscan->get_lastscan();
   // translators: %s is placeholder for the time since the last scan
   (! $last_scan) ? \esc_html_e('No scan has been performed yet.', 'ionos-essentials') : printf(
-    \esc_html__('Last scan: %s ago', 'ionos-essentials'),
+    \esc_html__('Last scan ran %s ago', 'ionos-essentials'),
     $last_scan
   );
   ?>
