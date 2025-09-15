@@ -11,12 +11,12 @@ function render_callback(): void
 
   if (! get_option('ionos_essentials_nba_setup_completed', false)) {
     $category_to_show = (\get_option('extendify_onboarding_completed', false) ? 'setup-ai' : 'setup-noai');
-    $actions = array_filter(
+    $actions          = array_filter(
       NBA::get_actions(),
       fn (NBA $action) => in_array($category_to_show, $action->categories, true)
     );
     $show_setup_actions = true;
-    $always_actions= array_filter(
+    $always_actions     = array_filter(
       NBA::get_actions(),
       fn (NBA $action) => in_array('always', $action->categories, true) && $action->active
     );
@@ -24,7 +24,11 @@ function render_callback(): void
     $category_to_show = 'after-setup';
     $actions          = array_filter(
       NBA::get_actions(),
-      fn (NBA $action) => (in_array('after-setup', $action->categories, true) || in_array('always', $action->categories, true))  && $action->active
+      fn (NBA $action) => (in_array('after-setup', $action->categories, true) || in_array(
+        'always',
+        $action->categories,
+        true
+      ))  && $action->active
     );
   }
 
@@ -122,10 +126,10 @@ function render_callback(): void
 
 
             <div class="grid nba-category-<?php echo \esc_attr($category_to_show);
-            if ($show_setup_actions) {
-              echo ' nba-setup';
-            } ?>">
-                <?php echo wp_kses( $cards, 'post' ); ?>
+  if ($show_setup_actions) {
+    echo ' nba-setup';
+  } ?>">
+                <?php echo wp_kses($cards, 'post'); ?>
             </div>
 
             <?php
@@ -148,23 +152,37 @@ function render_callback(): void
 
   <?php
 
-if($show_setup_actions) {
+if ($show_setup_actions) {
 
   $always_cards = '';
   foreach ($always_actions as $action) {
+    $target  ='_self';
+    $buttons = sprintf(
+      '<a data-nba-id="%s" href="%s" class="button button--secondary" target="%s" data-dismiss-on-click="%s">%s</a>',
+      $action->id,
+      \esc_url($action->link),
+      $target,
+      $action->dismiss_on_click ? 'true' : 'false',
+      \esc_html($action->anchor)
+    );
+    $buttons .= '<a data-nba-id="' . $action->id . '" class="ghost-button ionos-dismiss-nba">' . \esc_html__(
+      'Dismiss',
+      'ionos-essentials'
+    ) . '</a>';
+
     $always_cards .= \sprintf(
-        $card_template,
-        \esc_attr($action->id),
-        \esc_attr($action->active ? 'nba-active' : 'nba-inactive'),
-        \esc_html($action->title),
-        \esc_html($action->description),
-        $buttons
-      );
-    }
-    echo $always_cards;
+      $card_template,
+      \esc_attr($action->id),
+      \esc_attr($action->active ? 'nba-active' : 'nba-inactive'),
+      \esc_html($action->title),
+      \esc_html($action->description),
+      $buttons
+    );
+  }
+  echo $always_cards;
 }
 
-echo '</div></div>';
+  echo '</div></div>';
 }
 
 function render_empty_element(): void
