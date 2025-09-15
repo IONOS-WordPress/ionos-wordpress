@@ -5,6 +5,9 @@ namespace ionos\essentials\dashboard\blocks\next_best_actions;
 defined('ABSPATH') || exit();
 use const ionos\essentials\PLUGIN_DIR;
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/main.php';
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/single.php';
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/buttons.php';
+
 
 
 function render(): void

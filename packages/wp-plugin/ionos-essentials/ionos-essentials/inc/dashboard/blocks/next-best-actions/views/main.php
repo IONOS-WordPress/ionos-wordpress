@@ -105,7 +105,12 @@ function main_view($args): void
   if ($show_setup_actions) {
     echo ' nba-setup';
   } ?>">
-                <?php echo wp_kses($cards, 'post'); ?>
+                <?php
+                foreach ($actions as $action) {
+                  single_view($action);
+                }
+
+                ?>
             </div>
 
             <?php
