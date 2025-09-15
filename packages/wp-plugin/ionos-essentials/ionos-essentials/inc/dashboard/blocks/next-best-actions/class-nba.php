@@ -244,7 +244,7 @@ NBA::register(
   link: \admin_url('post-new.php?post_type=page&complete_nba=create-page'),
   anchor: \__('Create Page', 'ionos-essentials'),
   completed: false,
-  categories: ['setup-ai','setup-noai']
+  categories: ['setup-ai', 'setup-noai']
 );
 
 if ('extendable' === get_stylesheet()) {

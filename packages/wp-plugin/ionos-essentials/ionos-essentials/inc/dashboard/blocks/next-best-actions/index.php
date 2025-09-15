@@ -8,19 +8,29 @@ function render_callback(): void
 {
   require_once __DIR__ . '/class-nba.php';
 
-  $category_to_show = 'setup-ai';
-  $actions = array_filter(NBA::get_actions(), fn (NBA $action) => in_array($category_to_show, $action->categories, true) && $action->active);
+  if (! get_option('ionos_essentials_nba_setup_dismiss', false)) {
+    $category_to_show = ('extendable' === \get_option('stylesheet') && \is_plugin_active(
+      'extendify/extendify.php'
+    )) ? 'setup-ai' : 'setup-noai';
+    $actions = array_filter(
+      NBA::get_actions(),
+      fn (NBA $action) => in_array($category_to_show, $action->categories, true) && $action->active
+    );
+  }
 
   // No actions left, show misc category
   if (empty($actions)) {
     $category_to_show = 'misc';
-    $actions = array_filter(NBA::get_actions(), fn (NBA $action) => in_array($category_to_show, $action->categories, true) && $action->active);
+    $actions          = array_filter(
+      NBA::get_actions(),
+      fn (NBA $action) => in_array($category_to_show, $action->categories, true) && $action->active
+    );
   }
 
-  if( empty($actions)) {
+  if (empty($actions)) {
+    render_empty_element();
     return;
   }
-
 
   $cards         = '';
   $card_template = '<div id="%s" class="grid-col grid-col--12 grid-col--medium-6 grid-col--small-12">
@@ -34,7 +44,6 @@ function render_callback(): void
     </div>
   </div>
 </div>';
-
 
   foreach ($actions as $action) {
     $target = false === strpos(\esc_url($action->link), home_url()) ? '_blank' : '_top';
@@ -83,35 +92,52 @@ function render_callback(): void
               'ionos-essentials'
             ); ?></div>
 
-            <div class="grid nba-category-<?php echo $category_to_show; ?>">
+            <div class="grid nba-category-<?php \esc_attr($category_to_show);
+  if (\str_starts_with($category_to_show, 'setup')) {
+    echo ' nba-setup';
+  } ?>">
                 <?php echo \wp_kses($cards, [
-                  'div'    => [
-                    'id'    => true,
-                    'class' => true,
-                  ],
-                  'section' => [
-                    'class' => true,
-                  ],
-                  'h2'    => [
-                    'class' => true,
-                  ],
-                  'p'     => [
-                    'class' => true,
-                  ],
-                  'a'     => [
-                    'href'                  => true,
-                    'class'                 => true,
-                    'id'                    => true,
-                    'target'                => true,
-                    'data-nba-id'           => true,
-                    'data-dismiss-on-click' => true,
-                  ],
-                ]); ?>
+        'div'    => [
+          'id'    => true,
+          'class' => true,
+        ],
+        'section' => [
+          'class' => true,
+        ],
+        'h2'    => [
+          'class' => true,
+        ],
+        'p'     => [
+          'class' => true,
+        ],
+        'a'     => [
+          'href'                  => true,
+          'class'                 => true,
+          'id'                    => true,
+          'target'                => true,
+          'data-nba-id'           => true,
+          'data-dismiss-on-click' => true,
+        ],
+      ]); ?>
             </div>
+
+            <?php
+  if (\str_starts_with($category_to_show, 'setup')) {
+    printf(
+      '<button class="button button--secondary" id="ionos_dismiss_all_nba">%s</button>',
+      \esc_html__('Dismiss', 'ionos-essentials')
+    );
+  }
+  ?>
           </section>
         </div>
       </div>
   <?php
+}
+
+function render_empty_element(): void
+{
+  echo 'all done for now!';
 }
 
 \add_action('admin_init', function () {
