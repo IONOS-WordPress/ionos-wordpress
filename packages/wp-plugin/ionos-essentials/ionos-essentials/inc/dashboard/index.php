@@ -198,8 +198,12 @@ add_filter('admin_body_class', function ($classes) {
 });
 
 \add_action(
-  'wp_ajax_ionos-nba-setup-dismiss',
-  fn () => \update_option('ionos_essentials_nba_setup_dismiss', true) && \wp_die()
+  'wp_ajax_ionos-nba-setup-complete',
+  function () {
+    $status = (string) $_POST['status'] ?? 'unknown';
+    \update_option('ionos_essentials_nba_setup_completed', $status);
+    \wp_die();
+  }
 );
 
 \add_action('admin_enqueue_scripts', function ($hook) {

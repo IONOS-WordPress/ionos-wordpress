@@ -83,15 +83,16 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   });
 
-  dashboard.querySelector('#ionos_dismiss_all_nba')?.addEventListener('click', function (event) {
-    jQuery.post(wpData.ajaxUrl, {'action': 'ionos-nba-setup-dismiss'});
-
-    dashboard.querySelector('.nba-setup').classList.add('ionos_nba_dismissed');
-    setTimeout(() => {
-        dashboard.querySelector('.nba-setup').remove();
+  dashboard.querySelectorAll('.ionos_finish_setup')?.forEach((button) => {
+    button.addEventListener('click', function (event) {
+      jQuery.post(wpData.ajaxUrl, {'action': 'ionos-nba-setup-complete', 'status': event.target.dataset.status ?? 'dismissed'});
+      dashboard.querySelector('.nba-setup').classList.add('ionos_nba_dismissed');
+      setTimeout(() => {
+          dashboard.querySelector('.nba-setup').remove();
         location.reload();
       }, 800);
   });
+});
 
   const helpCenterLink = dashboard.querySelector('a[data-nba-id="help-center"]');
   if (helpCenterLink) {

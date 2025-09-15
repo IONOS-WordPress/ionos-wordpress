@@ -8,7 +8,7 @@ function render_callback(): void
 {
   require_once __DIR__ . '/class-nba.php';
 
-  if (! get_option('ionos_essentials_nba_setup_dismiss', false)) {
+  if (! get_option('ionos_essentials_nba_setup_completed', false)) {
     $category_to_show = ('extendable' === \get_option('stylesheet') && \is_plugin_active(
       'extendify/extendify.php'
     )) ? 'setup-ai' : 'setup-noai';
@@ -18,8 +18,7 @@ function render_callback(): void
     );
   }
 
-  // No actions left, show misc category
-  if (empty($actions)) {
+  if (\get_option('ionos_essentials_nba_setup_completed', false)) {
     $category_to_show = 'misc';
     $actions          = array_filter(
       NBA::get_actions(),
@@ -31,6 +30,9 @@ function render_callback(): void
     render_empty_element();
     return;
   }
+
+  $completed_actions = count(array_filter($actions, fn ($action) => $action->active === false));
+  $total_actions     = count($actions);
 
   $cards         = '';
   $card_template = '<div id="%s" class="grid-col grid-col--12 grid-col--medium-6 grid-col--small-12 %s">
@@ -90,30 +92,32 @@ function render_callback(): void
       <div class="card ionos_next_best_actions">
         <div class="card__content">
           <section class="card__section ionos_next_best_actions__section">
-            <div class="headline"><?php \esc_html_e("🚀  Getting started with WordPress", 'ionos-essentials'); ?></div>
+            <div class="headline"><?php \esc_html_e('🚀  Getting started with WordPress', 'ionos-essentials'); ?></div>
             <div class="paragraph"><?php \esc_html_e(
               'Ready to establish your online presence? Let\'s get the essentials sorted so your new site looks professional and is easy for people to find.',
               'ionos-essentials'
             ); ?></div>
 
-            <div style="width: 200px">
-              <?php
-                $completed_actions = count(array_filter($actions, fn($action) => $action->active === true));
-                $total_actions     = count($actions);
-              ?>
+            <?php if (\str_starts_with($category_to_show, 'setup')): ?>
+              <div style="width: 200px">
               <div class="quotabar">
                 <div class="quotabar__bar quotabar__bar--small">
-                  <span class="quotabar__value" style="width: <?php echo ($completed_actions / $total_actions * 100); ?>%;"></span>
+                  <span class="quotabar__value" style="width: <?php echo $completed_actions / $total_actions * 100; ?>%;"></span>
                 </div>
                   <p class="quotabar__text">
                     <?php
-                      // translators: 1: number of completed actions, 2: total number of actions
-                      printf(__(' %d of %d completed', 'ionos-essentials'), $completed_actions, $total_actions);
-                    ?>
+                      if ($completed_actions === $total_actions) {
+                        \esc_html_e('All actions completed!', 'ionos-essentials');
+                      } else {
+                        // translators: 1: number of completed actions, 2: total number of actions
+                        printf(__(' %1$d of %2$d completed', 'ionos-essentials'), $completed_actions, $total_actions);
+                      }
+  ?>
                 </p>
               </div>
-
             </div>
+            <?php endif; ?>
+
 
             <div class="grid nba-category-<?php echo \esc_attr($category_to_show);
   if (\str_starts_with($category_to_show, 'setup')) {
@@ -124,10 +128,18 @@ function render_callback(): void
 
             <?php
   if (\str_starts_with($category_to_show, 'setup')) {
-    printf(
-      '<button class="button ghost-button" id="ionos_dismiss_all_nba">%s</button>',
-      \esc_html__('Dismiss getting started guide', 'ionos-essentials')
-    );
+    if ($completed_actions === $total_actions) {
+      // all done, show dismiss button
+      printf(
+        '<button class="button button-primary ionos_finish_setup" data-status="finished">%s</button>',
+        \esc_html__('Finish setup', 'ionos-essentials')
+      );
+    } else {
+      printf(
+        '<button class="button ghost-button ionos_finish_setup" data-status="dismissed">%s</button>',
+        \esc_html__('Dismiss getting started guide', 'ionos-essentials')
+      );
+    }
   }
   ?>
           </section>
