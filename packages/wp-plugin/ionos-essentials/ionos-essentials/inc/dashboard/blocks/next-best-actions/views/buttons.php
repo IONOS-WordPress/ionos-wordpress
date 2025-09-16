@@ -4,7 +4,7 @@ namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
 defined('ABSPATH') || exit();
 
-function create_buttons($action)
+function create_buttons($action, $string = '')
 {
   $target = false === strpos(\esc_url($action->link), home_url()) ? '_blank' : '_top';
   if ('#' === $action->link) {
@@ -24,11 +24,14 @@ function create_buttons($action)
     $buttons = '<a id="ionos_essentials_install_gml" class="button button--secondary">' . $action->anchor . '</a>';
   }
 
+  if ($string != 'no-dismiss') {
   // Dismiss-Button
-  $buttons .= '<a data-nba-id="' . $action->id . '" class="ghost-button ionos-dismiss-nba">' . \esc_html__(
-    'Dismiss',
-    'ionos-essentials'
-  ) . '</a>';
+    $buttons .= '<a data-nba-id="' . $action->id . '" class="ghost-button ionos-dismiss-nba">' . \esc_html__(
+      'Dismiss',
+      'ionos-essentials'
+    ) . '</a>';
+  }
+ 
 
   return $buttons;
 }

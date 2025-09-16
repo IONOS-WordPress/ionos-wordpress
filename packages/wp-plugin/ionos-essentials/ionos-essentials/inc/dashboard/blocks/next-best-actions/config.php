@@ -179,13 +179,14 @@ NBA::register(
 
 NBA::register(
   id: 'tools-and-security',
-  title: \__('Tools & Security area', 'ionos-essentials'),
+  title: \__('\'Tools & Security\' area', 'ionos-essentials'),
   description: \__("All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it.", 'ionos-essentials'),
   link: '#tools',
   anchor: \__('Visit Tools & Security', 'ionos-essentials'),
   completed: false,
   dismiss_on_click: true,
-  categories: ['always']
+  categories: ['always'],
+  icon: 'absent-16'
 );
 
 NBA::register(
@@ -196,5 +197,6 @@ NBA::register(
   anchor: \__('Take the survey', 'ionos-essentials'),
   completed: false,
   dismiss_on_click: true,
-  categories: ['always']
+  categories: ['always'],
+  icon: 'accounting-48'
 );

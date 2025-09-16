@@ -8,7 +8,7 @@ function after_setup_view($args): void
 {
   echo '<div class="grid">';
   foreach ($args['actions'] as $action) {
-    single_view($action);
+    single_always_action_view($action);
   }
   echo '</div>';
 }

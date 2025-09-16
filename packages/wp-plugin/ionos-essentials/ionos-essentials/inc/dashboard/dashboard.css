@@ -113,7 +113,6 @@ main{
 }
 
 .ionos_next_best_actions{
-  background: white;
 
   .card{
     background: rgb(244, 247, 250);
@@ -140,23 +139,6 @@ main{
     transform: scale(0.7);
     opacity: 0;
     transition: all 0.75s ease-in-out;
-  }
-
-  .nba-setup{
-    .ionos-dismiss-nba{
-      display: none;
-    }
-  }
-
-  .nba-is-active{
-    display: block;
-    color: green;
-  }
-
-  .nba-active{
-    .nba-is-active{
-      display: none;
-    }
   }
 }
 
@@ -508,4 +490,67 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   .ionos-site-health-overview, .ionos-site-health-overview__info, .ionos-site-health-vulnerability {
     width: 100%;
   }
+}
+
+
+#ionos_nba_setup_container {
+  padding: 35px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  border-radius: 16px;
+
+  .container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .panel {
+    margin-bottom: 20px;  
+  } 
+  
+  .panel__item {
+    margin: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #000000;
+  }
+
+  .panel__item-header {
+    padding: 0;
+  }
+
+  .panel__item-section {
+    padding-left: 40px;
+    margin-top: -15px;
+    margin-bottom: 0;
+  }
+
+  .ionos_finish_setup {
+    display: flex;
+    align-items: center;
+
+    i {
+      padding-right: 10px;
+    }
+  }
+}
+
+#ionos_next_best_actions__setup_complete, #ionos_next_best_actions__all_done {
+  .container {
+    display: flex;
+    min-height: 200px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 50px 200px;
+  }
+
+  .paragraph {
+    text-align: center;
+  }
+}
+
+#ionos_next_best_actions__setup_complete {
+  margin-bottom: 20px;
 }
