@@ -25,13 +25,12 @@ function create_buttons($action, $string = '')
   }
 
   if ($string != 'no-dismiss') {
-  // Dismiss-Button
+    // Dismiss-Button
     $buttons .= '<a data-nba-id="' . $action->id . '" class="ghost-button ionos-dismiss-nba">' . \esc_html__(
       'Dismiss',
       'ionos-essentials'
     ) . '</a>';
   }
- 
 
   return $buttons;
 }

@@ -13,7 +13,7 @@ function single_view($action): void
 ); ?>" class="panel__item panel__item--closed <?php echo \esc_attr($action->active ? 'nba-active' : 'nba-inactive'); ?>" aria-expanded="false">
   <header class="panel__item-header">
     <div class="panel__icon">
-      <?php if(! $action->active) { ?>
+      <?php if (! $action->active) { ?>
       <svg class="icon-done" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><polygon points="0 0 24 0 24 24 0 24"></polygon>
         <path fill="#4caf50" d="M12,2 C17.52,2 22,6.48 22,12 C22,17.52 17.52,22 12,22 C6.48,22 2,17.52 2,12 C2,6.48 6.48,2 12,2 Z M15.6,8 L10.47,13.17 L8.4,11.09 L7,12.5 L10.47,16 L10.47,16 L17,9.41 L15.6,8 Z"></path></g>
       </svg>

@@ -34,7 +34,7 @@ function render_setup_header($args): void
                 // translators: 1: number of completed actions, 2: total number of actions
                 printf(__(' %1$d of %2$d completed', 'ionos-essentials'), $completed_actions, $total_actions);
               }
-    ?>
+  ?>
         </p>
       </div>
     </div>

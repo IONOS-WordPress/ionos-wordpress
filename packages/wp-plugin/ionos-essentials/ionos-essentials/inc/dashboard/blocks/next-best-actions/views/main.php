@@ -16,7 +16,7 @@ function main_view($args): void
           } else {
             after_setup_view($args);
           }
-          ?>
+  ?>
         </section>
       </div>
   <?php
