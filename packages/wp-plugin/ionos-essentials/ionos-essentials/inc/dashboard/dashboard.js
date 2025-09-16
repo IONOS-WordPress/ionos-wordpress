@@ -90,8 +90,16 @@ document.addEventListener('DOMContentLoaded', function () {
     button.addEventListener('click', function (event) {
       jQuery.post(wpData.ajaxUrl, {
         action: 'ionos-nba-setup-complete',
-        status: event.target.dataset.status ?? 'dismissed',
+        status: event.target.dataset.status,
       });
+
+      if(event.target.dataset.status === 'finished') {
+        dashboard.querySelector('#ionos_nba_setup_container').remove();
+        dashboard.querySelector('#ionos_next_best_actions__setup_complete').style.display = 'block';
+        return;
+      }
+
+
       dashboard.querySelector('.nba-setup').classList.add('ionos_nba_dismissed');
       setTimeout(() => {
         dashboard.querySelector('.nba-setup').remove();

@@ -142,8 +142,7 @@ main{
     transition: all 0.75s ease-in-out;
   }
 
-  .nba-category-setup-ai,
-  .nba-category-setup-noai{
+  .nba-setup{
     .ionos-dismiss-nba{
       display: none;
     }

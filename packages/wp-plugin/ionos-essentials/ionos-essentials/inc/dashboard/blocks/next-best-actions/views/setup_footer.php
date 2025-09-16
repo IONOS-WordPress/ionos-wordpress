@@ -6,7 +6,7 @@ defined('ABSPATH') || exit();
 
 function render_setup_footer($args): void
 {
-  // all done, show dismiss button
+  // all done, show button
   if ($args['completed_actions'] === $args['total_actions']) {
     printf(
       '<button class="button button-primary ionos_finish_setup" data-status="finished">%s</button>',

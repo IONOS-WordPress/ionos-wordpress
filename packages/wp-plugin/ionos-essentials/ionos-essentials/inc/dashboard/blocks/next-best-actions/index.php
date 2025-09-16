@@ -12,6 +12,8 @@ require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-acti
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup_footer.php';
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup.php';
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/after_setup.php';
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all_done.php';
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup_complete.php';
 
 function render(): void
 {
@@ -25,7 +27,7 @@ function render(): void
   // If setup is not completed, show setup actions and always actions
   // If setup is completed, show after-setup actions and always actions
   if (! get_option('ionos_essentials_nba_setup_completed', false)) {
-    $args['category_to_show'] = (\get_option('extendify_onboarding_completed', false) ? 'setup-noai' : 'setup-noai');
+    $args['category_to_show'] = (\get_option('extendify_onboarding_completed', false) ? 'setup-ai' : 'setup-noai');
     $args['actions']          = array_filter(
       NBA::get_actions(),
       fn (NBA $action) => in_array($args['category_to_show'], $action->categories, true)
@@ -51,17 +53,13 @@ function render(): void
   $args['total_actions']     = count($args['actions']);
 
   if (empty($args['actions'])) {
-    render_empty_element();
+    all_done_view();
     return;
   }
 
   main_view($args);
 }
 
-function render_empty_element(): void
-{
-  echo 'all done for now!';
-}
 
 \add_action('post_updated', function ($post_id, $post_after, $post_before) {
   if ('publish' !== $post_before->post_status || ('publish' !== $post_after->post_status && 'draft' !== $post_after->post_status)) {
