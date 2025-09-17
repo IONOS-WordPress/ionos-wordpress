@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-17T10:02:58+00:00\n"
+"POT-Creation-Date: 2025-09-17T13:55:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ionos-essentials\n"
@@ -230,7 +230,9 @@ msgid "Help us shape WordPress for you"
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
-msgid "We're alwayfs looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
+#: ionos-essentials/inc/dashboard/blocks/popup/index.php
+#: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
+msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
@@ -308,11 +310,6 @@ msgstr ""
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php
 #: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
 msgid "Your Feedback is important to us"
-msgstr ""
-
-#: ionos-essentials/inc/dashboard/blocks/popup/index.php
-#: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
-msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php

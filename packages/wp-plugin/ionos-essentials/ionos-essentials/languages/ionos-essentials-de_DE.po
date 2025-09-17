@@ -543,6 +543,7 @@ msgstr "Umfassender Hilfebereich mit: KI-Chat-Support, geführten Touren und ein
 msgid "Your Feedback is important to us"
 msgstr "Ihre Meinung ist uns wichtig!"
 
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php
 #: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
@@ -910,10 +911,6 @@ msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Help us shape WordPress for you"
-msgstr ""
-
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
-msgid "We're alwayfs looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
