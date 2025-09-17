@@ -53,7 +53,7 @@ NBA::register(
   anchor: \__('Edit Website', 'ionos-essentials'),
   completed: 1 < \wp_count_posts('page')
     ->publish,
-  categories: ['setup-noai']
+  categories: ['setup-ai']
 );
 
 if (is_plugin_active('extendify/extendify.php')) {
@@ -66,7 +66,8 @@ if (is_plugin_active('extendify/extendify.php')) {
     ),
     link: '#',
     anchor: \__('Open Help Center', 'ionos-essentials'),
-    completed: false // handled by view.js
+    completed: false, // handled by view.js
+    categories: ['after-setup']
   );
 }
 
@@ -79,7 +80,7 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
     anchor: \__('Set Up Contact Form', 'ionos-essentials'),
     completed: false,
     dismiss_on_click: true,
-    categories: ['after-setup']
+    categories: ['setup-ai']
   );
 }
 
@@ -93,7 +94,7 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
     link: \admin_url('admin.php?page=wc-admin&path=%2Fsetup-wizard'),
     anchor: \__('Start Setup', 'ionos-essentials'),
     completed: isset($woo_onboarding_status['completed']) || isset($woo_onboarding_status['skipped']), // when setup completed or cta is clicked
-    categories: ['after-setup']
+    categories: ['setup-ai']
   );
 }
 
@@ -105,7 +106,7 @@ NBA::register(
   anchor: \__('Create Page', 'ionos-essentials'),
   completed: false,
   dismiss_on_click: true,
-  categories: ['setup-ai', 'setup-noai']
+  categories: ['setup-noai']
 );
 
 $tenant        = Tenant::get_slug();
@@ -175,6 +176,34 @@ NBA::register(
   anchor: \__('Add Favicon', 'ionos-essentials'),
   completed: 0 < intval(\get_option('site_icon', 0)),
   categories: ['after-setup']
+);
+
+NBA::register(
+  id: 'personalize-business-data',
+  title: \__('Personalize business data', 'ionos-essentials'),
+  description: \__(
+    'Add your business details, like a phone number, email, and address, to your website.',
+    'ionos-essentials'
+  ),
+  link: \admin_url('admin.php?page=wc-settings'), // WooCommerce settings page
+  anchor: \__('Personalize business data', 'ionos-essentials'),
+  completed: !empty(\get_option('woocommerce_store_address'))
+          && !empty(\get_option('woocommerce_email_from_address'))
+          && !empty(\get_option('woocommerce_store_phone')),
+  categories: ['setup-ai']
+);
+
+NBA::register(
+  id: 'select-theme',
+  title: \__('Select a theme', 'ionos-essentials'),
+  description: \__(
+    'Choose a theme that matches your website\'s purpose and your comfort level.',
+    'ionos-essentials'
+  ),
+  link: \admin_url('themes.php'),
+  anchor: \__('Select a theme', 'ionos-essentials'),
+  completed: false === strpos(\wp_get_theme()->get_stylesheet(), 'twentytwenty'),
+  categories: ['setup-noai']
 );
 
 NBA::register(
