@@ -165,15 +165,10 @@ blocks\popup\render_callback();
   Showing update information
 </div>
 
-<main id="content" class="
-  <?php
-  \ionos\essentials\maintenance_mode\is_maintenance_mode()                      && printf(
-    'ionos-maintenance-mode'
-  );
-! empty(\ionos\essentials\wpscan\get_wpscan()->get_issues())                    && printf(' issues-found');
-?>
-
-  ">
+<main id="content" class="<?php
+  \ionos\essentials\maintenance_mode\is_maintenance_mode()   && printf('ionos-maintenance-mode');
+! empty(\ionos\essentials\wpscan\get_wpscan()->get_issues()) && printf(' issues-found');
+?>">
   <div class="page-section">
     <?php blocks\banner\render_callback(); ?>
   </div>

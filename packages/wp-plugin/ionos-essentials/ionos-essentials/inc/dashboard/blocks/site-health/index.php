@@ -67,8 +67,9 @@ function render_callback(): void
             </div>
           </div>
           </div>
-        <div class="ionos-site-health-vulnerability">
-          <?php \ionos\essentials\dashboard\blocks\vulnerability\render_callback()?>
+          <div class="ionos-site-health-vulnerability">
+            <?php \ionos\essentials\dashboard\blocks\vulnerability\render_callback()?>
+          </div>
         </div>
       </section>
     </div>
