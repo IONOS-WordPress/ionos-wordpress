@@ -53,7 +53,7 @@ NBA::register(
   anchor: \__('Edit Website', 'ionos-essentials'),
   completed: 1 < \wp_count_posts('page')
     ->publish,
-  categories: ['setup-noai']
+  categories: ['setup-ai']
 );
 
 if (is_plugin_active('extendify/extendify.php')) {
@@ -66,7 +66,8 @@ if (is_plugin_active('extendify/extendify.php')) {
     ),
     link: '#',
     anchor: \__('Open Help Center', 'ionos-essentials'),
-    completed: false // handled by view.js
+    completed: false, // handled by view.js
+    categories: ['after-setup']
   );
 }
 
@@ -79,7 +80,7 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
     anchor: \__('Set Up Contact Form', 'ionos-essentials'),
     completed: false,
     dismiss_on_click: true,
-    categories: ['after-setup']
+    categories: ['setup-ai']
   );
 }
 
@@ -93,7 +94,7 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
     link: \admin_url('admin.php?page=wc-admin&path=%2Fsetup-wizard'),
     anchor: \__('Start Setup', 'ionos-essentials'),
     completed: isset($woo_onboarding_status['completed']) || isset($woo_onboarding_status['skipped']), // when setup completed or cta is clicked
-    categories: ['after-setup']
+    categories: ['setup-ai']
   );
 }
 
@@ -105,7 +106,7 @@ NBA::register(
   anchor: \__('Create Page', 'ionos-essentials'),
   completed: false,
   dismiss_on_click: true,
-  categories: ['setup-ai', 'setup-noai']
+  categories: ['setup-noai']
 );
 
 $tenant        = Tenant::get_slug();
@@ -178,23 +179,53 @@ NBA::register(
 );
 
 NBA::register(
+  id: 'personalize-business-data',
+  title: \__('Personalize business data', 'ionos-essentials'),
+  description: \__(
+    'Add your business details, like a phone number, email, and address, to your website.',
+    'ionos-essentials'
+  ),
+  link: \admin_url('admin.php?page=wc-settings'), // WooCommerce settings page
+  anchor: \__('Personalize business data', 'ionos-essentials'),
+  completed: !empty(\get_option('woocommerce_store_address'))
+          && !empty(\get_option('woocommerce_email_from_address'))
+          && !empty(\get_option('woocommerce_store_phone')),
+  categories: ['setup-ai']
+);
+
+NBA::register(
+  id: 'select-theme',
+  title: \__('Select a theme', 'ionos-essentials'),
+  description: \__(
+    'Choose a theme that matches your website\'s purpose and your comfort level.',
+    'ionos-essentials'
+  ),
+  link: \admin_url('themes.php'),
+  anchor: \__('Select a theme', 'ionos-essentials'),
+  completed: false === strpos(\wp_get_theme()->get_stylesheet(), 'twentytwenty'),
+  categories: ['setup-noai']
+);
+
+NBA::register(
   id: 'tools-and-security',
-  title: \__('Tools & Security area', 'ionos-essentials'),
+  title: \__('\'Tools & Security\' area', 'ionos-essentials'),
   description: \__("All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it.", 'ionos-essentials'),
   link: '#tools',
   anchor: \__('Visit Tools & Security', 'ionos-essentials'),
   completed: false,
   dismiss_on_click: true,
-  categories: ['always']
+  categories: ['always'],
+  icon: 'absent-16'
 );
 
 NBA::register(
   id: 'survey',
   title: \__('Help us shape WordPress for you', 'ionos-essentials'),
-  description: \__("We're alwayfs looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.", 'ionos-essentials'),
+  description: \__("We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.", 'ionos-essentials'),
   link: get_survey_url(),
   anchor: \__('Take the survey', 'ionos-essentials'),
   completed: false,
   dismiss_on_click: true,
-  categories: ['always']
+  categories: ['always'],
+  icon: 'accounting-48'
 );

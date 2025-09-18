@@ -25,6 +25,7 @@ class NBA
     private readonly bool $completed,
     public readonly bool $dismiss_on_click,
     public readonly array $categories,
+    public readonly string $icon
   ) {
     self::$actions[$this->id] = $this;
   }
@@ -69,9 +70,10 @@ class NBA
     string $anchor,
     bool $completed = false,
     bool $dismiss_on_click = false,
-    array $categories = []
+    array $categories = [],
+    string $icon = 'group-16'
   ): void {
-    new self($id, $title, $description, $link, $anchor, $completed, $dismiss_on_click, $categories);
+    new self($id, $title, $description, $link, $anchor, $completed, $dismiss_on_click, $categories, $icon);
   }
 
   private static function _get_option()

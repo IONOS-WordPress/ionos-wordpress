@@ -125,126 +125,114 @@ msgstr "Zum Control Panel"
 msgid "Account Management"
 msgstr "Mein Konto"
 
-#: ionos-essentials/inc/dashboard/blocks/my-account/index.php
-msgid "One-click access to your customer account, login security and subscriptions."
-msgstr "Schnellzugriff auf Ihr Kundenkonto, Verträge und Anmeldesicherheit."
-
 #: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Overview"
 msgstr "Übersicht"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Create Page"
 msgstr "Seite erstellen"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add Logo"
 msgstr "Logo hinzufügen"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Ensure your website is branded with your unique logo for a professional look."
 msgstr "Für ein professionelles Aussehen, fügen Sie Ihrer Website Ihr einzigartiges Logo hinzu."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Connect Domain"
 msgstr "Domain verbinden"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Edit & Complete Your Website"
 msgstr "Website bearbeiten"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
 msgstr "Vervollständigen und personalisieren Sie Ihre Website mit KI-Tools, fügen Sie neue Inhalte wie Seiten, Texte und Bilder hinzu oder passen Sie Farben und Schriftarten an."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Edit Website"
 msgstr "Website bearbeiten"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Discover Help Center"
 msgstr "Hilfe-Center entdecken"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
 msgstr "Machen Sie sich mit unseren umfangreichen Support Angeboten vertraut und nutzen Sie unseren KI-Chat für alle Fragen rund um WordPress."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Open Help Center"
 msgstr "Hilfe-Center öffnen"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Set Up Email"
 msgstr "E-Mail einrichten"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Set up your included email account and integrate it with your website."
 msgstr "Richten Sie Ihr inbegriffenes E-Mail-Konto ein und verbinden Sie es mit Ihrer Website."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Set Up Contact Form"
 msgstr "Kontakt-Formular einrichten"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Create a contact form to stay connected with your visitors."
 msgstr "Richten Sie das Kontaktformular ein, um mit Ihren Besuchern in Kontakt zu bleiben."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Set Up Your WooCommerce Store"
 msgstr "Richten Sie Ihren WooCommerce Shop ein"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Launch your online store now with a guided setup wizard."
 msgstr "Starten Sie jetzt Ihren Online-Shop mit dem einfachen und komfortablen Einrichtungsassistenten."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Start Setup"
 msgstr "Mit der Einrichtung beginnen"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Social Media Setup"
 msgstr "Social Media einrichten"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Connect your social media profiles to your website and expand your online presence."
 msgstr "Verbinden Sie Ihre Social-Media-Profile mit Ihrer Website und erweitern Sie Ihre Online-Präsenz."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Connect Social Media"
 msgstr "Social Media verbinden"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add Favicon"
 msgstr "Favicon hinzufügen"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
 msgstr "Fügen Sie Ihrer Website ein Favicon (Website-Symbol) hinzu, um die Wiedererkennung und Sichtbarkeit Ihrer Marke zu verbessern."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Create a Page"
 msgstr "Eine Seite erstellen"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Create and publish a page and share your story with the world."
 msgstr "Erstellen und veröffentlichen Sie eine neue Seite und teilen Sie ihre Inhalte mit der Welt."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Connect your domain to your website to increase visibility and attract more visitors."
 msgstr "Verbinden Sie Ihre Domain mit Ihrer Website, um die Sichtbarkeit zu erhöhen und mehr Besucher anzuziehen."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Connect a Domain"
 msgstr "Eine Domain verbinden"
-
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/index.php
-msgid "Unlock Your Website's Potential"
-msgstr "Nutzen Sie das volle Potenzial Ihrer Website"
-
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/index.php
-msgid "Your website is live, but your journey is just beginning. Explore the recommended next actions to drive growth, improve performance, and achieve your online goals."
-msgstr "Ihre Website ist online, aber die Reise hat gerade erst begonnen. Hier finden Sie empfohlene nächste Schritte, um Ihre Website erfolgreich zu machen und Ihre Online-Ziele zu erreichen."
 
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php
 #: ionos-essentials/inc/dashboard/blocks/welcome/index.php
@@ -271,7 +259,7 @@ msgstr "Header bearbeiten"
 msgid "Edit Footer"
 msgstr "Footer bearbeiten"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/index.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/buttons.php
 msgid "Dismiss"
 msgstr "Nicht mehr anzeigen"
 
@@ -331,7 +319,7 @@ msgstr "RankingCoach"
 msgid "SSL"
 msgstr "SSL"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Setup Email Account"
 msgstr "E-Mail Konto einrichten"
 
@@ -356,15 +344,15 @@ msgstr "Website neu erstellen"
 msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr "Mit KI ist es möglich, Ihre Website innerhalb von 72 Stunden neu zu erstellen"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Legally compliant selling with German Market Light"
 msgstr "Rechtssicher verkaufen mit German Market Light"
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner."
 msgstr "Nutzen Sie die kostenlose Erweiterung für WooCommerce, um Ihren Onlineshop in Deutschland und Österreich rechtssicher zu betreiben."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/class-nba.php
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Install now"
 msgstr "Jetzt installieren"
 
@@ -555,11 +543,13 @@ msgstr "Umfassender Hilfebereich mit: KI-Chat-Support, geführten Touren und ein
 msgid "Your Feedback is important to us"
 msgstr "Ihre Meinung ist uns wichtig!"
 
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php
 #: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
 msgstr "Wir sind ständig auf der Suche nach Möglichkeiten Ihr WordPress-Hosting-Erlebnis noch besser zu machen. Nehmen Sie sich bitte ein paar Minuten Zeit, um an einer kurzen Online-Umfrage teilzunehmen."
 
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php
 #: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
 msgid "Take the survey"
@@ -802,6 +792,7 @@ msgid "Turn off notification here"
 msgstr "Benachrichtigungen hier abschalten"
 
 #: ionos-essentials/inc/security/index.php
+#, php-format
 msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
 msgstr "Das frühere Security-Plugin ist nun Teil des neuen Essentials-Plugin. Sie finden alle Funktionen unter <a href=\"%s\">Tools & Sicherheit</a> in unserem neuen Hub."
 
@@ -823,6 +814,7 @@ msgstr "Illustration der Benutzeroberfläche"
 
 #. translators: first placeholder for the url, second for the plugin name, last one for the response code
 #: ionos-essentials/inc/update/index.php
+#, php-format
 msgid "Failed to download <a href=\\\"%1$s\\\">%2$s-info.json</a>(response status=%3$s)"
 msgstr "Das Herunterladen von <a href=\\\"%1$s\\\">%2$s-info.json</a> (Antwortstatus=%3$s) ist fehlgeschlagen."
 
@@ -902,8 +894,103 @@ msgid "Should be improved"
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/index.php
-msgid "Good"
-msgstr ""
-#: ionos-essentials/inc/dashboard/index.php
 msgid "Tools & Security"
 msgstr "Tools & Sicherheit"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "'Tools & Security' area"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Visit Tools & Security"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Help us shape WordPress for you"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
+msgid "You're all caught up!"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
+msgid "You've completed all of our current recommendations. This list will update automatically with new tips, so check in again soon to see what's next."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
+msgid "View IONOS Help Center"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
+msgid "Leave feedback"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/main.php
+msgid "What's important for today"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
+msgid "Your Foundation is Built!"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
+msgid "Congratulations! You've successfully set up your WordPress site."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
+msgid "Now for the fun part, exploring ways to grow and enhance it."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
+msgid "Explore What's Next"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php
+msgid "Finish setup"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php
+msgid "Dismiss getting started guide"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
+msgid "🚀  Getting started with WordPress"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
+msgid "Ready to establish your online presence? Let's get the essentials sorted so your new site looks professional and is easy for people to find."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
+msgid "All actions completed!"
+msgstr ""
+
+#. translators: 1: number of completed actions, 2: total number of actions
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
+#, php-format
+msgid " %1$d of %2$d completed"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/index.php
+msgid "Good"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Personalize business data"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Add your business details, like a phone number, email, and address, to your website."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Select a theme"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Choose a theme that matches your website's purpose and your comfort level."
+msgstr ""

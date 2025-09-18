@@ -93,12 +93,11 @@ document.addEventListener('DOMContentLoaded', function () {
         status: event.target.dataset.status,
       });
 
-      if(event.target.dataset.status === 'finished') {
+      if (event.target.dataset.status === 'finished') {
         dashboard.querySelector('#ionos_nba_setup_container').remove();
         dashboard.querySelector('#ionos_next_best_actions__setup_complete').style.display = 'block';
         return;
       }
-
 
       dashboard.querySelector('.nba-setup').classList.add('ionos_nba_dismissed');
       setTimeout(() => {
@@ -328,4 +327,14 @@ document.addEventListener('DOMContentLoaded', function () {
       dashboard.querySelector('#bar').classList.add('site-health-color-green');
     }
   })();
+
+  dashboard.querySelectorAll('.panel__item').forEach((item) => {
+    item.addEventListener('click', () => {
+      const isExpanded = item.classList.contains('panel__item--expanded');
+
+      item.classList.toggle('panel__item--expanded', !isExpanded);
+      item.classList.toggle('panel__item--closed', isExpanded);
+      item.setAttribute('aria-expanded', String(!isExpanded));
+    });
+  });
 });

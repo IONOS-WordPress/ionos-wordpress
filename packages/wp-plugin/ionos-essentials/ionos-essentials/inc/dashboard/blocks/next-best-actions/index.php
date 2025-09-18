@@ -7,13 +7,14 @@ use const ionos\essentials\PLUGIN_DIR;
 
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/main.php';
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/single.php';
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/single-always-action.php';
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/buttons.php';
-require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup_header.php';
-require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup_footer.php';
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php';
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php';
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup.php';
-require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/after_setup.php';
-require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all_done.php';
-require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup_complete.php';
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/after-setup.php';
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php';
+require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php';
 
 function render(): void
 {
@@ -59,7 +60,6 @@ function render(): void
 
   main_view($args);
 }
-
 
 \add_action('post_updated', function ($post_id, $post_after, $post_before) {
   if ('publish' !== $post_before->post_status || ('publish' !== $post_after->post_status && 'draft' !== $post_after->post_status)) {

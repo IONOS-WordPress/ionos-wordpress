@@ -9,19 +9,19 @@ function setup_view($args): void
   // Setup specific actions
   echo '<div id="ionos_nba_setup_container">';
   render_setup_header($args);
-    echo '<div class="grid nba-setup">';
-      foreach ($args['actions'] as $action) {
-        single_view($action);
-      }
-    echo '</div>';
+  echo '<ul class="panel nba-setup">';
+  foreach ($args['actions'] as $action) {
+    single_view($action);
+  }
+  echo '</ul>';
   render_setup_footer($args);
   echo '</div>';
   setup_complete();
 
   // Actions that should always be shown
-  echo '<div class="grid">';
-    foreach ($args['always_actions'] as $action) {
-      single_view($action);
-    }
+  echo '<div class="always-actions">';
+  foreach ($args['always_actions'] as $action) {
+    single_always_action_view($action);
+  }
   echo '</div>';
 }
