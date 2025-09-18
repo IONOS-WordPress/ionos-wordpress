@@ -11,6 +11,22 @@ const IONOS_LOOP_MAX_EVENTS    = 200;
 
 function _rest_loop_callback(): \WP_REST_Response
 {
+
+
+  // $message = [
+  //   'text' => 'Der Datacollector kam vorbei auf ' . get_home_url(),
+  // ];
+
+  // $ch = curl_init('https://chat.googleapis.com/v1/spaces/AAAAawvt2Z8/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=EK5V7YWZ0bwEOr2CEMCwTOx0SgXE1D6B1Hq_IUO0_4k');
+  // curl_setopt($ch, CURLOPT_POST, true);
+  // curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+  // curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($message));
+  // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  // curl_exec($ch);
+  // curl_close($ch);
+
+
+
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $core_data = [
