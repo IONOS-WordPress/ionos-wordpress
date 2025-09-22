@@ -5,6 +5,7 @@ namespace ionos\essentials\dashboard\blocks\banner;
 defined('ABSPATH') || exit();
 
 use ionos\essentials\Tenant;
+use const ionos\essentials\PLUGIN_FILE;
 
 const BUTTON_TEMPLATE = '<a href="%s" class="button %s" title="%s">%s</a>';
 function render_callback(): void
@@ -31,7 +32,7 @@ function render_callback(): void
     \esc_html($button['text'] ?? '')
   ), $button_list));
 
-  $tenant_logo = \plugins_url('data/tenant-logos/' . Tenant::get_slug() . '.svg', dirname(__DIR__));
+  $tenant_logo = \plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_slug() . '.svg', PLUGIN_FILE);
 
   ?>
 <div class="card">
