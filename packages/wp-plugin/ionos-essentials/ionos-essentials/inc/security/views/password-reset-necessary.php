@@ -12,6 +12,7 @@
 
   <?php
   use const ionos\essentials\PLUGIN_DIR;
+  use const ionos\essentials\PLUGIN_FILE;
 
   \wp_register_style(
     handle: 'ionos-exos',
@@ -33,7 +34,7 @@
         printf(
           '<img src="%s" alt="%s" style="width: 118px; height: auto; margin-bottom: 16px;">',
           \esc_url(
-            \plugins_url('ionos-essentials/ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_slug() . '.svg', PLUGIN_DIR)
+            \plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_slug() . '.svg', PLUGIN_FILE)
           ),
           Tenant::get_label()
         );
