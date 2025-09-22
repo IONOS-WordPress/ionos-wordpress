@@ -11,7 +11,6 @@
   \esc_html_e('Password Reset Necessary', 'ionos-essentials'); ?></title>
 
   <?php
-  use const ionos\essentials\PLUGIN_DIR;
   use const ionos\essentials\PLUGIN_FILE;
 
   \wp_register_style(
