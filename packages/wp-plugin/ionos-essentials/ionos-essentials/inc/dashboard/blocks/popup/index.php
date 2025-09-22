@@ -2,10 +2,17 @@
 
 namespace ionos\essentials\dashboard\blocks\popup;
 
+use ionos\essentials\Tenant;
+
 defined('ABSPATH') || exit();
 
 function render_callback(): void
 {
+
+  if( 'ionos' !== Tenant::get_slug() ) {
+    return;
+  }
+
   // If the popup was maybe dismissed or already shown, or if it's not time yet, exit early.
   $ionos_popup_after_timestamp = (int) \get_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp', true);
   if (empty($ionos_popup_after_timestamp) || $ionos_popup_after_timestamp > time()) {
