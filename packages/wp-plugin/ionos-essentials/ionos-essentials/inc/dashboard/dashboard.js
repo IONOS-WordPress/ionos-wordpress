@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
       jQuery.post(wpData.ajaxUrl, {
         action: 'ionos-nba-setup-complete',
         status: event.target.dataset.status,
+        _wpnonce: wpData.nonce,
       });
 
       if (event.target.dataset.status === 'finished') {
