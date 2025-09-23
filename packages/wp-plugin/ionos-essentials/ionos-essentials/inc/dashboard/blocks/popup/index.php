@@ -9,7 +9,7 @@ defined('ABSPATH') || exit();
 function render_callback(): void
 {
 
-  if( 'ionos' !== Tenant::get_slug() ) {
+  if ('ionos' !== Tenant::get_slug()) {
     return;
   }
 

@@ -187,9 +187,9 @@ NBA::register(
   ),
   link: \admin_url('admin.php?page=wc-settings'), // WooCommerce settings page
   anchor: \__('Personalize business data', 'ionos-essentials'),
-  completed: !empty(\get_option('woocommerce_store_address'))
-          && !empty(\get_option('woocommerce_email_from_address'))
-          && !empty(\get_option('woocommerce_store_phone')),
+  completed: ! empty(\get_option('woocommerce_store_address'))
+          && ! empty(\get_option('woocommerce_email_from_address'))
+          && ! empty(\get_option('woocommerce_store_phone')),
   categories: ['setup-ai']
 );
 
@@ -218,7 +218,7 @@ NBA::register(
   icon: 'absent-16'
 );
 
-if( 'ionos' === Tenant::get_slug() ) {
+if ('ionos' === Tenant::get_slug()) {
   NBA::register(
     id: 'survey',
     title: \__('Help us shape WordPress for you', 'ionos-essentials'),
