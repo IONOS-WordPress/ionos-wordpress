@@ -329,8 +329,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })();
 
-  dashboard.querySelectorAll('.panel__item').forEach((item) => {
-    item.addEventListener('click', () => {
+  dashboard.querySelectorAll('.panel__item-header').forEach((header) => {
+    header.addEventListener('click', () => {
+      const item = header.closest('.panel__item');
       const isExpanded = item.classList.contains('panel__item--expanded');
 
       item.classList.toggle('panel__item--expanded', !isExpanded);
