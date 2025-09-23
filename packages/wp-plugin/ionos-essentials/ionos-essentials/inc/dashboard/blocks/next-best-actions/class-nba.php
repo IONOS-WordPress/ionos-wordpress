@@ -71,7 +71,7 @@ class NBA
     bool $completed = false,
     bool $dismiss_on_click = false,
     array $categories = [],
-    string $icon = 'group-16'
+    string $icon = 'target'
   ): void {
     new self($id, $title, $description, $link, $anchor, $completed, $dismiss_on_click, $categories, $icon);
   }

@@ -3,6 +3,7 @@
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
 defined('ABSPATH') || exit();
+use const ionos\essentials\PLUGIN_FILE;
 
 function single_always_action_view($action): void
 {
@@ -13,7 +14,11 @@ function single_always_action_view($action): void
 ); ?>" class="panel__item  panel__item--closed <?php echo \esc_attr($action->active ? 'nba-active' : 'nba-inactive'); ?>" aria-expanded="false">
   <header class="panel__item-header">
     <div class="panel__icon">
-     <i class="exos-icon exos-icon-<?php echo esc_html($action->icon); ?>"></i>
+     <img src="<?php echo esc_url( plugins_url(
+  '/ionos-essentials/inc/dashboard/assets/' . $action->icon . '.svg',
+  PLUGIN_FILE
+)); ?>" alt="All Done Thumb" width="30" height="30">
+
     </div>
     <div class="panel__headline__container">
       <h3 class="panel__headline">
