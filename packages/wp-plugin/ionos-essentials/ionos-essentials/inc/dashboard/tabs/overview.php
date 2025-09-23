@@ -13,8 +13,8 @@ defined('ABSPATH') || exit();
     -->
     <div class="grid-col grid-col--12"><?php blocks\site_health\render_callback(); ?></div>
 
-    <div class="grid-col grid-col--8"><?php blocks\next_best_actions\render(); ?></div>
-    <div class="grid-col grid-col--4">
+    <div class="grid-col grid-col--8 grid-col--small-12"><?php blocks\next_best_actions\render_callback(); ?></div>
+    <div class="grid-col grid-col--4 grid-col--small-12">
       <?php blocks\quick_links\render_callback(); ?>
       <?php blocks\my_account\render_callback(); ?>
     </div>
