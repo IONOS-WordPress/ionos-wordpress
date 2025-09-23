@@ -554,3 +554,17 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 #ionos_next_best_actions__setup_complete {
   margin-bottom: 20px;
 }
+
+.ionos-next-best-action {
+  padding-left: 0;
+}
+
+.ionos-quick-links {
+  padding-right: 0;
+}
+
+@media (max-width: 666px) {
+  .ionos-next-best-action, .ionos-quick-links {
+    padding: 0;
+  }
+}
