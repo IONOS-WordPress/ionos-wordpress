@@ -17,7 +17,7 @@ function single_always_action_view($action): void
      <img src="<?php echo esc_url( plugins_url(
   '/ionos-essentials/inc/dashboard/assets/' . $action->icon . '.svg',
   PLUGIN_FILE
-)); ?>" alt="All Done Thumb" width="30" height="30">
+)); ?>" alt="Icon" width="30" height="30">
 
     </div>
     <div class="panel__headline__container">
