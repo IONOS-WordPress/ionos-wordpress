@@ -502,6 +502,10 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   .container {
     display: flex;
     flex-direction: row;
+
+    .paragraph {
+      margin-right: 30px;
+    }
   }
 
   .panel {
