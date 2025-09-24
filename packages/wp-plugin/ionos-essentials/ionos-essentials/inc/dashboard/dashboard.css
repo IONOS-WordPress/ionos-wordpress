@@ -148,6 +148,10 @@ main{
   background-color: #edfaef;
   margin-bottom: 0;
 
+  .ionos_vulnerability__headline, .ionos_vulnerability__last-scan {
+    margin-left: 35px;
+  }
+
   .ionos_vulnerability__content{
     flex-direction: column;
     justify-content: space-between;
@@ -161,7 +165,7 @@ main{
     border-radius: 50%;
     padding: 0.2em 0.5em;
     font-size: 0.8em;
-    margin-right: 0.5em;
+    margin-right: 15px;
   }
 
   /* Respect the order of this definition, as high overwrites medium */
