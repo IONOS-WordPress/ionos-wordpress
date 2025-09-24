@@ -4,6 +4,7 @@ namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
 defined('ABSPATH') || exit();
 use const ionos\essentials\PLUGIN_FILE;
+use ionos\essentials\Tenant;
 
 function all_done_view(): void
 {
@@ -23,7 +24,9 @@ function all_done_view(): void
     </p>
     <div class="buttons">
       <a href="#" class="button button--secondary"><?php echo esc_html__('View IONOS Help Center', 'ionos-essentials')?></a>
-      <a href="#" class="button button--secondary"><?php echo esc_html__('Leave feedback', 'ionos-essentials')?></a>
+      <?php if ('ionos' === Tenant::get_slug()) { ?>
+        <a href="#" class="button button--secondary"><?php echo esc_html__('Leave feedback', 'ionos-essentials')?></a>
+      <?php } ?>
     </div>
    </div>
   </div>
