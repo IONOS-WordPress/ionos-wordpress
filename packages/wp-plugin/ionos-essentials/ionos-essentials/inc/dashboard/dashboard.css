@@ -566,3 +566,9 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 #ionos_next_best_actions__setup_complete {
   margin-bottom: 20px;
 }
+
+#tools-and-security, #survey {
+  .panel__item-header:after {
+    display: none;
+  }
+}
