@@ -72,7 +72,6 @@ function _register_at_datacollector(): bool
       'callback'            => __NAMESPACE__ . '\_rest_loop_click_callback',
     ]
   );
-
 });
 
 // log loop endpoint errors to error log
@@ -93,4 +92,3 @@ function _register_at_datacollector(): bool
   },
   accepted_args: 3
 );
-

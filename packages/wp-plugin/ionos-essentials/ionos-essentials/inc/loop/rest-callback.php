@@ -16,25 +16,27 @@ function _rest_loop_callback(): \WP_REST_Response
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $core_data = [
-    'generic'       => _get_generic(),
-    'user'          => \count_users('memory'),
-    'active_theme'  => _get_themes(),
-    'active_plugins'=> _get_plugins(),
-    'posts'         => _get_posts_and_pages(),
-    'comments'      => _get_comments(),
-    'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
-    'uploads'       => _get_uploads(),
+    // toDO: remove comments after development for deploying
+    // 'generic'       => _get_generic(),
+    // 'user'          => \count_users('memory'),
+    // 'active_theme'  => _get_themes(),
+    // 'active_plugins'=> _get_plugins(),
+    // 'posts'         => _get_posts_and_pages(),
+    // 'comments'      => _get_comments(),
+    // 'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
+    // 'uploads'       => _get_uploads(),
     'essentials'    => [
       'dashboard'   => _get_dashbord_data(),
-      'security'    => _get_security_data(),
+      'security'    => \get_option(\ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION, []),
+      'maintenance' => \ionos\essentials\maintenance_mode\is_maintenance_mode(),
     ],
     'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
+    'extendify'     => \get_option('extendify_onboarding_completed', null),
   ];
 
   // toDo: clear after development for deploying
   // \delete_option(IONOS_LOOP_EVENTS_OPTION);
   // \delete_option(IONOS_LOOP_CLICKS_OPTION);
-
 
   return \rest_ensure_response($core_data);
 }
@@ -43,14 +45,16 @@ function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
 {
   $body = $request->get_json_params();
 
-  if (!isset($body['anchor'])) {
-    return \rest_ensure_response(['error' => 'no anchor']);
+  if (! isset($body['anchor'])) {
+    return \rest_ensure_response([
+      'error' => 'no anchor',
+    ]);
   }
 
   $key = sanitize_text_field($body['anchor']);
 
   $data = \get_option(IONOS_LOOP_CLICKS_OPTION, []);
-  if (!is_array($data)) {
+  if (! is_array($data)) {
     $data = [];
   }
 
@@ -64,14 +68,9 @@ function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
 function _get_dashbord_data(): array
 {
   return [
-    'foo' => 'bar',
-  ];
-}
-
-function _get_security_data(): array
-{
-  return [
-    'foo' => 'bar',
+    'nba'           => \get_option('ionos_nba_status', []),
+    'actions_shown' => \get_option('ionos_loop_nba_actions_shown', null),
+    'setup'         => \get_option('ionos_essentials_nba_setup_completed', null),
   ];
 }
 
