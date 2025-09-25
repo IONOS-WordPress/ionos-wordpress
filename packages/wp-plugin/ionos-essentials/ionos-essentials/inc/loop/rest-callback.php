@@ -15,23 +15,51 @@ function _rest_loop_callback(): \WP_REST_Response
 
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
-  $core_data = [
-    // toDO: remove comments after development for deploying
-    // 'generic'       => _get_generic(),
-    // 'user'          => \count_users('memory'),
-    // 'active_theme'  => _get_themes(),
-    // 'active_plugins'=> _get_plugins(),
-    // 'posts'         => _get_posts_and_pages(),
-    // 'comments'      => _get_comments(),
-    // 'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
-    // 'uploads'       => _get_uploads(),
+  // $core_data = [
+  //   'generic'       => _get_generic(),
+  //   'user'          => \count_users('memory'),
+  //   'active_theme'  => _get_themes(),
+  //   'active_plugins'=> _get_plugins(),
+  //   'posts'         => _get_posts_and_pages(),
+  //   'comments'      => _get_comments(),
+  //   'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
+  //   'uploads'       => _get_uploads(),
+  //   'essentials'    => [
+  //     'dashboard'   => _get_dashbord_data(),
+  //     'security'    => \get_option(\ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION, []),
+  //     'maintenance' => \ionos\essentials\maintenance_mode\is_maintenance_mode(),
+  //   ],
+  //   'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
+  //   'extendify'     => \get_option('extendify_onboarding_completed', null),
+  // ];
+
+$core_data = [
+    'generic'       => _get_generic(),
+    'wordpress'    => [
+      'user'          => \count_users('memory'),
+      'active_theme'  => _get_themes(),
+      'active_plugins'=> _get_plugins(),
+      'posts'         => _get_posts_and_pages(),
+      'comments'      => _get_comments(),
+      'uploads'       => _get_uploads(),
+      'installed_themes'    => count(\wp_get_themes()),
+      'installed_plugins'   => count(\get_plugins()),
+      'permalink_structure' => \get_option('permalink_structure', ''),
+      'siteurl'             => \get_option('siteurl', ''),
+      'home'                => \get_option('home', ''),
+    ],
+
+    'extendify'     => \get_option('extendify_onboarding_completed', null),
+
+
+    'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
+    'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
+
     'essentials'    => [
       'dashboard'   => _get_dashbord_data(),
       'security'    => \get_option(\ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION, []),
       'maintenance' => \ionos\essentials\maintenance_mode\is_maintenance_mode(),
     ],
-    'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
-    'extendify'     => \get_option('extendify_onboarding_completed', null),
   ];
 
   // toDo: clear after development for deploying
@@ -83,12 +111,12 @@ function _get_generic(): array
     'tenant'              => Tenant::get_slug(),
     'core_version'        => \get_bloginfo('version'),
     'php_version'         => PHP_VERSION,
-    'installed_themes'    => count(\wp_get_themes()),
-    'installed_plugins'   => count(\get_plugins()),
+    // 'installed_themes'    => count(\wp_get_themes()),
+    // 'installed_plugins'   => count(\get_plugins()),
     'instance_created'    => _get_instance_creation_date(),
-    'permalink_structure' => \get_option('permalink_structure', ''),
-    'siteurl'             => \get_option('siteurl', ''),
-    'home'                => \get_option('home', ''),
+    // 'permalink_structure' => \get_option('permalink_structure', ''),
+    // 'siteurl'             => \get_option('siteurl', ''),
+    // 'home'                => \get_option('home', ''),
   ];
 }
 
