@@ -340,4 +340,17 @@ document.addEventListener('DOMContentLoaded', function () {
       item.setAttribute('aria-expanded', String(!isExpanded));
     });
   });
+
+ function track_click(anchor = "foo") {
+    fetch(wpData.restUrl + 'ionos/essentials/loop/v1/click', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': wpData.nonce,
+      },
+      body: JSON.stringify({ anchor }),
+      credentials: 'include',
+    })
+  }
+
 });

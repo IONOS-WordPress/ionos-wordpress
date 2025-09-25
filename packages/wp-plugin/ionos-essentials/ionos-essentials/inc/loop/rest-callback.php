@@ -7,6 +7,7 @@ use ionos\essentials\Tenant;
 defined('ABSPATH') || exit();
 
 const IONOS_LOOP_EVENTS_OPTION = 'ionos-loop-events';
+const IONOS_LOOP_CLICKS_OPTION = 'ionos-loop-clicks';
 const IONOS_LOOP_MAX_EVENTS    = 200;
 
 function _rest_loop_callback(): \WP_REST_Response
@@ -27,12 +28,37 @@ function _rest_loop_callback(): \WP_REST_Response
       'dashboard'   => _get_dashbord_data(),
       'security'    => _get_security_data(),
     ],
+    'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
   ];
 
   // toDo: clear after development for deploying
   // \delete_option(IONOS_LOOP_EVENTS_OPTION);
+  // \delete_option(IONOS_LOOP_CLICKS_OPTION);
+
 
   return \rest_ensure_response($core_data);
+}
+
+function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
+{
+  $body = $request->get_json_params();
+
+  if (!isset($body['anchor'])) {
+    return \rest_ensure_response(['error' => 'no anchor']);
+  }
+
+  $key = sanitize_text_field($body['anchor']);
+
+  $data = \get_option(IONOS_LOOP_CLICKS_OPTION, []);
+  if (!is_array($data)) {
+    $data = [];
+  }
+
+  $data[$key] = isset($data[$key]) ? $data[$key] + 1 : 1;
+
+  \update_option(IONOS_LOOP_CLICKS_OPTION, $data);
+
+  return \rest_ensure_response([]);
 }
 
 function _get_dashbord_data(): array

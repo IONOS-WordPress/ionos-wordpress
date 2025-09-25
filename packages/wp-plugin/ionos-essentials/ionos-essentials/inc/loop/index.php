@@ -12,6 +12,7 @@ defined('ABSPATH') || exit();
 const IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS      = 'ionos-essentials-loop-datacollector-last-access';
 const IONOS_LOOP_REST_NAMESPACE                 = 'ionos/essentials/loop/v1';
 const IONOS_LOOP_REST_ENDPOINT                  = '/loop-data';
+const IONOS_LOOP_REST_CLICK_ENDPOINT            = '/click';
 const IONOS_LOOP_DATACOLLECTOR_REGISTRATION_URL = 'https://webapps-loop.hosting.ionos.com/api/register';
 
 require_once __DIR__ . '/cron.php';
@@ -62,6 +63,16 @@ function _register_at_datacollector(): bool
       'callback'            => __NAMESPACE__ . '\_rest_loop_callback',
     ]
   );
+  \register_rest_route(
+    IONOS_LOOP_REST_NAMESPACE,
+    IONOS_LOOP_REST_CLICK_ENDPOINT,
+    [
+      'methods'             => 'POST',
+      'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
+      'callback'            => __NAMESPACE__ . '\_rest_loop_click_callback',
+    ]
+  );
+
 });
 
 // log loop endpoint errors to error log
@@ -82,3 +93,4 @@ function _register_at_datacollector(): bool
   },
   accepted_args: 3
 );
+
