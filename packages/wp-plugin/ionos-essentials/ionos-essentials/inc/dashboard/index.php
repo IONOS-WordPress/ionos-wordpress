@@ -143,16 +143,17 @@ add_filter('admin_body_class', function ($classes) {
     return ! \is_wp_error($result);
   }
 
-  \register_rest_route('ionos/essentials/dashboard/nba/v1', '/dismiss/(?P<id>[a-zA-Z0-9-]+)', [
+  \register_rest_route('ionos/essentials/dashboard/nba/v1', '/update', [
     'methods'  => 'POST',
     'callback' => function ($request) {
       require_once __DIR__ . '/blocks/my-account/index.php';
       require_once __DIR__ . '/blocks/next-best-actions/class-nba.php';
       $params = $request->get_params();
       $nba_id = $params['id'];
+      $status = isset($params['status']) ? sanitize_text_field((string) $params['status']) : 'dismissed';
 
       $nba = blocks\next_best_actions\NBA::get_nba($nba_id);
-      $res = $nba->set_status('dismissed', true);
+      $res = $nba->set_status($status, true);
       if ($res) {
         return new \WP_REST_Response([
           'status' => 'success',
