@@ -116,11 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   }
 
-  const updateNbaItem = async (target, status) => {
-    if( !status ) {
-      status = target.dataset.nbaStatus ?? 'dismiss';
-    }
-
+  const updateNbaItem = async (target, status = 'dismissed') => {
     fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/update', {
       method: 'POST',
       headers: {
