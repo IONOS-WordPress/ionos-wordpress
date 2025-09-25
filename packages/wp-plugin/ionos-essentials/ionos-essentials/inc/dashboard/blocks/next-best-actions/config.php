@@ -20,7 +20,7 @@ if (null !== $data) {
     ),
     link: $data['domain'] . $connectdomain,
     anchor: \__('Connect Domain', 'ionos-essentials'),
-    completed: false === strpos(home_url(), 'live-website.com') && false === strpos(home_url(), 'localhost'),
+    completed: false === strpos(home_url(), 'live-website.com') || true === strpos(home_url(), 'localhost'),
     categories: ['setup-ai', 'setup-noai']
   );
 
@@ -178,20 +178,34 @@ NBA::register(
   categories: ['after-setup']
 );
 
-NBA::register(
-  id: 'personalize-business-data',
-  title: \__('Personalize business data', 'ionos-essentials'),
-  description: \__(
-    'Add your business details, like a phone number, email, and address, to your website.',
-    'ionos-essentials'
-  ),
-  link: \admin_url('admin.php?page=wc-settings'), // WooCommerce settings page
-  anchor: \__('Personalize business data', 'ionos-essentials'),
-  completed: ! empty(\get_option('woocommerce_store_address'))
-          && ! empty(\get_option('woocommerce_email_from_address'))
-          && ! empty(\get_option('woocommerce_store_phone')),
-  categories: ['setup-ai']
-);
+$contact_query = new \WP_Query([
+  'post_type'      => 'page',
+  'title'          => __('contact', 'extendify-local'),
+  'posts_per_page' => 1,
+  'fields'         => 'ids',
+  'meta_query'     => [
+    [
+      'key'     => 'made_with_extendify_launch',
+      'compare' => '1',
+    ],
+  ],
+]);
+$contact_post_id = ! empty($contact_query->posts) ? $contact_query->posts[0] : 0;
+if ($contact_post_id) {
+  NBA::register(
+    id: 'personalize-business-data',
+    title: \__('Personalize business data', 'ionos-essentials'),
+    description: \__(
+      'Add your business details, like a phone number, email, and address, to your website.',
+      'ionos-essentials'
+    ),
+    link: \admin_url('post.php?post=' . $contact_post_id . '&action=edit'),
+    anchor: \__('Personalize business data', 'ionos-essentials'),
+    completed: false,
+    dismiss_on_click: true,
+    categories: ['setup-ai']
+  );
+};
 
 NBA::register(
   id: 'select-theme',
