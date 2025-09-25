@@ -76,13 +76,13 @@ document.addEventListener('DOMContentLoaded', function () {
   dashboard.querySelectorAll('.ionos-dismiss-nba').forEach((el) => {
     el.addEventListener('click', async (click) => {
       click.preventDefault();
-      dismissItem(click.target);
+      updateNbaItem(click.target, 'dismissed');
     });
   });
 
   dashboard.querySelectorAll('a[data-dismiss-on-click="true"]').forEach((link) => {
     link.onclick = () => {
-      dismissItem(link);
+      updateNbaItem(link, 'completed');
     };
   });
 
@@ -112,18 +112,19 @@ document.addEventListener('DOMContentLoaded', function () {
   if (helpCenterLink) {
     helpCenterLink.onclick = () => {
       document.querySelector('.extendify-help-center button').click();
-      dismissItem(helpCenterLink);
+      updateNbaItem(helpCenterLink, 'completed');
     };
   }
 
-  const dismissItem = async (target) => {
-    fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/dismiss/' + target.dataset.nbaId, {
+  const updateNbaItem = async (target, status) => {
+    fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-WP-Nonce': wpData.nonce,
       },
       credentials: 'include',
+      body: JSON.stringify({ id: target.dataset.nbaId, status }),
     }).then((response) => {
       if (!response.ok) {
         return;

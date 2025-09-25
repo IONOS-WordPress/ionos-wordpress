@@ -22,12 +22,12 @@ function all_done_view(): void
         'ionos-essentials'
       ); ?></span>
     </p>
-    <div class="buttons">
-      <a href="#" class="button button--secondary"><?php echo esc_html__('View IONOS Help Center', 'ionos-essentials')?></a>
-      <?php if ('ionos' === Tenant::get_slug()) { ?>
+    <?php if ('ionos' === Tenant::get_slug()) { ?>
+      <div class="buttons">
+        <a href="#" class="button button--secondary"><?php echo esc_html__('View IONOS Help Center', 'ionos-essentials')?></a>
         <a href="#" class="button button--secondary"><?php echo esc_html__('Leave feedback', 'ionos-essentials')?></a>
-      <?php } ?>
-    </div>
+      </div>
+    <?php } ?>
    </div>
   </div>
   <?php
