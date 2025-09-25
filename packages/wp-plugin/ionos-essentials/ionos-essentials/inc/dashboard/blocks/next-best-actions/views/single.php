@@ -10,7 +10,7 @@ function single_view($action): void
 
 <li id="<?php echo \esc_attr(
   $action->id
-); ?>" class="panel__item panel__item--closed <?php echo \esc_attr($action->active ? 'nba-active' : 'nba-inactive'); ?>" aria-expanded="false">
+); ?>" class="panel__item panel__item--closed expandable <?php echo \esc_attr($action->active ? 'nba-active' : 'nba-inactive'); ?>" aria-expanded="false">
   <header class="panel__item-header">
     <div class="panel__icon">
       <?php if (! $action->active) { ?>
