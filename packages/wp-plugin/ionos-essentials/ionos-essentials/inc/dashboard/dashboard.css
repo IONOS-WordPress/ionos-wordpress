@@ -567,7 +567,7 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   margin-bottom: 20px;
 }
 
-#tools-and-security, #survey {
+.always-expanded {
   .panel__item-header:after {
     display: none;
   }

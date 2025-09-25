@@ -332,12 +332,6 @@ document.addEventListener('DOMContentLoaded', function () {
   dashboard.querySelectorAll('.panel__item-header').forEach((header) => {
     header.addEventListener('click', () => {
       const item = header.closest('.panel__item');
-      const itemId = item.id;
-
-      if (itemId === 'tools-and-security' || itemId === 'survey') {
-        return;
-      }
-
       const isExpanded = item.classList.contains('panel__item--expanded');
 
       item.classList.toggle('panel__item--expanded', !isExpanded);
