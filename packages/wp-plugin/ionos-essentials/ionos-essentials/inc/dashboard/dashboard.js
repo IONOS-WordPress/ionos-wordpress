@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
   dashboard.querySelectorAll('.ionos-dismiss-nba').forEach((el) => {
     el.addEventListener('click', async (click) => {
       click.preventDefault();
-      updateNbaItem(click.target);
+      updateNbaItem(click.target, 'dismissed');
     });
   });
 
@@ -112,11 +112,11 @@ document.addEventListener('DOMContentLoaded', function () {
   if (helpCenterLink) {
     helpCenterLink.onclick = () => {
       document.querySelector('.extendify-help-center button').click();
-      updateNbaItem(helpCenterLink);
+      updateNbaItem(helpCenterLink, 'completed');
     };
   }
 
-  const updateNbaItem = async (target, status = 'dismissed') => {
+  const updateNbaItem = async (target, status) => {
     fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/update', {
       method: 'POST',
       headers: {
