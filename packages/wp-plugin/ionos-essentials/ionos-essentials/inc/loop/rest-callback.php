@@ -12,21 +12,6 @@ const IONOS_LOOP_MAX_EVENTS    = 200;
 function _rest_loop_callback(): \WP_REST_Response
 {
 
-
-  // $message = [
-  //   'text' => 'Der Datacollector kam vorbei auf ' . get_home_url(),
-  // ];
-
-  // $ch = curl_init('GOOGLE_HOOK_URL');
-  // curl_setopt($ch, CURLOPT_POST, true);
-  // curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-  // curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($message));
-  // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  // curl_exec($ch);
-  // curl_close($ch);
-
-
-
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $core_data = [
@@ -38,11 +23,29 @@ function _rest_loop_callback(): \WP_REST_Response
     'comments'      => _get_comments(),
     'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
     'uploads'       => _get_uploads(),
+    'essentials'    => [
+      'dashboard'   => _get_dashbord_data(),
+      'security'    => _get_security_data(),
+    ],
   ];
 
   // empty events after retrieval
   \delete_option(IONOS_LOOP_EVENTS_OPTION);
   return \rest_ensure_response($core_data);
+}
+
+function _get_dashbord_data(): array
+{
+  return [
+    'foo' => 'bar',
+  ];
+}
+
+function _get_security_data(): array
+{
+  return [
+    'foo' => 'bar',
+  ];
 }
 
 function _get_generic(): array

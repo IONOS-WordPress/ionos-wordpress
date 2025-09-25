@@ -12,8 +12,6 @@
 
 namespace ionos\essentials\migration;
 
-use function ionos\essentials\loop\_register_at_datacollector;
-
 defined('ABSPATH') || exit();
 
 use const ionos\essentials\PLUGIN_FILE;
