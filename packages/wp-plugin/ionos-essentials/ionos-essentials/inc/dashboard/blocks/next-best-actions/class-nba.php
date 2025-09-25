@@ -25,7 +25,8 @@ class NBA
     private readonly bool $completed,
     public readonly bool $dismiss_on_click,
     public readonly array $categories,
-    public readonly string $exos_icon
+    public readonly string $exos_icon,
+    public readonly bool $expanded
   ) {
     self::$actions[$this->id] = $this;
   }
@@ -71,9 +72,10 @@ class NBA
     bool $completed = false,
     bool $dismiss_on_click = false,
     array $categories = [],
-    string $exos_icon = 'target'
+    string $exos_icon = 'target',
+    bool $expanded = false
   ): void {
-    new self($id, $title, $description, $link, $anchor, $completed, $dismiss_on_click, $categories, $exos_icon);
+    new self($id, $title, $description, $link, $anchor, $completed, $dismiss_on_click, $categories, $exos_icon, $expanded);
   }
 
   private static function _get_option()

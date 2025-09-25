@@ -567,8 +567,20 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   margin-bottom: 20px;
 }
 
-.always-expanded {
+.panel__item--expanded.always-expanded {
   .panel__item-header:after {
     display: none;
+  }
+  .panel__item-header{
+    cursor: default;
+    color: inherit;
+  }
+  h3{
+      color: inherit;
+  }
+}
+.panel__item--expanded.always-expanded:hover {
+  h3{
+    color: inherit;
   }
 }
