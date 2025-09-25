@@ -21,7 +21,7 @@ function render_setup_header($args): void
       'ionos-essentials'
     ); ?></div>
 
-    <div style="width: 400px">
+    <div style="width: 350px">
       <div class="quotabar">
         <div class="quotabar__bar quotabar__bar--small">
           <span class="quotabar__value" style="width: <?php echo \esc_attr($completed_actions / $total_actions * 100); ?>%;"></span>
