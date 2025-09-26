@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  dashboard.querySelectorAll('a[data-dismiss-on-click="true"]').forEach((link) => {
+  dashboard.querySelectorAll('a[data-complete-on-click="true"]').forEach((link) => {
     link.onclick = () => {
       updateNbaItem(link, 'completed');
     };

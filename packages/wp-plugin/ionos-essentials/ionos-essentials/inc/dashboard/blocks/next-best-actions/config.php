@@ -53,7 +53,7 @@ NBA::register(
   ),
   link: $edit_url,
   anchor: \__('Edit Website', 'ionos-essentials'),
-  dismiss_on_click: true,
+  complete_on_click: true,
   categories: ['setup-ai']
 );
 
@@ -80,7 +80,7 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
     link: \admin_url('admin.php?page=wpcf7-new'),
     anchor: \__('Set Up Contact Form', 'ionos-essentials'),
     completed: false,
-    dismiss_on_click: true,
+    complete_on_click: true,
     categories: ['setup-ai']
   );
 }
@@ -105,8 +105,7 @@ NBA::register(
   description: \__('Create and publish a page and share your story with the world.', 'ionos-essentials'),
   link: \admin_url('post-new.php?post_type=page'),
   anchor: \__('Create Page', 'ionos-essentials'),
-  completed: false,
-  dismiss_on_click: true,
+  complete_on_click: true,
   categories: ['setup-noai']
 );
 
@@ -141,7 +140,7 @@ if ('extendable' === get_stylesheet()) {
     ),
     anchor: \__('Connect Social Media', 'ionos-essentials'),
     completed: false,
-    dismiss_on_click: true,
+    complete_on_click: true,
     categories: ['after-setup']
   );
 
@@ -203,7 +202,7 @@ if ($contact_post_id) {
     link: \admin_url('post.php?post=' . $contact_post_id . '&action=edit'),
     anchor: \__('Personalize business data', 'ionos-essentials'),
     completed: false,
-    dismiss_on_click: true,
+    complete_on_click: true,
     categories: ['setup-ai']
   );
 };
@@ -227,8 +226,7 @@ NBA::register(
   description: \__("All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it.", 'ionos-essentials'),
   link: '#tools',
   anchor: \__('Visit Tools & Security', 'ionos-essentials'),
-  completed: false,
-  dismiss_on_click: true,
+  complete_on_click: true,
   categories: ['always'],
   exos_icon: 'megaphone',
   expanded: true
@@ -242,7 +240,7 @@ if ('ionos' === Tenant::get_slug()) {
     link: get_survey_url(),
     anchor: \__('Take the survey', 'ionos-essentials'),
     completed: false,
-    dismiss_on_click: true,
+    complete_on_click: true,
     categories: ['always'],
     exos_icon: 'conversation',
     expanded: true
