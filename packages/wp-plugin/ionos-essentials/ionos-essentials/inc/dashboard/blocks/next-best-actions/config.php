@@ -43,7 +43,9 @@ if (null !== $data) {
 }
 
 $homepage = \get_option('page_on_front'); // returns "0" if no static front page is set
-$edit_url = intval($homepage) === 0 ? \admin_url('edit.php?post_type=page') : admin_url('post.php?post=' . $homepage . '&action=edit');
+$edit_url = intval($homepage) === 0 ? \admin_url('edit.php?post_type=page') : admin_url(
+  'post.php?post=' . $homepage . '&action=edit'
+);
 NBA::register(
   id: 'edit-and-complete',
   title: \__('Edit & Complete Your Website', 'ionos-essentials'),
@@ -205,7 +207,7 @@ if ($contact_post_id) {
     complete_on_click: true,
     categories: ['setup-ai']
   );
-};
+}
 
 NBA::register(
   id: 'select-theme',
@@ -222,7 +224,7 @@ NBA::register(
 
 NBA::register(
   id: 'tools-and-security',
-  title: \__('\'Tools & Security\' area', 'ionos-essentials'),
+  title: \__('Tools & Security', 'ionos-essentials'),
   description: \__("All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it.", 'ionos-essentials'),
   link: '#tools',
   anchor: \__('Visit Tools & Security', 'ionos-essentials'),

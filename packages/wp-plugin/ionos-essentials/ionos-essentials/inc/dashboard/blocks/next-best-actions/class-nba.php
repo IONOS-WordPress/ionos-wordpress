@@ -75,7 +75,18 @@ class NBA
     string $exos_icon = 'target',
     bool $expanded = false
   ): void {
-    new self($id, $title, $description, $link, $anchor, $completed, $complete_on_click, $categories, $exos_icon, $expanded);
+    new self(
+      $id,
+      $title,
+      $description,
+      $link,
+      $anchor,
+      $completed,
+      $complete_on_click,
+      $categories,
+      $exos_icon,
+      $expanded
+    );
   }
 
   private static function _get_option()
