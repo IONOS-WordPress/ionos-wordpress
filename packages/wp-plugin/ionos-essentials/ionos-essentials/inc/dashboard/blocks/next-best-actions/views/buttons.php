@@ -1,14 +1,13 @@
 <?php
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
-use ionos\essentials\dashboard\blocks\next_best_actions\NBA;
 
 defined('ABSPATH') || exit();
 
-function create_buttons(NBA $action , $string = '')
+function create_buttons(NBA $action, $string = '')
 {
   $target = false === strpos(\esc_url($action->link), home_url()) ? '_blank' : '_top';
-  if ('#' === $action->link) {
+  if (str_starts_with(($action->link), '#')) {
     $target = '';
   }
   $buttons = sprintf(
