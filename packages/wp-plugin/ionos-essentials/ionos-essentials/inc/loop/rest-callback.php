@@ -7,26 +7,98 @@ use ionos\essentials\Tenant;
 defined('ABSPATH') || exit();
 
 const IONOS_LOOP_EVENTS_OPTION = 'ionos-loop-events';
+const IONOS_LOOP_CLICKS_OPTION = 'ionos-loop-clicks';
 const IONOS_LOOP_MAX_EVENTS    = 200;
 
 function _rest_loop_callback(): \WP_REST_Response
 {
+
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
+
+  // $core_data = [
+  //   'generic'       => _get_generic(),
+  //   'user'          => \count_users('memory'),
+  //   'active_theme'  => _get_themes(),
+  //   'active_plugins'=> _get_plugins(),
+  //   'posts'         => _get_posts_and_pages(),
+  //   'comments'      => _get_comments(),
+  //   'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
+  //   'uploads'       => _get_uploads(),
+  //   'essentials'    => [
+  //     'dashboard'   => _get_dashbord_data(),
+  //     'security'    => \get_option(\ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION, []),
+  //     'maintenance' => \ionos\essentials\maintenance_mode\is_maintenance_mode(),
+  //   ],
+  //   'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
+  //   'extendify'     => \get_option('extendify_onboarding_completed', null),
+  // ];
 
   $core_data = [
     'generic'       => _get_generic(),
-    'user'          => \count_users('memory'),
-    'active_theme'  => _get_themes(),
-    'active_plugins'=> _get_plugins(),
-    'posts'         => _get_posts_and_pages(),
-    'comments'      => _get_comments(),
+    'wordpress'     => [
+      'user'                => \count_users('memory'),
+      'active_theme'        => _get_themes(),
+      'active_plugins'      => _get_plugins(),
+      'posts'               => _get_posts_and_pages(),
+      'comments'            => _get_comments(),
+      'uploads'             => _get_uploads(),
+      'installed_themes'    => count(\wp_get_themes()),
+      'installed_plugins'   => count(\get_plugins()),
+      'permalink_structure' => \get_option('permalink_structure', ''),
+      'siteurl'             => \get_option('siteurl', ''),
+      'home'                => \get_option('home', ''),
+    ],
+
+    'extendify'     => \get_option('extendify_onboarding_completed', null),
+
     'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
-    'uploads'       => _get_uploads(),
+    'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
+
+    'essentials'    => [
+      'dashboard'   => _get_dashbord_data(),
+      'security'    => \get_option(\ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION, []),
+      'maintenance' => \ionos\essentials\maintenance_mode\is_maintenance_mode(),
+    ],
   ];
 
-  // empty events after retrieval
-  \delete_option(IONOS_LOOP_EVENTS_OPTION);
+  // toDo: clear after development for deploying
+  // \delete_option(IONOS_LOOP_EVENTS_OPTION);
+  // \delete_option(IONOS_LOOP_CLICKS_OPTION);
+
   return \rest_ensure_response($core_data);
+}
+
+function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
+{
+  $body = $request->get_json_params();
+
+  if (! isset($body['anchor'])) {
+    return \rest_ensure_response([
+      'error' => 'no anchor',
+    ]);
+  }
+
+  $key = sanitize_text_field($body['anchor']);
+
+  $data = \get_option(IONOS_LOOP_CLICKS_OPTION, []);
+  if (! is_array($data)) {
+    $data = [];
+  }
+
+  $data[$key] = isset($data[$key]) ? $data[$key] + 1 : 1;
+
+  \update_option(IONOS_LOOP_CLICKS_OPTION, $data);
+
+  return \rest_ensure_response([]);
+}
+
+function _get_dashbord_data(): array
+{
+  return [
+    'nba'           => \get_option('ionos_nba_status', []),
+    'actions_shown' => \get_option('ionos_loop_nba_actions_shown', null),
+    'setup'         => \get_option('ionos_essentials_nba_setup_completed', null),
+  ];
 }
 
 function _get_generic(): array
@@ -38,12 +110,12 @@ function _get_generic(): array
     'tenant'              => Tenant::get_slug(),
     'core_version'        => \get_bloginfo('version'),
     'php_version'         => PHP_VERSION,
-    'installed_themes'    => count(\wp_get_themes()),
-    'installed_plugins'   => count(\get_plugins()),
+    // 'installed_themes'    => count(\wp_get_themes()),
+    // 'installed_plugins'   => count(\get_plugins()),
     'instance_created'    => _get_instance_creation_date(),
-    'permalink_structure' => \get_option('permalink_structure', ''),
-    'siteurl'             => \get_option('siteurl', ''),
-    'home'                => \get_option('home', ''),
+    // 'permalink_structure' => \get_option('permalink_structure', ''),
+    // 'siteurl'             => \get_option('siteurl', ''),
+    // 'home'                => \get_option('home', ''),
   ];
 }
 

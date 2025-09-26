@@ -8,7 +8,7 @@ use const ionos\essentials\PLUGIN_FILE;
 
 function all_done_view(): void
 {
-    $dismissed = \get_option('ionos_nba_status')['survey']['dismissed'] ?? false;
+  $dismissed = \get_option('ionos_nba_status')['survey']['dismissed'] ?? false;
   ?>
   <div id="ionos_next_best_actions__all_done">
    <div class="container">
@@ -26,7 +26,7 @@ function all_done_view(): void
     <?php if ('ionos' === Tenant::get_slug()) { ?>
       <div class="buttons">
         <a href="#" class="button button--secondary"><?php echo esc_html__('View IONOS Help Center', 'ionos-essentials')?></a>
-        <?php if ( $dismissed ) { ?>
+        <?php if ($dismissed) { ?>
         <a href="#" class="button button--secondary"><?php echo esc_html__('Leave feedback', 'ionos-essentials')?></a>
         <?php } ?>
       </div>
