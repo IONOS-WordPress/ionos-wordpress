@@ -125,16 +125,6 @@ main{
     padding-bottom: 0;
   }
 
-  .nba-card{
-    .card__section{
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-between;
-    }
-  }
-
   .ionos_nba_dismissed{
     transform: scale(0.7);
     opacity: 0;
@@ -513,9 +503,9 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   }
 
   .panel {
-    margin-bottom: 20px;  
-  } 
-  
+    margin-bottom: 20px;
+  }
+
   .panel__item {
     margin: 0;
     border-radius: 0;

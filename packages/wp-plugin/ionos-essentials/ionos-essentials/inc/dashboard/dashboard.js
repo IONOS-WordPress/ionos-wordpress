@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
       setTimeout(() => {
         dashboard.getElementById(target.dataset.nbaId).remove();
 
-        const nbaCount = dashboard.querySelectorAll('.nba-card').length;
+        const nbaCount = dashboard.querySelectorAll('.nba-active').length;
         if (nbaCount === 0) {
           location.reload();
         }
