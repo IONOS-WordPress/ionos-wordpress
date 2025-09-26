@@ -7,6 +7,6 @@ defined('ABSPATH') || exit();
 function after_setup_view($args): void
 {
   foreach ($args['actions'] as $action) {
-    single_always_action_view($action);
+    single_accordion_view($action);
   }
 }

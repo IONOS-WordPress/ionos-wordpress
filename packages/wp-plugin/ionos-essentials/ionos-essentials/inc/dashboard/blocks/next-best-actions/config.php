@@ -215,7 +215,8 @@ NBA::register(
   completed: false,
   dismiss_on_click: true,
   categories: ['always'],
-  exos_icon: 'megaphone'
+  exos_icon: 'megaphone',
+  expanded: true
 );
 
 if ('ionos' === Tenant::get_slug()) {
@@ -228,6 +229,7 @@ if ('ionos' === Tenant::get_slug()) {
     completed: false,
     dismiss_on_click: true,
     categories: ['always'],
-    exos_icon: 'conversation'
+    exos_icon: 'conversation',
+    expanded: true
   );
 }
