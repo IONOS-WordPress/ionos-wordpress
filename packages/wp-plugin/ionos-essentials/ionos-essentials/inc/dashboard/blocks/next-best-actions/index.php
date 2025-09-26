@@ -58,7 +58,10 @@ function render(): void
     return;
   }
 
-  \update_option('ionos_loop_nba_actions_shown', array_merge(array_keys($args['actions']), array_keys($args['always_actions'] ?? [])));
+  \update_option(
+    'ionos_loop_nba_actions_shown',
+    array_merge(array_keys($args['actions']), array_keys($args['always_actions'] ?? []))
+  );
 
   main_view($args);
 }

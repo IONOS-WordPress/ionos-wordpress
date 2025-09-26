@@ -33,15 +33,15 @@ function _rest_loop_callback(): \WP_REST_Response
   //   'extendify'     => \get_option('extendify_onboarding_completed', null),
   // ];
 
-$core_data = [
+  $core_data = [
     'generic'       => _get_generic(),
-    'wordpress'    => [
-      'user'          => \count_users('memory'),
-      'active_theme'  => _get_themes(),
-      'active_plugins'=> _get_plugins(),
-      'posts'         => _get_posts_and_pages(),
-      'comments'      => _get_comments(),
-      'uploads'       => _get_uploads(),
+    'wordpress'     => [
+      'user'                => \count_users('memory'),
+      'active_theme'        => _get_themes(),
+      'active_plugins'      => _get_plugins(),
+      'posts'               => _get_posts_and_pages(),
+      'comments'            => _get_comments(),
+      'uploads'             => _get_uploads(),
       'installed_themes'    => count(\wp_get_themes()),
       'installed_plugins'   => count(\get_plugins()),
       'permalink_structure' => \get_option('permalink_structure', ''),
@@ -50,7 +50,6 @@ $core_data = [
     ],
 
     'extendify'     => \get_option('extendify_onboarding_completed', null),
-
 
     'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
     'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
