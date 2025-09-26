@@ -513,9 +513,9 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   }
 
   .panel {
-    margin-bottom: 20px;  
-  } 
-  
+    margin-bottom: 20px;
+  }
+
   .panel__item {
     margin: 0;
     border-radius: 0;
@@ -563,6 +563,10 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   .paragraph {
     text-align: center;
   }
+}
+
+.panel__item-section {
+  display: inherit;
 }
 
 @media (max-width: 666px) {
