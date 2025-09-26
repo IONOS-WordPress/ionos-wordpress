@@ -67,7 +67,7 @@ if (is_plugin_active('extendify/extendify.php')) {
     ),
     link: '#',
     anchor: \__('Open Help Center', 'ionos-essentials'),
-    completed: false, // handled by view.js
+    complete_on_click: true,
     categories: ['after-setup']
   );
 }
