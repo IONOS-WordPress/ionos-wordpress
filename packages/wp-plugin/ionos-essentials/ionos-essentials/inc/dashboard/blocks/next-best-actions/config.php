@@ -42,6 +42,8 @@ if (null !== $data) {
   }
 }
 
+$homepage = \get_option('page_on_front'); // returns "0" if no static front page is set
+$edit_url = intval($homepage) === 0 ? \admin_url('edit.php?post_type=page') : admin_url('post.php?post=' . $homepage . '&action=edit');
 NBA::register(
   id: 'edit-and-complete',
   title: \__('Edit & Complete Your Website', 'ionos-essentials'),
@@ -49,10 +51,9 @@ NBA::register(
     'Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts.',
     'ionos-essentials'
   ),
-  link: \admin_url('post-new.php?post_type=page&ext-close'), //  /wp-admin/post-new.php?post_type=page&ext-close
+  link: $edit_url,
   anchor: \__('Edit Website', 'ionos-essentials'),
-  completed: 1 < \wp_count_posts('page')
-    ->publish,
+  dismiss_on_click: true,
   categories: ['setup-ai']
 );
 
