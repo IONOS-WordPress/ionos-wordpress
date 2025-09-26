@@ -21,7 +21,7 @@ function setup_view($args): void
   // Actions that should always be shown
   echo '<div class="always-actions">';
   foreach ($args['always_actions'] as $action) {
-    single_always_action_view($action);
+    single_accordion_view($action);
   }
   echo '</div>';
 }

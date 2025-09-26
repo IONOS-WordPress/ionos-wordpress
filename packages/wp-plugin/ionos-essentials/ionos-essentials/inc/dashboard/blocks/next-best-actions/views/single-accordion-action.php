@@ -5,13 +5,15 @@ namespace ionos\essentials\dashboard\blocks\next_best_actions;
 defined('ABSPATH') || exit();
 use const ionos\essentials\PLUGIN_FILE;
 
-function single_always_action_view($action): void
+function single_accordion_view($action): void
 {
   ?>
 
 <div id="<?php echo \esc_attr(
   $action->id
-); ?>" class="panel__item  panel__item--closed <?php echo \esc_attr($action->active ? 'nba-active' : 'nba-inactive'); ?>" aria-expanded="false">
+); ?>" class="panel__item <?php echo $action->expanded ? 'panel__item--expanded always-expanded ' : 'panel__item--closed expandable '; ?>
+  <?php echo esc_attr($action->active ? 'nba-active' : 'nba-inactive'); ?>"
+  aria-expanded="<?php echo $action->expanded ? 'true' : 'false'; ?>">
   <header class="panel__item-header">
     <div class="panel__icon">
      <img src="<?php echo esc_url(plugins_url(
