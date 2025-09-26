@@ -20,7 +20,7 @@ if (null !== $data) {
     ),
     link: $data['domain'] . $connectdomain,
     anchor: \__('Connect Domain', 'ionos-essentials'),
-    completed: false === strpos(home_url(), 'live-website.com') || true === strpos(home_url(), 'localhost'),
+    completed: false === strpos(home_url(), 'live-website.com'),
     categories: ['setup-ai', 'setup-noai']
   );
 
