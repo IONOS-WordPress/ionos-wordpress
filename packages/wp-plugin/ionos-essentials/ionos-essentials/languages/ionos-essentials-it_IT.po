@@ -428,11 +428,6 @@ msgstr "Onboarding"
 msgid "No thanks"
 msgstr "No grazie"
 
-#: ionos-essentials/inc/dashboard/blocks/banner/index.php
-#: ionos-essentials/inc/dashboard/tabs/tools.php
-msgid "Tools"
-msgstr "Strumenti"
-
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Website security"
 msgstr "Sicurezza del sito web"
@@ -636,6 +631,7 @@ msgstr "I punteggi sono espressi su una scala da 1 a 10, dove un valore più alt
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "Non è consentito installare plugin e temi se il loro punteggio supera 7,0."
 
+#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
@@ -875,10 +871,6 @@ msgid "PHP version"
 msgstr "Versione di PHP"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-msgid "Vulnerability scan"
-msgstr "Scansione delle vulnerabilità"
-
-#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 msgid "View details"
 msgstr "Visualizza dettagli"
 
@@ -897,7 +889,9 @@ msgstr "Da migliorare"
 msgid "Good"
 msgstr "Buona"
 
+#: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Tools & Security"
 msgstr "Strumenti e sicurezza"
 
@@ -994,4 +988,3 @@ msgstr "Seleziona un tema"
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Choose a theme that matches your website's purpose and your comfort level."
 msgstr "Scegli un tema che corrisponda allo scopo del tuo sito web e al tuo livello di competenza."
-

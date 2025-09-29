@@ -433,11 +433,6 @@ msgstr "Onboarding"
 msgid "No thanks"
 msgstr "Nej tack"
 
-#: ionos-essentials/inc/dashboard/blocks/banner/index.php
-#: ionos-essentials/inc/dashboard/tabs/tools.php
-msgid "Tools"
-msgstr "Verktyg"
-
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Website security"
 msgstr "Webbplatsens säkerhet"
@@ -641,6 +636,7 @@ msgstr "Poängen är på en skala från 1 till 10, där ett högre värde indike
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "Installationer av tillägg och teman är förbjudna om deras poäng överskrider 7,0."
 
+#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
@@ -880,10 +876,6 @@ msgid "PHP version"
 msgstr "PHP-version"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-msgid "Vulnerability scan"
-msgstr "Sårbarhetsskanning"
-
-#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 msgid "View details"
 msgstr "Visa detaljer"
 
@@ -898,7 +890,9 @@ msgstr "Senaste skanningen kördes för %s sedan"
 msgid "Should be improved"
 msgstr "Behöver förbättras"
 
+#: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Tools & Security"
 msgstr "Verktyg och Säkerhet"
 

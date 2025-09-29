@@ -428,11 +428,6 @@ msgstr "Onboarding"
 msgid "No thanks"
 msgstr "Non merci."
 
-#: ionos-essentials/inc/dashboard/blocks/banner/index.php
-#: ionos-essentials/inc/dashboard/tabs/tools.php
-msgid "Tools"
-msgstr "Outils"
-
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Website security"
 msgstr "Sécurité du site Web"
@@ -636,6 +631,7 @@ msgstr "Les notes sont attribuées sur une échelle de 1 à 10, où une valeur �
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "L'installation d'extensions et de thèmes est interdite si leur note dépasse 7,0."
 
+#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
@@ -875,10 +871,6 @@ msgid "PHP version"
 msgstr "Version PHP"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-msgid "Vulnerability scan"
-msgstr "Analyse des vulnérabilités"
-
-#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 msgid "View details"
 msgstr "Afficher les détails"
 
@@ -893,7 +885,9 @@ msgstr "Dernière analyse il y a %s"
 msgid "Should be improved"
 msgstr "À améliorer"
 
+#: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Tools & Security"
 msgstr "Outils et Sécurité"
 

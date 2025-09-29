@@ -433,11 +433,6 @@ msgstr "Onboarding"
 msgid "No thanks"
 msgstr "Nee, bedankt"
 
-#: ionos-essentials/inc/dashboard/blocks/banner/index.php
-#: ionos-essentials/inc/dashboard/tabs/tools.php
-msgid "Tools"
-msgstr "Tools"
-
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Website security"
 msgstr "Websitebeveiliging"
@@ -641,6 +636,7 @@ msgstr "De scores zijn op een schaal van 1 tot 10, waarbij een hogere waarde een
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "Installaties van plug-ins en thema's zijn niet mogelijk als hun score hoger dan 7 is."
 
+#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
@@ -880,10 +876,6 @@ msgid "PHP version"
 msgstr "PHP-versie"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-msgid "Vulnerability scan"
-msgstr "Kwetsbaarheidsscan"
-
-#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 msgid "View details"
 msgstr "Details bekijken"
 
@@ -898,7 +890,9 @@ msgstr "Laatste scan %s geleden uitgevoerd"
 msgid "Should be improved"
 msgstr "Moet verbeterd worden"
 
+#: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Tools & Security"
 msgstr "Tools en Beveiliging"
 

@@ -428,11 +428,6 @@ msgstr "Comenzar a usar la función"
 msgid "No thanks"
 msgstr "No, gracias"
 
-#: ionos-essentials/inc/dashboard/blocks/banner/index.php
-#: ionos-essentials/inc/dashboard/tabs/tools.php
-msgid "Tools"
-msgstr "Herramientas"
-
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Website security"
 msgstr "Seguridad de la página web"
@@ -636,6 +631,7 @@ msgstr "En una escala del 1 al 10, las puntuaciones más altas suponen más ries
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "No se permite la instalación de plugins y temas que superen la puntuación 7.0."
 
+#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
@@ -875,10 +871,6 @@ msgid "PHP version"
 msgstr "Versión de PHP"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-msgid "Vulnerability scan"
-msgstr "Escáner de vulnerabilidades"
-
-#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 msgid "View details"
 msgstr "Vista de detalles"
 
@@ -893,7 +885,9 @@ msgstr "Último análisis hace %s"
 msgid "Should be improved"
 msgstr "Mejora requerida"
 
+#: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Tools & Security"
 msgstr "Herramientas y seguridad"
 
@@ -943,7 +937,7 @@ msgstr "¡Enhorabuena! Has configurado tu página web de WordPress con éxito."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Now for the fun part, exploring ways to grow and enhance it."
-msgstr ""Ahora comienza la diversión: explora formas de hacerla crecer y mejorar."
+msgstr "\"Ahora comienza la diversión: explora formas de hacerla crecer y mejorar."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Explore What's Next"
