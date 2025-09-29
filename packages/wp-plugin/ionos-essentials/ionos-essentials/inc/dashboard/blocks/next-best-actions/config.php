@@ -171,7 +171,7 @@ NBA::register(
   id: 'favicon',
   title: \__('Add Favicon', 'ionos-essentials'),
   description: \__(
-    'Add a favicon (website icon) to your website to enhance brand recognition and visibility.',
+    'Add a favicon (site icon) to your website to enhance brand recognition and visibility.',
     'ionos-essentials'
   ),
   link: \admin_url('options-general.php'),

@@ -215,8 +215,8 @@ msgid "Add Favicon"
 msgstr "Favicon hinzufügen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
-msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
-msgstr "Fügen Sie Ihrer Website ein Favicon (Website-Symbol) hinzu, um die Wiedererkennung und Sichtbarkeit Ihrer Marke zu verbessern."
+msgid "Add a favicon (site icon) to your website to enhance brand recognition and visibility."
+msgstr "Fügen Sie Ihrer Website ein Favicon (Website-Icon) hinzu, um die Wiedererkennung und Sichtbarkeit Ihrer Marke zu verbessern."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Create a Page"
@@ -875,7 +875,7 @@ msgid "PHP version"
 msgstr "PHP Version"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-msgid "Vulnerability Scan"
+msgid "Vulnerability scan"
 msgstr "Schwachstellen-Scan"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
@@ -922,7 +922,7 @@ msgid "You've completed all of our current recommendations. This list will updat
 msgstr "Sie haben alle unsere aktuellen Empfehlungen abgeschlossen. Diese Liste wird automatisch mit neuen Tipps aktualisiert. Schauen Sie bald wieder vorbei, um zu erfahren, was als Nächstes kommt."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
-msgid "View IONOS Help Center"
+msgid "View Digital Guide"
 msgstr "Das IONOS Hilfe-Center besuchen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
