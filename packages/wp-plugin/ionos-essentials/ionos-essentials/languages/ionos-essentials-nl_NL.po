@@ -8,11 +8,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-09-02 10:19\n"
+"PO-Revision-Date: 2025-09-23 09:18\n"
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Crowdin-File: LOC-8352_NL.po\n"
-"X-Crowdin-File-ID: 528\n"
+"X-Crowdin-File: LOC-8516_ionos-essentials-nl_NL (6).po\n"
+"X-Crowdin-File-ID: 536\n"
 "X-Crowdin-Language: nl\n"
 "X-Crowdin-Project: 75e86f746860bcef4fdd142a24cf2467\n"
 "X-Crowdin-Project-ID: 61\n"
@@ -865,38 +865,38 @@ msgstr "Verwijder"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "Maintenance page active"
-msgstr ""
+msgstr "Onderhoudspagina actief"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "Site health"
-msgstr ""
+msgstr "Gezondheid van website"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "WordPress version"
-msgstr ""
+msgstr "WordPress versie"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "PHP version"
-msgstr ""
+msgstr "PHP-versie"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 msgid "Vulnerability Scan"
-msgstr ""
+msgstr "Kwetsbaarheidsscan"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 msgid "View details"
-msgstr ""
+msgstr "Details bekijken"
 
 #. translators: %s is placeholder for the time since the last scan
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 #, php-format
 msgid "Last scan ran %s ago"
-msgstr ""
+msgstr "Laatste scan %s geleden uitgevoerd"
 
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Should be improved"
-msgstr ""
+msgstr "Moet verbeterd worden"
 
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Tools & Security"
@@ -904,98 +904,98 @@ msgstr "Tools en Beveiliging"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "'Tools & Security' area"
-msgstr ""
+msgstr "Sectie 'Tools & beveiliging'"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
-msgstr ""
+msgstr "Alle functies van je vorige beveiligingsplug-in hebben hier een nieuwe plek gevonden. Daarnaast is er een nieuwe onderhoudspagina die je kunt inschakelen wanneer dit nodig is."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Visit Tools & Security"
-msgstr ""
+msgstr "Bekijk Tools & beveiliging"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Help us shape WordPress for you"
-msgstr ""
+msgstr "Help ons om WordPress voor jou vorm te geven"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "You're all caught up!"
-msgstr ""
+msgstr "Je bent helemaal up-to-date."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "You've completed all of our current recommendations. This list will update automatically with new tips, so check in again soon to see what's next."
-msgstr ""
+msgstr "Je hebt al onze aanbevelingen uitgevoerd. Deze lijst wordt automatisch bijgewerkt met nieuwe tips, dus kom snel terug om te zien wat de volgende stap is."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "View IONOS Help Center"
-msgstr ""
+msgstr "Bekijk IONOS help center"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "Leave feedback"
-msgstr ""
+msgstr "Geef feedback"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/main.php
 msgid "What's important for today"
-msgstr ""
+msgstr "Wat is belangrijk voor vandaag"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Your Foundation is Built!"
-msgstr ""
+msgstr "De basis is gelegd!"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Congratulations! You've successfully set up your WordPress site."
-msgstr ""
+msgstr "Gefeliciteerd! Je hebt je WordPress site succesvol geconfigureerd."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Now for the fun part, exploring ways to grow and enhance it."
-msgstr ""
+msgstr "En dan nu het leuke gedeelte: ontdek hoe je je site kunt laten groeien en verbeteren."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Explore What's Next"
-msgstr ""
+msgstr "Verken de volgende stappen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php
 msgid "Finish setup"
-msgstr ""
+msgstr "Configuratie afronden"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php
 msgid "Dismiss getting started guide"
-msgstr ""
+msgstr "Startgids negeren"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "🚀  Getting started with WordPress"
-msgstr ""
+msgstr "🚀 Aan de slag met WordPress!"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "Ready to establish your online presence? Let's get the essentials sorted so your new site looks professional and is easy for people to find."
-msgstr ""
+msgstr "Klaar om je website te maken? Laten we de essentiële zaken regelen zodat je nieuwe site er professioneel uitziet en goed te vinden is."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "All actions completed!"
-msgstr ""
+msgstr "Alle acties voltooid!"
 
 #. translators: 1: number of completed actions, 2: total number of actions
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 #, php-format
 msgid " %1$d of %2$d completed"
-msgstr ""
+msgstr " %1$d van %2$d voltooid"
 
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Good"
-msgstr ""
+msgstr "Goed"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Personalize business data"
-msgstr ""
+msgstr "Bedrijfsgegevens personaliseren"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add your business details, like a phone number, email, and address, to your website."
-msgstr ""
+msgstr "Voeg je bedrijfsgegevens toe aan je website, zoals een telefoonnummer, e-mail en adres."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Select a theme"
-msgstr ""
+msgstr "Thema selecteren"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Choose a theme that matches your website's purpose and your comfort level."
-msgstr ""
+msgstr "Kies een thema dat past bij het doel van je website en jouw voorkeuren."

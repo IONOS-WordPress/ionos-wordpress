@@ -555,7 +555,7 @@ msgstr "¡Actualizamos tu hub %s con potentes novedades!"
 
 #: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
 msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
-msgstr "¡Acabamos de habilitar la nueva pestaña «Herramientas y seguridad»! Todas las funciones e interfaces de uso de tu anterior plugin de seguridad se encuentran ahora aquí para una gestión centralizada y más sencilla. Además, también tienes disponible una nueva función de página de mantenimiento que puedes activar cuando lo necesites."
+msgstr "¡Acabamos de habilitar la nueva pestaña «Herramientas y seguridad»! Todas las funciones e interfaces de uso de tu anterior plugin de seguridad se encuentran ahora aquí para una gestión centralizada y más sencilla. Además, también tienes disponible una nueva función de página de mantenimiento que puedes activar cuando necesites."
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
@@ -860,38 +860,38 @@ msgstr "Borrar"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "Maintenance page active"
-msgstr ""
+msgstr "Página de mantenimiento activa"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "Site health"
-msgstr ""
+msgstr "Salud de la web"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "WordPress version"
-msgstr ""
+msgstr "Versión de WordPress"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "PHP version"
-msgstr ""
+msgstr "Versión de PHP"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 msgid "Vulnerability Scan"
-msgstr ""
+msgstr "Escáner de vulnerabilidades"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 msgid "View details"
-msgstr ""
+msgstr "Vista de detalles"
 
 #. translators: %s is placeholder for the time since the last scan
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 #, php-format
 msgid "Last scan ran %s ago"
-msgstr ""
+msgstr "Último análisis hace %s"
 
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Should be improved"
-msgstr ""
+msgstr "Mejora requerida"
 
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Tools & Security"
@@ -899,98 +899,98 @@ msgstr "Herramientas y seguridad"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "'Tools & Security' area"
-msgstr ""
+msgstr "Sección de «Herramientas y seguridad»"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
-msgstr ""
+msgstr "Todas las funciones de tu antiguo plugin de seguridad están ahora aquí. Además, encontrarás una nueva función de página de mantenimiento que puedes activar cuando necesites."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Visit Tools & Security"
-msgstr ""
+msgstr "Ir a «Herramientas y seguridad»"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Help us shape WordPress for you"
-msgstr ""
+msgstr "Ayúdanos a mejorar WordPress para ti"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "You're all caught up!"
-msgstr ""
+msgstr "¡Ya está todo listo!"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "You've completed all of our current recommendations. This list will update automatically with new tips, so check in again soon to see what's next."
-msgstr ""
+msgstr "Completaste todas nuestras recomendaciones actuales. Esta lista se actualizará de forma automática con nuevas recomendaciones, así que vuelve a consultarla próximamente para más novedades."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "View IONOS Help Center"
-msgstr ""
+msgstr "Ir al Centro de Ayuda de IONOS"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "Leave feedback"
-msgstr ""
+msgstr "Danos tu opinión"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/main.php
 msgid "What's important for today"
-msgstr ""
+msgstr "Resumen del día"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Your Foundation is Built!"
-msgstr ""
+msgstr "¡Tus cimientos ya están preparados!"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Congratulations! You've successfully set up your WordPress site."
-msgstr ""
+msgstr "¡Enhorabuena! Configuraste tu página web de WordPress con éxito."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Now for the fun part, exploring ways to grow and enhance it."
-msgstr ""
+msgstr "Ahora comienza la diversión: explora formas de hacerla crecer y mejorar."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Explore What's Next"
-msgstr ""
+msgstr "Explorar los pasos siguientes"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php
 msgid "Finish setup"
-msgstr ""
+msgstr "Finalizar configuración"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php
 msgid "Dismiss getting started guide"
-msgstr ""
+msgstr "Descartar la guía inicial"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "🚀  Getting started with WordPress"
-msgstr ""
+msgstr "🚀 Arranca motores en WordPress"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "Ready to establish your online presence? Let's get the essentials sorted so your new site looks professional and is easy for people to find."
-msgstr ""
+msgstr "¿Todo listo para concebir tu presencia online? Empieza por lo esencial para que tu nueva página web tenga un aspecto profesional y buena visibilidad en internet."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "All actions completed!"
-msgstr ""
+msgstr "¡Todas las acciones están completadas!"
 
 #. translators: 1: number of completed actions, 2: total number of actions
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 #, php-format
 msgid " %1$d of %2$d completed"
-msgstr ""
+msgstr "%1$d de %2$d acciones completadas"
 
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Good"
-msgstr ""
+msgstr "Buena"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Personalize business data"
-msgstr ""
+msgstr "Personalizar datos de empresa"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add your business details, like a phone number, email, and address, to your website."
-msgstr ""
+msgstr "Incluye los datos de tu empresa en la página web (p.ej.: número de teléfono, correo electrónico y dirección postal)"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Select a theme"
-msgstr ""
+msgstr "Seleccionar un tema"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Choose a theme that matches your website's purpose and your comfort level."
-msgstr ""
+msgstr "Elige un tema que represente la esencia de tu página web y que encaje con tus expectativas de comodidad."
