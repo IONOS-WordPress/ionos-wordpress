@@ -80,10 +80,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  dashboard.querySelectorAll('a[data-dismiss-on-click="true"]').forEach((link) => {
-    link.onclick = () => {
+  dashboard.querySelectorAll('a[data-complete-on-click="true"]').forEach((link) => {
+    link.addEventListener('click', () => {
       updateNbaItem(link, 'completed');
-    };
+    });
   });
 
   dashboard.querySelectorAll('.ionos_finish_setup')?.forEach((button) => {
@@ -110,10 +110,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const helpCenterLink = dashboard.querySelector('a[data-nba-id="help-center"]');
   if (helpCenterLink) {
-    helpCenterLink.onclick = () => {
+    helpCenterLink.addEventListener('click', () => {
       document.querySelector('.extendify-help-center button').click();
-      updateNbaItem(helpCenterLink, 'completed');
-    };
+    });
   }
 
   const updateNbaItem = async (target, status) => {
@@ -134,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
       setTimeout(() => {
         dashboard.getElementById(target.dataset.nbaId).remove();
 
-        const nbaCount = dashboard.querySelectorAll('.nba-card').length;
+        const nbaCount = dashboard.querySelectorAll('.nba-active').length;
         if (nbaCount === 0) {
           location.reload();
         }
