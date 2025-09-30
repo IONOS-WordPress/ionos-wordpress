@@ -747,8 +747,7 @@ msgstr "Advanced"
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 #, php-format
 msgid "%s Hub as WordPress Admin start page"
-msgstr "%s Hub als Startseite für WordPress-Admins"
-
+msgstr "%s Hub als Startseite der WordPress Administrationsoberfläche"
 #. translators: %s is placeholder for the tenant name
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 #, php-format
