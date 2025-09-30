@@ -1043,8 +1043,8 @@ msgid "Add your business details, like a phone number, email, and address, to yo
 msgstr "Add your business details, like a phone number, email, and address, to your website."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
-msgid "Select a theme"
-msgstr "Select a theme"
+msgid "Select a Theme"
+msgstr "Select a Theme"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Choose a theme that matches your website's purpose and your comfort level."

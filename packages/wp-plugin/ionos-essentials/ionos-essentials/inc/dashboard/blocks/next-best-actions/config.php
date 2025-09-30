@@ -8,40 +8,6 @@ use ionos\essentials\Tenant;
 
 $data = \ionos\essentials\dashboard\blocks\my_account\get_account_data();
 
-if (null !== $data) {
-  $connectdomain = $data['nba_links']['connectdomain'] ?? '';
-
-  NBA::register(
-    id: 'connect-domain',
-    title: \__('Connect a Domain', 'ionos-essentials'),
-    description: \__(
-      'Connect your domain to your website to increase visibility and attract more visitors.',
-      'ionos-essentials'
-    ),
-    link: $data['domain'] . $connectdomain,
-    anchor: \__('Connect Domain', 'ionos-essentials'),
-    completed: false === strpos(home_url(), 'live-website.com'),
-    categories: ['setup-ai', 'setup-noai']
-  );
-
-  if (false !== strpos(home_url(), 'live-website.com') && (false !== strpos(home_url(), 'localhost'))) {
-    $connectmail = $data['nba_links']['connectmail'] ?? '';
-
-    NBA::register(
-      id: 'email-account',
-      title: \__('Set Up Email', 'ionos-essentials'),
-      description: \__(
-        'Set up your included email account and integrate it with your website.',
-        'ionos-essentials'
-      ),
-      link: $data['domain'] . $connectmail,
-      anchor: \__('Setup Email Account', 'ionos-essentials'),
-      completed: 'onclick',
-      categories: ['after-setup']
-    );
-  }
-}
-
 $homepage = \get_option('page_on_front'); // returns "0" if no static front page is set
 $edit_url = intval($homepage) === 0 ? \admin_url('edit.php?post_type=page') : admin_url(
   'post.php?post=' . $homepage . '&action=edit'
@@ -102,6 +68,19 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
 }
 
 NBA::register(
+  id: 'select-theme',
+  title: \__('Select a Theme', 'ionos-essentials'),
+  description: \__(
+    'Choose a theme that matches your website\'s purpose and your comfort level.',
+    'ionos-essentials'
+  ),
+  link: \admin_url('themes.php'),
+  anchor: \__('Select a Theme', 'ionos-essentials'),
+  completed: false === strpos(\wp_get_theme()->get_stylesheet(), 'twentytwenty'),
+  categories: ['setup-noai']
+);
+
+NBA::register(
   id: 'create-page',
   title: \__('Create a Page', 'ionos-essentials'),
   description: \__('Create and publish a page and share your story with the world.', 'ionos-essentials'),
@@ -110,6 +89,40 @@ NBA::register(
   complete_on_click: true,
   categories: ['setup-noai']
 );
+
+if (null !== $data) {
+  $connectdomain = $data['nba_links']['connectdomain'] ?? '';
+
+  NBA::register(
+    id: 'connect-domain',
+    title: \__('Connect a Domain', 'ionos-essentials'),
+    description: \__(
+      'Connect your domain to your website to increase visibility and attract more visitors.',
+      'ionos-essentials'
+    ),
+    link: $data['domain'] . $connectdomain,
+    anchor: \__('Connect Domain', 'ionos-essentials'),
+    completed: false === strpos(home_url(), 'live-website.com'),
+    categories: ['setup-ai', 'setup-noai']
+  );
+
+  if (false !== strpos(home_url(), 'live-website.com') && (false !== strpos(home_url(), 'localhost'))) {
+    $connectmail = $data['nba_links']['connectmail'] ?? '';
+
+    NBA::register(
+      id: 'email-account',
+      title: \__('Set Up Email', 'ionos-essentials'),
+      description: \__(
+        'Set up your included email account and integrate it with your website.',
+        'ionos-essentials'
+      ),
+      link: $data['domain'] . $connectmail,
+      anchor: \__('Setup Email Account', 'ionos-essentials'),
+      completed: 'onclick',
+      categories: ['after-setup']
+    );
+  }
+}
 
 $tenant        = Tenant::get_slug();
 $market        = strtolower(\get_option($tenant . '_market', 'de'));
@@ -208,19 +221,6 @@ if ($contact_post_id) {
     categories: ['setup-ai']
   );
 }
-
-NBA::register(
-  id: 'select-theme',
-  title: \__('Select a theme', 'ionos-essentials'),
-  description: \__(
-    'Choose a theme that matches your website\'s purpose and your comfort level.',
-    'ionos-essentials'
-  ),
-  link: \admin_url('themes.php'),
-  anchor: \__('Select a theme', 'ionos-essentials'),
-  completed: false === strpos(\wp_get_theme()->get_stylesheet(), 'twentytwenty'),
-  categories: ['setup-noai']
-);
 
 NBA::register(
   id: 'tools-and-security',

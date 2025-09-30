@@ -987,7 +987,7 @@ msgid "Add your business details, like a phone number, email, and address, to yo
 msgstr "Voeg je bedrijfsgegevens toe aan je website, zoals een telefoonnummer, e-mail en adres."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
-msgid "Select a theme"
+msgid "Select a Theme"
 msgstr "Thema selecteren"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php

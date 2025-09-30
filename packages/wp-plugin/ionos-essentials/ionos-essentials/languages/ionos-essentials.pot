@@ -207,7 +207,7 @@ msgid "Add your business details, like a phone number, email, and address, to yo
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
-msgid "Select a theme"
+msgid "Select a Theme"
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php

@@ -982,7 +982,7 @@ msgid "Add your business details, like a phone number, email, and address, to yo
 msgstr "Incluye los datos de tu empresa en la página web (p.ej.: número de teléfono, correo electrónico y dirección postal)."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
-msgid "Select a theme"
+msgid "Select a Theme"
 msgstr "Seleccionar un tema"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
