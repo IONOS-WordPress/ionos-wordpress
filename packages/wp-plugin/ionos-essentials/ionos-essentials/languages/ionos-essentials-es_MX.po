@@ -772,7 +772,7 @@ msgid "Do it yourself"
 msgstr "Confecciona tu web de forma autónoma"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgid "Vulnerability scan not possible. Please contact Customer Care."
 msgstr "El escaneo de vulnerabilidades no es posible. Ponte en contacto con Atención al Cliente."
 
 #: ionos-essentials/inc/tenants/config/udag.php

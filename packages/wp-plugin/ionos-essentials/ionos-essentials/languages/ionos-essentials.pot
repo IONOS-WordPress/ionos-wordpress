@@ -914,7 +914,7 @@ msgid "Your %s plugin team"
 msgstr ""
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgid "Vulnerability scan not possible. Please contact Customer Care."
 msgstr ""
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php

@@ -579,7 +579,7 @@ msgstr "Wichtige Sicherheits-Benachrichtigung: Schwachstelle in Ihrer WordPress 
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 msgid "Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:"
-msgstr "Hallo,<br />wir möchten Sie darüber informieren, dass der letzte Sicherheits-Scan ein oder mehrere Probleme gefunden hat, die Ihre Aufmerksamkeit benötigen."
+msgstr "Hallo,<br />wir möchten Sie darüber informieren, dass der letzte Schwachstellen-Scan ein oder mehrere Probleme gefunden hat, die Ihre Aufmerksamkeit benötigen."
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
@@ -772,7 +772,7 @@ msgid "Webspace"
 msgstr "Webspace"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgid "Vulnerability scan not possible. Please contact Customer Care."
 msgstr "Schwachstellen-Scan nicht möglich. Bitte kontaktieren Sie den Kunden Service."
 
 #: ionos-essentials/inc/tenants/config/udag.php

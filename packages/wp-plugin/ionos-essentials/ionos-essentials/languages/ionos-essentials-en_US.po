@@ -756,8 +756,8 @@ msgid "To re-enable access to this account, the password must be updated. We hav
 msgstr "To re-enable access to this account, the password must be updated. We have sent an email with reset instructions to"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
-msgstr "Vulnerability Scan not possible. Please contact Customer Care."
+msgid "Vulnerability scan not possible. Please contact Customer Care."
+msgstr "Vulnerability scan not possible. Please contact Customer Care."
 
 #: ionos-essentials/inc/tenants/config/udag.php
 msgid "Manage Domains"
