@@ -57,7 +57,7 @@ function get_settings_value($key)
  <div id="tools" class="page-section ionos-tab">
     <div class="grid">
       <div class="grid-col grid-col--12">
-        <h3 class="headline headline--sub"><?php \esc_html_e('Tools & Security', 'ionos-essentials'); ?></h3>
+        <h3 class="headline headline--sub"><?php \esc_html_e('Tools', 'ionos-essentials'); ?></h3>
 
         <div class="sheet">
           <section class="sheet__section">

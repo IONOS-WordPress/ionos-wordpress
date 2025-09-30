@@ -425,6 +425,10 @@ msgid "No thanks"
 msgstr "Nein, danke"
 
 #: ionos-essentials/inc/dashboard/tabs/tools.php
+msgid "Tools"
+msgstr "Tools"
+
+#: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Website security"
 msgstr "Website-Sicherheit"
 
@@ -887,7 +891,6 @@ msgstr "Sollte verbessert werden"
 
 #: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/index.php
-#: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Tools & Security"
 msgstr "Tools & Sicherheit"
 

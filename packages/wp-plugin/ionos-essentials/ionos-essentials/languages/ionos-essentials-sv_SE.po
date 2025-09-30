@@ -434,6 +434,10 @@ msgid "No thanks"
 msgstr "Nej tack"
 
 #: ionos-essentials/inc/dashboard/tabs/tools.php
+msgid "Tools"
+msgstr "Verktyg"
+
+#: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Website security"
 msgstr "Webbplatsens säkerhet"
 
@@ -892,7 +896,6 @@ msgstr "Behöver förbättras"
 
 #: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/index.php
-#: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Tools & Security"
 msgstr "Verktyg och Säkerhet"
 
