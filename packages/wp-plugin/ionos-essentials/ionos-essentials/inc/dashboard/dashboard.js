@@ -287,7 +287,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   const siteHealthTests = [
-    'background-updates',
+    //'background-updates',
+    'page-cache',
     'loopback-requests',
     'https-status',
     'dotorg-communication',
@@ -296,12 +297,19 @@ document.addEventListener('DOMContentLoaded', function () {
   (async () => {
     for (const test of siteHealthTests) {
       try {
+        let headers = {
+          'Content-Type': 'application/json',
+          'X-WP-Nonce': wpData.nonce,
+        }
+
+        if( test === 'authorization-header' ) {
+          // this test requires an additional nonce
+          headers['Authorization'] = 'Basic ' + btoa('user:pwd')
+        }
+
         const response = await fetch(wpData.restUrl + 'wp-site-health/v1/tests/' + test, {
           method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-WP-Nonce': wpData.nonce,
-          },
+          headers: headers,
           credentials: 'include',
         });
         if (!response.ok) {
@@ -315,12 +323,18 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
     // all tests are done, now update the UI
-    const totalIssues = (wpData.siteHealthIssueCount.critical ?? 0) + (wpData.siteHealthIssueCount.recommended ?? 0);
-    const totalTests = totalIssues + (wpData.siteHealthIssueCount.good ?? 0);
-    const badTestsRatio = totalTests > 0 ? totalIssues / totalTests : 1;
-    dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - 565.48 * (1 - badTestsRatio);
+    const totalTests =
+      parseInt(wpData.siteHealthIssueCount.good, 0) +
+      parseInt(wpData.siteHealthIssueCount.recommended, 0) +
+      parseInt(wpData.siteHealthIssueCount.critical, 0) * 1.5;
+    const failedTests =
+      parseInt(wpData.siteHealthIssueCount.recommended, 0) * 0.5 +
+      parseInt(wpData.siteHealthIssueCount.critical, 0) * 1.5;
+    const goodTestsRatio = 100 - Math.ceil((failedTests / totalTests) * 100);
 
-    if (badTestsRatio >= 0.2 || wpData.siteHealthIssueCount.critical !== 0) {
+    dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - 565.48 * (goodTestsRatio / 100);
+
+    if (goodTestsRatio <= 80 || wpData.siteHealthIssueCount.critical !== 0) {
       dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthImprovable;
       dashboard.querySelector('#bar').classList.add('site-health-color-orange');
     } else {
