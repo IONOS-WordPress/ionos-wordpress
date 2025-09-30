@@ -216,7 +216,7 @@ msgstr "Añadir favicon"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add a favicon (site icon) to your website to enhance brand recognition and visibility."
-msgstr "Integra un favicon (icono de página web) en tu web para mejorar el reconocimiento y la visibilidad de tu marca."
+msgstr "Integra un favicon (icono del sitio) en tu web para mejorar el reconocimiento y la visibilidad de tu marca."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Create a Page"
