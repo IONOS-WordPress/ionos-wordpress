@@ -922,7 +922,7 @@ msgstr "Je hebt al onze aanbevelingen uitgevoerd. Deze lijst wordt automatisch b
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "View Digital Guide"
-msgstr "Bekijk IONOS help center"
+msgstr "Bekijk Digital Guide"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "Leave feedback"

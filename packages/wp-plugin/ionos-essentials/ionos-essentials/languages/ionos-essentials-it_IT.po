@@ -921,7 +921,7 @@ msgstr "Hai terminato tutte le nostre raccomandazioni. Questo elenco si aggiorne
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "View Digital Guide"
-msgstr "Visualizza il Centro Assistenza IONOS"
+msgstr "Visualizza Digital Guide"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "Leave feedback"

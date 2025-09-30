@@ -922,7 +922,7 @@ msgstr "Du har slutfört alla våra nuvarande rekommendationer. Den här listan 
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "View Digital Guide"
-msgstr "Visa IONOS hjälpcenter"
+msgstr "Visa Digital Guide"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "Leave feedback"
