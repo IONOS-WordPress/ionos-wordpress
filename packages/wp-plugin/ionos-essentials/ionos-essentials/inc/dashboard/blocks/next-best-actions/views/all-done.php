@@ -9,7 +9,7 @@ use const ionos\essentials\PLUGIN_FILE;
 function all_done_view(): void
 {
   $digital_guide_url = 'https://www.ionos.' . explode('_', get_locale())[0] . '/digitalguide/hub/wordpress/';
-  $dismissed = \get_option('ionos_nba_status')['survey']['dismissed'] ?? false;
+  $survey_dismissed = \get_option('ionos_nba_status')['survey']['dismissed'] ?? false;
   ?>
   <div id="ionos_next_best_actions__all_done">
    <div class="container">
@@ -26,9 +26,9 @@ function all_done_view(): void
     </p>
     <?php if ('ionos' === Tenant::get_slug()) { ?>
       <div class="buttons">
-        <a href="<?php echo \esc_url($digital_guide_url); ?>" class="button button--secondary"><?php echo esc_html__('View Digital Guide', 'ionos-essentials')?></a>
-        <?php if ($dismissed) { ?>
-          <a href="<?php echo \esc_url(get_survey_url()); ?>" class="button button--secondary"><?php echo esc_html__('Leave feedback', 'ionos-essentials')?></a>
+        <a href="<?php echo \esc_url($digital_guide_url); ?>" class="button button--secondary" target="_blank"><?php echo esc_html__('View Digital Guide', 'ionos-essentials')?></a>
+        <?php if ($survey_dismissed) { ?>
+          <a href="<?php echo \esc_url(get_survey_url()); ?>" class="button button--secondary" target="_blank"><?php echo esc_html__('Leave feedback', 'ionos-essentials')?></a>
         <?php } ?>
       </div>
     <?php } ?>
