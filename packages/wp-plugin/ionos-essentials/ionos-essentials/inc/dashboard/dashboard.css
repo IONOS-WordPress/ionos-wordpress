@@ -1,6 +1,13 @@
 @import 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.css';
 @import '../wpscan/wpscan.css';
 
+@media (min-width: 1400px) {
+  #content {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+}
+
 .with-issues-only, .with-issues-only-flex{
   display: none;
 }
@@ -374,9 +381,17 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 }
 
 .ionos-site-health-overview {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+  h2 {
+    word-break: break-all;
+  }
+}
+
+.ionos-site-health-overview__iframe {
+  border: 1px solid #bcc8d4;
 }
 
 @media (max-width: 1200px) {
@@ -419,6 +434,11 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 
 .site-health-status {
   width: 180px;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 #site-health-status-text{
@@ -555,7 +575,7 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   .panel__item {
     margin: 0;
     border-radius: 0;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #BCC8D4;
   }
 
   .panel__item-header {
@@ -575,6 +595,12 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     i {
       padding-right: 10px;
     }
+  }
+}
+
+@media (max-width: 960px) {
+  #ionos_nba_setup_container {
+    padding: 20px;
   }
 }
 
