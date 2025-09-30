@@ -428,6 +428,10 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 
 .ionos-site-health-vulnerability {
   width: 440px;
+  
+  .card {
+    box-shadow: none;
+  }
 }
 
 .ionos-site-health-overview__info-homeurl {
