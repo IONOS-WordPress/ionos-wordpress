@@ -246,6 +246,11 @@ add_filter('admin_body_class', function ($classes) {
     }
   }
 
+  $async_tests = array_keys($tests['async']);
+  $async_tests = array_map(function ($item) {
+    return str_replace('_', '-', $item);
+  }, $async_tests);
+
   // Alternatively we could use the transient, but it might be outdated. If we do so, we can remove the above code and delete the async tests in dashboard.js
   //$issue_counts = \get_transient('ionos_essentials_site_health_issues', '{"good":0,"recommended":0,"critical":0}');
 
@@ -257,6 +262,7 @@ add_filter('admin_body_class', function ($classes) {
     'securityOptionName'  => IONOS_SECURITY_FEATURE_OPTION,
     'tenant'              => Tenant::get_slug(),
     'siteHealthIssueCount'=> $issue_counts,
+    'siteHealthAsyncTests'  => $async_tests,
     'i18n'                => [
       'installing'            => \esc_html__('Installing...', 'ionos-essentials'),
       'activated'             => \esc_html__('activated.', 'ionos-essentials'),

@@ -286,16 +286,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  const siteHealthTests = [
-    //'background-updates',
-    'page-cache',
-    'loopback-requests',
-    'https-status',
-    'dotorg-communication',
-    'authorization-header',
-  ];
   (async () => {
-    for (const test of siteHealthTests) {
+    for (const test of wpData.siteHealthAsyncTests) {
       try {
         let headers = {
           'Content-Type': 'application/json',
