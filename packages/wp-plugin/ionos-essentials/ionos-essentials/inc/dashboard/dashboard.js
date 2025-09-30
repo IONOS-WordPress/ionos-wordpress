@@ -316,12 +316,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     // all tests are done, now update the UI
     const totalTests =
-      parseInt(wpData.siteHealthIssueCount.good, 0) +
-      parseInt(wpData.siteHealthIssueCount.recommended, 0) +
-      parseInt(wpData.siteHealthIssueCount.critical, 0) * 1.5;
+      parseInt(wpData.siteHealthIssueCount.good, 10) +
+      parseInt(wpData.siteHealthIssueCount.recommended, 10) +
+      parseInt(wpData.siteHealthIssueCount.critical, 10) * 1.5;
     const failedTests =
-      parseInt(wpData.siteHealthIssueCount.recommended, 0) * 0.5 +
-      parseInt(wpData.siteHealthIssueCount.critical, 0) * 1.5;
+      parseInt(wpData.siteHealthIssueCount.recommended, 10) * 0.5 +
+      parseInt(wpData.siteHealthIssueCount.critical, 10) * 1.5;
     const goodTestsRatio = 100 - Math.ceil((failedTests / totalTests) * 100);
 
     dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - 565.48 * (goodTestsRatio / 100);
