@@ -142,11 +142,15 @@ main{
 .ionos_vulnerability{
   container-type: inline-size !important;
   container: ionos_vulnerability;
-  background-color: #edfaef;
+  background-color: #c8fae2;
   margin-bottom: 0;
 
   .ionos_vulnerability__headline, .ionos_vulnerability__last-scan {
     margin-left: 35px;
+  }
+
+  .headline {
+    margin-bottom: 4px;
   }
 
   .ionos_vulnerability__content{
@@ -208,6 +212,10 @@ main{
 
  .issue-row .bubble i{
     color: #ffffff;
+
+    &::before {
+      padding-left: 1px;    
+    }
   }
 
   .issue-row.high .bubble{
@@ -540,6 +548,14 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   margin-bottom: 20px;
 }
 
+.panel__item {
+  box-shadow: none;
+}
+
+.panel__item:hover {
+  box-shadow: none;
+}
+
 .panel__item--expanded.always-expanded {
   .panel__item-header:after {
     display: none;
@@ -551,6 +567,10 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   h3{
       color: inherit;
   }
+}
+
+.panel__headline {
+  font-size: 18px;
 }
 
 #ionos_nba_setup_container {
