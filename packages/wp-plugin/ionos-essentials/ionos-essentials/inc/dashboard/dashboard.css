@@ -417,7 +417,7 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 .ionos-site-health-overview__info-items {
     display: flex;
     flex-direction: row;
-    gap: 40px;
+    gap: 20px;
 }
 
 .ionos-site-health-overview__info-item{
@@ -441,7 +441,7 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 }
 
 .site-health-status {
-  width: 180px;
+  width: 200px;
 
   a {
     color: inherit;
@@ -452,7 +452,15 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 #site-health-status-text{
   display: flex;
   gap: 10px;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 2px;
+  color: #001B41;
+}
+
+#site-health-status-message{
+  width: 150px;
+  overflow: hidden;
+  height: 60px;
 }
 
 .site-health-status-circle {
@@ -463,10 +471,13 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     stroke-dashoffset: 0;
     transition: stroke-dashoffset 1s linear;
     stroke: #c3c4c7;
-    stroke-width: 2em;
+    stroke-width: 1.5em;
+            width: 20px;
+        height: 20px;
 
     &#bar{
       stroke: #888888;
+      transform: rotate(-90deg);
 
       &.site-health-color-orange{
         stroke: #ffb900;

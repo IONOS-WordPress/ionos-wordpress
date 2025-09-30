@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const totalIssues = (wpData.siteHealthIssueCount.critical ?? 0) + (wpData.siteHealthIssueCount.recommended ?? 0);
     const totalTests = totalIssues + (wpData.siteHealthIssueCount.good ?? 0);
     const badTestsRatio = totalTests > 0 ? totalIssues / totalTests : 1;
-    dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - 565.48 * (1 - badTestsRatio);
+    dashboard.querySelector('#bar').style.strokeDashoffset = -1 * (565.48 - 565.48 * (1 - badTestsRatio));
 
     if (badTestsRatio >= 0.2 || wpData.siteHealthIssueCount.critical !== 0) {
       dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthImprovable;
