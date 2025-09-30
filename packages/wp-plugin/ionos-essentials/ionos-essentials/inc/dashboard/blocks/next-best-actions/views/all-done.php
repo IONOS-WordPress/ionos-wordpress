@@ -28,7 +28,7 @@ function all_done_view(): void
       <div class="buttons">
         <a href="<?php echo \esc_url($digital_guide_url); ?>" class="button button--secondary"><?php echo esc_html__('View Digital Guide', 'ionos-essentials')?></a>
         <?php if ($dismissed) { ?>
-        <a href="<?php echo \esc_url(get_survey_url()); ?>" class="button button--secondary"><?php echo esc_html__('Leave feedback', 'ionos-essentials')?></a>
+          <a href="<?php echo \esc_url(get_survey_url()); ?>" class="button button--secondary"><?php echo esc_html__('Leave feedback', 'ionos-essentials')?></a>
         <?php } ?>
       </div>
     <?php } ?>
