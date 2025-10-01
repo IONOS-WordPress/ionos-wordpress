@@ -292,11 +292,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let headers = {
           'Content-Type': 'application/json',
           'X-WP-Nonce': wpData.nonce,
-        }
+        };
 
-        if( test === 'authorization-header' ) {
+        if (test === 'authorization-header') {
           // this test requires an additional nonce
-          headers['Authorization'] = 'Basic ' + btoa('user:pwd')
+          headers['Authorization'] = 'Basic ' + btoa('user:pwd');
         }
 
         const response = await fetch(wpData.restUrl + 'wp-site-health/v1/tests/' + test, {
@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function () {
     jQuery.post(wpData.ajaxUrl, {
       action: 'ionos-set-site-health-issues',
       issues: JSON.stringify(wpData.siteHealthIssueCount),
-      _wpnonce: wpData.nonce
+      _wpnonce: wpData.nonce,
     });
   })();
 
