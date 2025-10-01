@@ -226,33 +226,35 @@ add_filter('admin_body_class', function ($classes) {
     true
   );
 
-  $issue_counts = [
-    'good'        => 0,
-    'recommended' => 0,
-    'critical'    => 0,
-  ];
 
-  // we do not rely on the transient health-check-site-status-result because we want to count all issues, even the async ones
-  $tests      = \WP_Site_Health::get_tests();
-  $siteHealth = new \WP_Site_Health();
-  foreach ($tests['direct'] as $test) {
-    if (is_string($test['test'])) {
-      $test_function = sprintf('get_test_%s', $test['test']);
-      if (method_exists($siteHealth, $test_function) && is_callable([$siteHealth, $test_function])) {
-        $test_result = $siteHealth->{$test_function}()['status'];
-        ++$issue_counts[$test_result];
+  $issue_counts = json_decode(\get_transient('ionos_site_health_issue_count', null), true);
+  $async_tests  = [];
+
+  // if we do not have a transient, we perform the direct tests and async tests here
+  // the transient is written later after the async tests are done via browser
+  if( empty($issue_counts) ) {
+    $issue_counts = [];
+    // we do not rely on the transient health-check-site-status-result because we want to count all issues, even the async ones
+    $tests      = \WP_Site_Health::get_tests();
+    $siteHealth = new \WP_Site_Health();
+    foreach ($tests['direct'] as $test) {
+      if (is_string($test['test'])) {
+        $test_function = sprintf('get_test_%s', $test['test']);
+        if (method_exists($siteHealth, $test_function) && is_callable([$siteHealth, $test_function])) {
+          $test_result = $siteHealth->{$test_function}()['status'];
+          $issue_counts[$test_result] = ($issue_counts[$test_result] ?? 0) + 1;
+        }
+
       }
-
     }
+
+    $async_tests = array_keys($tests['async']);
+    $async_tests = array_map(function ($item) {
+      return str_replace('_', '-', $item);
+    }, $async_tests);
   }
 
-  $async_tests = array_keys($tests['async']);
-  $async_tests = array_map(function ($item) {
-    return str_replace('_', '-', $item);
-  }, $async_tests);
 
-  // Alternatively we could use the transient, but it might be outdated. If we do so, we can remove the above code and delete the async tests in dashboard.js
-  //$issue_counts = \get_transient('ionos_essentials_site_health_issues', '{"good":0,"recommended":0,"critical":0}');
 
   \wp_localize_script('ionos-essentials-dashboard-js', 'wpData', [
     'nonce'               => \wp_create_nonce('wp_rest'),
