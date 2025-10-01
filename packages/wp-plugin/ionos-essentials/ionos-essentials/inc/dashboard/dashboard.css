@@ -198,6 +198,7 @@ main{
 
   .issue-row{
     display: inline-flex;
+    font-size: var(--third-level-headline-size, 16px);
   }
 
   .issue-row .bubble{
