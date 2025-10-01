@@ -631,11 +631,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   }
 }
 
-.always-actions {
-  .panel__item {
-    margin-bottom: 0;
-  }
-}
 
 @media (max-width: 960px) {
   #ionos_nba_setup_container {
