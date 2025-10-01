@@ -590,7 +590,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 
 #ionos_nba_setup_container {
   padding: 35px;
-  margin-bottom: 20px;
   background: #ffffff;
   border-radius: 16px;
 
@@ -630,6 +629,12 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     i {
       padding-right: 10px;
     }
+  }
+}
+
+.always-actions {
+  .panel__item {
+    margin-bottom: 0;
   }
 }
 
