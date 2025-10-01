@@ -7,7 +7,7 @@ defined('ABSPATH') || exit();
 function setup_view($args): void
 {
   // Setup specific actions
-  echo '<div class="card"><div id="ionos_nba_setup_container">';
+  echo '<div class="card"><div id="ionos_nba_setup_container" class="card__section">';
   render_setup_header($args);
   echo '<ul class="panel nba-setup">';
   foreach ($args['actions'] as $action) {
