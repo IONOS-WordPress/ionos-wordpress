@@ -333,6 +333,13 @@ document.addEventListener('DOMContentLoaded', function () {
       dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthGood;
       dashboard.querySelector('#bar').classList.add('site-health-color-green');
     }
+
+    // set the transient so we do not have to run the tests on every page load
+    jQuery.post(wpData.ajaxUrl, {
+      action: 'ionos-set-site-health-issues',
+      issues: JSON.stringify(wpData.siteHealthIssueCount),
+      _wpnonce: wpData.nonce
+    });
   })();
 
   dashboard.querySelectorAll('.expandable > .panel__item-header').forEach((header) => {

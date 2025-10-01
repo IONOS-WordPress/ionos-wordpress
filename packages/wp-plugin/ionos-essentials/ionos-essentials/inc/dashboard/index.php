@@ -214,6 +214,22 @@ add_filter('admin_body_class', function ($classes) {
   }
 );
 
+\add_action(
+  'wp_ajax_ionos-set-site-health-issues',
+  function () {
+    $issues = stripslashes((string) ($_POST['issues'] ?? '{}'));
+    if (empty($_POST['_wpnonce']) || ! wp_verify_nonce($_POST['_wpnonce'], 'wp_rest')) {
+      wp_send_json_error([
+        'message' => 'Something went wrong.',
+      ], 403);
+      wp_die();
+    }
+
+    \set_transient('ionos_site_health_issue_count', $issues, 12 * HOUR_IN_SECONDS);
+    \wp_die();
+  }
+);
+
 \add_action('admin_enqueue_scripts', function ($hook) {
   if (ADMIN_PAGE_HOOK !== $hook) {
     return;
@@ -226,22 +242,21 @@ add_filter('admin_body_class', function ($classes) {
     true
   );
 
-
-  $issue_counts = json_decode(\get_transient('ionos_site_health_issue_count', null), true);
+  $issue_counts = \get_transient('ionos_site_health_issue_count', null);
   $async_tests  = [];
 
   // if we do not have a transient, we perform the direct tests and async tests here
   // the transient is written later after the async tests are done via browser
-  if( empty($issue_counts) ) {
+  if (empty($issue_counts)) {
     $issue_counts = [];
     // we do not rely on the transient health-check-site-status-result because we want to count all issues, even the async ones
-    $tests      = \WP_Site_Health::get_tests();
-    $siteHealth = new \WP_Site_Health();
+    $tests       = \WP_Site_Health::get_tests();
+    $site_health = new \WP_Site_Health();
     foreach ($tests['direct'] as $test) {
       if (is_string($test['test'])) {
         $test_function = sprintf('get_test_%s', $test['test']);
-        if (method_exists($siteHealth, $test_function) && is_callable([$siteHealth, $test_function])) {
-          $test_result = $siteHealth->{$test_function}()['status'];
+        if (method_exists($site_health, $test_function) && is_callable([$site_health, $test_function])) {
+          $test_result                = $site_health->{$test_function}()['status'];
           $issue_counts[$test_result] = ($issue_counts[$test_result] ?? 0) + 1;
         }
 
@@ -254,24 +269,22 @@ add_filter('admin_body_class', function ($classes) {
     }, $async_tests);
   }
 
-
-
   \wp_localize_script('ionos-essentials-dashboard-js', 'wpData', [
-    'nonce'               => \wp_create_nonce('wp_rest'),
-    'healthCheckNonce'    => \wp_create_nonce('health-check-site-status-result'),
-    'restUrl'             => \esc_url_raw(rest_url()),
-    'ajaxUrl'             => admin_url('admin-ajax.php'),
-    'securityOptionName'  => IONOS_SECURITY_FEATURE_OPTION,
-    'tenant'              => Tenant::get_slug(),
-    'siteHealthIssueCount'=> $issue_counts,
+    'nonce'                  => \wp_create_nonce('wp_rest'),
+    'healthCheckNonce'       => \wp_create_nonce('health-check-site-status-result'),
+    'restUrl'                => \esc_url_raw(rest_url()),
+    'ajaxUrl'                => admin_url('admin-ajax.php'),
+    'securityOptionName'     => IONOS_SECURITY_FEATURE_OPTION,
+    'tenant'                 => Tenant::get_slug(),
+    'siteHealthIssueCount'  => $issue_counts,
     'siteHealthAsyncTests'  => $async_tests,
-    'i18n'                => [
-      'installing'            => \esc_html__('Installing...', 'ionos-essentials'),
-      'activated'             => \esc_html__('activated.', 'ionos-essentials'),
-      'deactivated'           => \esc_html__('deactivated.', 'ionos-essentials'),
-      'updating'              => \esc_html__('updating...', 'ionos-essentials'),
-      'deleting'              => \esc_html__('deleting...', 'ionos-essentials'),
-      'loading'               => \esc_html__('Loading content ...', 'ionos-essentials'),
+    'i18n'                   => [
+      'installing'             => \esc_html__('Installing...', 'ionos-essentials'),
+      'activated'              => \esc_html__('activated.', 'ionos-essentials'),
+      'deactivated'            => \esc_html__('deactivated.', 'ionos-essentials'),
+      'updating'               => \esc_html__('updating...', 'ionos-essentials'),
+      'deleting'               => \esc_html__('deleting...', 'ionos-essentials'),
+      'loading'                => \esc_html__('Loading content ...', 'ionos-essentials'),
       'siteHealthImprovable'  => \esc_html__('Should be improved', 'ionos-essentials'),
       'siteHealthGood'        => \esc_html__('Good', 'ionos-essentials'),
     ],

@@ -42,7 +42,9 @@ function render_callback(): void
               <h2 class="headline headline--sub"><?php echo \esc_url(parse_url(\get_option('siteurl', ''), PHP_URL_HOST)); ?></h2>
             </div>
             <div class="ionos-site-health-overview__info-items">
-              <a href="<?php echo \admin_url('site-health.php'); ?>" class="ionos-site-health-overview__info-item site-health-status" style="color: inherit; text-decoration: none;">
+              <a href="<?php echo \esc_attr(\admin_url(
+                'site-health.php'
+              )); ?>" class="ionos-site-health-overview__info-item site-health-status" style="color: inherit; text-decoration: none;">
                 <p><?php \esc_html_e('Site health', 'ionos-essentials')?></p>
                 <strong id="site-health-status-text">
                   <div class="site-health-status-circle">
