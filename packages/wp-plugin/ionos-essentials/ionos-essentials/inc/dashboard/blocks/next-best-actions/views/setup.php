@@ -19,7 +19,7 @@ function setup_view($args): void
   setup_complete();
 
   // Actions that should always be shown
-  echo '<div class="card"><div class="always-actions">';
+  echo '<div class="card"><div class="single-accordion-actions">';
   foreach ($args['always_actions'] as $action) {
     single_accordion_view($action);
   }

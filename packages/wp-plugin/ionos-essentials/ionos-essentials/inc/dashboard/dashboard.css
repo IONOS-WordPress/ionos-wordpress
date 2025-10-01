@@ -628,7 +628,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   .ionos_finish_setup {
     display: flex;
     align-items: center;
-    padding: 0;
 
     i {
       padding-right: 10px;
@@ -641,11 +640,16 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   margin-bottom: 0;
 }
 
-.always-actions {
+.single-accordion-actions {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
 }
+
+@media (max-width: 666px) {
+  .single-accordion-actions  {
+    gap: 16px;
+  }
 
 @media (max-width: 960px) {
   #ionos_nba_setup_container {
