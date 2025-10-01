@@ -248,7 +248,11 @@ add_filter('admin_body_class', function ($classes) {
   // if we do not have a transient, we perform the direct tests and async tests here
   // the transient is written later after the async tests are done via browser
   if (empty($issue_counts)) {
-    $issue_counts = [];
+    $issue_counts = [
+      'critical'  => 0,
+      'recommended' => 0,
+      'good'      => 0,
+    ];
     // we do not rely on the transient health-check-site-status-result because we want to count all issues, even the async ones
     $tests       = \WP_Site_Health::get_tests();
     $site_health = new \WP_Site_Health();
