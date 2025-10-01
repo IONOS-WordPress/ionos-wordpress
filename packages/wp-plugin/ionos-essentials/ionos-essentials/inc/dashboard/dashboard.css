@@ -476,8 +476,8 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     transition: stroke-dashoffset 1s linear;
     stroke: #c3c4c7;
     stroke-width: 1.5em;
-            width: 20px;
-        height: 20px;
+    width: 20px;
+    height: 20px;
 
     &#bar{
       stroke: #888888;
