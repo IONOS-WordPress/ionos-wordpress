@@ -225,7 +225,7 @@ add_filter('admin_body_class', function ($classes) {
       wp_die();
     }
 
-    \set_transient('ionos_site_health_issue_count', $issues, 12 * HOUR_IN_SECONDS);
+    \set_transient('ionos_site_health_issue_count', $issues, 5 * MINUTE_IN_SECONDS);
     \wp_die();
   }
 );
