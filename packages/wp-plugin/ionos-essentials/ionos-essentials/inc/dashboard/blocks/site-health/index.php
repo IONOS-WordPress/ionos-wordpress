@@ -42,7 +42,9 @@ function render_callback(): void
               <h2 class="headline headline--sub"><?php echo \esc_url(parse_url(\get_option('siteurl', ''), PHP_URL_HOST)); ?></h2>
             </div>
             <div class="ionos-site-health-overview__info-items">
-              <div class="ionos-site-health-overview__info-item site-health-status">
+              <a href="<?php echo \esc_attr(\admin_url(
+                'site-health.php'
+              )); ?>" class="ionos-site-health-overview__info-item site-health-status" style="color: inherit; text-decoration: none;">
                 <p><?php \esc_html_e('Site health', 'ionos-essentials')?></p>
                 <strong id="site-health-status-text">
                   <div class="site-health-status-circle">
@@ -53,7 +55,7 @@ function render_callback(): void
                   </div>
                   <span id="site-health-status-message" class="site-health-color"><?php echo \esc_html_e('Results are still loading&hellip;'); ?></span>
                 </strong>
-              </div>
+              </a>
               <div class="ionos-site-health-overview__info-item">
                 <h3 class="ionos-site-health-overview__info-item-title"><?php \esc_html_e('WordPress version', 'ionos-essentials')?></h3>
                 <h4 class="headline headline--sub"><?php echo \esc_attr(\get_bloginfo('version')); ?></h4>
