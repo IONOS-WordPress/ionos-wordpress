@@ -400,6 +400,7 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 
 .ionos-site-health-overview__iframe {
   border: 1px solid #bcc8d4;
+  border-radius: 8px;
 }
 
 @media (max-width: 1200px) {
@@ -481,7 +482,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 
     &#bar{
       stroke: #888888;
-      transform: rotate(-90deg);
 
       &.site-health-color-orange{
         stroke: #ffb900;

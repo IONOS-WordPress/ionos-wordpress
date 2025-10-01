@@ -49,7 +49,7 @@ function render_callback(): void
                     <div class="site-health-status-circle">
                       <svg aria-hidden="true" focusable="false" width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <circle r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
-                        <circle id="bar" r="90" cx="-100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+                        <circle id="bar" r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
                       </svg>
                     </div>
                     <span id="site-health-status-message" class="site-health-color"><?php echo \esc_html_e('Results are still loading&hellip;'); ?></span>
