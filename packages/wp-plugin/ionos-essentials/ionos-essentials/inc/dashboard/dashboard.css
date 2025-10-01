@@ -642,7 +642,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 .single-accordion-actions {
   display: flex;
   flex-direction: column;
-  gap: 32px;
 }
 
 @media (max-width: 666px) {
