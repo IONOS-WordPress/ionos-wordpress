@@ -591,7 +591,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 #ionos_nba_setup_container {
   padding: 35px;
   background: #ffffff;
-  border-radius: 16px;
 
   .container {
     display: flex;
