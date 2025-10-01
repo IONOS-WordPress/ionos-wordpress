@@ -426,6 +426,10 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     display: flex;
     flex-direction: column;
     height: 100%;
+
+    .headline {
+      margin-bottom: 0;
+    }
 }
 
 .ionos-site-health-vulnerability {
@@ -466,7 +470,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 #site-health-status-message{
   width: 150px;
   overflow: hidden;
-  height: 60px;
 }
 
 .site-health-status-circle {
