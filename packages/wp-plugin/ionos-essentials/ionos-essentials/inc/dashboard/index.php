@@ -242,7 +242,16 @@ add_filter('admin_body_class', function ($classes) {
     true
   );
 
-  $issue_counts = \get_transient('ionos_site_health_issue_count', null);
+  $issue_counts = \get_transient('ionos_site_health_issue_count');
+  if (is_string($issue_counts)) {
+    $decoded = json_decode($issue_counts, true);
+    if (json_last_error() === JSON_ERROR_NONE) {
+      $issue_counts = $decoded;
+    } else {
+      $issue_counts = [];
+    }
+  }
+
   $async_tests  = [];
 
   // if we do not have a transient, we perform the direct tests and async tests here
