@@ -129,6 +129,15 @@ main{
   }
 }
 
+
+.ionos-site-health-vulnerability {
+  width: 440px;
+  
+  .card {
+    box-shadow: none;
+  }
+}
+
 .ionos_next_best_actions{
 
   .card{
@@ -442,14 +451,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 
   .headline {
     margin-bottom: 0;
-  }
-}
-
-.ionos-site-health-vulnerability {
-  width: 440px;
-  
-  .card {
-    box-shadow: none;
   }
 }
 
