@@ -140,6 +140,10 @@ main{
 
   .ionos_next_best_actions__section{
     padding-bottom: 0;
+
+    .card {
+      margin-bottom: 16px;
+    }
   }
 
   .ionos_nba_dismissed{
