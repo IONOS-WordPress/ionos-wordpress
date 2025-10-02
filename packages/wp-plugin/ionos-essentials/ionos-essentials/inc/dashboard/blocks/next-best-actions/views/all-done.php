@@ -8,9 +8,9 @@ use const ionos\essentials\PLUGIN_FILE;
 
 function all_done_view(): void
 {
-  $DIGITAL_GUIDE_SUPPORTED_LANGUAGES = ['de', 'es', 'fr', 'it'];
+  $digital_guide_supported_languages = ['de', 'es', 'fr', 'it'];
   $language                          = explode('_', get_locale())[0];
-  $tld                               = in_array($language, $DIGITAL_GUIDE_SUPPORTED_LANGUAGES) ? $language : 'com';
+  $tld                               = in_array($language, $digital_guide_supported_languages) ? $language : 'com';
   $digital_guide_url                 = 'https://www.ionos.' . $tld . '/digitalguide/hub/wordpress/';
   $survey_dismissed                  = \get_option('ionos_nba_status')['survey']['dismissed'] ?? false;
   ?>

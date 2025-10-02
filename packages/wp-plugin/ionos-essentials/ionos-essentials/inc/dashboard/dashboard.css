@@ -1,6 +1,23 @@
 @import 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.css';
 @import '../wpscan/wpscan.css';
 
+@media (min-width: 1440px) {
+  #content {
+    width: 100%;
+  }
+
+  .page-section.ionos-dashboard__blocks {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+#content {
+  padding: 0;
+}
+.ionos-dashboard__blocks {
+  padding: 0;
+}
+
 .with-issues-only, .with-issues-only-flex{
   display: none;
 }
@@ -112,6 +129,15 @@ main{
   }
 }
 
+
+.ionos-site-health-vulnerability {
+  width: 440px;
+  
+  .card {
+    box-shadow: none;
+  }
+}
+
 .ionos_next_best_actions{
 
   .card{
@@ -123,6 +149,10 @@ main{
 
   .ionos_next_best_actions__section{
     padding-bottom: 0;
+
+    .card {
+      margin-bottom: 16px;
+    }
   }
 
   .ionos_nba_dismissed{
@@ -135,11 +165,15 @@ main{
 .ionos_vulnerability{
   container-type: inline-size !important;
   container: ionos_vulnerability;
-  background-color: #edfaef;
+  background-color: #c8fae2;
   margin-bottom: 0;
 
   .ionos_vulnerability__headline, .ionos_vulnerability__last-scan {
     margin-left: 35px;
+  }
+
+  .headline {
+    margin-bottom: 4px;
   }
 
   .ionos_vulnerability__content{
@@ -164,7 +198,7 @@ main{
 
   }
   &.high{
-    background-color: #fcf0f1;
+    background-color: #ffe4e2;
 
   }
   &.error{
@@ -187,6 +221,7 @@ main{
 
   .issue-row{
     display: inline-flex;
+    font-size: var(--third-level-headline-size, 16px);
   }
 
   .issue-row .bubble{
@@ -201,6 +236,10 @@ main{
 
  .issue-row .bubble i{
     color: #ffffff;
+
+    &::before {
+      padding-left: 1px;    
+    }
   }
 
   .issue-row.high .bubble{
@@ -310,11 +349,10 @@ main{
   }
 }
 
-
-
 .ionos-maintenance-only {
   display: none;
 }
+
 main.ionos-maintenance-mode .ionos-maintenance-only{
   display: inline-block;
 }
@@ -374,9 +412,18 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 }
 
 .ionos-site-health-overview {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+  .headline {
+    word-break: break-all;
+  }
+}
+
+.ionos-site-health-overview__iframe {
+  border: 1px solid #bcc8d4;
+  border-radius: 8px;
 }
 
 @media (max-width: 1200px) {
@@ -394,37 +441,44 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 .ionos-site-health-overview__info-items {
     display: flex;
     flex-direction: row;
-    gap: 40px;
+    gap: 20px;
 }
 
 .ionos-site-health-overview__info-item{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
-.ionos-site-health-vulnerability {
-  width: 440px;
+  .headline {
+    margin-bottom: 0;
+  }
 }
 
 .ionos-site-health-overview__info-homeurl {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .ionos-site-health-overview__info-homeurl .exos-icon {
-    font-size: 20px;
-    color: #096B35;
+  font-size: 20px;
+  color: #096B35;
 }
 
 .site-health-status {
-  width: 180px;
+  width: 200px;
 }
 
 #site-health-status-text{
   display: flex;
   gap: 10px;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 2px;
+  color: #001B41;
+}
+
+#site-health-status-message{
+  width: 150px;
+  overflow: hidden;
 }
 
 .site-health-status-circle {
@@ -435,7 +489,9 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     stroke-dashoffset: 0;
     transition: stroke-dashoffset 1s linear;
     stroke: #c3c4c7;
-    stroke-width: 2em;
+    stroke-width: 1.5em;
+    width: 20px;
+    height: 20px;
 
     &#bar{
       stroke: #888888;
@@ -452,7 +508,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     }
   }
 }
-
 
 @media (max-width: 800px) {
   .banner_wrapper {
@@ -520,6 +575,15 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   margin-bottom: 20px;
 }
 
+.panel__item {
+  margin-bottom: 0;
+  box-shadow: none;
+}
+
+.panel__item:hover {
+  box-shadow: none;
+}
+
 .panel__item--expanded.always-expanded {
   .panel__item-header:after {
     display: none;
@@ -533,11 +597,13 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   }
 }
 
+.panel__headline {
+  font-size: 18px;
+}
+
 #ionos_nba_setup_container {
   padding: 35px;
-  margin-bottom: 20px;
   background: #ffffff;
-  border-radius: 16px;
 
   .container {
     display: flex;
@@ -555,7 +621,7 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   .panel__item {
     margin: 0;
     border-radius: 0;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #BCC8D4;
   }
 
   .panel__item-header {
@@ -575,6 +641,23 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     i {
       padding-right: 10px;
     }
+  }
+}
+
+.single-accordion-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 666px) {
+  .single-accordion-actions  {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 960px) {
+  #ionos_nba_setup_container {
+    padding: 20px;
   }
 }
 
