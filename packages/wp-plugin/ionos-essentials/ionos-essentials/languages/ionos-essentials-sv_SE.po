@@ -99,12 +99,14 @@ msgid "Quick Links"
 msgstr "Snabblänkar"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiskt fel hittades"
 msgstr[1] "kritiska fel hittades"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "varning hittad"
@@ -682,7 +684,6 @@ msgstr "Aktivering rekommenderas inte"
 msgid "The vulnerability scan has found issues for"
 msgstr "Sårbarhetsskanningen har hittat problem för"
 
-#. translators: %s is placeholder for the time since the last scan
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
@@ -731,14 +732,6 @@ msgstr "Visa uppdateringsdetaljer"
 #: ionos-essentials/inc/wpscan/views/issues.php
 msgid "This theme is active. Please activate another theme."
 msgstr "Detta tema är aktivt. Aktivera ett annat tema."
-
-#: ionos-essentials/inc/wpscan/views/summary.php
-msgid "critical issues found"
-msgstr "kritiska fel hittades"
-
-#: ionos-essentials/inc/wpscan/views/summary.php
-msgid "warnings found"
-msgstr "varningar hittade"
 
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
@@ -880,6 +873,7 @@ msgid "PHP version"
 msgstr "PHP-version"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "View details"
 msgstr "Visa detaljer"
 

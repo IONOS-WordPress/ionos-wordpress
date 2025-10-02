@@ -94,12 +94,14 @@ msgid "Invoices"
 msgstr "Invoices"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "critical issue found"
 msgstr[1] "critical issues found"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "warning found"
@@ -663,7 +665,6 @@ msgstr "Activation is not recommended"
 msgid "The vulnerability scan has found issues for"
 msgstr "The vulnerability scan has found issues for"
 
-#. translators: %s is placeholder for the time since the last scan
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
@@ -706,14 +707,6 @@ msgstr "View update details"
 #: ionos-essentials/inc/wpscan/views/issues.php
 msgid "This theme is active. Please activate another theme."
 msgstr "This theme is active. Please activate another theme."
-
-#: ionos-essentials/inc/wpscan/views/summary.php
-msgid "critical issues found"
-msgstr "critical issues found"
-
-#: ionos-essentials/inc/wpscan/views/summary.php
-msgid "warnings found"
-msgstr "warnings found"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
@@ -876,6 +869,7 @@ msgid "PHP version"
 msgstr "PHP version"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "View details"
 msgstr "View details"
 

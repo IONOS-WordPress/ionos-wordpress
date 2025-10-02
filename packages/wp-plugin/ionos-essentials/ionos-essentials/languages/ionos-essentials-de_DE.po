@@ -94,12 +94,14 @@ msgid "Quick Links"
 msgstr "Schnellzugriff"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Kritisches Problem gefunden"
 msgstr[1] "Kritische Probleme gefunden"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "Warnung gefunden"
@@ -673,7 +675,6 @@ msgstr "Die Aktivierung wird nicht empfohlen."
 msgid "The vulnerability scan has found issues for"
 msgstr "Der Schwachstellen-Scan hat Probleme gefunden für"
 
-#. translators: %s is placeholder for the time since the last scan
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
@@ -722,14 +723,6 @@ msgstr "Details zum Update einsehen"
 #: ionos-essentials/inc/wpscan/views/issues.php
 msgid "This theme is active. Please activate another theme."
 msgstr "Dieses Theme ist aktiv. Bitte aktiviere ein anderes Theme."
-
-#: ionos-essentials/inc/wpscan/views/summary.php
-msgid "critical issues found"
-msgstr "Kritische Probleme gefunden"
-
-#: ionos-essentials/inc/wpscan/views/summary.php
-msgid "warnings found"
-msgstr "Warnungen gefunden"
 
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
@@ -875,6 +868,7 @@ msgid "PHP version"
 msgstr "PHP Version"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "View details"
 msgstr "Details ansehen"
 
