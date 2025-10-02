@@ -189,11 +189,11 @@ function has_leaked_flag($user_id): bool
 });
 
 \add_action('profile_update', function ($user_id, $old_user_data) {
-  if( !defined( 'WP_CLI' ) || !WP_CLI ) {
+  if (! defined('WP_CLI') || ! WP_CLI) {
     return;
   }
 
-  if ( $old_user_data->user_pass === \get_userdata( $user_id)->user_pass ) {
+  if ($old_user_data->user_pass === \get_userdata($user_id)->user_pass) {
     return;
   }
 
