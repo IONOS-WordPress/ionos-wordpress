@@ -31,7 +31,8 @@ function render_callback(): void
     \esc_html($button['text'] ?? '')
   ), $button_list));
 
-  $tenant_logo = \plugins_url('data/tenant-logos/' . Tenant::get_slug() . '.svg', dirname(__DIR__));
+  $tenant_slug = Tenant::get_slug();
+  $tenant_logo = \plugins_url('data/tenant-logos/' . $tenant_slug . '.svg', dirname(__DIR__));
 
   ?>
 <div class="card">
@@ -39,7 +40,7 @@ function render_callback(): void
     <section class="card__section">
       <div class="banner_wrapper">
         <div class="content">
-          <img class="banner-logo"
+          <img class="banner-logo banner-logo--<?php echo \esc_attr($tenant_slug); ?>"
           src="<?php echo \esc_attr($tenant_logo); ?>"
           alt="<?php echo \esc_attr(Tenant::get_label()); ?> Logo"
           >

@@ -132,7 +132,7 @@ main{
 
 .ionos-site-health-vulnerability {
   width: 440px;
-  
+
   .card {
     box-shadow: none;
   }
@@ -238,7 +238,7 @@ main{
     color: #ffffff;
 
     &::before {
-      padding-left: 1px;    
+      padding-left: 1px;
     }
   }
 
@@ -328,6 +328,10 @@ main{
 .banner-logo {
   width: 100px;
   padding: 20px;
+}
+
+.banner-logo--piensa, .banner-logo--udag {
+  width: 150px;
 }
 
 .page-tabbar__items {
