@@ -42,20 +42,20 @@ function render_callback(): void
               <h2 class="headline headline--sub"><?php echo \esc_url(parse_url(\get_option('siteurl', ''), PHP_URL_HOST)); ?></h2>
             </div>
             <div class="ionos-site-health-overview__info-items">
-            <div class="ionos-site-health-overview__info-item site-health-status">
-              <p><?php \esc_html_e('Site health', 'ionos-essentials')?></p>
-              <strong id="site-health-status-text" >
-                <div class="site-health-status-circle">
-                  <svg aria-hidden="true" focusable="false" width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <circle r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
-                    <circle id="bar" r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
-                </svg>
-                </div>
-                <span id="site-health-status-message" class="site-health-color"><?php echo \esc_html_e('Results are still loading&hellip;'); ?></span>
-              </strong>
-            </div>
-
-
+              <a href="<?php echo \esc_attr(\admin_url(
+                'site-health.php'
+              )); ?>" class="ionos-site-health-overview__info-item site-health-status" style="color: inherit; text-decoration: none;">
+                <p><?php \esc_html_e('Site health', 'ionos-essentials')?></p>
+                <strong id="site-health-status-text">
+                  <div class="site-health-status-circle">
+                    <svg aria-hidden="true" focusable="false" width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                      <circle r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+                      <circle id="bar" r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+                    </svg>
+                  </div>
+                  <span id="site-health-status-message" class="site-health-color"><?php echo \esc_html_e('Results are still loading&hellip;'); ?></span>
+                </strong>
+              </a>
               <div class="ionos-site-health-overview__info-item">
                 <h3 class="ionos-site-health-overview__info-item-title"><?php \esc_html_e('WordPress version', 'ionos-essentials')?></h3>
                 <h4 class="headline headline--sub"><?php echo \esc_attr(\get_bloginfo('version')); ?></h4>
@@ -66,13 +66,12 @@ function render_callback(): void
               </div>
             </div>
           </div>
-          </div>
+        </div>
         <div class="ionos-site-health-vulnerability">
           <?php \ionos\essentials\dashboard\blocks\vulnerability\render_callback()?>
         </div>
       </section>
     </div>
   </div>
-
 <?php
 }

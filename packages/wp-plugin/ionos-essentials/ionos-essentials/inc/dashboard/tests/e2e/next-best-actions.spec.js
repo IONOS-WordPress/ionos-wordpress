@@ -14,14 +14,14 @@ test.describe('essentials:dashboard next-best-actions block', () => {
     await admin.visitAdminPage('/');
     let body = page.locator('body');
 
-    let dismissAnchor = body.locator('.ionos-dismiss-nba[data-nba-id="create-page"]');
+    let dismissAnchor = body.locator('.ionos_finish_setup');
     await expect(dismissAnchor).toHaveCount(1);
     await dismissAnchor.click();
 
     // show dashboard and ensure "create-page" action is not more available
     await admin.visitAdminPage('/');
     body = page.locator('body');
-    dismissAnchor = body.locator('.ionos-dismiss-nba[data-nba-id="create-page"]');
+    dismissAnchor = body.locator('.ionos_finish_setup');
     await expect(dismissAnchor).toHaveCount(0);
   });
 });

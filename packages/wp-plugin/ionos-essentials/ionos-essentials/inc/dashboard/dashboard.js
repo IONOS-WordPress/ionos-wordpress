@@ -76,33 +76,54 @@ document.addEventListener('DOMContentLoaded', function () {
   dashboard.querySelectorAll('.ionos-dismiss-nba').forEach((el) => {
     el.addEventListener('click', async (click) => {
       click.preventDefault();
-      dismissItem(click.target);
+      updateNbaItem(click.target, 'dismissed');
     });
   });
 
-  const emailAccountLink = dashboard.querySelector('a[data-nba-id="email-account"]');
-  if (emailAccountLink) {
-    emailAccountLink.onclick = () => {
-      dismissItem(emailAccountLink);
-    };
-  }
+  dashboard.querySelectorAll('a[data-complete-on-click="true"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      updateNbaItem(link, 'completed');
+    });
+  });
+
+  dashboard.querySelectorAll('.ionos_finish_setup')?.forEach((button) => {
+    button.addEventListener('click', function (event) {
+      jQuery.post(wpData.ajaxUrl, {
+        action: 'ionos-nba-setup-complete',
+        status: event.target.dataset.status,
+        _wpnonce: wpData.nonce,
+      });
+
+      if (event.target.dataset.status === 'finished') {
+        dashboard.querySelector('#ionos_nba_setup_container').remove();
+        dashboard.querySelector('#ionos_next_best_actions__setup_complete').style.display = 'block';
+        return;
+      }
+
+      dashboard.querySelector('.nba-setup').classList.add('ionos_nba_dismissed');
+      setTimeout(() => {
+        dashboard.querySelector('.nba-setup').remove();
+        location.reload();
+      }, 800);
+    });
+  });
 
   const helpCenterLink = dashboard.querySelector('a[data-nba-id="help-center"]');
   if (helpCenterLink) {
-    helpCenterLink.onclick = () => {
+    helpCenterLink.addEventListener('click', () => {
       document.querySelector('.extendify-help-center button').click();
-      dismissItem(helpCenterLink);
-    };
+    });
   }
 
-  const dismissItem = async (target) => {
-    fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/dismiss/' + target.dataset.nbaId, {
+  const updateNbaItem = async (target, status) => {
+    fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-WP-Nonce': wpData.nonce,
       },
       credentials: 'include',
+      body: JSON.stringify({ id: target.dataset.nbaId, status }),
     }).then((response) => {
       if (!response.ok) {
         return;
@@ -112,9 +133,9 @@ document.addEventListener('DOMContentLoaded', function () {
       setTimeout(() => {
         dashboard.getElementById(target.dataset.nbaId).remove();
 
-        const nbaCount = dashboard.querySelectorAll('.nba-card').length;
+        const nbaCount = dashboard.querySelectorAll('.nba-active').length;
         if (nbaCount === 0) {
-          dashboard.querySelector('.ionos_next_best_actions').remove();
+          location.reload();
         }
       }, 800);
     });
@@ -265,22 +286,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  const siteHealthTests = [
-    'background-updates',
-    'loopback-requests',
-    'https-status',
-    'dotorg-communication',
-    'authorization-header',
-  ];
   (async () => {
-    for (const test of siteHealthTests) {
+    for (const test of wpData.siteHealthAsyncTests) {
       try {
+        let headers = {
+          'Content-Type': 'application/json',
+          'X-WP-Nonce': wpData.nonce,
+        };
+
+        if (test === 'authorization-header') {
+          // this test requires an additional nonce
+          headers['Authorization'] = 'Basic ' + btoa('user:pwd');
+        }
+
         const response = await fetch(wpData.restUrl + 'wp-site-health/v1/tests/' + test, {
           method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-WP-Nonce': wpData.nonce,
-          },
+          headers: headers,
           credentials: 'include',
         });
         if (!response.ok) {
@@ -288,30 +309,47 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         const data = await response.json();
         wpData.siteHealthIssueCount[data.status] = parseInt(wpData.siteHealthIssueCount[data.status] ?? 0) + 1;
-        // eslint-disable-next-line no-unused-vars
       } catch (error) {
-        console.error('Error fetching site health status for test ' + test);
+        // silence is golden
+        console.error(error);
       }
     }
     // all tests are done, now update the UI
-    //toDo: remove debug-code
-    wpData.siteHealthIssueCount = {
-      good: 10,
-      recommended: 10,
-      critical: 1,
-    };
+    const totalTests =
+      parseInt(wpData.siteHealthIssueCount.good, 10) +
+      parseInt(wpData.siteHealthIssueCount.recommended, 10) +
+      parseInt(wpData.siteHealthIssueCount.critical, 10) * 1.5;
+    const failedTests =
+      parseInt(wpData.siteHealthIssueCount.recommended, 10) * 0.5 +
+      parseInt(wpData.siteHealthIssueCount.critical, 10) * 1.5;
+    const goodTestsRatio = 100 - Math.ceil((failedTests / totalTests) * 100);
 
-    const totalIssues = (wpData.siteHealthIssueCount.critical ?? 0) + (wpData.siteHealthIssueCount.recommended ?? 0);
-    const totalTests = totalIssues + (wpData.siteHealthIssueCount.good ?? 0);
-    const badTestsRatio = totalTests > 0 ? totalIssues / totalTests : 1;
-    dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - 565.48 * (1 - badTestsRatio);
+    dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - 565.48 * (goodTestsRatio / 100);
 
-    if (badTestsRatio >= 0.2 || wpData.siteHealthIssueCount.critical !== 0) {
+    if (goodTestsRatio <= 80 || wpData.siteHealthIssueCount.critical !== 0) {
       dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthImprovable;
       dashboard.querySelector('#bar').classList.add('site-health-color-orange');
     } else {
       dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthGood;
       dashboard.querySelector('#bar').classList.add('site-health-color-green');
     }
+
+    // set the transient so we do not have to run the tests on every page load
+    jQuery.post(wpData.ajaxUrl, {
+      action: 'ionos-set-site-health-issues',
+      issues: JSON.stringify(wpData.siteHealthIssueCount),
+      _wpnonce: wpData.nonce,
+    });
   })();
+
+  dashboard.querySelectorAll('.expandable > .panel__item-header').forEach((header) => {
+    header.addEventListener('click', () => {
+      const item = header.closest('.panel__item');
+      const isExpanded = item.classList.contains('panel__item--expanded');
+
+      item.classList.toggle('panel__item--expanded', !isExpanded);
+      item.classList.toggle('panel__item--closed', isExpanded);
+      item.setAttribute('aria-expanded', String(!isExpanded));
+    });
+  });
 });
