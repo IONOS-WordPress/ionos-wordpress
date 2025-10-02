@@ -1,5 +1,12 @@
 # @ionos-wordpress/essentials
 
+## 1.3.1
+
+### Patch Changes
+
+- 2530bee: translation improvements
+- 2530bee: site health fix
+
 ## 1.3.0
 
 ### Minor Changes
