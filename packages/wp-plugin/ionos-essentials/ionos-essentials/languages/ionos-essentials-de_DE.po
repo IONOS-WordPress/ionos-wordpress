@@ -51,7 +51,7 @@ msgstr "Meine Rechnungen"
 #: ionos-essentials/inc/tenants/config/fasthosts.php
 #: ionos-essentials/inc/tenants/config/piensa.php
 msgid "Control Panel"
-msgstr "IONOS Konto"
+msgstr "Control Panel"
 
 #: ionos-essentials/inc/tenants/config/fasthosts.php
 msgid "My User"
@@ -121,7 +121,7 @@ msgstr "Website mit KI erstellen"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
 msgid "Manage Hosting"
-msgstr "Zum IONOS Konto"
+msgstr "Zum Control Panel"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
 msgid "Account Management"
@@ -150,7 +150,7 @@ msgstr "Domain verbinden"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Edit & Complete Your Website"
-msgstr "Website bearbeiten"
+msgstr "Website prüfen und vervollständigen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
@@ -946,15 +946,15 @@ msgstr "Einrichtung fertigstellen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php
 msgid "Dismiss getting started guide"
-msgstr "Erste Schritte-Guide überspringen"
+msgstr "Erste Schritte überspringen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "🚀  Getting started with WordPress"
-msgstr "🚀 Erste Schritte mit WordPress"
+msgstr "🚀   Erste Schritte mit WordPress"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "Ready to establish your online presence? Let's get the essentials sorted so your new site looks professional and is easy for people to find."
-msgstr "Sind Sie bereit, Ihre Online-Präsenz aufzubauen? Legen Sie die Grundlagen fest, damit Ihre neue Website professionell wirkt und für Besucher leicht zu finden ist."
+msgstr "Erledigen Sie die wichtigsten Schritte, damit Ihre neue WordPress Website professionell auf Ihre Besucher  wirkt und sie im Internet gefunden werden."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "All actions completed!"
