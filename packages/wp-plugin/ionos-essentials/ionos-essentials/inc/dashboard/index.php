@@ -248,7 +248,11 @@ add_filter('admin_body_class', function ($classes) {
   // if we do not have a transient, we perform the direct tests and async tests here
   // the transient is written later after the async tests are done via browser
   if (empty($issue_counts)) {
-    $issue_counts = [];
+    $issue_counts = [
+      'critical'    => 0,
+      'recommended' => 0,
+      'good'        => 0,
+    ];
     // we do not rely on the transient health-check-site-status-result because we want to count all issues, even the async ones
     $tests       = \WP_Site_Health::get_tests();
     $site_health = new \WP_Site_Health();
@@ -276,8 +280,8 @@ add_filter('admin_body_class', function ($classes) {
     'ajaxUrl'                => admin_url('admin-ajax.php'),
     'securityOptionName'     => IONOS_SECURITY_FEATURE_OPTION,
     'tenant'                 => Tenant::get_slug(),
-    'siteHealthIssueCount'  => $issue_counts,
-    'siteHealthAsyncTests'  => $async_tests,
+    'siteHealthIssueCount'   => $issue_counts,
+    'siteHealthAsyncTests'   => $async_tests,
     'i18n'                   => [
       'installing'             => \esc_html__('Installing...', 'ionos-essentials'),
       'activated'              => \esc_html__('activated.', 'ionos-essentials'),
@@ -285,8 +289,8 @@ add_filter('admin_body_class', function ($classes) {
       'updating'               => \esc_html__('updating...', 'ionos-essentials'),
       'deleting'               => \esc_html__('deleting...', 'ionos-essentials'),
       'loading'                => \esc_html__('Loading content ...', 'ionos-essentials'),
-      'siteHealthImprovable'  => \esc_html__('Should be improved', 'ionos-essentials'),
-      'siteHealthGood'        => \esc_html__('Good', 'ionos-essentials'),
+      'siteHealthImprovable'   => \esc_html__('Should be improved', 'ionos-essentials'),
+      'siteHealthGood'         => \esc_html__('Good', 'ionos-essentials'),
     ],
   ]);
 });
@@ -346,3 +350,7 @@ add_filter('show_admin_bar', function ($show) {
   }
   return $show;
 });
+
+\add_action('upgrader_process_complete', function ($upgrader_object, $options) {
+  delete_transient('ionos_site_health_issue_count');
+}, 10, 2);
