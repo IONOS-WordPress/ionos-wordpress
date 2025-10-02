@@ -12,4 +12,4 @@ packages:
 # catalogs can be used to maintain dependencies for a group of packages at a single place
 # see https://pnpm.io/catalogs
 catalog:
-  '@wordpress/components': ^30.2.0
+  '@wordpress/components': ^30.4.0
