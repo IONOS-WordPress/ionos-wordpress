@@ -1,5 +1,5 @@
 ---
-'@ionos-wordpress/essentials': major
+'@ionos-wordpress/essentials': minor
 ---
 
 added status bar to Hub Overview
