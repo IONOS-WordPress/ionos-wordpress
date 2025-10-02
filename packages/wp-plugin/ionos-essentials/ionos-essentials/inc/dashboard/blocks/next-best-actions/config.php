@@ -76,7 +76,7 @@ NBA::register(
   ),
   link: \admin_url('themes.php'),
   anchor: \__('Select a Theme', 'ionos-essentials'),
-  completed: false === strpos(\wp_get_theme()->get_stylesheet(), 'twentytwenty'),
+  completed: \wp_get_theme()->get_stylesheet() !== 'extendable',
   categories: ['setup-noai']
 );
 
