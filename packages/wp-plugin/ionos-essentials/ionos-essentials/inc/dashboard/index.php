@@ -11,6 +11,7 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/misc.php';
+require_once ABSPATH . 'wp-admin/includes/class-wp-site-health.php';
 
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
@@ -54,8 +55,8 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 
   \add_submenu_page(
     parent_slug: ADMIN_PAGE_SLUG,
-    page_title : __('Tools and security', 'ionos-essentials'),
-    menu_title : __('Tools and security', 'ionos-essentials'),
+    page_title : __('Tools & Security', 'ionos-essentials'),
+    menu_title : __('Tools & Security', 'ionos-essentials'),
     capability : REQUIRED_USER_CAPABILITIES,
     menu_slug  : 'admin.php?page=' . ADMIN_PAGE_SLUG . '#tools'
   );
@@ -142,16 +143,17 @@ add_filter('admin_body_class', function ($classes) {
     return ! \is_wp_error($result);
   }
 
-  \register_rest_route('ionos/essentials/dashboard/nba/v1', '/dismiss/(?P<id>[a-zA-Z0-9-]+)', [
+  \register_rest_route('ionos/essentials/dashboard/nba/v1', '/update', [
     'methods'  => 'POST',
     'callback' => function ($request) {
       require_once __DIR__ . '/blocks/my-account/index.php';
       require_once __DIR__ . '/blocks/next-best-actions/class-nba.php';
       $params = $request->get_params();
       $nba_id = $params['id'];
+      $status = isset($params['status']) ? sanitize_text_field((string) $params['status']) : 'dismissed';
 
       $nba = blocks\next_best_actions\NBA::get_nba($nba_id);
-      $res = $nba->set_status('dismissed', true);
+      $res = $nba->set_status($status, true);
       if ($res) {
         return new \WP_REST_Response([
           'status' => 'success',
@@ -196,6 +198,38 @@ add_filter('admin_body_class', function ($classes) {
   );
 });
 
+\add_action(
+  'wp_ajax_ionos-nba-setup-complete',
+  function () {
+    $status = (string) $_POST['status'] ?? 'unknown';
+    if (empty($_POST['_wpnonce']) || ! wp_verify_nonce($_POST['_wpnonce'], 'wp_rest')) {
+      wp_send_json_error([
+        'message' => 'Something went wrong.',
+      ], 403);
+      wp_die();
+    }
+
+    \update_option('ionos_essentials_nba_setup_completed', $status);
+    \wp_die();
+  }
+);
+
+\add_action(
+  'wp_ajax_ionos-set-site-health-issues',
+  function () {
+    $issues = stripslashes((string) ($_POST['issues'] ?? '{}'));
+    if (empty($_POST['_wpnonce']) || ! wp_verify_nonce($_POST['_wpnonce'], 'wp_rest')) {
+      wp_send_json_error([
+        'message' => 'Something went wrong.',
+      ], 403);
+      wp_die();
+    }
+
+    \set_transient('ionos_site_health_issue_count', $issues, 5 * MINUTE_IN_SECONDS);
+    \wp_die();
+  }
+);
+
 \add_action('admin_enqueue_scripts', function ($hook) {
   if (ADMIN_PAGE_HOOK !== $hook) {
     return;
@@ -208,19 +242,55 @@ add_filter('admin_body_class', function ($classes) {
     true
   );
 
+  $issue_counts = \get_transient('ionos_site_health_issue_count', null);
+  $async_tests  = [];
+
+  // if we do not have a transient, we perform the direct tests and async tests here
+  // the transient is written later after the async tests are done via browser
+  if (empty($issue_counts)) {
+    $issue_counts = [
+      'critical'    => 0,
+      'recommended' => 0,
+      'good'        => 0,
+    ];
+    // we do not rely on the transient health-check-site-status-result because we want to count all issues, even the async ones
+    $tests       = \WP_Site_Health::get_tests();
+    $site_health = new \WP_Site_Health();
+    foreach ($tests['direct'] as $test) {
+      if (is_string($test['test'])) {
+        $test_function = sprintf('get_test_%s', $test['test']);
+        if (method_exists($site_health, $test_function) && is_callable([$site_health, $test_function])) {
+          $test_result                = $site_health->{$test_function}()['status'];
+          $issue_counts[$test_result] = ($issue_counts[$test_result] ?? 0) + 1;
+        }
+
+      }
+    }
+
+    $async_tests = array_keys($tests['async']);
+    $async_tests = array_map(function ($item) {
+      return str_replace('_', '-', $item);
+    }, $async_tests);
+  }
+
   \wp_localize_script('ionos-essentials-dashboard-js', 'wpData', [
-    'nonce'              => \wp_create_nonce('wp_rest'),
-    'restUrl'            => \esc_url_raw(rest_url()),
-    'ajaxUrl'            => admin_url('admin-ajax.php'),
-    'securityOptionName' => IONOS_SECURITY_FEATURE_OPTION,
-    'tenant'             => Tenant::get_slug(),
-    'i18n'               => [
-      'installing'  => \esc_html__('Installing...', 'ionos-essentials'),
-      'activated'   => \esc_html__('activated.', 'ionos-essentials'),
-      'deactivated' => \esc_html__('deactivated.', 'ionos-essentials'),
-      'updating'    => \esc_html__('updating...', 'ionos-essentials'),
-      'deleting'    => \esc_html__('deleting...', 'ionos-essentials'),
-      'loading'     => \esc_html__('Loading content ...', 'ionos-essentials'),
+    'nonce'                  => \wp_create_nonce('wp_rest'),
+    'healthCheckNonce'       => \wp_create_nonce('health-check-site-status-result'),
+    'restUrl'                => \esc_url_raw(rest_url()),
+    'ajaxUrl'                => admin_url('admin-ajax.php'),
+    'securityOptionName'     => IONOS_SECURITY_FEATURE_OPTION,
+    'tenant'                 => Tenant::get_slug(),
+    'siteHealthIssueCount'   => $issue_counts,
+    'siteHealthAsyncTests'   => $async_tests,
+    'i18n'                   => [
+      'installing'             => \esc_html__('Installing...', 'ionos-essentials'),
+      'activated'              => \esc_html__('activated.', 'ionos-essentials'),
+      'deactivated'            => \esc_html__('deactivated.', 'ionos-essentials'),
+      'updating'               => \esc_html__('updating...', 'ionos-essentials'),
+      'deleting'               => \esc_html__('deleting...', 'ionos-essentials'),
+      'loading'                => \esc_html__('Loading content ...', 'ionos-essentials'),
+      'siteHealthImprovable'   => \esc_html__('Should be improved', 'ionos-essentials'),
+      'siteHealthGood'         => \esc_html__('Good', 'ionos-essentials'),
     ],
   ]);
 });
@@ -272,3 +342,15 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
   'wp_ajax_ionos-popup-dismiss',
   fn () => (\delete_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp') && \wp_die())
 );
+
+/* hide admin bar, when query param /?hidetoolbar=1 is set */
+add_filter('show_admin_bar', function ($show) {
+  if (isset($_GET['hidetoolbar'])) {
+    return false;
+  }
+  return $show;
+});
+
+\add_action('upgrader_process_complete', function ($upgrader_object, $options) {
+  delete_transient('ionos_site_health_issue_count');
+}, 10, 2);

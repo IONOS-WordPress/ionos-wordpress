@@ -14,6 +14,7 @@ require_once __DIR__ . '/blocks/my-account/index.php';
 require_once __DIR__ . '/blocks/whats-new/index.php';
 require_once __DIR__ . '/blocks/quick-links/index.php';
 require_once __DIR__ . '/blocks/popup/index.php';
+require_once __DIR__ . '/blocks/site-health/index.php';
 
 // Fontface must be loaded before the template is rendered
 ?>
@@ -164,15 +165,11 @@ blocks\popup\render_callback();
   Showing update information
 </div>
 
-<main id="content" class="
-  <?php
-  \ionos\essentials\maintenance_mode\is_maintenance_mode()                      && printf(
-    'ionos-maintenance-mode'
-  );
-! empty(\ionos\essentials\wpscan\get_wpscan()->get_issues())                    && printf(' issues-found');
-?>
-
-  ">
+<main id="content" class="page-section <?php
+  \ionos\essentials\maintenance_mode\is_maintenance_mode()   && printf('ionos-maintenance-mode');
+! empty(\ionos\essentials\wpscan\get_wpscan()->get_issues()) && printf(' issues-found');
+?>">
+<div class="page-section ionos-dashboard__blocks">
   <div class="page-section">
     <?php blocks\banner\render_callback(); ?>
   </div>
@@ -181,6 +178,7 @@ blocks\popup\render_callback();
   require_once __DIR__ . '/tabs/overview.php';
 require_once __DIR__ . '/tabs/tools.php';
 ?>
+</div>
 
 </main>
 </template>

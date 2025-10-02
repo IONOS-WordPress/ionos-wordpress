@@ -1,6 +1,23 @@
 @import 'https://ce1.uicdn.net/exos/framework/3.0/exos.min.css';
 @import '../wpscan/wpscan.css';
 
+@media (min-width: 1440px) {
+  #content {
+    width: 100%;
+  }
+
+  .page-section.ionos-dashboard__blocks {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+#content {
+  padding: 0;
+}
+.ionos-dashboard__blocks {
+  padding: 0;
+}
+
 .with-issues-only, .with-issues-only-flex{
   display: none;
 }
@@ -112,8 +129,16 @@ main{
   }
 }
 
+
+.ionos-site-health-vulnerability {
+  width: 440px;
+
+  .card {
+    box-shadow: none;
+  }
+}
+
 .ionos_next_best_actions{
-  background: white;
 
   .card{
     background: rgb(244, 247, 250);
@@ -124,15 +149,9 @@ main{
 
   .ionos_next_best_actions__section{
     padding-bottom: 0;
-  }
 
-  .nba-card{
-    .card__section{
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-between;
+    .card {
+      margin-bottom: 16px;
     }
   }
 
@@ -146,15 +165,22 @@ main{
 .ionos_vulnerability{
   container-type: inline-size !important;
   container: ionos_vulnerability;
-  background-color: #edfaef;
+  background-color: #c8fae2;
+  margin-bottom: 0;
+
+  .ionos_vulnerability__headline, .ionos_vulnerability__last-scan {
+    margin-left: 35px;
+  }
+
+  .headline {
+    margin-bottom: 4px;
+  }
 
   .ionos_vulnerability__content{
     flex-direction: column;
     justify-content: space-between;
-    background-image: url('assets/security/none.svg');
     background-repeat: no-repeat;
     background-position: top right;
-    gap: 18px;
   }
 
   .bubble{
@@ -163,36 +189,67 @@ main{
     border-radius: 50%;
     padding: 0.2em 0.5em;
     font-size: 0.8em;
-    margin-right: 0.5em;
+    margin-right: 15px;
   }
 
   /* Respect the order of this definition, as high overwrites medium */
   &.medium{
     background-color: #fcf9e8;
-    .ionos_vulnerability__content{
-      background-image: url('assets/security/medium.svg');
-    }
+
   }
   &.high{
-    background-color: #fcf0f1;
-    .ionos_vulnerability__content{
-      background-image: url('assets/security/high.svg');
-    }
+    background-color: #ffe4e2;
+
   }
   &.error{
-    background-color: white;
-    .ionos_vulnerability__content{
-      background-image: none;
+    background-color: #d3d3d3;
+
+  }
+
+  .ionos_vulnerability__problems{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .issue-rows{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .issue-row{
+    display: inline-flex;
+    font-size: var(--third-level-headline-size, 16px);
+  }
+
+  .issue-row .bubble{
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #ffffff;
+  }
+
+ .issue-row .bubble i{
+    color: #ffffff;
+
+    &::before {
+      padding-left: 1px;
     }
   }
 
   .issue-row.high .bubble{
-    background-color: #cc1818;
-    color: white;
+    background-color: #f50d00;
   }
+
   .issue-row.medium .bubble{
-    background-color: #f0b849;
+    background-color: #ef8302;
   }
+
 }
 
 @container ionos_vulnerability (max-width: 400px) {
@@ -210,6 +267,33 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+.ionos_buttons_same_width{
+  display: flex;
+  flex-wrap: wrap;
+  a{
+    padding-left: 0 !important;
+    flex: 1 1 35%;
+    justify-items: start;
+    margin: 0 0 12px 0;
+    text-decoration: none;
+
+    align-items: center;
+
+    color: var(--ghost-button-text-color,#1474c4);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: var(--button-font-family,"OpenSansSemibold",arial,sans-serif);
+    font-size: var(--button-font-size,14px);
+    justify-content: start;
+    gap: 8px;
+    min-height: 28px;
+
+    &:hover{
+      color: black;
+    }
   }
 }
 
@@ -246,6 +330,10 @@ main{
   padding: 20px;
 }
 
+.banner-logo--piensa, .banner-logo--udag {
+  width: 150px;
+}
+
 .page-tabbar__items {
   margin-left: 0;
 }
@@ -265,27 +353,10 @@ main{
   }
 }
 
-@media (max-width: 800px) {
-  .banner_wrapper {
-    flex-direction: column;;
-  }
-
-  .content {
-    width: 100%;
-  }
-
-  .ionos_banner_buttons{
-    width: 100%;
-  }
-
-  .banner-navigation {
-    width: 100%;
-  }
-}
-
 .ionos-maintenance-only {
   display: none;
 }
+
 main.ionos-maintenance-mode .ionos-maintenance-only{
   display: inline-block;
 }
@@ -335,4 +406,261 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 
 .static-overlay__blocker--active, .static-overlay__container--active {
   display: flex;
+}
+
+.ionos-site-health {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* height: 152px; */
+}
+
+.ionos-site-health-overview {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+  .headline {
+    word-break: break-all;
+  }
+}
+
+.ionos-site-health-overview__iframe {
+  border: 1px solid #bcc8d4;
+  border-radius: 8px;
+}
+
+@media (max-width: 1200px) {
+  .ionos-site-health-overview__iframe {
+    display: none;
+  }
+}
+
+.ionos-site-health-overview__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ionos-site-health-overview__info-items {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.ionos-site-health-overview__info-item{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .headline {
+    margin-bottom: 0;
+  }
+}
+
+.ionos-site-health-overview__info-homeurl {
+  display: flex;
+  gap: 10px;
+}
+
+.ionos-site-health-overview__info-homeurl .exos-icon {
+  font-size: 20px;
+  color: #096B35;
+}
+
+.site-health-status {
+  width: 200px;
+}
+
+#site-health-status-text{
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding-top: 2px;
+  color: #001B41;
+}
+
+#site-health-status-message{
+  width: 150px;
+  overflow: hidden;
+}
+
+.site-health-status-circle {
+  width: 18px;
+  height: 18px;
+
+  svg circle{
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+    stroke: #c3c4c7;
+    stroke-width: 1.5em;
+    width: 20px;
+    height: 20px;
+
+    &#bar{
+      stroke: #888888;
+
+      &.site-health-color-orange{
+        stroke: #ffb900;
+      }
+      &.site-health-color-green{
+        stroke: #46b450;
+      }
+      &.site-health-color-red{
+        stroke: #dc3232;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .banner_wrapper {
+    flex-direction: column;;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .ionos_banner_buttons{
+    width: 100%;
+  }
+
+  .banner-navigation {
+    width: 100%;
+  }
+
+  .ionos-site-health {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .ionos-site-health-overview__info-items {
+    justify-content: space-between;
+  }
+
+  .ionos-site-health-overview, .ionos-site-health-overview__info, .ionos-site-health-vulnerability {
+    width: 100%;
+  }
+}
+
+
+#ionos_next_best_actions__setup_complete, #ionos_next_best_actions__all_done {
+  .container {
+    display: flex;
+    min-height: 200px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px 80px;
+  }
+
+  @media (max-width: 1050px) {
+    .container {
+      padding: 20px;
+    }
+  }
+
+  .paragraph {
+    text-align: center;
+  }
+}
+
+@media (max-width: 666px) {
+  #ionos_next_best_actions__setup_complete, #ionos_next_best_actions__all_done {
+    margin-bottom: 20px;
+  }
+}
+
+#ionos_next_best_actions__setup_complete {
+  margin-bottom: 20px;
+}
+
+.panel__item {
+  margin-bottom: 0;
+  box-shadow: none;
+}
+
+.panel__item:hover {
+  box-shadow: none;
+}
+
+.panel__item--expanded.always-expanded {
+  .panel__item-header:after {
+    display: none;
+  }
+  .panel__item-header{
+    cursor: default;
+    color: inherit;
+  }
+  h3{
+      color: inherit;
+  }
+}
+
+.panel__headline {
+  font-size: 18px;
+}
+
+#ionos_nba_setup_container {
+  padding: 35px;
+  background: #ffffff;
+
+  .container {
+    display: flex;
+    flex-direction: row;
+
+    .paragraph {
+      margin-right: 30px;
+    }
+  }
+
+  .panel {
+    margin-bottom: 20px;
+  }
+
+  .panel__item {
+    margin: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #BCC8D4;
+  }
+
+  .panel__item-header {
+    padding: 0;
+  }
+
+  .panel__item-section {
+    padding-left: 40px;
+    margin-top: -15px;
+    margin-bottom: 0;
+  }
+
+  .ionos_finish_setup {
+    display: flex;
+    align-items: center;
+
+    i {
+      padding-right: 10px;
+    }
+  }
+}
+
+.single-accordion-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 960px) {
+  #ionos_nba_setup_container {
+    padding: 20px;
+  }
+}
+
+.panel__item--expanded.always-expanded:hover {
+  h3{
+    color: inherit;
+  }
 }

@@ -1,3 +1,6 @@
+// tell eslint that the global variable exists when this file gets executed
+/* global wpData:true */
+/* global jQuery:true */
 document.addEventListener('DOMContentLoaded', function () {
   // Welcome dialog
   const dashboard = document.querySelector('#wpbody-content').shadowRoot;
@@ -16,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   dashboard.querySelectorAll('.ionos-popup-dismiss')?.forEach((button) => {
     button.addEventListener('click', function () {
-      jQuery.post(wpData.ajaxUrl, {'action': 'ionos-popup-dismiss'});
+      jQuery.post(wpData.ajaxUrl, { action: 'ionos-popup-dismiss' });
       dashboard.querySelector('#ionos-essentials-popup').close();
     });
   });
@@ -73,33 +76,54 @@ document.addEventListener('DOMContentLoaded', function () {
   dashboard.querySelectorAll('.ionos-dismiss-nba').forEach((el) => {
     el.addEventListener('click', async (click) => {
       click.preventDefault();
-      dismissItem(click.target);
+      updateNbaItem(click.target, 'dismissed');
     });
   });
 
-  const emailAccountLink = dashboard.querySelector('a[data-nba-id="email-account"]');
-  if (emailAccountLink) {
-    emailAccountLink.onclick = () => {
-      dismissItem(emailAccountLink);
-    };
-  }
+  dashboard.querySelectorAll('a[data-complete-on-click="true"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      updateNbaItem(link, 'completed');
+    });
+  });
+
+  dashboard.querySelectorAll('.ionos_finish_setup')?.forEach((button) => {
+    button.addEventListener('click', function (event) {
+      jQuery.post(wpData.ajaxUrl, {
+        action: 'ionos-nba-setup-complete',
+        status: event.target.dataset.status,
+        _wpnonce: wpData.nonce,
+      });
+
+      if (event.target.dataset.status === 'finished') {
+        dashboard.querySelector('#ionos_nba_setup_container').remove();
+        dashboard.querySelector('#ionos_next_best_actions__setup_complete').style.display = 'block';
+        return;
+      }
+
+      dashboard.querySelector('.nba-setup').classList.add('ionos_nba_dismissed');
+      setTimeout(() => {
+        dashboard.querySelector('.nba-setup').remove();
+        location.reload();
+      }, 800);
+    });
+  });
 
   const helpCenterLink = dashboard.querySelector('a[data-nba-id="help-center"]');
   if (helpCenterLink) {
-    helpCenterLink.onclick = () => {
+    helpCenterLink.addEventListener('click', () => {
       document.querySelector('.extendify-help-center button').click();
-      dismissItem(helpCenterLink);
-    };
+    });
   }
 
-  const dismissItem = async (target) => {
-    fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/dismiss/' + target.dataset.nbaId, {
+  const updateNbaItem = async (target, status) => {
+    fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-WP-Nonce': wpData.nonce,
       },
       credentials: 'include',
+      body: JSON.stringify({ id: target.dataset.nbaId, status }),
     }).then((response) => {
       if (!response.ok) {
         return;
@@ -109,9 +133,9 @@ document.addEventListener('DOMContentLoaded', function () {
       setTimeout(() => {
         dashboard.getElementById(target.dataset.nbaId).remove();
 
-        const nbaCount = dashboard.querySelectorAll('.nba-card').length;
+        const nbaCount = dashboard.querySelectorAll('.nba-active').length;
         if (nbaCount === 0) {
-          dashboard.querySelector('.ionos_next_best_actions').remove();
+          location.reload();
         }
       }, 800);
     });
@@ -174,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
           window.EXOS.snackbar.critical(description + ' ' + wpData.i18n.deactivated);
         }
-      } catch (error) {
+      } catch {
         window.EXOS.snackbar.warning('Network error updating option ' + key);
       }
     });
@@ -201,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   dashboard.querySelectorAll('[data-slug]').forEach((element) => {
-    element.addEventListener('click', function (event) {
+    element.addEventListener('click', function () {
       const overlay = dashboard.querySelector('#plugin-install-overlay');
 
       dashboard.querySelector('.static-overlay__blocker').classList.add('static-overlay__blocker--active');
@@ -259,6 +283,73 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.reload();
           }, 10000);
         });
+    });
+  });
+
+  (async () => {
+    for (const test of wpData.siteHealthAsyncTests) {
+      try {
+        let headers = {
+          'Content-Type': 'application/json',
+          'X-WP-Nonce': wpData.nonce,
+        };
+
+        if (test === 'authorization-header') {
+          // this test requires an additional nonce
+          headers['Authorization'] = 'Basic ' + btoa('user:pwd');
+        }
+
+        const response = await fetch(wpData.restUrl + 'wp-site-health/v1/tests/' + test, {
+          method: 'GET',
+          headers: headers,
+          credentials: 'include',
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        wpData.siteHealthIssueCount[data.status] = parseInt(wpData.siteHealthIssueCount[data.status] ?? 0) + 1;
+      } catch (error) {
+        // silence is golden
+        console.error(error);
+      }
+    }
+    // all tests are done, now update the UI
+    const totalTests =
+      parseInt(wpData.siteHealthIssueCount.good, 10) +
+      parseInt(wpData.siteHealthIssueCount.recommended, 10) +
+      parseInt(wpData.siteHealthIssueCount.critical, 10) * 1.5;
+    const failedTests =
+      parseInt(wpData.siteHealthIssueCount.recommended, 10) * 0.5 +
+      parseInt(wpData.siteHealthIssueCount.critical, 10) * 1.5;
+    const goodTestsRatio = 100 - Math.ceil((failedTests / totalTests) * 100);
+
+    dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - 565.48 * (goodTestsRatio / 100);
+
+    if (goodTestsRatio <= 80 || wpData.siteHealthIssueCount.critical !== 0) {
+      dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthImprovable;
+      dashboard.querySelector('#bar').classList.add('site-health-color-orange');
+    } else {
+      dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthGood;
+      dashboard.querySelector('#bar').classList.add('site-health-color-green');
+    }
+
+    // set the transient so we do not have to run the tests on every page load
+    jQuery.post(wpData.ajaxUrl, {
+      action: 'ionos-set-site-health-issues',
+      issues: JSON.stringify(wpData.siteHealthIssueCount),
+      _wpnonce: wpData.nonce,
+    });
+  })();
+
+  dashboard.querySelectorAll('.expandable > .panel__item-header').forEach((header) => {
+    header.addEventListener('click', () => {
+      const item = header.closest('.panel__item');
+      const isExpanded = item.classList.contains('panel__item--expanded');
+
+      item.classList.toggle('panel__item--expanded', !isExpanded);
+      item.classList.toggle('panel__item--closed', isExpanded);
+      item.setAttribute('aria-expanded', String(!isExpanded));
     });
   });
 });

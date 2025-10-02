@@ -2,17 +2,25 @@
 
 add something here if branch name + PR title are not self-explanatory
 
-## PR checklist
+## Checklist
 
-- [ ] lint + lint-fix
-- [ ] updated/added tests
-- [ ] tests run locally
-- [ ] updated the documentation if necessary
+- [ ] Acceptance Criteria are fulfilled (or there is no ticket)
+- [ ] tests added if necessary
+- [ ] docs added if necessary
 
-## [optional] QA Instructions, Screenshots, Recordings
+## Screenshots / Recordings
 
-_Please replace this line with instructions on how to test your changes, a note
-on the devices and browsers this has been tested on, as well as any relevant
-images for UI changes._
+_If the ui was changed by PR please provide a screenshot_
 
-_If the ui was changed by PR please provide a before and after screenshot_
+## manual testing
+
+- [ ] done / trivial change (docs, ...)
+- [ ] requested
+      _Please replace this line with instructions on how to test your changes_
+
+## Reviewer checklist
+
+- [ ] if requested manual testing done
+- [ ] sufficient tests
+- [ ] sufficient docs
+- [ ] general Code Review

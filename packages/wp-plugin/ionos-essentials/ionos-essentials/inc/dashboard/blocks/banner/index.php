@@ -5,6 +5,7 @@ namespace ionos\essentials\dashboard\blocks\banner;
 defined('ABSPATH') || exit();
 
 use ionos\essentials\Tenant;
+use const ionos\essentials\PLUGIN_FILE;
 
 const BUTTON_TEMPLATE = '<a href="%s" class="button %s" title="%s">%s</a>';
 function render_callback(): void
@@ -31,7 +32,8 @@ function render_callback(): void
     \esc_html($button['text'] ?? '')
   ), $button_list));
 
-  $tenant_logo = \plugins_url('data/tenant-logos/' . Tenant::get_slug() . '.svg', dirname(__DIR__));
+  $tenant_slug = Tenant::get_slug();
+  $tenant_logo = \plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . $tenant_slug . '.svg', PLUGIN_FILE);
 
   ?>
 <div class="card">
@@ -39,7 +41,7 @@ function render_callback(): void
     <section class="card__section">
       <div class="banner_wrapper">
         <div class="content">
-          <img class="banner-logo"
+          <img class="banner-logo banner-logo--<?php echo \esc_attr($tenant_slug); ?>"
           src="<?php echo \esc_attr($tenant_logo); ?>"
           alt="<?php echo \esc_attr(Tenant::get_label()); ?> Logo"
           >
@@ -51,7 +53,7 @@ function render_callback(): void
             </li>
             <li>
               <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="tools">
-                <div class="page-tabbar__label may-have-issue-dot"><?php \esc_html_e('Tools', 'ionos-essentials'); ?></div>
+                <div class="page-tabbar__label may-have-issue-dot"><?php \esc_html_e('Tools & Security', 'ionos-essentials'); ?></div>
               </a>
             </li>
           </ul>

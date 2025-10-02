@@ -60,10 +60,9 @@
   .issue-row{
     font-size: var(--third-level-headline-size, 16px);
   }
-  .ionos_vulnerability__content{
-    background-image: none !important;
-    gap: 10px;
-    margin-bottom: 1em;
+
+  .paragraph{
+    padding-top: 10px;
   }
 }
 
