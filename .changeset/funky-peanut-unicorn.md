@@ -2,4 +2,4 @@
 '@ionos-wordpress/essentials': major
 ---
 
-added status bar to Hub Overview
+redesigned and improved next best actions
