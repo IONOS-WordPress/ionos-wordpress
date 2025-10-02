@@ -1,5 +1,12 @@
 # @ionos-wordpress/essentials
 
+## 2.0.0
+
+### Major Changes
+
+- f53eaba: redesigned and improved next best actions
+- 3e9a3ee: added status bar to Hub Overview
+
 ## 1.2.0
 
 ### Minor Changes
