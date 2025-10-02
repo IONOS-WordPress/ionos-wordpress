@@ -653,12 +653,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   flex-direction: column;
 }
 
-@media (max-width: 666px) {
-  .single-accordion-actions  {
-    gap: 16px;
-  }
-}
-
 @media (max-width: 960px) {
   #ionos_nba_setup_container {
     padding: 20px;
