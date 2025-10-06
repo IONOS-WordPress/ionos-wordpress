@@ -19,7 +19,7 @@ const configs = [
   includeIgnoreFile(lintIgnorePath),
   eslintPluginImport.flatConfigs.recommended,
   pluginReact.configs.flat.recommended,
-  reactHooks.configs['recommended-latest'],
+  reactHooks.configs['recommended-latest'][0],
   eslintPluginPrettierRecommended,
   // {
   //   ignores: ['**/*.md', '**/*.json', '**/*.code-workspace'],
