@@ -188,6 +188,18 @@ function has_leaked_flag($user_id): bool
   }
 });
 
+\add_action('profile_update', function ($user_id, $old_user_data) {
+  if (! defined('WP_CLI') || ! WP_CLI) {
+    return;
+  }
+
+  if ($old_user_data->user_pass === \get_userdata($user_id)->user_pass) {
+    return;
+  }
+
+  \update_user_meta($user_id, LEAKED_CREDENTIALS_FLAG_NAME, false);
+}, 10, 2);
+
 function is_valid_email($email): bool
 {
   return IONOS_NOREPLY_EMAIL !== $email && is_email($email);

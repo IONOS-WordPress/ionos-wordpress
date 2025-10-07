@@ -8,11 +8,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"PO-Revision-Date: 2025-09-02 10:37\n"
+"PO-Revision-Date: 2025-09-23 09:19\n"
 "Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Crowdin-File: LOC-8352_SE.po\n"
-"X-Crowdin-File-ID: 530\n"
+"X-Crowdin-File: LOC-8516_ionos-essentials-sv_SE (4).po\n"
+"X-Crowdin-File-ID: 534\n"
 "X-Crowdin-Language: sv\n"
 "X-Crowdin-Project: 75e86f746860bcef4fdd142a24cf2467\n"
 "X-Crowdin-Project-ID: 61\n"
@@ -99,12 +99,14 @@ msgid "Quick Links"
 msgstr "Snabblänkar"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "kritiskt fel hittades"
 msgstr[1] "kritiska fel hittades"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "varning hittad"
@@ -220,7 +222,7 @@ msgid "Add Favicon"
 msgstr "Lägg till favicon"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
-msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
+msgid "Add a favicon (site icon) to your website to enhance brand recognition and visibility."
 msgstr "Lägg till en favicon (webbplatsikon) för att stärka varumärkeskännedomen och synligheten."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
@@ -433,7 +435,6 @@ msgstr "Onboarding"
 msgid "No thanks"
 msgstr "Nej tack"
 
-#: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr "Verktyg"
@@ -641,6 +642,7 @@ msgstr "Poängen är på en skala från 1 till 10, där ett högre värde indike
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "Installationer av tillägg och teman är förbjudna om deras poäng överskrider 7,0."
 
+#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
@@ -682,7 +684,6 @@ msgstr "Aktivering rekommenderas inte"
 msgid "The vulnerability scan has found issues for"
 msgstr "Sårbarhetsskanningen har hittat problem för"
 
-#. translators: %s is placeholder for the time since the last scan
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
@@ -733,14 +734,6 @@ msgid "This theme is active. Please activate another theme."
 msgstr "Detta tema är aktivt. Aktivera ett annat tema."
 
 #: ionos-essentials/inc/wpscan/views/summary.php
-msgid "critical issues found"
-msgstr "kritiska fel hittades"
-
-#: ionos-essentials/inc/wpscan/views/summary.php
-msgid "warnings found"
-msgstr "varningar hittade"
-
-#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
 msgstr "En automatisk skanning görs dagligen och varje gång ett nytt tillägg eller tema installeras, med hjälp av databasen för sårbarheter från WPScan."
 
@@ -781,7 +774,7 @@ msgid "To re-enable access to this account, the password must be updated. We hav
 msgstr "För att återaktivera åtkomsten måste lösenordet uppdateras. Vi har skickat ett e‑postmeddelande med instruktioner för återställning till"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgid "Vulnerability scan not possible. Please contact Customer Care."
 msgstr "Sårbarhetsskanning inte möjlig. Kontakta kundtjänst."
 
 #: ionos-essentials/inc/tenants/config/udag.php
@@ -865,137 +858,135 @@ msgstr "Radera"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "Maintenance page active"
-msgstr ""
+msgstr "Underhållssida aktiv"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "Site health"
-msgstr ""
+msgstr "Webbplatsens hälsa"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "WordPress version"
-msgstr ""
+msgstr "WordPress-version"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "PHP version"
-msgstr ""
+msgstr "PHP-version"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-msgid "Vulnerability Scan"
-msgstr ""
-
-#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "View details"
-msgstr ""
+msgstr "Visa detaljer"
 
 #. translators: %s is placeholder for the time since the last scan
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 #, php-format
 msgid "Last scan ran %s ago"
-msgstr ""
+msgstr "Senaste skanningen kördes för %s sedan"
 
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Should be improved"
-msgstr ""
+msgstr "Behöver förbättras"
 
+#: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Tools & Security"
 msgstr "Verktyg och Säkerhet"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "'Tools & Security' area"
-msgstr ""
+msgstr "Området ”Verktyg & Säkerhet”"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
-msgstr ""
+msgstr "Alla funktioner från ditt tidigare säkerhetsplugin har nu fått ett nytt hem här. Dessutom hittar du en ny funktion för underhållssida som du kan slå på när du behöver den."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Visit Tools & Security"
-msgstr ""
+msgstr "Besök Verktyg & Säkerhet"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Help us shape WordPress for you"
-msgstr ""
+msgstr "Hjälp oss forma WordPress för dig"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "You're all caught up!"
-msgstr ""
+msgstr "Du är helt à jour!"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "You've completed all of our current recommendations. This list will update automatically with new tips, so check in again soon to see what's next."
-msgstr ""
+msgstr "Du har slutfört alla våra nuvarande rekommendationer. Den här listan uppdateras automatiskt med nya tips, så kika in igen snart för att se vad som väntar härnäst."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
-msgid "View IONOS Help Center"
-msgstr ""
+msgid "View Digital Guide"
+msgstr "Visa Digital Guide"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "Leave feedback"
-msgstr ""
+msgstr "Lämna feedback"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/main.php
 msgid "What's important for today"
-msgstr ""
+msgstr "Det som är viktigt idag"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Your Foundation is Built!"
-msgstr ""
+msgstr "Din grund är lagd!"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Congratulations! You've successfully set up your WordPress site."
-msgstr ""
+msgstr "Grattis! Du har framgångsrikt konfigurerat din WordPress-sida."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Now for the fun part, exploring ways to grow and enhance it."
-msgstr ""
+msgstr "Nu börjar det roliga – att utforska hur du kan utveckla och förbättra den."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Explore What's Next"
-msgstr ""
+msgstr "Utforska vad som väntar härnäst"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php
 msgid "Finish setup"
-msgstr ""
+msgstr "Slutför installation"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php
 msgid "Dismiss getting started guide"
-msgstr ""
+msgstr "Stäng guiden för att komma igång"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "🚀  Getting started with WordPress"
-msgstr ""
+msgstr "🚀 Kom igång med WordPress"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "Ready to establish your online presence? Let's get the essentials sorted so your new site looks professional and is easy for people to find."
-msgstr ""
+msgstr "Redo att bygga din digitala närvaro? Låt oss ta hand om grunderna så att din nya webbplats ser professionell ut och är lätt att hitta."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "All actions completed!"
-msgstr ""
+msgstr "Alla åtgärder klara!"
 
 #. translators: 1: number of completed actions, 2: total number of actions
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 #, php-format
 msgid " %1$d of %2$d completed"
-msgstr ""
+msgstr " %1$d av %2$d slutförda"
 
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Good"
-msgstr ""
+msgstr "Bra"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Personalize business data"
-msgstr ""
+msgstr "Anpassa företagsuppgifter"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add your business details, like a phone number, email, and address, to your website."
-msgstr ""
+msgstr "Lägg till uppgifter som telefonnummer, e-post och adress på din webbplats."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
-msgid "Select a theme"
-msgstr ""
+msgid "Select a Theme"
+msgstr "Välj ett tema"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Choose a theme that matches your website's purpose and your comfort level."
-msgstr ""
+msgstr "Välj ett tema som passar din webbplats syfte och som du själv trivs med."

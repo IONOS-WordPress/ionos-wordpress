@@ -30,9 +30,7 @@ function render_callback(): void
             ></iframe>
           </div>
           <div class="ionos-site-health-overview__info">
-            <?php if (\ionos\essentials\maintenance_mode\is_maintenance_mode()) { ?>
-              <span class="badge badge--warning-solid ionos-maintenance-only" style="width: 180px; margin-bottom: 10px;"><?php \esc_html_e('Maintenance page active', 'ionos-essentials'); ?></span>
-            <?php } ?>
+            <span class="badge badge--warning-solid ionos-maintenance-only" style="width: fit-content; margin-bottom: 10px;"><?php \esc_html_e('Maintenance page active', 'ionos-essentials'); ?></span>
             <div class="ionos-site-health-overview__info-homeurl">
               <?php if (\is_ssl()) { ?>
                 <i class="exos-icon exos-icon-nav-lock-close-16"></i>
@@ -42,7 +40,9 @@ function render_callback(): void
               <h2 class="headline headline--sub"><?php echo \esc_url(parse_url(\get_option('siteurl', ''), PHP_URL_HOST)); ?></h2>
             </div>
             <div class="ionos-site-health-overview__info-items">
-              <div class="ionos-site-health-overview__info-item site-health-status">
+              <a href="<?php echo \esc_attr(\admin_url(
+                'site-health.php'
+              )); ?>" class="ionos-site-health-overview__info-item site-health-status" style="color: inherit; text-decoration: none;">
                 <p><?php \esc_html_e('Site health', 'ionos-essentials')?></p>
                 <strong id="site-health-status-text">
                   <div class="site-health-status-circle">
@@ -53,7 +53,7 @@ function render_callback(): void
                   </div>
                   <span id="site-health-status-message" class="site-health-color"><?php echo \esc_html_e('Results are still loading&hellip;'); ?></span>
                 </strong>
-              </div>
+              </a>
               <div class="ionos-site-health-overview__info-item">
                 <h3 class="ionos-site-health-overview__info-item-title"><?php \esc_html_e('WordPress version', 'ionos-essentials')?></h3>
                 <h4 class="headline headline--sub"><?php echo \esc_attr(\get_bloginfo('version')); ?></h4>

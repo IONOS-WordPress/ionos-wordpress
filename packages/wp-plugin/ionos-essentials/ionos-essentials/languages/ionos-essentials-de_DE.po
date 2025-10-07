@@ -22,12 +22,12 @@ msgstr "Das essentials-Plugin bietet IONOS-Hosting-spezifische Funktionen."
 #. Author of the plugin
 #: ionos-essentials.php
 msgid "IONOS Group"
-msgstr "IONOS-Gruppe"
+msgstr "IONOS Group"
 
 #. Author URI of the plugin
 #: ionos-essentials.php
 msgid "https://www.ionos-group.com/brands.html"
-msgstr "https://www.ionos-group.com/brands.html"
+msgstr "https://www.ionos-group.com/de/marken.html"
 
 #: ionos-essentials/inc/tenants/config/arsys.php
 #: ionos-essentials/inc/tenants/config/piensa.php
@@ -94,12 +94,14 @@ msgid "Quick Links"
 msgstr "Schnellzugriff"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "critical issue found"
 msgid_plural "critical issues found"
 msgstr[0] "Kritisches Problem gefunden"
 msgstr[1] "Kritische Probleme gefunden"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "warning found"
 msgid_plural "warnings found"
 msgstr[0] "Warnung gefunden"
@@ -148,7 +150,7 @@ msgstr "Domain verbinden"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Edit & Complete Your Website"
-msgstr "Website bearbeiten"
+msgstr "Website prüfen und vervollständigen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add pages, text, and images, fine-tune your website with AI-powered tools or adjust colours and fonts."
@@ -160,7 +162,7 @@ msgstr "Website bearbeiten"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Discover Help Center"
-msgstr "Hilfe-Center entdecken"
+msgstr "Das Hilfe-Center entdecken"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Get instant support with Co-Pilot AI, explore our Knowledge Base, or take guided tours."
@@ -215,8 +217,8 @@ msgid "Add Favicon"
 msgstr "Favicon hinzufügen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
-msgid "Add a favicon (website icon) to your website to enhance brand recognition and visibility."
-msgstr "Fügen Sie Ihrer Website ein Favicon (Website-Symbol) hinzu, um die Wiedererkennung und Sichtbarkeit Ihrer Marke zu verbessern."
+msgid "Add a favicon (site icon) to your website to enhance brand recognition and visibility."
+msgstr "Fügen Sie Ihrer Website ein Favicon (Website-Icon) hinzu, um die Wiedererkennung und Sichtbarkeit Ihrer Marke zu verbessern."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Create a Page"
@@ -424,7 +426,6 @@ msgstr "Onboarding"
 msgid "No thanks"
 msgstr "Nein, danke"
 
-#: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Tools"
 msgstr "Tools"
@@ -451,7 +452,7 @@ msgstr "Überwachen Sie Passwortleaks. Besteht der Verdacht, dass ein Passwort k
 
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Block XML-RPC access"
-msgstr "XML-RPC Zugang blockieren"
+msgstr "Zugang zu XML-RPC blockieren"
 
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 msgid "Block access to XML-RPC, for security purposes we recommend keeping this blocked if not in use."
@@ -547,7 +548,7 @@ msgstr "Ihre Meinung ist uns wichtig!"
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php
 #: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
-msgstr "Wir sind ständig auf der Suche nach Möglichkeiten Ihr WordPress-Hosting-Erlebnis noch besser zu machen. Nehmen Sie sich bitte ein paar Minuten Zeit, um an einer kurzen Online-Umfrage teilzunehmen."
+msgstr "Wir sind ständig auf der Suche nach Möglichkeiten Ihr WordPress-Hosting-Erlebnis zu verbessern. Nehmen Sie sich bitte ein paar Minuten Zeit, um an einer kurzen Online-Umfrage teilzunehmen."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php
@@ -584,7 +585,7 @@ msgstr "Wichtige Sicherheits-Benachrichtigung: Schwachstelle in Ihrer WordPress 
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 msgid "Dear user,<br />We want to inform you that our recent vulnerability scan has detected one or more issues that require your attention:"
-msgstr "Hallo,<br />wir möchten Sie darüber informieren, dass der letzte Sicherheits-Scan ein oder mehrere Probleme gefunden hat, die Ihre Aufmerksamkeit benötigen."
+msgstr "Hallo,<br />wir möchten Sie darüber informieren, dass der letzte Schwachstellen-Scan ein oder mehrere Probleme gefunden hat, die Ihre Aufmerksamkeit benötigen."
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 msgid "To ensure the safety and security of your website, we recommend reviewing the findings of the scan and taking appropriate actions. For more detailed information about the specific vulnerabilities identified, please visit the following link:"
@@ -632,6 +633,7 @@ msgstr "Die Werte liegen auf einer Skala von 1 bis 10, wobei ein höherer Wert e
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
 msgstr "Plugins und Themes dürfen nicht installiert werden, wenn ihre Bewertung über 7,0 liegt."
 
+#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "Vulnerability scan"
@@ -673,7 +675,6 @@ msgstr "Die Aktivierung wird nicht empfohlen."
 msgid "The vulnerability scan has found issues for"
 msgstr "Der Schwachstellen-Scan hat Probleme gefunden für"
 
-#. translators: %s is placeholder for the time since the last scan
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "No scan has been performed yet."
@@ -724,14 +725,6 @@ msgid "This theme is active. Please activate another theme."
 msgstr "Dieses Theme ist aktiv. Bitte aktiviere ein anderes Theme."
 
 #: ionos-essentials/inc/wpscan/views/summary.php
-msgid "critical issues found"
-msgstr "Kritische Probleme gefunden"
-
-#: ionos-essentials/inc/wpscan/views/summary.php
-msgid "warnings found"
-msgstr "Warnungen gefunden"
-
-#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "We automatically scan daily and whenever a new plugin or theme is installed, using the WPScan vulnerability database."
 msgstr "Wir scannen, mithilfe der WPScan-Sicherheitslückendatenbank, automatisch jeden Tag und sobald ein neues Plugin oder Theme installiert wird."
 
@@ -747,7 +740,7 @@ msgstr "Advanced"
 #: ionos-essentials/inc/dashboard/tabs/tools.php
 #, php-format
 msgid "%s Hub as WordPress Admin start page"
-msgstr "%s Hub als Startseite für WordPress-Admins"
+msgstr "%s Hub als Startseite der WordPress Administrationsoberfläche"
 
 #. translators: %s is placeholder for the tenant name
 #: ionos-essentials/inc/dashboard/tabs/tools.php
@@ -776,7 +769,7 @@ msgid "Webspace"
 msgstr "Webspace"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "Vulnerability Scan not possible. Please contact Customer Care."
+msgid "Vulnerability scan not possible. Please contact Customer Care."
 msgstr "Schwachstellen-Scan nicht möglich. Bitte kontaktieren Sie den Kunden Service."
 
 #: ionos-essentials/inc/tenants/config/udag.php
@@ -860,137 +853,135 @@ msgstr "Löschen"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "Maintenance page active"
-msgstr ""
+msgstr "Wartungsseite aktiv"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "Site health"
-msgstr ""
+msgstr "Website-Zustand"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "WordPress version"
-msgstr ""
+msgstr "WordPress Version"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "PHP version"
-msgstr ""
+msgstr "PHP Version"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-msgid "Vulnerability Scan"
-msgstr ""
-
-#: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
+#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "View details"
-msgstr ""
+msgstr "Details ansehen"
 
 #. translators: %s is placeholder for the time since the last scan
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
 #: ionos-essentials/inc/wpscan/views/summary.php
 #, php-format
 msgid "Last scan ran %s ago"
-msgstr ""
+msgstr "Letzter Scan war vor %s"
 
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Should be improved"
-msgstr ""
+msgstr "Sollte verbessert werden"
 
+#: ionos-essentials/inc/dashboard/blocks/banner/index.php
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Tools & Security"
 msgstr "Tools & Sicherheit"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "'Tools & Security' area"
-msgstr ""
+msgstr "Bereich Tools & Sicherheit"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "All the features from your previous security plugin have now found their new home here. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
-msgstr ""
+msgstr "Alle Funktionen Ihres bisherigen Sicherheits-Plugins sind nun hier zu finden. Darüber hinaus steht Ihnen eine neue Wartungsseitenfunktion zur Verfügung, die Sie bei Bedarf aktivieren können."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Visit Tools & Security"
-msgstr ""
+msgstr "Tools & Sicherheit besuchen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Help us shape WordPress for you"
-msgstr ""
+msgstr "Unterstützen Sie uns dabei, WordPress für Sie zu gestalten"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "You're all caught up!"
-msgstr ""
+msgstr "Sie sind auf dem neuesten Stand!"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "You've completed all of our current recommendations. This list will update automatically with new tips, so check in again soon to see what's next."
-msgstr ""
+msgstr "Sie haben alle unsere aktuellen Empfehlungen abgeschlossen. Diese Liste wird automatisch mit neuen Tipps aktualisiert. Schauen Sie bald wieder vorbei, um zu erfahren, was als Nächstes kommt."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
-msgid "View IONOS Help Center"
-msgstr ""
+msgid "View Digital Guide"
+msgstr "Digital Guide besuchen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/all-done.php
 msgid "Leave feedback"
-msgstr ""
+msgstr "Feedback geben"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/main.php
 msgid "What's important for today"
-msgstr ""
+msgstr "Was ist heute wichtig?"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Your Foundation is Built!"
-msgstr ""
+msgstr "Ihre Grundlage ist geschaffen!"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Congratulations! You've successfully set up your WordPress site."
-msgstr ""
+msgstr "Herzlichen Glückwunsch! Sie haben Ihre WordPress-Website erfolgreich eingerichtet."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Now for the fun part, exploring ways to grow and enhance it."
-msgstr ""
+msgstr "Nun zum interessanten Teil: Wege zur Weiterentwicklung und Verbesserung finden"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-complete.php
 msgid "Explore What's Next"
-msgstr ""
+msgstr "Entdecken Sie die nächsten Schritte"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php
 msgid "Finish setup"
-msgstr ""
+msgstr "Einrichtung fertigstellen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-footer.php
 msgid "Dismiss getting started guide"
-msgstr ""
+msgstr "Erste Schritte überspringen"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "🚀  Getting started with WordPress"
-msgstr ""
+msgstr "🚀   Erste Schritte mit WordPress"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "Ready to establish your online presence? Let's get the essentials sorted so your new site looks professional and is easy for people to find."
-msgstr ""
+msgstr "Erledigen Sie die wichtigsten Schritte, damit Ihre neue WordPress Website professionell auf Ihre Besucher  wirkt und sie im Internet gefunden werden."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 msgid "All actions completed!"
-msgstr ""
+msgstr "Alle Aktionen abgeschlossen!"
 
 #. translators: 1: number of completed actions, 2: total number of actions
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/views/setup-header.php
 #, php-format
 msgid " %1$d of %2$d completed"
-msgstr ""
+msgstr "%1$d von %2$d abgeschlossen"
 
 #: ionos-essentials/inc/dashboard/index.php
 msgid "Good"
-msgstr ""
+msgstr "Gut"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Personalize business data"
-msgstr ""
+msgstr "Geschäftsdaten personalisieren"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add your business details, like a phone number, email, and address, to your website."
-msgstr ""
+msgstr "Fügen Sie Ihre Unternehmensdaten wie Telefonnummer, E-Mail-Adresse und Anschrift zu Ihrer Website hinzu."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
-msgid "Select a theme"
-msgstr ""
+msgid "Select a Theme"
+msgstr "Wählen Sie ein Theme"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Choose a theme that matches your website's purpose and your comfort level."
-msgstr ""
+msgstr "Wählen Sie ein Theme, das zum Zweck Ihrer Website und Ihren Anforderungen passt."

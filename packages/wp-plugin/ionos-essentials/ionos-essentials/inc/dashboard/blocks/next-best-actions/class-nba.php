@@ -23,7 +23,7 @@ class NBA
     public readonly string $link,
     public readonly string $anchor,
     private readonly bool $completed,
-    public readonly bool $dismiss_on_click,
+    public readonly bool $complete_on_click,
     public readonly array $categories,
     public readonly string $exos_icon,
     public readonly bool $expanded
@@ -70,7 +70,7 @@ class NBA
     string $link,
     string $anchor,
     bool $completed = false,
-    bool $dismiss_on_click = false,
+    bool $complete_on_click = false,
     array $categories = [],
     string $exos_icon = 'target',
     bool $expanded = false
@@ -82,7 +82,7 @@ class NBA
       $link,
       $anchor,
       $completed,
-      $dismiss_on_click,
+      $complete_on_click,
       $categories,
       $exos_icon,
       $expanded

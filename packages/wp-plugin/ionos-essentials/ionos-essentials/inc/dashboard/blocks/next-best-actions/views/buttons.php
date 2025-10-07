@@ -4,18 +4,18 @@ namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
 defined('ABSPATH') || exit();
 
-function create_buttons($action, $string = '')
+function create_buttons(NBA $action, $string = '')
 {
   $target = false === strpos(\esc_url($action->link), home_url()) ? '_blank' : '_top';
-  if ('#' === $action->link) {
+  if (str_starts_with(($action->link), '#')) {
     $target = '';
   }
   $buttons = sprintf(
-    '<a data-nba-id="%s" href="%s" class="button button--secondary" target="%s" data-dismiss-on-click="%s">%s</a>',
+    '<a data-nba-id="%s" href="%s" class="button button--secondary" target="%s" data-complete-on-click="%s">%s</a>',
     $action->id,
     \esc_url($action->link),
     $target,
-    $action->dismiss_on_click ? 'true' : 'false',
+    $action->complete_on_click ? 'true' : 'false',
     \esc_html($action->anchor)
   );
 
