@@ -40,9 +40,8 @@ function _rest_loop_callback(): \WP_REST_Response
     ],
   ];
 
-  // toDo: clear after development for deploying
-  // \delete_option(IONOS_LOOP_EVENTS_OPTION);
-  // \delete_option(IONOS_LOOP_CLICKS_OPTION);
+  \delete_option(IONOS_LOOP_EVENTS_OPTION);
+  \delete_option(IONOS_LOOP_CLICKS_OPTION);
 
   return \rest_ensure_response($core_data);
 }
