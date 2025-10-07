@@ -52,7 +52,7 @@ require_once __DIR__ . '/ionos-essentials/inc/login/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/security/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/maintenance_mode/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/wpscan/index.php';
-//require_once __DIR__ . '/ionos-essentials/inc/loop/index.php';
+// require_once __DIR__ . '/ionos-essentials/inc/loop/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/extendify/index.php';
 
 // soc plugin components
