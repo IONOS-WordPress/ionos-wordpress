@@ -1,3 +1,6 @@
+var foo = 'hallo4';
+console.log(foo);
+
 // tell eslint that the global variable exists when this file gets executed
 /* global ionosWPScanPlugins:true */
 /* global jQuery:true */
