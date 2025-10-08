@@ -1,6 +1,3 @@
-var foo = 'hallo6';
-console.log(foo);
-
 // tell eslint that the global variable exists when this file gets executed
 /* global ionosWPScanThemes:true */
 document.addEventListener('DOMContentLoaded', function () {
