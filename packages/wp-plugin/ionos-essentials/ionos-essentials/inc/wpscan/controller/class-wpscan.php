@@ -20,6 +20,7 @@ class WPScan
 
     if (false === $this->issues || ! is_array($this->issues)) {
       $this->get_new_middleware_data();
+
       $this->maybe_send_email();
     }
 
@@ -267,6 +268,9 @@ class WPScan
     $message = $this->get_mail_content(array_values($unknown_names));
     $headers = ['Content-Type: text/html; charset=UTF-8'];
 
+    \ionos\essentials\loop\log_loop_event('wpscan_email_sent', [
+      'issues' => array_values($unknown_names),
+    ]);
     \wp_mail($to, $subject, $message, $headers);
     return true;
   }
