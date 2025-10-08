@@ -79,7 +79,6 @@ function display_problems(array $args): void
     }
     echo '</div>';
 
-    display_full_report_link($args);
   }
 
   if (0 === $args['high'] && 0 === $args['medium']) {
@@ -91,19 +90,6 @@ function display_problems(array $args): void
     echo '</h4></div>';
   }
   echo '</div>';
-}
-
-function display_full_report_link($args): void
-{
-  printf(
-    <<<EOF
-    <div class="ionos_vulnerability__report-link">
-      <a href="#tools" class="button button--secondary">%s</a>
-    </div>
-EOF
-    ,
-    \esc_html__('View details', 'ionos-essentials')
-  );
 }
 
 function display_last_scan(array $args): void
