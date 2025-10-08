@@ -285,7 +285,7 @@ module.exports = {
 $(
   # add recursively all {index,*-index}.js files in src directory to webpack entry
   # ignore files with block.json in the same directory
-  for js_file in $(find $JS_SRC_PATH -type f \( -name 'index.js' -o -name '*-index.js' \) ! -execdir test -f block.json \; -print | xargs -I {} realpath --relative-to $JS_SRC_PATH {}); do
+  for  js_file in $(find $JS_SRC_PATH -type f -name '*.js' ! -execdir test -f block.json \; -print | xargs -I {} realpath --relative-to $JS_SRC_PATH {}); do
     echo "        '${js_file%.*}': './$PLUGIN_NAME/src/$js_file',"
   done
 )
