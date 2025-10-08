@@ -4,6 +4,7 @@
 @media (min-width: 1440px) {
   #content {
     width: 100%;
+    min-height: 100%;
   }
 
   .page-section.ionos-dashboard__blocks {
@@ -11,9 +12,12 @@
     margin: 0 auto;
   }
 }
+
 #content {
   padding: 0;
+  height: auto;
 }
+
 .ionos-dashboard__blocks {
   padding: 0;
 }
