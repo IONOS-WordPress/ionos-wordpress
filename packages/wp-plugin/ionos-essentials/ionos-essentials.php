@@ -37,6 +37,65 @@ defined('ABSPATH') || exit();
   }
 );
 
+\add_action('admin_enqueue_scripts', function (): void {
+  
+  // enqueue dashboard scripts
+  $dashboard_assets = include_once __DIR__ . '/ionos-essentials/build/dashboard/index.asset.php';
+  \wp_enqueue_script(
+    'ionos-essentials-dashboard',
+    \plugins_url('/ionos-essentials/build/dashboard/index.js', __FILE__),
+    $dashboard_assets['dependencies'],
+    $dashboard_assets['version'],
+    [
+      'in_footer' => true,
+    ],
+  );
+
+  // enqueue maintenance mode scripts
+  $maintenace_mode_assets = include_once __DIR__ . '/ionos-essentials/build/maintenance_mode/index.asset.php';
+  \wp_enqueue_script(
+    'ionos-essentials-maintenance-mode',
+    \plugins_url('/ionos-essentials/build/maintenance_mode/index.js', __FILE__),
+    $maintenace_mode_assets['dependencies'],
+    $maintenace_mode_assets['version'],
+    [
+      'in_footer' => true,
+    ],
+  );
+
+  // enqueue security scripts
+  $security_assets = include_once __DIR__ . '/ionos-essentials/build/security/index.asset.php';
+  \wp_enqueue_script(
+    'ionos-essentials-security',
+    \plugins_url('/ionos-essentials/build/security/index.js', __FILE__),
+    $security_assets['dependencies'],
+    $security_assets['version'],
+    [
+      'in_footer' => true,
+    ],
+  );
+
+  // enqueue wpscan scripts
+  $scripts = ['plugin-install', 'theme-install', 'theme-overview'];
+    foreach ($scripts as $name) {
+        $asset_path = __DIR__ . "/ionos-essentials/build/wpscan/{$name}.asset.php";
+        $script_url = plugins_url("/ionos-essentials/build/wpscan/{$name}.js", __FILE__);
+
+        if (file_exists($asset_path)) {
+            $asset = include $asset_path;
+
+            wp_enqueue_script(
+                "ionos-essentials-{$name}",
+                $script_url,
+                $asset['dependencies'],
+                $asset['version'],
+                ['in_footer' => true]
+            );
+        }
+    }
+});
+
+
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';
 require_once __DIR__ . '/ionos-essentials/inc/update/index.php';
 
