@@ -33,16 +33,6 @@ function is_maintenance_mode()
   );
 }, 31);
 
-\add_action('admin_enqueue_scripts', function () {
-  \wp_enqueue_script(
-    'ionos-maintenance-mode-admin',
-    \plugin_dir_url(__FILE__) . 'maintenance.js',
-    ['jquery'],
-    filemtime(plugin_dir_path(__FILE__) . 'maintenance.js'),
-    true
-  );
-});
-
 add_action('init', function () {
   if (! is_maintenance_mode()) {
     return;
