@@ -52,15 +52,7 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
 });
 
 \add_action('admin_enqueue_scripts', function () {
-  \wp_enqueue_script(
-    'ionos-security-js',
-    \plugin_dir_url(__FILE__) . 'security.js',
-    ['common'], // common renders the close button for dismissible notices
-    filemtime(\plugin_dir_path(__FILE__) . 'security.js'),
-    true
-  );
-
-  \wp_localize_script('ionos-security-js', 'ionosSecurityWpData', [
+  \wp_localize_script('ionos-essentials-security', 'ionosSecurityWpData', [
     'nonce'              => \wp_create_nonce('wp_rest'),
     'ajaxUrl'            => admin_url('admin-ajax.php'),
   ]);
