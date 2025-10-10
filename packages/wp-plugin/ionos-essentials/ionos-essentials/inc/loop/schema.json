@@ -13,7 +13,6 @@
         "tenant": { "type": "string" },
         "core_version": { "type": "string" },
         "php_version": { "type": "string" },
-        "extendify": { "type": "boolean" },
         "instance_created": { "type": "integer" }
       },
       "required": [
@@ -35,9 +34,9 @@
     "clicks": {
       "type": "object"
     },
-    "essentials": {
+    "plugin_data": {
       "type": "object"
     }
   },
-  "required": ["hosting", "wordpress", "essentials"]
+  "required": ["hosting", "wordpress", "plugin_data"]
 }
