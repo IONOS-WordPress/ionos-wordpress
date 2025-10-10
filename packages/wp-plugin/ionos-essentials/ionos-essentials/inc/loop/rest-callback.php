@@ -78,9 +78,9 @@ function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
 function _get_dashbord_data(): array
 {
   return [
-    'nba'           => \get_option('ionos_nba_status', []),
-    'actions_shown' => \get_option('ionos_loop_nba_actions_shown', null),
-    'setup'         => \get_option('ionos_essentials_nba_setup_completed', null),
+    'nba'                    => \get_option('ionos_nba_status', []),
+    'actions_shown'          => \get_option('ionos_loop_nba_actions_shown', null),
+    'getting_started_status' => \get_option('ionos_essentials_nba_setup_completed', null),
   ];
 }
 
