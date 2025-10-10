@@ -88,7 +88,7 @@ function _get_hosting(): array
     'tenant'              => Tenant::get_slug(),
     'core_version'        => \get_bloginfo('version'),
     'php_version'         => PHP_VERSION,
-    'extendify'           => (bool) \get_option('extendify_onboarding_completed', null),
+    'extendify_onboarding_completed' => (bool) \get_option('extendify_onboarding_completed', null),
     'instance_created'    => _get_instance_creation_date(),
   ];
 }
