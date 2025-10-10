@@ -18,8 +18,8 @@ function _rest_loop_callback(): \WP_REST_Response
   $core_data = [
     'hosting'       => _get_hosting(),
     'wordpress'     => [
-      'user'                => \count_users('memory'),
-      'active_theme'        => _get_themes(),
+      'user_data'           => \count_users('memory'),
+      'active_theme'        => _get_active_theme(),
       'active_plugins'      => _get_plugins(),
       'posts'               => _get_posts_and_pages(),
       'comments'            => _get_comments(),
@@ -33,10 +33,15 @@ function _rest_loop_callback(): \WP_REST_Response
     'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
     'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
 
-    'essentials'    => [
-      'dashboard'   => _get_dashbord_data(),
-      'security'    => \get_option(\ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION, []),
-      'maintenance' => \ionos\essentials\maintenance_mode\is_maintenance_mode(),
+    'plugin_data' => [
+      'ionos-essentials'    => [
+        'dashboard'   => _get_dashbord_data(),
+        'security'    => \get_option(\ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION, []),
+        'maintenance' => \ionos\essentials\maintenance_mode\is_maintenance_mode(),
+      ],
+      'extendify' => [
+        'extendify_onboarding_completed' => (bool) \get_option('extendify_onboarding_completed', null),
+      ],
     ],
   ];
 
@@ -88,7 +93,6 @@ function _get_hosting(): array
     'tenant'              => Tenant::get_slug(),
     'core_version'        => \get_bloginfo('version'),
     'php_version'         => PHP_VERSION,
-    'extendify_onboarding_completed' => (bool) \get_option('extendify_onboarding_completed', null),
     'instance_created'    => _get_instance_creation_date(),
   ];
 }
@@ -114,7 +118,7 @@ function _get_instance_creation_date(): ?int
   return $timestamp;
 }
 
-function _get_themes(): array
+function _get_active_theme(): array
 {
   $current_theme = \wp_get_theme();
 
@@ -126,12 +130,10 @@ function _get_themes(): array
   $auto_update        = in_array($current_theme_slug, $auto_update_themes, true);
 
   return [
-    [
       'id'                => $current_theme_slug,
       'version'           => $current_theme->get('Version'),
       'parent_theme_slug' => $parent_theme_slug,
       'auto_update'       => $auto_update,
-    ],
   ];
 }
 
@@ -198,12 +200,12 @@ function _get_uploads(): array
   $basedir     = $uploads_dir['basedir'];
 
   $file_count = 0;
-  $file_size  = 0;
+  $size  = 0;
 
   if (! is_dir($basedir)) {
     return [
       'file_count' => 0,
-      'file_size'  => '0',
+      'size'  => '0',
     ];
   }
 
@@ -214,13 +216,13 @@ function _get_uploads(): array
   foreach ($iterator as $file) {
     if ($file->isFile()) {
       $file_count++;
-      $file_size += $file->getSize();
+      $size += $file->getSize();
     }
   }
 
   return [
     'file_count' => $file_count,
-    'file_size'  => (string) $file_size,  // as string to allow big filesize numbers
+    'size'  => (string) $size,  // as string to allow big filesize numbers
   ];
 }
 
