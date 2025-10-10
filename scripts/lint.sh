@@ -360,8 +360,8 @@ function ionos.wordpress.wordpress_plugin() {
       fi
 
       # test 'Domain Path' field
-      if ! grep -qoP "Domain Path:\s*/languages$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Domain Path: /languages' is missing or invalid"
+      if ! grep -qoP "Domain Path:\s*/.+$" $dir/$plugin_file; then
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Domain Path: <languages-dir-path>' is missing or invalid"
         exit_code=1
       fi
     done
