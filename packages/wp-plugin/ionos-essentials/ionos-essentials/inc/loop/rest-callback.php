@@ -2,9 +2,16 @@
 
 namespace ionos\essentials\loop;
 
+defined('ABSPATH') || exit();
+
+require_once __DIR__ . '/../dashboard/blocks/next-best-actions/index.php';
+require_once __DIR__ . '/../dashboard/blocks/next-best-actions/class-nba.php';
+
+use ionos\essentials\dashboard\blocks\next_best_actions\NBA;
 use ionos\essentials\Tenant;
 
-defined('ABSPATH') || exit();
+use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
+use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN;
 
 const IONOS_LOOP_EVENTS_OPTION = 'ionos-loop-events';
 const IONOS_LOOP_CLICKS_OPTION = 'ionos-loop-clicks';
@@ -77,11 +84,13 @@ function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
 
 function _get_dashbord_data(): array
 {
-  return [
-    'nba'                    => \get_option('ionos_nba_status', []),
-    'actions_shown'          => \get_option('ionos_loop_nba_actions_shown', null),
-    'getting_started_status' => \get_option('ionos_essentials_nba_setup_completed', null),
+  $data = [
+    'nba'                    => \get_option(NBA::OPTION_STATUS_NAME, []),
+    'actions_shown'          => \get_option(OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN, []),
+    'getting_started_status' => \get_option(OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED, null),
   ];
+
+  return $data;
 }
 
 function _get_hosting(): array
