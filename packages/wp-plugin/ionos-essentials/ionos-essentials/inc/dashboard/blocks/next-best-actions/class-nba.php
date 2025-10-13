@@ -10,7 +10,7 @@ defined('ABSPATH') || exit();
 
 class NBA
 {
-  public const OPTION_NAME = 'ionos_nba_status';
+  public const OPTION_STATUS_NAME = 'ionos_nba_status';
 
   private static $option_value;
 
@@ -92,7 +92,7 @@ class NBA
   private static function _get_option()
   {
     if (! isset(self::$option_value)) {
-      self::$option_value = \get_option(self::OPTION_NAME, []);
+      self::$option_value = \get_option(self::OPTION_STATUS_NAME, []);
     }
     return self::$option_value;
   }
@@ -100,7 +100,7 @@ class NBA
   private static function _set_option(array $option)
   {
     self::$option_value = $option;
-    return \update_option(self::OPTION_NAME, $option);
+    return \update_option(self::OPTION_STATUS_NAME, $option);
   }
 
   private function _get_status()
