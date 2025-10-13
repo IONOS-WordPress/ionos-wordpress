@@ -6,28 +6,25 @@
     "tenant": "ionos",
     "core_version": "6.8.3",
     "php_version": "8.3.26",
-    "extendify": false,
-    "instance_created": 1760091201
+    "instance_created": 1760370182
   },
   "wordpress": {
-    "user": {
+    "user_data": {
       "total_users": 1,
       "avail_roles": {
         "none": 0,
         "administrator": 1
       }
     },
-    "active_theme": [
-      {
-        "id": "twentytwentyfive",
-        "version": "1.3",
-        "parent_theme_slug": null,
-        "auto_update": false
-      }
-    ],
+    "active_theme": {
+      "id": "twentytwentyfive",
+      "version": "1.3",
+      "parent_theme_slug": null,
+      "auto_update": false
+    },
     "active_plugins": [
       {
-        "plugin_slug": "ionos-essentials\/ionos-essentials.php",
+        "plugin_slug": "ionos-essentials/ionos-essentials.php",
         "version": "1.3.1",
         "auto_update": false
       }
@@ -39,7 +36,7 @@
       },
       {
         "type": "page",
-        "count": 1
+        "count": 2
       }
     ],
     "comments": {
@@ -48,13 +45,13 @@
     },
     "uploads": {
       "file_count": 0,
-      "file_size": "0"
+      "size": "0"
     },
     "installed_themes": 15,
     "installed_plugins": 1,
-    "permalink_structure": "\/%postname%",
-    "siteurl": "http:\/\/localhost:8888",
-    "home": "http:\/\/localhost:8888"
+    "permalink_structure": "/%postname%",
+    "siteurl": "http://localhost:8888",
+    "home": "http://localhost:8888"
   },
   "events": [
     {
@@ -66,27 +63,31 @@
     }
   ],
   "clicks": {
-    "Add new page": 1,
-    "Edit site Navigation": 1
+    "add-new-page": 1,
+    "edit-site-navigation": 1
   },
-  "essentials": {
-    "dashboard": {
-      "nba": [],
-      "actions_shown": [
-        "select-theme",
-        "create-page",
-        "connect-domain",
-        "tools-and-security",
-        "survey"
-      ],
-      "setup": null
+  "plugin_data": {
+    "ionos-essentials": {
+      "dashboard": {
+        "nba_status": {
+          "create-page": "completed",
+          "tools-and-security": "dismissed",
+          "survey": "dismissed",
+          "select-theme": null,
+          "connect-domain": null
+        },
+        "ionos_essentials_nba_setup_completed": null
+      },
+      "security": {
+        "IONOS_SECURITY_FEATURE_OPTION_XMLRPC": true,
+        "IONOS_SECURITY_FEATURE_OPTION_PEL": true,
+        "IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING": true,
+        "IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY": true
+      },
+      "maintenance": false
     },
-    "security": {
-      "IONOS_SECURITY_FEATURE_OPTION_XMLRPC": true,
-      "IONOS_SECURITY_FEATURE_OPTION_PEL": true,
-      "IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING": true,
-      "IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY": true
-    },
-    "maintenance": false
+    "extendify": {
+      "extendify_onboarding_completed": false
+    }
   }
 }
