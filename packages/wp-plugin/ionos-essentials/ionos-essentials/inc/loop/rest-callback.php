@@ -85,10 +85,21 @@ function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
 function _get_dashbord_data(): array
 {
   $data = [
-    'nba'                    => \get_option(NBA::OPTION_STATUS_NAME, []),
-    'actions_shown'          => \get_option(OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN, []),
-    'getting_started_status' => \get_option(OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED, null),
+    'nba_status' => [],
+    OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED => \get_option(OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED, null),
   ];
+
+  $nba_status = \get_option(NBA::OPTION_STATUS_NAME, []);
+  foreach ($nba_status as $key => $value) {
+    $data['nba_status'][$key] = join(',', array_keys($value));
+  }
+
+  $actions_shown = \get_option(OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN, []);
+  foreach ($actions_shown as $value) {
+    if(! array_key_exists($value, $data['nba_status'])) {
+      $data['nba_status'][$value] = null;
+    }
+  }
 
   return $data;
 }
