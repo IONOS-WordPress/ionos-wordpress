@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 800);
       });
 
-      ionos_loop_track_click(target.dataset.nbaId + '/' + status)
+      ionos_loop_track_click(target.dataset.nbaId + '/' + status);
     };
 
     dashboard.querySelector('#ionos_essentials_install_gml')?.addEventListener('click', function (event) {
@@ -217,7 +217,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     dashboard.querySelectorAll('.dialog-closer').forEach((element) => {
       element.addEventListener('click', function () {
-        dashboard.querySelector('.static-overlay__blocker--active')?.classList.remove('static-overlay__blocker--active');
+        dashboard
+          .querySelector('.static-overlay__blocker--active')
+          ?.classList.remove('static-overlay__blocker--active');
         dashboard
           .querySelector('.static-overlay__container--active')
           ?.classList.remove('static-overlay__container--active');
@@ -358,15 +360,13 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-
     dashboard.querySelectorAll('[data-track-link]').forEach((element) => {
-      element.addEventListener('click', (event) => {
+      element.addEventListener('click', () => {
         ionos_loop_track_click(element.dataset.trackLink);
       });
     });
 
-
-  function ionos_loop_track_click(anchor) {
+    function ionos_loop_track_click(anchor) {
       fetch(wpData.restUrl + 'ionos/essentials/loop/v1/click', {
         method: 'POST',
         headers: {
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         body: JSON.stringify({ anchor }),
         credentials: 'include',
-      })
+      });
     }
   }
 });

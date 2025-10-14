@@ -1,9 +1,8 @@
 // tell eslint that the global variable exists when this file gets executed
 /* global ionosWPScanThemes:true */
 document.addEventListener('DOMContentLoaded', function () {
-  
   const parent = document.querySelector('.theme-browser');
-  
+
   if (parent) {
     function highlightThemes() {
       const themes = document.querySelectorAll('[data-slug]');
@@ -32,7 +31,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const notice = document.createElement('div');
         notice.innerHTML = html;
-        notice.classList.add('update-message', 'notice', 'inline', 'notice-warning', 'notice-alt', 'ionos-theme-issues');
+        notice.classList.add(
+          'update-message',
+          'notice',
+          'inline',
+          'notice-warning',
+          'notice-alt',
+          'ionos-theme-issues'
+        );
         theme.appendChild(notice);
       });
     }
