@@ -12,7 +12,7 @@
  * License:           GPL-2.0-or-later
  * Author:            IONOS Group
  * Author URI:        https://www.ionos-group.com/brands.html
- * Domain Path:       /languages
+ * Domain Path:       /ionos-essentials/languages
  * Text Domain:       ionos-essentials
  */
 

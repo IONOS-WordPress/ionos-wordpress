@@ -25,6 +25,7 @@ class Tenant
       'piensa'    => 'Piensa Solutions',
       'strato'    => 'STRATO',
       'udag'      => 'United Domains',
+      default     => 'IONOS',
     };
   }
 

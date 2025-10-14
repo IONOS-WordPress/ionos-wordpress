@@ -97,6 +97,10 @@ function render_callback(): void
 \add_filter('ionos_dashboard_banner__register_button', function ($button_list) {
   $data = get_account_data();
 
+  if (empty($data)) {
+    return $button_list;
+  }
+
   $managehosting = $data['banner_links']['managehosting'] ?? '';
 
   $button_list[] = [
