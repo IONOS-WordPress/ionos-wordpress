@@ -115,8 +115,6 @@ class NBA
   }
 }
 
-use const ionos\essentials\PLUGIN_DIR;
-
 if (! function_exists('is_plugin_active')) {
   include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 }
