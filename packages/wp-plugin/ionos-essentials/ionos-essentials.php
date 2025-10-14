@@ -78,8 +78,8 @@ defined('ABSPATH') || exit();
   // enqueue wpscan scripts
   $scripts = ['plugin-install', 'theme-install', 'theme-overview'];
     foreach ($scripts as $name) {
-        $asset_path = __DIR__ . "/ionos-essentials/build/wpscan/{$name}.asset.php";
-        $script_url = plugins_url("/ionos-essentials/build/wpscan/{$name}.js", __FILE__);
+        $asset_path = __DIR__ . "/ionos-essentials/build/wpscan/{$name}-index.asset.php";
+        $script_url = plugins_url("/ionos-essentials/build/wpscan/{$name}-index.js", __FILE__);
 
         if (file_exists($asset_path)) {
             $asset = include $asset_path;
