@@ -9,9 +9,8 @@ require_once __DIR__ . '/../dashboard/blocks/next-best-actions/class-nba.php';
 
 use ionos\essentials\dashboard\blocks\next_best_actions\NBA;
 use ionos\essentials\Tenant;
-
-use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN;
+use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 
 const IONOS_LOOP_EVENTS_OPTION = 'ionos-loop-events';
 const IONOS_LOOP_CLICKS_OPTION = 'ionos-loop-clicks';
@@ -85,7 +84,7 @@ function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
 function _get_dashbord_data(): array
 {
   $data = [
-    'nba_status' => [],
+    'nba_status'                                => [],
     OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED => \get_option(OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED, null),
   ];
 
@@ -96,7 +95,7 @@ function _get_dashbord_data(): array
 
   $actions_shown = \get_option(OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN, []);
   foreach ($actions_shown as $value) {
-    if(! array_key_exists($value, $data['nba_status'])) {
+    if (! array_key_exists($value, $data['nba_status'])) {
       $data['nba_status'][$value] = null;
     }
   }
@@ -150,10 +149,10 @@ function _get_active_theme(): array
   $auto_update        = in_array($current_theme_slug, $auto_update_themes, true);
 
   return [
-      'id'                => $current_theme_slug,
-      'version'           => $current_theme->get('Version'),
-      'parent_theme_slug' => $parent_theme_slug,
-      'auto_update'       => $auto_update,
+    'id'                => $current_theme_slug,
+    'version'           => $current_theme->get('Version'),
+    'parent_theme_slug' => $parent_theme_slug,
+    'auto_update'       => $auto_update,
   ];
 }
 
@@ -220,12 +219,12 @@ function _get_uploads(): array
   $basedir     = $uploads_dir['basedir'];
 
   $file_count = 0;
-  $size  = 0;
+  $size       = 0;
 
   if (! is_dir($basedir)) {
     return [
       'file_count' => 0,
-      'size'  => '0',
+      'size'       => '0',
     ];
   }
 
@@ -242,7 +241,7 @@ function _get_uploads(): array
 
   return [
     'file_count' => $file_count,
-    'size'  => (string) $size,  // as string to allow big filesize numbers
+    'size'       => (string) $size,  // as string to allow big filesize numbers
   ];
 }
 

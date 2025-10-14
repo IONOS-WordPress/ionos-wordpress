@@ -6,7 +6,7 @@ defined('ABSPATH') || exit();
 
 use const ionos\essentials\PLUGIN_DIR;
 
-const OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN = 'ionos_essentials_nba_actions_shown';
+const OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN   = 'ionos_essentials_nba_actions_shown';
 const OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED = 'ionos_essentials_nba_setup_completed';
 
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/main.php';

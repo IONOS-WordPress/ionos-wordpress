@@ -11,7 +11,7 @@ function get_config(): array
   return [
     [
       'url'  => $blog_url . '/wp-admin/post-new.php?post_type=page',
-      'id'  => 'add-new-page',
+      'id'   => 'add-new-page',
       'text' => __(
         'Add new page',
         'ionos-essentials'
@@ -20,13 +20,13 @@ function get_config(): array
     ],
     [
       'url'  => $blog_url . '/wp-admin/post-new.php',
-      'id'  => 'add-new-post',
+      'id'   => 'add-new-post',
       'text' => __('Add new post', 'ionos-essentials'),
       'icon' => 'helparticle-16',
     ],
     [
       'url'  => $blog_url . '/wp-admin/site-editor.php?p=%2Fnavigation',
-      'id'  => 'edit-site-navigation',
+      'id'   => 'edit-site-navigation',
       'text' => __(
         'Edit site Navigation',
         'ionos-essentials'
@@ -35,7 +35,7 @@ function get_config(): array
     ],
     [
       'url'  => $blog_url . '/wp-admin/site-editor.php?path=%2Fwp_global_styles',
-      'id'  => 'change-styles',
+      'id'   => 'change-styles',
       'text' => __(
         'Change Styles',
         'ionos-essentials'
@@ -44,13 +44,13 @@ function get_config(): array
     ],
     [
       'url'  => $blog_url . '/wp-admin/site-editor.php?p=%2Fpage&canvas=edit&ionos-siteeditor-quick-link=header',
-      'id'  => 'edit-header',
+      'id'   => 'edit-header',
       'text' => __('Edit Header', 'ionos-essentials'),
       'icon' => 'website-48',
     ],
     [
       'url'  => $blog_url . '/wp-admin/site-editor.php?p=%2Fpage&canvas=edit&ionos-siteeditor-quick-link=footer',
-      'id'  => 'edit-footer',
+      'id'   => 'edit-footer',
       'text' => __(
         'Edit Footer',
         'ionos-essentials'
@@ -59,7 +59,7 @@ function get_config(): array
     ],
     [
       'url'  => $blog_url . '/wp-admin/plugin-install.php',
-      'id'  => 'add-plugins',
+      'id'   => 'add-plugins',
       'text' => __(
         'Add Plugins',
         'ionos-essentials'
@@ -68,7 +68,7 @@ function get_config(): array
     ],
     [
       'url'  => $blog_url . '/wp-admin/upload.php',
-      'id'  => 'upload-media',
+      'id'   => 'upload-media',
       'text' => __('Upload Media files', 'ionos-essentials'),
       'icon' => 'upload-16',
     ],
