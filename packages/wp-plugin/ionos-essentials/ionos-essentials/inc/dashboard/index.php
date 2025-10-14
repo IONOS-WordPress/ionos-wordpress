@@ -13,6 +13,7 @@ require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/misc.php';
 require_once ABSPATH . 'wp-admin/includes/class-wp-site-health.php';
 
+use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 
@@ -209,7 +210,7 @@ add_filter('admin_body_class', function ($classes) {
       wp_die();
     }
 
-    \update_option('ionos_essentials_nba_setup_completed', $status);
+    \update_option(OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED, $status);
     \wp_die();
   }
 );

@@ -3,7 +3,11 @@
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
 defined('ABSPATH') || exit();
+
 use const ionos\essentials\PLUGIN_DIR;
+
+const OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN   = 'ionos_essentials_nba_actions_shown';
+const OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED = 'ionos_essentials_nba_setup_completed';
 
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/main.php';
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/views/single.php';
@@ -27,7 +31,7 @@ function render(): void
   // Get all actions depending on the setup status
   // If setup is not completed, show setup actions and always actions
   // If setup is completed, show after-setup actions and always actions
-  if (! get_option('ionos_essentials_nba_setup_completed', false)) {
+  if (! \get_option(OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED, false)) {
     $args['category_to_show'] = (\get_option('extendify_onboarding_completed', false) ? 'setup-ai' : 'setup-noai');
     $args['actions']          = array_filter(
       NBA::get_actions(),
@@ -59,7 +63,7 @@ function render(): void
   }
 
   \update_option(
-    'ionos_loop_nba_actions_shown',
+    OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN,
     array_merge(array_keys($args['actions']), array_keys($args['always_actions'] ?? []))
   );
 
