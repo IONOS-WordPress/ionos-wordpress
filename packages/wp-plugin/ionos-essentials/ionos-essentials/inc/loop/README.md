@@ -8,4 +8,4 @@ Permission to this endpoint is always granted locall due to _return true_ in _re
 
 ## validate json against json schema
 
-`npx ajv-cli validate -s packages/wp-plugin/ionos-essentials/ionos-essentials/inc/loop/schema.json -d packages/wp-plugin/ionos-essentials/ionos-essentials/inc/loop/loop-data-example.json`
+`npx ajv-cli validate -s packages/wp-plugin/ionos-essentials/ionos-essentials/inc/loop/schema.json -d packages/wp-plugin/ionos-essentials/ionos-essentials/inc/loop/loop-format-example.json`
