@@ -154,9 +154,9 @@
               "description": "Number of uploaded files"
             },
             "size": {
-              "type": "string",
-              "description": "Total size of uploaded files in bytes. string used for large numbers",
-              "pattern": "^\\d+$"
+              "type": "integer",
+              "description": "Total size of uploaded files in bytes.",
+              "minimum": 0
             }
           },
           "additionalProperties": true
