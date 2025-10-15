@@ -868,7 +868,6 @@ msgid "PHP version"
 msgstr "Versione di PHP"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "View details"
 msgstr "Visualizza dettagli"
 

@@ -91,16 +91,9 @@ class WPScan
     if (! $screen || 'theme-install' !== $screen->id) {
       return;
     }
-    \wp_enqueue_script(
-      'ionos-wpscan-theme-install',
-      \plugin_dir_url(__FILE__) . 'js/theme-install.js',
-      [],
-      filemtime(\plugin_dir_path(__FILE__) . 'js/theme-install.js'),
-      true
-    );
 
     \wp_localize_script(
-      'ionos-wpscan-theme-install',
+      'ionos-essentials-theme-install',
       'ionosWPScanThemes',
       [
         'issues'  => $this->get_issues(),
@@ -123,16 +116,9 @@ class WPScan
     if (! $screen || 'plugin-install' !== $screen->id) {
       return;
     }
-    \wp_enqueue_script(
-      'ionos-wpscan-plugins',
-      \plugin_dir_url(__FILE__) . 'js/plugin-install.js',
-      [],
-      filemtime(\plugin_dir_path(__FILE__) . 'js/plugin-install.js'),
-      true
-    );
 
     \wp_localize_script(
-      'ionos-wpscan-plugins',
+      'ionos-essentials-plugin-install',
       'ionosWPScanPlugins',
       [
         'issues'  => $this->get_issues(),
@@ -163,16 +149,8 @@ class WPScan
       return;
     }
 
-    \wp_enqueue_script(
-      'ionos-essentials-themes',
-      \plugin_dir_url(__FILE__) . 'js/theme-overview.js',
-      [],
-      filemtime(\plugin_dir_path(__FILE__) . 'js/theme-overview.js'),
-      true
-    );
-
     \wp_localize_script(
-      'ionos-essentials-themes',
+      'ionos-essentials-theme-overview',
       'ionosWPScanThemes',
       [
         'slugs' => array_column($issues, 'slug'),

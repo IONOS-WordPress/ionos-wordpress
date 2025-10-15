@@ -235,13 +235,6 @@ add_filter('admin_body_class', function ($classes) {
   if (ADMIN_PAGE_HOOK !== $hook) {
     return;
   }
-  \wp_enqueue_script(
-    'ionos-essentials-dashboard-js',
-    \plugin_dir_url(__FILE__) . 'dashboard.js',
-    [],
-    filemtime(\plugin_dir_path(__FILE__) . 'dashboard.js'),
-    true
-  );
 
   $issue_counts = \get_transient('ionos_site_health_issue_count');
   if (is_string($issue_counts)) {
@@ -283,7 +276,7 @@ add_filter('admin_body_class', function ($classes) {
     }, $async_tests);
   }
 
-  \wp_localize_script('ionos-essentials-dashboard-js', 'wpData', [
+  \wp_localize_script('ionos-essentials-dashboard', 'wpData', [
     'nonce'                  => \wp_create_nonce('wp_rest'),
     'healthCheckNonce'       => \wp_create_nonce('health-check-site-status-result'),
     'restUrl'                => \esc_url_raw(rest_url()),
