@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (parent) {
     function highlightThemes() {
-      const themes = document.querySelectorAll('[data-slug]');
+      const themes = document.querySelectorAll('.themes .theme[data-slug]');
       if (themes.length === 0) {
         // Retry after a short delay if no themes are found
         // I don't know why this is needed, but the themes are not loaded yet
@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
 
-        const html = `<p>${ionosWPScanThemes.i18n.issues_found}. <span class="ionos-no-activation">${ionosWPScanThemes.i18n.no_activation}</span> <a href="admin.php?page=${ionosWPScanThemes.i18n.brand}#tools" class="" type="button">${ionosWPScanThemes.i18n.more_info}</a></p>`;
+        const html = `<p>${ionosWPScanThemes.i18n.issues_found}. <span class="ionos-no-activation">${ionosWPScanThemes.i18n.no_activation}</span> <a href="admin.php?page=${ionosWPScanThemes.brand}#tools" class="" type="button">${ionosWPScanThemes.i18n.more_info}</a></p>`;
         // Prevent link click from bubbling
         setTimeout(() => {
-          const link = theme.querySelector('a[href="admin.php?page=' + ionosWPScanThemes.i18n.brand + '#tools"]');
+          const link = theme.querySelector('a[href="admin.php?page=' + ionosWPScanThemes.brand + '#tools"]');
           if (link) {
             link.addEventListener('click', function (e) {
               e.stopPropagation();
@@ -40,6 +40,26 @@ document.addEventListener('DOMContentLoaded', function () {
           'ionos-theme-issues'
         );
         theme.appendChild(notice);
+
+        const outerOverlay = document.querySelector('.theme-overlay');
+
+        if (outerOverlay && outerOverlay.children.length > 0) {
+          // Find the nested .theme-overlay
+          const innerOverlay = outerOverlay.querySelector('.theme-overlay');
+
+          if (innerOverlay) {
+            const themeInfo = innerOverlay.querySelector('.theme-info');
+
+            if (themeInfo) {
+              const author = themeInfo.querySelector('.theme-author');
+              const autoupdate = themeInfo.querySelector('.theme-autoupdate');
+
+              if (author && autoupdate) {
+                themeInfo.insertBefore(notice, autoupdate);
+              }
+            }
+          }
+        }
       });
     }
 

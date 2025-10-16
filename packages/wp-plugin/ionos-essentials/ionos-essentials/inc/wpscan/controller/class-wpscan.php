@@ -187,7 +187,7 @@ class WPScan
     $updates       = get_site_transient('update_plugins');
     $noshadowclass = isset($updates->response[$plugin_file]) ? 'ionos-plugin-noshadow' : '';
 
-    $brand = Tenant::get_label();
+    $brand = Tenant::get_slug();
 
     printf(
       '<tr class="plugin-update-tr %s ionos-wpscan-notice"><td colspan="4" class="plugin-update colspanchange %s"><div class="update-message notice inline %s notice-alt">%s %s. <a href="%s">%s.</a></div></td></tr>',
