@@ -241,7 +241,7 @@ function _get_uploads(): array
 
   return [
     'file_count' => $file_count,
-    'size'       => $size,  // as string to allow big filesize numbers
+    'size'       => $size,
   ];
 }
 
