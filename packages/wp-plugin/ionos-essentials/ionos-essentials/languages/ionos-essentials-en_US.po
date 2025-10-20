@@ -285,10 +285,12 @@ msgstr "Upload Media files"
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Get an overview of the latest updates and enhancements."
 
+#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "My Products"
 msgstr "My Products"
 
+#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "Project Overview"
 msgstr "Project Overview"
@@ -297,6 +299,7 @@ msgstr "Project Overview"
 msgid "Domains and SSL management"
 msgstr "Domains and SSL management"
 
+#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "Add more products"
 msgstr "Add more products"
@@ -329,6 +332,7 @@ msgstr "SSL"
 msgid "Setup Email Account"
 msgstr "Setup Email Account"
 
+#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "My Account"
 msgstr "My Account"
