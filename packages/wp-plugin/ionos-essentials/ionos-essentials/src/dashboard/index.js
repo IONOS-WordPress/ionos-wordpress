@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const data = await response.json();
           wpData.siteHealthIssueCount[data.status] = parseInt(wpData.siteHealthIssueCount[data.status] ?? 0) + 1;
         } catch (error) {
-          // silence is golden
+          // eslint-disable-next-line no-console
           console.error(error);
         }
       }
