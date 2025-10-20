@@ -12,7 +12,7 @@ function all_done_view(): void
   $language                          = explode('_', get_locale())[0];
   $tld                               = in_array($language, $digital_guide_supported_languages) ? $language : 'com';
   $digital_guide_url                 = 'https://www.ionos.' . $tld . '/digitalguide/hub/wordpress/';
-  $survey_dismissed                  = \get_option('ionos_nba_status')['survey']['dismissed'] ?? false;
+  $survey_dismissed                  = \get_option(NBA::OPTION_STATUS_NAME)['survey']['dismissed'] ?? false;
   ?>
   <div id="ionos_next_best_actions__all_done">
     <div class="card">

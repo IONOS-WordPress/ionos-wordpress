@@ -142,8 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         }, 800);
       });
-
-      ionos_loop_track_click(target.dataset.nbaId + '/' + status);
     };
 
     dashboard.querySelector('#ionos_essentials_install_gml')?.addEventListener('click', function (event) {

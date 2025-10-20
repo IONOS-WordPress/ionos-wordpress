@@ -10,7 +10,7 @@ defined('ABSPATH') || exit();
 
 class NBA
 {
-  public const OPTION_NAME = 'ionos_nba_status';
+  public const OPTION_STATUS_NAME = 'ionos_nba_status';
 
   private static $option_value;
 
@@ -29,6 +29,7 @@ class NBA
     public readonly bool $expanded
   ) {
     self::$actions[$this->id] = $this;
+    require_once __DIR__ . '/config.php';
   }
 
   public function __get($property)
@@ -55,11 +56,13 @@ class NBA
 
   public static function get_nba($id): self|null
   {
+    require_once __DIR__ . '/config.php';
     return self::$actions[$id];
   }
 
   public static function get_actions(): array
   {
+    require_once __DIR__ . '/config.php';
     return self::$actions;
   }
 
@@ -91,16 +94,18 @@ class NBA
 
   private static function _get_option()
   {
+    require_once __DIR__ . '/config.php';
     if (! isset(self::$option_value)) {
-      self::$option_value = \get_option(self::OPTION_NAME, []);
+      self::$option_value = \get_option(self::OPTION_STATUS_NAME, []);
     }
     return self::$option_value;
   }
 
   private static function _set_option(array $option)
   {
+    require_once __DIR__ . '/config.php';
     self::$option_value = $option;
-    return \update_option(self::OPTION_NAME, $option);
+    return \update_option(self::OPTION_STATUS_NAME, $option);
   }
 
   private function _get_status()
@@ -109,10 +114,6 @@ class NBA
     return $option[$this->id] ?? [];
   }
 }
-
-use const ionos\essentials\PLUGIN_DIR;
-
-require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php';
 
 if (! function_exists('is_plugin_active')) {
   include_once(ABSPATH . 'wp-admin/includes/plugin.php');
@@ -128,7 +129,7 @@ function get_survey_url(): string
     'es'    => 'https://feedback.ionos.com/nmdopgnfds?l=es',
     'it'    => 'https://feedback.ionos.com/nmdopgnfds?l=it',
   ];
-  $locale = determine_locale();
+  $locale = \determine_locale();
   if ($locale === 'en_US') {
     return $survey_links['en_us'];
   }
