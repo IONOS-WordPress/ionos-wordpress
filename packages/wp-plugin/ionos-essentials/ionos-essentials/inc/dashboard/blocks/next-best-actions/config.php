@@ -119,7 +119,8 @@ if (null !== $data) {
       ),
       link: $data['domain'] . $connectmail,
       anchor: \__('Setup Email Account', 'ionos-essentials'),
-      completed: 'onclick',
+      completed: false,
+      complete_on_click: true,
       categories: ['after-setup']
     );
   }
