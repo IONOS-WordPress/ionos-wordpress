@@ -18,7 +18,7 @@ async function login(page) {
   // as the wp-env user has a leaked password
   await page.goto('/wp-admin');
   await page.fill('#user_login', 'admin');
-  await page.fill('#user_pass', 'g0lasch0815!');
+  await page.fill('#user_pass', process.env.WP_PASSWORD);
   await page.click('[name="wp-submit"]');
 
   // Click the Confirm-email button, if it exists
