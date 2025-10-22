@@ -8,10 +8,7 @@ test.describe(
   },
   () => {
     test.beforeAll(async () => {
-      try {
-        execTestCLI(`wp --quiet user meta delete 1 ionos_essentials_welcome`);
-        /* eslint-disable-next-line no-empty */
-      } catch {}
+      execTestCLI(`wp --quiet user meta delete 1 ionos_essentials_welcome`);
     });
 
     test('test welcome banner', async ({ admin, page }) => {

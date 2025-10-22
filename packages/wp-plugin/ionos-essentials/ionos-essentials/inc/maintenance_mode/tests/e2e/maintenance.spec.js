@@ -9,19 +9,20 @@ test.describe(
   () => {
     test.beforeAll(async () => {
       execTestCLI(`
-      # set popup after timestamp to a far future date to prevent popups during e2e tests
-      wp --quiet user meta update 1 ionos_popup_after_timestamp ${Math.MAX_SAFE_INTEGER}
-      # set essentials welcome overlay already clicked away
-      wp --quiet user meta update 1 ionos_essentials_welcome true
-      # simulate extendify onboarding already done
-      wp --quiet option update extendify_attempted_redirect_count 4
-      # reset maintenance mode
-      wp --quiet option delete ionos_essentials_maintenance_mode
-    `);
+        # set popup after timestamp to a far future date to prevent popups during e2e tests
+        wp --quiet user meta update 1 ionos_popup_after_timestamp ${Math.MAX_SAFE_INTEGER}
+        # set essentials welcome overlay already clicked away
+        wp --quiet user meta update 1 ionos_essentials_welcome true
+        # simulate extendify onboarding already done
+        wp --quiet option update extendify_attempted_redirect_count 4
+        # reset maintenance mode
+        wp --quiet option delete ionos_essentials_maintenance_mode
+      `);
     });
 
-    test.afterAll(async () => {
+    test.afterAll(async ({ requestUtils }) => {
       execTestCLI(`wp --quiet option delete ionos_essentials_maintenance_mode`);
+      // await requestUtils.setupRest();
     });
 
     test('maintenance mode is enabled', async ({ admin, page }) => {
@@ -42,13 +43,13 @@ test.describe(
       await page.waitForTimeout(1000);
       await expect(page).toHaveTitle('Construction');
     });
+
+    // test('maintenance mode is enabled 2', async ({ admin, page, requestUtils }) => {
+    //   await requestUtils.login();
+
+    //   await admin.visitAdminPage('/');
+    //   await page.getByRole('button', { name: 'Tools' }).click();
+    //   await page.locator('#ionos_essentials_maintenance_mode').click();
+    // });
   }
 );
-
-// test('maintenance mode is enabled', async ({ admin, page }) => {
-//   // await globalThis.requestUtils.setupRest();
-
-//   await admin.visitAdminPage('/');
-//   await page.getByRole('button', { name: 'Tools' }).click();
-//   await page.locator('#ionos_essentials_maintenance_mode').click();
-// });

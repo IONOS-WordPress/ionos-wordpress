@@ -8,7 +8,7 @@ test.describe(
   },
   () => {
     test('/dashboard contains My Account block', async ({ admin, page }) => {
-      await execTestCLI('wp --quiet option update ionos_group_brand ionos');
+      execTestCLI('wp --quiet option update ionos_group_brand ionos');
       await admin.visitAdminPage('/');
 
       const body = await page.locator('body');

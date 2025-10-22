@@ -8,9 +8,7 @@ test.describe(
   },
   () => {
     test.beforeAll(async () => {
-      execTestCLI(`
-      wp --quiet option delete IONOS_SECURITY_FEATURE_OPTION
-    `);
+      execTestCLI(`wp --quiet option delete IONOS_SECURITY_FEATURE_OPTION`);
     });
 
     test('user can set option', async ({ admin, page }) => {

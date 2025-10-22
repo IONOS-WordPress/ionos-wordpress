@@ -8,14 +8,11 @@ test.describe(
   },
   () => {
     test.beforeAll(async () => {
-      try {
-        execTestCLI(`
-      wp --quiet user update admin --user_pass='\${WP_PASSWORD}'
-      wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2
-      wp --quiet option delete IONOS_SECURITY_FEATURE_OPTION
-    `);
-        // eslint-disable-next-line no-empty
-      } catch {}
+      execTestCLI(`
+        wp --quiet user update admin --user_pass='\${WP_PASSWORD}'
+        wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2
+        wp --quiet option delete IONOS_SECURITY_FEATURE_OPTION
+      `);
     });
 
     async function login(page) {
