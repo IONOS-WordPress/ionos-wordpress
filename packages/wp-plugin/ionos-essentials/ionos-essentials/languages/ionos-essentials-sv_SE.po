@@ -125,6 +125,7 @@ msgid "Start AI Sitebuilder"
 msgstr "Starta AI-hemsidegenerator"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
+#: ionos-essentials/inc/tenants/config/homepl.php
 msgid "Manage Hosting"
 msgstr "Hantera webbhotell"
 
@@ -290,12 +291,10 @@ msgstr "Ladda upp mediefiler"
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Upptäck nya funktioner och få en översikt över de senaste uppdateringarna och förbättringarna i din WordPress Hub."
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "My Products"
 msgstr "Mina produkter"
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "Project Overview"
 msgstr "Projektöversikt"
@@ -304,7 +303,6 @@ msgstr "Projektöversikt"
 msgid "Domains and SSL management"
 msgstr "Domäner och SSL-hantering"
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "Add more products"
 msgstr "Lägg till fler produkter"
@@ -337,7 +335,6 @@ msgstr "SSL"
 msgid "Setup Email Account"
 msgstr "Konfigurera e-postkonto"
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "My Account"
 msgstr "Mitt konto"

@@ -120,6 +120,7 @@ msgid "Start AI Sitebuilder"
 msgstr "Avvia la creazione di siti web con IA"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
+#: ionos-essentials/inc/tenants/config/homepl.php
 msgid "Manage Hosting"
 msgstr "Gestisci hosting"
 
@@ -285,12 +286,10 @@ msgstr "Carica file multimediali"
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Scopri le ultime novità e aggiornamenti."
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "My Products"
 msgstr "I miei prodotti"
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "Project Overview"
 msgstr "Panoramica del progetto"
@@ -299,7 +298,6 @@ msgstr "Panoramica del progetto"
 msgid "Domains and SSL management"
 msgstr "Gestione dei domini e SSL"
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "Add more products"
 msgstr "Aggiungi altri prodotti"
@@ -332,7 +330,6 @@ msgstr "SSL"
 msgid "Setup Email Account"
 msgstr "Crea account e-mail"
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "My Account"
 msgstr "Il mio account"

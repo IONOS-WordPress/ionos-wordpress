@@ -7,23 +7,7 @@ defined('ABSPATH') || exit();
 $links = [
   [
     'url'    => '',
-    'anchor' => __('My Products', 'ionos-essentials'),
-  ],
-  [
-    'url'    => '',
-    'anchor' => __('My Account', 'ionos-essentials'),
-  ],
-  [
-    'url'    => '',
-    'anchor' => __('Project Overview', 'ionos-essentials'),
-  ],
-  [
-    'url'    => '',
-    'anchor' => __('Domains and SSL management', 'ionos-essentials'),
-  ],
-  [
-    'url'    => '',
-    'anchor' => __('Add more products', 'ionos-essentials'),
+    'anchor' => __('Manage Hosting', 'ionos-essentials'),
   ]
 ];
 

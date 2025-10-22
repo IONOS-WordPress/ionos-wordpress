@@ -42,6 +42,7 @@ msgid "Account Management"
 msgstr "Gestión de cuenta"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
+#: ionos-essentials/inc/tenants/config/homepl.php
 msgid "Manage Hosting"
 msgstr "Gestionar hosting"
 
@@ -285,12 +286,10 @@ msgstr "Tu contrato"
 msgid "Current offers"
 msgstr "Ofertas actuales"
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "My Products"
 msgstr "Mis productos"
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "Project Overview"
 msgstr "Vista general de proyectos"
@@ -299,7 +298,6 @@ msgstr "Vista general de proyectos"
 msgid "Domains and SSL management"
 msgstr "Gestión de dominios y SSL"
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "Add more products"
 msgstr "Añadir más productos"
@@ -332,7 +330,6 @@ msgstr "SSL"
 msgid "Setup Email Account"
 msgstr "Configurar e-mail"
 
-#: ionos-essentials/inc/tenants/config/homepl.php
 #: ionos-essentials/inc/tenants/config/ionos.php
 msgid "My Account"
 msgstr "Mi cuenta"
