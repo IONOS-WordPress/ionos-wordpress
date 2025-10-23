@@ -38,7 +38,7 @@ defined('ABSPATH') || exit();
 );
 
 \add_action('admin_enqueue_scripts', function (): void {
-  
+
   // enqueue dashboard scripts
   $dashboard_assets = include_once __DIR__ . '/ionos-essentials/build/dashboard/index.asset.php';
   \wp_enqueue_script(
@@ -77,24 +77,25 @@ defined('ABSPATH') || exit();
 
   // enqueue wpscan scripts
   $scripts = ['plugin-install', 'theme-install', 'theme-overview'];
-    foreach ($scripts as $name) {
-        $asset_path = __DIR__ . "/ionos-essentials/build/wpscan/{$name}-index.asset.php";
-        $script_url = plugins_url("/ionos-essentials/build/wpscan/{$name}-index.js", __FILE__);
+  foreach ($scripts as $name) {
+    $asset_path = __DIR__ . "/ionos-essentials/build/wpscan/{$name}-index.asset.php";
+    $script_url = plugins_url("/ionos-essentials/build/wpscan/{$name}-index.js", __FILE__);
 
-        if (file_exists($asset_path)) {
-            $asset = include $asset_path;
+    if (file_exists($asset_path)) {
+      $asset = include $asset_path;
 
-            wp_enqueue_script(
-                "ionos-essentials-{$name}",
-                $script_url,
-                $asset['dependencies'],
-                $asset['version'],
-                ['in_footer' => true]
-            );
-        }
+      wp_enqueue_script(
+        "ionos-essentials-{$name}",
+        $script_url,
+        $asset['dependencies'],
+        $asset['version'],
+        [
+          'in_footer' => true,
+        ]
+      );
     }
+  }
 });
-
 
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';
 require_once __DIR__ . '/ionos-essentials/inc/update/index.php';

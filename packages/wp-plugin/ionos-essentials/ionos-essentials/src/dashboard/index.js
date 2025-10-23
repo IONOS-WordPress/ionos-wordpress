@@ -142,8 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         }, 800);
       });
-
-      ionos_loop_track_click(target.dataset.nbaId + '/' + status);
     };
 
     dashboard.querySelector('#ionos_essentials_install_gml')?.addEventListener('click', function (event) {
@@ -317,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const data = await response.json();
           wpData.siteHealthIssueCount[data.status] = parseInt(wpData.siteHealthIssueCount[data.status] ?? 0) + 1;
         } catch (error) {
-          // silence is golden
+          // eslint-disable-next-line no-console
           console.error(error);
         }
       }
