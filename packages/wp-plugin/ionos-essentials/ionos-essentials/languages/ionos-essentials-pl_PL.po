@@ -74,6 +74,7 @@ msgid "Account Management"
 msgstr "Zarządzanie kontem"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
+#: ionos-essentials/inc/tenants/config/homepl.php
 msgid "Manage Hosting"
 msgstr "Zarządzaj hostingiem"
 

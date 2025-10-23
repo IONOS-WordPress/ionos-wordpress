@@ -47,7 +47,6 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
     description: \__('Create a contact form to stay connected with your visitors.', 'ionos-essentials'),
     link: \admin_url('admin.php?page=wpcf7-new'),
     anchor: \__('Set Up Contact Form', 'ionos-essentials'),
-    completed: false,
     complete_on_click: true,
     categories: ['setup-ai']
   );
@@ -119,7 +118,6 @@ if (null !== $data) {
       ),
       link: $data['domain'] . $connectmail,
       anchor: \__('Setup Email Account', 'ionos-essentials'),
-      completed: false,
       complete_on_click: true,
       categories: ['after-setup']
     );
@@ -156,7 +154,6 @@ if ('extendable' === get_stylesheet()) {
       'site-editor.php?postId=extendable%2F%2Ffooter&postType=\wp_template_part&focusMode=true&canvas=edit'
     ),
     anchor: \__('Connect Social Media', 'ionos-essentials'),
-    completed: false,
     complete_on_click: true,
     categories: ['after-setup']
   );
@@ -218,7 +215,6 @@ if ($contact_post_id) {
     ),
     link: \admin_url('post.php?post=' . $contact_post_id . '&action=edit'),
     anchor: \__('Personalize business data', 'ionos-essentials'),
-    completed: false,
     complete_on_click: true,
     categories: ['setup-ai']
   );
@@ -243,7 +239,6 @@ if ('ionos' === Tenant::get_slug()) {
     description: \__("We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey.", 'ionos-essentials'),
     link: get_survey_url(),
     anchor: \__('Take the survey', 'ionos-essentials'),
-    completed: false,
     complete_on_click: true,
     categories: ['always'],
     exos_icon: 'conversation',
