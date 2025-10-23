@@ -134,7 +134,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         dashboard.getElementById(target.dataset.nbaId).classList.add('ionos_nba_dismissed');
         setTimeout(() => {
-          dashboard.getElementById(target.dataset.nbaId).remove();
+          const item = dashboard.getElementById(target.dataset.nbaId);
+          if (item && item.parentElement) {
+            item.parentElement.remove();
+          }
 
           const nbaCount = dashboard.querySelectorAll('.nba-active').length;
           if (nbaCount === 0) {
