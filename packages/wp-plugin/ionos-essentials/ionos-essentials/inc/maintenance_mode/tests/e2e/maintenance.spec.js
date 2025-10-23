@@ -55,10 +55,12 @@ test.describe(
         await requestUtils.setupRest();
       }
 
-      // CAVEAT : you are NOT logged in at this point. but at the next test start, the logged-in state is restored
-      // so if you want to test something that requires a logged-in user, you need to do that in follow up tests
-      // or do a re-login by "clicking" programmatically the login link and logging in again
-      // (via wp-login.php)
+      /*
+        CAVEAT : you are NOT logged in at this point. but at the next test start, the logged-in state is restored
+        so if you want to test something that requires a logged-in user, you need to do that in follow up tests
+        or do a re-login by "clicking" programmatically the login link and logging in again
+        (via wp-login.php)
+      */
     });
 
     /*
