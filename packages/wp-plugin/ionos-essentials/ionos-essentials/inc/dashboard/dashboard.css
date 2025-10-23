@@ -188,7 +188,6 @@ main{
   }
 
   .bubble{
-    background-color: #4ab866;
     color: #000;
     border-radius: 50%;
     padding: 0.2em 0.5em;
@@ -225,6 +224,7 @@ main{
 
   .issue-row{
     display: inline-flex;
+    align-items: center;
     font-size: var(--third-level-headline-size, 16px);
   }
 
@@ -238,12 +238,8 @@ main{
     color: #ffffff;
   }
 
- .issue-row .bubble i{
-    color: #ffffff;
-
-    &::before {
-      padding-left: 1px;
-    }
+  .issue-row .headline {
+    margin-bottom: 0;
   }
 
   .issue-row.high .bubble{
@@ -646,7 +642,7 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     display: flex;
     align-items: center;
 
-    i {
+    img {
       padding-right: 10px;
     }
   }
