@@ -202,6 +202,7 @@ add_filter('admin_body_class', function ($classes) {
 \add_action(
   'wp_ajax_ionos-nba-setup-complete',
   function () {
+    require_once __DIR__ . '/blocks/next-best-actions/index.php';
     $status = (string) $_POST['status'] ?? 'unknown';
     if (empty($_POST['_wpnonce']) || ! wp_verify_nonce($_POST['_wpnonce'], 'wp_rest')) {
       wp_send_json_error([
