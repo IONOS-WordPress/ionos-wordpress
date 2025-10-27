@@ -120,6 +120,7 @@ msgid "Start AI Sitebuilder"
 msgstr "Website mit KI erstellen"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
+#: ionos-essentials/inc/tenants/config/homepl.php
 msgid "Manage Hosting"
 msgstr "Zum Control Panel"
 
