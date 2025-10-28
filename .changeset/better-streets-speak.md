@@ -2,4 +2,4 @@
 '@ionos-wordpress/essentials': minor
 ---
 
-prepare loop
+several bugfixes
