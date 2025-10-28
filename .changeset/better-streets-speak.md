@@ -1,5 +1,5 @@
 ---
-'@ionos-wordpress/essentials': minor
+'@ionos-wordpress/essentials': patch
 ---
 
 several bugfixes
