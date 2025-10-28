@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.3.2
+
+### Patch Changes
+
+- c5c484d: several bugfixes
+
 ## 1.3.1
 
 ### Patch Changes
