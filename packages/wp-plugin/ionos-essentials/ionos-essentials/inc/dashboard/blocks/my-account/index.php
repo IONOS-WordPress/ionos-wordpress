@@ -33,6 +33,8 @@ function get_account_data()
   $webmail_links = '';
   if ('ionos' === $tenant) {
     $webmail_links = $webmailloginlinks[$market] ?? $webmailloginlinks['de'];
+  } else if ('homepl' === $tenant ) {
+    $webmail_links = $webmailloginlinks['pl'];
   }
 
   $nba_links    = $nba_links    ?? '';
@@ -96,6 +98,10 @@ function render_callback(): void
 
 \add_filter('ionos_dashboard_banner__register_button', function ($button_list) {
   $data = get_account_data();
+
+  if (empty($data)) {
+    return $button_list;
+  }
 
   $managehosting = $data['banner_links']['managehosting'] ?? '';
 

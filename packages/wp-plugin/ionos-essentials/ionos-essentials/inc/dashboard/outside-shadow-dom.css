@@ -54,14 +54,16 @@ body.ionos-dashboard{
 
   #wpbody{
     margin-left: -20px;
+    height: 100%;
   }
 
   #wpbody-content {
     padding-bottom: 0;
+    height: 100%;
   }
 
   #wpwrap{
-    background-color: var(--default-background-color, #f4f7fa);
+    height: 100%;
   }
 
 }

@@ -2,34 +2,108 @@
 
 namespace ionos\essentials\loop;
 
-use ionos\essentials\Tenant;
-
 defined('ABSPATH') || exit();
 
+require_once __DIR__ . '/../dashboard/blocks/next-best-actions/index.php';
+require_once __DIR__ . '/../dashboard/blocks/next-best-actions/class-nba.php';
+
+use ionos\essentials\dashboard\blocks\next_best_actions\NBA;
+use ionos\essentials\Tenant;
+use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN;
+use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
+
 const IONOS_LOOP_EVENTS_OPTION = 'ionos-loop-events';
+const IONOS_LOOP_CLICKS_OPTION = 'ionos-loop-clicks';
 const IONOS_LOOP_MAX_EVENTS    = 200;
 
 function _rest_loop_callback(): \WP_REST_Response
 {
+
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $core_data = [
-    'generic'       => _get_generic(),
-    'user'          => \count_users('memory'),
-    'active_theme'  => _get_themes(),
-    'active_plugins'=> _get_plugins(),
-    'posts'         => _get_posts_and_pages(),
-    'comments'      => _get_comments(),
+    'hosting'       => _get_hosting(),
+    'wordpress'     => [
+      'user_data'           => \count_users('memory'),
+      'active_theme'        => _get_active_theme(),
+      'active_plugins'      => _get_plugins(),
+      'posts'               => _get_posts_and_pages(),
+      'comments'            => _get_comments(),
+      'uploads'             => _get_uploads(),
+      'installed_themes'    => count(\wp_get_themes()),
+      'installed_plugins'   => count(\get_plugins()),
+      'permalink_structure' => \get_option('permalink_structure', ''),
+      'siteurl'             => \get_option('siteurl', ''),
+      'home'                => \get_option('home', ''),
+    ],
     'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
-    'uploads'       => _get_uploads(),
+    'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
+
+    'plugin_data' => [
+      'ionos-essentials'    => [
+        'dashboard'   => _get_dashbord_data(),
+        'security'    => \get_option(\ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION, []),
+        'maintenance' => \ionos\essentials\maintenance_mode\is_maintenance_mode(),
+      ],
+      'extendify' => [
+        'extendify_onboarding_completed' => (bool) \get_option('extendify_onboarding_completed', null),
+      ],
+    ],
   ];
 
-  // empty events after retrieval
   \delete_option(IONOS_LOOP_EVENTS_OPTION);
+  \delete_option(IONOS_LOOP_CLICKS_OPTION);
+
   return \rest_ensure_response($core_data);
 }
 
-function _get_generic(): array
+function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
+{
+  $body = $request->get_json_params();
+
+  if (! isset($body['anchor'])) {
+    return \rest_ensure_response([
+      'error' => 'no anchor',
+    ]);
+  }
+
+  $key = sanitize_text_field($body['anchor']);
+
+  $data = \get_option(IONOS_LOOP_CLICKS_OPTION, []);
+  if (! is_array($data)) {
+    $data = [];
+  }
+
+  $data[$key] = isset($data[$key]) ? $data[$key] + 1 : 1;
+
+  \update_option(IONOS_LOOP_CLICKS_OPTION, $data);
+
+  return \rest_ensure_response([]);
+}
+
+function _get_dashbord_data(): array
+{
+  $data = [
+    'nba_status'                                => [],
+    OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED => \get_option(OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED, null),
+  ];
+
+  $nba_status = \get_option(NBA::OPTION_STATUS_NAME, []);
+  foreach ($nba_status as $key => $value) {
+    $data['nba_status'][$key] = join(',', array_keys($value));
+  }
+
+  $actions_shown = \get_option(OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN, []);
+  foreach ($actions_shown as $value) {
+    if (! array_key_exists($value, $data['nba_status'])) {
+      $data['nba_status'][$value] = null;
+    }
+  }
+
+  return $data;
+}
+
+function _get_hosting(): array
 {
   return [
     'locale'              => \get_locale(),
@@ -38,12 +112,7 @@ function _get_generic(): array
     'tenant'              => Tenant::get_slug(),
     'core_version'        => \get_bloginfo('version'),
     'php_version'         => PHP_VERSION,
-    'installed_themes'    => count(\wp_get_themes()),
-    'installed_plugins'   => count(\get_plugins()),
     'instance_created'    => _get_instance_creation_date(),
-    'permalink_structure' => \get_option('permalink_structure', ''),
-    'siteurl'             => \get_option('siteurl', ''),
-    'home'                => \get_option('home', ''),
   ];
 }
 
@@ -68,7 +137,7 @@ function _get_instance_creation_date(): ?int
   return $timestamp;
 }
 
-function _get_themes(): array
+function _get_active_theme(): array
 {
   $current_theme = \wp_get_theme();
 
@@ -80,12 +149,10 @@ function _get_themes(): array
   $auto_update        = in_array($current_theme_slug, $auto_update_themes, true);
 
   return [
-    [
-      'id'                => $current_theme_slug,
-      'version'           => $current_theme->get('Version'),
-      'parent_theme_slug' => $parent_theme_slug,
-      'auto_update'       => $auto_update,
-    ],
+    'id'                => $current_theme_slug,
+    'version'           => $current_theme->get('Version'),
+    'parent_theme_slug' => $parent_theme_slug,
+    'auto_update'       => $auto_update,
   ];
 }
 
@@ -152,12 +219,12 @@ function _get_uploads(): array
   $basedir     = $uploads_dir['basedir'];
 
   $file_count = 0;
-  $file_size  = 0;
+  $size       = 0;
 
   if (! is_dir($basedir)) {
     return [
       'file_count' => 0,
-      'file_size'  => '0',
+      'size'       => '0',
     ];
   }
 
@@ -168,13 +235,13 @@ function _get_uploads(): array
   foreach ($iterator as $file) {
     if ($file->isFile()) {
       $file_count++;
-      $file_size += $file->getSize();
+      $size += $file->getSize();
     }
   }
 
   return [
     'file_count' => $file_count,
-    'file_size'  => (string) $file_size,  // as string to allow big filesize numbers
+    'size'       => $size,
   ];
 }
 

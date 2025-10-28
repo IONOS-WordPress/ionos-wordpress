@@ -125,6 +125,7 @@ msgid "Start AI Sitebuilder"
 msgstr "Starta AI-hemsidegenerator"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
+#: ionos-essentials/inc/tenants/config/homepl.php
 msgid "Manage Hosting"
 msgstr "Hantera webbhotell"
 
@@ -873,7 +874,6 @@ msgid "PHP version"
 msgstr "PHP-version"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "View details"
 msgstr "Visa detaljer"
 

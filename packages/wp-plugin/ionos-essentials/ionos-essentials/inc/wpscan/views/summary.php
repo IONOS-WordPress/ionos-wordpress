@@ -79,31 +79,17 @@ function display_problems(array $args): void
     }
     echo '</div>';
 
-    display_full_report_link($args);
   }
 
   if (0 === $args['high'] && 0 === $args['medium']) {
     echo '<div class="issue-row none">';
-    echo '<span class="bubble"><i class="exos-icon exos-icon-check-16"></i></span><h4 class="headline headline--sub">' . \esc_html__(
+    echo '<span class="bubble"><svg class="icon-done" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#4caf50" /><path fill="#ffffff" d="M13.6,6.0 L8.48,11.18 L6.4,9.09 L5.0,10.5 L8.48,14.0 L15.0,7.4 L13.6,6.0 Z" /></svg></span><h4 class="headline headline--sub">' . \esc_html__(
       'Website is safe and secure',
       'ionos-essentials'
     );
     echo '</h4></div>';
   }
   echo '</div>';
-}
-
-function display_full_report_link($args): void
-{
-  printf(
-    <<<EOF
-    <div class="ionos_vulnerability__report-link">
-      <a href="#tools" class="button button--secondary">%s</a>
-    </div>
-EOF
-    ,
-    \esc_html__('View details', 'ionos-essentials')
-  );
 }
 
 function display_last_scan(array $args): void

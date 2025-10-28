@@ -9,7 +9,7 @@ function render_callback(): void
   $config_file = __DIR__ . '/config.php';
 
   if (file_exists($config_file)) {
-    require $config_file;
+    require_once $config_file;
 
     ?>
 <div class="card">
@@ -20,8 +20,9 @@ function render_callback(): void
         <?php
               foreach (get_config() as $link) {
                 printf(
-                  '<a href="%s"><i class="button__icon exos-icon exos-icon-%s"></i>%s</a>',
+                  '<a href="%s" data-track-link="%s"><i class="button__icon exos-icon exos-icon-%s"></i>%s</a>',
                   \esc_url($link['url']),
+                  \esc_attr($link['id']),
                   $link['icon'],
                   \esc_html($link['text'])
                 );

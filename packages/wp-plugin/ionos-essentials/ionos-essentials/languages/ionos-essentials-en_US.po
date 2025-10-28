@@ -120,6 +120,7 @@ msgid "Start AI Sitebuilder"
 msgstr "Start AI Sitebuilder"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
+#: ionos-essentials/inc/tenants/config/homepl.php
 msgid "Manage Hosting"
 msgstr "Manage Hosting"
 
@@ -869,7 +870,6 @@ msgid "PHP version"
 msgstr "PHP version"
 
 #: ionos-essentials/inc/dashboard/blocks/vulnerability/index.php
-#: ionos-essentials/inc/wpscan/views/summary.php
 msgid "View details"
 msgstr "View details"
 

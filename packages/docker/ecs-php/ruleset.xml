@@ -57,6 +57,7 @@
     <exclude name="PSR2.ControlStructures.SwitchDeclaration"/>
     <exclude name="PSR12.Files.FileHeader"/>
     <exclude name="WordPress.PHP.YodaConditions"/>
+    <exclude name="WordPress.WhiteSpace.CastStructureSpacing"/>
   </rule>
 
   <!-- <rule ref="WordPress-Core">

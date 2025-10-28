@@ -20,6 +20,7 @@ class WPScan
 
     if (false === $this->issues || ! is_array($this->issues)) {
       $this->get_new_middleware_data();
+
       $this->maybe_send_email();
     }
 
@@ -90,16 +91,9 @@ class WPScan
     if (! $screen || 'theme-install' !== $screen->id) {
       return;
     }
-    \wp_enqueue_script(
-      'ionos-wpscan-theme-install',
-      \plugin_dir_url(__FILE__) . 'js/theme-install.js',
-      [],
-      filemtime(\plugin_dir_path(__FILE__) . 'js/theme-install.js'),
-      true
-    );
 
     \wp_localize_script(
-      'ionos-wpscan-theme-install',
+      'ionos-essentials-theme-install',
       'ionosWPScanThemes',
       [
         'issues'  => $this->get_issues(),
@@ -122,16 +116,9 @@ class WPScan
     if (! $screen || 'plugin-install' !== $screen->id) {
       return;
     }
-    \wp_enqueue_script(
-      'ionos-wpscan-plugins',
-      \plugin_dir_url(__FILE__) . 'js/plugin-install.js',
-      [],
-      filemtime(\plugin_dir_path(__FILE__) . 'js/plugin-install.js'),
-      true
-    );
 
     \wp_localize_script(
-      'ionos-wpscan-plugins',
+      'ionos-essentials-plugin-install',
       'ionosWPScanPlugins',
       [
         'issues'  => $this->get_issues(),
@@ -162,16 +149,8 @@ class WPScan
       return;
     }
 
-    \wp_enqueue_script(
-      'ionos-essentials-themes',
-      \plugin_dir_url(__FILE__) . 'js/theme-overview.js',
-      [],
-      filemtime(\plugin_dir_path(__FILE__) . 'js/theme-overview.js'),
-      true
-    );
-
     \wp_localize_script(
-      'ionos-essentials-themes',
+      'ionos-essentials-theme-overview',
       'ionosWPScanThemes',
       [
         'slugs' => array_column($issues, 'slug'),
@@ -208,7 +187,7 @@ class WPScan
     $updates       = get_site_transient('update_plugins');
     $noshadowclass = isset($updates->response[$plugin_file]) ? 'ionos-plugin-noshadow' : '';
 
-    $brand = Tenant::get_label();
+    $brand = Tenant::get_slug();
 
     printf(
       '<tr class="plugin-update-tr %s ionos-wpscan-notice"><td colspan="4" class="plugin-update colspanchange %s"><div class="update-message notice inline %s notice-alt">%s %s. <a href="%s">%s.</a></div></td></tr>',
@@ -267,6 +246,9 @@ class WPScan
     $message = $this->get_mail_content(array_values($unknown_names));
     $headers = ['Content-Type: text/html; charset=UTF-8'];
 
+    \ionos\essentials\loop\log_loop_event('wpscan_email_sent', [
+      'issues' => array_values($unknown_names),
+    ]);
     \wp_mail($to, $subject, $message, $headers);
     return true;
   }

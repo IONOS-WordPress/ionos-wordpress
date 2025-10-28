@@ -30,7 +30,7 @@ function render_callback(): void
             ></iframe>
           </div>
           <div class="ionos-site-health-overview__info">
-            <span class="badge badge--warning-solid ionos-maintenance-only" style="width: 180px; margin-bottom: 10px;"><?php \esc_html_e('Maintenance page active', 'ionos-essentials'); ?></span>
+            <span class="badge badge--warning-solid ionos-maintenance-only" style="width: fit-content; margin-bottom: 10px;"><?php \esc_html_e('Maintenance page active', 'ionos-essentials'); ?></span>
             <div class="ionos-site-health-overview__info-homeurl">
               <?php if (\is_ssl()) { ?>
                 <i class="exos-icon exos-icon-nav-lock-close-16"></i>
