@@ -31,6 +31,10 @@ $configs = [
     'color' => '#092850',
     'logo'  => 'udag.svg',
   ],
+  'homepl' => [
+    'color' => '#000000',
+    'logo'  => 'homepl.svg',
+  ],
 ];
 
 $tenant = Tenant::get_slug();
