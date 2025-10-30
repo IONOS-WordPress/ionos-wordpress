@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
           slug: event.target.dataset.slug,
           type: 'plugin',
         })
-        .done(function (response) {
+        .always(function (response) {
           switch (response.data) {
             case 'warnings_found':
               message.innerHTML = `<p>${ionosWPScanPlugins.i18n.warnings_found}</p>`;

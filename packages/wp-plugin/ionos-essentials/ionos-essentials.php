@@ -76,7 +76,8 @@ defined('ABSPATH') || exit();
   );
 
   // enqueue wpscan scripts
-  $scripts = ['plugin-install', 'theme-install', 'theme-overview'];
+  $token = \get_option('ionos_security_wpscan_token', '');
+  $scripts = empty($token) ? [] : ['plugin-install', 'theme-install', 'theme-overview'];
   foreach ($scripts as $name) {
     $asset_path = __DIR__ . "/ionos-essentials/build/wpscan/{$name}-index.asset.php";
     $script_url = plugins_url("/ionos-essentials/build/wpscan/{$name}-index.js", __FILE__);
