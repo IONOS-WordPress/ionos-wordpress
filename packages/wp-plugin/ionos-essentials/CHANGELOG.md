@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.3.3
+
+### Patch Changes
+
+- 6b0cfad: fix essentials for php 7.4.33
+
 ## 1.3.2
 
 ### Patch Changes
