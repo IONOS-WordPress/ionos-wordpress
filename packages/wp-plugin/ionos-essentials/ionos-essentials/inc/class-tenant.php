@@ -10,12 +10,12 @@ defined('ABSPATH') || exit();
 
 class Tenant
 {
-  private readonly string $_label;
+  private string $_label = 'IONOS';
 
   private static ?Tenant $instance = null;
 
   private function __construct(
-    private readonly string $_slug
+    private string $_slug
   ) {
     $this->_label = match ($_slug) {
       'ionos'     => 'IONOS',
