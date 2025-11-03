@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
             slug: event.target.dataset.slug,
             type: 'theme',
           })
-          .done(function (response) {
+          .always(function (response) {
             switch (response.data) {
               case 'warnings_found':
                 notice.innerHTML = `<p>${ionosWPScanThemes.i18n.warnings_found}</p>`;
