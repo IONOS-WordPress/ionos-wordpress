@@ -166,6 +166,26 @@ main{
   }
 }
 
+.ionos-site-health-overview__info-item{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .headline {
+    margin-bottom: 0;
+  }
+}
+
+.ionos-site-health-overview {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+  .headline {
+    word-break: break-all;
+  }
+}
+
 .ionos_vulnerability{
   container-type: inline-size !important;
   container: ionos_vulnerability;
@@ -415,16 +435,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   /* height: 152px; */
 }
 
-.ionos-site-health-overview {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-
-  .headline {
-    word-break: break-all;
-  }
-}
-
 .ionos-site-health-overview__iframe {
   border: 1px solid #bcc8d4;
   border-radius: 8px;
@@ -446,16 +456,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     display: flex;
     flex-direction: row;
     gap: 20px;
-}
-
-.ionos-site-health-overview__info-item{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-
-  .headline {
-    margin-bottom: 0;
-  }
 }
 
 .ionos-site-health-overview__info-homeurl {
