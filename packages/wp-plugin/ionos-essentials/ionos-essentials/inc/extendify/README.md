@@ -9,7 +9,7 @@ Extendify is a third party plugin with features like
 
 ## setup
 
-to have extendify working, the open source plugin from the marketplace, one "Site Assistant" Plugin (see *license plugin* below) and the extendable theme from the marketplace.
+to have extendify working, the open source plugin from the marketplace, one "Site Assistant" Plugin (see _license plugin_ below) and the extendable theme from the marketplace.
 
 ## license plugin
 
@@ -21,9 +21,4 @@ there are 7 tenants with 2 licenses each, resulting in 14 different plugins. the
 
 the license is sent to a extendify server for evaluating the actual featureset behind the license.
 this call is IP range restricted so it is only allowed from stretch instances.
-currently *all tenants but Ionos* are restricted
-
-
-
-
-
+currently _all tenants but Ionos_ are restricted
