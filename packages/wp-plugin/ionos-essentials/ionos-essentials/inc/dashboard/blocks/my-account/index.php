@@ -33,7 +33,7 @@ function get_account_data()
   $webmail_links = '';
   if ('ionos' === $tenant) {
     $webmail_links = $webmailloginlinks[$market] ?? $webmailloginlinks['de'];
-  } else if ('homepl' === $tenant ) {
+  } elseif ('homepl' === $tenant) {
     $webmail_links = $webmailloginlinks['pl'];
   }
 
