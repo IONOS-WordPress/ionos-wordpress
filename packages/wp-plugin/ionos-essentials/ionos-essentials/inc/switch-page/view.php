@@ -39,15 +39,20 @@ $configs = [
 
 $tenant = Tenant::get_slug();
 $config = $configs[$tenant] ?? reset($configs);
+$theme_file = realpath(__DIR__ . '/../dashboard/exos-themes/' . $tenant . '.css');
+
+if (file_exists($theme_file)) {
+  \wp_register_style(
+    handle: 'exos-theme',
+    src: \plugins_url($tenant . '.css', $theme_file),
+    ver: filemtime($theme_file)
+  );
+  \wp_print_styles(['exos-theme']);
+}
+
 ?>
 
-<style>
-  .option:first-child:hover {
-    border-color: <?php echo \esc_attr($config['color']); ?>;
-  }
-</style>
-
-<div class="wrapper">
+<div class="wrapper page-section">
   <div class="header">
     <img class="logo" src="<?php echo \esc_attr(
       \plugins_url('assets/logos/' . $config['logo'], __FILE__)
@@ -57,38 +62,34 @@ $config = $configs[$tenant] ?? reset($configs);
     <h1 class="headline"><?php \esc_html_e('How do you want to create your new website?', 'ionos-essentials'); ?></h1>
     <div class="container">
       <div class="options">
-        <div class="option" style=":hover{border-color: <?php echo \esc_attr($config['color']); ?>;}">
-          <a href="<?php echo \esc_attr(\admin_url('admin.php?page=extendify-launch')); ?>" class="link-btn">
-            <div class="option-content">
-              <span class="info-text" style="background-color: <?php echo \esc_attr($config['color']); ?>;"><?php \esc_html_e('Online in a few minutes', 'ionos-essentials'); ?></span>
-              <img src="<?php echo \esc_url(
-                \plugins_url('assets/artificial-intelligence.png', __FILE__)
-              ); ?>" alt="<?php \esc_attr_e('Artificial Intelligence Illustration', 'ionos-essentials'); ?>"/>
-              <h3><?php \esc_html_e('With AI', 'ionos-essentials'); ?></h3>
-              <p><?php \esc_html_e(
-                'Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images.',
-                'ionos-essentials'
-              ); ?></p>
-              <p style="font-weight:700"><?php \esc_html_e('100% WordPress', 'ionos-essentials'); ?></p>
-            </div>
-          </a>
+        <div class="option card">
+          <div class="option-content card__section">
+            <img src="<?php echo \esc_url(
+              \plugins_url('assets/artificial-intelligence.png', __FILE__)
+            ); ?>" alt="<?php \esc_attr_e('Artificial Intelligence Illustration', 'ionos-essentials'); ?>"/>
+            <h3 class="headline"><?php \esc_html_e('With AI', 'ionos-essentials'); ?></h3>
+            <p class="paragraph"><?php \esc_html_e(
+              'A native WordPress website in minutes. Our powerful AI generates design, images and content based on your needs.',
+              'ionos-essentials'
+            ); ?></p>
+            <a href="?php echo \esc_attr(\admin_url('admin.php?page=extendify-launch')); ?>" class="button button--primary"><?php \esc_html_e('Continue with AI', 'ionos-essentials'); ?></a>
+          </div>
         </div>
-        <div class="option">
-          <a href="<?php echo \esc_attr(
-            \admin_url('admin.php?page=' . Tenant::get_slug())
-          ); ?>" class="link-btn">
-            <div class="option-content">
-              <img
-                src="<?php echo \esc_attr(\plugins_url('assets/user-interface.png', __FILE__)); ?>"
-                alt="<?php \esc_attr_e('User Interface Illustration', 'ionos-essentials'); ?>"
-              />
-              <h3><?php \esc_html_e('Do it yourself', 'ionos-essentials'); ?></h3>
-              <p><?php \esc_html_e(
-                'You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later.',
-                'ionos-essentials'
-              ); ?></p>
-            </div>
-          </a>
+        <div class="option card">
+          <div class="option-content card__section">
+            <img
+              src="<?php echo \esc_attr(\plugins_url('assets/user-interface.png', __FILE__)); ?>"
+              alt="<?php \esc_attr_e('User Interface Illustration', 'ionos-essentials'); ?>"
+            />
+            <h3 class="headline"><?php \esc_html_e('Do it yourself', 'ionos-essentials'); ?></h3>
+            <p class="paragraph"><?php \esc_html_e(
+              'Take full control of the creative process. You can easily switch over to the AI builder later from inside Wordpress.',
+              'ionos-essentials'
+            ); ?></p>
+            <a href="<?php echo \esc_attr(
+          \admin_url('admin.php?page=' . Tenant::get_slug())
+        ); ?>" class="button button--secondary"><?php \esc_html_e('Create manually', 'ionos-essentials'); ?></a>
+          </div>
         </div>
       </div>
 
