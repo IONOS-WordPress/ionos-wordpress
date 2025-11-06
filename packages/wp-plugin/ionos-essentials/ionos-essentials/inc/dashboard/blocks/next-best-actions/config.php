@@ -220,6 +220,20 @@ if ($contact_post_id) {
   );
 }
 
+// if ('extendable' === get_stylesheet()) {
+  NBA::register(
+    id: 'extendify-agent',
+    title: \__('Extendify Agent', 'ionos-essentials'),
+    description: \__("Extendify has a cool AI Agent. It allows for editing on the website view directly", 'ionos-essentials'),
+    link: '#',
+    anchor: \__('Visit AI Agent', 'ionos-essentials'),
+    complete_on_click: true,
+    categories: ['always'],
+    exos_icon: 'megaphone',
+    expanded: true
+  );
+// }
+
 NBA::register(
   id: 'tools-and-security',
   title: \__('\'Tools & Security\' area', 'ionos-essentials'),
