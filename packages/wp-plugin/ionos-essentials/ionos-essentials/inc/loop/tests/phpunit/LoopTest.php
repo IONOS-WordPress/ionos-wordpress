@@ -68,7 +68,7 @@ class LoopTest extends \WP_UnitTestCase  {
     $json['timestamp'] = time(); // set timestamp for schema validation
     $json['instance'] = '75b2707e45c147ea74e32c677ae7b12316acbdc37a70faa63cc2b675b53c3b6d'; // set fixed instance ID for schema validation
 
-    $schema = json_decode(file_get_contents(__DIR__ . './../../schema.json'), true);
+    $schema = json_decode(file_get_contents(__DIR__ . './../../loop-1.0-schema.json'), true);
 
     $validation = \rest_validate_value_from_schema($json, $schema);
     $this->assertTrue($validation, 'data returned by loop endpoint matches schema');

@@ -2,6 +2,6 @@
 
 README.md
 CHANGELOG.md
-*example.json
+-example-data.json
 # schema is need for the loop test runned within the ci/cd pipeline
 # *schema.json

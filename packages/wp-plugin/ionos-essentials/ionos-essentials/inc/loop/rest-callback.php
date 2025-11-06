@@ -22,6 +22,7 @@ function _rest_loop_callback(): \WP_REST_Response
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $core_data = [
+    'version'      => '1.0',
     'hosting'       => _get_hosting(),
     'wordpress'     => [
       'user_data'           => \count_users('memory'),
