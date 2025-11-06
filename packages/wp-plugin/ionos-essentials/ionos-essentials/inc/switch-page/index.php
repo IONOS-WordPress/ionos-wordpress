@@ -78,5 +78,7 @@ defined('ABSPATH') || exit();
       [],
       filemtime(\plugin_dir_path(__FILE__) . 'style.css')
     );
+
+    wp_deregister_style( 'buttons' );
   }
 );
