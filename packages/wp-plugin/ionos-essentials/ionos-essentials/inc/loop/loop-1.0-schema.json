@@ -4,6 +4,11 @@
   "description": "Schema for IONOS WordPress site configuration and telemetry data",
   "type": "object",
   "properties": {
+    "version": {
+      "type": "string",
+      "description": "semantic version of the loop telemetry data format",
+      "examples": ["1.0"]
+    },
     "hosting": {
       "type": "object",
       "description": "Hosting site configuration and metadata",
