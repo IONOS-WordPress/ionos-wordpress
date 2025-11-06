@@ -48,6 +48,9 @@ if (file_exists($theme_file)) {
     ver: filemtime($theme_file)
   );
   \wp_print_styles(['exos-theme']);
+
+  wp_deregister_style( 'buttons' );
+
 }
 
 ?>
@@ -65,7 +68,7 @@ if (file_exists($theme_file)) {
         <div class="option card">
           <div class="option-content card__section">
             <img src="<?php echo \esc_url(
-              \plugins_url('assets/artificial-intelligence.png', __FILE__)
+              \plugins_url('assets/machine-learning.svg', __FILE__)
             ); ?>" alt="<?php \esc_attr_e('Artificial Intelligence Illustration', 'ionos-essentials'); ?>"/>
             <h3 class="headline"><?php \esc_html_e('With AI', 'ionos-essentials'); ?></h3>
             <p class="paragraph"><?php \esc_html_e(
@@ -78,7 +81,7 @@ if (file_exists($theme_file)) {
         <div class="option card">
           <div class="option-content card__section">
             <img
-              src="<?php echo \esc_attr(\plugins_url('assets/user-interface.png', __FILE__)); ?>"
+              src="<?php echo \esc_attr(\plugins_url('assets/user-interface.svg', __FILE__)); ?>"
               alt="<?php \esc_attr_e('User Interface Illustration', 'ionos-essentials'); ?>"
             />
             <h3 class="headline"><?php \esc_html_e('Do it yourself', 'ionos-essentials'); ?></h3>
