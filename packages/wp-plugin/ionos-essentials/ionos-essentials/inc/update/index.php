@@ -71,23 +71,26 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
     $plugin_data = \get_plugin_data(ABSPATH . 'wp-content/plugins/' . $args->slug, false, false);
 
     // fetch changelog from github
-    $res = \wp_remote_get($plugin_data['UpdateURI'], [
+    $res = \wp_remote_get(
+      'https://raw.githubusercontent.com/IONOS-WordPress/ionos-wordpress/refs/heads/main/packages/wp-plugin/ionos-essentials/CHANGELOG.md',
+      [
       'headers' => [
         'Accept' => 'application/json',
       ],
+
     ]);
+
+    $result = (object) [
+      'name'     => $plugin_data['Name'],
+      'version'  => $plugin_data['Version'],
+      'slug'     => $args->slug,
+      'sections' => [
+        'changelog' => '',  // will be filled later
+      ],
+    ];
 
     // abort if the request failed or the response code is not 200 or the response body is empty
     if ((200 !== \wp_remote_retrieve_response_code($res)) || ('' === \wp_remote_retrieve_body($res))) {
-      $result = (object) [
-        'name'     => $plugin_data['Name'],
-        'version'  => $plugin_data['Version'],
-        'slug'     => $args->slug,
-        'sections' => [
-          'changelog' => '',  // will be filled later
-        ],
-      ];
-
       // abort gracefully
       // show error message including link in the changelog section
       $result->sections['changelog'] = \esc_html(
@@ -103,8 +106,18 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
       return $result;
     }
 
-    $result       = (object) json_decode($res['body'], true);
-    $result->name = $plugin_data['Name'];
+    $md_data   = \wp_remote_retrieve_body($res);
+    $html_data = preg_replace('/### (.*?)\n/', '<strong>$1</strong>', $md_data);
+    $html_data = preg_replace('/## (.*?)\n/', '<h4>$1</h4>', $html_data);
+    $html_data = preg_replace('/# (.*?)\n/', '', $html_data);
+    $html_data = preg_replace('/- [a-z0-9]{7}..(.*?)\n/', '<li>$1</li>', $html_data);
+    $html_data = preg_replace(
+      '/(?:(?<=<\/strong>)|(?<=<\/h4>))\s*((?:<li>.*?<\/li>\s*)+)/si',
+      "<ul>\n$1</ul>",
+      $html_data
+    );
+
+    $result->sections['changelog'] = \wp_kses_post($html_data);
 
     return $result;
   }
