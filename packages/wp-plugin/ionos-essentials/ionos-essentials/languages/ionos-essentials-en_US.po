@@ -770,6 +770,7 @@ msgstr "Trademark protection"
 msgid "Turn off notification here"
 msgstr "Turn off notification here"
 
+#. translators: %s: URL to the Hub's Tools & Security page.
 #: ionos-essentials/inc/security/index.php
 #, php-format
 msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
