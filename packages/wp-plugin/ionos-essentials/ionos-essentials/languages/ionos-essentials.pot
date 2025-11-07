@@ -74,7 +74,7 @@ msgid "Account Management"
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
-#: ionos-essentials/inc/tenants/config/homepl.php
+#: ionos-essentials/inc/tenants/homepl.php
 msgid "Manage Hosting"
 msgstr ""
 
@@ -739,111 +739,111 @@ msgstr ""
 msgid "By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "My offers"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "My data"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My products"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My invoices"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/fasthosts.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/fasthosts.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Control Panel"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "My User"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "WordPress Websites"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Account"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Project Overview"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Domains and SSL management"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Products"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Add more products"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Data of customer"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Services"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Invoices"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Package overview"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your invoices"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your contract"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Current offers"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage WordPress"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage Domains"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage e-mail"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Webspace"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "RankingCoach"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "SSL"
 msgstr ""
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Trademark protection"
 msgstr ""
 

@@ -34,63 +34,63 @@ msgstr "IONOS Group "
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "My offers"
 msgstr "Mijn aanbiedingen"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "My data"
 msgstr "Mijn gegevens"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My products"
 msgstr "Mijn producten"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My invoices"
 msgstr "Mijn facturen"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/fasthosts.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/fasthosts.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Control Panel"
 msgstr "Klantenlogin"
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "My User"
 msgstr "Mijn gebruiker"
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "WordPress Websites"
 msgstr "WordPress websites"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Data of customer"
 msgstr "Klantgegevens"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Services"
 msgstr "Diensten"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Invoices"
 msgstr "Facturen"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Package overview"
 msgstr "Overzicht van je pakketten"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your invoices"
 msgstr "Je facturen "
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your contract"
 msgstr "Je contract"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Current offers"
 msgstr "Actuele aanbiedingen"
 
@@ -125,7 +125,7 @@ msgid "Start AI Sitebuilder"
 msgstr "AI websitemaker starten"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
-#: ionos-essentials/inc/tenants/config/homepl.php
+#: ionos-essentials/inc/tenants/homepl.php
 msgid "Manage Hosting"
 msgstr "Hosting beheren"
 
@@ -291,19 +291,19 @@ msgstr "Mediabestanden uploaden"
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Ontdek nieuwe functies en verbeteringen."
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Products"
 msgstr "Mijn producten"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Project Overview"
 msgstr "Projectoverzicht"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Domains and SSL management"
 msgstr "Beheer van domeinen en SSL"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Add more products"
 msgstr "Meer producten toevoegen"
 
@@ -311,23 +311,23 @@ msgstr "Meer producten toevoegen"
 msgid "Webmail Login"
 msgstr "Inloggen Webmail"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage WordPress"
 msgstr "WordPress beheren"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage e-mail"
 msgstr "E-mail beheren"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Webspace"
 msgstr "Webspace"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "RankingCoach"
 msgstr "rankingCoach"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "SSL"
 msgstr "SSL"
 
@@ -335,7 +335,7 @@ msgstr "SSL"
 msgid "Setup Email Account"
 msgstr "E-mailaccount instellen"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Account"
 msgstr "Mijn account"
 
@@ -778,11 +778,11 @@ msgstr "Om weer toegang tot dit account te krijgen, moet het wachtwoord worden h
 msgid "Vulnerability scan not possible. Please contact Customer Care."
 msgstr "Kwetsbaarheidsscan niet mogelijk. Neem contact op met de klantenservice."
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage Domains"
 msgstr "Domeinen beheren"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Trademark protection"
 msgstr "Bescherming van handelsmerken"
 
