@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos\essentials\tenants\config;
+namespace ionos\essentials\tenant;
 
 defined('ABSPATH') || exit();
 
