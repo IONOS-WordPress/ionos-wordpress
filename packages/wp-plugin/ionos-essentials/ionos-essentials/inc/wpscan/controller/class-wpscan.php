@@ -246,9 +246,11 @@ class WPScan
     $message = $this->get_mail_content(array_values($unknown_names));
     $headers = ['Content-Type: text/html; charset=UTF-8'];
 
-    \ionos\essentials\loop\log_loop_event('wpscan_email_sent', [
-      'issues' => array_values($unknown_names),
-    ]);
+    if (function_exists('ionos\essentials\loop\log_loop_event')) {
+      \ionos\essentials\loop\log_loop_event('wpscan_email_sent', [
+        'issues' => array_values($unknown_names),
+      ]);
+    }
     \wp_mail($to, $subject, $message, $headers);
     return true;
   }
