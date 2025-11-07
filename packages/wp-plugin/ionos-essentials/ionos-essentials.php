@@ -99,6 +99,7 @@ defined('ABSPATH') || exit();
 });
 
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';
+require_once __DIR__ . '/ionos-essentials/inc/tenants/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/update/index.php';
 
 // soc plugin components
