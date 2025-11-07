@@ -53,6 +53,13 @@ function _register_at_datacollector(): bool
   return ! \is_wp_error($response);
 }
 
+// revoke consent for legacy loop plugin
+\add_action('init', function () {
+  if (class_exists('\Ionos\Loop\Plugin')) {
+    \Ionos\Loop\Plugin::revoke_consent();
+  }
+}, 90); // before legacy loop init at 99
+
 \add_action('rest_api_init', function () {
   \register_rest_route(
     IONOS_LOOP_REST_NAMESPACE,
