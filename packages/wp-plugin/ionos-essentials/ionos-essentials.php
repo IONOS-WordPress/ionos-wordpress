@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name:       Essentials
- * Description:       The Essentials plugin provides IONOS hosting specific functionality.
+ * Description:       The Essentials plugin provides hosting specific functionality.
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
