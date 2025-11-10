@@ -22,6 +22,7 @@ function _rest_loop_callback(): \WP_REST_Response
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $core_data = [
+    'version'       => '1.0',
     'hosting'       => _get_hosting(),
     'wordpress'     => [
       'user_data'           => \count_users('memory'),
@@ -243,31 +244,4 @@ function _get_uploads(): array
     'file_count' => $file_count,
     'size'       => $size,
   ];
-}
-
-\add_action('wp_login', function () {
-  // Log the login event
-  log_loop_event('login', [
-    'type' => ($_GET['action'] ?? '') === 'ionos_oauth_authenticate' ? 'sso' : 'default',
-  ]);
-});
-
-function log_loop_event(string $name, array $payload = []): void
-{
-  $events = \get_option(IONOS_LOOP_EVENTS_OPTION, []);
-
-  if (! is_array($events)) {
-    $events = [];
-  }
-
-  $events[] = [
-    'name'      => $name,
-    'payload'   => $payload,
-    'timestamp' => time(),  // current Unix timestamp (UTC)
-  ];
-
-  // Optional: limit stored events to avoid bloating options table
-  $events = array_slice($events, -IONOS_LOOP_MAX_EVENTS);
-
-  \update_option(IONOS_LOOP_EVENTS_OPTION, $events);
 }
