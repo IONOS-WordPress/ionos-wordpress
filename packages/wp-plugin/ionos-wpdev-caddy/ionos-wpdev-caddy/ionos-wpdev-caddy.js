@@ -5,26 +5,23 @@
 const caddySettings = wp['ionos-wpdev-caddy'];
 
 // load and process catalogs
-const loadedCatalogs = ((responses)=>{
+const loadedCatalogs = ((responses) => {
   return Object.fromEntries(
-    responses
-      .map((response, index) => {
-        if (response.status === 'fulfilled') {
-          const url = caddySettings.catalogs[index];
-          let catalog = response.value.default;
+    responses.map((response, index) => {
+      if (response.status === 'fulfilled') {
+        const url = caddySettings.catalogs[index];
+        let catalog = response.value.default;
 
-          console.log(`Catalog(='${catalog.caption}') loaded from '${url}' :`, catalog);
-          return [url, catalog];
-        } else {
-          console.error(`Failed to load Catalog(=${caddySettings.catalogs[index]}) :`, response.reason);
-        }
-      })
+        console.log(`Catalog(='${catalog.caption}') loaded from '${url}' :`, catalog);
+        return [url, catalog];
+      } else {
+        console.error(`Failed to load Catalog(=${caddySettings.catalogs[index]}) :`, response.reason);
+      }
+    })
   );
 })(
   // load all catalogs in parallel ignoring failures
-  await Promise.allSettled(
-    caddySettings.catalogs.map(url => import(url, { with: { type: 'json' } }))
-  )
+  await Promise.allSettled(caddySettings.catalogs.map((url) => import(url, { with: { type: 'json' } })))
 );
 
 // all html elements of our page having a id attribute <string, HTMLElement>
@@ -32,11 +29,11 @@ const controls = {};
 
 function onCatalogChanged() {
   const value = document.getElementById('catalogs').value;
-  const selectedCatalog = loadedCatalogs[value]; 
+  const selectedCatalog = loadedCatalogs[value];
   const snippetSelect = document.getElementById('catalog_snippet');
-  
+
   snippetSelect.replaceChildren(
-    ...selectedCatalog.items.map(item => {
+    ...selectedCatalog.items.map((item) => {
       const option = document.createElement('option');
       option.value = item.body;
       option.textContent = item.caption ?? item.body.substring(0, 30) + '...';
@@ -44,6 +41,8 @@ function onCatalogChanged() {
       return option;
     })
   );
+
+  onCatalogSnippetChanged();
 }
 
 // Map<textarea, wp.codeEditor> for all codemirror'ized textareas
@@ -53,7 +52,7 @@ function onCatalogSnippetChanged() {
   const select = document.getElementById('catalog_snippet');
   const value = select.value;
   const textarea = select.form.querySelector('textarea');
-  
+
   textarea.value = value;
   const editor = textareaEditorMapping.get(textarea);
   editor.codemirror.setValue(value);
@@ -73,9 +72,9 @@ function populateCatalogSelect() {
 }
 
 // initialize editor for all textareas on the page
-wp.domReady(()=> {
+wp.domReady(() => {
   // collect all elements having a id attribute into controls
-  for( const control of document.querySelectorAll('.wrap [id]')) {
+  for (const control of document.querySelectorAll('.wrap [id]')) {
     controls[control.id] = control;
   }
 
@@ -104,9 +103,9 @@ wp.domReady(()=> {
     output.classList.add('progress');
     try {
       const response = await wp.apiFetch({
-          url   : wp['ionos-wpdev-caddy'].ajax_url, 
-          method: 'POST',
-          body,
+        url: wp['ionos-wpdev-caddy'].ajax_url,
+        method: 'POST',
+        body,
       });
 
       output.value = response.data;
@@ -133,12 +132,12 @@ wp.domReady(()=> {
 
     const selectedSnippetCaption = catalogSnippetSelect.options[catalogSnippetSelect.selectedIndex].label;
 
-    const snippetCaption = (prompt("Enter catalog snippet name to save to:", selectedSnippetCaption) || '').trim();
+    const snippetCaption = (prompt('Enter catalog snippet name to save to:', selectedSnippetCaption) || '').trim();
     if (snippetCaption) {
       const selectedCatalogUrl = catalogSelect.value;
       const selectedCatalog = loadedCatalogs[selectedCatalogUrl];
 
-      const existingItemIndex = selectedCatalog.items.findIndex(item => item.caption === snippetCaption);
+      const existingItemIndex = selectedCatalog.items.findIndex((item) => item.caption === snippetCaption);
       if (existingItemIndex !== -1) {
         // Update existing item
         selectedCatalog.items[existingItemIndex].body = textarea.value;
@@ -154,8 +153,8 @@ wp.domReady(()=> {
       // trigger updating of snippet select
       onCatalogChanged();
       // select the saved snippet
-      for( const option of catalogSnippetSelect.options) {
-        if( option.label === snippetCaption) {
+      for (const option of catalogSnippetSelect.options) {
+        if (option.label === snippetCaption) {
           option.selected = true;
           break;
         }
@@ -182,9 +181,7 @@ wp.domReady(()=> {
   };
 
   document.getElementById('import_catalog').onclick = () => {
-    const json = JSON.parse(
-      document.getElementById('import_dialog').querySelector('textarea').value
-    );
+    const json = JSON.parse(document.getElementById('import_dialog').querySelector('textarea').value);
 
     let url = `#${Object.keys(loadedCatalogs).length}`;
     const matchedEntry = Object.entries(loadedCatalogs).find(([url, catalog]) => catalog.caption === json.caption);
@@ -192,7 +189,7 @@ wp.domReady(()=> {
     if (matchedEntry) {
       url = matchedEntry[0];
     }
-    
+
     loadedCatalogs[url] = json;
 
     document.getElementById('import_dialog').close();
@@ -203,13 +200,13 @@ wp.domReady(()=> {
 
   // initialize codemirror
   const textarea = document.getElementById('php_editor');
-  const editor = wp.codeEditor.initialize( textarea);
+  const editor = wp.codeEditor.initialize(textarea);
   textareaEditorMapping.set(textarea, editor);
 
   // assign label to codemirror editor focus
   textarea.onclick = () => editor.codemirror.focus();
 
-  // fire initial events to populate selects and editors 
+  // fire initial events to populate selects and editors
   onCatalogChanged();
   onCatalogSnippetChanged();
 });
