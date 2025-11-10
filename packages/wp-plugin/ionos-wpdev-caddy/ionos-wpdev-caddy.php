@@ -31,7 +31,7 @@ const MENU_PAGE_URI   = 'admin.php?page=' . MENU_PAGE_SLUG;
 
 \add_action(
   hook_name: 'admin_menu',
-  callback: function() {
+  callback: function () {
     $page_hook_suffix = \add_menu_page(
       page_title : MENU_PAGE_TITLE,
       menu_title : MENU_PAGE_TITLE,
@@ -42,57 +42,62 @@ const MENU_PAGE_URI   = 'admin.php?page=' . MENU_PAGE_SLUG;
 
     // enqueue assets only on our plugin page
     \add_action(
-      hook_name: "load-$page_hook_suffix",
-      callback: function() {
-        \wp_enqueue_code_editor( [
+      hook_name: "load-{$page_hook_suffix}",
+      callback: function () {
+        \wp_enqueue_code_editor([
           'type' => 'application/x-httpd-php', // Specify the language mode
           // Set the CodeMirror theme (e.g., 'default', 'ambiance', 'monokai', etc.)
-          'theme' => 'monokai',
+          'theme'      => 'monokai',
           'codemirror' => [
-            'lineNumbers' => true,
-            'tabSize'     => 2,
-            'indentUnit'  => 2,
+            'lineNumbers'    => true,
+            'tabSize'        => 2,
+            'indentUnit'     => 2,
             'indentWithTabs' => false,
-            'lineWrapping' => false,
+            'lineWrapping'   => false,
           ],
         ]);
 
         // enqueue our own script and styles
         \wp_enqueue_script_module(
           id      : MENU_PAGE_SLUG,
-          src     : \plugin_dir_url( PLUGIN_FILE ) . '/ionos-wpdev-caddy/ionos-wpdev-caddy.js',
-          version : filemtime( PLUGIN_DIR . '/ionos-wpdev-caddy/ionos-wpdev-caddy.js' ),
+          src     : \plugin_dir_url(PLUGIN_FILE) . '/ionos-wpdev-caddy/ionos-wpdev-caddy.js',
+          version : filemtime(PLUGIN_DIR . '/ionos-wpdev-caddy/ionos-wpdev-caddy.js'),
         );
         \wp_enqueue_style(
           handle  : MENU_PAGE_SLUG,
-          src     : \plugin_dir_url( PLUGIN_FILE ) . '/ionos-wpdev-caddy/ionos-wpdev-caddy.css',
-          ver     : filemtime( PLUGIN_DIR . '/ionos-wpdev-caddy/ionos-wpdev-caddy.css' ),
+          src     : \plugin_dir_url(PLUGIN_FILE) . '/ionos-wpdev-caddy/ionos-wpdev-caddy.css',
+          ver     : filemtime(PLUGIN_DIR . '/ionos-wpdev-caddy/ionos-wpdev-caddy.css'),
         );
 
         // needed for doing the ajax call to our custom wp_ajax action
         // @TODO: we cannot add it to the deps of our enqueued script since it's a module
-        \wp_enqueue_script( 'wp-api-fetch');
+        \wp_enqueue_script('wp-api-fetch');
 
         // inject our array of snippet catalog urls to load on the frontend
         \wp_add_inline_script(
           handle : 'wp-api-fetch', // @TODO: using our js module handle does not work here (probably since it's a module) - 'wp-api-fetch' is a workaround
-          data   : strtr(<<<JS
+          data   : strtr(
+            <<<JS
             wp['{MENU_PAGE_SLUG}'] = {
               catalogs    : {catalogs},
               ajax_url    : '{ajax_url}',
               ajax_action : '{ajax_action}',
             };
-            JS, [
+            JS
+            ,
+            [
               '{MENU_PAGE_SLUG}' => MENU_PAGE_SLUG,
               // ajax_url is only here to be super self contained -> admin pages always contain the line "var ajaxurl = '/wp-admin/admin-ajax.php'"
-              '{ajax_url}' => \admin_url('admin-ajax.php'),
+              '{ajax_url}'    => \admin_url('admin-ajax.php'),
               '{ajax_action}' => MENU_PAGE_SLUG,
-              '{catalogs}' => \wp_json_encode(
+              '{catalogs}'    => \wp_json_encode(
                 array_values(array_map(
-                  fn(string $file): string => \plugin_dir_url(PLUGIN_FILE) . '/ionos-wpdev-caddy/catalogs/' . \sanitize_file_name($file),
+                  fn (string $file): string => \plugin_dir_url(
+                    PLUGIN_FILE
+                  ) . '/ionos-wpdev-caddy/catalogs/' . \sanitize_file_name($file),
                   array_filter(
                     scandir(PLUGIN_DIR . '/ionos-wpdev-caddy/catalogs'),
-                    fn(string $file): bool => str_ends_with($file, '.json') && $file !== 'schema.json'
+                    fn (string $file): bool => str_ends_with($file, '.json') && $file !== 'schema.json'
                   )
                 ))
               ),
@@ -104,8 +109,10 @@ const MENU_PAGE_URI   = 'admin.php?page=' . MENU_PAGE_SLUG;
   }
 );
 
-function _render_admin_page(): void {
-  echo strtr(<<<HTML
+function _render_admin_page(): void
+{
+  printf(
+    strtr(<<<HTML
     <div class="wrap">
       <h1>{page_title}</h1>
       <p>{page_title} helps IONOS WordPress development team finding issues and bugs.</p>
@@ -208,33 +215,36 @@ function _render_admin_page(): void {
       </dialog>
     </div>
     HTML
-  , [
-    '{page_title}' => esc_html(MENU_PAGE_TITLE),
-  ]);
+      , [
+        '{page_title}' => esc_html(MENU_PAGE_TITLE),
+      ])
+  );
 }
 
 \add_action('wp_ajax_' . MENU_PAGE_SLUG, function () {
   // since we utilize the automatically available nonce from wp-api-fetch we need to use the expected key '_ajax_nonce' here
-  \check_ajax_referer( 'wp_rest', '_ajax_nonce' );
+  \check_ajax_referer('wp_rest', '_ajax_nonce');
 
   $php_code = wp_unslash($_POST['php_code']) ?? '<?php';
 
   $temp_file = sys_get_temp_dir() . '/' . MENU_PAGE_SLUG . '.php';
-  if ( $temp_file === false ) {
-    \wp_send_json_error([ 'message' => 'Could not create temporary file.' ]);
+  if ($temp_file === false) {
+    \wp_send_json_error([
+      'message' => 'Could not create temporary file.',
+    ]);
   }
 
-  file_put_contents( $temp_file, $php_code );
+  file_put_contents($temp_file, $php_code);
   ob_start();
   try {
     require_once $temp_file;
     $output = ob_get_clean();
     \wp_send_json_success($output);
-  } catch ( \Throwable $e ) {
+  } catch (\Throwable $e) {
     $output = ob_get_clean();
     \wp_send_json_error($e . PHP_EOL . $output);
   } finally {
-    unlink( $temp_file );
+    unlink($temp_file);
   }
 });
 
@@ -242,12 +252,14 @@ function _render_admin_page(): void {
 
 \add_action(
   hook_name: 'admin_bar_menu',
-  callback: function(WP_Admin_Bar $wp_admin_bar) {
+  callback: function (WP_Admin_Bar $wp_admin_bar) {
     $wp_admin_bar->add_node([
-        'id'    => MENU_PAGE_SLUG,
-        'title' => MENU_PAGE_TITLE,
-        'href'  => \admin_url(MENU_PAGE_URI),
-        'meta'  => [ 'class' => MENU_PAGE_SLUG ]
+      'id'    => MENU_PAGE_SLUG,
+      'title' => MENU_PAGE_TITLE,
+      'href'  => \admin_url(MENU_PAGE_URI),
+      'meta'  => [
+        'class' => MENU_PAGE_SLUG,
+      ],
     ]);
 
     /*
@@ -257,7 +269,6 @@ function _render_admin_page(): void {
       'href'  => \admin_url(MENU_PAGE_URI),
       'parent'=> 'ionos-stretch-support'
     ]);
-
     $wp_admin_bar->add_node([
       'id'    => 'unterseite-2',
       'title' => 'Link 2',
@@ -272,10 +283,10 @@ function _render_admin_page(): void {
 // add a link to the plugin page to the plugin description in plugins.php
 \add_filter(
   hook_name: 'plugin_row_meta',
-  callback: function( $links, $file ) {
-    if ( $file === \plugin_basename( PLUGIN_FILE ) ) {
-      $settings_link = '<a href="' . \admin_url(MENU_PAGE_URI) . '">' . \esc_html( 'Settings') . '</a>';
-      $links[] = $settings_link;
+  callback: function ($links, $file) {
+    if ($file === \plugin_basename(PLUGIN_FILE)) {
+      $settings_link = '<a href="' . \admin_url(MENU_PAGE_URI) . '">' . \esc_html('Settings') . '</a>';
+      $links[]       = $settings_link;
     }
     return $links;
   },

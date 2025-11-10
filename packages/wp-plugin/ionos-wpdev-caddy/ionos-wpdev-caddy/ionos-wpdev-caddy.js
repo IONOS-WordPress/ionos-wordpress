@@ -1,7 +1,8 @@
 /*
   js module injected into caddy admin page
 */
-
+/* global wp */
+/* eslint no-console: "off" */
 const caddySettings = wp['ionos-wpdev-caddy'];
 
 // load and process catalogs
@@ -118,8 +119,7 @@ wp.domReady(() => {
       }
     } catch (error) {
       console.error('API Fetch Failure:', error);
-
-      output.value = response.data;
+      output.value = error.message;
       output.classList.replace('progress', 'error');
     }
   };
@@ -184,7 +184,7 @@ wp.domReady(() => {
     const json = JSON.parse(document.getElementById('import_dialog').querySelector('textarea').value);
 
     let url = `#${Object.keys(loadedCatalogs).length}`;
-    const matchedEntry = Object.entries(loadedCatalogs).find(([url, catalog]) => catalog.caption === json.caption);
+    const matchedEntry = Object.entries(loadedCatalogs).find(([, catalog]) => catalog.caption === json.caption);
 
     if (matchedEntry) {
       url = matchedEntry[0];
