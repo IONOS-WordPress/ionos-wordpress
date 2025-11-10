@@ -69,6 +69,7 @@ if (\get_transient('ionos_security_migrated_notice_show')) {
     }
 
     $notice = sprintf(
+      /* translators: %s: URL to the Hub's Tools & Security page. */
       __('The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href="%s">Tools & Security</a> of our new Hub.', 'ionos-essentials'),
       \esc_url(\admin_url() . '?page=' . Tenant::get_slug() . '#tools')
     );
