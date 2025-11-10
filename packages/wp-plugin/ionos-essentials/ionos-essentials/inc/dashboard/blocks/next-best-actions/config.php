@@ -225,11 +225,11 @@ NBA::register(
   id: 'extendify-agent',
   title: \__('New AI Agent with Enhanced Capabilities', 'ionos-essentials'),
   description: \__('Our new AI Agent is here to change the way you edit your site! Simply point and click on elements to make changes and try the new capabilities, from font and style changes to rearranging content.', 'ionos-essentials'),
-  link: '#',
+  link: \home_url(),
   anchor: \__('Try it', 'ionos-essentials'),
   complete_on_click: true,
   categories: ['always'],
-  exos_icon: 'megaphone',
+  exos_icon: 'machine-learning',
   expanded: true
 );
 // }
