@@ -26,7 +26,7 @@ msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp
 
 #. Description of the plugin
 #: ionos-essentials.php
-msgid "The Essentials plugin provides IONOS hosting specific functionality."
+msgid "The Essentials plugin provides hosting specific functionality."
 msgstr "Wtyczka Essentials zapewnia funkcje specyficzne dla hostingu."
 
 #. Author of the plugin

@@ -16,7 +16,7 @@ msgstr ""
 
 #. Description of the plugin
 #: ionos-essentials.php
-msgid "The Essentials plugin provides IONOS hosting specific functionality."
+msgid "The Essentials plugin provides hosting specific functionality."
 msgstr "El plugin Essentials proporciona funcionalidades específicas para el hosting."
 
 #. Author of the plugin
