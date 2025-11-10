@@ -985,3 +985,15 @@ msgstr "Skanujemy automatycznie codziennie i za każdym razem, gdy instalujesz n
 #: ionos-essentials/inc/wpscan/views/summary.php
 msgid "Learn more"
 msgstr "Dowiedz się więcej"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "New AI Agent with Enhanced Capabilities"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Our new AI Agent is here to change the way you edit your site! Simply point and click on elements to make changes and try the new capabilities, from font and style changes to rearranging content."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Try it"
+msgstr ""

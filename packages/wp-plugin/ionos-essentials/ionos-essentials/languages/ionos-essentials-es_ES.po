@@ -985,3 +985,15 @@ msgstr "Seleccionar un tema"
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Choose a theme that matches your website's purpose and your comfort level."
 msgstr "Elige un tema que represente la esencia de tu página web y que encaje con tus expectativas de comodidad."
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "New AI Agent with Enhanced Capabilities"
+msgstr "Nuevo: agente IA con funcionalidades mejoradas"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Our new AI Agent is here to change the way you edit your site! Simply point and click on elements to make changes and try the new capabilities, from font and style changes to rearranging content."
+msgstr "Nuestro nuevo agente IA va a cambiar la forma en que editas tu sitio web: solo tienes que hacer clic en un elemento para cambiarlo. Desde editar un estilo o una fuente hasta reorganizar todo el contenido."
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Try it"
+msgstr "Probar ahora"
