@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       WPDev Caddy
  * Description:       Plugin helps IONOS WordPress development team finding issues and bugs.
- * Requires at least: 6.8
+ * Requires at least: 6.7
  * Requires Plugins:
  * Requires PHP:      8.3
  * Version:           1.0.0
@@ -60,12 +60,12 @@ const MENU_PAGE_URI   = 'admin.php?page=' . MENU_PAGE_SLUG;
         // enqueue our own script and styles
         \wp_enqueue_script_module(
           id      : MENU_PAGE_SLUG,
-          src     : \plugin_dir_url(PLUGIN_FILE) . '/ionos-wpdev-caddy/ionos-wpdev-caddy.js',
+          src     : \plugin_dir_url(PLUGIN_FILE) . 'ionos-wpdev-caddy/ionos-wpdev-caddy.js',
           version : filemtime(PLUGIN_DIR . '/ionos-wpdev-caddy/ionos-wpdev-caddy.js'),
         );
         \wp_enqueue_style(
           handle  : MENU_PAGE_SLUG,
-          src     : \plugin_dir_url(PLUGIN_FILE) . '/ionos-wpdev-caddy/ionos-wpdev-caddy.css',
+          src     : \plugin_dir_url(PLUGIN_FILE) . 'ionos-wpdev-caddy/ionos-wpdev-caddy.css',
           ver     : filemtime(PLUGIN_DIR . '/ionos-wpdev-caddy/ionos-wpdev-caddy.css'),
         );
 
@@ -94,7 +94,7 @@ const MENU_PAGE_URI   = 'admin.php?page=' . MENU_PAGE_SLUG;
                 array_values(array_map(
                   fn (string $file): string => \plugin_dir_url(
                     PLUGIN_FILE
-                  ) . '/ionos-wpdev-caddy/catalogs/' . \sanitize_file_name($file),
+                  ) . 'ionos-wpdev-caddy/catalogs/' . \sanitize_file_name($file),
                   array_filter(
                     scandir(PLUGIN_DIR . '/ionos-wpdev-caddy/catalogs'),
                     fn (string $file): bool => str_ends_with($file, '.json') && $file !== 'schema.json'
