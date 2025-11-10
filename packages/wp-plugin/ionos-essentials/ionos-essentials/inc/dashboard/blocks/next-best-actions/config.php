@@ -223,10 +223,10 @@ if ($contact_post_id) {
 // if ('extendable' === get_stylesheet()) {
   NBA::register(
     id: 'extendify-agent',
-    title: \__('Extendify Agent', 'ionos-essentials'),
-    description: \__("Extendify has a cool AI Agent. It allows for editing on the website view directly", 'ionos-essentials'),
+    title: \__('New AI Agent with Enhanced Capabilities', 'ionos-essentials'),
+    description: \__("Our new AI Agent is here to change the way you edit your site! Simply point and click on elements to make changes and try the new capabilities, from font and style changes to rearranging content.", 'ionos-essentials'),
     link: '#',
-    anchor: \__('Visit AI Agent', 'ionos-essentials'),
+    anchor: \__('Try it', 'ionos-essentials'),
     complete_on_click: true,
     categories: ['always'],
     exos_icon: 'megaphone',
