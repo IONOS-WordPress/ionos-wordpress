@@ -2,11 +2,16 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
+use const ionos\essentials\PLUGIN_DIR;
+
 defined('ABSPATH') || exit();
 
-use ionos\essentials\Tenant;
+require_once PLUGIN_DIR . '/ionos-essentials/inc/class-tenant.php';
 
-$data = \ionos\essentials\dashboard\blocks\my_account\get_account_data();
+use ionos\essentials\Tenant;
+use function ionos\essentials\tenant\get_tenant_config;
+
+$data = get_tenant_config();
 
 $homepage = \get_option('page_on_front'); // returns "0" if no static front page is set
 $edit_url = intval($homepage) === 0 ? \admin_url('edit.php?post_type=page') : admin_url(

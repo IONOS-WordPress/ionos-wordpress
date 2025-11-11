@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name:       Essentials
- * Description:       The essentials plugin provides IONOS hosting specific functionality.
+ * Description:       The Essentials plugin provides hosting specific functionality.
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
@@ -95,6 +95,7 @@ defined('ABSPATH') || exit();
 });
 
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';
+require_once __DIR__ . '/ionos-essentials/inc/tenants/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/update/index.php';
 
 // soc plugin components

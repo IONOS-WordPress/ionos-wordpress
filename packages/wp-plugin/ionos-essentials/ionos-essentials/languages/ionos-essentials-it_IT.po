@@ -16,8 +16,8 @@ msgstr ""
 
 #. Description of the plugin
 #: ionos-essentials.php
-msgid "The essentials plugin provides IONOS hosting specific functionality."
-msgstr "Il plugin Essentials fornisce funzionalità specifiche per l'hosting IONOS."
+msgid "The Essentials plugin provides hosting specific functionality."
+msgstr "Il plugin Essentials fornisce funzionalità specifiche per l'hosting."
 
 #. Author of the plugin
 #: ionos-essentials.php
@@ -29,63 +29,63 @@ msgstr "Gruppo IONOS"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "My offers"
 msgstr "Le mie offerte"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "My data"
 msgstr "I miei dati"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My products"
 msgstr "I miei prodotti"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My invoices"
 msgstr "Le mie fatture"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/fasthosts.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/fasthosts.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Control Panel"
 msgstr "Area Clienti"
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "My User"
 msgstr "Il mio utente"
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "WordPress Websites"
 msgstr "Siti web WordPress"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Data of customer"
 msgstr "Dati cliente"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Services"
 msgstr "Servizi"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Invoices"
 msgstr "Fatture"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Package overview"
 msgstr "Panoramica del pacchetto"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your invoices"
 msgstr "Le tue fatture"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your contract"
 msgstr "Il tuo contratto"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Current offers"
 msgstr "Offerte attuali"
 
@@ -120,7 +120,7 @@ msgid "Start AI Sitebuilder"
 msgstr "Avvia la creazione di siti web con IA"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
-#: ionos-essentials/inc/tenants/config/homepl.php
+#: ionos-essentials/inc/tenants/homepl.php
 msgid "Manage Hosting"
 msgstr "Gestisci hosting"
 
@@ -286,19 +286,19 @@ msgstr "Carica file multimediali"
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Scopri le ultime novità e aggiornamenti."
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Products"
 msgstr "I miei prodotti"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Project Overview"
 msgstr "Panoramica del progetto"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Domains and SSL management"
 msgstr "Gestione dei domini e SSL"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Add more products"
 msgstr "Aggiungi altri prodotti"
 
@@ -306,23 +306,23 @@ msgstr "Aggiungi altri prodotti"
 msgid "Webmail Login"
 msgstr "Accesso a Webmail"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage WordPress"
 msgstr "Gestisci WordPress"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage e-mail"
 msgstr "Gestisci le e-mail"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Webspace"
 msgstr "Spazio web"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "RankingCoach"
 msgstr "RankingCoach"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "SSL"
 msgstr "SSL"
 
@@ -330,7 +330,7 @@ msgstr "SSL"
 msgid "Setup Email Account"
 msgstr "Crea account e-mail"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Account"
 msgstr "Il mio account"
 
@@ -774,11 +774,11 @@ msgstr "Per riattivare l'accesso a questo account, è necessario aggiornare la p
 msgid "Vulnerability scan not possible. Please contact Customer Care."
 msgstr "Non è possibile eseguire la scansione delle vulnerabilità. Contatta l'Assistenza Clienti."
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage Domains"
 msgstr "Gestisci domini"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Trademark protection"
 msgstr "Tutela del marchio"
 
@@ -786,6 +786,7 @@ msgstr "Tutela del marchio"
 msgid "Turn off notification here"
 msgstr "Disattiva le notifiche qui"
 
+#. translators: %s: URL to the Hub's Tools & Security page.
 #: ionos-essentials/inc/security/index.php
 #, php-format
 msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
