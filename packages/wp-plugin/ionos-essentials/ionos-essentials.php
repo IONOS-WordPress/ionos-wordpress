@@ -40,7 +40,7 @@ defined('ABSPATH') || exit();
 \add_action('admin_enqueue_scripts', function (): void {
 
   // enqueue dashboard scripts
-  $dashboard_assets = include_once __DIR__ . '/ionos-essentials/build/dashboard/index.asset.php';
+  $dashboard_assets = require_once __DIR__ . '/ionos-essentials/build/dashboard/index.asset.php';
   \wp_enqueue_script(
     'ionos-essentials-dashboard',
     \plugins_url('/ionos-essentials/build/dashboard/index.js', __FILE__),
@@ -51,8 +51,10 @@ defined('ABSPATH') || exit();
     ],
   );
 
+  wp_set_script_translations('ionos-essentials-dashboard', 'ionos-essentials', PLUGIN_DIR . '/ionos-essentials/languages');
+
   // enqueue maintenance mode scripts
-  $maintenace_mode_assets = include_once __DIR__ . '/ionos-essentials/build/maintenance_mode/index.asset.php';
+  $maintenace_mode_assets = require_once __DIR__ . '/ionos-essentials/build/maintenance_mode/index.asset.php';
   \wp_enqueue_script(
     'ionos-essentials-maintenance-mode',
     \plugins_url('/ionos-essentials/build/maintenance_mode/index.js', __FILE__),
@@ -64,7 +66,7 @@ defined('ABSPATH') || exit();
   );
 
   // enqueue security scripts
-  $security_assets = include_once __DIR__ . '/ionos-essentials/build/security/index.asset.php';
+  $security_assets = require_once __DIR__ . '/ionos-essentials/build/security/index.asset.php';
   \wp_enqueue_script(
     'ionos-essentials-security',
     \plugins_url('/ionos-essentials/build/security/index.js', __FILE__),
@@ -87,6 +89,9 @@ defined('ABSPATH') || exit();
       'in_footer' => true,
     ],
   );
+
+  wp_set_script_translations('ionos-essentials-wpscan', 'ionos-essentials', PLUGIN_DIR . '/ionos-essentials/languages');
+
 });
 
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';

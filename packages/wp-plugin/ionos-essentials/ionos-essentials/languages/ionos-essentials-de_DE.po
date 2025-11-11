@@ -330,7 +330,7 @@ msgstr "E-Mail Konto einrichten"
 msgid "My Account"
 msgstr "Mein Konto"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Installing..."
 msgstr "Installieren..."
 
@@ -475,11 +475,11 @@ msgstr "Wartungsseite"
 msgid "Active"
 msgstr "Aktiv"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "activated."
 msgstr "aktiviert."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deactivated."
 msgstr "deaktiviert."
 
@@ -572,11 +572,11 @@ msgstr "Wir haben gerade den brandneuen Reiter „Tools & Sicherheit” eingefü
 msgid "Website is safe and secure"
 msgstr "Die Website ist sicher und geschützt."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "updating..."
 msgstr "Update..."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deleting..."
 msgstr "Löschen..."
 
@@ -599,6 +599,7 @@ msgid "Your %s plugin team"
 msgstr "Ihr %s-Plugin Team"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "More information"
 msgstr "Weitere Informationen"
 
@@ -606,7 +607,7 @@ msgstr "Weitere Informationen"
 msgid "An error occurred while fetching the vulnerability data."
 msgstr "Beim Abrufen der Daten zu den Sicherheitslücken ist ein Fehler aufgetreten."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Loading content ..."
 msgstr "Inhalte werden geladen..."
 
@@ -644,31 +645,31 @@ msgstr "Schwachstellen-Scan"
 msgid "issue found"
 msgstr "Problem gefunden"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Checking for vulnerabilities..."
 msgstr "Auf der Suche nach Schwachstellen..."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Warnings found. Installation is not recommended."
 msgstr "Warnungen gefunden. Die Installation wird nicht empfohlen."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "Kritische Schwachstellen gefunden! Die Installation ist nicht möglich."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "Keine Schwachstellen gefunden. Sie können dieses Theme bedenkenlos installieren."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "Keine Schwachstellen gefunden. Sie können dieses Plugin bedenkenlos installieren."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "The vulnerability scan has found issues"
 msgstr "Der Schwachstellen-Scan hat Probleme gefunden."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Activation is not recommended"
 msgstr "Die Aktivierung wird nicht empfohlen."
 
@@ -879,7 +880,7 @@ msgstr "Details ansehen"
 msgid "Last scan ran %s ago"
 msgstr "Letzter Scan war vor %s"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Should be improved"
 msgstr "Sollte verbessert werden"
 
@@ -966,7 +967,7 @@ msgstr "Alle Aktionen abgeschlossen!"
 msgid " %1$d of %2$d completed"
 msgstr "%1$d von %2$d abgeschlossen"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Good"
 msgstr "Gut"
 

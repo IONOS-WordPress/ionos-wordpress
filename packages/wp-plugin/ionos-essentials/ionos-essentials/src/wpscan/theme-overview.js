@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 // tell eslint that the global variable exists when this file gets executed
 /* global ionosWPScanThemes:true */
 document.addEventListener('DOMContentLoaded', function () {
@@ -18,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
 
-        const html = `<p>${ionosWPScanThemes.i18n.issues_found}. <span class="ionos-no-activation">${ionosWPScanThemes.i18n.no_activation}</span> <a href="admin.php?page=${ionosWPScanThemes.brand}#tools" class="" type="button">${ionosWPScanThemes.i18n.more_info}</a></p>`;
+        const html = `<p>${__('The vulnerability scan has found issues', 'ionos-essentials')}. <span class="ionos-no-activation">${__('Activation is not recommended', 'ionos-essentials')}</span> <a href="admin.php?page=${ionosWPScanThemes.brand}#tools" class="" type="button">${__('More information', 'ionos-essentials')}</a></p>`;
         // Prevent link click from bubbling
         setTimeout(() => {
           const link = theme.querySelector('a[href="admin.php?page=' + ionosWPScanThemes.brand + '#tools"]');
