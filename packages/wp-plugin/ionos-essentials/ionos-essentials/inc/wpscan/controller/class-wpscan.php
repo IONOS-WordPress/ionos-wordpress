@@ -93,7 +93,7 @@ class WPScan
     }
 
     \wp_localize_script(
-      'ionos-essentials-theme-install',
+      'ionos-essentials-wpscan',
       'ionosWPScanThemes',
       [
         'issues'  => $this->get_issues(),
@@ -118,7 +118,7 @@ class WPScan
     }
 
     \wp_localize_script(
-      'ionos-essentials-plugin-install',
+      'ionos-essentials-wpscan',
       'ionosWPScanPlugins',
       [
         'issues'  => $this->get_issues(),
@@ -150,7 +150,7 @@ class WPScan
     }
 
     \wp_localize_script(
-      'ionos-essentials-theme-overview',
+      'ionos-essentials-wpscan',
       'ionosWPScanThemes',
       [
         'slugs' => array_column($issues, 'slug'),

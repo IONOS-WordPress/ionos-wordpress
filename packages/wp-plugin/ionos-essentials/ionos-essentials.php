@@ -75,27 +75,18 @@ defined('ABSPATH') || exit();
     ],
   );
 
+
   // enqueue wpscan scripts
-  $token   = \get_option('ionos_security_wpscan_token', '');
-  $scripts = empty($token) ? [] : ['plugin-install', 'theme-install', 'theme-overview'];
-  foreach ($scripts as $name) {
-    $asset_path = __DIR__ . "/ionos-essentials/build/wpscan/{$name}-index.asset.php";
-    $script_url = plugins_url("/ionos-essentials/build/wpscan/{$name}-index.js", __FILE__);
-
-    if (file_exists($asset_path)) {
-      $asset = include $asset_path;
-
-      wp_enqueue_script(
-        "ionos-essentials-{$name}",
-        $script_url,
-        $asset['dependencies'],
-        $asset['version'],
-        [
-          'in_footer' => true,
-        ]
-      );
-    }
-  }
+  $wpscan_assets = include_once __DIR__ . '/ionos-essentials/build/wpscan/index.asset.php';
+  \wp_enqueue_script(
+    'ionos-essentials-wpscan',
+    \plugins_url('/ionos-essentials/build/wpscan/index.js', __FILE__),
+    $wpscan_assets['dependencies'],
+    $wpscan_assets['version'],
+    [
+      'in_footer' => true,
+    ],
+  );
 });
 
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';
