@@ -225,7 +225,7 @@ if ($contact_post_id) {
   );
 }
 
-// if ('extendable' === get_stylesheet()) {
+if ('extendable' === get_stylesheet()) {
 NBA::register(
   id: 'extendify-agent',
   title: \__('New AI Agent with Enhanced Capabilities', 'ionos-essentials'),
@@ -237,7 +237,7 @@ NBA::register(
   exos_icon: 'machine-learning',
   expanded: true
 );
-// }
+}
 
 NBA::register(
   id: 'tools-and-security',
