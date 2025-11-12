@@ -51,7 +51,11 @@ defined('ABSPATH') || exit();
     ],
   );
 
-  wp_set_script_translations('ionos-essentials-dashboard', 'ionos-essentials', PLUGIN_DIR . '/ionos-essentials/languages');
+  wp_set_script_translations(
+    'ionos-essentials-dashboard',
+    'ionos-essentials',
+    PLUGIN_DIR . '/ionos-essentials/languages'
+  );
 
   // enqueue maintenance mode scripts
   $maintenace_mode_assets = require_once __DIR__ . '/ionos-essentials/build/maintenance_mode/index.asset.php';
@@ -77,7 +81,6 @@ defined('ABSPATH') || exit();
     ],
   );
 
-
   // enqueue wpscan scripts
   $wpscan_assets = include_once __DIR__ . '/ionos-essentials/build/wpscan/index.asset.php';
   \wp_enqueue_script(
@@ -91,7 +94,6 @@ defined('ABSPATH') || exit();
   );
 
   wp_set_script_translations('ionos-essentials-wpscan', 'ionos-essentials', PLUGIN_DIR . '/ionos-essentials/languages');
-
 });
 
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';
