@@ -339,7 +339,7 @@ msgstr "E-mailaccount instellen"
 msgid "My Account"
 msgstr "Mijn account"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Installing..."
 msgstr "Installeren..."
 
@@ -484,11 +484,11 @@ msgstr "Onderhoudspagina"
 msgid "Active"
 msgstr "Actief"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "activated."
 msgstr "geactiveerd."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deactivated."
 msgstr "gedeactiveerd."
 
@@ -577,11 +577,11 @@ msgstr "We hebben een nieuw tabblad \"Tools & beveiliging\" toegevoegd! Alle fun
 msgid "Website is safe and secure"
 msgstr "Website is veilig"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "updating..."
 msgstr "bijwerken..."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deleting..."
 msgstr "verwijderen..."
 
@@ -604,6 +604,7 @@ msgid "Your %s plugin team"
 msgstr "%s plug-in team"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "More information"
 msgstr "Meer informatie"
 
@@ -615,7 +616,7 @@ msgstr "Er is een fout opgetreden bij het ophalen van de gegevens."
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Overzichtelijk helpcentrum met een AI-chatbot, rondleidingen en een uitgebreide kennisbank"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Loading content ..."
 msgstr "Inhoud laden ..."
 
@@ -653,31 +654,31 @@ msgstr "Kwetsbaarheidsscan"
 msgid "issue found"
 msgstr "probleem gevonden"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Checking for vulnerabilities..."
 msgstr "Controleren op kwetsbaarheden..."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Warnings found. Installation is not recommended."
 msgstr "Waarschuwingen gevonden. Installatie wordt niet aanbevolen."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "Kritieke kwetsbaarheden gevonden! Installatie is niet mogelijk."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "Geen kwetsbaarheden gevonden. Je kunt dit thema veilig installeren."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "Geen kwetsbaarheden gevonden. Je kunt deze plug-in veilig installeren."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "The vulnerability scan has found issues"
 msgstr "De kwetsbaarheidsscan heeft problemen gevonden"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Activation is not recommended"
 msgstr "Activatie wordt niet aanbevolen"
 
@@ -885,7 +886,7 @@ msgstr "Details bekijken"
 msgid "Last scan ran %s ago"
 msgstr "Laatste scan %s geleden uitgevoerd"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Should be improved"
 msgstr "Moet verbeterd worden"
 
@@ -972,7 +973,7 @@ msgstr "Alle acties voltooid!"
 msgid " %1$d of %2$d completed"
 msgstr " %1$d van %2$d voltooid"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Good"
 msgstr "Goed"
 

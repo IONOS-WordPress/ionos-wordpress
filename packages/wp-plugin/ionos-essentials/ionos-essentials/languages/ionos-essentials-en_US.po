@@ -334,7 +334,7 @@ msgstr "Setup Email Account"
 msgid "My Account"
 msgstr "My Account"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Installing..."
 msgstr "Installing..."
 
@@ -480,11 +480,11 @@ msgstr "Maintenance page"
 msgid "Active"
 msgstr "Active"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "activated."
 msgstr "activated."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deactivated."
 msgstr "deactivated."
 
@@ -573,6 +573,7 @@ msgid "We've just rolled out a brand-new \"Tools & Security\" tab! All the featu
 msgstr "We've just rolled out a brand-new \"Tools & Security\" tab! All the features and user interfaces from your previous security plugin have now found their new home here, making everything more centralized and easier to manage. Plus, you'll find a new maintenance page function that you can switch on whenever you need it."
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "More information"
 msgstr "More information"
 
@@ -588,15 +589,15 @@ msgstr "Dear user,<br />We want to inform you that our recent vulnerability scan
 msgid "An error occurred while fetching the vulnerability data."
 msgstr "An error occurred while fetching the vulnerability data."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "updating..."
 msgstr "updating..."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deleting..."
 msgstr "deleting..."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Loading content ..."
 msgstr "Loading content ..."
 
@@ -634,31 +635,31 @@ msgstr "Vulnerability scan"
 msgid "issue found"
 msgstr "issue found"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Checking for vulnerabilities..."
 msgstr "Checking for vulnerabilities..."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Warnings found. Installation is not recommended."
 msgstr "Warnings found. Installation is not recommended."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "Critical vulnerabilities found! Installation is not possible."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "No vulnerabilities found. You can safely install this theme."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "No vulnerabilities found. You can safely install this plugin."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "The vulnerability scan has found issues"
 msgstr "The vulnerability scan has found issues"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Activation is not recommended"
 msgstr "Activation is not recommended"
 
@@ -881,7 +882,7 @@ msgstr "View details"
 msgid "Last scan ran %s ago"
 msgstr "Last scan ran %s ago"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Should be improved"
 msgstr "Should be improved"
 
@@ -968,7 +969,7 @@ msgstr "All actions completed!"
 msgid " %1$d of %2$d completed"
 msgstr " %1$d of %2$d completed"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Good"
 msgstr "Good"
 

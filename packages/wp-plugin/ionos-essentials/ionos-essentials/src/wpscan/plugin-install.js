@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 // tell eslint that the global variable exists when this file gets executed
 /* global ionosWPScanPlugins:true */
 /* global jQuery:true */
@@ -18,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const message = document.createElement('div');
       message.classList.add('notice', 'notice-alt', 'notice-warning', 'inline');
-      message.innerHTML = `<p>${ionosWPScanPlugins.i18n.checking}</p>`;
+      message.innerHTML = `<p>${__('Checking for vulnerabilities...', 'ionos-essentials')}</p>`;
       pluginCard?.insertBefore(message, pluginCard.firstChild);
 
       jQuery
@@ -31,18 +33,18 @@ document.addEventListener('DOMContentLoaded', function () {
         .always(function (response) {
           switch (response.data) {
             case 'warnings_found':
-              message.innerHTML = `<p>${ionosWPScanPlugins.i18n.warnings_found}</p>`;
+              message.innerHTML = `<p>${__('Warnings found. Installation is not recommended.', 'ionos-essentials')}</p>`;
               message.classList.add('notice-info');
               event.target.dataset.safe = 'true';
               event.target.dataset.disabled = 'false';
               break;
             case 'criticals_found':
-              message.innerHTML = `<p>${ionosWPScanPlugins.i18n.critical_found}</p>`;
+              message.innerHTML = `<p>${__('Critical vulnerabilities found! Installation is not possible.', 'ionos-essentials')}</p>`;
               message.classList.remove('notice-warning');
               message.classList.add('notice-error');
               break;
             default:
-              message.innerHTML = `<p>${ionosWPScanPlugins.i18n.nothing_found}</p>`;
+              message.innerHTML = `<p>${__('No vulnerabilities found. You can safely install this plugin.', 'ionos-essentials')}</p>`;
               message.classList.remove('notice-warning');
               message.classList.add('notice-success');
               event.target.dataset.safe = 'true';
