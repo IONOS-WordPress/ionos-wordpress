@@ -37,8 +37,8 @@ $configs = [
   ],
 ];
 
-$tenant = Tenant::get_slug();
-$config = $configs[$tenant] ?? reset($configs);
+$tenant     = Tenant::get_slug();
+$config     = $configs[$tenant] ?? reset($configs);
 $theme_file = realpath(__DIR__ . '/../dashboard/exos-themes/' . $tenant . '.css');
 
 if (file_exists($theme_file)) {
@@ -49,7 +49,7 @@ if (file_exists($theme_file)) {
   );
   \wp_print_styles(['exos-theme']);
 
-  wp_deregister_style( 'buttons' );
+  wp_deregister_style('buttons');
 
 }
 
@@ -90,8 +90,8 @@ if (file_exists($theme_file)) {
               'ionos-essentials'
             ); ?></p>
             <a href="<?php echo \esc_attr(
-          \admin_url('admin.php?page=' . Tenant::get_slug())
-        ); ?>" class="button button--secondary"><?php \esc_html_e('Create manually', 'ionos-essentials'); ?></a>
+              \admin_url('admin.php?page=' . Tenant::get_slug())
+            ); ?>" class="button button--secondary"><?php \esc_html_e('Create manually', 'ionos-essentials'); ?></a>
           </div>
         </div>
       </div>
@@ -99,17 +99,17 @@ if (file_exists($theme_file)) {
       <div class="checkbox-option">
         <span>
           <?php
-          printf(
-            // translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
-            \esc_html__(
-              'By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s',
-              'ionos-essentials'
-            ),
-            '<a href="https://openai.com/policies/terms-of-use/" target="_blank">',
-            '</a>',
-            '<a href="https://openai.com/policies/privacy-policy/" target="_blank">',
-            '</a>'
-          );
+              printf(
+                // translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
+                \esc_html__(
+                  'By using AI features you agree to the OpenAI %1$sTerms of Use%2$s and %3$sPrivacy Policy%4$s',
+                  'ionos-essentials'
+                ),
+                '<a href="https://openai.com/policies/terms-of-use/" target="_blank">',
+                '</a>',
+                '<a href="https://openai.com/policies/privacy-policy/" target="_blank">',
+                '</a>'
+              );
 ?>
         </span>
       </div>
