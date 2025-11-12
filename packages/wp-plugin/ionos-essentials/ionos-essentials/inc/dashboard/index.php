@@ -286,16 +286,6 @@ add_filter('admin_body_class', function ($classes) {
     'tenant'                 => Tenant::get_slug(),
     'siteHealthIssueCount'   => $issue_counts,
     'siteHealthAsyncTests'   => $async_tests,
-    'i18n'                   => [
-      'installing'             => \esc_html__('Installing...', 'ionos-essentials'),
-      'activated'              => \esc_html__('activated.', 'ionos-essentials'),
-      'deactivated'            => \esc_html__('deactivated.', 'ionos-essentials'),
-      'updating'               => \esc_html__('updating...', 'ionos-essentials'),
-      'deleting'               => \esc_html__('deleting...', 'ionos-essentials'),
-      'loading'                => \esc_html__('Loading content ...', 'ionos-essentials'),
-      'siteHealthImprovable'   => \esc_html__('Should be improved', 'ionos-essentials'),
-      'siteHealthGood'         => \esc_html__('Good', 'ionos-essentials'),
-    ],
   ]);
 });
 

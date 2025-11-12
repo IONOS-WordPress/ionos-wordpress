@@ -339,7 +339,7 @@ msgstr "Konfigurera e-postkonto"
 msgid "My Account"
 msgstr "Mitt konto"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Installing..."
 msgstr "Installera..."
 
@@ -468,11 +468,11 @@ msgstr "Underhållssida"
 msgid "Active"
 msgstr "Aktiv"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "activated."
 msgstr "aktiverad."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deactivated."
 msgstr "avaktiverad."
 
@@ -561,11 +561,11 @@ msgstr "Nu finns fliken \"Verktyg & säkerhet\"! Alla funktioner och inställnin
 msgid "Website is safe and secure"
 msgstr "Webbplatsen är säker och trygg"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "updating..."
 msgstr "uppdaterar..."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deleting..."
 msgstr "raderar..."
 
@@ -588,6 +588,7 @@ msgid "Your %s plugin team"
 msgstr "Ditt %s plugin-team"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "More information"
 msgstr "Mer information"
 
@@ -599,7 +600,7 @@ msgstr "Ett fel inträffade när sårbarhetsdata hämtades."
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Omfattande hjälpsektion – med AI-chatt, guidade turer och en gedigen kunskapsbank"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Loading content ..."
 msgstr "Laddar innehåll ..."
 
@@ -637,31 +638,31 @@ msgstr "Sårbarhetsskanning"
 msgid "issue found"
 msgstr "problem upptäckta"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Checking for vulnerabilities..."
 msgstr "Söker efter sårbarheter…"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Warnings found. Installation is not recommended."
 msgstr "Varningar hittades. Installation rekommenderas inte."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "Kritiska sårbarheter hittades! Installation är inte möjlig."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "Inga sårbarheter hittades. Du kan installera detta tema utan risk."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "Inga sårbarheter hittades. Du kan installera detta tillägg utan risk."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "The vulnerability scan has found issues"
 msgstr "Sårbarhetsskanningen har hittat problem"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Activation is not recommended"
 msgstr "Aktivering rekommenderas inte"
 
@@ -869,7 +870,7 @@ msgstr "Visa detaljer"
 msgid "Last scan ran %s ago"
 msgstr "Senaste skanningen kördes för %s sedan"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Should be improved"
 msgstr "Behöver förbättras"
 
@@ -956,7 +957,7 @@ msgstr "Alla åtgärder klara!"
 msgid " %1$d of %2$d completed"
 msgstr " %1$d av %2$d slutförda"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Good"
 msgstr "Bra"
 

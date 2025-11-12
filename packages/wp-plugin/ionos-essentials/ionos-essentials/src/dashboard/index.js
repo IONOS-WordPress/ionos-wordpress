@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 // tell eslint that the global variable exists when this file gets executed
 /* global wpData:true */
 /* global jQuery:true */
@@ -149,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     dashboard.querySelector('#ionos_essentials_install_gml')?.addEventListener('click', function (event) {
       event.target.disabled = true;
-      event.target.innerText = wpData.i18n.installing;
+      event.target.innerText = __('Installing...', 'ionos-essentials');
 
       fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/install-gml', {
         method: 'GET',
@@ -200,9 +202,9 @@ document.addEventListener('DOMContentLoaded', function () {
           const data = await response.json();
 
           if (data.value) {
-            window.EXOS.snackbar.success(description + ' ' + wpData.i18n.activated);
+            window.EXOS.snackbar.success(description + ' ' + __('activated.', 'ionos-essentials'));
           } else {
-            window.EXOS.snackbar.critical(description + ' ' + wpData.i18n.deactivated);
+            window.EXOS.snackbar.critical(description + ' ' + __('deactivated.', 'ionos-essentials'));
           }
         } catch {
           window.EXOS.snackbar.warning('Network error updating option ' + key);
@@ -247,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         overlay.innerHTML =
           '<div id="plugin-information-waiting"><div class="loading-spin"></div><p class="paragraph paragraph--large paragraph--bold paragraph--align-center">' +
-          wpData.i18n.loading +
+          __('Loading content ...', 'ionos-essentials') +
           '</p></div>';
         overlay.appendChild(iframe);
         iframe.onload = function () {
@@ -262,8 +264,8 @@ document.addEventListener('DOMContentLoaded', function () {
       element.addEventListener('click', function (event) {
         element.disabled = true;
         const payload = JSON.parse(element.dataset.wpscan);
-        element.innerText = payload.action === 'delete' ? wpData.i18n.deleting : wpData.i18n.updating;
-
+        element.innerText =
+          payload.action === 'delete' ? __('deleting...', 'ionos-essentials') : __('updating...', 'ionos-essentials');
         event.preventDefault();
         fetch(wpData.restUrl + 'ionos/essentials/wpscan/recommended-action', {
           method: 'POST',
@@ -335,10 +337,10 @@ document.addEventListener('DOMContentLoaded', function () {
       dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - 565.48 * (goodTestsRatio / 100);
 
       if (goodTestsRatio <= 80 || wpData.siteHealthIssueCount.critical !== 0) {
-        dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthImprovable;
+        dashboard.querySelector('#site-health-status-message').innerHTML = __('Should be improved', 'ionos-essentials');
         dashboard.querySelector('#bar').classList.add('site-health-color-orange');
       } else {
-        dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthGood;
+        dashboard.querySelector('#site-health-status-message').innerHTML = __('Good', 'ionos-essentials');
         dashboard.querySelector('#bar').classList.add('site-health-color-green');
       }
 
