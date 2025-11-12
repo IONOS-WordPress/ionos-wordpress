@@ -93,18 +93,12 @@ class WPScan
     }
 
     \wp_localize_script(
-      'ionos-essentials-theme-install',
+      'ionos-essentials-wpscan',
       'ionosWPScanThemes',
       [
         'issues'  => $this->get_issues(),
         'ajaxUrl' => admin_url('admin-ajax.php'),
         'nonce'   => \wp_create_nonce('ionos-wpscan-instant-check'),
-        'i18n'    => [
-          'checking'       => __('Checking for vulnerabilities...', 'ionos-essentials'),
-          'warnings_found' => __('Warnings found. Installation is not recommended.', 'ionos-essentials'),
-          'critical_found' => __('Critical vulnerabilities found! Installation is not possible.', 'ionos-essentials'),
-          'nothing_found'  => __('No vulnerabilities found. You can safely install this theme.', 'ionos-essentials'),
-        ],
       ]
     );
   }
@@ -118,18 +112,12 @@ class WPScan
     }
 
     \wp_localize_script(
-      'ionos-essentials-plugin-install',
+      'ionos-essentials-wpscan',
       'ionosWPScanPlugins',
       [
         'issues'  => $this->get_issues(),
         'ajaxUrl' => admin_url('admin-ajax.php'),
         'nonce'   => \wp_create_nonce('ionos-wpscan-instant-check'),
-        'i18n'    => [
-          'checking'       => __('Checking for vulnerabilities...', 'ionos-essentials'),
-          'warnings_found' => __('Warnings found. Installation is not recommended.', 'ionos-essentials'),
-          'critical_found' => __('Critical vulnerabilities found! Installation is not possible.', 'ionos-essentials'),
-          'nothing_found'  => __('No vulnerabilities found. You can safely install this plugin.', 'ionos-essentials'),
-        ],
       ]
     );
   }
@@ -150,16 +138,11 @@ class WPScan
     }
 
     \wp_localize_script(
-      'ionos-essentials-theme-overview',
+      'ionos-essentials-wpscan',
       'ionosWPScanThemes',
       [
         'slugs' => array_column($issues, 'slug'),
         'brand' => Tenant::get_slug(),
-        'i18n'  => [
-          'issues_found'  => __('The vulnerability scan has found issues', 'ionos-essentials'),
-          'no_activation' => __('Activation is not recommended', 'ionos-essentials'),
-          'more_info'     => __('More information', 'ionos-essentials'),
-        ],
       ]
     );
   }
@@ -246,9 +229,11 @@ class WPScan
     $message = $this->get_mail_content(array_values($unknown_names));
     $headers = ['Content-Type: text/html; charset=UTF-8'];
 
-    \ionos\essentials\loop\log_loop_event('wpscan_email_sent', [
-      'issues' => array_values($unknown_names),
-    ]);
+    if (function_exists('ionos\essentials\loop\log_loop_event')) {
+      \ionos\essentials\loop\log_loop_event('wpscan_email_sent', [
+        'issues' => array_values($unknown_names),
+      ]);
+    }
     \wp_mail($to, $subject, $message, $headers);
     return true;
   }

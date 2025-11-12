@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: sv\n"
-"Language-Team: Swedish\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-09-23 09:19\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: 75e86f746860bcef4fdd142a24cf2467\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: Swedish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-09-23 09:19\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: LOC-8516_ionos-essentials-sv_SE (4).po\n"
 "X-Crowdin-File-ID: 534\n"
 "X-Crowdin-Language: sv\n"
@@ -21,8 +21,8 @@ msgstr ""
 
 #. Description of the plugin
 #: ionos-essentials.php
-msgid "The essentials plugin provides IONOS hosting specific functionality."
-msgstr "Essentials-plugin ger IONOS hosting-specifik funktionalitet."
+msgid "The Essentials plugin provides hosting specific functionality."
+msgstr "Essentials-plugin ger hosting-specifik funktionalitet."
 
 #. Author of the plugin
 #: ionos-essentials.php
@@ -34,63 +34,63 @@ msgstr "IONOS-koncernen"
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "My offers"
 msgstr "Mina erbjudanden"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "My data"
 msgstr "Mina uppgifter"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My products"
 msgstr "Mina produkter"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My invoices"
 msgstr "Mina fakturor"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/fasthosts.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/fasthosts.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Control Panel"
 msgstr "Kontrollpanelen"
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "My User"
 msgstr "Min användare"
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "WordPress Websites"
 msgstr "WordPress Webbplatser"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Data of customer"
 msgstr "Uppgifter om kunden"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Services"
 msgstr "Tjänster"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Invoices"
 msgstr "Fakturor"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Package overview"
 msgstr "Paketöversikt"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your invoices"
 msgstr "Visa fakturor"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your contract"
 msgstr "Ditt avtal"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Current offers"
 msgstr "Aktuella erbjudanden"
 
@@ -125,7 +125,7 @@ msgid "Start AI Sitebuilder"
 msgstr "Starta AI-hemsidegenerator"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
-#: ionos-essentials/inc/tenants/config/homepl.php
+#: ionos-essentials/inc/tenants/homepl.php
 msgid "Manage Hosting"
 msgstr "Hantera webbhotell"
 
@@ -291,19 +291,19 @@ msgstr "Ladda upp mediefiler"
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Upptäck nya funktioner och få en översikt över de senaste uppdateringarna och förbättringarna i din WordPress Hub."
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Products"
 msgstr "Mina produkter"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Project Overview"
 msgstr "Projektöversikt"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Domains and SSL management"
 msgstr "Domäner och SSL-hantering"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Add more products"
 msgstr "Lägg till fler produkter"
 
@@ -311,23 +311,23 @@ msgstr "Lägg till fler produkter"
 msgid "Webmail Login"
 msgstr "Webmail-inloggning"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage WordPress"
 msgstr "WordPress Förvalta"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage e-mail"
 msgstr "Förvalta e-post"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Webspace"
 msgstr "Webbutrymme"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "RankingCoach"
 msgstr "RankingCoach"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "SSL"
 msgstr "SSL"
 
@@ -335,11 +335,11 @@ msgstr "SSL"
 msgid "Setup Email Account"
 msgstr "Konfigurera e-postkonto"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Account"
 msgstr "Mitt konto"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Installing..."
 msgstr "Installera..."
 
@@ -379,28 +379,12 @@ msgid "How do you want to create your new website?"
 msgstr "Hur vill du skapa din nya webbplats?"
 
 #: ionos-essentials/inc/switch-page/view.php
-msgid "Online in a few minutes"
-msgstr "Online på några minuter"
-
-#: ionos-essentials/inc/switch-page/view.php
 msgid "With AI"
 msgstr "Med AI"
 
 #: ionos-essentials/inc/switch-page/view.php
-msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
-msgstr "Automatisk skapande av webbplats baserat på dina önskemål och krav. Inklusive färdiga texter och bilder."
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "100% WordPress"
-msgstr "100% WordPress"
-
-#: ionos-essentials/inc/switch-page/view.php
 msgid "Do it yourself"
 msgstr "Gör det själv"
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
-msgstr "Du bestämmer själv hur du vill skapa din webbplats. Oroa dig inte, du kan också starta AI-skapandet från WordPress Dashboard senare."
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: ionos-essentials/inc/switch-page/view.php
@@ -484,11 +468,11 @@ msgstr "Underhållssida"
 msgid "Active"
 msgstr "Aktiv"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "activated."
 msgstr "aktiverad."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deactivated."
 msgstr "avaktiverad."
 
@@ -577,11 +561,11 @@ msgstr "Nu finns fliken \"Verktyg & säkerhet\"! Alla funktioner och inställnin
 msgid "Website is safe and secure"
 msgstr "Webbplatsen är säker och trygg"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "updating..."
 msgstr "uppdaterar..."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deleting..."
 msgstr "raderar..."
 
@@ -604,6 +588,7 @@ msgid "Your %s plugin team"
 msgstr "Ditt %s plugin-team"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "More information"
 msgstr "Mer information"
 
@@ -615,7 +600,7 @@ msgstr "Ett fel inträffade när sårbarhetsdata hämtades."
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Omfattande hjälpsektion – med AI-chatt, guidade turer och en gedigen kunskapsbank"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Loading content ..."
 msgstr "Laddar innehåll ..."
 
@@ -653,31 +638,31 @@ msgstr "Sårbarhetsskanning"
 msgid "issue found"
 msgstr "problem upptäckta"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Checking for vulnerabilities..."
 msgstr "Söker efter sårbarheter…"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Warnings found. Installation is not recommended."
 msgstr "Varningar hittades. Installation rekommenderas inte."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "Kritiska sårbarheter hittades! Installation är inte möjlig."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "Inga sårbarheter hittades. Du kan installera detta tema utan risk."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "Inga sårbarheter hittades. Du kan installera detta tillägg utan risk."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "The vulnerability scan has found issues"
 msgstr "Sårbarhetsskanningen har hittat problem"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Activation is not recommended"
 msgstr "Aktivering rekommenderas inte"
 
@@ -778,11 +763,11 @@ msgstr "För att återaktivera åtkomsten måste lösenordet uppdateras. Vi har 
 msgid "Vulnerability scan not possible. Please contact Customer Care."
 msgstr "Sårbarhetsskanning inte möjlig. Kontakta kundtjänst."
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage Domains"
 msgstr "Hantera domäner"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Trademark protection"
 msgstr "Varumärkesskydd"
 
@@ -790,6 +775,7 @@ msgstr "Varumärkesskydd"
 msgid "Turn off notification here"
 msgstr "Stäng av avisering här"
 
+#. translators: %s: URL to the Hub's Tools & Security page.
 #: ionos-essentials/inc/security/index.php
 #, php-format
 msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
@@ -884,7 +870,7 @@ msgstr "Visa detaljer"
 msgid "Last scan ran %s ago"
 msgstr "Senaste skanningen kördes för %s sedan"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Should be improved"
 msgstr "Behöver förbättras"
 
@@ -971,7 +957,7 @@ msgstr "Alla åtgärder klara!"
 msgid " %1$d of %2$d completed"
 msgstr " %1$d av %2$d slutförda"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Good"
 msgstr "Bra"
 
@@ -1001,7 +987,26 @@ msgstr "Ny AI-agent med förbättrad kapacitet"
 msgid "Our new AI Agent is here to change the way you edit your site! Simply point and click on elements to make changes and try the new capabilities, from font and style changes to rearranging content."
 msgstr "Vår nya AI Agent är här för att förändra hur du redigerar din webbplats! Peka och klicka på element för att göra ändringar och prova de nya funktionerna, från ändringar av typsnitt och stil till omorganisering av innehåll."
 
-#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+#: ionos-essentials/inc/switch-page/view.php
 #, generated by deepl
+msgid "A native WordPress website in minutes. Our powerful AI generates design, images and content based on your needs."
+msgstr "En egen WordPress-webbplats på några minuter. Vår kraftfulla AI genererar design, bilder och innehåll baserat på dina behov."
+
+#: ionos-essentials/inc/switch-page/view.php
+#, generated by deepl
+msgid "Continue with AI"
+msgstr "Fortsätt med AI"
+
+#: ionos-essentials/inc/switch-page/view.php
+#, generated by deepl
+msgid "Take full control of the creative process. You can easily switch over to the AI builder later from inside Wordpress."
+msgstr "Ta full kontroll över den kreativa processen. Du kan enkelt växla över till AI-byggaren senare från Wordpress."
+
+#: ionos-essentials/inc/switch-page/view.php
+#, generated by deepl
+msgid "Create manually"
+msgstr "Skapa manuellt"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Try it"
-msgstr "Prova det"
+msgstr ""

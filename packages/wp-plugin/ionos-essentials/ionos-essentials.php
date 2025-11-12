@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name:       Essentials
- * Description:       The essentials plugin provides IONOS hosting specific functionality.
+ * Description:       The Essentials plugin provides hosting specific functionality.
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
@@ -40,13 +40,19 @@ defined('ABSPATH') || exit();
 \add_action('admin_enqueue_scripts', function (): void {
 
   // enqueue dashboard scripts
-  $dashboard_assets = include_once __DIR__ . '/ionos-essentials/build/dashboard/index.asset.php';
+  $dashboard_assets = require_once __DIR__ . '/ionos-essentials/build/dashboard/index.asset.php';
   \wp_enqueue_script(
     'ionos-essentials-dashboard',
     \plugins_url('/ionos-essentials/build/dashboard/index.js', __FILE__),
     $dashboard_assets['dependencies'],
     $dashboard_assets['version'],
     true,
+  );
+
+  wp_set_script_translations(
+    'ionos-essentials-dashboard',
+    'ionos-essentials',
+    PLUGIN_DIR . '/ionos-essentials/languages'
   );
 
   // enqueue maintenance mode scripts
@@ -59,9 +65,8 @@ defined('ABSPATH') || exit();
     true
   );
 
-
   // enqueue security scripts
-  $security_assets = include_once __DIR__ . '/ionos-essentials/build/security/index.asset.php';
+  $security_assets = require_once __DIR__ . '/ionos-essentials/build/security/index.asset.php';
   \wp_enqueue_script(
     'ionos-essentials-security',
     \plugins_url('/ionos-essentials/build/security/index.js', __FILE__),
@@ -71,52 +76,43 @@ defined('ABSPATH') || exit();
   );
 
   // enqueue wpscan scripts
-  $token   = \get_option('ionos_security_wpscan_token', '');
-  $scripts = empty($token) ? [] : ['plugin-install', 'theme-install', 'theme-overview'];
-  foreach ($scripts as $name) {
-    $asset_path = __DIR__ . "/ionos-essentials/build/wpscan/{$name}-index.asset.php";
-    $script_url = plugins_url("/ionos-essentials/build/wpscan/{$name}-index.js", __FILE__);
+  $wpscan_assets = include_once __DIR__ . '/ionos-essentials/build/wpscan/index.asset.php';
+  \wp_enqueue_script(
+    'ionos-essentials-wpscan',
+    \plugins_url('/ionos-essentials/build/wpscan/index.js', __FILE__),
+    $wpscan_assets['dependencies'],
+    $wpscan_assets['version'],
+    [
+      'in_footer' => true,
+    ],
+  );
 
-    if (file_exists($asset_path)) {
-      $asset = include $asset_path;
+  wp_set_script_translations('ionos-essentials-wpscan', 'ionos-essentials', PLUGIN_DIR . '/ionos-essentials/languages');
+});
 
-      wp_enqueue_script(
-        "ionos-essentials-{$name}",
-        $script_url,
-        $asset['dependencies'],
-        $asset['version'],
-        [
-          'in_footer' => true,
-        ]
-      );
-    }
+add_action('wp_enqueue_scripts', function () {
+  if (! is_user_logged_in()) {
+    return;
   }
+
+  $assets_file = __DIR__ . '/ionos-essentials/build/ai_agent/index.asset.php';
+  if (! file_exists($assets_file)) {
+    return;
+  }
+
+  $assets = require $assets_file;
+
+  wp_enqueue_script(
+    'ionos-essentials-ai-agent',
+    plugins_url('ionos-essentials/build/ai_agent/index.js', __FILE__),
+    $assets['dependencies'],
+    $assets['version'],
+    true
+  );
 });
-
-add_action('wp_enqueue_scripts', function() {
-    if (!is_user_logged_in()) {
-        return; 
-    }
-
-    $assets_file = __DIR__ . '/ionos-essentials/build/ai_agent/index.asset.php';
-    if (!file_exists($assets_file)) {
-      return;
-    }
-
-    $assets = require $assets_file;
-
-    wp_enqueue_script(
-        'ionos-essentials-ai-agent',
-        plugins_url('ionos-essentials/build/ai_agent/index.js', __FILE__),
-        $assets['dependencies'],
-        $assets['version'],
-        true
-    );
-});
-
-
 
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';
+require_once __DIR__ . '/ionos-essentials/inc/tenants/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/update/index.php';
 
 // soc plugin components
