@@ -107,15 +107,32 @@ wp.domReady(() => {
         url: wp['ionos-wpdev-caddy'].ajax_url,
         method: 'POST',
         body,
+        parse: false,
       });
 
-      output.value = response.data;
-      output.classList.replace('progress', response.success ? 'success' : 'error');
+      let success = response.ok;
+      let data = await response.text();
 
-      if (response.success) {
-        console.log('API Fetch Success:', response.data);
+      if (success) {
+        try {
+          const json = JSON.parse(data);
+          data = json.data;
+          success = json.success;
+        } catch {
+          success = false;
+          data = `Failed to parse response as JSON: \n\n${data}`;
+        }
       } else {
-        console.error('API Fetch Error:', response.data);
+        data = `HTTP Error Status: ${response.status}\n\n${data}`;
+      }
+
+      output.value = data;
+      output.classList.replace('progress', success ? 'success' : 'error');
+
+      if (success) {
+        console.log('API Fetch Success:', data);
+      } else {
+        console.error('API Fetch Error:', data);
       }
     } catch (error) {
       console.error('API Fetch Failure:', error);
