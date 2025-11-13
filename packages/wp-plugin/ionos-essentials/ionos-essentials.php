@@ -46,23 +46,23 @@ defined('ABSPATH') || exit();
     \plugins_url('/ionos-essentials/build/dashboard/index.js', __FILE__),
     $dashboard_assets['dependencies'],
     $dashboard_assets['version'],
-    [
-      'in_footer' => true,
-    ],
+    true,
   );
 
-  wp_set_script_translations('ionos-essentials-dashboard', 'ionos-essentials', PLUGIN_DIR . '/ionos-essentials/languages');
+  wp_set_script_translations(
+    'ionos-essentials-dashboard',
+    'ionos-essentials',
+    PLUGIN_DIR . '/ionos-essentials/languages'
+  );
 
   // enqueue maintenance mode scripts
-  $maintenace_mode_assets = require_once __DIR__ . '/ionos-essentials/build/maintenance_mode/index.asset.php';
-  \wp_enqueue_script(
+  $maintenance_mode_assets = include_once __DIR__ . '/ionos-essentials/build/maintenance_mode/index.asset.php';
+  wp_enqueue_script(
     'ionos-essentials-maintenance-mode',
-    \plugins_url('/ionos-essentials/build/maintenance_mode/index.js', __FILE__),
-    $maintenace_mode_assets['dependencies'],
-    $maintenace_mode_assets['version'],
-    [
-      'in_footer' => true,
-    ],
+    plugins_url('/ionos-essentials/build/maintenance_mode/index.js', __FILE__),
+    $maintenance_mode_assets['dependencies'],
+    $maintenance_mode_assets['version'],
+    true
   );
 
   // enqueue security scripts
@@ -72,11 +72,8 @@ defined('ABSPATH') || exit();
     \plugins_url('/ionos-essentials/build/security/index.js', __FILE__),
     $security_assets['dependencies'],
     $security_assets['version'],
-    [
-      'in_footer' => true,
-    ],
+    true,
   );
-
 
   // enqueue wpscan scripts
   $wpscan_assets = include_once __DIR__ . '/ionos-essentials/build/wpscan/index.asset.php';
@@ -91,7 +88,27 @@ defined('ABSPATH') || exit();
   );
 
   wp_set_script_translations('ionos-essentials-wpscan', 'ionos-essentials', PLUGIN_DIR . '/ionos-essentials/languages');
+});
 
+add_action('wp_enqueue_scripts', function () {
+  if (! is_user_logged_in()) {
+    return;
+  }
+
+  $assets_file = __DIR__ . '/ionos-essentials/build/ai_agent/index.asset.php';
+  if (! file_exists($assets_file)) {
+    return;
+  }
+
+  $assets = require $assets_file;
+
+  wp_enqueue_script(
+    'ionos-essentials-ai-agent',
+    plugins_url('ionos-essentials/build/ai_agent/index.js', __FILE__),
+    $assets['dependencies'],
+    $assets['version'],
+    true
+  );
 });
 
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';
