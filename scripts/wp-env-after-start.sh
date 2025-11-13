@@ -133,6 +133,7 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     # emulate ionos brand by default
     wp --quiet option update ionos_group_brand ionos
     wp --quiet option update ionos_group_brand_menu IONOS
+    wp --quiet option update ionos_market de
 
     if [[ -n "${WPSCAN_TOKEN:-}" ]]; then
       wp --quiet option update ionos_security_wpscan_token "${WPSCAN_TOKEN}"
