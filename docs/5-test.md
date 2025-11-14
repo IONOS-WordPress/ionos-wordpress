@@ -83,6 +83,11 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
   >
   > There is a GitHub feature request to make this step unnecessary: https://github.com/microsoft/playwright/issues/34572 - but until then, we have to do this step manually.
 
+## Loggin out in e2e-tests
+
+If you logout within a test, please re-login afterwards with `await requestUtils.setupRest();`.
+See the the _maintenance_-test for real life example.
+
 # Linux bare metal testing (without being in devcontainer)
 
 Everything works exactly as in DevContainer, but you need to have the requirements installed globall :

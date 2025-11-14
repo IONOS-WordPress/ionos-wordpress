@@ -15,24 +15,7 @@ test.describe(
       `);
     });
 
-    async function login(page) {
-      // Normally we use the wp-env standard user, but we need to create a new user for testing security
-      // as the wp-env user has a leaked password
-      await page.goto('/wp-admin');
-      await page.fill('#user_login', 'admin');
-      await page.fill('#user_pass', process.env.WP_PASSWORD);
-      await page.click('[name="wp-submit"]');
-
-      // Click the Confirm-email button, if it exists
-      try {
-        await page.waitForSelector('button:has-text("Log In")', { timeout: 5000 });
-        await page.click('button:has-text("Log In")');
-      } catch {
-        // Silence is golden.
-      }
-    }
-
-    test('prevent log in with e-mail', async ({ page }) => {
+    test('prevent log in with e-mail', async ({ page, requestUtils }) => {
       // Login with email
       await page.goto('/wp-admin');
       await page.fill('#user_login', 'wordpress@example.com');
@@ -40,10 +23,12 @@ test.describe(
       await page.click('[name="wp-submit"]');
 
       await expect(page.locator('.notice-error')).toHaveCount(1);
+
+      await requestUtils.setupRest();
     });
 
-    test('warning of no ssl', async ({ page }) => {
-      await login(page);
+    test('warning of no ssl', async ({ page, admin }) => {
+      await admin.visitAdminPage('/');
 
       await expect(page.locator('.ionos-ssl-check')).toHaveCount(1);
     });
