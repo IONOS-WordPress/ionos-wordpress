@@ -35,6 +35,7 @@ function ionos.wordpress.get_workflow_artifacts() {
 
   # loop over workspace packages and grab flavor specific artifacts
   for PACKAGE_PATH in $(find ./packages -mindepth 2 -maxdepth 2 -type d | sort); do
+    continue
     PACKAGE_NAME=$(jq -r '.name // false' $PACKAGE_PATH/package.json)
 
     if [[ "$(jq -r '.private // false' $PACKAGE_PATH/package.json)" == "true" ]]; then
