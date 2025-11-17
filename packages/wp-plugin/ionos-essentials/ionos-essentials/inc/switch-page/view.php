@@ -75,7 +75,9 @@ if (file_exists($theme_file)) {
               'A native WordPress website in minutes. Our powerful AI generates design, images and content based on your needs.',
               'ionos-essentials'
             ); ?></p>
-            <a href="?php echo \esc_attr(\admin_url('admin.php?page=extendify-launch')); ?>" class="button button--primary"><?php \esc_html_e('Continue with AI', 'ionos-essentials'); ?></a>
+            <a href="<?php echo \esc_attr(
+              \admin_url('admin.php?page=extendify-launch')
+            ); ?>" class="button button--primary"><?php \esc_html_e('Continue with AI', 'ionos-essentials'); ?></a>
           </div>
         </div>
         <div class="option card">
