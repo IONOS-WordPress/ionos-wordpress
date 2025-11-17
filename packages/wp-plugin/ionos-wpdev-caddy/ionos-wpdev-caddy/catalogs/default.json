@@ -1,0 +1,36 @@
+{
+  "caption": "Default PHP Snippets",
+  "description": "Default collection of common PHP code snippets for quick insertion.",
+  "items": [
+    {
+      "caption": "phpinfo",
+      "description": "Outputs information about PHP's configuration.",
+      "body": "<?php\nphpinfo();\n"
+    },
+    {
+      "caption": "Huhu",
+      "description": "outputs something in php",
+      "body": "<?php\necho 'hello world';\n"
+    },
+    {
+      "caption": "(test error) register a wordpress hook being executed",
+      "description": "Registers a WordPress hook being executed.",
+      "body": "<?php\n\\add_action('init', function() {\n echo \"huhu\";\n wp_die(); \n}\n\n"
+    },
+    {
+      "caption": "test send email",
+      "description": "sends a email",
+      "body": "<?php\n\\add_action('wp_mail_failed', 'wp_mail_failed_handler');\nfunction wp_mail_failed_handler($wp_error) {\n  print_r($wp_error->get_error_messages());\n};\n\nprintf(\n  'test send a email : %s', \n  \\wp_mail('recipient@example.com', 'Subject', 'Message') ? 'succeed' : 'failed'\n);\n\n"
+    },
+    {
+      "caption": "test log error",
+      "description": "writes something into the error log and check if it is logged",
+      "body": "<?php\n\nprintf(\n  <<<EOF\n  # DEBUG configuration\n  \n  WP_DEBUG%s\n  WP_DEBUG_LOG%s\n  WP_DEBUG_DISPLAY%s\n  \n  EOF\n  ,\n  defined('WP_DEBUG') ? '=' . json_encode(WP_DEBUG) : ' is not defined',\n\tdefined( 'WP_DEBUG_LOG') ? '=' . json_encode(WP_DEBUG_LOG) : ' is not defined',\n  defined( 'WP_DEBUG_DISPLAY') ? '=' . json_decode(WP_DEBUG_DISPLAY) : ' is not defined'\n);\n\n$error_log_path = ini_get('error_log');\nif (empty($error_log_path)) {\n  echo \"The 'error_log' directive is NOT set to a custom file in php.ini.\\n\";\n  echo \"Errors are likely being sent to the SAPI error logger (e.g., the web server's main error log: /var/log/apache2/error.log or a similar file).\";\n} elseif ($error_log_path === 'syslog') {\n  echo \"The 'error_log' directive is set to 'syslog'.\\n\";\n  echo \"Errors are being sent to the system's logging facility.\";\n} else {\n  echo \"The PHP error log path is: \" . $error_log_path . \"\\n\\n\";\n  \n  error_log('Mensch hier ist aber wirklich was in die Hose gegangen');\n  \n  echo \"# last 20 lines of the error log file :\\n\\n\";\n    \n  // Assume $error_log_path holds the path to your log file\n  $num_lines = 20;\n  $log_lines = [];\n  $chunk_size = 4096; // Read the file in 4KB chunks\n\n\ttry {\n    // Check if the file exists and is readable\n    if (!is_readable($error_log_path)) {\n        throw new Exception(\"File not found or not readable: $error_log_path\");\n    }\n\n    // Open the file for reading\n    $file_handle = fopen($error_log_path, 'r');\n\n    // Get the file size and set the current position to the end\n    $file_size = filesize($error_log_path);\n    $position = $file_size;\n\n    // Loop backward, reading chunks until we have enough lines\n    while ($position > 0 && count($log_lines) < $num_lines) {\n      // Calculate the starting position for the next chunk\n      $start = max(0, $position - $chunk_size);\n      $length = $position - $start;\n        \n      // Move the pointer and read the chunk\n      fseek($file_handle, $start);\n      $chunk = fread($file_handle, $length);\n        \n      // Update the position for the next iteration\n      $position = $start;\n\n      // Split the chunk into lines\n      $lines = explode(\"\\n\", $chunk);\n        \n      // Append the new lines to the beginning of the result array\n      // array_splice is used to maintain the correct order and limit\n      $log_lines = array_slice(array_merge($lines, $log_lines), -$num_lines, $num_lines);\n    }\n    \n    fclose($file_handle);\n\n    // Filter out potential empty lines from file start/end and output\n    $final_lines = array_filter($log_lines);\n    \n    echo implode(\"\\n\", $final_lines);\n\t} catch (Exception $e) {\n    echo \"Error reading log file: \" . $e->getMessage();\n\t}  \n}\n\n\n"
+    },
+    {
+      "caption": ".htaccess tests",
+      "description": "test writing to .htaccess",
+      "body": "<?php\n\n$files_and_dirs = scandir(ABSPATH);\n\nif ($files_and_dirs === false) {\n    echo \"Error: Could not read the directory at \" . ABSPATH;\n} else {\n    echo \"# Files and Directories in ABSPATH(=\" . ABSPATH . \"):\\n\\n\";\n    \n    foreach ($files_and_dirs as $item) {\n      // Exclude the current directory (.) and parent directory (..)\n      if ($item === '.' || $item === '..') {\n        continue;\n      }\n        \n        // Check if the item is a directory or a file for better presentation\n        $path = ABSPATH . $item;\n        $type = is_dir($path) ? 'Directory' : 'File';\n        \n        echo str_pad($item, 30) . \" [\" . $type . \"]\\n\";\n    }\n}\n\n$ht_access = ABSPATH . '.htaccess';\nif(!file_exists($ht_access)) {\n  printf (\"\\n.htaccess file does not exist.\\n\");\n  \n  if (touch($ht_access)) {\n    printf (\"\\n✅ The empty .htaccess file has been created or its timestamp has been updated at: %s\\n\", htmlspecialchars($ht_access));\n  } else {\n    printf( \"\\n❌ Error Failed to create the .htaccess file. This usually means PHP does not have the **necessary write permissions** for the directory: %s\\n\", ABSPATH);\n  }\n  \n  return; \n}\n\n// 1. Get the raw file permissions\n$perms = fileperms($ht_access);\n\n// 2. Determine file type (first character)\n$info = 'Unknown Type';\nif (($perms & 0xC000) == 0xC000) $info = 's'; // Socket\nelseif (($perms & 0xA000) == 0xA000) $info = 'l'; // Symbolic Link\nelseif (($perms & 0x8000) == 0x8000) $info = '-'; // Regular File\nelseif (($perms & 0x6000) == 0x6000) $info = 'b'; // Block special\nelseif (($perms & 0x4000) == 0x4000) $info = 'd'; // Directory\nelseif (($perms & 0x2000) == 0x2000) $info = 'c'; // Character special\nelseif (($perms & 0x1000) == 0x1000) $info = 'p'; // FIFO pipe\n\n// 3. Determine permissions (the next nine characters)\n// Use bitwise operators to check for read (r), write (w), and execute (x) for owner, group, and others.\n$info .= (($perms & 0x0100) ? 'r' : '-'); // Owner Read\n$info .= (($perms & 0x0080) ? 'w' : '-'); // Owner Write\n$info .= (($perms & 0x0040) ?\n          (($perms & 0x0800) ? 's' : 'x' ) :\n          (($perms & 0x0800) ? 'S' : '-')); // Owner Execute/SetUID\n\n$info .= (($perms & 0x0020) ? 'r' : '-'); // Group Read\n$info .= (($perms & 0x0010) ? 'w' : '-'); // Group Write\n$info .= (($perms & 0x0008) ?\n          (($perms & 0x0400) ? 's' : 'x' ) :\n          (($perms & 0x0400) ? 'S' : '-')); // Group Execute/SetGID\n\n$info .= (($perms & 0x0004) ? 'r' : '-'); // Others Read\n$info .= (($perms & 0x0002) ? 'w' : '-'); // Others Write\n$info .= (($perms & 0x0001) ?\n          (($perms & 0x0200) ? 't' : 'x' ) :\n          (($perms & 0x0200) ? 'T' : '-')); // Others Execute/Sticky\n\necho \"\\n\\n# .htaccess Permissions (Symbolic):\\n\\n\";\necho \"The symbolic permissions are: \" . $info . \"\\n\";\n\nprintf(\"\\n# Contents of .htaccess file\\n\\n%s\", file_get_contents($ht_access));\n"
+    }
+  ]
+}

@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es_MX\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-08-05 22:39+0200\n"
+"POT-Creation-Date: 2025-04-09T08:51:38+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-essentials 0.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-09T08:51:38+00:00\n"
-"PO-Revision-Date: 2025-08-05 22:39+0200\n"
-"Language: es_MX\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -334,7 +334,7 @@ msgstr "Configurar e-mail"
 msgid "My Account"
 msgstr "Mi cuenta"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Installing..."
 msgstr "Instalando..."
 
@@ -374,24 +374,8 @@ msgid "How do you want to create your new website?"
 msgstr "¿Cómo quieres crear tu nueva página web?"
 
 #: ionos-essentials/inc/switch-page/view.php
-msgid "Online in a few minutes"
-msgstr "Online en unos minutos"
-
-#: ionos-essentials/inc/switch-page/view.php
 msgid "With AI"
 msgstr "Con IA"
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
-msgstr "Creación automática de páginas web en función de tus preferencias y requisitos. Incluye textos e imágenes listos para usar."
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "100% WordPress"
-msgstr "100% WordPress"
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
-msgstr "Tú decides cómo crear tu página web. No te preocupes, también podrás iniciar la funcionalidad para confeccionarla con IA desde el panel de WordPress más tarde."
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: ionos-essentials/inc/switch-page/view.php
@@ -471,11 +455,11 @@ msgstr "Página de mantenimiento"
 msgid "Active"
 msgstr "Función activa"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "activated."
 msgstr "activada."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deactivated."
 msgstr "desactivada."
 
@@ -564,11 +548,11 @@ msgstr "¡Acabamos de habilitar la nueva pestaña «Herramientas y seguridad»! 
 msgid "Website is safe and secure"
 msgstr "La página web está segura y protegida"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "updating..."
 msgstr "actualizando..."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deleting..."
 msgstr "eliminando..."
 
@@ -591,6 +575,7 @@ msgid "Your %s plugin team"
 msgstr "Tu equipo de plugins %s"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "More information"
 msgstr "Más información"
 
@@ -602,7 +587,7 @@ msgstr "Hubo un error al recuperar los datos de vulnerabilidades."
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Sección de ayuda completa, que incluye: asistencia por chat con IA, recorridos guiados y una amplia base de datos de conocimientos."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Loading content ..."
 msgstr "Cargando contenido..."
 
@@ -640,31 +625,31 @@ msgstr "Escáner de vulnerabilidades"
 msgid "issue found"
 msgstr "problema detectado"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Checking for vulnerabilities..."
 msgstr "Buscando vulnerabilidades..."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Warnings found. Installation is not recommended."
 msgstr "Alertas detectadas. No se recomienda la instalación."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "¡Vulnerabilidades críticas detectadas! La instalación no es posible."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "No se encontraron vulnerabilidades. Puedes instalar este tema de forma segura."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "No se encontraron vulnerabilidades. Puedes instalar este plugin de forma segura."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "The vulnerability scan has found issues"
 msgstr "El escáner de vulnerabilidades detectó problemas"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/index.js
 msgid "Activation is not recommended"
 msgstr "La activación no es recomendable"
 
@@ -880,7 +865,7 @@ msgstr "Vista de detalles"
 msgid "Last scan ran %s ago"
 msgstr "Último análisis hace %s"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Should be improved"
 msgstr "Mejora requerida"
 
@@ -967,7 +952,7 @@ msgstr "¡Todas las acciones están completadas!"
 msgid " %1$d of %2$d completed"
 msgstr "%1$d de %2$d acciones completadas"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Good"
 msgstr "Buena"
 
@@ -986,3 +971,23 @@ msgstr "Seleccionar un tema"
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Choose a theme that matches your website's purpose and your comfort level."
 msgstr "Elige un tema que represente la esencia de tu página web y que encaje con tus expectativas de comodidad."
+
+#: ionos-essentials/inc/switch-page/view.php
+#, generated by deepl
+msgid "A native WordPress website in minutes. Our powerful AI generates design, images and content based on your needs."
+msgstr "Un sitio web WordPress nativo en cuestión de minutos. Nuestra potente IA genera el diseño, las imágenes y el contenido en función de tus necesidades."
+
+#: ionos-essentials/inc/switch-page/view.php
+#, generated by deepl
+msgid "Continue with AI"
+msgstr "Continuar con la IA"
+
+#: ionos-essentials/inc/switch-page/view.php
+#, generated by deepl
+msgid "Take full control of the creative process. You can easily switch over to the AI builder later from inside Wordpress."
+msgstr "Toma el control total del proceso creativo. Puedes cambiar fácilmente al AI builder más tarde desde dentro de Wordpress."
+
+#: ionos-essentials/inc/switch-page/view.php
+#, generated by deepl
+msgid "Create manually"
+msgstr "Crear manualmente"
