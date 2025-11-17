@@ -11,6 +11,13 @@ Extendify is a third party plugin with features like
 
 to have extendify working, the open source plugin from the marketplace, one "Site Assistant" Plugin (see _license plugin_ below) and the extendable theme from the marketplace.
 
+### install everything
+
+```
+pnpm wp-env run cli wp plugin install extendify https://web-hosting.s3-eu-central-1.ionoscloud.com/extendify/01-ext-ion2hs971.zip --activate
+pnpm wp-env run cli wp theme install extendable --activate
+```
+
 ## license plugin
 
 the current setup features a license plugin on every instance.
