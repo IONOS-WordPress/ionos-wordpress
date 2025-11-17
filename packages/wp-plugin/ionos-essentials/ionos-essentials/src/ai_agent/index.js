@@ -10,9 +10,9 @@ const interval = setInterval(() => {
     return;
   }
 
-  const isDisabled = innerButton.classList.contains('opacity-60');
+  const chatBotVisible = document.querySelector('#extendify-agent-popout-modal');
 
-  if (!isDisabled) {
+  if (!chatBotVisible) {
     innerButton.click();
   }
   clearInterval(interval);
