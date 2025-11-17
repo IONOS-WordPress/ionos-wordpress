@@ -49,7 +49,7 @@ defined('ABSPATH') || exit();
     true,
   );
 
-  wp_set_script_translations(
+  \wp_set_script_translations(
     'ionos-essentials-dashboard',
     'ionos-essentials',
     PLUGIN_DIR . '/ionos-essentials/languages'
@@ -57,7 +57,7 @@ defined('ABSPATH') || exit();
 
   // enqueue maintenance mode scripts
   $maintenance_mode_assets = include_once __DIR__ . '/ionos-essentials/build/maintenance_mode/index.asset.php';
-  wp_enqueue_script(
+  \wp_enqueue_script(
     'ionos-essentials-maintenance-mode',
     plugins_url('/ionos-essentials/build/maintenance_mode/index.js', __FILE__),
     $maintenance_mode_assets['dependencies'],
@@ -87,10 +87,10 @@ defined('ABSPATH') || exit();
     ],
   );
 
-  wp_set_script_translations('ionos-essentials-wpscan', 'ionos-essentials', PLUGIN_DIR . '/ionos-essentials/languages');
+  \wp_set_script_translations('ionos-essentials-wpscan', 'ionos-essentials', PLUGIN_DIR . '/ionos-essentials/languages');
 });
 
-add_action('wp_enqueue_scripts', function () {
+\add_action('wp_enqueue_scripts', function () {
   if (! is_user_logged_in()) {
     return;
   }
@@ -102,7 +102,7 @@ add_action('wp_enqueue_scripts', function () {
 
   $assets = require $assets_file;
 
-  wp_enqueue_script(
+  \wp_enqueue_script(
     'ionos-essentials-ai-agent',
     plugins_url('ionos-essentials/build/ai_agent/index.js', __FILE__),
     $assets['dependencies'],
