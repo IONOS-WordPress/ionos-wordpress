@@ -1,22 +1,19 @@
-if (new URLSearchParams(window.location.search).get('ionos-highlight') === 'chatbot') {
-  const interval = setInterval(() => {
-    const agentItem = document.querySelector('.extendify-agent');
-    if (!agentItem) {
-      return;
-    }
+const interval = setInterval(() => {
+  const agentItem = document.querySelector('.extendify-agent');
+  if (!agentItem) {
+    return;
+  }
 
-    const innerButton = agentItem.querySelector('button, a');
-    if (!innerButton) {
-      clearInterval(interval);
-      return;
-    }
-
-    const isDisabled = innerButton.classList.contains('opacity-60');
-
-    if (!isDisabled) {
-      innerButton.click();
-    }
-
+  const innerButton = agentItem.querySelector('button, a');
+  if (!innerButton) {
     clearInterval(interval);
-  }, 500);
-}
+    return;
+  }
+
+  const isDisabled = innerButton.classList.contains('opacity-60');
+
+  if (!isDisabled) {
+    innerButton.click();
+  }
+  clearInterval(interval);
+}, 500);

@@ -87,29 +87,35 @@ defined('ABSPATH') || exit();
     ],
   );
 
-  \wp_set_script_translations('ionos-essentials-wpscan', 'ionos-essentials', PLUGIN_DIR . '/ionos-essentials/languages');
-});
-
-\add_action('wp_enqueue_scripts', function () {
-  if (! is_user_logged_in()) {
-    return;
-  }
-
-  $assets_file = __DIR__ . '/ionos-essentials/build/ai_agent/index.asset.php';
-  if (! file_exists($assets_file)) {
-    return;
-  }
-
-  $assets = require $assets_file;
-
-  \wp_enqueue_script(
-    'ionos-essentials-ai-agent',
-    plugins_url('ionos-essentials/build/ai_agent/index.js', __FILE__),
-    $assets['dependencies'],
-    $assets['version'],
-    true
+  \wp_set_script_translations(
+    'ionos-essentials-wpscan',
+    'ionos-essentials',
+    PLUGIN_DIR . '/ionos-essentials/languages'
   );
 });
+
+if (($_GET['ionos-highlight'] ?? '') === 'chatbot') {
+  \add_action('wp_enqueue_scripts', function () {
+    if (! is_user_logged_in()) {
+      return;
+    }
+
+    $assets_file = __DIR__ . '/ionos-essentials/build/ai_agent/index.asset.php';
+    if (! file_exists($assets_file)) {
+      return;
+    }
+
+    $assets = require $assets_file;
+
+    \wp_enqueue_script(
+      'ionos-essentials-ai-agent',
+      plugins_url('ionos-essentials/build/ai_agent/index.js', __FILE__),
+      $assets['dependencies'],
+      $assets['version'],
+      true
+    );
+  });
+}
 
 require_once __DIR__ . '/ionos-essentials/inc/class-tenant.php';
 require_once __DIR__ . '/ionos-essentials/inc/tenants/index.php';
