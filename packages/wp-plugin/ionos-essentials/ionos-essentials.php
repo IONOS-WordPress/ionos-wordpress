@@ -109,7 +109,7 @@ if (($_GET['ionos-highlight'] ?? '') === 'chatbot') {
 
     \wp_enqueue_script(
       'ionos-essentials-ai-agent',
-      plugins_url('ionos-essentials/build/ai_agent/index.js', __FILE__),
+      \plugins_url('ionos-essentials/build/ai_agent/index.js', __FILE__),
       $assets['dependencies'],
       $assets['version'],
       true

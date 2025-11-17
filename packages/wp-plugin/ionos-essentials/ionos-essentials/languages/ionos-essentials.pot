@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-12T09:54:21+00:00\n"
+"POT-Creation-Date: 2025-11-17T16:17:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ionos-essentials\n"
@@ -212,6 +212,18 @@ msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Add your business details, like a phone number, email, and address, to your website."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Create Legal Notice"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Insert the necessary data for your company and your industry (or industries) into the legal notice (Impressum) template in order to operate your new website in a legally compliant manner."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Edit now"
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php

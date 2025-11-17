@@ -225,6 +225,48 @@ if ($contact_post_id) {
   );
 }
 
+function has_legal_page_for_locale(&$post_id = null)
+{
+  $locale = \get_locale();
+
+  // Check if locale is a variation of German or French
+  if (strpos($locale, 'de') === 0) {
+    $keyword = 'impressum';
+  } elseif (strpos($locale, 'fr') === 0) {
+    $keyword = 'mentions-legales';
+  } else {
+    return false;
+  }
+
+  $pages = \get_pages([
+    'post_status' => 'publish',
+  ]);
+
+  foreach ($pages as $page) {
+    $slug = strtolower($page->post_name);
+
+    if (strpos($slug, $keyword) !== false) {
+      $post_id = $page->ID;
+      return true;
+    }
+  }
+
+  return false;
+}
+
+$legal_post_id = null;
+
+if (has_legal_page_for_locale($legal_post_id)) {
+  NBA::register(
+    id: 'extendify-imprint',
+    title: __('Create Legal Notice', 'ionos-essentials'),
+    description: __('Insert the necessary data for your company and your industry (or industries) into the legal notice (Impressum) template in order to operate your new website in a legally compliant manner.', 'ionos-essentials'),
+    link: \admin_url('post.php?post=' . $legal_post_id . '&action=edit'),
+    anchor: __('Edit now', 'ionos-essentials'),
+    complete_on_click: true,
+    categories: ['setup-ai']
+  );
+}
 
 if ('extendable' === get_stylesheet() && \get_option('extendify_onboarding_completed')) {
   NBA::register(
