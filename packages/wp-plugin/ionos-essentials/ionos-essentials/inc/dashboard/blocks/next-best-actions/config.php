@@ -225,7 +225,8 @@ if ($contact_post_id) {
   );
 }
 
-if ('extendable' === get_stylesheet()) {
+
+if ('extendable' === get_stylesheet() && \get_option('extendify_onboarding_completed')) {
   NBA::register(
     id: 'extendify-agent',
     title: \__('New AI Agent with Enhanced Capabilities', 'ionos-essentials'),
