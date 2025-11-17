@@ -12,8 +12,7 @@ test.describe('Switch page', () => {
     await admin.visitAdminPage('/admin.php?page=ionos-onboarding');
 
     await expect(page.locator('a[href*="extendify-launch"]')).toBeVisible();
-    await expect(page.locator('a[href$="admin.php?page=ionos"].link-btn')).toBeVisible();
-
+    await expect(page.getByRole('link', { name: 'Create manually' })).toBeVisible();
     await expect(errors).toEqual([]);
   });
 });
