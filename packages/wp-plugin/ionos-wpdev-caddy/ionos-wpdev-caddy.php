@@ -225,7 +225,7 @@ function _render_admin_page(): void
   // since we utilize the automatically available nonce from wp-api-fetch we need to use the expected key '_ajax_nonce' here
   \check_ajax_referer('wp_rest', '_ajax_nonce');
 
-  $php_code = wp_unslash($_POST['php_code']) ?? '<?php';
+  $php_code = \wp_unslash($_POST['php_code']) ?? '<?php';
 
   $temp_file = sys_get_temp_dir() . '/' . MENU_PAGE_SLUG . '.php';
   if ($temp_file === false) {
