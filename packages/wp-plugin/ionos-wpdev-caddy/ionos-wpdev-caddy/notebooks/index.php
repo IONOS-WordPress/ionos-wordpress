@@ -45,6 +45,10 @@ function get_notebooks(): array
       ];
     }
 
+    usort($cells, function($l, $r) {
+      return $l['name'] <=> $r['name'];
+    });
+
     $slug = NOTEBOOKS_PAGE_SLUG_PREFIX . \sanitize_title($name);
     $notebooks[] = [
       'name'    => $name,
