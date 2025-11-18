@@ -83,6 +83,7 @@ function log_loop_event(string $name, array $payload = []): void
 // revoke consent for legacy loop plugin
 \add_action('init', function () {
   if (class_exists('\Ionos\Loop\Plugin')) {
+    \add_option('ionos_loop_consent_LEGACY', \get_option('ionos_loop_consent', false), null, false);
     \Ionos\Loop\Plugin::revoke_consent();
   }
 }, 90); // before legacy loop init at 99
