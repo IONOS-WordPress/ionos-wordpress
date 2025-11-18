@@ -1003,3 +1003,15 @@ msgstr "Manuell erstellen"
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Try it"
 msgstr "Ausprobieren"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Create Legal Notice"
+msgstr "Impressum erstellen"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Insert the necessary data for your company and your industry (or industries) into the legal notice (Impressum) template in order to operate your new website in a legally compliant manner."
+msgstr "Fügen Sie die für Ihr Unternehmen und Ihre Brachen notwendigen Daten in die Impressumsvorlage ein um Ihre neue Webseite rechtssicher zu betreiben."
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Edit now"
+msgstr "Jetzt erstellen"
