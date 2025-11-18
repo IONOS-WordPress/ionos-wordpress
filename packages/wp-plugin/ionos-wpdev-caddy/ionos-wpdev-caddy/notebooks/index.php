@@ -13,6 +13,9 @@ defined('ABSPATH') || exit();
 const NOTEBOOKS_DIR = __DIR__ . '/notebooks';
 const NOTEBOOKS_PAGE_SLUG_PREFIX = MENU_PAGE_SLUG . '-notebook-';
 
+const ACTION_SAVE = NOTEBOOKS_PAGE_SLUG_PREFIX . 'save-cell-value';
+const ACTION_RENAME  = NOTEBOOKS_PAGE_SLUG_PREFIX . 'rename-cell';
+
 function get_notebooks(): array
 {
   static $notebooks = null;
@@ -103,14 +106,17 @@ function get_notebooks(): array
     ver     : filemtime(PLUGIN_DIR . '/ionos-wpdev-caddy/notebooks/index.css'),
   );
 
-  // inject our array of snippet catalog urls to load on the frontend
   \wp_add_inline_script(
     handle : NOTEBOOKS_PAGE_SLUG_PREFIX,
     data   : sprintf(
       "wp['ionos-wpdev-caddy-notebooks'] = %s;",
       \wp_json_encode([
         'current' => $notebook,
-        'ajax_action' => MENU_PAGE_SLUG,
+        'actions' => [
+          'execute' => MENU_PAGE_SLUG,
+          'save'    => ACTION_SAVE,
+          'rename'  => ACTION_RENAME,
+        ],
       ])
     ),
   );
@@ -126,8 +132,8 @@ function _render_notebook_page(array $notebook): void
         Notebooks helps IONOS WordPress development team finding issues and bugs.
       </p>
       <p>
-        Snippets are executed in the context of the currently loaded WordPress installation.
-        Execute snippets with care - they run with your full WordPress user privileges.
+        Cells are executed in the context of the currently loaded WordPress installation.
+        Execute cells with care - they run with your full WordPress user privileges.
       </p>
 
       <form>
@@ -145,15 +151,18 @@ function _render_notebook_page(array $notebook): void
             <textarea class="notebook-cell-editor"></textarea>
           </div>
           <p>
-            <button type="button" class="notebook-cell-execute button button-primary" title="Execute PHP Snippet on the server in WordPress context">
-              Execute Snippet
+            <button type="button" class="notebook-cell-execute button button-primary" title="Execute PHP cell on the server in WordPress context">
+              Execute cell
             </button>
             <span>&nbsp;</span>
-            <button type="button" class="notebook-cell-reset button button-secondary" title="Reset the editor content to the original snippet content">
+            <button type="button" class="notebook-cell-reset button button-secondary" title="Reset the editor content to the original cell content">
               Reset Editor
             </button>
-            <button type="button" class="notebook-cell-save button button-secondary" title="Save the current editor content back to the snippet catalog">
-              Save Snippet
+            <button type="button" class="notebook-cell-save button button-secondary" title="Save the current editor content to the server">
+              Save
+            </button>
+            <button type="button" class="notebook-cell-rename button button-secondary" title="Rename the current cell">
+              Rename
             </button>
           </p>
           <div>
@@ -166,7 +175,7 @@ function _render_notebook_page(array $notebook): void
 
       <p>
         <em>
-          Snippets are ordered alphabetically by their file name.
+          Cells are ordered alphabetically by their file name.
         </em>
       </p>
     </div>
@@ -176,6 +185,59 @@ function _render_notebook_page(array $notebook): void
       ])
   );
 }
+
+\add_action('wp_ajax_' . ACTION_SAVE, function () {
+  // since we utilize the automatically available nonce from wp-api-fetch we need to use the expected key '_ajax_nonce' here
+  \check_ajax_referer('wp_rest', '_ajax_nonce');
+
+  $notebook = $_POST['notebook'];
+  $cell = $_POST['cell'];
+  $value = \wp_unslash($_POST['value']);
+
+  $notebook_dir = NOTEBOOKS_DIR . '/' . $notebook;
+  if (!is_dir($notebook_dir)) {
+    \wp_send_json_error(sprintf("Notebook '%s' does not exist.", $notebook));
+  }
+
+  $php_file = $notebook_dir . '/' . $cell;
+  if (!is_file($php_file)) {
+    \wp_send_json_error(sprintf("Cell '%s' does not exist in notebook '%s'.", $cell, $notebook));
+  }
+
+  file_put_contents($php_file, $value);
+
+  \wp_send_json_success(sprintf("Successfully saved value of cell '%s' in notebook '%s'.", $cell, $notebook));
+});
+
+\add_action('wp_ajax_' . ACTION_RENAME, function () {
+  // since we utilize the automatically available nonce from wp-api-fetch we need to use the expected key '_ajax_nonce' here
+  \check_ajax_referer('wp_rest', '_ajax_nonce');
+
+  $notebook = $_POST['notebook'];
+  $from_cell_name = $_POST['from_cell_name'];
+  $to_cell_name = $_POST['to_cell_name'];
+
+  $notebook_dir = NOTEBOOKS_DIR . '/' . $notebook;
+  if (!is_dir($notebook_dir)) {
+    \wp_send_json_error(sprintf("Notebook '%s' does not exist.", $notebook));
+  }
+
+  $php_file = $notebook_dir . '/' . $from_cell_name;
+  if (!is_file($php_file)) {
+    \wp_send_json_error(sprintf("Cell '%s' does not exist in notebook '%s'.", $from_cell_name, $notebook));
+  }
+
+  $to_php_file = $notebook_dir . '/' . $to_cell_name;
+  if (is_file($to_php_file)) {
+    \wp_send_json_error(sprintf("Cell '%s' already exists in notebook '%s'.", $to_cell_name, $notebook));
+  }
+
+  if (!rename($php_file, $to_php_file)) {
+    \wp_send_json_error(sprintf("Could not rename cell '%s' to '%s' in notebook '%s'.", $from_cell_name, $to_cell_name, $notebook));
+  }
+
+  \wp_send_json_success(sprintf("Successfully saved value of cell '%s' in notebook '%s'.", $from_cell_name, $notebook));
+});
 
 // ui sugar - not really needed
 \add_action(

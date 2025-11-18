@@ -27,7 +27,7 @@ function getCellOutputElement(cellElement) {
 
 async function executeCell(php_code) {
   const body = new FormData();
-  body.append('action', wp['ionos-wpdev-caddy-notebooks'].ajax_action);
+  body.append('action', wp['ionos-wpdev-caddy-notebooks'].actions.execute);
   body.append('php_code', php_code);
   body.append('_ajax_nonce', wp.apiFetch.nonceMiddleware.nonce);
 
@@ -53,6 +53,36 @@ async function executeCell(php_code) {
   return data;
 }
 
+async function saveCell(notebook_name, cell_name, cell_value) {
+  const body = new FormData();
+  body.append('action', wp['ionos-wpdev-caddy-notebooks'].actions.save);
+  body.append('notebook', notebook_name);
+  body.append('cell', cell_name);
+  body.append('value', cell_value);
+  body.append('_ajax_nonce', wp.apiFetch.nonceMiddleware.nonce);
+
+  return await wp.apiFetch({
+    url: window.ajaxurl,
+    method: 'POST',
+    body,
+  });
+}
+
+async function renameCell(notebook_name, from_cell_name, to_cell_name) {
+  const body = new FormData();
+  body.append('action', wp['ionos-wpdev-caddy-notebooks'].actions.rename);
+  body.append('notebook', notebook_name);
+  body.append('from_cell_name', from_cell_name);
+  body.append('to_cell_name', to_cell_name);
+  body.append('_ajax_nonce', wp.apiFetch.nonceMiddleware.nonce);
+
+  return await wp.apiFetch({
+    url: window.ajaxurl,
+    method: 'POST',
+    body,
+  });
+}
+
 wp.domReady(() => {
   const settings = wp['ionos-wpdev-caddy-notebooks'];
 
@@ -62,26 +92,35 @@ wp.domReady(() => {
 
   const { current: notebook } = settings;
   const cellTemplate = document.getElementById('notebook-cell-template').content;
-  const bindings = new Map();
   const textareaEditorMapping = new Map();
 
   const app_root = document.getElementById('ionos-wpdev-caddy-notebooks');
 
+  function* id_generator(startValue = 0) {
+    let count = startValue;
+    while (true) {
+      yield count++;
+    }
+  }
+
+  const idGenerator = id_generator();
+  idGenerator.next(); // skip 0
+
   function bindCellElement(cell) {
     const e = cellTemplate.cloneNode(true);
 
+    const cell_id = idGenerator.next().value;
+
     const eName = getCellNameElement(e);
-    eName.setAttribute('for', cell.name + '-editor');
     eName.textContent = cell.name;
 
     const eTextarea = getCellEditorElement(e);
     eTextarea.value = cell.value;
-    eTextarea.id = eName.for;
+    eTextarea.id = eName.for = cell_id + '-editor';
 
     const eOutputLabel = e.querySelector('.notebook-cell-output-label');
-    eOutputLabel.setAttribute('for', cell.name + '-output');
     const eOutput = getCellOutputElement(e);
-    eOutput.id = cell.name + '-output';
+    eOutput.id = eOutputLabel.for = cell_id + '-output';
 
     const eExecute = e.querySelector('.notebook-cell-execute');
     eExecute.onclick = async () => {
@@ -102,14 +141,44 @@ wp.domReady(() => {
       }
     };
 
+    e.querySelector('.notebook-cell-reset').onclick = () =>
+      textareaEditorMapping.get(eTextarea).codemirror.setValue(eTextarea.value);
+
+    const eSave = e.querySelector('.notebook-cell-save');
+    eSave.onclick = async () => {
+      const value = textareaEditorMapping.get(eTextarea).codemirror.getValue();
+      await saveCell(notebook.name, cell.name, value);
+      eTextarea.value = value;
+    };
+
+    const eRename = e.querySelector('.notebook-cell-rename');
+    eRename.onclick = async () => {
+      let newName = prompt('Enter new cell name:', cell.name.replace(/\.php$/, ''));
+      if (newName && newName !== cell.name) {
+        newName = newName.trim();
+        if (!newName) {
+          alert('New cell name cannot be empty!');
+          return;
+        }
+
+        newName = newName + '.php';
+        const existingCell = notebook.cells.find((c) => c.name === newName);
+        if (existingCell) {
+          alert(`A cell with the name "${newName}.php" already exists!`);
+          return;
+        }
+
+        await renameCell(notebook.name, cell.name, newName);
+        eName.textContent = cell.name = newName;
+      }
+    };
+
     app_root.appendChild(e);
 
     const editor = wp.codeEditor.initialize(eTextarea);
     textareaEditorMapping.set(eTextarea, editor);
 
     eName.onclick = () => editor.codemirror.focus();
-
-    bindings.set(e, cell);
   }
 
   {
