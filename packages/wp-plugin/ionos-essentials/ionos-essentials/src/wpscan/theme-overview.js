@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       themes.forEach(function (theme) {
-        if (!ionosWPScanThemes.slugs.includes(theme.dataset.slug)) {
+        if (!ionosWPScanThemes.slugs?.includes(theme.dataset.slug)) {
           return;
         }
 
