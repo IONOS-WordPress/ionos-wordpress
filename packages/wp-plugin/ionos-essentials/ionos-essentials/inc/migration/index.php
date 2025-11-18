@@ -72,20 +72,14 @@ function _install()
       return;
 
     case version_compare($last_installed_version, '1.0.0', '<'):
-
-      // keep consent for ionos loop to use it later on in dashboard
-      $ionos_loop_consent_given = \get_option('ionos_loop_consent', false);
-
-      $plugins_to_remove = [
+     $plugins_to_remove = [
         'ionos-loop/ionos-loop.php',
         'ionos-journey/ionos-journey.php',
         'ionos-navigation/ionos-navigation.php',
       ];
       \deactivate_plugins($plugins_to_remove);
       \add_action('shutdown', fn () => \delete_plugins($plugins_to_remove));
-
-      // re add ionos loop consent data
-      \add_option('ionos_loop_consent', $ionos_loop_consent_given);
+    
       // no break because we want to run all migrations sequentially
     case version_compare($last_installed_version, '1.0.4', '<'):
       \update_option('ionos_migration_step', 1);
