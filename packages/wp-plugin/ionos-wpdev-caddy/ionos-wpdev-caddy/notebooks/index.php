@@ -110,6 +110,7 @@ function get_notebooks(): array
       "wp['ionos-wpdev-caddy-notebooks'] = %s;",
       \wp_json_encode([
         'current' => $notebook,
+        'ajax_action' => MENU_PAGE_SLUG,
       ])
     ),
   );
@@ -121,7 +122,13 @@ function _render_notebook_page(array $notebook): void
     strtr(<<<HTML
     <div class="wrap">
       <h1>{$notebook['name']}</h1>
-      <p>Notebooks helps IONOS WordPress development team finding issues and bugs.</p>
+      <p>
+        Notebooks helps IONOS WordPress development team finding issues and bugs.
+      </p>
+      <p>
+        Snippets are executed in the context of the currently loaded WordPress installation.
+        Execute snippets with care - they run with your full WordPress user privileges.
+      </p>
 
       <form>
         <dl id="ionos-wpdev-caddy-notebooks"></dl>
@@ -138,14 +145,14 @@ function _render_notebook_page(array $notebook): void
             <textarea class="notebook-cell-editor"></textarea>
           </div>
           <p>
-            <button type="button" class="action-execute button button-primary" title="Execute PHP Snippet on the server in WordPress context">
+            <button type="button" class="notebook-cell-execute button button-primary" title="Execute PHP Snippet on the server in WordPress context">
               Execute Snippet
             </button>
             <span>&nbsp;</span>
-            <button type="button" class="action-reset button button-secondary" title="Reset the editor content to the original snippet content">
+            <button type="button" class="notebook-cell-reset button button-secondary" title="Reset the editor content to the original snippet content">
               Reset Editor
             </button>
-            <button type="button" class="action-save button button-secondary" title="Save the current editor content back to the snippet catalog">
+            <button type="button" class="notebook-cell-save button button-secondary" title="Save the current editor content back to the snippet catalog">
               Save Snippet
             </button>
           </p>
@@ -156,126 +163,21 @@ function _render_notebook_page(array $notebook): void
           <hr>
         </dd>
       </template>
+
+      <p>
+        <em>
+          Snippets are ordered alphabetically by their file name.
+        </em>
+      </p>
     </div>
     HTML
       , [
         '{page_title}' => esc_html($notebook['name']),
       ])
   );
-
-  /*
-  printf(
-    strtr(<<<HTML
-    <div class="wrap">
-      <h1>{page_title}</h1>
-      <p>{page_title} helps IONOS WordPress development team finding issues and bugs.</p>
-
-      <form>
-        <dl>
-          <dt>
-            <label for="catalogs">Snippet catalog</label>
-          </dt>
-          <dd>
-          <select id="catalogs"></select>
-          </dd>
-
-          <dt>
-            <label for="catalog_snippet">Snippet</label>
-          </dt>
-          <dd>
-          <select id="catalog_snippet"></select>
-          </dd>
-
-          <dt>
-            <label data-editor_label="1">PHP Code</label>
-          </dt>
-          <dd>
-            <textarea
-              id="php_editor"
-              rows="10"
-              cols="50"><?php
-        // Your PHP code goes here
-            </textarea>
-          </dd>
-          <dt></dt>
-          <dd>
-            <p>
-              <button type="button" id="execute" class="button button-primary" title="Execute PHP Snippet on the server in WordPress context">
-                Execute Snippet
-              </button>
-              <span>&nbsp;</span>
-              <button type="button" id="reset" class="button button-secondary" title="Reset the editor content to the original snippet content">
-                Reset Editor
-              </button>
-              <button type="button" id="save" class="button button-secondary" title="Save the current editor content back to the snippet catalog">
-                Save Snippet
-              </button>
-              <span>&nbsp;</span>
-              <button type="button" id="export" class="button button-secondary" title="Export the current snippet catalog to the javascript console">
-                Export catalog
-              </button>
-              <button type="button" id="import" class="button button-secondary" title="Import snippet catalog">
-                Import catalog
-              </button>
-            </p>
-          </dd>
-          <dt>
-            <label for="output">Output:</label>
-          </dt>
-          <dd>
-            <textarea id="output" rows="10" cols="50" readonly></textarea>
-          </dd>
-        </dl>
-      </form>
-
-
-      <dialog id="import_dialog" class="wp-dialog" closedby="any">
-        <h3>Import Catalog</h3>
-        <p>Use the textarea below to paste a snippet catalog in JSON format.</p>
-        <textarea
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-          is="syntax-highlight"
-          language="json"
-        ></textarea>
-        <p>
-          <button type="button" id="import_catalog" class="button button-primary" title="Import snippet catalog into browser memory">
-            Import catalog
-          </button>
-        </p>
-        <p>
-          <em>(Click on backdrop to close dialog.)</em>
-        </p>
-      </dialog>
-
-      <dialog id="export_dialog" class="wp-dialog" closedby="any">
-        <h3>Export Catalog</h3>
-        <p>You can copy the snippet catalog from textarea below to the clipboard</p>
-        <textarea
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-          is="syntax-highlight"
-          language="json"
-        ></textarea>
-        <!-- <syntax-highlight language="js"></syntax-highlight> -->
-        <p>
-          <em>(Click on backdrop to close dialog.)</em>
-        </p>
-      </dialog>
-    </div>
-    HTML
-      , [
-        '{page_title}' => esc_html(MENU_PAGE_TITLE),
-      ])
-    */
 }
 
 // ui sugar - not really needed
-
 \add_action(
   hook_name: 'admin_bar_menu',
   callback: function (WP_Admin_Bar $wp_admin_bar) {

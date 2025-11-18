@@ -25,6 +25,34 @@ function getCellOutputElement(cellElement) {
   return cellElement.querySelector('.notebook-cell-output');
 }
 
+async function executeCell(php_code) {
+  const body = new FormData();
+  body.append('action', wp['ionos-wpdev-caddy-notebooks'].ajax_action);
+  body.append('php_code', php_code);
+  body.append('_ajax_nonce', wp.apiFetch.nonceMiddleware.nonce);
+
+  const response = await wp.apiFetch({
+    url: window.ajaxurl,
+    method: 'POST',
+    body,
+    parse: false,
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP Error Status: ${response.status}`);
+  }
+
+  let data = await response.text();
+
+  try {
+    data = JSON.parse(data);
+  } catch {
+    throw new Error(`Failed to parse response as JSON: \n\n${data}`);
+  }
+
+  return data;
+}
+
 wp.domReady(() => {
   const settings = wp['ionos-wpdev-caddy-notebooks'];
 
@@ -54,6 +82,25 @@ wp.domReady(() => {
     eOutputLabel.setAttribute('for', cell.name + '-output');
     const eOutput = getCellOutputElement(e);
     eOutput.id = cell.name + '-output';
+
+    const eExecute = e.querySelector('.notebook-cell-execute');
+    eExecute.onclick = async () => {
+      eExecute.disabled = true;
+      eOutput.classList.remove('error', 'success');
+      eOutput.classList.add('progress');
+      eOutput.value = 'Executing PHP Code ...';
+      try {
+        const response = await executeCell(textareaEditorMapping.get(eTextarea).codemirror.getValue());
+        eOutput.value = response.data;
+        eOutput.classList.replace('progress', response.success ? 'success' : 'error');
+      } catch (error) {
+        console.error('API Fetch Failure:', error);
+        eOutput.value = error.message;
+        eOutput.classList.replace('progress', 'error');
+      } finally {
+        eExecute.disabled = false;
+      }
+    };
 
     app_root.appendChild(e);
 
