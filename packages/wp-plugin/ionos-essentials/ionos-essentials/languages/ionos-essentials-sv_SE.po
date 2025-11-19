@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: sv\n"
-"Language-Team: Swedish\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-09-23 09:19\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: 75e86f746860bcef4fdd142a24cf2467\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: Swedish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-09-23 09:19\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-File: LOC-8516_ionos-essentials-sv_SE (4).po\n"
 "X-Crowdin-File-ID: 534\n"
 "X-Crowdin-Language: sv\n"
@@ -588,7 +588,7 @@ msgid "Your %s plugin team"
 msgstr "Ditt %s plugin-team"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "More information"
 msgstr "Mer information"
 
@@ -638,31 +638,34 @@ msgstr "Sårbarhetsskanning"
 msgid "issue found"
 msgstr "problem upptäckta"
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Checking for vulnerabilities..."
 msgstr "Söker efter sårbarheter…"
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Warnings found. Installation is not recommended."
 msgstr "Varningar hittades. Installation rekommenderas inte."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "Kritiska sårbarheter hittades! Installation är inte möjlig."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "Inga sårbarheter hittades. Du kan installera detta tema utan risk."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "Inga sårbarheter hittades. Du kan installera detta tillägg utan risk."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "The vulnerability scan has found issues"
 msgstr "Sårbarhetsskanningen har hittat problem"
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "Activation is not recommended"
 msgstr "Aktivering rekommenderas inte"
 

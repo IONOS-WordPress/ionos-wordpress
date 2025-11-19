@@ -233,10 +233,6 @@ add_filter('admin_body_class', function ($classes) {
 );
 
 \add_action('admin_enqueue_scripts', function ($hook) {
-  if (ADMIN_PAGE_HOOK !== $hook) {
-    return;
-  }
-
   $issue_counts = \get_transient('ionos_site_health_issue_count');
   if (is_string($issue_counts)) {
     $decoded = json_decode($issue_counts, true);

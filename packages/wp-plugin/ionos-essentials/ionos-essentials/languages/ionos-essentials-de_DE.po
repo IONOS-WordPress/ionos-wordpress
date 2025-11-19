@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Transfer-Encoding: 8bit\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: de\n"
-"Language-Team: none\n"
-"Last-Translator: Automatically generated\n"
-"MIME-Version: 1.0\n"
-"PO-Revision-Date: 2025-04-09 14:29+0200\n"
-"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-wordpress/essentials 0.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T08:22:27+00:00\n"
+"PO-Revision-Date: 2025-04-09 14:29+0200\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
@@ -583,7 +583,7 @@ msgid "Your %s plugin team"
 msgstr "Ihr %s-Plugin Team"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "More information"
 msgstr "Weitere Informationen"
 
@@ -629,31 +629,34 @@ msgstr "Schwachstellen-Scan"
 msgid "issue found"
 msgstr "Problem gefunden"
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Checking for vulnerabilities..."
 msgstr "Auf der Suche nach Schwachstellen..."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Warnings found. Installation is not recommended."
 msgstr "Warnungen gefunden. Die Installation wird nicht empfohlen."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "Kritische Schwachstellen gefunden! Die Installation ist nicht möglich."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "Keine Schwachstellen gefunden. Sie können dieses Theme bedenkenlos installieren."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "Keine Schwachstellen gefunden. Sie können dieses Plugin bedenkenlos installieren."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "The vulnerability scan has found issues"
 msgstr "Der Schwachstellen-Scan hat Probleme gefunden."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "Activation is not recommended"
 msgstr "Die Aktivierung wird nicht empfohlen."
 
