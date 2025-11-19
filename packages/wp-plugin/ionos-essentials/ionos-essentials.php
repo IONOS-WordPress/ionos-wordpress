@@ -18,6 +18,8 @@
 
 namespace ionos\essentials;
 
+use ionos\essentials\wpscan\WPScan;
+
 const PLUGIN_FILE = __FILE__;
 const PLUGIN_DIR  = __DIR__;
 
@@ -37,26 +39,9 @@ defined('ABSPATH') || exit();
   }
 );
 
-\add_action('admin_enqueue_scripts', function (): void {
-
-  // enqueue dashboard scripts
-  $dashboard_assets = require_once __DIR__ . '/ionos-essentials/build/dashboard/index.asset.php';
-  \wp_enqueue_script(
-    'ionos-essentials-dashboard',
-    \plugins_url('/ionos-essentials/build/dashboard/index.js', __FILE__),
-    $dashboard_assets['dependencies'],
-    $dashboard_assets['version'],
-    true,
-  );
-
-  \wp_set_script_translations(
-    'ionos-essentials-dashboard',
-    'ionos-essentials',
-    PLUGIN_DIR . '/ionos-essentials/languages'
-  );
-
+\add_action('admin_enqueue_scripts', function ($hook): void {
   // enqueue maintenance mode scripts
-  $maintenance_mode_assets = include_once __DIR__ . '/ionos-essentials/build/maintenance_mode/index.asset.php';
+  $maintenance_mode_assets = require_once __DIR__ . '/ionos-essentials/build/maintenance_mode/index.asset.php';
   \wp_enqueue_script(
     'ionos-essentials-maintenance-mode',
     plugins_url('/ionos-essentials/build/maintenance_mode/index.js', __FILE__),
@@ -76,19 +61,44 @@ defined('ABSPATH') || exit();
   );
 
   // enqueue wpscan scripts
-  $wpscan_assets = include_once __DIR__ . '/ionos-essentials/build/wpscan/index.asset.php';
+  $token   = \get_option('ionos_security_wpscan_token', '');
+  $scripts = empty($token) ? [] : ['plugin-install', 'theme-install', 'theme-overview'];
+  foreach ($scripts as $name) {
+
+    $asset_path = __DIR__ . "/ionos-essentials/build/wpscan/{$name}-index.asset.php";
+    $script_url = \plugins_url("/ionos-essentials/build/wpscan/{$name}-index.js", __FILE__);
+
+    if (! file_exists($asset_path)) {
+      continue;
+    }
+
+    $asset = require_once $asset_path;
+
+    \wp_register_script("ionos-essentials-{$name}", $script_url, $asset['dependencies'], $asset['version'], true);
+
+    \wp_set_script_translations(
+      "ionos-essentials-{$name}",
+      'ionos-essentials',
+      PLUGIN_DIR . '/ionos-essentials/languages'
+    );
+  }
+
+  // enqueue dashboard scripts
+  if (ADMIN_PAGE_HOOK !== $hook) {
+    return;
+  }
+
+  $dashboard_assets = require_once __DIR__ . '/ionos-essentials/build/dashboard/index.asset.php';
   \wp_enqueue_script(
-    'ionos-essentials-wpscan',
-    \plugins_url('/ionos-essentials/build/wpscan/index.js', __FILE__),
-    $wpscan_assets['dependencies'],
-    $wpscan_assets['version'],
-    [
-      'in_footer' => true,
-    ],
+    'ionos-essentials-dashboard',
+    \plugins_url('/ionos-essentials/build/dashboard/index.js', __FILE__),
+    $dashboard_assets['dependencies'],
+    $dashboard_assets['version'],
+    true,
   );
 
   \wp_set_script_translations(
-    'ionos-essentials-wpscan',
+    'ionos-essentials-dashboard',
     'ionos-essentials',
     PLUGIN_DIR . '/ionos-essentials/languages'
   );
@@ -105,7 +115,7 @@ if (($_GET['ionos-highlight'] ?? '') === 'chatbot') {
       return;
     }
 
-    $assets = require $assets_file;
+    $assets = require_once $assets_file;
 
     \wp_enqueue_script(
       'ionos-essentials-ai-agent',

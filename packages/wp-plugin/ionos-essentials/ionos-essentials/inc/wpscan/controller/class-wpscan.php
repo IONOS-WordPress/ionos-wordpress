@@ -88,12 +88,14 @@ class WPScan
   public function add_issue_on_theme_install(): void
   {
     $screen = get_current_screen();
-    if (! $screen || 'theme-install' !== $screen->id) {
+    if (! $screen || ('theme-install' !== $screen->id)) {
       return;
     }
 
+    \wp_enqueue_script('ionos-essentials-theme-install');
+
     \wp_localize_script(
-      'ionos-essentials-wpscan',
+      'ionos-essentials-theme-install',
       'ionosWPScanThemes',
       [
         'issues'  => $this->get_issues(),
@@ -105,14 +107,15 @@ class WPScan
 
   public function add_issue_on_plugin_install(): void
   {
-
     $screen = get_current_screen();
-    if (! $screen || 'plugin-install' !== $screen->id) {
+    if (! $screen || ('plugin-install' !== $screen->id)) {
       return;
     }
 
+    \wp_enqueue_script('ionos-essentials-plugin-install');
+
     \wp_localize_script(
-      'ionos-essentials-wpscan',
+      'ionos-essentials-plugin-install',
       'ionosWPScanPlugins',
       [
         'issues'  => $this->get_issues(),
@@ -125,20 +128,20 @@ class WPScan
   public function add_theme_issues_notice(): void
   {
     $screen = get_current_screen();
-    if (! $screen || 'themes' !== $screen->id) {
+    if (! $screen || ('themes' !== $screen->id)) {
       return;
     }
-    $isses  = $this->get_issues();
-    $issues = array_filter($isses, function ($issue) {
-      return 'theme' === $issue['type'];
-    });
+
+    $issues = array_filter($this->get_issues(), fn ($issue) => 'theme' === $issue['type']);
 
     if (0 === count($issues)) {
       return;
     }
 
+    \wp_enqueue_script('ionos-essentials-theme-overview');
+
     \wp_localize_script(
-      'ionos-essentials-wpscan',
+      'ionos-essentials-theme-overview',
       'ionosWPScanThemes',
       [
         'slugs' => array_column($issues, 'slug'),
