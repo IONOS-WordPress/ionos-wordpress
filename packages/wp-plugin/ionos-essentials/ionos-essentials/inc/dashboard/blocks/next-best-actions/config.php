@@ -225,7 +225,6 @@ if ($contact_post_id) {
   );
 }
 
-
 if ('extendable' === get_stylesheet() && \get_option('extendify_onboarding_completed')) {
   NBA::register(
     id: 'extendify-agent',

@@ -69,23 +69,17 @@ defined('ABSPATH') || exit();
     $script_url = \plugins_url("/ionos-essentials/build/wpscan/{$name}-index.js", __FILE__);
 
     if (! file_exists($asset_path)) {
-        continue;
+      continue;
     }
 
     $asset = require_once $asset_path;
 
-    \wp_register_script(
-        "ionos-essentials-{$name}",
-        $script_url,
-        $asset['dependencies'],
-        $asset['version'],
-        true
-    );
+    \wp_register_script("ionos-essentials-{$name}", $script_url, $asset['dependencies'], $asset['version'], true);
 
     \wp_set_script_translations(
-        "ionos-essentials-{$name}",
-        'ionos-essentials',
-        PLUGIN_DIR . '/ionos-essentials/languages'
+      "ionos-essentials-{$name}",
+      'ionos-essentials',
+      PLUGIN_DIR . '/ionos-essentials/languages'
     );
   }
 
@@ -93,7 +87,7 @@ defined('ABSPATH') || exit();
   if (ADMIN_PAGE_HOOK !== $hook) {
     return;
   }
-  
+
   $dashboard_assets = require_once __DIR__ . '/ionos-essentials/build/dashboard/index.asset.php';
   \wp_enqueue_script(
     'ionos-essentials-dashboard',
