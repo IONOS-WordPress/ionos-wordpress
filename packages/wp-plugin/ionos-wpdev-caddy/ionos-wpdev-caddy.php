@@ -261,21 +261,6 @@ function _render_admin_page(): void
         'class' => MENU_PAGE_SLUG,
       ],
     ]);
-
-    /*
-    $wp_admin_bar->add_node([
-      'id'    => 'unterseite-1',
-      'title' => 'IONOS Stretch Support',
-      'href'  => \admin_url(MENU_PAGE_URI),
-      'parent'=> 'ionos-stretch-support'
-    ]);
-    $wp_admin_bar->add_node([
-      'id'    => 'unterseite-2',
-      'title' => 'Link 2',
-      'href'  => 'https://wikipedia.org',
-      'parent'=> 'ionos-stretch-support'
-    ]);
-    */
   },
   priority : 999,
 );
@@ -293,5 +278,4 @@ function _render_admin_page(): void
   accepted_args: 2,
 );
 
-// // hide menu page from admin menu
-// \add_action( 'admin_head', fn() => \remove_submenu_page( 'admin.php', MENU_PAGE_SLUG ));
+require_once __DIR__ . '/ionos-wpdev-caddy/notebooks/index.php';
