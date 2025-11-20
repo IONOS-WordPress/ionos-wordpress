@@ -214,6 +214,42 @@ render_section([
                     </span>
                 </div>
             </div>
+          </section>
+
+           <section class="sheet__section">
+            <div class="grid">
+                <div class="grid-col grid-col--8 grid-col--small-12">
+                    <h2 class="headline headline--sub" style="display: flex; align-items: center;">
+                      <?php
+                       \esc_html_e(
+    'Allow AI to control your WordPress via MCP',
+    'ionos-essentials')
+?>             <p class="paragraph" style="margin: 0 0 0 10px;">
+  <span class="badge badge--neutral-solid"><?php \esc_html_e('For developers', 'ionos-essentials'); ?></span>
+</p>
+                </h2>
+
+                    <p class="paragraph paragraph--neutral">
+                        <?php  \esc_html_e(
+    'Grant external LLMs like Gemini & Claude secure access to your content, with the WordPress-MCP plugin.',
+    'ionos-essentials');
+?>
+                    </p>
+                </div>
+                <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
+                    <span class="input-switch">
+                        <input id="ionos_essentialsmcp" type="checkbox" data-description="<?php \esc_attr_e( 'Allow AI to control your WordPress via MCP', 'ionos-essentials'); ?>"
+
+                        >
+                        <label>
+                            <span class="input-switch__on"></span>
+                            <span class="input-switch__toggle"></span>
+                            <span class="input-switch__off"></span>
+                        </label>
+                    </span>
+                </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
