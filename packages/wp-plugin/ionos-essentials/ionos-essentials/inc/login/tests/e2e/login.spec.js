@@ -18,8 +18,8 @@ test.describe(
 
       await expect(page.locator('img[src*="ionos.svg"]')).toBeVisible();
 
-      // Make sure there are no console errors. This is to catch any issues with loading the logo.
-      await expect(errors).toEqual([]);
+      // .toHaveLength(0) is best practice according to playwright docs
+      await expect(errors).toHaveLength(0);
     });
   }
 );

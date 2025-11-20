@@ -13,6 +13,7 @@ test.describe('Switch page', () => {
 
     await expect(page.locator('a[href*="extendify-launch"]')).toBeVisible();
     await expect(page.getByRole('link', { name: 'Create manually' })).toBeVisible();
-    await expect(errors).toEqual([]);
+    // .toHaveLength(0) is best practice according to playwright docs
+    await expect(errors).toHaveLength(0);
   });
 });
