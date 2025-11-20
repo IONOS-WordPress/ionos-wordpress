@@ -44,11 +44,11 @@ The following features (user faced and internal) are implemented:
 
 - **[#dashboard]** Banner
 
-  the banner shows up, has the correct tenant logo and buttons
+  the banner shows up, has the correct tenant title
 
   - implemented in
 
-    - **❌ tests missing !**
+    - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/e2e/welcome.spec.js
 
 - **[#dashboard]** My-account
 
