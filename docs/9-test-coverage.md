@@ -179,7 +179,7 @@ The following features (user faced and internal) are implemented:
 
   - implemented in
 
-    - **❌ tests missing !**
+    - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/security/tests/e2e/security.spec.js
 
 - **[#switchpage]** Provides a page wherepackages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/e2e/dashboard-no-errors.spec.js the user can decide whether to use AI for setup or not
 
