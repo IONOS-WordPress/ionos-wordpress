@@ -22,7 +22,7 @@ The following features (user faced and internal) are implemented:
 
   - implemented in
 
-    - **❌ tests missing !**
+    - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/e2e/dashboard-no-errors.spec.js
 
 - **[#dashboard]** click on tab changes tab
 
@@ -181,7 +181,7 @@ The following features (user faced and internal) are implemented:
 
     - **❌ tests missing !**
 
-- **[#switchpage]** Provides a page where the user can decide whether to use AI for setup or not
+- **[#switchpage]** Provides a page wherepackages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/e2e/dashboard-no-errors.spec.js the user can decide whether to use AI for setup or not
 
   assert switch page to be the same as screenshot
 
