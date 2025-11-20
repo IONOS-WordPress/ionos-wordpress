@@ -18,7 +18,7 @@ The following features (user faced and internal) are implemented:
 
     - **❌ tests missing !**
 
-- **[#dashboard]** Dasboard is shown, no javascript error occurs
+- **[#dashboard]** Dashboard is shown, no javascript error occurs
 
   - implemented in
 
