@@ -16,7 +16,7 @@ The following features (user faced and internal) are implemented:
 
   - implemented in
 
-    - **❌ tests missing !**
+    - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/e2e/dashboard-localization.spec.js
 
 - **[#dashboard]** Dashboard is shown, no javascript error occurs
 
