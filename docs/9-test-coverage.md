@@ -56,7 +56,7 @@ The following features (user faced and internal) are implemented:
 
   - implemented in
 
-    - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/e2e/dashboard.spec.js
+    - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/e2e/dashboard-myaccount.spec.js
 
 - **[#dashboard]** My-account
 
