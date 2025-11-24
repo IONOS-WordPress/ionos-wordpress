@@ -15,6 +15,13 @@ define('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE', $mcp_settings['enabled'] ?? false);
       'methods'             => 'POST',
       'permission_callback' => fn () => 0 !== \get_current_user_id(),
       'callback'            => function ($request) {
+
+        if (!wp_verify_nonce($request->get_header('X-WP-Nonce'), 'wp_rest')) {
+          return new \WP_Error('rest_forbidden', 'Invalid nonce.', [
+            'status' => 403,
+          ]);
+        }
+
         $params   = $request->get_json_params();
         $activate = $params['activate'] ?? 'false';
 
