@@ -262,9 +262,10 @@ render_section([
 
                   <div class="code snippet hidden">
                     <p class="paragraph paragraph--bold">
-                      <?php \esc_html_e('Enter the following JSON into your preferred LLM’s settings file', 'ionos-essentials'); ?>
+                      <?php \esc_html_e('Enter the following JSON into your preferred AI Clients settings file', 'ionos-essentials'); ?>
                     </p>
                     <p class="paragraph paragraph--minor">
+                      <i class="exos-icon exos-icon-warningmessage-32"></i>
                       <?php \esc_html_e('Please take note of this as this is not stored and can not be viewed again.', 'ionos-essentials'); ?>
                     </p>
                     <pre class="code mcp"><button class="copy-icon" title="<?php \esc_attr_e(
