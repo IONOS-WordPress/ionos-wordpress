@@ -234,6 +234,11 @@ document.addEventListener('DOMContentLoaded', function () {
       dashboard.querySelector('#learn-more-overlay').classList.add('static-overlay__container--active');
     });
 
+    dashboard.querySelector('#restart-ai-sitebuilder')?.addEventListener('click', function () {
+      dashboard.querySelector('.static-overlay__blocker').classList.add('static-overlay__blocker--active');
+      dashboard.querySelector('#restart-ai-sitebuilder-overlay').classList.add('static-overlay__container--active');
+    });
+
     dashboard.querySelectorAll('[data-slug]').forEach((element) => {
       element.addEventListener('click', function () {
         const overlay = dashboard.querySelector('#plugin-install-overlay');

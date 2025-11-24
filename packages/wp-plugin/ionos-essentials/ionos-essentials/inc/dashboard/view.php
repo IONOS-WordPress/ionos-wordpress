@@ -161,6 +161,84 @@ blocks\popup\render_callback();
   </div>
 </div>
 
+
+<div class="static-overlay__container dialog-closer" id="restart-ai-sitebuilder-overlay">
+  <div class="sheet static-overlay--closable static-overlay__content sheet--micro-effect" data-static-overlay-id="demo-overlay1" style="margin-top: inherit;">
+    <section class="sheet__section">
+      <div style="display: flex; justify-content: right;">
+        <i class="exos-icon exos-icon-deleteinput-16 dialog-closer"></i>
+      </div>
+      <h3 class="headline headline--sub"><?php \esc_html_e('Restart AI Sitebuilder', 'ionos-essentials'); ?></h3>
+      <p class="paragraph"><?php \esc_html_e('This will permanently reset all content and data created by the AI Sitebuilder on this WordPress website.', 'ionos-essentials') ?></p>
+      <p class="paragraph"><?php \esc_html_e('Pages initially created without the use of the AI Sitebuilder will be kept.', 'ionos-essentials') ?></p>
+
+      <?php
+      include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+      // Check theme and plugins
+      $theme     = ( get_stylesheet() === 'extendable' );
+      $extendify = is_plugin_active( 'extendify/extendify.php' );
+
+      // Detect ANY plugin that starts with "01-ext-"
+      $match = array_filter(
+          array_keys( \get_plugins() ),
+          fn( $k ) => str_starts_with( $k, '01-ext-' )
+      );
+
+      $ext01_plugin_path = reset( $match );
+      $ext01 = $ext01_plugin_path && is_plugin_active( $ext01_plugin_path );
+
+      // Build array of missing items
+      $missing_items = [];
+
+      if ( ! $theme ) {
+          $missing_items[] = [
+              'title' => __('The Extendable theme is not installed or set as the active theme. You need to do this before you can continue.', 'ionos-essentials'),
+              'url'   => \admin_url('themes.php'),
+              'link_text' => __('Manage themes', 'ionos-essentials'),
+          ];
+      }
+
+      if ( ! $extendify ) {
+          $missing_items[] = [
+              'title' => __('The Extendify plugin is not installed or activated. You need to do this before you can continue.', 'ionos-essentials'),
+              'url'   => \admin_url('plugins.php'),
+              'link_text' => __('Manage plugins', 'ionos-essentials'),
+          ];
+      }
+
+      if ( ! $ext01 ) {
+          $missing_items[] = [
+              'title' => __('The Site-Assistant plugin is not installed or activated. You need to do this before you can continue.', 'ionos-essentials'),
+              'url'   => \admin_url('plugins.php'),
+              'link_text' => __('Manage plugins', 'ionos-essentials'),
+          ];
+      }
+
+      // Display output
+      if ( $missing_items ) : ?>
+      <ul class="bullet-list">
+        <?php foreach ( $missing_items as $item ) : ?>
+            <li>
+                <p><strong><?php echo \esc_html( $item['title'] ); ?></strong></p>
+                <a href="<?php echo \esc_url( $item['url'] ); ?>" class="link">
+                    <?php echo \esc_html( $item['link_text'] ); ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+          </ul>
+      <?php else : ?>
+        <div>
+          <a href="<?php echo \admin_url('admin.php?page=extendify-launch'); ?>" class="button button--primary dialog-closer" title="<?php \esc_html_e('Restart AI Sitebuilder', 'ionos-essentials'); ?>"><?php \esc_html_e('Restart AI Sitebuilder', 'ionos-essentials'); ?></a>
+          <button class="button button--secondary dialog-closer" title="<?php \esc_html_e('Cancel', 'ionos-essentials'); ?>"><?php \esc_html_e('Cancel', 'ionos-essentials'); ?></button>
+        </div>
+      <?php endif; ?>
+    </section>
+  </div>
+</div>
+
+
+
 <div class="static-overlay__container dialog-closer" id="plugin-install-overlay">
   Showing update information
 </div>
