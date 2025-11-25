@@ -71,7 +71,7 @@ define('IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD', 'Essentials MCP');
                 'env' => [
                   'WP_API_URL' => get_site_url(),
                   'WP_API_USERNAME' => wp_get_current_user()->user_login,
-                  'WP_API_PASSWORD' => get_application_password(),
+                  'WP_API_PASSWORD' => get_new_application_password(),
                ],
             ],
           ],
@@ -80,7 +80,6 @@ define('IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD', 'Essentials MCP');
         return rest_ensure_response(new \WP_REST_Response([
           'active'   => '1',
           'snippet'  => json_encode($snippet, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
-
         ], 200));
       },
     ]
@@ -89,13 +88,11 @@ define('IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD', 'Essentials MCP');
 
 
 function activate_mcp_server(): bool {
-
   if( defined('WORDPRESS_MCP_PATH') ){
     return true;
   }
 
   if(!file_exists(WP_PLUGIN_DIR . '/wordpress-mcp/wordpress-mcp.php')){
-
     $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
     $result   = $upgrader->install('https://github.com/Automattic/wordpress-mcp/releases/download/v0.2.5/wordpress-mcp.zip');
     if( \is_wp_error($result) ){
@@ -104,25 +101,18 @@ function activate_mcp_server(): bool {
     }
   }
 
-
   if (!is_plugin_active('wordpress-mcp/wordpress-mcp.php')) {
     \activate_plugin('wordpress-mcp/wordpress-mcp.php');
-    return true;
   }
 
   return true;
 }
 
-function get_application_password(): string {
+function get_new_application_password(): string {
   $user = wp_get_current_user();
   $applications = \WP_Application_Passwords::get_user_application_passwords($user->ID);
 
-  foreach ($applications as $app) {
-    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD) {
-      \WP_Application_Passwords::delete_application_password($user->ID, $app['uuid']);
-      break;
-    }
-  }
+  revoke_application_password();
 
   $new_app = \WP_Application_Passwords::create_new_application_password(
     $user->ID,
@@ -134,12 +124,11 @@ function get_application_password(): string {
     return '';
   }
 
-
   return \WP_Application_Passwords::chunk_password( $new_app[0] );
 }
 
 function user_has_application_password(): bool {
-   $user = wp_get_current_user();
+  $user = wp_get_current_user();
   $applications = \WP_Application_Passwords::get_user_application_passwords($user->ID);
 
   foreach ($applications as $app) {
