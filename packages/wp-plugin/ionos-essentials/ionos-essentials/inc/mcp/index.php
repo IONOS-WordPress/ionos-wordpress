@@ -4,8 +4,12 @@ namespace ionos\essentials\mcp;
 
 defined('ABSPATH') || exit();
 
-$mcp_settings = \get_option('wordpress_mcp_settings', []);
-define('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE', $mcp_settings['enabled'] ?? false);
+define('IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD', 'Essentials MCP');
+
+\add_action('init', function () {
+  $mcp_settings = \get_option('wordpress_mcp_settings', ['enabled' => false]);
+  define('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE', (defined('WORDPRESS_MCP_PATH') && $mcp_settings['enabled']));
+});
 
 \add_action('rest_api_init', function () {
   \register_rest_route(
@@ -23,10 +27,20 @@ define('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE', $mcp_settings['enabled'] ?? false);
         }
 
         $params   = $request->get_json_params();
-        $activate = $params['activate'] ?? 'false';
+        $activate = $params['activate'] ? true : false;
 
-        $mcp_settings            = \get_option('wordpress_mcp_settings', []);
-        $mcp_settings['enabled'] = $activate ? true : false;
+        if ($params['revokeAppPassword']) {
+          revoke_application_password();
+        }
+
+        $mcp_settings = \get_option('wordpress_mcp_settings', []);
+        $mcp_settings = [
+          'enabled' => $activate,
+          'enable_create_tools' => true,
+          'enable_update_tools' => true,
+          'enable_delete_tools' => true,
+        ];
+
         \update_option('wordpress_mcp_settings', $mcp_settings);
 
         if (false === $activate) {
@@ -35,19 +49,33 @@ define('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE', $mcp_settings['enabled'] ?? false);
           ], 200));
         }
 
+        if (! activate_mcp_server()) {
+          return rest_ensure_response(new \WP_REST_Response([
+            'active' => '0',
+            'error'  => 'MCP server plugin is not active.',
+          ], 500));
+        }
+
+
+        if(user_has_application_password()){
+           return rest_ensure_response(new \WP_REST_Response([
+            'active' => '1',
+          ], 200));
+        }
+
         $snippet = [
           'servers' => [
             'wordpress' => [
-              'type'    => 'http',
-              'url'     => rest_url('wp/v2/wpmcp/streamable'),
-              'headers' => [
-                'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3hreGtmdC1ranNvOX3x7nazugwvaJzghEvR8BBt10fc0GEU3040ghM',
-              ],
+              'command'    => 'npx',
+              'args'     => "['-y', '@automattic/mcp-wordpress-remote@latest'],",
+                'env' => [
+                  'WP_API_URL' => get_site_url(),
+                  'WP_API_USERNAME' => wp_get_current_user()->user_login,
+                  'WP_API_PASSWORD' => get_application_password(),
+               ],
             ],
           ],
         ];
-
-        sleep(3); // simulate processing time
 
         return rest_ensure_response(new \WP_REST_Response([
           'active'   => '1',
@@ -58,3 +86,79 @@ define('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE', $mcp_settings['enabled'] ?? false);
     ]
   );
 }, 1);
+
+
+function activate_mcp_server(): bool {
+
+  if( defined('WORDPRESS_MCP_PATH') ){
+    return true;
+  }
+
+  if(!file_exists(WP_PLUGIN_DIR . '/wordpress-mcp/wordpress-mcp.php')){
+
+    $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
+    $result   = $upgrader->install('https://github.com/Automattic/wordpress-mcp/releases/download/v0.2.5/wordpress-mcp.zip');
+    if( \is_wp_error($result) ){
+      error_log('Failed to install MCP server plugin: ' . $result->get_error_message());
+      return false;
+    }
+  }
+
+
+  if (!is_plugin_active('wordpress-mcp/wordpress-mcp.php')) {
+    \activate_plugin('wordpress-mcp/wordpress-mcp.php');
+    return true;
+  }
+
+  return true;
+}
+
+function get_application_password(): string {
+  $user = wp_get_current_user();
+  $applications = \WP_Application_Passwords::get_user_application_passwords($user->ID);
+
+  foreach ($applications as $app) {
+    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD) {
+      \WP_Application_Passwords::delete_application_password($user->ID, $app['uuid']);
+      break;
+    }
+  }
+
+  $new_app = \WP_Application_Passwords::create_new_application_password(
+    $user->ID,
+    ['name' => IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD]
+  );
+
+  if (is_wp_error($new_app)) {
+    error_log('Failed to create application password: ' . $new_app->get_error_message());
+    return '';
+  }
+
+
+  return \WP_Application_Passwords::chunk_password( $new_app[0] );
+}
+
+function user_has_application_password(): bool {
+   $user = wp_get_current_user();
+  $applications = \WP_Application_Passwords::get_user_application_passwords($user->ID);
+
+  foreach ($applications as $app) {
+    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function revoke_application_password(): void {
+  $user = wp_get_current_user();
+  $applications = \WP_Application_Passwords::get_user_application_passwords($user->ID);
+
+  foreach ($applications as $app) {
+    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD) {
+      \WP_Application_Passwords::delete_application_password($user->ID, $app['uuid']);
+      break;
+    }
+  }
+}

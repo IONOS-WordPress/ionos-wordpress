@@ -186,7 +186,10 @@ document.addEventListener('DOMContentLoaded', function () {
               'Content-Type': 'application/json',
               'X-WP-Nonce': wpData.nonce,
             },
-            body: JSON.stringify({ activate: dashboard.querySelector('#ionos-essentials-mcp').checked }),
+            body: JSON.stringify({
+              activate: dashboard.querySelector('#ionos-essentials-mcp').checked,
+              revokeAppPassword: button.dataset.revokeAppPassword ?? 0,
+            }),
           });
 
           loading_element.classList.add('hidden');
@@ -202,8 +205,13 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
           }
 
-          code_element.querySelector('code').innerText = data.snippet;
-          code_element.classList.remove('hidden');
+          if (data.snippet) {
+            code_element.querySelector('code').innerText = data.snippet;
+            code_element.classList.remove('hidden');
+          } else {
+            button_element.classList.remove('hidden');
+          }
+
           window.EXOS.snackbar.success(__('WordPress MCP enabled', 'ionos-essentials'));
         } catch {
           window.EXOS.snackbar.warning(__('An error occured while enabling WordPress MCP.', 'ionos-essentials'));
