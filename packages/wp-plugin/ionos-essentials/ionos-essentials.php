@@ -87,13 +87,12 @@ defined('ABSPATH') || exit();
   if (ADMIN_PAGE_HOOK !== $hook) {
     return;
   }
-$a = \wp_get_environment_type();
   $dashboard_assets = require_once __DIR__ . '/ionos-essentials/build/dashboard/index.asset.php';
   \wp_enqueue_script(
     'ionos-essentials-dashboard',
     \plugins_url('/ionos-essentials/build/dashboard/index.js', __FILE__),
     $dashboard_assets['dependencies'],
-    \wp_get_environment_type() === 'local' ? random_int(0, 1000000) : $dashboard_assets['version'],
+    $dashboard_assets['version'],
     true,
   );
 
