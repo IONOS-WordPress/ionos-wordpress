@@ -149,28 +149,28 @@ function get_settings_value($key)
                 'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
               ]);
 
-              if (! is_stretch()) {
-                render_section([
-                  'title'       => \esc_html__('Block XML-RPC access', 'ionos-essentials'),
-                  'id'          => IONOS_SECURITY_FEATURE_OPTION_XMLRPC,
-                  'description' => \esc_html__(
-                    'Block access to XML-RPC, for security purposes we recommend keeping this blocked if not in use.',
-                    'ionos-essentials'
-                  ),
-                  'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_XMLRPC) ? 'checked' : '',
-                ]);
-              }
+if (! is_stretch()) {
+  render_section([
+    'title'       => \esc_html__('Block XML-RPC access', 'ionos-essentials'),
+    'id'          => IONOS_SECURITY_FEATURE_OPTION_XMLRPC,
+    'description' => \esc_html__(
+      'Block access to XML-RPC, for security purposes we recommend keeping this blocked if not in use.',
+      'ionos-essentials'
+    ),
+    'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_XMLRPC) ? 'checked' : '',
+  ]);
+}
 
-              render_section([
-                'title'       => \esc_html__('Prohibit email login', 'ionos-essentials'),
-                'id'          => IONOS_SECURITY_FEATURE_OPTION_PEL,
-                'description' => \esc_html__(
-                  'Disable login with email addresses. This improves security by reducing the potential attack surface.',
-                  'ionos-essentials'
-                ),
-                'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_PEL) ? 'checked' : '',
-              ]);
-              ?>
+render_section([
+  'title'       => \esc_html__('Prohibit email login', 'ionos-essentials'),
+  'id'          => IONOS_SECURITY_FEATURE_OPTION_PEL,
+  'description' => \esc_html__(
+    'Disable login with email addresses. This improves security by reducing the potential attack surface.',
+    'ionos-essentials'
+  ),
+  'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_PEL) ? 'checked' : '',
+]);
+?>
 
           </div>
         </div>
@@ -182,21 +182,21 @@ function get_settings_value($key)
               <div class="grid-col grid-col--8 grid-col--small-12">
                 <h2 class="headline headline--sub">
                   <?php
-                    printf(
-                      // translators: %s is placeholder for the tenant name
-                      \esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'),
-                      Tenant::get_label()
-                    );
-                  ?>
+      printf(
+        // translators: %s is placeholder for the tenant name
+        \esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'),
+        Tenant::get_label()
+      );
+?>
                 </h2>
                 <p class="paragraph paragraph--neutral">
                     <?php
-                      // translators: %s is placeholder for the tenant name
-                      printf(\esc_html__(
-                        'Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience.',
-                        'ionos-essentials',
-                      ), Tenant::get_label());
-                    ?>
+    // translators: %s is placeholder for the tenant name
+    printf(\esc_html__(
+      'Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience.',
+      'ionos-essentials',
+    ), Tenant::get_label());
+?>
                 </p>
               </div>
               <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
@@ -215,38 +215,40 @@ function get_settings_value($key)
               </div>
             </div>
           </section>
-          <?php include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-      
-          $plugin = is_plugin_active( '01-ext-ion8dhas7/01-ext-ion8dhas7.php' ); 
+          <?php include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
-          $match = array_filter( array_keys( get_plugins() ), fn($k) =>
-              str_starts_with($k, '01-ext-')
-          );
+$plugin = is_plugin_active('01-ext-ion8dhas7/01-ext-ion8dhas7.php');
 
-          $plugin = reset($match); // first match or false
+$match = array_filter(
+  array_keys(get_plugins()),
+  fn ($k) =>
+    str_starts_with($k, '01-ext-')
+);
 
-          // Check if Site-assistant plugin is installed
-          if ( $plugin ) { ?>
+$plugin = reset($match); // first match or false
+
+// Check if Site-assistant plugin is installed
+if ($plugin) { ?>
             <section class="sheet__section">
               <div class="grid">
                 <div class="grid-col grid-col--8 grid-col--small-12">
                   <h2 class="headline headline--sub">
                     <?php
-                      printf(
-                        // translators: %s is placeholder for the tenant name
-                        \esc_html__('Restart AI Sitebuilder', 'ionos-essentials'),
-                        Tenant::get_label()
-                      );
-                    ?>
+            printf(
+              // translators: %s is placeholder for the tenant name
+              \esc_html__('Restart AI Sitebuilder', 'ionos-essentials'),
+              Tenant::get_label()
+            );
+  ?>
                   </h2>
                   <p class="paragraph paragraph--neutral">
                       <?php
-                        // translators: %s is placeholder for the tenant name
-                        printf(\esc_html__(
-                          'Restart the AI Sitebuilder setup wizard to generate a new site from scratch. This will allow you to re-do the entire creation process.',
-                          'ionos-essentials',
-                        ), Tenant::get_label());
-                      ?>
+      // translators: %s is placeholder for the tenant name
+      printf(\esc_html__(
+        'Restart the AI Sitebuilder setup wizard to generate a new site from scratch. This will allow you to re-do the entire creation process.',
+        'ionos-essentials',
+      ), Tenant::get_label());
+  ?>
                       <span class="link" id="restart-ai-sitebuilder"><?php \esc_html_e('Restart AI Sitebuilder', 'ionos-essentials'); ?></span>
                   </p>
                 </div>
