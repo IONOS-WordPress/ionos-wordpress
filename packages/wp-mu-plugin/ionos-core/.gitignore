@@ -1,0 +1,7 @@
+# Ignore everything in custom-plugins
+ionos-core/custom-plugins/*
+
+# Except these directories
+!ionos-core/custom-plugins/pi/
+!ionos-core/custom-plugins/pa/
+!ionos-core/custom-plugins/po/

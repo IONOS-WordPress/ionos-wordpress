@@ -1,0 +1,14 @@
+{
+  "name": "@ionos-wordpress/ionos-core",
+  "version": "1.0.0",
+  "scripts": {
+    "prebuild": "./scripts/prebuild.sh"
+  },
+  "private": true,
+  "devDependencies": {
+    "@ionos-wordpress/rector-php": "workspace:*",
+    "@ionos-wordpress/ecs-php": "workspace:*",
+    "@ionos-wordpress/potrans": "workspace:*",
+    "@ionos-wordpress/dennis-i18n": "workspace:*"
+  }
+}
