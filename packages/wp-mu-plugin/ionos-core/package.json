@@ -2,7 +2,7 @@
   "name": "@ionos-wordpress/ionos-core",
   "version": "1.0.0",
   "scripts": {
-    "prebuild": "./scripts/prebuild.sh"
+    "postbuild": "./scripts/postbuild.sh"
   },
   "private": true,
   "devDependencies": {
