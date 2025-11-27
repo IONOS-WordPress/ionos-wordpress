@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.4.0
+
+### Minor Changes
+
+- 4f464f1: Adding Loop
+
 ## 1.3.3
 
 ### Patch Changes
