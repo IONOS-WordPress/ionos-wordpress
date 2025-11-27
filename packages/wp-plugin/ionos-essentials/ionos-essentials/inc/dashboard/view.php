@@ -197,7 +197,7 @@ $missing_items = [];
 if (! $theme) {
   $missing_items[] = [
     'title'     => __('The Extendable theme is not installed or set as the active theme. You need to do this before you can continue.', 'ionos-essentials'),
-    'url'       => \admin_url('themes.php?theme=extendable'),
+    'url'       => \admin_url('theme-install.php?theme=extendable'),
     'link_text' => __('Manage themes', 'ionos-essentials'),
   ];
 }
@@ -205,14 +205,14 @@ if (! $theme) {
 if (! $extendify) {
   $missing_items[] = [
     'title'     => __('The Extendify plugin is not installed or activated. You need to do this before you can continue.', 'ionos-essentials'),
-    'url'       => \admin_url('plugins.php?s=extendify&plugin_status=inactive'),
+    'url'       => \admin_url('plugin-install.php?s=extendify&tab=search&type=term'),
     'link_text' => __('Manage plugins', 'ionos-essentials'),
   ];
 }
 
 if (! $ext01) {
   $missing_items[] = [
-    'title'     => __('The Site-Assistant plugin is not installed or activated. You need to do this before you can continue.', 'ionos-essentials'),
+    'title'     => __('The Site-Assistant plugin is not activated. You need to do this before you can continue.', 'ionos-essentials'),
     'url'       => \admin_url('plugins.php?s=site%20assistant&plugin_status=inactive'),
     'link_text' => __('Manage plugins', 'ionos-essentials'),
   ];
