@@ -1014,3 +1014,51 @@ msgstr "Insert the necessary data for your company and your industry (or industr
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Edit now"
 msgstr "Edit now"
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Allow AI to control your WordPress via MCP"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "For developers"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Grant external LLMs like Gemini & Claude secure access to your content, with the WordPress-MCP plugin."
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Installing MCP capabilities"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Enter the following JSON into your preferred AI Clients settings file"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Please take note of this as this is not stored and can not be viewed again."
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Copy to clipboard"
+msgstr ""
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "An error occured while enabling WordPress MCP."
+msgstr ""
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "WordPress MCP disabled"
+msgstr ""
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "WordPress MCP enabled"
+msgstr ""
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "Copied to clipboard"
+msgstr ""
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "Failed to copy to clipboard"
+msgstr ""

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-19T12:53:24+00:00\n"
+"POT-Creation-Date: 2025-11-27T14:13:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ionos-essentials\n"
@@ -627,6 +627,34 @@ msgstr ""
 msgid "Please wait a moment while we are installing Jetpack Backup for you."
 msgstr ""
 
+#: ionos-essentials/inc/mcp/view.php
+msgid "Allow AI to control your WordPress via MCP"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "For developers"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Grant external LLMs like Gemini & Claude secure access to your content, with the WordPress-MCP plugin."
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Installing MCP capabilities"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Enter the following JSON into your preferred AI Clients settings file"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Please take note of this as this is not stored and can not be viewed again."
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Copy to clipboard"
+msgstr ""
+
 #: ionos-essentials/inc/security/credentials-checking.php
 msgid "The entered password has already been leaked. Please choose another one."
 msgstr ""
@@ -954,6 +982,26 @@ msgstr ""
 
 #: ionos-essentials/build/dashboard/index.js
 msgid "Installing..."
+msgstr ""
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "An error occured while enabling WordPress MCP."
+msgstr ""
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "WordPress MCP disabled"
+msgstr ""
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "WordPress MCP enabled"
+msgstr ""
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "Copied to clipboard"
+msgstr ""
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "Failed to copy to clipboard"
 msgstr ""
 
 #: ionos-essentials/build/dashboard/index.js
