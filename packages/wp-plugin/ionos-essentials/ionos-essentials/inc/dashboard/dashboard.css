@@ -166,6 +166,26 @@ main{
   }
 }
 
+.ionos-site-health-overview__info-item{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .headline {
+    margin-bottom: 0;
+  }
+}
+
+.ionos-site-health-overview {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+
+  .headline {
+    word-break: break-all;
+  }
+}
+
 .ionos_vulnerability{
   container-type: inline-size !important;
   container: ionos_vulnerability;
@@ -415,16 +435,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   /* height: 152px; */
 }
 
-.ionos-site-health-overview {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-
-  .headline {
-    word-break: break-all;
-  }
-}
-
 .ionos-site-health-overview__iframe {
   border: 1px solid #bcc8d4;
   border-radius: 8px;
@@ -448,16 +458,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     gap: 20px;
 }
 
-.ionos-site-health-overview__info-item{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-
-  .headline {
-    margin-bottom: 0;
-  }
-}
-
 .ionos-site-health-overview__info-homeurl {
   display: flex;
   gap: 10px;
@@ -478,6 +478,13 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   align-items: flex-start;
   padding-top: 2px;
   color: #001B41;
+  padding: 4px 8px;
+  border-radius: 24px;
+
+  &:hover{
+    background-color: var(--ghost-button-background-color,  #dbedf8);
+    color: var(--ghost-button-text-color, #1474c4);
+  }
 }
 
 #site-health-status-message{
@@ -662,5 +669,29 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
 .panel__item--expanded.always-expanded:hover {
   h3{
     color: inherit;
+  }
+}
+
+pre.mcp {
+  background: #091E39;
+  border-radius: 8px;
+  padding: 16px;
+  overflow: hidden;
+  position: relative;
+
+  code {
+    color: #2AE979;
+    font-family: "courier new";
+    white-space: pre;
+
+  }
+
+  .copy-icon{
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
   }
 }

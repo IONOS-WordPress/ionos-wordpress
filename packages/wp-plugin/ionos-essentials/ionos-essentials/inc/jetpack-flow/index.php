@@ -85,7 +85,21 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
   }
 
   if (\is_plugin_active(JETPACK_PLUGIN_FILE)) {
-    \wp_redirect(add_query_arg('jetpack-partner-coupon', $_GET['coupon'], \admin_url()));
+    if (str_contains(
+      $_SERVER['REQUEST_URI'],
+      'page=ionos-assistant&setup_action=partner&usecase=jetpack-backup&coupon='
+    )) {
+      $redirect_url = add_query_arg(
+        [
+          'page'                 => 'jetpack',
+          'showCouponRedemption' => '1',
+        ],
+        \admin_url('admin-php')
+      );
+      \wp_redirect($redirect_url);
+    } else {
+      \wp_redirect(add_query_arg('jetpack-partner-coupon', $_GET['coupon'], \admin_url('admin.php')));
+    }
     exit;
   }
 

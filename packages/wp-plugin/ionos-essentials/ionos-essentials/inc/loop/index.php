@@ -53,6 +53,41 @@ function _register_at_datacollector(): bool
   return ! \is_wp_error($response);
 }
 
+function log_loop_event(string $name, array $payload = []): void
+{
+  $events = \get_option(IONOS_LOOP_EVENTS_OPTION, []);
+
+  if (! is_array($events)) {
+    $events = [];
+  }
+
+  $events[] = [
+    'name'      => $name,
+    'payload'   => $payload,
+    'timestamp' => time(),  // current Unix timestamp (UTC)
+  ];
+
+  // Optional: limit stored events to avoid bloating options table
+  $events = array_slice($events, -IONOS_LOOP_MAX_EVENTS);
+
+  \update_option(IONOS_LOOP_EVENTS_OPTION, $events);
+}
+
+\add_action('wp_login', function () {
+  // Log the login event
+  log_loop_event('login', [
+    'type' => ($_GET['action'] ?? '') === 'ionos_oauth_authenticate' ? 'sso' : 'default',
+  ]);
+});
+
+// revoke consent for legacy loop plugin
+\add_action('init', function () {
+  if (class_exists('\Ionos\Loop\Plugin')) {
+    \add_option('ionos_loop_consent_LEGACY', \get_option('ionos_loop_consent', false), null, false);
+    \Ionos\Loop\Plugin::revoke_consent();
+  }
+}, 90); // before legacy loop init at 99
+
 \add_action('rest_api_init', function () {
   \register_rest_route(
     IONOS_LOOP_REST_NAMESPACE,

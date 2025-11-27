@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 // tell eslint that the global variable exists when this file gets executed
 /* global wpData:true */
 /* global jQuery:true */
@@ -149,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     dashboard.querySelector('#ionos_essentials_install_gml')?.addEventListener('click', function (event) {
       event.target.disabled = true;
-      event.target.innerText = wpData.i18n.installing;
+      event.target.innerText = __('Installing...', 'ionos-essentials');
 
       fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/install-gml', {
         method: 'GET',
@@ -167,9 +169,73 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    dashboard.querySelectorAll('.ionos-essentials-mcp-activate').forEach((button) => {
+      button.addEventListener('click', async function () {
+        const loading_element = dashboard.querySelector('#ionos-essentials-mcp-info .loading');
+        const code_element = dashboard.querySelector('#ionos-essentials-mcp-info .snippet');
+        const button_element = dashboard.querySelector('button.ionos-essentials-mcp-activate');
+
+        loading_element.classList.toggle('hidden', !dashboard.querySelector('#ionos-essentials-mcp').checked);
+        code_element.classList.add('hidden');
+        button_element.classList.add('hidden');
+
+        try {
+          const response = await fetch(wpData.restUrl + 'ionos/essentials/mcp/action', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-WP-Nonce': wpData.nonce,
+            },
+            body: JSON.stringify({
+              activate: dashboard.querySelector('#ionos-essentials-mcp').checked,
+              revokeAppPassword: button.dataset.revokeAppPassword ?? 0,
+            }),
+          });
+
+          loading_element.classList.add('hidden');
+          if (!response.ok) {
+            window.EXOS.snackbar.warning(__('An error occured while enabling WordPress MCP.', 'ionos-essentials'));
+            return;
+          }
+
+          const data = await response.json();
+
+          if (data.active === '0') {
+            window.EXOS.snackbar.warning(__('WordPress MCP disabled', 'ionos-essentials'));
+            return;
+          }
+
+          if (data.snippet) {
+            code_element.querySelector('code').innerText = data.snippet;
+            code_element.classList.remove('hidden');
+          } else {
+            button_element.classList.remove('hidden');
+          }
+
+          window.EXOS.snackbar.success(__('WordPress MCP enabled', 'ionos-essentials'));
+        } catch {
+          window.EXOS.snackbar.warning(__('An error occured while enabling WordPress MCP.', 'ionos-essentials'));
+        }
+      });
+    });
+
+    dashboard.querySelector('button.copy-icon').addEventListener('click', function () {
+      const codeElement = dashboard.querySelector('#ionos-essentials-mcp-info .snippet code');
+      if (codeElement) {
+        navigator.clipboard
+          .writeText(codeElement.innerText)
+          .then(() => {
+            window.EXOS.snackbar.success(__('Copied to clipboard', 'ionos-essentials'));
+          })
+          .catch(() => {
+            window.EXOS.snackbar.warning(__('Failed to copy to clipboard', 'ionos-essentials'));
+          });
+      }
+    });
+
     dashboard.querySelectorAll('.input-switch').forEach((switchElement) => {
       switchElement.addEventListener('click', async function (event) {
-        if (!event.target.matches('input[type="checkbox"]')) {
+        if (!event.target.matches('input[type="checkbox"]') || event.target.dataset.manual) {
           return;
         }
 
@@ -200,9 +266,9 @@ document.addEventListener('DOMContentLoaded', function () {
           const data = await response.json();
 
           if (data.value) {
-            window.EXOS.snackbar.success(description + ' ' + wpData.i18n.activated);
+            window.EXOS.snackbar.success(description + ' ' + __('activated.', 'ionos-essentials'));
           } else {
-            window.EXOS.snackbar.critical(description + ' ' + wpData.i18n.deactivated);
+            window.EXOS.snackbar.critical(description + ' ' + __('deactivated.', 'ionos-essentials'));
           }
         } catch {
           window.EXOS.snackbar.warning('Network error updating option ' + key);
@@ -247,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         overlay.innerHTML =
           '<div id="plugin-information-waiting"><div class="loading-spin"></div><p class="paragraph paragraph--large paragraph--bold paragraph--align-center">' +
-          wpData.i18n.loading +
+          __('Loading content ...', 'ionos-essentials') +
           '</p></div>';
         overlay.appendChild(iframe);
         iframe.onload = function () {
@@ -262,8 +328,8 @@ document.addEventListener('DOMContentLoaded', function () {
       element.addEventListener('click', function (event) {
         element.disabled = true;
         const payload = JSON.parse(element.dataset.wpscan);
-        element.innerText = payload.action === 'delete' ? wpData.i18n.deleting : wpData.i18n.updating;
-
+        element.innerText =
+          payload.action === 'delete' ? __('deleting...', 'ionos-essentials') : __('updating...', 'ionos-essentials');
         event.preventDefault();
         fetch(wpData.restUrl + 'ionos/essentials/wpscan/recommended-action', {
           method: 'POST',
@@ -335,10 +401,10 @@ document.addEventListener('DOMContentLoaded', function () {
       dashboard.querySelector('#bar').style.strokeDashoffset = 565.48 - 565.48 * (goodTestsRatio / 100);
 
       if (goodTestsRatio <= 80 || wpData.siteHealthIssueCount.critical !== 0) {
-        dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthImprovable;
+        dashboard.querySelector('#site-health-status-message').innerHTML = __('Should be improved', 'ionos-essentials');
         dashboard.querySelector('#bar').classList.add('site-health-color-orange');
       } else {
-        dashboard.querySelector('#site-health-status-message').innerHTML = wpData.i18n.siteHealthGood;
+        dashboard.querySelector('#site-health-status-message').innerHTML = __('Good', 'ionos-essentials');
         dashboard.querySelector('#bar').classList.add('site-health-color-green');
       }
 

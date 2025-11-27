@@ -21,8 +21,8 @@ msgstr ""
 
 #. Description of the plugin
 #: ionos-essentials.php
-msgid "The essentials plugin provides IONOS hosting specific functionality."
-msgstr "De plug-in Essentials biedt specifieke functies voor IONOS hosting."
+msgid "The Essentials plugin provides hosting specific functionality."
+msgstr "De plug-in Essentials biedt specifieke functies voor hosting."
 
 #. Author of the plugin
 #: ionos-essentials.php
@@ -34,63 +34,63 @@ msgstr "IONOS Group "
 msgid "https://www.ionos-group.com/brands.html"
 msgstr "https://www.ionos-group.com/brands.html"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "My offers"
 msgstr "Mijn aanbiedingen"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "My data"
 msgstr "Mijn gegevens"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My products"
 msgstr "Mijn producten"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My invoices"
 msgstr "Mijn facturen"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/fasthosts.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/fasthosts.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Control Panel"
 msgstr "Klantenlogin"
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "My User"
 msgstr "Mijn gebruiker"
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "WordPress Websites"
 msgstr "WordPress websites"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Data of customer"
 msgstr "Klantgegevens"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Services"
 msgstr "Diensten"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Invoices"
 msgstr "Facturen"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Package overview"
 msgstr "Overzicht van je pakketten"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your invoices"
 msgstr "Je facturen "
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your contract"
 msgstr "Je contract"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Current offers"
 msgstr "Actuele aanbiedingen"
 
@@ -125,7 +125,7 @@ msgid "Start AI Sitebuilder"
 msgstr "AI websitemaker starten"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
-#: ionos-essentials/inc/tenants/config/homepl.php
+#: ionos-essentials/inc/tenants/homepl.php
 msgid "Manage Hosting"
 msgstr "Hosting beheren"
 
@@ -291,19 +291,19 @@ msgstr "Mediabestanden uploaden"
 msgid "Get an overview of the latest updates and enhancements."
 msgstr "Ontdek nieuwe functies en verbeteringen."
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Products"
 msgstr "Mijn producten"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Project Overview"
 msgstr "Projectoverzicht"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Domains and SSL management"
 msgstr "Beheer van domeinen en SSL"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Add more products"
 msgstr "Meer producten toevoegen"
 
@@ -311,23 +311,23 @@ msgstr "Meer producten toevoegen"
 msgid "Webmail Login"
 msgstr "Inloggen Webmail"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage WordPress"
 msgstr "WordPress beheren"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage e-mail"
 msgstr "E-mail beheren"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Webspace"
 msgstr "Webspace"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "RankingCoach"
 msgstr "rankingCoach"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "SSL"
 msgstr "SSL"
 
@@ -335,11 +335,11 @@ msgstr "SSL"
 msgid "Setup Email Account"
 msgstr "E-mailaccount instellen"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Account"
 msgstr "Mijn account"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Installing..."
 msgstr "Installeren..."
 
@@ -379,28 +379,12 @@ msgid "How do you want to create your new website?"
 msgstr "Hoe wil je je nieuwe website maken?"
 
 #: ionos-essentials/inc/switch-page/view.php
-msgid "Online in a few minutes"
-msgstr "Binnen een paar minuten online"
-
-#: ionos-essentials/inc/switch-page/view.php
 msgid "With AI"
 msgstr "Met AI"
 
 #: ionos-essentials/inc/switch-page/view.php
-msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
-msgstr "Automatische websitecreatie op basis van jouw voorkeuren en vereisten. Inclusief kant-en-klare teksten en afbeeldingen."
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "100% WordPress"
-msgstr "100% WordPress"
-
-#: ionos-essentials/inc/switch-page/view.php
 msgid "Do it yourself"
 msgstr "Doe het zelf"
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
-msgstr "Jij beslist hoe je je website maakt. Geen zorgen, je kunt ook later nog starten met AI vanuit het WordPress dashboard."
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: ionos-essentials/inc/switch-page/view.php
@@ -484,11 +468,11 @@ msgstr "Onderhoudspagina"
 msgid "Active"
 msgstr "Actief"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "activated."
 msgstr "geactiveerd."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deactivated."
 msgstr "gedeactiveerd."
 
@@ -577,11 +561,11 @@ msgstr "We hebben een nieuw tabblad \"Tools & beveiliging\" toegevoegd! Alle fun
 msgid "Website is safe and secure"
 msgstr "Website is veilig"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "updating..."
 msgstr "bijwerken..."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deleting..."
 msgstr "verwijderen..."
 
@@ -604,6 +588,7 @@ msgid "Your %s plugin team"
 msgstr "%s plug-in team"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "More information"
 msgstr "Meer informatie"
 
@@ -615,7 +600,7 @@ msgstr "Er is een fout opgetreden bij het ophalen van de gegevens."
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Overzichtelijk helpcentrum met een AI-chatbot, rondleidingen en een uitgebreide kennisbank"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Loading content ..."
 msgstr "Inhoud laden ..."
 
@@ -653,31 +638,34 @@ msgstr "Kwetsbaarheidsscan"
 msgid "issue found"
 msgstr "probleem gevonden"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Checking for vulnerabilities..."
 msgstr "Controleren op kwetsbaarheden..."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Warnings found. Installation is not recommended."
 msgstr "Waarschuwingen gevonden. Installatie wordt niet aanbevolen."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "Kritieke kwetsbaarheden gevonden! Installatie is niet mogelijk."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "Geen kwetsbaarheden gevonden. Je kunt dit thema veilig installeren."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/plugin-install-index.js
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "Geen kwetsbaarheden gevonden. Je kunt deze plug-in veilig installeren."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "The vulnerability scan has found issues"
 msgstr "De kwetsbaarheidsscan heeft problemen gevonden"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "Activation is not recommended"
 msgstr "Activatie wordt niet aanbevolen"
 
@@ -778,11 +766,11 @@ msgstr "Om weer toegang tot dit account te krijgen, moet het wachtwoord worden h
 msgid "Vulnerability scan not possible. Please contact Customer Care."
 msgstr "Kwetsbaarheidsscan niet mogelijk. Neem contact op met de klantenservice."
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage Domains"
 msgstr "Domeinen beheren"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Trademark protection"
 msgstr "Bescherming van handelsmerken"
 
@@ -790,6 +778,7 @@ msgstr "Bescherming van handelsmerken"
 msgid "Turn off notification here"
 msgstr "Meldingen hier uitschakelen"
 
+#. translators: %s: URL to the Hub's Tools & Security page.
 #: ionos-essentials/inc/security/index.php
 #, php-format
 msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
@@ -884,7 +873,7 @@ msgstr "Details bekijken"
 msgid "Last scan ran %s ago"
 msgstr "Laatste scan %s geleden uitgevoerd"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Should be improved"
 msgstr "Moet verbeterd worden"
 
@@ -971,7 +960,7 @@ msgstr "Alle acties voltooid!"
 msgid " %1$d of %2$d completed"
 msgstr " %1$d van %2$d voltooid"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Good"
 msgstr "Goed"
 
@@ -990,3 +979,103 @@ msgstr "Thema selecteren"
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Choose a theme that matches your website's purpose and your comfort level."
 msgstr "Kies een thema dat past bij het doel van je website en jouw voorkeuren."
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "New AI Agent with Enhanced Capabilities"
+msgstr "Nieuwe AI agent met verbeterde mogelijkheden"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Our new AI Agent is here to change the way you edit your site! Simply point and click on elements to make changes and try the new capabilities, from font and style changes to rearranging content."
+msgstr "Onze nieuwe AI agent verandert de manier waarop jij je website bewerkt! Klik op elementen om wijzigingen aan te brengen en probeer de nieuwe mogelijkheden, van lettertype- en stijlwijzigingen tot het herschikken van inhoud."
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "A native WordPress website in minutes. Our powerful AI generates design, images and content based on your needs."
+msgstr "Een WordPress website in enkele minuten. Onze krachtige AI-tool genereert ontwerp, afbeeldingen en inhoud op basis van jouw wensen."
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "Continue with AI"
+msgstr "Doorgaan met AI"
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "Take full control of the creative process. You can easily switch over to the AI builder later from inside Wordpress."
+msgstr "Neem het creatieve proces in eigen handen. Je kunt later binnen WordPress eenvoudig overschakelen naar de AI sitebuilder."
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "Create manually"
+msgstr "Handmatig aanmaken"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Try it"
+msgstr "Probeer het"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Create Legal Notice"
+msgstr "Pagina met juridische informatie maken"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Insert the necessary data for your company and your industry (or industries) into the legal notice (Impressum) template in order to operate your new website in a legally compliant manner."
+msgstr "Voeg de benodigde gegevens van je bedrijf en je branche(s) toe aan het sjabloon om de vereiste juridische informatie op je website weer te geven."
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Edit now"
+msgstr "Nu bewerken"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Allow AI to control your WordPress via MCP"
+msgstr "Laat AI je WordPress besturen via MCP"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "For developers"
+msgstr "Voor ontwikkelaars"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Installing MCP capabilities"
+msgstr "MCP-mogelijkheden installeren"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Enter the following JSON into your preferred AI Clients settings file"
+msgstr "Voer de volgende JSON in uw gewenste AI Clients instellingenbestand in"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Please take note of this as this is not stored and can not be viewed again."
+msgstr "Houd hier rekening mee, want dit wordt niet opgeslagen en kan niet opnieuw worden bekeken."
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Copy to clipboard"
+msgstr "Kopiëren naar klembord"
+
+#: ionos-essentials/build/dashboard/index.js
+#, generated by deepl
+msgid "An error occured while enabling WordPress MCP."
+msgstr "Er is een fout opgetreden tijdens het inschakelen van WordPress MCP."
+
+#: ionos-essentials/build/dashboard/index.js
+#, generated by deepl
+msgid "WordPress MCP disabled"
+msgstr "WordPress MCP uitgeschakeld"
+
+#: ionos-essentials/build/dashboard/index.js
+#, generated by deepl
+msgid "WordPress MCP enabled"
+msgstr "WordPress MCP ingeschakeld"
+
+#: ionos-essentials/build/dashboard/index.js
+#, generated by deepl
+msgid "Copied to clipboard"
+msgstr "Gekopieerd naar klembord"
+
+#: ionos-essentials/build/dashboard/index.js
+#, generated by deepl
+msgid "Failed to copy to clipboard"
+msgstr "Kopiëren naar klembord mislukt"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Grant external AI Clients like Gemini & Claude secure access to your content, with the WordPress-MCP plugin."
+msgstr "Geef externe AI-clients zoals Gemini & Claude beveiligde toegang tot je inhoud met de WordPress-MCP plugin."

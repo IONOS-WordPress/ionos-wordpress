@@ -214,6 +214,13 @@ render_section([
                     </span>
                 </div>
             </div>
+          </section>
+
+          <?php
+            if( defined('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE') ){
+              require_once(__DIR__ . '/../../mcp/view.php');
+            }
+          ?>
         </div>
       </div>
     </div>

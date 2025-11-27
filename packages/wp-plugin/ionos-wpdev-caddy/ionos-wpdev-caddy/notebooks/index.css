@@ -1,0 +1,44 @@
+BODY[class*="wpdev-caddy-notebook-"] {
+  DL#ionos-wpdev-caddy-notebooks {
+    DT {
+      LABEL {
+        font-weight: 600;
+      }
+    }
+
+    DD {
+      margin-left: inherit;
+
+      /* min height a textarea to 4 lines of text, max height to 2 lines of text */
+      TEXTAREA.notebook-cell-output {
+        field-sizing: content;
+        /* apply height* rules only to content of textarea */
+        box-sizing: content-box;
+        overflow-y: auto;
+        width: calc(100% - 15px);;
+        resize: none;
+        min-height: 4lh;
+        max-height: 20lh;
+        font-family: monospace;
+      }
+
+      TEXTAREA.notebook-cell-output.progress {
+        color: rgb(34, 113, 177);
+      }
+
+      TEXTAREA.notebook-cell-output.error {
+        color: red;
+      }
+
+      TEXTAREA.notebook-cell-output.success {
+        color: inherit;
+      }
+    }
+
+    DD:last-of-type {
+      HR {
+        display: none;
+      }
+    }
+  }
+}

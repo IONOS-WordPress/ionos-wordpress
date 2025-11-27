@@ -16,8 +16,8 @@ msgstr ""
 
 #. Description of the plugin
 #: ionos-essentials.php
-msgid "The essentials plugin provides IONOS hosting specific functionality."
-msgstr "El plugin Essentials proporciona funcionalidades específicas para el hosting de IONOS."
+msgid "The Essentials plugin provides hosting specific functionality."
+msgstr "El plugin Essentials proporciona funcionalidades específicas para tu hosting."
 
 #. Author of the plugin
 #: ionos-essentials.php
@@ -42,7 +42,7 @@ msgid "Account Management"
 msgstr "Gestión de cuenta"
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
-#: ionos-essentials/inc/tenants/config/homepl.php
+#: ionos-essentials/inc/tenants/homepl.php
 msgid "Manage Hosting"
 msgstr "Gestionar hosting"
 
@@ -226,79 +226,79 @@ msgstr "Obtén una visión general de las últimas actualizaciones y mejoras."
 msgid "Overview"
 msgstr "Vista general"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "My offers"
 msgstr "Mis ofertas"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "My data"
 msgstr "Mis datos"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My products"
 msgstr "Mis productos"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
+#: ionos-essentials/inc/tenants/arsys.php
 msgid "My invoices"
 msgstr "Mis facturas"
 
-#: ionos-essentials/inc/tenants/config/arsys.php
-#: ionos-essentials/inc/tenants/config/fasthosts.php
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/arsys.php
+#: ionos-essentials/inc/tenants/fasthosts.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Control Panel"
 msgstr "Panel de control"
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "My User"
 msgstr "Mi usuario"
 
-#: ionos-essentials/inc/tenants/config/fasthosts.php
+#: ionos-essentials/inc/tenants/fasthosts.php
 msgid "WordPress Websites"
 msgstr "Páginas web de WordPress"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Data of customer"
 msgstr "Datos del cliente"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Services"
 msgstr "Servicios"
 
-#: ionos-essentials/inc/tenants/config/piensa.php
+#: ionos-essentials/inc/tenants/piensa.php
 msgid "Invoices"
 msgstr "Facturas"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Package overview"
 msgstr "Vista general del panel"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your invoices"
 msgstr "Tus facturas"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Your contract"
 msgstr "Tu contrato"
 
-#: ionos-essentials/inc/tenants/config/strato.php
+#: ionos-essentials/inc/tenants/strato.php
 msgid "Current offers"
 msgstr "Ofertas actuales"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Products"
 msgstr "Mis productos"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Project Overview"
 msgstr "Vista general de proyectos"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Domains and SSL management"
 msgstr "Gestión de dominios y SSL"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "Add more products"
 msgstr "Añadir más productos"
 
@@ -306,23 +306,23 @@ msgstr "Añadir más productos"
 msgid "Webmail Login"
 msgstr "Acceso a Webmail"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage WordPress"
 msgstr "Gestionar WordPress"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage e-mail"
 msgstr "Gestionar e-mails"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Webspace"
 msgstr "Espacio web"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "RankingCoach"
 msgstr "RankingCoach"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "SSL"
 msgstr "SSL"
 
@@ -330,11 +330,11 @@ msgstr "SSL"
 msgid "Setup Email Account"
 msgstr "Configurar e-mail"
 
-#: ionos-essentials/inc/tenants/config/ionos.php
+#: ionos-essentials/inc/tenants/ionos.php
 msgid "My Account"
 msgstr "Mi cuenta"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Installing..."
 msgstr "Instalando..."
 
@@ -374,24 +374,8 @@ msgid "How do you want to create your new website?"
 msgstr "¿Cómo quieres crear tu nueva página web?"
 
 #: ionos-essentials/inc/switch-page/view.php
-msgid "Online in a few minutes"
-msgstr "Online en unos minutos"
-
-#: ionos-essentials/inc/switch-page/view.php
 msgid "With AI"
 msgstr "Con IA"
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
-msgstr "Creación automática de páginas web en función de tus preferencias y requisitos. Incluye textos e imágenes listos para usar."
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "100% WordPress"
-msgstr "100% WordPress"
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
-msgstr "Tú decides cómo crear tu página web. No te preocupes, también podrás iniciar la funcionalidad para confeccionarla con IA desde el panel de WordPress más tarde."
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: ionos-essentials/inc/switch-page/view.php
@@ -471,11 +455,11 @@ msgstr "Página de mantenimiento"
 msgid "Active"
 msgstr "Función activa"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "activated."
 msgstr "activada."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deactivated."
 msgstr "desactivada."
 
@@ -541,7 +525,7 @@ msgstr "Tu opinión nos importa"
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php
 #: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
-msgstr "Siempre estamos buscando formas de mejorar tu experiencia con el hosting de WordPress. Por favor, dedica unos minutos a realizar una breve encuesta online."
+msgstr "Siempre estamos buscando formas de mejorar tu experiencia con el hosting para WordPress. Por favor, dedica unos minutos a realizar una breve encuesta online."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php
@@ -564,11 +548,11 @@ msgstr "¡Acabamos de habilitar la nueva pestaña «Herramientas y seguridad»! 
 msgid "Website is safe and secure"
 msgstr "La página web está segura y protegida"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "updating..."
 msgstr "actualizando..."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "deleting..."
 msgstr "eliminando..."
 
@@ -591,6 +575,7 @@ msgid "Your %s plugin team"
 msgstr "Tu equipo de plugins %s"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "More information"
 msgstr "Más información"
 
@@ -602,7 +587,7 @@ msgstr "Hubo un error al recuperar los datos de vulnerabilidades."
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Sección de ayuda completa, que incluye: asistencia por chat con IA, recorridos guiados y una amplia base de datos de conocimientos."
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Loading content ..."
 msgstr "Cargando contenido..."
 
@@ -640,31 +625,34 @@ msgstr "Escáner de vulnerabilidades"
 msgid "issue found"
 msgstr "problema detectado"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Checking for vulnerabilities..."
 msgstr "Buscando vulnerabilidades..."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Warnings found. Installation is not recommended."
 msgstr "Alertas detectadas. No se recomienda la instalación."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "¡Vulnerabilidades críticas detectadas! La instalación no es posible."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "No se encontraron vulnerabilidades. Puedes instalar este tema de forma segura."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/plugin-install-index.js
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "No se encontraron vulnerabilidades. Puedes instalar este plugin de forma segura."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "The vulnerability scan has found issues"
 msgstr "El escáner de vulnerabilidades detectó problemas"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscan.php
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "Activation is not recommended"
 msgstr "La activación no es recomendable"
 
@@ -773,11 +761,11 @@ msgstr "Confecciona tu web de forma autónoma"
 msgid "Vulnerability scan not possible. Please contact Customer Care."
 msgstr "El escaneo de vulnerabilidades no es posible. Ponte en contacto con Atención al Cliente."
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Manage Domains"
 msgstr "Gestionar dominios"
 
-#: ionos-essentials/inc/tenants/config/udag.php
+#: ionos-essentials/inc/tenants/udag.php
 msgid "Trademark protection"
 msgstr "Protección de marcas comerciales"
 
@@ -785,6 +773,7 @@ msgstr "Protección de marcas comerciales"
 msgid "Turn off notification here"
 msgstr "Desactiva la notificación aquí"
 
+#. translators: %s: URL to the Hub's Tools & Security page.
 #: ionos-essentials/inc/security/index.php
 #, php-format
 msgid "The former Security plugin is now part of the new essentials plugin. You can find all functionality under <a href=\"%s\">Tools & Security</a> of our new Hub."
@@ -879,7 +868,7 @@ msgstr "Vista de detalles"
 msgid "Last scan ran %s ago"
 msgstr "Último análisis hace %s"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Should be improved"
 msgstr "Mejora requerida"
 
@@ -966,7 +955,7 @@ msgstr "¡Todas las acciones están completadas!"
 msgid " %1$d of %2$d completed"
 msgstr "%1$d de %2$d acciones completadas"
 
-#: ionos-essentials/inc/dashboard/index.php
+#: ionos-essentials/build/dashboard/index.js
 msgid "Good"
 msgstr "Buena"
 
@@ -985,3 +974,103 @@ msgstr "Seleccionar un tema"
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Choose a theme that matches your website's purpose and your comfort level."
 msgstr "Elige un tema que represente la esencia de tu página web y que encaje con tus expectativas de comodidad."
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "New AI Agent with Enhanced Capabilities"
+msgstr "Tu nuevo agente de IA con funcionalidades mejoradas"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Our new AI Agent is here to change the way you edit your site! Simply point and click on elements to make changes and try the new capabilities, from font and style changes to rearranging content."
+msgstr "Nuestro nuevo agente de IA cambiará la forma en que editas tu página web: solo tienes que hacer clic en un elemento para cambiarlo. Desde editar el estilo o fuente hasta reorganizar todo el contenido."
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "A native WordPress website in minutes. Our powerful AI generates design, images and content based on your needs."
+msgstr "Crea tu página con la aplicación de WordPress de forma sencilla en cuestión de minutos. Nuestra potente herramienta de IA genera el diseño, las imágenes y el contenido en función de tus necesidades."
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "Continue with AI"
+msgstr "Continuar con la IA"
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "Take full control of the creative process. You can easily switch over to the AI builder later from inside Wordpress."
+msgstr "Toma el control total del proceso creativo. Puedes cambiar fácilmente al AI builder más tarde desde dentro de Wordpress."
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "Create manually"
+msgstr "Crear manualmente"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Try it"
+msgstr "Probar ahora"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Create Legal Notice"
+msgstr "Crear aviso legal"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Insert the necessary data for your company and your industry (or industries) into the legal notice (Impressum) template in order to operate your new website in a legally compliant manner."
+msgstr "Introduce los datos necesarios de tu empresa y tu sector o sectores en la plantilla de aviso legal para que tu nueva página web esté en conformidad con la normativa."
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Edit now"
+msgstr "Editar ahora"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Allow AI to control your WordPress via MCP"
+msgstr "Permite que la IA controle tu WordPress a través de MCP"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "For developers"
+msgstr "Para desarrolladores"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Installing MCP capabilities"
+msgstr "Instalación de las capacidades MCP"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Enter the following JSON into your preferred AI Clients settings file"
+msgstr "Introduzca el siguiente JSON en su archivo de configuración de clientes AI preferido"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Please take note of this as this is not stored and can not be viewed again."
+msgstr "Por favor, tome nota de esto ya que no se almacena y no se puede volver a ver."
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Copy to clipboard"
+msgstr "Copiar al portapapeles"
+
+#: ionos-essentials/build/dashboard/index.js
+#, generated by deepl
+msgid "An error occured while enabling WordPress MCP."
+msgstr "Se ha producido un error al activar WordPress MCP."
+
+#: ionos-essentials/build/dashboard/index.js
+#, generated by deepl
+msgid "WordPress MCP disabled"
+msgstr "WordPress MCP desactivado"
+
+#: ionos-essentials/build/dashboard/index.js
+#, generated by deepl
+msgid "WordPress MCP enabled"
+msgstr "WordPress MCP habilitado"
+
+#: ionos-essentials/build/dashboard/index.js
+#, generated by deepl
+msgid "Copied to clipboard"
+msgstr "Copiado al portapapeles"
+
+#: ionos-essentials/build/dashboard/index.js
+#, generated by deepl
+msgid "Failed to copy to clipboard"
+msgstr "Error al copiar al portapapeles"
+
+#: ionos-essentials/inc/mcp/view.php
+#, generated by deepl
+msgid "Grant external AI Clients like Gemini & Claude secure access to your content, with the WordPress-MCP plugin."
+msgstr "Conceda a clientes externos de AI, como Gemini y Claude, acceso seguro a su contenido con el plugin WordPress-MCP."

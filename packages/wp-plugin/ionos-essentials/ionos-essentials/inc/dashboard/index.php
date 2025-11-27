@@ -233,10 +233,6 @@ add_filter('admin_body_class', function ($classes) {
 );
 
 \add_action('admin_enqueue_scripts', function ($hook) {
-  if (ADMIN_PAGE_HOOK !== $hook) {
-    return;
-  }
-
   $issue_counts = \get_transient('ionos_site_health_issue_count');
   if (is_string($issue_counts)) {
     $decoded = json_decode($issue_counts, true);
@@ -286,16 +282,6 @@ add_filter('admin_body_class', function ($classes) {
     'tenant'                 => Tenant::get_slug(),
     'siteHealthIssueCount'   => $issue_counts,
     'siteHealthAsyncTests'   => $async_tests,
-    'i18n'                   => [
-      'installing'             => \esc_html__('Installing...', 'ionos-essentials'),
-      'activated'              => \esc_html__('activated.', 'ionos-essentials'),
-      'deactivated'            => \esc_html__('deactivated.', 'ionos-essentials'),
-      'updating'               => \esc_html__('updating...', 'ionos-essentials'),
-      'deleting'               => \esc_html__('deleting...', 'ionos-essentials'),
-      'loading'                => \esc_html__('Loading content ...', 'ionos-essentials'),
-      'siteHealthImprovable'   => \esc_html__('Should be improved', 'ionos-essentials'),
-      'siteHealthGood'         => \esc_html__('Good', 'ionos-essentials'),
-    ],
   ]);
 });
 

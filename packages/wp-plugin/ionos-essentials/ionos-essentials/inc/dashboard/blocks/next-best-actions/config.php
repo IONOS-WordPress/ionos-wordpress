@@ -2,11 +2,16 @@
 
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
+use const ionos\essentials\PLUGIN_DIR;
+
 defined('ABSPATH') || exit();
 
-use ionos\essentials\Tenant;
+require_once PLUGIN_DIR . '/ionos-essentials/inc/class-tenant.php';
 
-$data = \ionos\essentials\dashboard\blocks\my_account\get_account_data();
+use ionos\essentials\Tenant;
+use function ionos\essentials\tenant\get_tenant_config;
+
+$data = get_tenant_config();
 
 $homepage = \get_option('page_on_front'); // returns "0" if no static front page is set
 $edit_url = intval($homepage) === 0 ? \admin_url('edit.php?post_type=page') : admin_url(
@@ -217,6 +222,63 @@ if ($contact_post_id) {
     anchor: \__('Personalize business data', 'ionos-essentials'),
     complete_on_click: true,
     categories: ['setup-ai']
+  );
+}
+
+function has_legal_page_for_locale(&$post_id = null)
+{
+  $locale = \get_locale();
+
+  // Check if locale is a variation of German or French
+  if (strpos($locale, 'de') === 0) {
+    $keyword = 'impressum';
+  } elseif (strpos($locale, 'fr') === 0) {
+    $keyword = 'mentions-legales';
+  } else {
+    return false;
+  }
+
+  $pages = \get_pages([
+    'post_status' => 'publish',
+  ]);
+
+  foreach ($pages as $page) {
+    $slug = strtolower($page->post_name);
+
+    if (strpos($slug, $keyword) !== false) {
+      $post_id = $page->ID;
+      return true;
+    }
+  }
+
+  return false;
+}
+
+$legal_post_id = null;
+
+if (has_legal_page_for_locale($legal_post_id)) {
+  NBA::register(
+    id: 'extendify-imprint',
+    title: __('Create Legal Notice', 'ionos-essentials'),
+    description: __('Insert the necessary data for your company and your industry (or industries) into the legal notice (Impressum) template in order to operate your new website in a legally compliant manner.', 'ionos-essentials'),
+    link: \admin_url('post.php?post=' . $legal_post_id . '&action=edit'),
+    anchor: __('Edit now', 'ionos-essentials'),
+    complete_on_click: true,
+    categories: ['setup-ai']
+  );
+}
+
+if ('extendable' === get_stylesheet() && \get_option('extendify_onboarding_completed')) {
+  NBA::register(
+    id: 'extendify-agent',
+    title: \__('New AI Agent with Enhanced Capabilities', 'ionos-essentials'),
+    description: \__('Our new AI Agent is here to change the way you edit your site! Simply point and click on elements to make changes and try the new capabilities, from font and style changes to rearranging content.', 'ionos-essentials'),
+    link: \add_query_arg('ionos-highlight', 'chatbot', home_url()),
+    anchor: \__('Try it', 'ionos-essentials'),
+    complete_on_click: true,
+    categories: ['always'],
+    exos_icon: 'machine-learning',
+    expanded: true
   );
 }
 

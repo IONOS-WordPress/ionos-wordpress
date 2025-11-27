@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos\essentials\tenants\config;
+namespace ionos\essentials\tenant;
 
 defined('ABSPATH') || exit();
 
@@ -8,7 +8,7 @@ $links = [
   [
     'url'    => '',
     'anchor' => __('Manage Hosting', 'ionos-essentials'),
-  ]
+  ],
 ];
 
 // Trailing slash
@@ -23,5 +23,5 @@ $nba_link = [
 ];
 
 $webmailloginlinks = [
-  'pl' => 'https://login.poczta.home.pl/'
+  'pl' => 'https://login.poczta.home.pl/',
 ];
