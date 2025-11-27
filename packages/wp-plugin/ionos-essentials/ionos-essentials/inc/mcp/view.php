@@ -28,6 +28,7 @@ defined('ABSPATH') || exit();
           <span class="input-switch" >
               <input id="ionos-essentials-mcp" class="ionos-essentials-mcp-activate" type="checkbox" data-manual="true" data-description="<?php \esc_attr_e('Allow AI to control your WordPress via MCP', 'ionos-essentials'); ?>"
               <?php echo (IONOS_ESSENTIALS_MCP_SERVER_ACTIVE) ? 'checked' : ''; ?>
+              data-track-link="mcp-toggle"
               >
               <label>
                   <span class="input-switch__on"></span>
