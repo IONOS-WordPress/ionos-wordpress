@@ -375,7 +375,7 @@ msgstr "Mit KI"
 
 #: ionos-essentials/inc/switch-page/view.php
 msgid "Do it yourself"
-msgstr "Machen Sie es selbst"
+msgstr "Seite selbst erstellen"
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: ionos-essentials/inc/switch-page/view.php
