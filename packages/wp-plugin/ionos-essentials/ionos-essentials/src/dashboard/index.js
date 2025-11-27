@@ -169,9 +169,73 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    dashboard.querySelectorAll('.ionos-essentials-mcp-activate').forEach((button) => {
+      button.addEventListener('click', async function () {
+        const loading_element = dashboard.querySelector('#ionos-essentials-mcp-info .loading');
+        const code_element = dashboard.querySelector('#ionos-essentials-mcp-info .snippet');
+        const button_element = dashboard.querySelector('button.ionos-essentials-mcp-activate');
+
+        loading_element.classList.toggle('hidden', !dashboard.querySelector('#ionos-essentials-mcp').checked);
+        code_element.classList.add('hidden');
+        button_element.classList.add('hidden');
+
+        try {
+          const response = await fetch(wpData.restUrl + 'ionos/essentials/mcp/action', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-WP-Nonce': wpData.nonce,
+            },
+            body: JSON.stringify({
+              activate: dashboard.querySelector('#ionos-essentials-mcp').checked,
+              revokeAppPassword: button.dataset.revokeAppPassword ?? 0,
+            }),
+          });
+
+          loading_element.classList.add('hidden');
+          if (!response.ok) {
+            window.EXOS.snackbar.warning(__('An error occured while enabling WordPress MCP.', 'ionos-essentials'));
+            return;
+          }
+
+          const data = await response.json();
+
+          if (data.active === '0') {
+            window.EXOS.snackbar.warning(__('WordPress MCP disabled', 'ionos-essentials'));
+            return;
+          }
+
+          if (data.snippet) {
+            code_element.querySelector('code').innerText = data.snippet;
+            code_element.classList.remove('hidden');
+          } else {
+            button_element.classList.remove('hidden');
+          }
+
+          window.EXOS.snackbar.success(__('WordPress MCP enabled', 'ionos-essentials'));
+        } catch {
+          window.EXOS.snackbar.warning(__('An error occured while enabling WordPress MCP.', 'ionos-essentials'));
+        }
+      });
+    });
+
+    dashboard.querySelector('button.copy-icon').addEventListener('click', function () {
+      const codeElement = dashboard.querySelector('#ionos-essentials-mcp-info .snippet code');
+      if (codeElement) {
+        navigator.clipboard
+          .writeText(codeElement.innerText)
+          .then(() => {
+            window.EXOS.snackbar.success(__('Copied to clipboard', 'ionos-essentials'));
+          })
+          .catch(() => {
+            window.EXOS.snackbar.warning(__('Failed to copy to clipboard', 'ionos-essentials'));
+          });
+      }
+    });
+
     dashboard.querySelectorAll('.input-switch').forEach((switchElement) => {
       switchElement.addEventListener('click', async function (event) {
-        if (!event.target.matches('input[type="checkbox"]')) {
+        if (!event.target.matches('input[type="checkbox"]') || event.target.dataset.manual) {
           return;
         }
 

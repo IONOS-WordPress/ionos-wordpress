@@ -87,7 +87,6 @@ defined('ABSPATH') || exit();
   if (ADMIN_PAGE_HOOK !== $hook) {
     return;
   }
-
   $dashboard_assets = require_once __DIR__ . '/ionos-essentials/build/dashboard/index.asset.php';
   \wp_enqueue_script(
     'ionos-essentials-dashboard',
@@ -146,6 +145,8 @@ require_once __DIR__ . '/ionos-essentials/inc/wpscan/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/loop/index.php';
 
 require_once __DIR__ . '/ionos-essentials/inc/extendify/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/mcp/index.php';
+
 
 // soc plugin components
 require_once __DIR__ . '/ionos-essentials/inc/migration/index.php';
