@@ -19,7 +19,7 @@ defined('ABSPATH') || exit();
 
           <p class="paragraph paragraph--neutral">
               <?php \esc_html_e(
-                'Grant external LLMs like Gemini & Claude secure access to your content, with the WordPress-MCP plugin.',
+                'Grant external AI Clients like Gemini & Claude secure access to your content, with the WordPress-MCP plugin.',
                 'ionos-essentials');
 ?>
           </p>

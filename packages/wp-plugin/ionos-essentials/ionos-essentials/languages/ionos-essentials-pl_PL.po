@@ -1031,10 +1031,6 @@ msgid "For developers"
 msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "Grant external LLMs like Gemini & Claude secure access to your content, with the WordPress-MCP plugin."
-msgstr ""
-
-#: ionos-essentials/inc/mcp/view.php
 msgid "Installing MCP capabilities"
 msgstr ""
 
@@ -1068,4 +1064,8 @@ msgstr ""
 
 #: ionos-essentials/build/dashboard/index.js
 msgid "Failed to copy to clipboard"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Grant external AI Clients like Gemini & Claude secure access to your content, with the WordPress-MCP plugin."
 msgstr ""
