@@ -49,6 +49,9 @@ function _rest_loop_callback(): \WP_REST_Response
       'extendify' => [
         'extendify_onboarding_completed' => (bool) \get_option('extendify_onboarding_completed', null),
       ],
+      'mcp' => [
+        'settings' => \get_option('wordpress_mcp_settings', false),
+      ],
     ],
   ];
 
