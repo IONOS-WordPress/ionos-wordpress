@@ -51,6 +51,7 @@ function _rest_loop_callback(): \WP_REST_Response
       ],
       'mcp' => [
         'settings' => \get_option('wordpress_mcp_settings', false),
+        'tracking' => \get_option('ionos_loop_mcp_tracking', []),
       ],
     ],
   ];
