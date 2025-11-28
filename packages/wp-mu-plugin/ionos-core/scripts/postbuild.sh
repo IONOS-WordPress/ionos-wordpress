@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 
-# if [[ "$CI" == "true" ]]; then
-#   echo "This script is not intended to be run in CI environments."
-#   exit 0
-# fi
+#
+# installs custom plugins into the ionos-core mu-plugin's custom-plugins directory
+# just for local development, not intended for CI environments
+#
+
+set -eo pipefail
+
+if [[ "${CI:-}" == "true" ]]; then
+  exit 0
+fi
 
 readonly PLUGINS_TO_INSTALL=(
   https://downloads.wordpress.org/plugin/wordpress-seo.zip
