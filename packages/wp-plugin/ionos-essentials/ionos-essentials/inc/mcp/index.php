@@ -4,7 +4,7 @@ namespace ionos\essentials\mcp;
 
 defined('ABSPATH') || exit();
 
-define('IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD', 'Essentials MCP');
+define('IONOS_ESSENTIALS_MCP_APPLICATION_NAME', 'Essentials MCP');
 
 \add_action('init', function () {
   $mcp_settings = \get_option('wordpress_mcp_settings', ['enabled' => false]);
@@ -86,6 +86,17 @@ define('IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD', 'Essentials MCP');
   );
 }, 1);
 
+add_action('application_password_did_authenticate', function($user, $item) {
+  if( $item['name'] !== IONOS_ESSENTIALS_MCP_APPLICATION_NAME ){
+    return;
+  }
+
+  $data = \get_option('ionos_loop_mcp_tracking', []);
+
+  $data[$user->user_login] = ($data[$user->user_login] ?? 0) + 1;
+
+  \update_option('ionos_loop_mcp_tracking', $data);
+}, 10, 2);
 
 function activate_mcp_server(): bool {
   if( defined('WORDPRESS_MCP_PATH') ){
@@ -116,7 +127,7 @@ function get_new_application_password(): string {
 
   $new_app = \WP_Application_Passwords::create_new_application_password(
     $user->ID,
-    ['name' => IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD]
+    ['name' => IONOS_ESSENTIALS_MCP_APPLICATION_NAME]
   );
 
   if (is_wp_error($new_app)) {
@@ -132,7 +143,7 @@ function user_has_application_password(): bool {
   $applications = \WP_Application_Passwords::get_user_application_passwords($user->ID);
 
   foreach ($applications as $app) {
-    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD) {
+    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_NAME) {
       return true;
     }
   }
@@ -145,7 +156,7 @@ function revoke_application_password(): void {
   $applications = \WP_Application_Passwords::get_user_application_passwords($user->ID);
 
   foreach ($applications as $app) {
-    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD) {
+    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_NAME) {
       \WP_Application_Passwords::delete_application_password($user->ID, $app['uuid']);
       break;
     }
