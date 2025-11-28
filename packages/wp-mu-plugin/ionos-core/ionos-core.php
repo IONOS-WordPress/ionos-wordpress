@@ -22,15 +22,21 @@ defined('ABSPATH') || exit();
 error_log('IONOS Core MU Plugin loaded.');
 
 // Define custom plugins directory
-define('IONOS_CUSTOM_PLUGINS_PATH', 'ionos-core/custom-plugins/');
-define('IONOS_CUSTOM_PLUGINS_DIR', __DIR__ . '/' . IONOS_CUSTOM_PLUGINS_PATH);
-define('IONOS_CUSTOM_PLUGINS_URL', \plugins_url(IONOS_CUSTOM_PLUGINS_PATH, __FILE__));
+const IONOS_CUSTOM_PLUGINS_PATH = 'ionos-core/custom-plugins/';
+const IONOS_CUSTOM_PLUGINS_DIR = __DIR__ . '/ionos-core/' . IONOS_CUSTOM_PLUGINS_PATH;
+const IONOS_CUSTOM_PLUGINS_URL = WPMU_PLUGIN_URL . IONOS_CUSTOM_PLUGINS_DIR;
 
 /**
  * Load custom plugins directly
  */
 \add_action('muplugins_loaded', function () {
-	if (!is_dir(IONOS_CUSTOM_PLUGINS_DIR)) {
+  if (!is_dir(IONOS_CUSTOM_PLUGINS_DIR)) {
+    error_log(
+      sprintf(
+        'IONOS Core: skip loading plugins from custom directory(=%s) - directory does not exist',
+        IONOS_CUSTOM_PLUGINS_DIR,
+      )
+    );
 		return;
 	}
 
@@ -47,7 +53,7 @@ define('IONOS_CUSTOM_PLUGINS_URL', \plugins_url(IONOS_CUSTOM_PLUGINS_PATH, __FIL
 				if (!empty($plugin_data['Name'])) {
 					// Load the plugin file directly
 					include_once $plugin_file;
-					error_log('IONOS Core: Loaded custom plugin: ' . $plugin_slug . '/' . basename($plugin_file));
+					error_log('IONOS Core: Loaded plugin from custom path: ' . $plugin_slug . '/' . basename($plugin_file));
 					break; // Only load one main plugin file per directory
 				}
 			}
