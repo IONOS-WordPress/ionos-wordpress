@@ -23,7 +23,7 @@ error_log('IONOS Core MU Plugin loaded.');
 
 // Define custom plugins directory
 const IONOS_CUSTOM_PLUGINS_PATH = 'ionos-core/custom-plugins/';
-const IONOS_CUSTOM_PLUGINS_DIR = __DIR__ . '/ionos-core/' . IONOS_CUSTOM_PLUGINS_PATH;
+const IONOS_CUSTOM_PLUGINS_DIR = __DIR__ . '/' . IONOS_CUSTOM_PLUGINS_PATH;
 const IONOS_CUSTOM_PLUGINS_URL = WPMU_PLUGIN_URL . IONOS_CUSTOM_PLUGINS_DIR;
 
 /**
@@ -65,22 +65,24 @@ const IONOS_CUSTOM_PLUGINS_URL = WPMU_PLUGIN_URL . IONOS_CUSTOM_PLUGINS_DIR;
  * Register custom plugin directory URL handling
  */
 \add_filter('plugins_url', function ($url, $path, $plugin) {
-	// Check if the plugin file is from our custom plugins directory
-	if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR)) {
-		// Get the plugin directory (without the main plugin file)
-		$plugin_relative = str_replace(IONOS_CUSTOM_PLUGINS_DIR, '', $plugin);
-		// Remove the plugin filename, keeping only the directory path
-		$plugin_dir = dirname($plugin_relative);
+  // Check if the plugin file is from our custom plugins directory
+  if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR)) {
+      // Get the plugin directory relative to custom plugins dir
+      $plugin_relative = str_replace(IONOS_CUSTOM_PLUGINS_DIR, '', $plugin);
+      // Remove the plugin filename, keeping only the directory path
+      $plugin_dir = dirname($plugin_relative);
 
-		// If path is empty, the plugin is requesting its own directory
-		if (empty($path)) {
-			return IONOS_CUSTOM_PLUGINS_URL . $plugin_dir;
-		}
+      $base_url = \plugins_url(IONOS_CUSTOM_PLUGINS_PATH, __FILE__);
 
-		// Otherwise, append the path to the plugin directory
-		return IONOS_CUSTOM_PLUGINS_URL . $plugin_dir . '/' . ltrim($path, '/');
-	}
-	return $url;
+      // If path is empty, the plugin is requesting its own directory
+      if (empty($path)) {
+          return $base_url . $plugin_dir;
+      }
+
+      // Otherwise, append the path to the plugin directory
+      return $base_url . $plugin_dir . '/' . ltrim($path, '/');
+  }
+  return $url;
 }, 10, 3);
 
 /**
