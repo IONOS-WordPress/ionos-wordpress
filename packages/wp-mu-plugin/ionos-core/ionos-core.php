@@ -95,7 +95,7 @@ function deactivate_custom_plugin($plugin_key) {
 					$plugin_key = IONOS_CUSTOM_PLUGINS_PATH . $plugin_slug . '/' . basename($plugin_file);
 
 					// Only load if active
-					if (is_custom_plugin_active($plugin_key)) {
+					if (in_array($plugin_key, $active_plugins, true)) {
 						include_once $plugin_file;
 						error_log('IONOS Core: Loaded plugin from custom path: ' . $plugin_slug . '/' . basename($plugin_file));
 					}
