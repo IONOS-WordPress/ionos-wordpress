@@ -120,7 +120,7 @@ function get_custom_plugins() : array {
 /**
  * Inject activated custom plugins
  */
-\add_action('muplugins_loaded', function () {
+\add_action('plugins_loaded', function () {
 	$custom_plugins = get_custom_plugins();
 	$active_plugins = get_active_custom_plugins();
 
@@ -194,14 +194,18 @@ function get_custom_plugins() : array {
 
 /**
  * prevent pollution of active_plugins with our custom plugins
+ * This ensures that when WordPress updates the active_plugins option,
+ * our custom plugins are not added to the standard active plugins list
  */
 \add_filter(
   hook_name: 'pre_update_option_active_plugins',
-  callback : function (array $active_plugins) : array {
+  callback : function (array $value, array $old_value, string $option) : array {
     $custom_active_plugins = get_active_custom_plugins();
     // remove our custom active plugins from the new value
-    return array_diff($active_plugins, $custom_active_plugins);
-  }
+    $x = array_diff($value, $custom_active_plugins);
+    return $x;
+  },
+  accepted_args : 3,
 );
 
 /**
