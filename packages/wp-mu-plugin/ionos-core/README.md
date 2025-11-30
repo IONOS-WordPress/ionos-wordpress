@@ -31,7 +31,7 @@ But it has some caveats:
 - delete custom active plugins :
 
   ```
-  pnpm -s wp-env run cli wp --quiet option delete ionos_custom_plugins_active
+  pnpm -s wp-env run cli wp --quiet option delete IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION
   ```
 
 - show error log
