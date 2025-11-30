@@ -50,7 +50,7 @@ function activate_custom_plugin($plugin_key) {
 	$active_plugins = get_active_custom_plugins();
 	if (!in_array($plugin_key, $active_plugins, true)) {
 		$active_plugins[] = $plugin_key;
-		\update_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION, $active_plugins);
+		\update_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION, $active_plugins, true);
 	}
 }
 
@@ -62,26 +62,35 @@ function deactivate_custom_plugin($plugin_key) {
 	$key = array_search($plugin_key, $active_plugins, true);
 	if ($key !== false) {
 		unset($active_plugins[$key]);
-		\update_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION, array_values($active_plugins));
+		\update_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION, array_values($active_plugins), true);
 	}
 }
 
 /**
- * Inject activated custom plugins
+ * Get all custom plugins from the custom plugins directory
+ * Returns an array of plugin info: ['key' => plugin_key, 'file' => plugin_file, 'data' => plugin_data]
  */
-\add_action('muplugins_loaded', function () {
-	if (!is_dir(IONOS_CUSTOM_PLUGINS_DIR)) {
+function get_custom_plugins() : array {
+  static $custom_plugins = null;
+
+  if ($custom_plugins !== null) {
+    return $custom_plugins;
+  }
+
+  $custom_plugins = [];
+
+  if (!is_dir(IONOS_CUSTOM_PLUGINS_DIR)) {
 		error_log(
 			sprintf(
-				'IONOS Core: skip loading plugins from custom directory(=%s) - directory does not exist',
+				'IONOS Core: skip loading plugins from custom directory(=%s) - directory does not exist or no valid plugins found',
 				IONOS_CUSTOM_PLUGINS_DIR,
 			)
 		);
-		return;
+
+		return $custom_plugins;
 	}
 
 	$plugin_dirs = glob(IONOS_CUSTOM_PLUGINS_DIR . '*', GLOB_ONLYDIR);
-	$active_plugins = get_active_custom_plugins();
 
 	foreach ($plugin_dirs as $plugin_dir) {
 		$plugin_slug = basename($plugin_dir);
@@ -93,15 +102,33 @@ function deactivate_custom_plugin($plugin_key) {
 				$plugin_data = \get_file_data($plugin_file, ['Name' => 'Plugin Name']);
 				if (!empty($plugin_data['Name'])) {
 					$plugin_key = IONOS_CUSTOM_PLUGINS_PATH . $plugin_slug . '/' . basename($plugin_file);
-
-					// Only load if active
-					if (in_array($plugin_key, $active_plugins, true)) {
-						include_once $plugin_file;
-						error_log('IONOS Core: Loaded plugin from custom path: ' . $plugin_slug . '/' . basename($plugin_file));
-					}
-					break; // Only load one main plugin file per directory
+					$custom_plugins[] = [
+						'key' => $plugin_key,
+						'file' => $plugin_file,
+						'slug' => $plugin_slug,
+						'data' => $plugin_data,
+					];
+					break; // Only process one main plugin file per directory
 				}
 			}
+		}
+	}
+
+	return $custom_plugins;
+}
+
+/**
+ * Inject activated custom plugins
+ */
+\add_action('muplugins_loaded', function () {
+	$custom_plugins = get_custom_plugins();
+	$active_plugins = get_active_custom_plugins();
+
+	foreach ($custom_plugins as $plugin_info) {
+		// Only load if active
+		if (in_array($plugin_info['key'], $active_plugins, true)) {
+			include_once $plugin_info['file'];
+			error_log('IONOS Core: Loaded plugin from custom path: ' . $plugin_info['slug'] . '/' . basename($plugin_info['file']));
 		}
 	}
 }, 1);
@@ -136,29 +163,14 @@ function deactivate_custom_plugin($plugin_key) {
  * This allows users to see and treat (mostly deactivate) custom plugins like regular ones
  */
 \add_filter('all_plugins', function ($plugins) {
-	if (!is_dir(IONOS_CUSTOM_PLUGINS_DIR)) {
-		return $plugins;
-	}
+	$custom_plugins = get_custom_plugins();
 
-	$plugin_dirs = glob(IONOS_CUSTOM_PLUGINS_DIR . '*', GLOB_ONLYDIR);
-
-	foreach ($plugin_dirs as $plugin_dir) {
-		$plugin_slug = basename($plugin_dir);
-		$plugin_files = glob($plugin_dir . '/*.php');
-
-		foreach ($plugin_files as $plugin_file) {
-			if (file_exists($plugin_file)) {
-				// Check if it's a valid plugin file
-				$plugin_data = \get_plugin_data($plugin_file, false, false);
-				if (!empty($plugin_data['Name'])) {
-					$plugin_key = IONOS_CUSTOM_PLUGINS_PATH . $plugin_slug . '/' . basename($plugin_file);
-					if (!isset($plugins[$plugin_key])) {
-						$plugins[$plugin_key] = $plugin_data;
-						// $plugins[$plugin_key]['Description'] = $plugin_data['Description'] . ' <em>(IONOS provisioned)</em>';
-					}
-					break;
-				}
-			}
+	foreach ($custom_plugins as $plugin_info) {
+		if (!isset($plugins[$plugin_info['key']])) {
+			// Get full plugin data for admin display
+			$plugin_data = \get_plugin_data($plugin_info['file'], false, false);
+			$plugins[$plugin_info['key']] = $plugin_data;
+			// $plugins[$plugin_info['key']]['Description'] = $plugin_data['Description'] . ' <em>(IONOS provisioned)</em>';
 		}
 	}
 
@@ -178,6 +190,18 @@ function deactivate_custom_plugin($plugin_key) {
     return array_unique(array_merge($active_plugins, $custom_active));
   },
   accepted_args : 1,
+);
+
+/**
+ * prevent pollution of active_plugins with our custom plugins
+ */
+\add_filter(
+  hook_name: 'pre_update_option_active_plugins',
+  callback : function (array $active_plugins) : array {
+    $custom_active_plugins = get_active_custom_plugins();
+    // remove our custom active plugins from the new value
+    return array_diff($active_plugins, $custom_active_plugins);
+  }
 );
 
 /**
