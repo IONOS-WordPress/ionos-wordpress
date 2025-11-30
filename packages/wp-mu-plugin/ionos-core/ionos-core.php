@@ -24,23 +24,64 @@ error_log('IONOS Core MU Plugin loaded.');
 // Define custom plugins directory
 const IONOS_CUSTOM_PLUGINS_PATH = 'ionos-core/custom-plugins/';
 const IONOS_CUSTOM_PLUGINS_DIR = __DIR__ . '/' . IONOS_CUSTOM_PLUGINS_PATH;
-const IONOS_CUSTOM_PLUGINS_URL = WPMU_PLUGIN_URL . IONOS_CUSTOM_PLUGINS_DIR;
+
+// Option name to store active custom plugins
+const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
 
 /**
- * Load custom plugins directly
+ * Get list of active custom plugins
+ */
+function get_active_custom_plugins() {
+	return \get_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION, []);
+}
+
+/**
+ * Check if a custom plugin is active
+ */
+function is_custom_plugin_active($plugin_key) {
+	$active_plugins = get_active_custom_plugins();
+	return in_array($plugin_key, $active_plugins, true);
+}
+
+/**
+ * Activate a custom plugin
+ */
+function activate_custom_plugin($plugin_key) {
+	$active_plugins = get_active_custom_plugins();
+	if (!in_array($plugin_key, $active_plugins, true)) {
+		$active_plugins[] = $plugin_key;
+		\update_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION, $active_plugins);
+	}
+}
+
+/**
+ * Deactivate a custom plugin
+ */
+function deactivate_custom_plugin($plugin_key) {
+	$active_plugins = get_active_custom_plugins();
+	$key = array_search($plugin_key, $active_plugins, true);
+	if ($key !== false) {
+		unset($active_plugins[$key]);
+		\update_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION, array_values($active_plugins));
+	}
+}
+
+/**
+ * Inject activated custom plugins
  */
 \add_action('muplugins_loaded', function () {
-  if (!is_dir(IONOS_CUSTOM_PLUGINS_DIR)) {
-    error_log(
-      sprintf(
-        'IONOS Core: skip loading plugins from custom directory(=%s) - directory does not exist',
-        IONOS_CUSTOM_PLUGINS_DIR,
-      )
-    );
+	if (!is_dir(IONOS_CUSTOM_PLUGINS_DIR)) {
+		error_log(
+			sprintf(
+				'IONOS Core: skip loading plugins from custom directory(=%s) - directory does not exist',
+				IONOS_CUSTOM_PLUGINS_DIR,
+			)
+		);
 		return;
 	}
 
 	$plugin_dirs = glob(IONOS_CUSTOM_PLUGINS_DIR . '*', GLOB_ONLYDIR);
+	$active_plugins = get_active_custom_plugins();
 
 	foreach ($plugin_dirs as $plugin_dir) {
 		$plugin_slug = basename($plugin_dir);
@@ -51,9 +92,13 @@ const IONOS_CUSTOM_PLUGINS_URL = WPMU_PLUGIN_URL . IONOS_CUSTOM_PLUGINS_DIR;
 				// Check if it's a valid plugin file by looking for plugin headers
 				$plugin_data = \get_file_data($plugin_file, ['Name' => 'Plugin Name']);
 				if (!empty($plugin_data['Name'])) {
-					// Load the plugin file directly
-					include_once $plugin_file;
-					error_log('IONOS Core: Loaded plugin from custom path: ' . $plugin_slug . '/' . basename($plugin_file));
+					$plugin_key = IONOS_CUSTOM_PLUGINS_PATH . $plugin_slug . '/' . basename($plugin_file);
+
+					// Only load if active
+					if (is_custom_plugin_active($plugin_key)) {
+						include_once $plugin_file;
+						error_log('IONOS Core: Loaded plugin from custom path: ' . $plugin_slug . '/' . basename($plugin_file));
+					}
 					break; // Only load one main plugin file per directory
 				}
 			}
@@ -63,6 +108,7 @@ const IONOS_CUSTOM_PLUGINS_URL = WPMU_PLUGIN_URL . IONOS_CUSTOM_PLUGINS_DIR;
 
 /**
  * Register custom plugin directory URL handling
+ * This allows plugins_url() to return correct URLs for our custom plugins
  */
 \add_filter('plugins_url', function ($url, $path, $plugin) {
   // Check if the plugin file is from our custom plugins directory
@@ -86,7 +132,8 @@ const IONOS_CUSTOM_PLUGINS_URL = WPMU_PLUGIN_URL . IONOS_CUSTOM_PLUGINS_DIR;
 }, 10, 3);
 
 /**
- * Show custom plugins in the admin plugins list (read-only, can't be deactivated)
+ * Show custom plugins in the admin plugins list
+ * This allows users to see and treat (mostly deactivate) custom plugins like regular ones
  */
 \add_filter('all_plugins', function ($plugins) {
 	if (!is_dir(IONOS_CUSTOM_PLUGINS_DIR)) {
@@ -107,7 +154,7 @@ const IONOS_CUSTOM_PLUGINS_URL = WPMU_PLUGIN_URL . IONOS_CUSTOM_PLUGINS_DIR;
 					$plugin_key = IONOS_CUSTOM_PLUGINS_PATH . $plugin_slug . '/' . basename($plugin_file);
 					if (!isset($plugins[$plugin_key])) {
 						$plugins[$plugin_key] = $plugin_data;
-						$plugins[$plugin_key]['Description'] = $plugin_data['Description'] . ' <strong>(Loaded from custom directory)</strong>';
+						// $plugins[$plugin_key]['Description'] = $plugin_data['Description'] . ' <em>(IONOS provisioned)</em>';
 					}
 					break;
 				}
@@ -119,22 +166,89 @@ const IONOS_CUSTOM_PLUGINS_URL = WPMU_PLUGIN_URL . IONOS_CUSTOM_PLUGINS_DIR;
 }, 999);
 
 /**
- * Prevent deactivation, activation, and deletion of custom plugins
+ * Filter active plugins to include custom active plugins
+ * This ensures that WordPress recognizes our custom active plugins as active
+ */
+\add_filter(
+  hook_name: 'option_active_plugins',
+  callback: function(array $active_plugins) {
+    $custom_active = get_active_custom_plugins();
+    // merge our custom active plugins with the standard active plugins
+    // use array_unique to avoid duplicates since this fillter will be called multiple times
+    return array_unique(array_merge($active_plugins, $custom_active));
+  },
+  accepted_args : 1,
+);
+
+/**
+ * Suppress "Plugin file does not exist" errors for custom plugins.
+ * This happens because WordPress checks for plugin file existence during activation,
+ * but our custom plugins are loaded directly and may not exist as separate files.
+ */
+\add_filter(
+  hook_name: 'wp_admin_notice_markup',
+  callback: function(string $markup, string $message, array $args) {
+    if(
+      is_array($args['additional_classes']) && in_array('error', $args['additional_classes']) &&
+      // we need to look for the localized version of the string
+      str_contains($message, __( 'Plugin file does not exist.' ))
+    ) {
+      // Check if the message relates to one of our activated custom plugins
+      foreach (get_active_custom_plugins() as $plugin_string) {
+        if (str_contains($message, $plugin_string)) {
+          return ''; // suppress the error message
+        }
+      }
+    }
+    return $markup;
+  },
+  accepted_args : 3,
+);
+
+/**
+ * Handle activation/deactivation of custom plugins
+ * This allows users to activate/deactivate custom plugins from the admin interface
+ */
+\add_action('admin_init', function () {
+	// Handle activation
+	if (isset($_GET['action']) && $_GET['action'] === 'activate' && isset($_GET['plugin'])) {
+		$plugin = \wp_unslash($_GET['plugin']);
+		if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+			\check_admin_referer('activate-plugin_' . $plugin);
+			activate_custom_plugin($plugin);
+			\wp_redirect(\admin_url('plugins.php?activate=true'));
+			exit;
+		}
+	}
+
+	// Handle deactivation
+	if (isset($_GET['action']) && $_GET['action'] === 'deactivate' && isset($_GET['plugin'])) {
+		$plugin = \wp_unslash($_GET['plugin']);
+		if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+			\check_admin_referer('deactivate-plugin_' . $plugin);
+			deactivate_custom_plugin($plugin);
+			\wp_redirect(\admin_url('plugins.php?deactivate=true'));
+			exit;
+		}
+	}
+});
+
+/**
+ * Prevent deletion of custom plugins
+ * These plugins are loaded directly and should not be deleted by users
  */
 \add_filter('plugin_action_links', function ($actions, $plugin_file) {
 	if (str_starts_with($plugin_file, IONOS_CUSTOM_PLUGINS_PATH)) {
-		// Remove activate, deactivate, and delete links since they're must-use plugins
-		unset($actions['activate']);
-		unset($actions['deactivate']);
+		// Remove delete link since they're custom loaded plugins
 		unset($actions['delete']);
-		// Add a notice that it's a must-use plugin
-		$actions['must_use'] = '<span style="color: #999;">ionos-core provisioned plugin</span>';
+    $actions['must_use'] = '<span style="color: #999;">ionos-core provisioned plugins cannot be deleted.</span>';
 	}
 	return $actions;
 }, 10, 2);
 
 /**
  * Bypass plugin file existence check during activation
+ * This prevents errors when activating custom plugins since they are loaded directly
  */
 \add_action('admin_init', function () {
 	if (isset($_GET['action']) && $_GET['action'] === 'activate' && isset($_GET['plugin'])) {
