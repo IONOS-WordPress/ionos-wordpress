@@ -188,6 +188,9 @@ function deactivate_custom_plugin($plugin_key) {
 \add_filter(
   hook_name: 'wp_admin_notice_markup',
   callback: function(string $markup, string $message, array $args) {
+
+    // Check if it's an error about a missing plugin file
+    // and if it relates to one of our custom plugins
     if(
       ($args['type'] === 'error' ||
         (is_array($args['additional_classes']) && in_array('error', $args['additional_classes']))) &&
@@ -201,9 +204,6 @@ function deactivate_custom_plugin($plugin_key) {
         }
       }
     }
-
-    error_log($message);
-    error_log(var_export($args, true));
 
     return $markup;
   },
