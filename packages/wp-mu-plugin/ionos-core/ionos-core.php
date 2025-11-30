@@ -189,9 +189,10 @@ function deactivate_custom_plugin($plugin_key) {
   hook_name: 'wp_admin_notice_markup',
   callback: function(string $markup, string $message, array $args) {
     if(
-      is_array($args['additional_classes']) && in_array('error', $args['additional_classes']) &&
+      ($args['type'] === 'error' ||
+        (is_array($args['additional_classes']) && in_array('error', $args['additional_classes']))) &&
       // we need to look for the localized version of the string
-      str_contains($message, __( 'Plugin file does not exist.' ))
+      str_contains($message, __('Plugin file does not exist.'))
     ) {
       // Check if the message relates to one of our activated custom plugins
       foreach (get_active_custom_plugins() as $plugin_string) {
@@ -200,6 +201,10 @@ function deactivate_custom_plugin($plugin_key) {
         }
       }
     }
+
+    error_log($message);
+    error_log(var_export($args, true));
+
     return $markup;
   },
   accepted_args : 3,
