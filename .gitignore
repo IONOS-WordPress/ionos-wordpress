@@ -29,3 +29,6 @@ packages/*/*/webpack.config.js
 /wp-playground-blueprint.local.json
 .DS_Store
 .go-waas.env
+mcp.log
+.gemini/settings.json
+.vscode/mcp.json

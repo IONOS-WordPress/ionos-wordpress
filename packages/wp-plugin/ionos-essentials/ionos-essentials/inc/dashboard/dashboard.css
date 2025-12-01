@@ -671,3 +671,27 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
     color: inherit;
   }
 }
+
+pre.mcp {
+  background: #091E39;
+  border-radius: 8px;
+  padding: 16px;
+  overflow: hidden;
+  position: relative;
+
+  code {
+    color: #2AE979;
+    font-family: "courier new";
+    white-space: pre;
+
+  }
+
+  .copy-icon{
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+  }
+}
