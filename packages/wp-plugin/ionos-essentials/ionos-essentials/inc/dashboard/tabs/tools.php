@@ -228,7 +228,7 @@ $match = array_filter(
 $plugin = reset($match); // first match or false
 
 // Check if Site-assistant plugin is installed
-if ($plugin) { ?>
+if ($plugin && \get_option('extendify_onboarding_completed')) { ?>
             <section class="sheet__section">
               <div class="grid">
                 <div class="grid-col grid-col--8 grid-col--small-12">
