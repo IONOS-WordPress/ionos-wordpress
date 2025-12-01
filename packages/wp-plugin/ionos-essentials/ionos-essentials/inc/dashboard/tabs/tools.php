@@ -255,6 +255,12 @@ if ($plugin && \get_option('extendify_onboarding_completed')) { ?>
               </div>
             </section>
           <?php } ?>
+
+          <?php
+            if( defined('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE') ){
+              require_once(__DIR__ . '/../../mcp/view.php');
+            }
+          ?>
         </div>
       </div>
     </div>

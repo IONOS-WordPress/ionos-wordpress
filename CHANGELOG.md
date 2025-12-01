@@ -1,5 +1,13 @@
 # ionos-wordpress
 
+## 0.0.6
+
+### Patch Changes
+
+- 0d8977c: New NBA: Link to Extendify Agent
+  New Switchpage look
+  New NBA: Link to Extendify Legal Notice
+
 ## 0.0.5
 
 ### Patch Changes
