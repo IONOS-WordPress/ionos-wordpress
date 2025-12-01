@@ -163,19 +163,26 @@ function get_custom_plugins() : array {
  * This allows users to see and treat (mostly deactivate) custom plugins like regular ones
  */
 \add_filter('all_plugins', function ($plugins) {
-	$custom_plugins = get_custom_plugins();
+	global $pagenow;
 
-	foreach ($custom_plugins as $plugin_info) {
-		if (!isset($plugins[$plugin_info['key']])) {
-			// Get full plugin data for admin display
-			$plugin_data = \get_plugin_data($plugin_info['file'], false, false);
-			$plugins[$plugin_info['key']] = $plugin_data;
-			// $plugins[$plugin_info['key']]['Description'] = $plugin_data['Description'] . ' <em>(IONOS provisioned)</em>';
-		}
-	}
+  switch ($pagenow) {
+    case 'plugins.php':
+    	$custom_plugins = get_custom_plugins();
+
+      foreach ($custom_plugins as $plugin_info) {
+        if (!isset($plugins[$plugin_info['key']])) {
+          // Get full plugin data for admin display
+          $plugin_data = \get_plugin_data($plugin_info['file'], false, false);
+          $plugins[$plugin_info['key']] = $plugin_data;
+          // $plugins[$plugin_info['key']]['Description'] = $plugin_data['Description'] . ' <em>(IONOS provisioned)</em>';
+        }
+      }
+
+      break;
+  }
 
 	return $plugins;
-}, 999);
+});
 
 /**
  * Filter active plugins to include custom active plugins
@@ -293,4 +300,5 @@ function get_custom_plugins() : array {
 		}
 	}
 });
+
 
