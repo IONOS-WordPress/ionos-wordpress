@@ -4,7 +4,7 @@ namespace ionos\essentials\mcp;
 
 defined('ABSPATH') || exit();
 
-define('IONOS_ESSENTIALS_MCP_APPLICATION_NAME', 'Essentials MCP');
+const APPLICATION_NAME = 'Essentials MCP';
 
 \add_action('init', function () {
   $mcp_settings = \get_option('wordpress_mcp_settings', ['enabled' => false]);
@@ -57,7 +57,7 @@ define('IONOS_ESSENTIALS_MCP_APPLICATION_NAME', 'Essentials MCP');
         }
 
 
-        if(user_has_application_password()){
+        if(\WP_Application_Passwords::application_name_exists_for_user( wp_get_current_user()->ID, APPLICATION_NAME )){
            return rest_ensure_response(new \WP_REST_Response([
             'active' => '1',
           ], 200));
@@ -87,7 +87,7 @@ define('IONOS_ESSENTIALS_MCP_APPLICATION_NAME', 'Essentials MCP');
 }, 1);
 
 add_action('application_password_did_authenticate', function($user, $item) {
-  if( $item['name'] !== IONOS_ESSENTIALS_MCP_APPLICATION_NAME ){
+  if( $item['name'] !== APPLICATION_NAME ){
     return;
   }
 
@@ -127,7 +127,7 @@ function get_new_application_password(): string {
 
   $new_app = \WP_Application_Passwords::create_new_application_password(
     $user->ID,
-    ['name' => IONOS_ESSENTIALS_MCP_APPLICATION_NAME]
+    ['name' => APPLICATION_NAME]
   );
 
   if (is_wp_error($new_app)) {
@@ -138,25 +138,12 @@ function get_new_application_password(): string {
   return \WP_Application_Passwords::chunk_password( $new_app[0] );
 }
 
-function user_has_application_password(): bool {
-  $user = wp_get_current_user();
-  $applications = \WP_Application_Passwords::get_user_application_passwords($user->ID);
-
-  foreach ($applications as $app) {
-    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_NAME) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
 function revoke_application_password(): void {
   $user = wp_get_current_user();
   $applications = \WP_Application_Passwords::get_user_application_passwords($user->ID);
 
   foreach ($applications as $app) {
-    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_NAME) {
+    if ($app['name'] === APPLICATION_NAME) {
       \WP_Application_Passwords::delete_application_password($user->ID, $app['uuid']);
       break;
     }
