@@ -177,12 +177,69 @@ function get_custom_plugins() : array {
           // $plugins[$plugin_info['key']]['Description'] = $plugin_data['Description'] . ' <em>(IONOS provisioned)</em>';
         }
       }
-
       break;
   }
 
 	return $plugins;
 });
+
+/**
+ * Prevent installation of plugins that already exist as custom plugins
+ * This filters the plugin installation API results to hide plugins that are already available
+ */
+\add_filter('plugins_api_result', function ($result, $action, $args) {
+	if ($action !== 'query_plugins' && $action !== 'plugin_information') {
+		return $result;
+	}
+
+	$custom_plugins = get_custom_plugins();
+	$custom_slugs = array_column($custom_plugins, 'slug');
+
+	if ($action === 'query_plugins' && isset($result->plugins)) {
+		// Filter out plugins that match our custom plugin slugs
+		$result->plugins = array_filter($result->plugins, function($plugin) use ($custom_slugs) {
+			$plugin_slug = is_object($plugin) ? $plugin->slug : ($plugin['slug'] ?? '');
+			return !in_array($plugin_slug, $custom_slugs, true);
+		});
+		$result->plugins = array_values($result->plugins); // Re-index array
+	}
+
+	if ($action === 'plugin_information' && isset($result->slug)) {
+		// If user tries to view details of a custom plugin, show notice
+		if (in_array($result->slug, $custom_slugs, true)) {
+			$result->sections['description'] = '<div class="notice notice-info"><p><strong>This plugin is already provisioned by IONOS Core and cannot be installed from WordPress.org.</strong></p></div>' . ($result->sections['description'] ?? '');
+			// Remove installation-related data
+			$result->download_link = '';
+		}
+	}
+
+	return $result;
+}, 10, 3);
+
+/**
+ * Block installation attempts of custom plugins
+ */
+\add_filter('upgrader_pre_install', function ($response, $hook_extra) {
+	if (isset($hook_extra['plugin'])) {
+		$custom_plugins = get_custom_plugins();
+		$custom_slugs = array_column($custom_plugins, 'slug');
+
+		// Extract slug from plugin path
+		$plugin_slug = dirname($hook_extra['plugin']);
+		if ($plugin_slug === '.') {
+			$plugin_slug = basename($hook_extra['plugin'], '.php');
+		}
+
+		if (in_array($plugin_slug, $custom_slugs, true)) {
+			return new \WP_Error(
+				'plugin_already_provisioned',
+				'This plugin is already provisioned by IONOS Core and cannot be installed from WordPress.org.'
+			);
+		}
+	}
+
+	return $response;
+}, 10, 2);
 
 /**
  * Filter active plugins to include custom active plugins
