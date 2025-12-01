@@ -103,7 +103,7 @@ function log_loop_event(string $name, array $payload = []): void
     IONOS_LOOP_REST_CLICK_ENDPOINT,
     [
       'methods'             => 'POST',
-      'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
+      'permission_callback' => fn () => 0 !== \get_current_user_id(),
       'callback'            => __NAMESPACE__ . '\_rest_loop_click_callback',
     ]
   );
