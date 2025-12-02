@@ -1,6 +1,6 @@
 ## Description
 
-add something here if branch name + PR title are not self-explanatory
+DELETE if branch name + PR title are self-explanatory
 
 ## Checklist
 
