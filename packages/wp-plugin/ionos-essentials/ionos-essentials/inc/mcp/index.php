@@ -4,7 +4,7 @@ namespace ionos\essentials\mcp;
 
 defined('ABSPATH') || exit();
 
-define('IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD', 'Essentials MCP');
+const APPLICATION_NAME = 'Essentials MCP';
 
 \add_action('init', function () {
   $mcp_settings = \get_option('wordpress_mcp_settings', ['enabled' => false]);
@@ -57,7 +57,7 @@ define('IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD', 'Essentials MCP');
         }
 
 
-        if(user_has_application_password()){
+        if(\WP_Application_Passwords::application_name_exists_for_user( wp_get_current_user()->ID, APPLICATION_NAME )){
            return rest_ensure_response(new \WP_REST_Response([
             'active' => '1',
           ], 200));
@@ -86,6 +86,17 @@ define('IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD', 'Essentials MCP');
   );
 }, 1);
 
+add_action('application_password_did_authenticate', function($user, $item) {
+  if( $item['name'] !== APPLICATION_NAME ){
+    return;
+  }
+
+  $data = \get_option('ionos_loop_mcp_tracking', []);
+
+  $data[$user->user_login] = ($data[$user->user_login] ?? 0) + 1;
+
+  \update_option('ionos_loop_mcp_tracking', $data);
+}, 10, 2);
 
 function activate_mcp_server(): bool {
   if( defined('WORDPRESS_MCP_PATH') ){
@@ -116,7 +127,7 @@ function get_new_application_password(): string {
 
   $new_app = \WP_Application_Passwords::create_new_application_password(
     $user->ID,
-    ['name' => IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD]
+    ['name' => APPLICATION_NAME]
   );
 
   if (is_wp_error($new_app)) {
@@ -127,25 +138,12 @@ function get_new_application_password(): string {
   return \WP_Application_Passwords::chunk_password( $new_app[0] );
 }
 
-function user_has_application_password(): bool {
-  $user = wp_get_current_user();
-  $applications = \WP_Application_Passwords::get_user_application_passwords($user->ID);
-
-  foreach ($applications as $app) {
-    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
 function revoke_application_password(): void {
   $user = wp_get_current_user();
   $applications = \WP_Application_Passwords::get_user_application_passwords($user->ID);
 
   foreach ($applications as $app) {
-    if ($app['name'] === IONOS_ESSENTIALS_MCP_APPLICATION_PASSWORD) {
+    if ($app['name'] === APPLICATION_NAME) {
       \WP_Application_Passwords::delete_application_password($user->ID, $app['uuid']);
       break;
     }

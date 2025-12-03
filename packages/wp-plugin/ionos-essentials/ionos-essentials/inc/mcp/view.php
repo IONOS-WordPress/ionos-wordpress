@@ -67,7 +67,7 @@ defined('ABSPATH') || exit();
         <?php
         $label = \esc_html('Generate application password for user', 'ionos-essentials');
         $revokeAppPassword = 0;
-        if(user_has_application_password()){
+        if(\WP_Application_Passwords::application_name_exists_for_user( wp_get_current_user()->ID, APPLICATION_NAME )){
           $label = \esc_html('Regenerate application password for user', 'ionos-essentials');
           $revokeAppPassword = 1;
         }
