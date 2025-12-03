@@ -87,16 +87,5 @@ function get_ai_button(): array
       ], ];
   }
 
-  if (strtotime($launch_completed) > time() - (3 * 24 * 60 * 60)) {
-    return [
-      [
-        'link'           => \admin_url('admin.php?page=extendify-launch'),
-        'text'           => \__('Rebuild Website', 'ionos-essentials'),
-        'css-class'      => 'button--promoting',
-        'title'          => \__('It is possible to rebuild your AI-created website within 72 hours', 'ionos-essentials'),
-        'target'         => '_blank',
-      ], ];
-  }
-
   return [];
 }

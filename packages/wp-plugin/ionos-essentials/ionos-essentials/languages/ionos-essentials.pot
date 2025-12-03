@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Essentials 1.3.3\n"
+"Project-Id-Version: Essentials 1.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-27T14:25:22+00:00\n"
+"POT-Creation-Date: 2025-12-03T10:53:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ionos-essentials\n"
@@ -55,14 +55,6 @@ msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/banner/index.php
 msgid "Start AI Sitebuilder"
-msgstr ""
-
-#: ionos-essentials/inc/dashboard/blocks/banner/index.php
-msgid "Rebuild Website"
-msgstr ""
-
-#: ionos-essentials/inc/dashboard/blocks/banner/index.php
-msgid "It is possible to rebuild your AI-created website within 72 hours"
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
@@ -581,6 +573,17 @@ msgstr ""
 msgid "Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience."
 msgstr ""
 
+#. translators: %s is placeholder for the tenant name
+#: ionos-essentials/inc/dashboard/tabs/tools.php
+#: ionos-essentials/inc/dashboard/view.php
+msgid "Restart AI Sitebuilder"
+msgstr ""
+
+#. translators: %s is placeholder for the tenant name
+#: ionos-essentials/inc/dashboard/tabs/tools.php
+msgid "Restart the AI Sitebuilder setup wizard to generate a new site from scratch. This will allow you to re-do the entire creation process."
+msgstr ""
+
 #: ionos-essentials/inc/dashboard/view.php
 msgid "Vulnerability scan information"
 msgstr ""
@@ -595,6 +598,38 @@ msgstr ""
 
 #: ionos-essentials/inc/dashboard/view.php
 msgid "Installations of plugins and themes are prohibited if their score exceeds 7.0."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "This will permanently reset all content and data created by the AI Sitebuilder on this WordPress website."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "Pages initially created without the use of the AI Sitebuilder will be kept."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "The Extendable theme is not installed or set as the active theme. You need to do this before you can continue."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "Manage themes"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "The Extendify plugin is not installed or activated. You need to do this before you can continue."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "Manage plugins"
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "The Site-Assistant plugin is not activated. You need to do this before you can continue."
+msgstr ""
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "Cancel"
 msgstr ""
 
 #. translators: s=link to control panel
