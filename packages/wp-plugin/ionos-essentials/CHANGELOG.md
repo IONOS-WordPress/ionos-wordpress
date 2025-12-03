@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.4.1
+
+### Patch Changes
+
+- ab10e6f: fix permission check for click tracking
+
 ## 1.4.0
 
 ### Minor Changes
