@@ -1,7 +1,8 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { execTestCLI } from '../../../../../../../../playwright/wp-env';
 
-test.describe('MCP',
+test.describe(
+  'MCP',
   {
     tag: ['@mcp'],
   },
@@ -35,4 +36,5 @@ test.describe('MCP',
       // Make sure there are no console errors. This is to catch any issues with loading the snippet.
       await expect(errors).toEqual([]);
     });
-});
+  }
+);

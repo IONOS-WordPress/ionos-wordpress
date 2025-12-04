@@ -219,11 +219,7 @@ render_section([
 
 $plugin = is_plugin_active('01-ext-ion8dhas7/01-ext-ion8dhas7.php');
 
-$match = array_filter(
-  array_keys(get_plugins()),
-  fn ($k) =>
-    str_starts_with($k, '01-ext-')
-);
+$match = array_filter(array_keys(get_plugins()), fn ($k) => str_starts_with($k, '01-ext-'));
 
 $plugin = reset($match); // first match or false
 
@@ -257,10 +253,10 @@ if ($plugin && \get_option('extendify_onboarding_completed')) { ?>
           <?php } ?>
 
           <?php
-            if( defined('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE') ){
+            if (defined('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE')) {
               require_once(__DIR__ . '/../../mcp/view.php');
             }
-          ?>
+?>
         </div>
       </div>
     </div>

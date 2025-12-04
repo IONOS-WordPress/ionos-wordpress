@@ -16,7 +16,7 @@ use const ionos\essentials\loop\IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS;
   }
   // @toDo: Remove after Nikolaus
   $delay = 0;
-  if( time() < strtotime('2025-12-06') ) {
+  if (time() < strtotime('2025-12-06')) {
     $delay += rand(0, WEEK_IN_SECONDS);
   }
   \wp_schedule_event(time() + $delay, 'weekly', IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS);
