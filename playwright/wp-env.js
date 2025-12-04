@@ -7,5 +7,7 @@ export function execTestCLI(command) {
   return execSync(`cat <<EOF | docker exec --interactive ${prefix}-tests-cli-1 sh -
     set -x
     ${command}
-EOF`).toString().trim();
+EOF`)
+    .toString()
+    .trim();
 }
