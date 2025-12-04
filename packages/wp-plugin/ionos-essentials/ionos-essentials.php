@@ -147,7 +147,6 @@ require_once __DIR__ . '/ionos-essentials/inc/loop/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/extendify/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/mcp/index.php';
 
-
 // soc plugin components
 require_once __DIR__ . '/ionos-essentials/inc/migration/index.php';
 

@@ -7,7 +7,11 @@
     "tenant": "ionos",
     "core_version": "6.8.3",
     "php_version": "8.3.26",
-    "instance_created": 1760370182
+    "instance_created": 1760370182,
+    "htaccess_md5": {
+      "wp-content/aiowps_backups/.htaccess": "4afd84b898945e884f88b7f2cda376c0",
+      ".htaccess": "8c2735e637d52076bdd0ccd8311737fa"
+    }
   },
   "wordpress": {
     "user_data": {

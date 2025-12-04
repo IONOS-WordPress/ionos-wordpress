@@ -45,6 +45,14 @@
         "instance_created": {
           "type": "integer",
           "description": "UTC Unix timestamp when the instance was created"
+        },
+        "htaccess_md5": {
+          "type": "object",
+          "description": "List of all .htaccess files (key: file path relative to ABSPATH, value: MD5  checksum)",
+          "additionalProperties": {
+            "type": "string",
+            "description": "MD5 checksum of the .htaccess file"
+          }
         }
       },
       "required": ["locale", "blog_public", "market", "tenant", "core_version", "php_version", "instance_created"]

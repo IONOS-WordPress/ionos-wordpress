@@ -695,3 +695,26 @@ pre.mcp {
     font-size: 20px;
   }
 }
+
+.bullet-list {
+    list-style: none; /* remove default bullets */
+    padding-left: 0;
+}
+
+.bullet-list li {
+    position: relative;
+    padding-left: 30px; /* space for icon */
+    margin-bottom: 10px;
+}
+
+/* Add the triangle icon before each list item */
+.bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 4%;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon fill="%23000000" points="12,2 22,20 2,20"/><text x="12" y="17" font-size="12" font-family="Arial" font-weight="bold" fill="%23ffffff" text-anchor="middle">!</text></svg>') no-repeat center center;
+    background-size: contain;
+}

@@ -137,17 +137,17 @@ function get_settings_value($key)
         <?php } ?>
 
         <div class="sheet">
-            <div>
-              <?php
-          render_section([
-            'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
-            'id'          => IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING,
-            'description' => \esc_html__(
-              'Monitor password leaks. If a password is suspected to be compromised, you will receive an email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated.',
-              'ionos-essentials',
-            ),
-            'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
-          ]);
+          <div>
+            <?php
+              render_section([
+                'title'       => \esc_html__('Password monitoring', 'ionos-essentials'),
+                'id'          => IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING,
+                'description' => \esc_html__(
+                  'Monitor password leaks. If a password is suspected to be compromised, you will receive an email notification with instructions to change it. As a further precaution, the account will be locked until the password is updated.',
+                  'ionos-essentials',
+                ),
+                'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
+              ]);
 
 if (! is_stretch()) {
   render_section([
@@ -176,51 +176,87 @@ render_section([
         </div>
 
         <h3 class="headline headline--sub"><?php \esc_html_e('Advanced', 'ionos-essentials'); ?></h3>
-                <div class="sheet">
+        <div class="sheet">
           <section class="sheet__section">
             <div class="grid">
-                <div class="grid-col grid-col--8 grid-col--small-12">
-                    <h2 class="headline headline--sub">
-                      <?php
-                        printf(
-                          // translators: %s is placeholder for the tenant name
-                          \esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'),
-                          Tenant::get_label()
-                        );
+              <div class="grid-col grid-col--8 grid-col--small-12">
+                <h2 class="headline headline--sub">
+                  <?php
+      printf(
+        // translators: %s is placeholder for the tenant name
+        \esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'),
+        Tenant::get_label()
+      );
 ?>
                 </h2>
-                    <p class="paragraph paragraph--neutral">
-                        <?php
-  // translators: %s is placeholder for the tenant name
-  printf(\esc_html__(
-    'Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience.',
-    'ionos-essentials',
-  ), Tenant::get_label());
+                <p class="paragraph paragraph--neutral">
+                    <?php
+    // translators: %s is placeholder for the tenant name
+    printf(\esc_html__(
+      'Enable the %s Hub as a start page in your WordPress admin panel for a more personalised and efficient experience.',
+      'ionos-essentials',
+    ), Tenant::get_label());
 ?>
-                    </p>
-                </div>
-                <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
-                    <span class="input-switch">
-                        <input id="ionos_essentials_dashboard_mode" type="checkbox" data-description="<?php printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), Tenant::get_label()); ?>"
-                        <?php if (\get_option('ionos_essentials_dashboard_mode', true)) {
-                          echo 'checked';
-                        } ?>
-                        >
-                        <label>
-                            <span class="input-switch__on"></span>
-                            <span class="input-switch__toggle"></span>
-                            <span class="input-switch__off"></span>
-                        </label>
-                    </span>
-                </div>
+                </p>
+              </div>
+              <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
+                <span class="input-switch">
+                  <input id="ionos_essentials_dashboard_mode" type="checkbox" data-description="<?php printf(\esc_html__('%s Hub as WordPress Admin start page', 'ionos-essentials'), Tenant::get_label()); ?>"
+                  <?php if (\get_option('ionos_essentials_dashboard_mode', true)) {
+                    echo 'checked';
+                  } ?>
+                  >
+                  <label>
+                      <span class="input-switch__on"></span>
+                      <span class="input-switch__toggle"></span>
+                      <span class="input-switch__off"></span>
+                  </label>
+                </span>
+              </div>
             </div>
           </section>
+          <?php include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+
+$plugin = is_plugin_active('01-ext-ion8dhas7/01-ext-ion8dhas7.php');
+
+$match = array_filter(array_keys(get_plugins()), fn ($k) => str_starts_with($k, '01-ext-'));
+
+$plugin = reset($match); // first match or false
+
+// Check if Site-assistant plugin is installed
+if ($plugin && \get_option('extendify_onboarding_completed')) { ?>
+            <section class="sheet__section">
+              <div class="grid">
+                <div class="grid-col grid-col--8 grid-col--small-12">
+                  <h2 class="headline headline--sub">
+                    <?php
+            printf(
+              // translators: %s is placeholder for the tenant name
+              \esc_html__('Restart AI Sitebuilder', 'ionos-essentials'),
+              Tenant::get_label()
+            );
+  ?>
+                  </h2>
+                  <p class="paragraph paragraph--neutral">
+                      <?php
+      // translators: %s is placeholder for the tenant name
+      printf(\esc_html__(
+        'Restart the AI Sitebuilder setup wizard to generate a new site from scratch. This will allow you to re-do the entire creation process.',
+        'ionos-essentials',
+      ), Tenant::get_label());
+  ?>
+                      <span class="link" id="restart-ai-sitebuilder"><?php \esc_html_e('Restart AI Sitebuilder', 'ionos-essentials'); ?></span>
+                  </p>
+                </div>
+              </div>
+            </section>
+          <?php } ?>
 
           <?php
-            if( defined('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE') ){
+            if (defined('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE')) {
               require_once(__DIR__ . '/../../mcp/view.php');
             }
-          ?>
+?>
         </div>
       </div>
     </div>
