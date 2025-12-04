@@ -118,6 +118,7 @@ function _get_hosting(): array
     'core_version'        => \get_bloginfo('version'),
     'php_version'         => PHP_VERSION,
     'instance_created'    => _get_instance_creation_date(),
+    'htaccess_md5'        => array('.htaccess' => md5_file(ABSPATH . '.htaccess')),
   ];
 }
 
