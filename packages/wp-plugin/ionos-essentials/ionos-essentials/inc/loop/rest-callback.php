@@ -13,7 +13,6 @@ use ionos\essentials\Tenant;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
-
 use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN;
 use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 
@@ -113,35 +112,37 @@ function _get_dashbord_data(): array
   return $data;
 }
 
-function _get_all_htaccess_md5(): array {
-    // Setup Iterators for deep search
-    $iterator = new RecursiveIteratorIterator(
-      new RecursiveDirectoryIterator( ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS )
-    );
+function _get_all_htaccess_md5(): array
+{
+  // Setup Iterators for deep search
+  $iterator = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator(ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS)
+  );
 
-    // Filter the iterator to only include actual .htaccess files.
-    $htaccess_files = iterator_to_array( new class( $iterator ) extends FilterIterator {
-      public function accept(): bool {
-        $file = $this->current();
-        return $file->isFile() && $file->getFilename() === '.htaccess';
-      }
-    });
+  // Filter the iterator to only include actual .htaccess files.
+  $htaccess_files = iterator_to_array(new class($iterator) extends FilterIterator {
+    public function accept(): bool
+    {
+      $file = $this->current();
+      return $file->isFile() && $file->getFilename() === '.htaccess';
+    }
+  });
 
-    // Use array_map to generate the associative array.
-    $checksums = array_map(
-      // Arrow function to compute the checksum
-      fn( SplFileInfo $file ): string => md5_file( $file->getRealPath() ),
-      $htaccess_files
-    );
+  // Use array_map to generate the associative array.
+  $checksums = array_map(
+    // Arrow function to compute the checksum
+    fn (SplFileInfo $file): string => md5_file($file->getRealPath()),
+    $htaccess_files
+  );
 
-    // Use array_combine to set the file paths as keys (relative to ABSPATH).
-    $paths = array_map(
-      fn( SplFileInfo $file ): string => str_replace( ABSPATH, '', $file->getRealPath() ),
-      $htaccess_files
-    );
+  // Use array_combine to set the file paths as keys (relative to ABSPATH).
+  $paths = array_map(
+    fn (SplFileInfo $file): string => str_replace(ABSPATH, '', $file->getRealPath()),
+    $htaccess_files
+  );
 
-    // Combine the path array (keys) and the checksum array (values)
-    return array_combine( $paths, $checksums );
+  // Combine the path array (keys) and the checksum array (values)
+  return array_combine($paths, $checksums);
 }
 
 function _get_hosting(): array
@@ -154,7 +155,7 @@ function _get_hosting(): array
     'core_version'        => \get_bloginfo('version'),
     'php_version'         => PHP_VERSION,
     'instance_created'    => _get_instance_creation_date(),
-    'htaccess_md5'        => (object)_get_all_htaccess_md5(),
+    'htaccess_md5'        => (object) _get_all_htaccess_md5(),
   ];
 }
 
