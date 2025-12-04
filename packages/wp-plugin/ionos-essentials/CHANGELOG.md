@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.4.2
+
+### Patch Changes
+
+- 0bc29dd: Add htaccess-info to loop data
+
 ## 1.4.1
 
 ### Patch Changes
