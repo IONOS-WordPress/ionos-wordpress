@@ -39,10 +39,11 @@ function get_tenant_config()
   $nba_links    = $nba_links    ?? '';
   $banner_links = $banner_links ?? '';
 
-  $domain   = $market_domains[$market] ?? reset($market_domains);
+  $domain   = \get_option('ionos_sfs_website_id') ? $market_domains['stretch'] : ($market_domains[$market] ?? reset($market_domains));
 
   $data = [
     'links'        => $links,
+    'sfs_links'    => $sfs_links ?? [],
     'domain'       => $domain,
     'market'       => $market,
     'tenant'       => $tenant,
