@@ -28,6 +28,12 @@ const EXTRA_ENTRYPOINT = '/opt/WordPress/extra/index.php';
 
 @include_once EXTRA_ENTRYPOINT;
 
+/*
+
+  rest of th file is just sugar for logging errors during inclusion
+
+*/
+
 // Check for the error PHP might have registered
 $error = error_get_last();
 
