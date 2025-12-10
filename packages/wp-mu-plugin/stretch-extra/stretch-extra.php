@@ -19,6 +19,11 @@ namespace ionos\stretch_extra;
 
 defined('ABSPATH') || exit();
 
+if (!array_key_exists('SFSWORDPRESS', $_SERVER)) {
+  // Not running on SFS WordPress hosting; do not load extra code.
+  return;
+}
+
 const EXTRA_ENTRYPOINT = '/opt/WordPress/extra/index.php';
 
 @include_once EXTRA_ENTRYPOINT;
