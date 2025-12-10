@@ -38,7 +38,7 @@ $market_domains = [
   'es'      => 'https://my.ionos.es/',
   'it'      => 'https://my.ionos.it/',
   'mx'      => 'https://my.ionos.mx/',
-  'stretch' => 'https://stretch.ionos.org/websites/',
+  'stretch' => 'https://' . ( get_option('ionos_sfs_panel_hostname') ?: 'stretch.ionos.org' ) . '/websites/',
 ];
 
 $webmailloginlinks = [
