@@ -1123,3 +1123,11 @@ msgstr "Ge externa AI-klienter som Gemini & Claude säker åtkomst till ditt inn
 #: ionos-essentials/inc/dashboard/view.php
 msgid "The Site-Assistant plugin is not activated. You need to do this before you can continue."
 msgstr ""
+
+#: ionos-essentials/inc/tenants/ionos.php
+msgid "Log Analysis"
+msgstr ""
+
+#: ionos-essentials/inc/tenants/ionos.php
+msgid "Manage Cache"
+msgstr ""

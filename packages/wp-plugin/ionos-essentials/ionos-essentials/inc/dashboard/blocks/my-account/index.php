@@ -15,7 +15,7 @@ function render_callback(): void
   }
 
   $links = '';
-  if ( empty(\get_option('ionos_sfs_website_id'))) {
+  if (empty(\get_option('ionos_sfs_website_id'))) {
     foreach ($data['links'] as $link) {
       $links .= sprintf(
         '<a href="%s" target="_blank">%s</a>',
@@ -23,7 +23,7 @@ function render_callback(): void
         \esc_html($link['anchor'])
       );
     }
-     if (! empty($data['webmail'])) {
+    if (! empty($data['webmail'])) {
       $links .= sprintf(
         '<a href="%s" target="_blank">%s</a>',
         \esc_url($data['webmail']),
@@ -34,7 +34,7 @@ function render_callback(): void
     foreach ($data['sfs_links'] as $link) {
       $links .= sprintf(
         '<a href="%s" target="_blank">%s</a>',
-        \esc_url($data['domain'] . \get_option('ionos_sfs_website_id'). '/' . $link['url']),
+        \esc_url($data['domain'] . \get_option('ionos_sfs_website_id') . '/' . $link['url']),
         \esc_html($link['anchor'])
       );
     }
@@ -65,10 +65,12 @@ function render_callback(): void
   }
 
   $button_list[] = [
-      'link'           => $data['domain'] . (\get_option('ionos_sfs_website_id') ?: ($data['banner_links']['managehosting'] ?? '')),
-      'target'         => '_blank',
-      'text'           => esc_html__('Manage Hosting', 'ionos-essentials'),
-      'css-attributes' => 'deeplink',
+    'link'           => $data['domain'] . (\get_option(
+      'ionos_sfs_website_id'
+    ) ?: ($data['banner_links']['managehosting'] ?? '')),
+    'target'         => '_blank',
+    'text'           => esc_html__('Manage Hosting', 'ionos-essentials'),
+    'css-attributes' => 'deeplink',
   ];
 
   return $button_list;
