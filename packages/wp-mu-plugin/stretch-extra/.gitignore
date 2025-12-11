@@ -1,0 +1,7 @@
+# Ignore everything in custom-plugins
+stretch-extra/plugins/*
+
+# # Except these directories
+# !stretch-core/custom-plugins/pi/
+# !stretch-core/custom-plugins/pa/
+# !stretch-core/custom-plugins/po/
