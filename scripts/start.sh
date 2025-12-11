@@ -97,7 +97,7 @@ if [[ "${TEST_PRODUCTION:-}" == 'true' ]]; then
     # echoes comma separated list of unpacked transpiled mu-plugins
     function mu_plugins {
       for PLUGIN in $(find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-        echo "\"wp-content/mu-plugins/${PLUGIN}.php\" : \"./packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}.php\","
+        echo "\"wp-content/mu-plugins/${PLUGIN}.php\" : \"./packages/wp-mu-plugin/${PLUGIN}/dist/${zip_archive%.zip}/${PLUGIN}.php\","
         if [[ -d "./packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}" ]]; then
           zip_archive=$(find packages/wp-mu-plugin/${PLUGIN} -regex ".*\.zip" -printf '%f\n' 2>/dev/null || echo '')
           echo "\"wp-content/mu-plugins/${PLUGIN}\" : \"./packages/wp-mu-plugin/${PLUGIN}/dist/${zip_archive%.zip}/${PLUGIN}\","
