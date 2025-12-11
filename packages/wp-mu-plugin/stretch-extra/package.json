@@ -2,6 +2,9 @@
   "name": "@ionos-wordpress/stretch-extra",
   "version": "1.0.0",
   "private": true,
+  "scripts" : {
+    "prepack": "./scripts/prepack.sh"
+  },
   "devDependencies": {
     "@ionos-wordpress/rector-php": "workspace:*",
     "@ionos-wordpress/ecs-php": "workspace:*",

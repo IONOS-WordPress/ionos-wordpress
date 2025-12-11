@@ -1,0 +1,190 @@
+#!/usr/bin/env bash
+
+#
+# script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
+#
+# this script is used to install or update a configured set of plugins/themes into mu plugin stretch-extra
+#
+
+# bootstrap the environment
+source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+
+readonly STRETCH_EXTRA_BUNDLE_DIR='./packages/wp-mu-plugin/stretch-extra/stretch-extra'
+
+ionos.wordpress.stretch-extra.help() {
+  echo "STRETCH_EXTRA_BUNDLE_DIR=$STRETCH_EXTRA_BUNDLE_DIR"
+
+  # print everything in this script file after the '###help-message' marker
+  printf "$(sed -e '1,/^###help-message/d' "$0")\n"
+}
+
+ionos.wordpress.stretch-extra.bundle() {
+  echo "Bundling plugins and themes using configuration '${STRETCH_EXTRA_CONFIG_PATH}' into stretch-extra..."
+
+  # Read all top-level properties from the config file into a bash array
+  mapfile -t top_level_keys < <(jq -r 'keys[]' "${STRETCH_EXTRA_CONFIG_PATH}")
+
+  [[ "$VERBOSE" != '' ]] && ionos.wordpress.log_info "read configuration \n\n$(cat "${STRETCH_EXTRA_CONFIG_PATH}")"
+
+  # Loop over all keys in top_level_keys
+  for top_level_key in "${top_level_keys[@]}"; do
+    [[ "$VERBOSE" != '' ]] && ionos.wordpress.log_info "Processing ${top_level_key}"
+
+    # Get the number of items for this key
+    local item_count=$(jq -r ".${top_level_key} | length" "${STRETCH_EXTRA_CONFIG_PATH}")
+
+    # Loop over all items in the current key (plugins|themes|...)
+    for ((i=0; i<item_count; i++)); do
+      # Read the plugin or theme into an associative array
+      declare -A item
+      while IFS="=" read -r key value; do
+        item["$key"]="$value"
+      done < <(jq -r ".${top_level_key}[$i] | to_entries | .[] | \"\(.key)=\(.value)\"" "${STRETCH_EXTRA_CONFIG_PATH}")
+
+      # process the item based on the top-level key
+      case "${top_level_key}" in
+        plugins|themes)
+          local url="${item[url]}"
+
+          [[ "$VERBOSE" != '' ]] && ionos.wordpress.log_info "Processing ${top_level_key%?} from URL: ${url}"
+
+          local archive_file="${STRETCH_EXTRA_BUNDLE_DIR}/${top_level_key}/$(basename "$url")"
+
+          # If it's a file URL, substitute variables in the path
+          if [[ "$url" =~ ^file:// ]]; then
+            # Remove the file:// prefix
+            local file_path="${url#file://}"
+
+            # Evaluate the path to substitute variables like $(pwd)
+            url="file://$(eval echo "$file_path")"
+            archive_file="${STRETCH_EXTRA_BUNDLE_DIR}/${top_level_key}/$(basename "$url")"
+
+            cp "${url#file://}" "${archive_file}"
+          elif [[ "$url" =~ ^https?:// ]]; then
+            # Download the file from the URL
+            curl -s -L -o "${archive_file}" "$url"
+          else
+            ionos.wordpress.log_error "Unsupported URL format: ${url}"
+            exit 1
+          fi
+
+          [[ "$VERBOSE" != '' ]] && ionos.wordpress.log_info "Downloaded ${top_level_key%?} from URL: ${url}"
+
+          # Extract the zip file
+          unzip -q -o "${archive_file}" -d "${STRETCH_EXTRA_BUNDLE_DIR}/${top_level_key}/"
+
+          # Remove the archive file
+          rm -f "${archive_file}"
+
+          [[ "$VERBOSE" != '' ]] && ionos.wordpress.log_info "Extracted and removed archive: $(basename "${archive_file}")"
+
+          ;;
+        *)
+          ionos.wordpress.log_warn "Unknown top-level key: ${top_level_key}"
+          ;;
+      esac
+
+      unset item
+    done
+  done
+
+  # Placeholder for actual bundling logic
+}
+
+ionos.wordpress.stretch-extra.update() {
+  echo "Updating configuration ${STRETCH_EXTRA_CONFIG_PATH} in stretch-extra..."
+  # Placeholder for actual update logic
+}
+
+ionos.wordpress.stretch-extra.check() {
+  echo "Checking if plugins and themes using configuration ${STRETCH_EXTRA_CONFIG_PATH} in stretch-extra are up to date..."
+  # Placeholder for actual check logic
+}
+
+POSITIONAL_ARGS=()
+ACTION=''
+VERBOSE=''
+FORCE=''
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --help)
+      ionos.wordpress.stretch-extra.help
+      exit
+      ;;
+    --bundle|--update|--check)
+      [[ -n "$ACTION" ]] && {
+        ionos.wordpress.log_error "Error: --bundle, --check and --update are mutually exclusive options."
+        exit 1
+      }
+      ACTION=${1##--}
+      shift
+      ;;
+    --verbose)
+      VERBOSE=true
+      shift
+      ;;
+    --force)
+      VERBOSE=true
+      shift
+      ;;
+    -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1")
+      shift # past argument
+      ;;
+  esac
+done
+
+[[ -z "$ACTION" ]] && ACTION='help'
+
+[[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=("${STRETCH_EXTRA_BUNDLE_DIR}/stretch-extra.json")
+# Abort if more than one additional argument is given
+if [[ ${#POSITIONAL_ARGS[@]} -gt 1 ]]; then
+  ionos.wordpress.log_error "Error: Only one configuration file path can be provided."
+  exit 1
+fi
+
+export VERBOSE FORCE
+export STRETCH_EXTRA_CONFIG_PATH="${POSITIONAL_ARGS[0]}"
+
+ionos.wordpress.stretch-extra."${ACTION}"
+
+exit
+
+###help-message
+Syntax: 'pnpm run stretch-extra [options] [additional-args]'
+
+stretch-extra manages configured plugins and themes into mu plugin 'stretch-extra'.
+
+The default configuration file is located at './packages/wp-mu-plugin/stretch-extra/stretch-extra/stretch-extra/stretch-extra.json".
+It can be overridden by providing the configuration file to use as additional argument.
+E.g. 'pnpm run stretch-extra --bundle ./my-stretch-extra.json'
+
+Options:
+
+  --help    Show this help message and exit
+
+  --bundle  Bundle all configured plugins and themes into mu plugin 'stretch-extra'
+
+  --update  Update all configured plugin and theme versions in mu plugin 'stretch-extra' configuration
+
+  --check   Check if all configured plugins and themes are up to date in mu plugin 'stretch-extra'
+
+  Usage:
+    Provisions configured plugins and themes into mu plugin 'stretch-extra'.
+    'pnpm run stretch-extra --bundle'
+
+    Check if all configured plugins and themes are up to date in mu plugin 'stretch-extra'.
+    'pnpm run stretch-extra --check'
+
+    Update all configured plugins and themes in mu plugin 'stretch-extra'.
+    'pnpm run stretch-extra --update'
+
+Flags: 
+  --verbose   Enable verbose logging output
+
+see ./packages/wp-mu-plugin/stretch-extra/stretch-extra/stretch-extra/README.md for more informati"n

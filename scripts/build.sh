@@ -490,6 +490,8 @@ EOF
     )
   fi
 
+  pnpm --filter "$PACKAGE_NAME" --if-present run prepack
+
   if [[ "${USE[@]}" =~ all|wp-plugin:bundle ]]; then
     # create zip file for each dist/[plugin]-[version]-[php-version] directory
     for DIR in $(find $path/dist/ -type d -name '*-*-php*'); do

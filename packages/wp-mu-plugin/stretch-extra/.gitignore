@@ -1,7 +1,6 @@
 # Ignore everything in custom-plugins
 stretch-extra/plugins/*
+stretch-extra/themes/*
 
-# # Except these directories
-# !stretch-core/custom-plugins/pi/
-# !stretch-core/custom-plugins/pa/
-# !stretch-core/custom-plugins/po/
+!stretch-extra/plugins/README.md
+!stretch-extra/themes/README.md
