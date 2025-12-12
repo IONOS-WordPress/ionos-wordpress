@@ -1,12 +1,6 @@
 {
   "plugins" : [
     {
-      "url": "https://downloads.wordpress.org/plugin/woocommerce.10.4.0.zip"
-    },
-    {
-      "url": "https://downloads.wordpress.org/plugin/wordpress-seo.zip"
-    },
-    {
       "url": "https://downloads.wordpress.org/plugin/extendify.zip"
     },
     {
