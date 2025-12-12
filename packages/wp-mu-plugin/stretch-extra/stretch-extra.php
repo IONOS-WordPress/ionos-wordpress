@@ -19,9 +19,10 @@ namespace ionos\stretch_extra;
 
 defined('ABSPATH') || exit();
 
-if (!array_key_exists('SFS', $_SERVER)) {
-  $_SERVER['SFS'] = 'stretch-extra';
-}
+// // Set SFS server variable to fake stretch-extra context
+// if (!array_key_exists('SFS', $_SERVER)) {
+//   $_SERVER['SFS'] = 'stretch-extra';
+// }
 
 const EXTRA_ENTRYPOINT = __DIR__ . '/stretch-extra/index.php';
 
