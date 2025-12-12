@@ -106,11 +106,11 @@ ionos.wordpress.stretch-extra.install() {
 ionos.wordpress.stretch-extra.bundle() {
   echo "Installing plugins and themes using configuration '${STRETCH_EXTRA_CONFIG_PATH}' into stretch-extra..."
 
-  # install stretch-extra plugins/themes
-  pnpm run build --filter stretch-extra
-
   # build stretch-extra
   pnpm run stretch-extra --install
+
+  # install stretch-extra plugins/themes
+  pnpm run build --filter stretch-extra
 
   # collect all files into a tarball
   readonly SOURCE=$(echo ./packages/wp-mu-plugin/stretch-extra/dist/stretch-extra-*-php*/stretch-extra/stretch-extra)
@@ -118,9 +118,9 @@ ionos.wordpress.stretch-extra.bundle() {
   # Get stretch-extra version from package.json
   local version=$(jq -r '.version' ./packages/wp-mu-plugin/stretch-extra/package.json)
 
-  # Create tar.gz in system temp directory with only relative paths
-  local temp_file=$(mktemp -d)/stretch-extra-${version}.tar.gz
-  tar -czf "${temp_file}" -C "${SOURCE}" .
+  # Create tar.xz in system temp directory with only relative paths
+  local temp_file=$(mktemp -d)/stretch-extra-${version}.tar.xz
+  tar -cJf "${temp_file}" -C "${SOURCE}" .
 
   echo "${temp_file}"
 }
