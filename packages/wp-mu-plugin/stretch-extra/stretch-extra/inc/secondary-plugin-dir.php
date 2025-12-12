@@ -2,11 +2,13 @@
 
 namespace ionos\stretch_extra\secondary_plugin_dir;
 
+use const ionos\stretch_extra\IONOS_CUSTOM_DIR;
+
 defined('ABSPATH') || exit();
 
 // Define custom plugins directory
 const IONOS_CUSTOM_PLUGINS_PATH = 'plugins/';
-const IONOS_CUSTOM_PLUGINS_DIR  = __DIR__ . '/../' . IONOS_CUSTOM_PLUGINS_PATH;
+const IONOS_CUSTOM_PLUGINS_DIR  = IONOS_CUSTOM_DIR . '/' . IONOS_CUSTOM_PLUGINS_PATH;
 
 // Option name to store active custom plugins
 const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
@@ -130,24 +132,13 @@ function get_custom_plugins(): array
  * This allows plugins_url() to return correct URLs for our custom plugins
  */
 \add_filter('plugins_url', function ($url, $path, $plugin) {
-  // Check if the plugin file is from our custom plugins directory
-  if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR)) {
-    // Get the plugin directory relative to custom plugins dir
-    $plugin_relative = str_replace(IONOS_CUSTOM_PLUGINS_DIR, '', $plugin);
-    // Remove the plugin filename, keeping only the directory path
-    $plugin_dir = dirname($plugin_relative);
-
-    $base_url = \plugins_url(IONOS_CUSTOM_PLUGINS_PATH, __FILE__);
-
-    // If path is empty, the plugin is requesting its own directory
-    if (empty($path)) {
-      return $base_url . $plugin_dir;
-    }
-
-    // Otherwise, append the path to the plugin directory
-    return $base_url . $plugin_dir . '/' . ltrim($path, '/');
+  // if its not one of our plugins just return the original url
+  if (!str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR) && !array_key_exists('SFS', $_SERVER)) {
+    return $url;
   }
-  return $url;
+
+  // if we run in stretch sfs : replace the standard plugins URL part with sfs stretch mapping
+  return str_replace("wp-content/plugins/opt/WordPress/extra", "wp-sfsxtra", $url);
 }, 10, 3);
 
 /**
