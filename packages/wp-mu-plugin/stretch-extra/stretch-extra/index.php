@@ -8,6 +8,8 @@ namespace ionos\stretch_extra;
 
 defined('ABSPATH') || exit();
 
+const IONOS_CUSTOM_DIR  = __DIR__;
+
 /*
    require_once
    - all PHP files
