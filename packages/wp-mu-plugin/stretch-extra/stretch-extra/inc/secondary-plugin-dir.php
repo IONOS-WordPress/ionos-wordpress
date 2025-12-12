@@ -4,8 +4,6 @@ namespace ionos\stretch_extra\secondary_plugin_dir;
 
 defined('ABSPATH') || exit();
 
-error_log('secondary-plugin-dir: hello');
-
 // Define custom plugins directory
 const IONOS_CUSTOM_PLUGINS_PATH = 'plugins/';
 const IONOS_CUSTOM_PLUGINS_DIR  = __DIR__ . '/../' . IONOS_CUSTOM_PLUGINS_PATH;
