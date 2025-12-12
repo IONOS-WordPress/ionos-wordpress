@@ -505,6 +505,8 @@ $(echo -n "---")
 $(for ZIP_ARCHIVE in $(find $path/dist/ -name '*.zip'); do (cd $(dirname $ZIP_ARCHIVE) && unzip -l $(basename $ZIP_ARCHIVE) && echo ""); done)
 EOF
   fi
+
+  pnpm --filter "$PACKAGE_NAME" --if-present run postpack
 }
 
 # build a monorepo workspace package

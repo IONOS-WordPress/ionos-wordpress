@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts" : {
-    "prepack": "./scripts/prepack.sh"
+    "postpack": "./scripts/postpack.sh"
   },
   "devDependencies": {
     "@ionos-wordpress/rector-php": "workspace:*",
