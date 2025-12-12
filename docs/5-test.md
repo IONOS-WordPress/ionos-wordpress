@@ -110,6 +110,8 @@ to test the production build :
 
 Alternatively you can destroy wp-env and start the everything at once by doing `TEST_PRODUCTION=true pnpm run test`.
 
+> When starting wp-env with `TEST_PRODUCTION=true` a `.wp-env.json.override` will be created to mount the transpiled php files into `wp-env`. **This file will not automatically be removed on `pnpm destroy` by intention - you have to do it manually.**
+
 # links
 
 - dozens of useful playwright/wordpress testcases to borrow from :

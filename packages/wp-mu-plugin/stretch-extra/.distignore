@@ -1,0 +1,7 @@
+README.md
+CHANGELOG.md
+.gitignore
+/stretch-extra/plugins
+/stretch-extra/themes
+stretch-extra/stretch-extra.json
+/scripts
