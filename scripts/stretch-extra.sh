@@ -18,8 +18,20 @@ ionos.wordpress.stretch-extra.help() {
   printf "$(sed -e '1,/^###help-message/d' "$0")\n"
 }
 
-ionos.wordpress.stretch-extra.bundle() {
-  echo "Bundling plugins and themes using configuration '${STRETCH_EXTRA_CONFIG_PATH}' into stretch-extra..."
+ionos.wordpress.stretch-extra.clean() {
+  echo "Removing plugins and themes using configuration '${STRETCH_EXTRA_CONFIG_PATH}' in stretch-extra..."
+
+  local to_delete=$(find ${STRETCH_EXTRA_BUNDLE_DIR}/{plugins,themes,mu-plugins} -maxdepth 1 -mindepth 1 -type d 2>/dev/null || true)
+
+  for dir in $to_delete; do
+    rm -rf "$dir"
+  done
+
+  ionos.wordpress.log_info "Removed installed plugins and themes:\n\n$to_delete"
+}
+
+ionos.wordpress.stretch-extra.install() {
+  echo "Installing plugins and themes using configuration '${STRETCH_EXTRA_CONFIG_PATH}' into stretch-extra..."
 
   # Read all top-level properties from the config file into a bash array
   mapfile -t top_level_keys < <(jq -r 'keys[]' "${STRETCH_EXTRA_CONFIG_PATH}")
@@ -88,7 +100,29 @@ ionos.wordpress.stretch-extra.bundle() {
     done
   done
 
-  # Placeholder for actual bundling logic
+  ionos.wordpress.log_info "Installed plugins/themes\n\n$(find ${STRETCH_EXTRA_BUNDLE_DIR}/{plugins,themes,mu-plugins} -maxdepth 1 -mindepth 1 -type d 2>/dev/null || true)"
+}
+
+ionos.wordpress.stretch-extra.bundle() {
+  echo "Installing plugins and themes using configuration '${STRETCH_EXTRA_CONFIG_PATH}' into stretch-extra..."
+
+  # install stretch-extra plugins/themes
+  pnpm run build --filter stretch-extra
+
+  # build stretch-extra
+  pnpm run stretch-extra --install
+
+  # collect all files into a tarball
+  readonly SOURCE=$(echo ./packages/wp-mu-plugin/stretch-extra/dist/stretch-extra-*-php*/stretch-extra/stretch-extra)
+
+  # Get stretch-extra version from package.json
+  local version=$(jq -r '.version' ./packages/wp-mu-plugin/stretch-extra/package.json)
+
+  # Create tar.gz in system temp directory with only relative paths
+  local temp_file=$(mktemp -d)/stretch-extra-${version}.tar.gz
+  tar -czf "${temp_file}" -C "${SOURCE}" .
+
+  echo "${temp_file}"
 }
 
 ionos.wordpress.stretch-extra.update() {
@@ -112,9 +146,9 @@ while [[ $# -gt 0 ]]; do
       ionos.wordpress.stretch-extra.help
       exit
       ;;
-    --bundle|--update|--check)
+    --bundle|--update|--check|--install|--clean)
       [[ -n "$ACTION" ]] && {
-        ionos.wordpress.log_error "Error: --bundle, --check and --update are mutually exclusive options."
+        ionos.wordpress.log_error "Error: --bundle, --update, --check, --install and --clean are mutually exclusive options."
         exit 1
       }
       ACTION=${1##--}
@@ -168,7 +202,11 @@ Options:
 
   --help    Show this help message and exit
 
-  --bundle  Bundle all configured plugins and themes into mu plugin 'stretch-extra'
+  --install Install all configured plugins and themes into mu plugin 'stretch-extra'
+
+  --bundle  Bundle all configured plugins and themes including the distributable part of mu plugin 'stretch-extra' into a tarball
+
+  --clean   Removes all installed plugins and themes from mu plugin 'stretch-extra' 
 
   --update  Update all configured plugin and theme versions in mu plugin 'stretch-extra' configuration
 
@@ -176,7 +214,13 @@ Options:
 
   Usage:
     Provisions configured plugins and themes into mu plugin 'stretch-extra'.
+    'pnpm run stretch-extra --install'
+
+    Create a tarball including all configured plugins and themes including the distributable part of mu plugin 'stretch-extra'.
     'pnpm run stretch-extra --bundle'
+
+    Remove all installed plugins and themes from mu plugin 'stretch-extra'.
+    'pnpm run stretch-extra --clean'
 
     Check if all configured plugins and themes are up to date in mu plugin 'stretch-extra'.
     'pnpm run stretch-extra --check'
@@ -187,4 +231,4 @@ Options:
 Flags: 
   --verbose   Enable verbose logging output
 
-see ./packages/wp-mu-plugin/stretch-extra/stretch-extra/stretch-extra/README.md for more informati"n
+see ./packages/wp-mu-plugin/stretch-extra/stretch-extra/stretch-extra/README.md for more information
