@@ -8,8 +8,6 @@ namespace ionos\stretch_extra;
 
 defined('ABSPATH') || exit();
 
-error_log('hello from stretch-extra/index.php');
-
 /*
    require_once
    - all PHP files
