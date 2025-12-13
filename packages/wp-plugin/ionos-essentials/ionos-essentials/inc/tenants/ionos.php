@@ -30,14 +30,15 @@ $links = [
 // Trailing slash
 // The first market is the default market
 $market_domains = [
-  'de' => 'https://mein.ionos.de/',
-  'uk' => 'https://my.ionos.co.uk/',
-  'gb' => 'https://my.ionos.co.uk/',
-  'fr' => 'https://my.ionos.fr/',
-  'us' => 'https://my.ionos.com/',
-  'es' => 'https://my.ionos.es/',
-  'it' => 'https://my.ionos.it/',
-  'mx' => 'https://my.ionos.mx/',
+  'de'      => 'https://mein.ionos.de/',
+  'uk'      => 'https://my.ionos.co.uk/',
+  'gb'      => 'https://my.ionos.co.uk/',
+  'fr'      => 'https://my.ionos.fr/',
+  'us'      => 'https://my.ionos.com/',
+  'es'      => 'https://my.ionos.es/',
+  'it'      => 'https://my.ionos.it/',
+  'mx'      => 'https://my.ionos.mx/',
+  'stretch' => 'https://' . ( get_option('ionos_sfs_panel_hostname') ?: 'stretch.ionos.org' ) . '/websites/',
 ];
 
 $webmailloginlinks = [
@@ -52,10 +53,22 @@ $webmailloginlinks = [
 ];
 
 $nba_links = [
-  'connectdomain' => 'domains',
-  'connectmail'   => 'email-portfolio?',
+  'connectdomain'     => 'domains',
+  'connectmail'       => 'email-portfolio?',
+  'connectdomain_sfs' => \get_option('ionos_sfs_website_id') . '/domain-configuration',
 ];
 
 $banner_links = [
   'managehosting' => 'websites',
+];
+
+$sfs_links = [
+  [
+    'url'    => 'log-analysis',
+    'anchor' => __('Log Analysis', 'ionos-essentials'),
+  ],
+  [
+    'url'    => 'manage-cache',
+    'anchor' => __('Manage Cache', 'ionos-essentials'),
+  ],
 ];
