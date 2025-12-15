@@ -53,9 +53,10 @@ $webmailloginlinks = [
 ];
 
 $nba_links = [
-  'connectdomain'     => 'domains',
-  'connectmail'       => 'email-portfolio?',
-  'connectdomain_sfs' => \get_option('ionos_sfs_website_id') . '/domain-configuration',
+    'connectdomain' => get_option('ionos_sfs_website_id')
+        ? get_option('ionos_sfs_website_id') . '/domain-configuration'
+        : 'domains',
+    'connectmail'   => 'email-portfolio?',
 ];
 
 $banner_links = [
