@@ -66,18 +66,17 @@ function render_callback(): void
 
   $managehosting = $data['banner_links']['managehosting'] ?? '';
 
-  if (array_key_exists('SFS', $_SERVER) || ! empty(\get_option('ionos_sfs_website_id'))) {
+  if (array_key_exists('SFS', $_SERVER) || \get_option('ionos_sfs_website_id')) {
     $link = $data['domain'] . \get_option('ionos_sfs_website_id') . '/' . $managehosting;
   } else {
       $link = $data['domain'] . $managehosting;
   }
 
   $button_list[] = [
-    'link'           => $data['domain'] . $managehosting,
+    'link'           => $link,
     'target'         => '_blank',
-    'text'           => esc_html__('Manage Hosting', 'ionos-essentials'),
+    'text'           => \esc_html__('Manage Hosting', 'ionos-essentials'),
     'css-attributes' => 'deeplink',
   ];
-
   return $button_list;
 });

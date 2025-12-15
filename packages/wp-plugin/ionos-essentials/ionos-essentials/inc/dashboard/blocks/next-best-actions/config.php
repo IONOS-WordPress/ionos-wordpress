@@ -96,9 +96,7 @@ NBA::register(
 );
 
 if (null !== $data) {
-  $connectdomain = ! \get_option('ionos_sfs_website_id')
-    ? ($data['nba_links']['connectdomain'] ?? '')
-    : ($data['nba_links']['connectdomain_sfs'] ?? '');
+  $connectdomain = $data['nba_links']['connectdomain'] ?? '';
 
   NBA::register(
     id: 'connect-domain',
