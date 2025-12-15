@@ -67,7 +67,7 @@ function render_callback(): void
   $managehosting = $data['banner_links']['managehosting'] ?? '';
 
   if (array_key_exists('SFS', $_SERVER) || \get_option('ionos_sfs_website_id')) {
-    $link = $data['domain'] . \get_option('ionos_sfs_website_id') . '/' . $managehosting;
+    $link = $data['domain'] . \get_option('ionos_sfs_website_id') . '/';
   } else {
       $link = $data['domain'] . $managehosting;
   }
