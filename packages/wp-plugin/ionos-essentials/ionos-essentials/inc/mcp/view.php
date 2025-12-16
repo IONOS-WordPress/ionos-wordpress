@@ -52,7 +52,7 @@ defined('ABSPATH') || exit();
 
         <div class="code snippet hidden">
           <p class="paragraph paragraph--bold">
-            <?php \esc_html_e('Enter the following JSON into your preferred AI Clients settings file', 'ionos-essentials'); ?>
+            <?php \esc_html_e('Enter the following JSON into your preferred AI Clients settings file (under \'mcpServers\' / \'servers\')', 'ionos-essentials'); ?>
           </p>
           <p class="paragraph paragraph--minor">
             <i class="exos-icon exos-icon-warningmessage-32"></i>
