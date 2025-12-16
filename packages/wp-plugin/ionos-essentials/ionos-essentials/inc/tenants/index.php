@@ -31,7 +31,7 @@ function get_tenant_config()
   $market        = strtolower(\get_option($tenant . '_market', 'de'));
   $webmail_links = '';
   if ('ionos' === $tenant) {
-    $webmail_links = $webmailloginlinks[$market] ?? $webmailloginlinks['de'];
+    $webmail_links = $webmailloginlinks[$market] ?? '';
   } elseif ('homepl' === $tenant) {
     $webmail_links = $webmailloginlinks['pl'];
   }
@@ -39,13 +39,10 @@ function get_tenant_config()
   $nba_links    = $nba_links    ?? '';
   $banner_links = $banner_links ?? '';
 
-  $domain   = \get_option('ionos_sfs_website_id') ? $market_domains['stretch'] : ($market_domains[$market] ?? reset(
-    $market_domains
-  ));
+  $domain   = ($market_domains[$market] ?? reset($market_domains));
 
   $data = [
     'links'        => $links,
-    'sfs_links'    => $sfs_links ?? [],
     'domain'       => $domain,
     'market'       => $market,
     'tenant'       => $tenant,
