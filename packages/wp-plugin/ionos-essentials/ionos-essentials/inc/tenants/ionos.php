@@ -2,9 +2,20 @@
 
 namespace ionos\essentials\tenant;
 
-defined('ABSPATH') || exit();
+defined('ABSPATH')                          || exit();
 
-$links = [
+$is_sfs = array_key_exists('SFS', $_SERVER) || get_option('ionos_sfs_website_id');
+
+$links = $is_sfs ? [
+  [
+    'url'    => 'log-analysis',
+    'anchor' => __('Log Analysis', 'ionos-essentials'),
+  ],
+  [
+    'url'    => 'manage-cache',
+    'anchor' => __('Manage Cache', 'ionos-essentials'),
+  ],
+] : [
   [
     'url'    => 'account',
     'anchor' => __('My Account', 'ionos-essentials'),
@@ -29,18 +40,22 @@ $links = [
 
 // Trailing slash
 // The first market is the default market
-$market_domains = [
-  'de' => 'https://mein.ionos.de/',
-  'uk' => 'https://my.ionos.co.uk/',
-  'gb' => 'https://my.ionos.co.uk/',
-  'fr' => 'https://my.ionos.fr/',
-  'us' => 'https://my.ionos.com/',
-  'es' => 'https://my.ionos.es/',
-  'it' => 'https://my.ionos.it/',
-  'mx' => 'https://my.ionos.mx/',
+$market_domains = $is_sfs ? [
+  'de'      => 'https://' . (get_option('ionos_sfs_panel_hostname') ?: 'stretch.ionos.org') . '/websites/' . get_option(
+    'ionos_sfs_website_id'
+  ) . '/',
+] : [
+  'de'      => 'https://mein.ionos.de/',
+  'uk'      => 'https://my.ionos.co.uk/',
+  'gb'      => 'https://my.ionos.co.uk/',
+  'fr'      => 'https://my.ionos.fr/',
+  'us'      => 'https://my.ionos.com/',
+  'es'      => 'https://my.ionos.es/',
+  'it'      => 'https://my.ionos.it/',
+  'mx'      => 'https://my.ionos.mx/',
 ];
 
-$webmailloginlinks = [
+$webmailloginlinks = $is_sfs ? [] : [
   'de' => 'https://id.ionos.de/',
   'uk' => 'https://id.ionos.co.uk/',
   'gb' => 'https://id.ionos.co.uk/',
@@ -52,10 +67,12 @@ $webmailloginlinks = [
 ];
 
 $nba_links = [
-  'connectdomain' => 'domains',
+  'connectdomain' => $is_sfs
+      ? 'domain-configuration'
+      : 'domains',
   'connectmail'   => 'email-portfolio?',
 ];
 
 $banner_links = [
-  'managehosting' => 'websites',
+  'managehosting' => $is_sfs ? '' : 'websites',
 ];

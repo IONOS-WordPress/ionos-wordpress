@@ -107,7 +107,9 @@ if (null !== $data) {
     ),
     link: $data['domain'] . $connectdomain,
     anchor: \__('Connect Domain', 'ionos-essentials'),
-    completed: false === strpos(home_url(), 'live-website.com'),
+    completed: false === strpos(home_url(), 'live-website.com') &&
+      false          === strpos(home_url(), 'stretch.love')     &&
+      false          === strpos(home_url(), 'stretch.monster'),
     categories: ['setup-ai', 'setup-noai']
   );
 
