@@ -145,7 +145,6 @@ require_once __DIR__ . '/ionos-essentials/inc/wpscan/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/loop/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/adminbar/index.php';
 
-
 require_once __DIR__ . '/ionos-essentials/inc/extendify/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/mcp/index.php';
 

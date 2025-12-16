@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-15T14:06:11+00:00\n"
+"POT-Creation-Date: 2025-12-16T10:33:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ionos-essentials\n"
@@ -39,6 +39,12 @@ msgstr ""
 msgid "https://www.ionos-group.com/brands.html"
 msgstr ""
 
+#: ionos-essentials/inc/adminbar/index.php
+#: ionos-essentials/inc/dashboard/blocks/my-account/index.php
+#: ionos-essentials/inc/tenants/homepl.php
+msgid "Manage Hosting"
+msgstr ""
+
 #: ionos-essentials/inc/dashboard/blocks/banner/index.php
 msgid "View Site"
 msgstr ""
@@ -63,11 +69,6 @@ msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
 msgid "Account Management"
-msgstr ""
-
-#: ionos-essentials/inc/dashboard/blocks/my-account/index.php
-#: ionos-essentials/inc/tenants/homepl.php
-msgid "Manage Hosting"
 msgstr ""
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
@@ -824,6 +825,14 @@ msgstr ""
 
 #: ionos-essentials/inc/tenants/fasthosts.php
 msgid "WordPress Websites"
+msgstr ""
+
+#: ionos-essentials/inc/tenants/ionos.php
+msgid "Log Analysis"
+msgstr ""
+
+#: ionos-essentials/inc/tenants/ionos.php
+msgid "Manage Cache"
 msgstr ""
 
 #: ionos-essentials/inc/tenants/ionos.php

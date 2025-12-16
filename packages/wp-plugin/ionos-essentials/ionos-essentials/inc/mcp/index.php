@@ -67,10 +67,7 @@ const APPLICATION_NAME = 'Essentials MCP';
         $snippet = [
           'wordpress' => [
             'command'    => 'npx',
-            'args'       => [
-              '-y',
-              '@automattic/mcp-wordpress-remote@latest'
-            ],
+            'args'       => ['-y', '@automattic/mcp-wordpress-remote@latest'],
             'env'        => [
               'WP_API_URL'      => get_site_url(),
               'WP_API_USERNAME' => wp_get_current_user()
