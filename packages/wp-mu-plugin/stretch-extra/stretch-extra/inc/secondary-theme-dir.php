@@ -8,7 +8,120 @@ defined('ABSPATH') || exit();
 
 const IONOS_CUSTOM_THEMES_DIR  = IONOS_CUSTOM_DIR . '/themes';
 
-// Hook into the 'init' action. 'plugins_loaded' is also a good option.
-\add_action( 'init', function() {
-  \register_theme_directory( IONOS_CUSTOM_THEMES_DIR );
-});
+\register_theme_directory( IONOS_CUSTOM_THEMES_DIR );
+
+ini_set('error_log', true);
+
+/**
+ * Register custom theme directory URL handling
+ * This allows get_stylesheet_directory_uri() to return correct URLs for our custom themes
+ */
+\add_filter(
+hook_name: 'stylesheet_directory_uri',
+  callback: function ($stylesheet_dir_uri, $stylesheet, $theme_root_uri) {
+    error_log(
+      print_r( [
+        'stylesheet_dir_uri' => $stylesheet_dir_uri,
+        'stylesheet'         => $stylesheet,
+        'theme_root_uri'     => $theme_root_uri,
+      ], true)
+    );
+    /*
+    Array
+    (
+        [stylesheet_dir_uri] => https://lars1.stretch.vision/extra/themes/extendable
+        [stylesheet] => extendable
+        [theme_root_uri] => https://lars1.stretch.vision/extra/themes
+    )
+    */
+
+    // if its not one of our themes just return the original url
+    // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
+    if (!str_ends_with($theme_root_uri, '/extra/themes') && !array_key_exists('SFS', $_SERVER)) {
+      return $stylesheet_dir_uri;
+    }
+
+    error_log(sprintf(
+      'detected stretch sfs theme stylesheet directory uri - adjusting url %s to %s',
+      $stylesheet_dir_uri,
+      str_replace("/extra/themes/", "/wp-sfsxtra/themes/", $stylesheet_dir_uri))
+    );
+
+    // if we run in stretch sfs : replace the standard themes URL part with sfs stretch mapping
+    return str_replace("/extra/themes/", "/wp-sfsxtra/themes/", $stylesheet_dir_uri);
+  },
+  accepted_args: 3
+);
+
+\add_filter( 'theme_file_uri', function( $url, $file ) {
+    error_log(
+      print_r( [
+        'url'  => $url,
+        'file' => $file
+      ], true)
+    );
+
+    /*
+      [url] => https://lars1.stretch.vision/extra/themes/extendable/assets/fonts/baloo-tamma-2/baloo-tamma-2_wght.woff2
+      [file] => assets/fonts/baloo-tamma-2/baloo-tamma-2_wght.woff2
+    */
+
+    // if its not one of our plugins just return the original url
+    // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
+    if (!str_contains($url, "/extra/themes/") && !array_key_exists('SFS', $_SERVER)) {
+      return $url;
+    }
+
+    // if we run in stretch sfs : replace the standard themes URL part with sfs stretch mapping
+    return str_replace("/extra/themes/", "/wp-sfsxtra/themes/", $url);
+  },
+  accepted_args: 2
+);
+
+/**
+ * Filters the active theme directory URI.
+ *
+ * @param string $template_dir_uri The URI to the active theme's directory.
+ * @param string $template         The name of the active theme.
+ * @param string $theme_root_uri     The URI of the theme root (usually /wp-content/themes).
+ */
+add_filter(
+    hook_name: 'template_directory_uri',
+    callback: function ( $template_dir_uri, $template, $theme_root_uri ) {
+
+    error_log(
+      print_r( [
+        'template_dir_uri' => $template_dir_uri,
+        'template'         => $template,
+        'theme_root_uri'     => $theme_root_uri,
+      ], true)
+    );
+    /*
+    Array
+    (
+        [template_dir_uri] => https://lars1.stretch.vision/extra/themes/extendable
+        [template] => extendable
+        [theme_root_uri] => https://lars1.stretch.vision/extra/themes
+    )
+    */
+
+    // if its not one of our themes just return the original url
+    // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
+    if (!str_ends_with($theme_root_uri, '/extra/themes') && !array_key_exists('SFS', $_SERVER)) {
+      return $template_dir_uri;
+    }
+
+    error_log(sprintf(
+      'detected stretch sfs theme template uri - adjusting url %s to %s',
+      $template_dir_uri,
+      str_replace("/extra/themes/", "/wp-sfsxtra/themes/", $template_dir_uri))
+    );
+
+    // if we run in stretch sfs : replace the standard themes URL part with sfs stretch mapping
+    return str_replace("/extra/themes/", "/wp-sfsxtra/themes/", $template_dir_uri);
+  },
+  accepted_args: 3
+);
+
+
+
