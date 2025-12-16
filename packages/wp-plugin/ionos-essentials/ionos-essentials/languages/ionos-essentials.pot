@@ -679,7 +679,7 @@ msgid "Installing MCP capabilities"
 msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "Enter the following JSON into your preferred AI Clients settings file"
+msgid "Enter the following JSON into your preferred AI Clients settings file (under 'mcpServers' / 'servers')"
 msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
