@@ -30,17 +30,18 @@ ini_set('error_log', true);
 
   global $wp_filesystem;
 
-  $result = copy_dir(
+  $result = \copy_dir(
     IONOS_CUSTOM_THEMES_DIR . '/extendable',
     WP_CONTENT_DIR . '/themes/extendable'
   );
 
   \switch_theme('extendable');
 
-  // 3. Redirect to the exact same URL to ensure the newly set theme is loaded
-  // We use home_url($_SERVER['REQUEST_URI']) to keep the user on the same page
-  wp_safe_redirect(home_url($_SERVER['REQUEST_URI']));
-  exit;
+  // 2. Manually clear the theme cache to ensure the next calls get new data
+  \wp_clean_themes_cache();
+
+  $GLOBALS['template'] = get_option('template');
+  $GLOBALS['stylesheet'] = get_option('stylesheet');
 });
 
 return;
