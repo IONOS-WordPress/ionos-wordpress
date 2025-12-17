@@ -4,7 +4,7 @@ namespace ionos\essentials\tenant;
 
 defined('ABSPATH')                          || exit();
 
-$is_sfs = array_key_exists('SFS', $_SERVER) || get_option('ionos_sfs_website_id');
+$is_sfs = array_key_exists('SFS', $_SERVER) || get_option('sfs_website_id');
 
 $links = $is_sfs ? [
   [
@@ -41,8 +41,8 @@ $links = $is_sfs ? [
 // Trailing slash
 // The first market is the default market
 $market_domains = $is_sfs ? [
-  'de'      => 'https://' . (get_option('ionos_sfs_panel_hostname') ?: 'stretch.ionos.org') . '/websites/' . get_option(
-    'ionos_sfs_website_id'
+  'de'      => 'https://' . (get_option('sfs_panel_hostname') ?: 'stretch.ionos.org') . '/websites/' . get_option(
+    'sfs_website_id'
   ) . '/',
 ] : [
   'de'      => 'https://mein.ionos.de/',
