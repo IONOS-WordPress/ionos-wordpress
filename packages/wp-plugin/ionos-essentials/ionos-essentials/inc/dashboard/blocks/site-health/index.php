@@ -32,11 +32,19 @@ function render_callback(): void
           <div class="ionos-site-health-overview__info">
             <span class="badge badge--warning-solid ionos-maintenance-only" style="width: fit-content; margin-bottom: 10px;"><?php \esc_html_e('Maintenance page active', 'ionos-essentials'); ?></span>
             <div class="ionos-site-health-overview__info-homeurl">
-              <?php if (\is_ssl()) { ?>
-                <i class="exos-icon exos-icon-nav-lock-close-16"></i>
-              <?php } else { ?>
-                <i class="exos-icon exos-icon-nav-lock-16" style="color: #c90a00;"></i>
-              <?php } ?>
+              <?php
+                $title = \esc_attr__('Current SSL-Status', 'ionos-essentials');
+  $status              = \esc_attr__('Secure', 'ionos-essentials');
+  $icon                = 'exos-icon exos-icon-nav-lock-close-16';
+  $style               = '';
+  if (! \is_ssl()) {
+    $status = \esc_attr__('Not Secure', 'ionos-essentials');
+    $icon   = 'exos-icon exos-icon-nav-lock-16';
+    $style  = 'color: #c90a00;';
+  }
+
+  printf('<i class="%s" style="%s" title="%s: %s"></i>', $icon, $style, $title, $status);
+  ?>
               <h2 class="headline headline--sub"><?php echo \esc_url(parse_url(\get_option('siteurl', ''), PHP_URL_HOST)); ?></h2>
             </div>
             <div class="ionos-site-health-overview__info-items">
