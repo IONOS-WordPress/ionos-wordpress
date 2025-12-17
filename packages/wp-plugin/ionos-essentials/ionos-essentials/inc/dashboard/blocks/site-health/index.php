@@ -38,7 +38,7 @@ function render_callback(): void
   $icon                = 'exos-icon exos-icon-nav-lock-close-16';
   $style               = '';
   if (! \is_ssl()) {
-    $status = \esc_attr__('Not Secure', 'ionos-essentials');
+    $status = \esc_attr__('Insecure', 'ionos-essentials');
     $icon   = 'exos-icon exos-icon-nav-lock-16';
     $style  = 'color: #c90a00;';
   }
