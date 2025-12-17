@@ -71,7 +71,15 @@ ionos.wordpress.stretch-extra.install() {
             url="file://$(eval echo "$file_path")"
             archive_file="${STRETCH_EXTRA_BUNDLE_DIR}/${top_level_key}/$(basename "$url")"
 
-            cp "${url#file://}" "${archive_file}"
+            local_plugin_zip_archive="${url#file://}"
+
+            # @TODO: should we build the local plugin if path points to a local plugin repo when using stretch-extra --force switch?
+            if [[ ! -f "$local_plugin_zip_archive" ]]; then
+              ionos.wordpress.log_error "Local built plugin does not exist: $local_plugin_zip_archive"
+              exit 1
+            fi
+
+            cp "$local_plugin_zip_archive" "${archive_file}"
           elif [[ "$url" =~ ^https?:// ]]; then
             # Download the file from the URL
             curl -s -L -o "${archive_file}" "$url"
@@ -106,10 +114,13 @@ ionos.wordpress.stretch-extra.install() {
 ionos.wordpress.stretch-extra.bundle() {
   echo "Installing plugins and themes using configuration '${STRETCH_EXTRA_CONFIG_PATH}' into stretch-extra..."
 
-  # build stretch-extra
+  # clean stretch-extra plugin/theme dependencies (to get rid of previsouly installed plugins/themes)
+  pnpm run stretch-extra --clean
+
+  # install stretch-extra plugin/theme dependencies
   pnpm run stretch-extra --install
 
-  # install stretch-extra plugins/themes
+  # build plugins/themes
   pnpm run build --filter stretch-extra
 
   # collect all files into a tarball
