@@ -21,7 +21,7 @@ const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
     return;
   }
 
-  // suppress extendify insights cron job (stretch-extra/stretch-extra/plugins/01-ext-ion8dhas7/01-ext-ion8dhas7.php)
+  // suppress extendify insights cron job on stretch (stretch-extra/stretch-extra/plugins/01-ext-ion8dhas7/01-ext-ion8dhas7.php)
   // guessed ; it fails otherwise when php gets precompiled (OPCACHE)
   \update_option('extendify_insights_stop', true, true);
 
@@ -43,8 +43,8 @@ const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
 
   // Initialize the active plugins option as an empty array
   foreach(get_custom_plugins() as $plugin_info) {
-      // Activate all custom plugins by default on first run
-      activate_custom_plugin($plugin_info['key']);
+    // Activate all custom plugins by default on first run
+    activate_custom_plugin($plugin_info['key']);
   }
 });
 
@@ -59,7 +59,7 @@ function get_active_custom_plugins()
 /**
  * Check if a custom plugin is active
  */
-function is_custom_plugin_active($plugin_key)
+function is_custom_plugin_active($plugin_key) : bool
 {
   $active_plugins = get_active_custom_plugins();
   return in_array($plugin_key, $active_plugins, true);
