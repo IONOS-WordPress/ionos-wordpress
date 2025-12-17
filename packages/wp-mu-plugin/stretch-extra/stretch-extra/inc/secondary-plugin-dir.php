@@ -353,14 +353,16 @@ function get_custom_plugins(): array
  * Prevent deletion of custom plugins
  * These plugins are loaded directly and should not be deleted by users
  */
-\add_filter('plugin_action_links', function ($actions, $plugin_file) {
-  if (str_starts_with($plugin_file, IONOS_CUSTOM_PLUGINS_PATH)) {
-    // Remove delete link since they're custom loaded plugins
-    unset($actions['delete']);
-    $actions['must_use'] = '<span style="color: #999;">ionos-core provisioned plugins cannot be deleted.</span>';
-  }
-  return $actions;
-}, 10, 2);
+// needs UX improvement of deleting after Beta
+
+// \add_filter('plugin_action_links', function ($actions, $plugin_file) {
+//   if (str_starts_with($plugin_file, IONOS_CUSTOM_PLUGINS_PATH)) {
+//     // Remove delete link since they're custom loaded plugins
+//     unset($actions['delete']);
+//     $actions['must_use'] = '<span style="color: #999;">ionos-core provisioned plugins cannot be deleted.</span>';
+//   }
+//   return $actions;
+// }, 10, 2);
 
 /**
  * Bypass plugin file existence check during activation
