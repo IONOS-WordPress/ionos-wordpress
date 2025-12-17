@@ -26,7 +26,7 @@ const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
   {
     /**
     * Programmatically set permalinks to /%postname%/
-    * required to get extendify onbording working correctly
+    * required to get extendify onboarding (using rest API)  working correctly
     */
 
     // 1. Get the current structure
