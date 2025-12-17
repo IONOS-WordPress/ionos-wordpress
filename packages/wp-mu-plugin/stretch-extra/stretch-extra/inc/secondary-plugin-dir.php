@@ -32,18 +32,12 @@ const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
     */
 
     // 1. Get the current structure
-    $current_structure = get_option( 'permalink_structure' );
+    $current_structure = \get_option( 'permalink_structure' );
 
     // 2. Only update if it's not already set to /%postname%/
     if ( '/%postname%/' !== $current_structure ) {
-      global $wp_rewrite;
-
       // Update the option in the database
-      update_option( 'permalink_structure', '/%postname%/' );
-
-      // Force WordPress to regenerate rewrite rules (updates .htaccess)
-      $wp_rewrite->init();
-      $wp_rewrite->flush_rules(true);
+      \update_option( 'permalink_structure', '/%postname%/' );
     }
   }
 
