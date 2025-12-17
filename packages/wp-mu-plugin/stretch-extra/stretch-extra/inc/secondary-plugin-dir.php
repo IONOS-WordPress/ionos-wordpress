@@ -23,6 +23,28 @@ const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
 
   \update_option('extendify_insights_stop', true, true);
 
+  {
+    /**
+    * Programmatically set permalinks to /%postname%/
+    * required to get extendify onbording working correctly
+    */
+
+    // 1. Get the current structure
+    $current_structure = get_option( 'permalink_structure' );
+
+    // 2. Only update if it's not already set to /%postname%/
+    if ( '/%postname%/' !== $current_structure ) {
+      global $wp_rewrite;
+
+      // Update the option in the database
+      update_option( 'permalink_structure', '/%postname%/' );
+
+      // Force WordPress to regenerate rewrite rules (updates .htaccess)
+      $wp_rewrite->init();
+      $wp_rewrite->flush_rules(true);
+    }
+  }
+
   // Initialize the active plugins option as an empty array
   foreach(get_custom_plugins() as $plugin_info) {
       // Activate all custom plugins by default on first run
