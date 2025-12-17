@@ -148,8 +148,8 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
 
     # disable stretch-extra thirdparty plugin activation
     # (=> this would result in activating both stretch-extra and real ionos-essentials for example)
-    wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION 'a:0:{}'
-
+    wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
+    
     # fix permissions for mu-plugins folder if any
     # (leaving the permisions as-is will result in an error on destroy restart wp-env)
     if find /var/www/html/wp-content/mu-plugins -mindepth 1 -maxdepth 1 -type d -printf '%f\n' &>/dev/null; then
