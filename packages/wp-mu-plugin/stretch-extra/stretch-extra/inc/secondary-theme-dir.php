@@ -37,9 +37,10 @@ ini_set('error_log', true);
 
   \switch_theme('extendable');
 
-  // switch_theme will take immediately effect only if we also filter the theme functions here
-  \add_filter('template', fn() => 'extendable');
-  \add_filter('stylesheet', fn() => 'extendable');
+  // 3. Redirect to the exact same URL to ensure the newly set theme is loaded
+  // We use home_url($_SERVER['REQUEST_URI']) to keep the user on the same page
+  wp_safe_redirect(home_url($_SERVER['REQUEST_URI']));
+  exit;
 });
 
 return;
