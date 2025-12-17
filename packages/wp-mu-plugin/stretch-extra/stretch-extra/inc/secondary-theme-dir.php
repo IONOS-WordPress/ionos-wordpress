@@ -8,9 +8,36 @@ defined('ABSPATH') || exit();
 
 const IONOS_CUSTOM_THEMES_DIR  = IONOS_CUSTOM_DIR . '/themes';
 
-\register_theme_directory( IONOS_CUSTOM_THEMES_DIR );
+// \register_theme_directory( IONOS_CUSTOM_THEMES_DIR );
 
 ini_set('error_log', true);
+
+// @TODO: hack just for beta
+\add_action('plugins_loaded', function() {
+  // \delete_option('stretch_extra_extendable_theme_dir_initialized');
+  $is_initialized = get_option('stretch_extra_extendable_theme_dir_initialized', false);
+  if($is_initialized !== false) {
+    return;
+  }
+
+  \update_option('stretch_extra_extendable_theme_dir_initialized', true, true);
+
+  require_once ABSPATH . 'wp-admin/includes/file.php';
+  if(!WP_Filesystem()) {
+    error_log('WP_Filesystem initialization failed in stretch-extra secondary theme dir');
+    return;
+  }
+
+  global $wp_filesystem;
+
+  $result = copy_dir(
+    IONOS_CUSTOM_THEMES_DIR . '/extendable',
+    WP_CONTENT_DIR . '/themes/extendable'
+  );
+  switch_theme('extendable');
+});
+
+return;
 
 /**
  * Register custom theme directory URL handling
