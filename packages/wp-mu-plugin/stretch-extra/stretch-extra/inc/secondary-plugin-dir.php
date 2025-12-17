@@ -13,6 +13,19 @@ const IONOS_CUSTOM_PLUGINS_DIR  = IONOS_CUSTOM_DIR . '/' . IONOS_CUSTOM_PLUGINS_
 // Option name to store active custom plugins
 const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
 
+\add_action('plugins_loaded', function () {
+  $is_initialized = \get_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION);
+  if($is_initialized !== false) {
+    return;
+  }
+
+  // Initialize the active plugins option as an empty array
+ foreach(get_custom_plugins() as $plugin_info) {
+    // Activate all custom plugins by default on first run
+    activate_custom_plugin($plugin_info['key']);
+ }
+});
+
 /**
  * Get list of active custom plugins
  */
