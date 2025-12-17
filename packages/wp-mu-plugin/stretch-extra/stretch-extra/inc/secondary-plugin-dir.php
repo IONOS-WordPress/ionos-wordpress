@@ -21,6 +21,8 @@ const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
     return;
   }
 
+  // suppress extendify insights cron job (stretch-extra/stretch-extra/plugins/01-ext-ion8dhas7/01-ext-ion8dhas7.php)
+  // guessed ; it fails otherwise when php gets precompiled (OPCACHE)
   \update_option('extendify_insights_stop', true, true);
 
   {
