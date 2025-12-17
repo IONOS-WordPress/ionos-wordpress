@@ -34,7 +34,12 @@ ini_set('error_log', true);
     IONOS_CUSTOM_THEMES_DIR . '/extendable',
     WP_CONTENT_DIR . '/themes/extendable'
   );
-  switch_theme('extendable');
+
+  \switch_theme('extendable');
+
+  // switch_theme will take immediately effect only if we also filter the theme functions here
+  \add_filter('template', fn() => 'extendable');
+  \add_filter('stylesheet', fn() => 'extendable');
 });
 
 return;
