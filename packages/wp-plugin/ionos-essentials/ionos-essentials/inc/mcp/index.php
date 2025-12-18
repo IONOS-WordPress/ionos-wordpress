@@ -65,16 +65,14 @@ const APPLICATION_NAME = 'Essentials MCP';
         }
 
         $snippet = [
-          'servers' => [
-            'wordpress' => [
-              'command'    => 'npx',
-              'args'       => "['-y', '@automattic/mcp-wordpress-remote@latest'],",
-              'env'        => [
-                'WP_API_URL'      => get_site_url(),
-                'WP_API_USERNAME' => wp_get_current_user()
-                  ->user_login,
-                'WP_API_PASSWORD' => get_new_application_password(),
-              ],
+          'wordpress' => [
+            'command'    => 'npx',
+            'args'       => ['-y', '@automattic/mcp-wordpress-remote@latest'],
+            'env'        => [
+              'WP_API_URL'      => get_site_url(),
+              'WP_API_USERNAME' => wp_get_current_user()
+                ->user_login,
+              'WP_API_PASSWORD' => get_new_application_password(),
             ],
           ],
         ];
