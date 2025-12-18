@@ -1,0 +1,18 @@
+<?php
+
+namespace ionos\stretch_extra\migration;
+
+defined('ABSPATH') || exit();
+
+const IONOS_MIGRATION_OPTION = 'IONOS_MIGRATION_OPTION';
+
+\add_action('admin_init', function () {
+  if (!\get_option(IONOS_MIGRATION_OPTION)) {
+    return;
+  }
+  \wp_update_user([
+    'ID'         => \get_current_user_id(),
+    'user_email' => \get_option('admin_email')
+  ]);
+  update_option(IONOS_MIGRATION_OPTION, "1.0.0", true);
+});
