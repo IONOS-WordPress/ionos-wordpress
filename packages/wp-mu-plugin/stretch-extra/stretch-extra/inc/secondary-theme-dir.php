@@ -35,6 +35,11 @@ ini_set('error_log', true);
     WP_CONTENT_DIR . '/themes/extendable'
   );
 
+  if (is_wp_error($result)) {
+    error_log('Failed to copy extendable theme to themes directory: ' . $result->get_error_message());
+    return;
+  }
+
   \switch_theme('extendable');
 
   // 2. Manually clear the theme cache to ensure the next calls get new data
