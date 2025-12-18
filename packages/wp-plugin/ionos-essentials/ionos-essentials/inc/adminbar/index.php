@@ -14,7 +14,7 @@ function add_admin_bar_menu()
 
   $data = get_tenant_config();
   
-  if (empty($data) || ! isset($data['domain'], $data['banner_links']['managehosting'])) {
+  if (! isset($data, $data['domain'], $data['banner_links']['managehosting'])) {
     return;
   }
 
