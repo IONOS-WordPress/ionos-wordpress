@@ -24,14 +24,13 @@ defined('ABSPATH') || exit();
 //   $_SERVER['SFS'] = 'stretch-extra';
 // }
 
-const EXTRA_ENTRYPOINT = __DIR__ . '/stretch-extra/index.php';
-
 // abort if called from WP-CLI to avoid issues with command line scripts
 // (need to prevent execution while wp was loaded by wp-cli)
 if(defined( 'WP_CLI')) {
   return;
 }
 
+const EXTRA_ENTRYPOINT = __DIR__ . '/stretch-extra/index.php';
 require_once EXTRA_ENTRYPOINT;
 
 /*
