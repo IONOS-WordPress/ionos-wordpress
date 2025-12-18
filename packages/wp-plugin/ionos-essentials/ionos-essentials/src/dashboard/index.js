@@ -434,7 +434,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     dashboard.querySelectorAll('[data-track-link]').forEach((element) => {
       element.addEventListener('click', (ev) => {
-        ev.preventDefault();
+        if (element.href) {
+          ev.preventDefault();
+        }
         ionos_loop_track_click(element.dataset.trackLink, element.href);
       });
     });
@@ -449,7 +451,9 @@ document.addEventListener('DOMContentLoaded', function () {
         body: JSON.stringify({ anchor }),
         credentials: 'include',
       }).then(() => {
-        window.location.href = href;
+        if (href) {
+          window.location.href = href;
+        }
       });
     }
   }

@@ -34,8 +34,7 @@ test.describe(
       expect(mcpPlugin.status).toBe('active');
 
       // Make sure there are no console errors. This is to catch any issues with loading the snippet.
-      const filteredErrors = errors.filter((error) => !error.includes('Failed to load resource'));
-      await expect(filteredErrors).toEqual([]);
+      await expect(errors).toEqual([]);
     });
   }
 );
