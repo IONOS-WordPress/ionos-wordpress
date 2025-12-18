@@ -59,12 +59,14 @@ jobs:
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts
         name: gather_workflow_artifacts
+        if: always()
         with:
           runCmd: |
             pnpm exec ./scripts/_get-workflow-artefacts.sh
 
       - name: attach workflow artifacts
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           include-hidden-files: true
           # see https://github.com/actions/upload-artifact/issues/424

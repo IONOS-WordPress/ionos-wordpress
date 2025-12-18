@@ -433,12 +433,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     dashboard.querySelectorAll('[data-track-link]').forEach((element) => {
-      element.addEventListener('click', () => {
-        ionos_loop_track_click(element.dataset.trackLink);
+      element.addEventListener('click', (ev) => {
+        if (element.href) {
+          ev.preventDefault();
+        }
+        ionos_loop_track_click(element.dataset.trackLink, element.href);
       });
     });
 
-    function ionos_loop_track_click(anchor) {
+    function ionos_loop_track_click(anchor, href) {
       fetch(wpData.restUrl + 'ionos/essentials/loop/v1/click', {
         method: 'POST',
         headers: {
@@ -447,6 +450,10 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         body: JSON.stringify({ anchor }),
         credentials: 'include',
+      }).then(() => {
+        if (href) {
+          window.location.href = href;
+        }
       });
     }
   }
