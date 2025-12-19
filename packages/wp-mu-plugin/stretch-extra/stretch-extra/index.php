@@ -11,6 +11,6 @@ defined('ABSPATH') || exit();
 const IONOS_CUSTOM_DIR  = __DIR__;
 
 require_once __DIR__ . '/inc/migration.php';
-require_once __DIR__ . '/inc/secondary-plugin_dir';
-require_once __DIR__ . '/inc/secondary-theme_dir';
+require_once __DIR__ . '/inc/secondary-plugin-dir.php';
+require_once __DIR__ . '/inc/secondary-theme-dir.php';
 
