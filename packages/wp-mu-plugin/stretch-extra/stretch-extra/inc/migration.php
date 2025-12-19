@@ -7,7 +7,7 @@ defined('ABSPATH') || exit();
 const IONOS_MIGRATION_OPTION = 'IONOS_MIGRATION_OPTION';
 
 \add_action('admin_init', function () {
-  if (!\get_option(IONOS_MIGRATION_OPTION)) {
+  if (\get_option(IONOS_MIGRATION_OPTION) === "1.0.0") {
     return;
   }
   \wp_update_user([
