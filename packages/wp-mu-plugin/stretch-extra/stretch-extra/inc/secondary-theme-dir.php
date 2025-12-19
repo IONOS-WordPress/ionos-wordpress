@@ -17,7 +17,7 @@ ini_set('error_log', true);
   Alternative workaround : Alex can set the theme to extendable when provisioning the account
   if this is the case the code below can be removed
 */
-\add_action('muplugins_loaded', function() {
+\add_action('plugins_loaded', function() {
   $is_initialized = get_option('stretch_extra_extendable_theme_dir_initialized', false);
   if($is_initialized !== false) {
     return;
