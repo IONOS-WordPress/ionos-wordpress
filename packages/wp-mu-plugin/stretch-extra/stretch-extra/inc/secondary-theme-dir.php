@@ -12,15 +12,16 @@ const IONOS_CUSTOM_THEMES_DIR  = IONOS_CUSTOM_DIR . '/themes';
 
 ini_set('error_log', true);
 
-// @TODO: hack just for beta
-\add_action('plugins_loaded', function() {
-  // \delete_option('stretch_extra_extendable_theme_dir_initialized');
+/*
+  @TODO: the theme can be preset in the database template
+  Alternative workaround : Alex can set the theme to extendable when provisioning the account
+  if this is the case the code below can be removed
+*/
+\add_action('muplugins_loaded', function() {
   $is_initialized = get_option('stretch_extra_extendable_theme_dir_initialized', false);
   if($is_initialized !== false) {
     return;
   }
-
-  \update_option('stretch_extra_extendable_theme_dir_initialized', true, true);
 
   require_once ABSPATH . 'wp-admin/includes/file.php';
   if(!WP_Filesystem()) {
@@ -39,20 +40,10 @@ ini_set('error_log', true);
     error_log('Failed to copy extendable theme to themes directory: ' . $result->get_error_message());
     return;
   }
-});
-
-/*
-  @TODO: the theme can be preset in the database template
-  Alternative workaround : Alex can set the theme to extendable when provisioning the account
-  if this is the case the code below can be removed
-*/
-\add_action('muplugins_loaded', function() {
-  $is_initialized = get_option('stretch_extra_extendable_theme_dir_initialized', false);
-  if($is_initialized !== false) {
-    return;
-  }
 
   \switch_theme('extendable');
+  \update_option('stretch_extra_extendable_theme_dir_initialized', true, true);
+
 });
 
 return;
