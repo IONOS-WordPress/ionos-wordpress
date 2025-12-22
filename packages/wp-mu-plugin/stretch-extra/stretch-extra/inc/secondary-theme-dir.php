@@ -10,8 +10,6 @@ const IONOS_CUSTOM_THEMES_DIR  = IONOS_CUSTOM_DIR . '/themes';
 
 \register_theme_directory( IONOS_CUSTOM_THEMES_DIR );
 
-ini_set('error_log', true);
-
 /*
   @TODO: the theme can be preset in the database template
   Alternative workaround : Alex can set the theme to extendable when provisioning the account
@@ -22,25 +20,6 @@ ini_set('error_log', true);
   if($is_initialized !== false) {
     return;
   }
-  /*
-  require_once ABSPATH . 'wp-admin/includes/file.php';
-  if(!WP_Filesystem()) {
-    error_log('WP_Filesystem initialization failed in stretch-extra secondary theme dir');
-    return;
-  }
-
-  global $wp_filesystem;
-
-  $result = \copy_dir(
-    IONOS_CUSTOM_THEMES_DIR . '/extendable',
-    WP_CONTENT_DIR . '/themes/extendable'
-  );
-
-  if (is_wp_error($result)) {
-    error_log('Failed to copy extendable theme to themes directory: ' . $result->get_error_message());
-    return;
-  }
-  */
 
   // fixes wp-env local development where the theme may not available in the themes directory
   // depending on latest pnpm stretch-extra --install||clean call
@@ -134,8 +113,6 @@ ini_set('error_log', true);
 /**
  * Filters the active theme directory URI.
  *
- * @TOD: can be removed :  template_directory_uri is only called for parent themes, not child themes
- *
  * @param string $template_dir_uri The URI to the active theme's directory.
  * @param string $template         The name of the active theme.
  * @param string $theme_root_uri     The URI of the theme root (usually /wp-content/themes).
@@ -189,9 +166,6 @@ ini_set('error_log', true);
         'siteurl'         => $siteurl,
       ], true)
     );
-    /*
-    @TODO: verify if this filter is still needed
-    */
 
     // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
     if (!str_ends_with($theme_root_uri, '/extra/themes') && !array_key_exists('SFS', $_SERVER)) {
@@ -209,23 +183,4 @@ ini_set('error_log', true);
   },
   10,
   2
-);
-
-\add_filter(
-  'theme_root',
-  function($theme_root) {
-    error_log("inside theme_root filter");
-    error_log(
-      print_r( [
-        'theme_root' => $theme_root
-      ], true)
-    );
-    /*
-    @TODO: verify if this filter is still needed
-    */
-
-    return $theme_root;
-  },
-  10,
-  1
 );
