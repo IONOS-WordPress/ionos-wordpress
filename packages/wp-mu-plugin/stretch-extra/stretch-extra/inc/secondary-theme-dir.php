@@ -41,9 +41,14 @@ ini_set('error_log', true);
     return;
   }
   */
-  \switch_theme('extendable');
-  \update_option('stretch_extra_extendable_theme_dir_initialized', true, true);
 
+  // fixes wp-env local development where the theme may not available in the themes directory
+  // depending on latest pnpm stretch-extra --install||clean call
+  if (is_dir(IONOS_CUSTOM_THEMES_DIR . '/extendable')) {
+    \switch_theme('extendable');
+  }
+
+  \update_option('stretch_extra_extendable_theme_dir_initialized', true, true);
 });
 
 /**
