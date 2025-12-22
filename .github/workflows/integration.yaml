@@ -37,7 +37,7 @@ jobs:
       - devcontainer
     steps:
       - name: checkout branch from git
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -65,7 +65,7 @@ jobs:
             pnpm exec ./scripts/_get-workflow-artefacts.sh
 
       - name: attach workflow artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           include-hidden-files: true
