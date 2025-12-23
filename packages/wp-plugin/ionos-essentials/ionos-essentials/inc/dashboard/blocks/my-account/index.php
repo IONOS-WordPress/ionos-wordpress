@@ -30,21 +30,22 @@ function render_callback(): void
     );
   }
 
-  ?>
+  $links    = \wp_kses($links, 'post');
+  $headline = \esc_html__('Account Management', 'ionos-essentials');
+  printf(<<<EOL
+    <div class="card ionos_my_account">
+      <div class="card__content">
+        <section class="card__section">
+          <h2 class="headline headline--sub">{$headline}</h2>
+        <div class="ionos_my_account_links ionos_buttons_same_width">
+          {$links}
+        </div>
+        </section>
 
-  <div class="card ionos_my_account">
-    <div class="card__content">
-      <section class="card__section">
-        <h2 class="headline headline--sub"><?php \esc_html_e('Account Management', 'ionos-essentials'); ?></h2>
-      <div class="ionos_my_account_links ionos_buttons_same_width">
-        <?php echo \wp_kses($links, 'post'); ?>
       </div>
-      </section>
-
     </div>
-  </div>
+    EOL);
 
-<?php
 }
 
 \add_filter('ionos_dashboard_banner__register_button', function ($button_list) {

@@ -72,7 +72,6 @@ function render_callback(): void
         </div>
       </div>
       EOF);
-
 }
 
 function get_ai_button(): array
