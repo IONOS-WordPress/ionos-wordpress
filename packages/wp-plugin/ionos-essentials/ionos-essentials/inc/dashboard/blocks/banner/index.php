@@ -38,39 +38,41 @@ function render_callback(): void
   $tenant_slug = Tenant::get_slug();
   $tenant_logo = \plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . $tenant_slug . '.svg', PLUGIN_FILE);
 
-  ?>
-<div class="card">
-  <div class="card__content">
-    <section class="card__section">
-      <div class="banner_wrapper">
-        <div class="content">
-          <img class="banner-logo banner-logo--<?php echo \esc_attr($tenant_slug); ?>"
-          src="<?php echo \esc_attr($tenant_logo); ?>"
-          alt="<?php echo \esc_attr(Tenant::get_label()); ?> Logo"
-          >
-          <ul class="page-tabbar__items" role="menu">
-            <li>
-              <a href="#" class="page-tabbar__link page-tabbar__link--active" data-tab="overview">
-                <div class="page-tabbar__label"><?php \esc_html_e('Overview', 'ionos-essentials'); ?></div>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="tools">
-                <div class="page-tabbar__label may-have-issue-dot"><?php \esc_html_e('Tools & Security', 'ionos-essentials'); ?></div>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="ionos_banner_buttons">
-          <?php echo \wp_kses($buttons, 'post'); ?>
+  $tenant_slug   = \esc_attr($tenant_slug);
+  $tenant_logo   = \esc_url($tenant_logo);
+  $tenant_label  = \esc_attr(Tenant::get_label());
+  $overview_html = \esc_html__('Overview', 'ionos-essentials');
+  $tools_html    = \esc_html__('Tools & Security', 'ionos-essentials');
+  $buttons_html  = \wp_kses($buttons, 'post');
+  printf(<<<EOF
+      <div class="card">
+        <div class="card__content">
+          <section class="card__section">
+            <div class="banner_wrapper">
+              <div class="content">
+                <img class="banner-logo banner-logo--{$tenant_slug}" src="{$tenant_logo}" alt="{$tenant_label} Logo">
+                <ul class="page-tabbar__items" role="menu">
+                  <li>
+                    <a href="#" class="page-tabbar__link page-tabbar__link--active" data-tab="overview">
+                      <div class="page-tabbar__label">{$overview_html}</div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="page-tabbar__link" role="button" tabindex="0" data-tab="tools">
+                      <div class="page-tabbar__label may-have-issue-dot">{$tools_html}</div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="ionos_banner_buttons">
+                {$buttons_html}
+              </div>
+            </div>
+          </section>
         </div>
       </div>
-    </section>
-  </div>
-</div>
+      EOF);
 
-
-  <?php
 }
 
 function get_ai_button(): array
