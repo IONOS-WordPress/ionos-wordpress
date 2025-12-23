@@ -5,7 +5,6 @@ namespace ionos\essentials\dashboard;
 defined('ABSPATH') || exit();
 
 use ionos\essentials\Tenant;
-
 use function ionos\essentials\_is_plugin_active;
 use function ionos\essentials\is_stretch;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;

@@ -2,7 +2,7 @@
   "name": "@ionos-wordpress/stretch-extra",
   "version": "1.0.0",
   "private": true,
-  "scripts" : {
+  "scripts": {
     "postpack": "./scripts/postpack.sh"
   },
   "devDependencies": {

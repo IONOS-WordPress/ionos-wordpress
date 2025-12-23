@@ -16,7 +16,7 @@ const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
 // @TODO: hack just for beta : on first run activate all custom plugins
 \add_action('plugins_loaded', function () {
   $is_initialized = \get_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION);
-  if($is_initialized !== false) {
+  if ($is_initialized !== false) {
     return;
   }
 
@@ -26,7 +26,7 @@ const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
   \update_option('extendify_insights_stop', true, true);
 
   // Initialize the active plugins option as an empty array
-  foreach(get_custom_plugins() as $plugin_info) {
+  foreach (get_custom_plugins() as $plugin_info) {
     // Activate all custom plugins by default on first run
     // @TODO: activate all in one update_option call
     activate_custom_plugin($plugin_info['key']);
@@ -44,7 +44,7 @@ function get_active_custom_plugins()
 /**
  * Check if a custom plugin is active
  */
-function is_custom_plugin_active($plugin_key) : bool
+function is_custom_plugin_active($plugin_key): bool
 {
   $active_plugins = get_active_custom_plugins();
   return in_array($plugin_key, $active_plugins, true);
@@ -142,7 +142,9 @@ function get_custom_plugins(): array
     if (in_array($plugin_info['key'], $active_plugins, true)) {
       include_once $plugin_info['file'];
       error_log(
-        'secondary-plugin-dir: Loaded plugin from custom path: ' . $plugin_info['slug'] . '/' . basename($plugin_info['file'])
+        'secondary-plugin-dir: Loaded plugin from custom path: ' . $plugin_info['slug'] . '/' . basename(
+          $plugin_info['file']
+        )
       );
     }
   }
@@ -155,12 +157,12 @@ function get_custom_plugins(): array
 \add_filter('plugins_url', function ($url, $path, $plugin) {
   // if its not one of our plugins just return the original url
   // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
-  if (!str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR) && !array_key_exists('SFS', $_SERVER)) {
+  if (! str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR) && ! array_key_exists('SFS', $_SERVER)) {
     return $url;
   }
 
   // if we run in stretch sfs : replace the standard plugins URL part with sfs stretch mapping
-  return str_replace("wp-content/plugins/opt/WordPress/extra", "wp-sfsxtra", $url);
+  return str_replace('wp-content/plugins/opt/WordPress/extra', 'wp-sfsxtra', $url);
 }, 10, 3);
 
 /**

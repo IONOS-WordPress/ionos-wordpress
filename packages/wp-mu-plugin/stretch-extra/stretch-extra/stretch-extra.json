@@ -1,5 +1,5 @@
 {
-  "plugins" : [
+  "plugins": [
     {
       "url": "https://downloads.wordpress.org/plugin/extendify.zip"
     },
@@ -10,7 +10,7 @@
       "url": "file://./packages/wp-plugin/ionos-essentials/dist/ionos-essentials-*-php7.4.zip"
     }
   ],
-  "themes" : [
+  "themes": [
     {
       "url": "https://downloads.wordpress.org/theme/extendable.zip"
     }

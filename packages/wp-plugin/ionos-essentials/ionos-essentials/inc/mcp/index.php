@@ -117,7 +117,7 @@ function activate_mcp_server(): bool
     }
   }
 
-  if (!_is_plugin_active('wordpress-mcp/wordpress-mcp.php')) {
+  if (! _is_plugin_active('wordpress-mcp/wordpress-mcp.php')) {
     \activate_plugin('wordpress-mcp/wordpress-mcp.php');
   }
 

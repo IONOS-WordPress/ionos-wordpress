@@ -164,15 +164,15 @@ function is_stretch(): bool
  */
 function _is_plugin_active(string $plugin): bool
 {
-  if(function_exists('\ionos\stretch_extra\secondary_plugin_dir\is_custom_plugin_active')) {
-    $_plugin = 'plugins/' . $plugin;
+  if (function_exists('\ionos\stretch_extra\secondary_plugin_dir\is_custom_plugin_active')) {
+    $_plugin   = 'plugins/' . $plugin;
     $is_active = \ionos\stretch_extra\secondary_plugin_dir\is_custom_plugin_active($_plugin);
-    if($is_active) {
+    if ($is_active) {
       return $is_active;
     }
   }
 
-  if(!function_exists('is_plugin_active')) {
+  if (! function_exists('is_plugin_active')) {
     require_once ABSPATH . 'wp-admin/includes/plugin.php';
   }
   return is_plugin_active($plugin);

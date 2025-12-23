@@ -26,7 +26,7 @@ defined('ABSPATH') || exit();
 
 // abort if called from WP-CLI to avoid issues with command line scripts
 // (need to prevent execution while wp was loaded by wp-cli)
-if(defined( 'WP_CLI')) {
+if (defined('WP_CLI')) {
   return;
 }
 
@@ -34,10 +34,8 @@ const EXTRA_ENTRYPOINT = __DIR__ . '/stretch-extra/index.php';
 require_once EXTRA_ENTRYPOINT;
 
 /*
-
   rest of the file is just sugar for logging errors during inclusion
-
-*/
+ */
 
 // Check for the error PHP might have registered
 $error = error_get_last();
@@ -62,7 +60,7 @@ $wp_debug_log_enabled && \add_action('admin_head', function () {
 
 // If there was no error and WP_DEBUG_LOG is enabled, log successful inclusion
 if (! $error) {
-  $wp_debug_log_enabled && error_log("Successfully included script: " . EXTRA_ENTRYPOINT);
+  $wp_debug_log_enabled && error_log('Successfully included script: ' . EXTRA_ENTRYPOINT);
 }
 
 // Check if the last error was a "failed opening required" warning
