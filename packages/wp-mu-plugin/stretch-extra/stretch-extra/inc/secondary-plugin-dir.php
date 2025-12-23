@@ -13,37 +13,22 @@ const IONOS_CUSTOM_PLUGINS_DIR  = IONOS_CUSTOM_DIR . '/' . IONOS_CUSTOM_PLUGINS_
 // Option name to store active custom plugins
 const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
 
-// @TODO: hack just for beta
+// @TODO: hack just for beta : on first run activate all custom plugins
 \add_action('plugins_loaded', function () {
-  // \delete_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION);
   $is_initialized = \get_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION);
   if($is_initialized !== false) {
     return;
   }
 
+  // @TODO: investigate and fix: https://hosting-jira.1and1.org/browse/GPHWPP-4243
   // suppress extendify insights cron job on stretch (stretch-extra/stretch-extra/plugins/01-ext-ion8dhas7/01-ext-ion8dhas7.php)
   // guessed ; it fails otherwise when php gets precompiled (OPCACHE)
   \update_option('extendify_insights_stop', true, true);
 
-  {
-    /**
-    * Programmatically set permalinks to /%postname%/
-    * required to get extendify onboarding (using rest API)  working correctly
-    */
-
-    // 1. Get the current structure
-    $current_structure = \get_option( 'permalink_structure' );
-
-    // 2. Only update if it's not already set to /%postname%/
-    if ( '/%postname%/' !== $current_structure ) {
-      // Update the option in the database
-      \update_option( 'permalink_structure', '/%postname%/' );
-    }
-  }
-
   // Initialize the active plugins option as an empty array
   foreach(get_custom_plugins() as $plugin_info) {
     // Activate all custom plugins by default on first run
+    // @TODO: activate all in one update_option call
     activate_custom_plugin($plugin_info['key']);
   }
 });
@@ -94,6 +79,7 @@ function deactivate_custom_plugin($plugin_key)
  * Get all custom plugins from the custom plugins directory
  * Returns an array of plugin info: ['key' => plugin_key, 'file' => plugin_file, 'data' => plugin_data]
  */
+//@TODO: optimize: hardcode list of plugins. simplifiy, avoid glob and get_file_data calls
 function get_custom_plugins(): array
 {
   static $custom_plugins = null;
@@ -206,6 +192,7 @@ function get_custom_plugins(): array
  * Prevent installation of plugins that already exist as custom plugins
  * This filters the plugin installation API results to hide plugins that are already available
  */
+// @TODO: improve UX: https://hosting-jira.1and1.org/browse/GPHWPP-4232
 \add_filter('plugins_api_result', function ($result, $action, $args) {
   if ($action !== 'query_plugins' && $action !== 'plugin_information') {
     return $result;
@@ -252,7 +239,8 @@ function get_custom_plugins(): array
     if (in_array($plugin_slug, $custom_slugs, true)) {
       return new \WP_Error(
         'plugin_already_provisioned',
-        'This plugin is already provisioned by IONOS Core and cannot be installed from WordPress.org.'
+        // @TODO: real UX
+        'This plugin is already provisioned by your WordPress Hosting and cannot be installed by upload.'
       );
     }
   }
@@ -272,7 +260,6 @@ function get_custom_plugins(): array
     // use array_unique to avoid duplicates since this fillter will be called multiple times
     return array_unique(array_merge($active_plugins, $custom_active));
   },
-  accepted_args : 1,
 );
 
 /**
@@ -282,13 +269,12 @@ function get_custom_plugins(): array
  */
 \add_filter(
   hook_name: 'pre_update_option_active_plugins',
-  callback : function (array $value, array $old_value, string $option): array {
+  callback : function (array $value): array {
     $custom_active_plugins = get_active_custom_plugins();
     // remove our custom active plugins from the new value
     $x = array_diff($value, $custom_active_plugins);
     return $x;
   },
-  accepted_args : 3,
 );
 
 /**
@@ -348,21 +334,6 @@ function get_custom_plugins(): array
     }
   }
 });
-
-/**
- * Prevent deletion of custom plugins
- * These plugins are loaded directly and should not be deleted by users
- */
-// needs UX improvement of deleting after Beta
-
-// \add_filter('plugin_action_links', function ($actions, $plugin_file) {
-//   if (str_starts_with($plugin_file, IONOS_CUSTOM_PLUGINS_PATH)) {
-//     // Remove delete link since they're custom loaded plugins
-//     unset($actions['delete']);
-//     $actions['must_use'] = '<span style="color: #999;">ionos-core provisioned plugins cannot be deleted.</span>';
-//   }
-//   return $actions;
-// }, 10, 2);
 
 /**
  * Bypass plugin file existence check during activation
