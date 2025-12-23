@@ -45,7 +45,6 @@ function render_callback(): void
       </div>
     </div>
     EOL);
-
 }
 
 \add_filter('ionos_dashboard_banner__register_button', function ($button_list) {
