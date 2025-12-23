@@ -4,6 +4,8 @@ namespace ionos\essentials\descriptify;
 
 use ionos\essentials\Tenant;
 
+use function ionos\essentials\_is_plugin_active;
+
 defined('ABSPATH') || exit();
 
 add_action(
@@ -11,7 +13,7 @@ add_action(
   function () {
     global $pagenow;
 
-    if (\is_plugin_active(
+    if (_is_plugin_active(
       'ionos-assistant/ionos-assistant.php'
     ) || ! is_admin() || 'options-general.php' !== $pagenow) {
       return;

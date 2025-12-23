@@ -152,6 +152,21 @@ importers:
 
   packages/docker/rector-php: {}
 
+  packages/wp-mu-plugin/stretch-extra:
+    devDependencies:
+      '@ionos-wordpress/dennis-i18n':
+        specifier: workspace:*
+        version: link:../../docker/dennis-i18n
+      '@ionos-wordpress/ecs-php':
+        specifier: workspace:*
+        version: link:../../docker/ecs-php
+      '@ionos-wordpress/potrans':
+        specifier: workspace:*
+        version: link:../../docker/potrans
+      '@ionos-wordpress/rector-php':
+        specifier: workspace:*
+        version: link:../../docker/rector-php
+
   packages/wp-plugin/ionos-essentials:
     devDependencies:
       '@ionos-wordpress/dennis-i18n':

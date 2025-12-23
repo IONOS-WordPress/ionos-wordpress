@@ -42,7 +42,8 @@
     "gh-cli": "./scripts/gh-cli.sh",
     "go-waas": "./scripts/go-waas.sh",
     "playground": "./scripts/playground.sh",
-    "prepare": "./scripts/_prepare.sh"
+    "prepare": "./scripts/_prepare.sh",
+    "stretch-extra": "./scripts/stretch-extra.sh"
   },
   "keywords": [
     "pnpm",

@@ -1,0 +1,18 @@
+{
+  "plugins" : [
+    {
+      "url": "https://downloads.wordpress.org/plugin/extendify.zip"
+    },
+    {
+      "url": "https://s3-eu-central-1.ionoscloud.com/web-hosting/extendify/01-ext-ion8dhas7.zip"
+    },
+    {
+      "url": "file://./packages/wp-plugin/ionos-essentials/dist/ionos-essentials-*-php7.4.zip"
+    }
+  ],
+  "themes" : [
+    {
+      "url": "https://downloads.wordpress.org/theme/extendable.zip"
+    }
+  ]
+}
