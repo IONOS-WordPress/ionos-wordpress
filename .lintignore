@@ -7,3 +7,5 @@ docs/packages/
 packages/wp-plugin/ionos-essentials/inc/dashboard/data/ionos
 packages/wp-plugin/ionos-essentials/inc/dashboard/data/twentytwentyfive-global-styles.json
 *.sbom.syft.json
+packages/wp-mu-plugin/stretch-extra/stretch-extra/plugins
+packages/wp-mu-plugin/stretch-extra/stretch-extra/themes

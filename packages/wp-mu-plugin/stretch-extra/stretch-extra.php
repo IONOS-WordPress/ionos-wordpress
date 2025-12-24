@@ -38,7 +38,7 @@ require_once EXTRA_ENTRYPOINT;
  */
 
 // Check for the error PHP might have registered
-$error = error_get_last();
+$_error = error_get_last();
 
 $wp_debug_log_enabled = defined('WP_DEBUG_LOG') && WP_DEBUG_LOG;
 
@@ -59,16 +59,16 @@ $wp_debug_log_enabled && \add_action('admin_head', function () {
 });
 
 // If there was no error and WP_DEBUG_LOG is enabled, log successful inclusion
-if (! $error) {
+if (! $_error) {
   $wp_debug_log_enabled && error_log('Successfully included script: ' . EXTRA_ENTRYPOINT);
 }
 
 // Check if the last error was a "failed opening required" warning
-if (strpos($error['message'] ?? '', 'failed opening required') !== false) {
+if (strpos($_error['message'] ?? '', 'failed opening required') !== false) {
   error_log(sprintf("Failed to include script '%s'. File not found or inaccessible.", EXTRA_ENTRYPOINT));
 }
 
 // Check if the last error was not an E_WARNING (E_PARSE is a fatal error, etc.)
-if ($error['type'] ?? '' === E_WARNING) {
-  error_log(sprintf("An issue occurred while including '%s'. Message: {$error['message']}", EXTRA_ENTRYPOINT));
+if ($_error['type'] ?? '' === E_WARNING) {
+  error_log(sprintf("An issue occurred while including '%s'. Message: {$_error['message']}", EXTRA_ENTRYPOINT));
 }

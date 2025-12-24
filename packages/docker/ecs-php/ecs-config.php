@@ -50,6 +50,8 @@ return $configure->withRules([
       '**/ecs-config.php',
       '**/rector-config-php7.4.php',
       '**/rector-fix-types.php',
+      '**/stretch-extra/plugins/*',
+      '**/stretch-extra/themes/*',
       YodaStyleFixer::class
     ]
   )
