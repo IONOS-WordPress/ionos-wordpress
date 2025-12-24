@@ -179,7 +179,7 @@ function ionos.wordpress.build_workspace_package_docker() {
   # image labels : see https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys
   docker build \
     $(test -f $path/.env && cat $path/.env | sed 's/^/--build-arg /' ||:) \
-    --progress=plain \
+    --progress=quiet \
     -t $DOCKER_IMAGE_NAME:latest \
     -t $DOCKER_IMAGE_NAME:$PACKAGE_VERSION \
     --label "maintainer=$DOCKER_IMAGE_AUTHOR" \
@@ -196,7 +196,7 @@ function ionos.wordpress.build_workspace_package_docker() {
   cat << EOF | tee $path/build-info
 $(docker image inspect $DOCKER_IMAGE_NAME:latest | jq '.[0].Config.Labels | values')
 
-$(echo -n "---")
+$(echo -n "--------------------------------")
 
 $(docker image ls --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedAt}}\t{{.Size}}" $DOCKER_IMAGE_NAME:latest)
 EOF
