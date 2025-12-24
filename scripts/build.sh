@@ -179,7 +179,7 @@ function ionos.wordpress.build_workspace_package_docker() {
   # image labels : see https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys
   docker build \
     $(test -f $path/.env && cat $path/.env | sed 's/^/--build-arg /' ||:) \
-    --progress=plain \
+    --progress=quiet \
     -t $DOCKER_IMAGE_NAME:latest \
     -t $DOCKER_IMAGE_NAME:$PACKAGE_VERSION \
     --label "maintainer=$DOCKER_IMAGE_AUTHOR" \
@@ -196,7 +196,7 @@ function ionos.wordpress.build_workspace_package_docker() {
   cat << EOF | tee $path/build-info
 $(docker image inspect $DOCKER_IMAGE_NAME:latest | jq '.[0].Config.Labels | values')
 
-$(echo -n "---")
+$(echo -n "--------------------------------")
 
 $(docker image ls --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedAt}}\t{{.Size}}" $DOCKER_IMAGE_NAME:latest)
 EOF
@@ -429,7 +429,8 @@ EOF
   if [[ "${USE[@]}" =~ all|wp-plugin:rector|wp-plugin:bundle ]]; then
     # copy plugin code to dist/[plugin-name]
     mkdir -p $path/dist/$plugin_name-$PACKAGE_VERSION
-    rsync -rupE --verbose \
+    ionos.wordpress.log_info "syncing plugin files to $path/dist/$plugin_name-$PACKAGE_VERSION"
+    rsync -rupE --quiet \
       --exclude=node_modules/ \
       --exclude=package.json \
       --exclude=dist/ \
@@ -449,6 +450,7 @@ EOF
       $(test -f $path/.distignore && echo "--exclude-from=$path/.distignore") \
       $path/ \
       $path/dist/$plugin_name-$PACKAGE_VERSION
+      ionos.wordpress.log_info "syncing plugin files done"
   fi
 
   if [[ "${USE[@]}" =~ all|wp-plugin:rector ]]; then
@@ -463,7 +465,7 @@ EOF
         TARGET_PHP_VERSION="${RECTOR_CONFIG#*rector-config-php}"
         TARGET_DIR="dist/${plugin_name}-${PACKAGE_VERSION}-php${TARGET_PHP_VERSION}/${plugin_name}"
         mkdir -p $path/$TARGET_DIR
-        rsync -a $path/dist/${plugin_name}-$PACKAGE_VERSION/ $path/$TARGET_DIR
+        rsync -a --quiet $path/dist/${plugin_name}-$PACKAGE_VERSION/ $path/$TARGET_DIR
         # call dockerized rector
         docker run \
           $DOCKER_FLAGS \
@@ -475,6 +477,7 @@ EOF
           --clear-cache \
           --config "${RECTOR_CONFIG}.php" \
           --no-progress-bar \
+          --no-diffs \
           process \
           dist
 
@@ -500,9 +503,6 @@ EOF
     cat << EOF | tee $path/build-info
 $(cd $path/dist && ls -1shS *.zip 2>/dev/null || echo "no zip archives found")
 
-$(echo -n "---")
-
-$(for ZIP_ARCHIVE in $(find $path/dist/ -name '*.zip'); do (cd $(dirname $ZIP_ARCHIVE) && unzip -l $(basename $ZIP_ARCHIVE) && echo ""); done)
 EOF
   fi
 
