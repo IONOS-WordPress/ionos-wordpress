@@ -463,7 +463,7 @@ EOF
         TARGET_PHP_VERSION="${RECTOR_CONFIG#*rector-config-php}"
         TARGET_DIR="dist/${plugin_name}-${PACKAGE_VERSION}-php${TARGET_PHP_VERSION}/${plugin_name}"
         mkdir -p $path/$TARGET_DIR
-        rsync -a $path/dist/${plugin_name}-$PACKAGE_VERSION/ $path/$TARGET_DIR
+        rsync --quiet -a $path/dist/${plugin_name}-$PACKAGE_VERSION/ $path/$TARGET_DIR
         # call dockerized rector
         docker run \
           $DOCKER_FLAGS \
