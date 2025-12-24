@@ -475,6 +475,7 @@ EOF
           --clear-cache \
           --config "${RECTOR_CONFIG}.php" \
           --no-progress-bar \
+          --no-diffs \
           process \
           dist
 
