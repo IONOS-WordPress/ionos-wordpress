@@ -429,7 +429,8 @@ EOF
   if [[ "${USE[@]}" =~ all|wp-plugin:rector|wp-plugin:bundle ]]; then
     # copy plugin code to dist/[plugin-name]
     mkdir -p $path/dist/$plugin_name-$PACKAGE_VERSION
-    rsync -rupE --verbose \
+    ionos.wordpress.log_info "syncing plugin files to $path/dist/$plugin_name-$PACKAGE_VERSION"
+    rsync -rupE --quiet \
       --exclude=node_modules/ \
       --exclude=package.json \
       --exclude=dist/ \
@@ -449,6 +450,7 @@ EOF
       $(test -f $path/.distignore && echo "--exclude-from=$path/.distignore") \
       $path/ \
       $path/dist/$plugin_name-$PACKAGE_VERSION
+      ionos.wordpress.log_info "syncing plugin files done"
   fi
 
   if [[ "${USE[@]}" =~ all|wp-plugin:rector ]]; then
@@ -463,7 +465,7 @@ EOF
         TARGET_PHP_VERSION="${RECTOR_CONFIG#*rector-config-php}"
         TARGET_DIR="dist/${plugin_name}-${PACKAGE_VERSION}-php${TARGET_PHP_VERSION}/${plugin_name}"
         mkdir -p $path/$TARGET_DIR
-        rsync --quiet -a $path/dist/${plugin_name}-$PACKAGE_VERSION/ $path/$TARGET_DIR
+        rsync -a --quiet $path/dist/${plugin_name}-$PACKAGE_VERSION/ $path/$TARGET_DIR
         # call dockerized rector
         docker run \
           $DOCKER_FLAGS \
