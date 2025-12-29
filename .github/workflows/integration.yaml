@@ -111,7 +111,7 @@ jobs:
         with:
           runCmd: |
             pnpm run lint
-      
+
       # # automatically approve and merge dependabot PRs
       # dependabot:
       #   runs-on: ubuntu-latest
