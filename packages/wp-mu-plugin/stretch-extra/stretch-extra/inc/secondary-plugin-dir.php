@@ -13,6 +13,9 @@ const IONOS_CUSTOM_PLUGINS_DIR  = IONOS_CUSTOM_DIR . '/' . IONOS_CUSTOM_PLUGINS_
 // Option name to store active custom plugins
 const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
 
+// Option name to store deleted/hidden custom plugins
+const IONOS_CUSTOM_DELETED_PLUGINS_OPTION = 'IONOS_CUSTOM_DELETED_PLUGINS_OPTION';
+
 // @TODO: hack just for beta : on first run activate all custom plugins
 \add_action('plugins_loaded', function () {
   $is_initialized = \get_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION);
@@ -34,11 +37,58 @@ const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
 });
 
 /**
- * Get list of active custom plugins
+ * Get list of deleted/hidden custom plugins
+ */
+function get_deleted_custom_plugins()
+{
+  return \get_option(IONOS_CUSTOM_DELETED_PLUGINS_OPTION, []);
+}
+
+/**
+ * Mark a custom plugin as deleted/hidden
+ */
+function mark_custom_plugin_as_deleted($plugin_key)
+{
+  $deleted_plugins = get_deleted_custom_plugins();
+  if (! in_array($plugin_key, $deleted_plugins, true)) {
+    $deleted_plugins[] = $plugin_key;
+      // Also deactivate the plugin if it was active
+    deactivate_custom_plugin($plugin_key);
+    \update_option(IONOS_CUSTOM_DELETED_PLUGINS_OPTION, $deleted_plugins, true);
+  }
+}
+
+/**
+ * Unmark a custom plugin as deleted/hidden
+ */
+function unmark_custom_plugin_as_deleted($plugin_key)
+{
+  $deleted_plugins = get_deleted_custom_plugins();
+  $key             = array_search($plugin_key, $deleted_plugins, true);
+  if ($key !== false) {
+    unset($deleted_plugins[$key]);
+    \update_option(IONOS_CUSTOM_DELETED_PLUGINS_OPTION, array_values($deleted_plugins), true);
+  }
+}
+
+/**
+ * Check if a custom plugin is marked as deleted
+ */
+function is_custom_plugin_deleted($plugin_key): bool
+{
+  $deleted_plugins = get_deleted_custom_plugins();
+  return in_array($plugin_key, $deleted_plugins, true);
+}
+
+/**
+ * Get list of active custom plugins (excluding deleted ones)
  */
 function get_active_custom_plugins()
 {
-  return \get_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION, []);
+  $active_plugins  = \get_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION, []);
+  $deleted_plugins = get_deleted_custom_plugins();
+  // Filter out any deleted plugins from the active list
+  return array_diff($active_plugins, $deleted_plugins);
 }
 
 /**
@@ -76,58 +126,60 @@ function deactivate_custom_plugin($plugin_key)
 }
 
 /**
- * Get all custom plugins from the custom plugins directory
+ * Get all custom plugins from the custom plugins directory (excluding deleted ones)
  * Returns an array of plugin info: ['key' => plugin_key, 'file' => plugin_file, 'data' => plugin_data]
  */
 //@TODO: optimize: hardcode list of plugins. simplifiy, avoid glob and get_file_data calls
 function get_custom_plugins(): array
 {
-  static $custom_plugins = null;
+  static $all_custom_plugins = null;
 
-  if ($custom_plugins !== null) {
-    return $custom_plugins;
-  }
+  if ($all_custom_plugins === null) {
+    $all_custom_plugins = [];
 
-  $custom_plugins = [];
+    if (! is_dir(IONOS_CUSTOM_PLUGINS_DIR)) {
+      error_log(
+        sprintf(
+          'secondary-plugin-dir: skip loading plugins from custom directory(=%s) - directory does not exist or no valid plugins found',
+          IONOS_CUSTOM_PLUGINS_DIR,
+        )
+      );
 
-  if (! is_dir(IONOS_CUSTOM_PLUGINS_DIR)) {
-    error_log(
-      sprintf(
-        'secondary-plugin-dir: skip loading plugins from custom directory(=%s) - directory does not exist or no valid plugins found',
-        IONOS_CUSTOM_PLUGINS_DIR,
-      )
-    );
+      return $all_custom_plugins;
+    }
 
-    return $custom_plugins;
-  }
+    $plugin_dirs = glob(IONOS_CUSTOM_PLUGINS_DIR . '*', GLOB_ONLYDIR);
 
-  $plugin_dirs = glob(IONOS_CUSTOM_PLUGINS_DIR . '*', GLOB_ONLYDIR);
+    foreach ($plugin_dirs as $plugin_dir) {
+      $plugin_slug  = basename($plugin_dir);
+      $plugin_files = glob($plugin_dir . '/*.php');
 
-  foreach ($plugin_dirs as $plugin_dir) {
-    $plugin_slug  = basename($plugin_dir);
-    $plugin_files = glob($plugin_dir . '/*.php');
-
-    foreach ($plugin_files as $plugin_file) {
-      if (file_exists($plugin_file)) {
-        // Check if it's a valid plugin file by looking for plugin headers
-        $plugin_data = \get_file_data($plugin_file, [
-          'Name' => 'Plugin Name',
-        ]);
-        if (! empty($plugin_data['Name'])) {
-          $plugin_key       = IONOS_CUSTOM_PLUGINS_PATH . $plugin_slug . '/' . basename($plugin_file);
-          $custom_plugins[] = [
-            'key'  => $plugin_key,
-            'file' => $plugin_file,
-            'slug' => $plugin_slug,
-            'data' => $plugin_data,
-          ];
-          break; // Only process one main plugin file per directory
+      foreach ($plugin_files as $plugin_file) {
+        if (file_exists($plugin_file)) {
+          // Check if it's a valid plugin file by looking for plugin headers
+          $plugin_data = \get_file_data($plugin_file, [
+            'Name' => 'Plugin Name',
+          ]);
+          if (! empty($plugin_data['Name'])) {
+            $plugin_key           = IONOS_CUSTOM_PLUGINS_PATH . $plugin_slug . '/' . basename($plugin_file);
+            $all_custom_plugins[] = [
+              'key'  => $plugin_key,
+              'file' => $plugin_file,
+              'slug' => $plugin_slug,
+              'data' => $plugin_data,
+            ];
+            break; // Only process one main plugin file per directory
+          }
         }
       }
     }
   }
 
-  return $custom_plugins;
+  // Filter out deleted plugins
+  $deleted_plugins = get_deleted_custom_plugins();
+  return array_filter($all_custom_plugins, function ($plugin_info) use ($deleted_plugins) {
+    return ! in_array($plugin_info['key'], $deleted_plugins, true);
+  });
 }
 
 /**
@@ -174,9 +226,15 @@ function get_custom_plugins(): array
 
   switch ($pagenow) {
     case 'plugins.php':
-      $custom_plugins = get_custom_plugins();
+      $custom_plugins  = get_custom_plugins();
+      $deleted_plugins = get_deleted_custom_plugins();
 
       foreach ($custom_plugins as $plugin_info) {
+        // Skip deleted/hidden plugins
+        if (in_array($plugin_info['key'], $deleted_plugins, true)) {
+          continue;
+        }
+
         if (! isset($plugins[$plugin_info['key']])) {
           // Get full plugin data for admin display
           $plugin_data                  = \get_plugin_data($plugin_info['file'], false, false);
@@ -310,8 +368,8 @@ function get_custom_plugins(): array
 );
 
 /**
- * Handle activation/deactivation of custom plugins
- * This allows users to activate/deactivate custom plugins from the admin interface
+ * Handle activation/deactivation/deletion of custom plugins
+ * This allows users to activate/deactivate/delete custom plugins from the admin interface
  */
 \add_action('admin_init', function () {
   // Handle activation
@@ -348,6 +406,36 @@ function get_custom_plugins(): array
       // Redirect back without error since plugin is already loaded
       \wp_redirect(\admin_url('plugins.php?activate=true'));
       exit;
+    }
+  }
+});
+
+/*
+  WordPress calls 'delete_plugin' action when a plugin is deleted from the plugins list
+
+  This hook works for both single and bulk deletions.
+*/
+\add_action('delete_plugin', function ($plugin_key) {
+  if (str_starts_with($plugin_key, IONOS_CUSTOM_PLUGINS_PATH)) {
+    // If this is an AJAX request, send JSON response
+    if (\wp_doing_ajax()) {
+      $plugin_file = IONOS_CUSTOM_DIR . '/' . $plugin_key;
+      if (!file_exists($plugin_file)) {
+        return;
+      }
+
+      // Check if it's a valid plugin file by looking for plugin headers
+      $plugin_data = \get_file_data($plugin_file, [
+        'Name' => 'Plugin Name',
+      ]);
+      mark_custom_plugin_as_deleted($plugin_key);
+
+      \wp_send_json_success([
+        'delete' => 'plugin',
+        'plugin'  => $plugin_key,
+        'slug'  => $plugin_key,
+        'pluginName' => $plugin_data['Name'],
+      ]);
     }
   }
 });
