@@ -507,7 +507,9 @@ EOF
     done
     cat << EOF | tee $path/build-info
 $(cd $path/dist && ls -1shS *.zip 2>/dev/null || echo "no zip archives found")
-
+$(if [[ "$VERBOSE" == "yes" ]]; then
+  for ZIP_ARCHIVE in $(find $path/dist/ -name '*.zip'); do (cd $(dirname $ZIP_ARCHIVE) && unzip -l $(basename $ZIP_ARCHIVE) && echo ""); done
+fi)
 EOF
   fi
 
