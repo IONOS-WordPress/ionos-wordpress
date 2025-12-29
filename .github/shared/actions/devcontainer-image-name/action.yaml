@@ -16,14 +16,6 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: checkout branch from git
-      uses: actions/checkout@v5
-      with:
-        fetch-depth: 0
-        # List the folder(s) you want to include
-        sparse-checkout: |
-          .devcontainer
-
     - id: compute_image_name
       shell: bash
       run: |
