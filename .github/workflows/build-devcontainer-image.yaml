@@ -32,6 +32,8 @@ jobs:
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - uses: ./.github/shared/actions/devcontainer-image-name
         id: image_name
