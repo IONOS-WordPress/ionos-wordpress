@@ -45,9 +45,28 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check if image exists in registry
+        id: check_image
+        run: |
+          IMAGE_NAME="${{ steps.image_name.outputs.image_name }}"
+          if docker manifest inspect "$IMAGE_NAME" > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Image $IMAGE_NAME already exists in registry"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Image $IMAGE_NAME does not exist in registry"
+          fi
+
+      - name: Pull existing image from registry
+        if: steps.check_image.outputs.exists == 'true'
+        run: |
+          IMAGE_NAME="${{ steps.image_name.outputs.image_name }}"
+          echo "Pulling image $IMAGE_NAME from registry"
+          docker pull "$IMAGE_NAME"
+
       - name: Build dev container and push to GitHub Container Registry
+        if: steps.check_image.outputs.exists == 'false'
         uses: devcontainers/ci@v0.3
-        # if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
         with:
           imageName: ${{ steps.image_name.outputs.image_name }}
           runCmd: |
