@@ -38,7 +38,7 @@ jobs:
 
       - name: Login to GitHub Container Registry
         # devcontainer step that builds and pushes to registry is only needed for main and develop
-        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
+        # if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -47,7 +47,7 @@ jobs:
 
       - name: Build dev container and push to GitHub Container Registry
         uses: devcontainers/ci@v0.3
-        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
+        # if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
         with:
           imageName: ${{ steps.image_name.outputs.image_name }}
           runCmd: |
