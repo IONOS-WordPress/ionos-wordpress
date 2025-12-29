@@ -176,10 +176,11 @@ function ionos.wordpress.build_workspace_package_docker() {
   pnpm --filter "$PACKAGE_NAME" --if-present run build
   pnpm --filter "$PACKAGE_NAME" --if-present run postbuild
 
+  [[ "$VERBOSE" == "yes" ]] && DOCKER_BUILD_VERBOSE='plain' || DOCKER_BUILD_VERBOSE='quiet'
   # image labels : see https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys
   docker build \
     $(test -f $path/.env && cat $path/.env | sed 's/^/--build-arg /' ||:) \
-    --progress=quiet \
+    --progress=$DOCKER_BUILD_VERBOSE \
     -t $DOCKER_IMAGE_NAME:latest \
     -t $DOCKER_IMAGE_NAME:$PACKAGE_VERSION \
     --label "maintainer=$DOCKER_IMAGE_AUTHOR" \
@@ -367,6 +368,8 @@ EOF
         done
       done
 
+      ionos.wordpress.log_info "generate localization files with wp-cli for plugin $PLUGIN_NAME"
+
       # update po files
       ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n update-po $LANGUAGES_DIR/*.pot
 
@@ -415,7 +418,7 @@ EOF
         <(sed -e '/^".*$/d' -e 's/^\(#:.*\):[0-9]\+/\1/g' $po_file) \
         <(git show HEAD:$po_file 2>/dev/null | sed -e '/^".*$/d' -e 's/^\(#:.*\):[0-9]\+/\1/g') \
         || diff_error_code=$?
-      [[ "0" == "$diff_error_code" ]] && git checkout $po_file
+      [[ "0" == "$diff_error_code" ]] && git checkout $po_file --quiet
     done
   else
     ionos.wordpress.log_warn "processing i18n skipped : env variable WP_CLI_I18N_LOCALES not set or not enabled by --use"
@@ -430,7 +433,8 @@ EOF
     # copy plugin code to dist/[plugin-name]
     mkdir -p $path/dist/$plugin_name-$PACKAGE_VERSION
     ionos.wordpress.log_info "syncing plugin files to $path/dist/$plugin_name-$PACKAGE_VERSION"
-    rsync -rupE --quiet \
+    [[ "$VERBOSE" == "yes" ]] && RSYNC_VERBOSE='--verbose' || RSYNC_VERBOSE='--quiet'
+    rsync -rupE $RSYNC_VERBOSE \
       --exclude=node_modules/ \
       --exclude=package.json \
       --exclude=dist/ \
@@ -458,7 +462,8 @@ EOF
       # we wrap the loop in a subshell call because of the nullglob shell behaviour change
       # nullglob is needed because we want to skip the loop if no rector-config-php*.php files are found
       shopt -s nullglob
-
+      ionos.wordpress.log_info "running rector for plugin $plugin_name"
+      [[ "$VERBOSE" == "yes" ]] && RECTOR_VERBOSE='' || RECTOR_VERBOSE='--no-diffs'
       # process plugin using rector
       for RECTOR_CONFIG in ./packages/docker/rector-php/rector-config-php*.php; do
         RECTOR_CONFIG=$(basename "$RECTOR_CONFIG" '.php')
@@ -477,7 +482,7 @@ EOF
           --clear-cache \
           --config "${RECTOR_CONFIG}.php" \
           --no-progress-bar \
-          --no-diffs \
+          ${RECTOR_VERBOSE} \
           process \
           dist
 
