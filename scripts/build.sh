@@ -197,7 +197,7 @@ function ionos.wordpress.build_workspace_package_docker() {
   cat << EOF | tee $path/build-info
 $(docker image inspect $DOCKER_IMAGE_NAME:latest | jq '.[0].Config.Labels | values')
 
-$(echo -n "--------------------------------")
+$(echo -n "---")
 
 $(docker image ls --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.CreatedAt}}\t{{.Size}}" $DOCKER_IMAGE_NAME:latest)
 EOF
