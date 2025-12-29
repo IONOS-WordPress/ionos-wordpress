@@ -373,7 +373,7 @@ function get_custom_plugins(): array
  */
 \add_action('admin_init', function () {
   // Handle activation
-  if (isset($_GET['action']) && $_GET['action'] === 'activate' && isset($_GET['plugin'])) {
+  if (isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'activate') {
     $plugin = \wp_unslash($_GET['plugin']);
     if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
       \check_admin_referer('activate-plugin_' . $plugin);
@@ -384,27 +384,12 @@ function get_custom_plugins(): array
   }
 
   // Handle deactivation
-  if (isset($_GET['action']) && $_GET['action'] === 'deactivate' && isset($_GET['plugin'])) {
+  if (isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'deactivate') {
     $plugin = \wp_unslash($_GET['plugin']);
     if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
       \check_admin_referer('deactivate-plugin_' . $plugin);
       deactivate_custom_plugin($plugin);
       \wp_redirect(\admin_url('plugins.php?deactivate=true'));
-      exit;
-    }
-  }
-});
-
-/**
- * Bypass plugin file existence check during activation
- * This prevents errors when activating custom plugins since they are loaded directly
- */
-\add_action('admin_init', function () {
-  if (isset($_GET['action']) && $_GET['action'] === 'activate' && isset($_GET['plugin'])) {
-    $plugin = \wp_unslash($_GET['plugin']);
-    if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
-      // Redirect back without error since plugin is already loaded
-      \wp_redirect(\admin_url('plugins.php?activate=true'));
       exit;
     }
   }
