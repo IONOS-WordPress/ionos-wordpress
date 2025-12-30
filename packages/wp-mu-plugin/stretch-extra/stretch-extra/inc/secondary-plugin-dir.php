@@ -434,8 +434,8 @@ function get_custom_plugins(): array
 });
 
 /*
-  replace install link with activate link for custom plugins if user wants
-  to install a plugin which is already provisioned as custom plugin
+
+
 */
 \add_filter('plugin_install_action_links', function ($links, $plugin) {
   $custom_plugins = get_custom_plugins();
@@ -450,40 +450,72 @@ function get_custom_plugins(): array
 
   $custom_plugin = $custom_plugins[$index];
 
+  $is_active = is_custom_plugin_active($custom_plugin['key']);
+  $is_marked_deleted = is_custom_plugin_deleted($custom_plugin['key']);
+
   // search for install link and replace it with activate link
   foreach ($links as $key => &$link) {
     // "<a class="install-now button" data-slug="extendify" href="http://localhost:8888/wp-admin/update.php?action=install-plugin&#038;plugin=extendify&#038;_wpnonce=1eda07af0a" aria-label="Install Extendify 2.3.1 now" data-name="Extendify 2.3.1" role="button">Install Now</a>"
     if (str_contains($link, 'install-now')) {
-      // code borrowed and adapted from WP core (wp-admin/includes/class-wp-plugins-list-table.php)
-      $button_text = _x( 'Activate', 'plugin' );
-      $button_label = _x( 'Activate %s', 'plugin' );
-      $activate_url = \add_query_arg(
-        [
-          '_wpnonce' => \wp_create_nonce( 'activate-plugin_' . $custom_plugin['key'] ),
-          'action'   => 'activate',
-          'plugin'   => $custom_plugin['key'],
-        ],
-        \network_admin_url( 'plugins.php' )
-      );
+      if ($is_marked_deleted) {
+        /*
+          replace install link url with link to custom plugin if
+          plugin exists as disabled custom plugin
+        */
+        $button = sprintf(
+          '<button type="button" class="button button-disabled" disabled="disabled">%s</button>',
+          _x( 'Deleted', 'plugin' )
+        );
+        $link = $button;
+        break;
+      } else if($is_active) {
+        /*
+          replace install link with disabled "active" link button for custom plugins if
+          a plugin which is already provisioned as custom plugin is already active
+        */
+        $button = sprintf(
+          '<button type="button" class="button button-disabled" disabled="disabled">%s</button>',
+          _x( 'Active', 'plugin' )
+        );
+        $link = $button;
+        break;
+      } else if( !$is_marked_deleted) {
+        /*
+          replace install link with activate link for custom plugins if user wants
+          to install a plugin which is already provisioned as custom plugin
+        */
 
-      if ( \is_network_admin() ) {
-        $button_text = _x( 'Network Activate', 'plugin' );
-        $button_label = _x( 'Network Activate %s', 'plugin' );
-        $activate_url = \add_query_arg( [ 'networkwide' => 1 ], $activate_url );
+        // code borrowed and adapted from WP core (wp-admin/includes/class-wp-plugins-list-table.php)
+        $button_text = _x( 'Activate', 'plugin' );
+        $button_label = _x( 'Activate %s', 'plugin' );
+        $activate_url = \add_query_arg(
+          [
+            '_wpnonce' => \wp_create_nonce( 'activate-plugin_' . $custom_plugin['key'] ),
+            'action'   => 'activate',
+            'plugin'   => $custom_plugin['key'],
+          ],
+          \network_admin_url( 'plugins.php' )
+        );
+
+        if ( \is_network_admin() ) {
+          $button_text = _x( 'Network Activate', 'plugin' );
+          $button_label = _x( 'Network Activate %s', 'plugin' );
+          $activate_url = \add_query_arg( [ 'networkwide' => 1 ], $activate_url );
+        }
+
+        $button = sprintf(
+          '<a href="%1$s" data-name="%2$s" data-slug="%3$s" data-plugin="%4$s" class="button button-primary activate-now" aria-label="%5$s" role="button">%6$s</a>',
+          esc_url( $activate_url ),
+          esc_attr( $custom_plugin['data']['Name'] ),
+          esc_attr( $custom_plugin['slug'] ),
+          esc_attr( $custom_plugin['key'] ),
+          esc_attr( sprintf( $button_label, $custom_plugin['data']['Name'] ) ),
+          $button_text
+        );
+
+        $link = $button;
+        break;
       }
-
-      $button = sprintf(
-        '<a href="%1$s" data-name="%2$s" data-slug="%3$s" data-plugin="%4$s" class="button button-primary activate-now" aria-label="%5$s" role="button">%6$s</a>',
-        esc_url( $activate_url ),
-        esc_attr( $custom_plugin['data']['Name'] ),
-        esc_attr( $custom_plugin['slug'] ),
-        esc_attr( $custom_plugin['key'] ),
-        esc_attr( sprintf( $button_label, $custom_plugin['data']['Name'] ) ),
-        $button_text
-      );
-
-      $link = $button;
-      break;
     }
   }
 
