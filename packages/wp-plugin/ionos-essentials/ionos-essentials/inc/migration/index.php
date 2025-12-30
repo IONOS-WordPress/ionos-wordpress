@@ -12,6 +12,8 @@
 
 namespace ionos\essentials\migration;
 
+use function ionos\essentials\dashboard\install_plugin_from_url;
+
 defined('ABSPATH') || exit();
 
 use const ionos\essentials\PLUGIN_FILE;
@@ -86,6 +88,17 @@ function _install()
 
       // re add ionos loop consent data
       \add_option('ionos_loop_consent', $ionos_loop_consent_given);
+
+      // install the performance plugin for all non stretch spaces
+      if (\ionos\essentials\is_stretch() === false                  &&
+      ! is_plugin_active('ionos-performance/ionos-performance.php') &&
+      false == strpos(home_url(), 'localhost')) {
+        install_plugin_from_url(
+          'https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-group/ionos-performance.latest.zip'
+        );
+        \activate_plugin('ionos-performance/ionos-performance.php');
+      }
+
       // no break because we want to run all migrations sequentially
     case version_compare($last_installed_version, '1.0.4', '<'):
       \update_option('ionos_migration_step', 1);
