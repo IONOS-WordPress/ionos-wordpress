@@ -249,8 +249,8 @@ function get_custom_plugins(): array
 });
 
 /**
- * Prevent installation of plugins that already exist as custom plugins
- * This filters the plugin installation API results to hide plugins that are already available
+ * Mark custom plugins as already installed in plugin installation API results
+ * This shows plugins that already exist as custom plugins with an "installed" status
  */
 // @TODO: improve UX: https://hosting-jira.1and1.org/browse/GPHWPP-4232
 \add_filter('plugins_api_result', function ($result, $action, $args) {
@@ -262,19 +262,27 @@ function get_custom_plugins(): array
   $custom_slugs   = array_column($custom_plugins, 'slug');
 
   if ($action === 'query_plugins' && isset($result->plugins)) {
-    // Filter out plugins that match our custom plugin slugs
-    $result->plugins = array_filter($result->plugins, function ($plugin) use ($custom_slugs) {
+    // Mark custom plugins as already installed
+    foreach ($result->plugins as &$plugin) {
       $plugin_slug = is_object($plugin) ? $plugin->slug : ($plugin['slug'] ?? '');
-      return ! in_array($plugin_slug, $custom_slugs, true);
-    });
-    $result->plugins = array_values($result->plugins); // Re-index array
+      if (in_array($plugin_slug, $custom_slugs, true)) {
+        // Mark as installed
+        if (is_object($plugin)) {
+          $plugin->installed = true;
+        } else {
+          $plugin['installed'] = true;
+        }
+      }
+    }
+    unset($plugin); // Break reference
   }
 
   if ($action === 'plugin_information' && isset($result->slug)) {
     // If user tries to view details of a custom plugin, show notice
     if (in_array($result->slug, $custom_slugs, true)) {
-      $result->sections['description'] = '<div class="notice notice-info"><p><strong>This plugin is already provisioned by IONOS Core and cannot be installed from WordPress.org.</strong></p></div>' . ($result->sections['description'] ?? '');
-      // Remove installation-related data
+      // $result->sections['description'] = '<div class="notice notice-info"><p><strong>This plugin is already provisioned by IONOS Core and cannot be installed from WordPress.org.</strong></p></div>' . ($result->sections['description'] ?? '');
+      // Mark as installed and remove installation-related data
+      $result->installed = true;
       $result->download_link = '';
     }
   }
