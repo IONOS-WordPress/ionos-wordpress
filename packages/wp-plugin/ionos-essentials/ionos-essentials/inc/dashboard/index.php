@@ -112,6 +112,14 @@ add_filter('admin_body_class', function ($classes) {
   return $classes;
 });
 
+function install_plugin_from_url($plugin_url)
+{
+  $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
+  $result   = $upgrader->install($plugin_url);
+
+  return ! \is_wp_error($result);
+}
+
 \add_action('rest_api_init', function () {
   \register_rest_route(
     'ionos/essentials/dashboard/welcome/v1',
@@ -135,14 +143,6 @@ add_filter('admin_body_class', function ($classes) {
       },
     ]
   );
-
-  function install_plugin_from_url($plugin_url)
-  {
-    $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
-    $result   = $upgrader->install($plugin_url);
-
-    return ! \is_wp_error($result);
-  }
 
   \register_rest_route('ionos/essentials/dashboard/nba/v1', '/update', [
     'methods'  => 'POST',
