@@ -21,6 +21,21 @@ defined('ABSPATH') || exit();
         [],
         filemtime(\plugin_dir_path(__FILE__) . 'style.css')
       );
+
+      // Enqueue script for SSO button click tracking
+      \wp_enqueue_script(
+        'ionos-login-tracking',
+        \plugin_dir_url(__FILE__) . 'script.js',
+        [],
+        filemtime(\plugin_dir_path(__FILE__) . 'script.js'),
+        true
+      );
+
+      // Pass REST API URL to JavaScript
+      \wp_localize_script('ionos-login-tracking', 'ionosLoginTracking', [
+        'restUrl' => \rest_url('ionos/essentials/loop/v1/sso-click'),
+        'nonce'   => \wp_create_nonce('wp_rest'),
+      ]);
     }
   );
 
