@@ -259,13 +259,17 @@ function get_custom_plugins(): array
   }
 
   $custom_plugins = get_custom_plugins();
-  $custom_slugs   = array_column($custom_plugins, 'slug');
+  $custom_installed_plugin_slugs = array_column($custom_plugins, 'slug');
+  $custom_installed_plugin_slugs = array_merge(
+    array_map( fn($slug) => basename( dirname($slug)), get_deleted_custom_plugins() ),
+    $custom_installed_plugin_slugs
+  );
 
   if ($action === 'query_plugins' && isset($result->plugins)) {
     // Mark custom plugins as already installed
     foreach ($result->plugins as &$plugin) {
       $plugin_slug = is_object($plugin) ? $plugin->slug : ($plugin['slug'] ?? '');
-      if (in_array($plugin_slug, $custom_slugs, true)) {
+      if (in_array($plugin_slug, $custom_installed_plugin_slugs, true)) {
         // Mark as installed
         if (is_object($plugin)) {
           $plugin->installed = true;
@@ -279,10 +283,8 @@ function get_custom_plugins(): array
 
   if ($action === 'plugin_information' && isset($result->slug)) {
     // If user tries to view details of a custom plugin, show notice
-    if (in_array($result->slug, $custom_slugs, true)) {
+    if (in_array($result->slug, $custom_installed_plugin_slugs, true)) {
       // $result->sections['description'] = '<div class="notice notice-info"><p><strong>This plugin is already provisioned by IONOS Core and cannot be installed from WordPress.org.</strong></p></div>' . ($result->sections['description'] ?? '');
-      // Mark as installed and remove installation-related data
-      $result->installed = true;
       $result->download_link = '';
     }
   }
@@ -376,8 +378,8 @@ function get_custom_plugins(): array
 );
 
 /**
- * Handle activation/deactivation/deletion of custom plugins
- * This allows users to activate/deactivate/delete custom plugins from the admin interface
+ * Handle activation/deactivation/deletion/installation of custom plugins
+ * This allows users to activate/deactivate/delete/installation of custom plugins from the admin interface
  */
 \add_action('admin_init', function () {
   // Handle activation
@@ -398,6 +400,19 @@ function get_custom_plugins(): array
       \check_admin_referer('deactivate-plugin_' . $plugin);
       deactivate_custom_plugin($plugin);
       \wp_redirect(\admin_url('plugins.php?deactivate=true'));
+      exit;
+    }
+  }
+
+  if(isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'install-plugin') {
+    $plugin = \wp_unslash($_GET['plugin']);
+    if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+      // @TODO: check right nonce and return to search results mask (referrer)
+      // \check_admin_referer('reinstall_custom_plugin_' . $plugin);
+      unmark_custom_plugin_as_deleted($plugin);
+
+      // \wp_redirect(\admin_url('plugins.php?reinstall_custom_plugin=true'));
+
       exit;
     }
   }
@@ -434,41 +449,50 @@ function get_custom_plugins(): array
 });
 
 /*
-
-
+  Modify plugin installation action links for custom plugins. This changes
+  - the "Install Now" button to "Activate" or disabled "active" button for installed custom plugins
+  - the "Install Now" button to reenable a deleted custom plugin
 */
 \add_filter('plugin_install_action_links', function ($links, $plugin) {
-  $custom_plugins = get_custom_plugins();
-  $custom_slugs   = array_column($custom_plugins, 'slug');
+  $custom_plugin = array_find(
+    get_custom_plugins(),
+    fn($custom_plugin) => $custom_plugin['slug'] === $plugin['slug'],
+  );
 
-  $index = array_search($plugin['slug'], $custom_slugs, true);
+  $is_active = false;
+  $deleted_custom_plugin_slug = null;
 
-  // abort if not a available custom plugin
-  if ($index === false) {
+  if(is_array($custom_plugin)) {
+    $is_active = is_custom_plugin_active($custom_plugin['key']);
+  } else {
+    $deleted_custom_plugin_slug = array_find(
+      get_deleted_custom_plugins(),
+      fn($deleted_custom_plugin) => str_contains($deleted_custom_plugin, $plugin['slug']),
+    );
+  }
+
+  // abort if not a available or deleted custom plugin
+  if ($custom_plugin === null && $deleted_custom_plugin_slug === null) {
     return $links;
   }
 
-  $custom_plugin = $custom_plugins[$index];
-
-  $is_active = is_custom_plugin_active($custom_plugin['key']);
-  $is_marked_deleted = is_custom_plugin_deleted($custom_plugin['key']);
-
   // search for install link and replace it with activate link
   foreach ($links as $key => &$link) {
-    // "<a class="install-now button" data-slug="extendify" href="http://localhost:8888/wp-admin/update.php?action=install-plugin&#038;plugin=extendify&#038;_wpnonce=1eda07af0a" aria-label="Install Extendify 2.3.1 now" data-name="Extendify 2.3.1" role="button">Install Now</a>"
     if (str_contains($link, 'install-now')) {
-      if ($is_marked_deleted) {
+      if ($deleted_custom_plugin_slug !== null) {
         /*
           replace install link url with link to custom plugin if
           plugin exists as disabled custom plugin
         */
-        $button = sprintf(
-          '<button type="button" class="button button-disabled" disabled="disabled">%s</button>',
-          _x( 'Deleted', 'plugin' )
-        );
-        $link = $button;
+        // "<a class="install-now button" data-slug="extendify" href="http://localhost:8888/wp-admin/update.php?action=install-plugin&#038;plugin=extendify&#038;_wpnonce=f4bd11d090" aria-label="Install Extendify 2.3.1 now" data-name="Extendify 2.3.1" role="button">Install Now</a>"
+        $link = str_replace('plugin=' . \esc_attr($plugin['slug']), 'plugin=' . \esc_attr($deleted_custom_plugin_slug), $link);
+        // remove install-now class to avoid JS handling
+        $link = str_replace('install-now', '', $link);
+
         break;
-      } else if($is_active) {
+      }
+
+      if($is_active) {
         /*
           replace install link with disabled "active" link button for custom plugins if
           a plugin which is already provisioned as custom plugin is already active
@@ -479,7 +503,9 @@ function get_custom_plugins(): array
         );
         $link = $button;
         break;
-      } else if( !$is_marked_deleted) {
+      }
+
+      if($custom_plugin !== null) {
         /*
           replace install link with activate link for custom plugins if user wants
           to install a plugin which is already provisioned as custom plugin
