@@ -6,6 +6,7 @@ use WP_REST_Server;
 
 use const ionos\essentials\loop\IONOS_LOOP_REST_ENDPOINT;
 use const ionos\essentials\loop\IONOS_LOOP_REST_NAMESPACE;
+use const ionos\essentials\loop\IONOS_LOOP_REST_SSO_CLICK_ENDPOINT;
 
 /**
  * run only this test using 'pnpm test:php --php-opts "--filter LoopTest"'
