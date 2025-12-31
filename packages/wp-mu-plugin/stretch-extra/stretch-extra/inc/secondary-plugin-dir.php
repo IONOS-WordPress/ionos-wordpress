@@ -410,7 +410,7 @@ function get_custom_plugins(): array
       // @TODO: check right nonce and return to search results mask (referrer)
       // \check_admin_referer('reinstall_custom_plugin_' . $plugin);
       unmark_custom_plugin_as_deleted($plugin);
-
+      // @TODO: https://gemini.google.com/app/be3c90e0240dfa70
       // \wp_redirect(\admin_url('plugins.php?reinstall_custom_plugin=true'));
 
       exit;
