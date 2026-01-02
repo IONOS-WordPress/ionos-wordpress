@@ -6,6 +6,7 @@ use WP_REST_Server;
 
 use const ionos\essentials\loop\IONOS_LOOP_REST_ENDPOINT;
 use const ionos\essentials\loop\IONOS_LOOP_REST_NAMESPACE;
+use const ionos\essentials\loop\IONOS_LOOP_REST_SSO_CLICK_ENDPOINT;
 
 /**
  * run only this test using 'pnpm test:php --php-opts "--filter LoopTest"'
@@ -48,6 +49,19 @@ class LoopTest extends \WP_UnitTestCase  {
           'callback'            => __NAMESPACE__ . '\_rest_loop_callback',
         ]
       );
+      \register_rest_route(
+        IONOS_LOOP_REST_NAMESPACE,
+        IONOS_LOOP_REST_SSO_CLICK_ENDPOINT,
+        [
+          'methods'             => 'POST',
+          'permission_callback' => function (\WP_REST_Request $request) {
+            // Verify nonce to prevent unauthenticated abuse
+            $nonce = $request->get_header('X-WP-Nonce');
+            return $nonce && \wp_verify_nonce($nonce, 'wp_rest');
+          },
+          'callback'            => __NAMESPACE__ . '\_rest_sso_click_callback',
+        ]
+      );
     });
 
     \do_action( 'rest_api_init' );
@@ -72,5 +86,26 @@ class LoopTest extends \WP_UnitTestCase  {
 
     $validation = \rest_validate_value_from_schema($json, $schema);
     $this->assertTrue($validation, 'data returned by loop endpoint matches schema');
+  }
+
+  public function test_sso_click_endpoint_requires_nonce() : void {
+    // Test without nonce - should fail
+    $request = new \WP_REST_Request('POST', '/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_SSO_CLICK_ENDPOINT);
+    $response = $this->server->dispatch($request);
+    $this->assertEquals(403, $response->status, 'SSO click endpoint should reject requests without nonce');
+
+    // Test with invalid nonce - should fail
+    $request = new \WP_REST_Request('POST', '/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_SSO_CLICK_ENDPOINT);
+    $request->set_header('X-WP-Nonce', 'invalid-nonce');
+    $response = $this->server->dispatch($request);
+    $this->assertEquals(403, $response->status, 'SSO click endpoint should reject requests with invalid nonce');
+
+    // Test with valid nonce - should succeed
+    $nonce = \wp_create_nonce('wp_rest');
+    $request = new \WP_REST_Request('POST', '/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_SSO_CLICK_ENDPOINT);
+    $request->set_header('X-WP-Nonce', $nonce);
+    $response = $this->server->dispatch($request);
+    $this->assertEquals(200, $response->status, 'SSO click endpoint should accept requests with valid nonce');
+    $this->assertTrue($response->data['success'], 'SSO click endpoint should return success');
   }
 }
