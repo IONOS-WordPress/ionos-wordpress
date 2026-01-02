@@ -95,6 +95,13 @@ function _rest_permissions_check(WP_REST_Request $request): bool|WP_Error
   return true;
 }
 
+function _rest_sso_click_permissions_check(WP_REST_Request $request): bool
+{
+  // Verify nonce to prevent unauthenticated abuse
+  $nonce = $request->get_header('X-WP-Nonce');
+  return $nonce && \wp_verify_nonce($nonce, 'wp_rest');
+}
+
 function _ipv4_in_allowlist(string $ipv4, array $allow_list): bool
 {
   foreach ($allow_list as $cidr) {
