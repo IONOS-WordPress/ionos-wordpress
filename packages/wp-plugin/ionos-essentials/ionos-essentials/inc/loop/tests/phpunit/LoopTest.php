@@ -54,11 +54,7 @@ class LoopTest extends \WP_UnitTestCase  {
         IONOS_LOOP_REST_SSO_CLICK_ENDPOINT,
         [
           'methods'             => 'POST',
-          'permission_callback' => function (\WP_REST_Request $request) {
-            // Verify nonce to prevent unauthenticated abuse
-            $nonce = $request->get_header('X-WP-Nonce');
-            return $nonce && \wp_verify_nonce($nonce, 'wp_rest');
-          },
+          'permission_callback' => __NAMESPACE__ . '\_rest_sso_click_permissions_check',
           'callback'            => __NAMESPACE__ . '\_rest_sso_click_callback',
         ]
       );
@@ -89,20 +85,22 @@ class LoopTest extends \WP_UnitTestCase  {
   }
 
   public function test_sso_click_endpoint_requires_nonce() : void {
+    $endpoint_url = '/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_SSO_CLICK_ENDPOINT;
+
     // Test without nonce - should fail
-    $request = new \WP_REST_Request('POST', '/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_SSO_CLICK_ENDPOINT);
+    $request = new \WP_REST_Request('POST', $endpoint_url);
     $response = $this->server->dispatch($request);
     $this->assertEquals(403, $response->status, 'SSO click endpoint should reject requests without nonce');
 
     // Test with invalid nonce - should fail
-    $request = new \WP_REST_Request('POST', '/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_SSO_CLICK_ENDPOINT);
+    $request = new \WP_REST_Request('POST', $endpoint_url);
     $request->set_header('X-WP-Nonce', 'invalid-nonce');
     $response = $this->server->dispatch($request);
     $this->assertEquals(403, $response->status, 'SSO click endpoint should reject requests with invalid nonce');
 
     // Test with valid nonce - should succeed
     $nonce = \wp_create_nonce('wp_rest');
-    $request = new \WP_REST_Request('POST', '/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_SSO_CLICK_ENDPOINT);
+    $request = new \WP_REST_Request('POST', $endpoint_url);
     $request->set_header('X-WP-Nonce', $nonce);
     $response = $this->server->dispatch($request);
     $this->assertEquals(200, $response->status, 'SSO click endpoint should accept requests with valid nonce');
