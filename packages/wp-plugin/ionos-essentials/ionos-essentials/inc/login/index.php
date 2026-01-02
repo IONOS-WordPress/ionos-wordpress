@@ -3,6 +3,8 @@
 namespace ionos\essentials\login;
 
 use ionos\essentials\Tenant;
+
+use const ionos\essentials\PLUGIN_DIR;
 use const ionos\essentials\PLUGIN_FILE;
 
 defined('ABSPATH') || exit();
@@ -15,27 +17,23 @@ defined('ABSPATH') || exit();
   \add_action(
     'login_enqueue_scripts',
     function () {
+      $assets = require_once PLUGIN_DIR . '/ionos-essentials/build/login/index.asset.php';
+      $src_url = \plugins_url('ionos-essentials/build/login/', PLUGIN_FILE);
+
       \wp_enqueue_style(
         'ionos-login-redesign',
-        \plugin_dir_url(__FILE__) . 'style.css',
+        $src_url . 'index.css',
         [],
-        filemtime(\plugin_dir_path(__FILE__) . 'style.css')
+        $assets['version'],
       );
 
-      // Enqueue script for SSO button click tracking
       \wp_enqueue_script(
         'ionos-login-tracking',
-        \plugin_dir_url(__FILE__) . 'script.js',
-        [],
-        filemtime(\plugin_dir_path(__FILE__) . 'script.js'),
+        $src_url . 'index.js',
+        $assets['dependencies'],
+        $assets['version'],
         true
       );
-
-      // Pass REST API URL to JavaScript
-      \wp_localize_script('ionos-login-tracking', 'ionosLoginTracking', [
-        'restUrl' => \rest_url('ionos/essentials/loop/v1/sso-click'),
-        'nonce'   => \wp_create_nonce('wp_rest'),
-      ]);
     }
   );
 
