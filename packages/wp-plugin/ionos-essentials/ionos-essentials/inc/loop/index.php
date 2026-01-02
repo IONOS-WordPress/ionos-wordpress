@@ -144,7 +144,11 @@ function log_loop_event(string $name, array $payload = []): void
     IONOS_LOOP_REST_SSO_CLICK_ENDPOINT,
     [
       'methods'             => 'POST',
-      'permission_callback' => '__return_true', // Allow unauthenticated requests
+      'permission_callback' => function (\WP_REST_Request $request) {
+        // Verify nonce to prevent unauthenticated abuse
+        $nonce = $request->get_header('X-WP-Nonce');
+        return $nonce && \wp_verify_nonce($nonce, 'wp_rest');
+      },
       'callback'            => __NAMESPACE__ . '\_rest_sso_click_callback',
     ]
   );
