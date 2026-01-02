@@ -2,8 +2,6 @@
 
 namespace ionos\stretch_extra\secondary_plugin_dir;
 
-use WP_Plugin_Dependencies;
-
 use const ionos\stretch_extra\IONOS_CUSTOM_DIR;
 
 defined('ABSPATH') || exit();
@@ -54,7 +52,7 @@ function mark_custom_plugin_as_deleted($plugin_key)
   $deleted_plugins = get_deleted_custom_plugins();
   if (! in_array($plugin_key, $deleted_plugins, true)) {
     $deleted_plugins[] = $plugin_key;
-      // Also deactivate the plugin if it was active
+    // Also deactivate the plugin if it was active
     deactivate_custom_plugin($plugin_key);
     \update_option(IONOS_CUSTOM_DELETED_PLUGINS_OPTION, $deleted_plugins, true);
   }
@@ -260,10 +258,10 @@ function get_custom_plugins(): array
     return $result;
   }
 
-  $custom_plugins = get_custom_plugins();
+  $custom_plugins                = get_custom_plugins();
   $custom_installed_plugin_slugs = array_column($custom_plugins, 'slug');
   $custom_installed_plugin_slugs = array_merge(
-    array_map( fn($slug) => basename( dirname($slug)), get_deleted_custom_plugins() ),
+    array_map(fn ($slug) => basename(dirname($slug)), get_deleted_custom_plugins()),
     $custom_installed_plugin_slugs
   );
 
@@ -409,66 +407,68 @@ function get_custom_plugins(): array
 
 // override default plugin installation AJAX handler to handle re-enabling of deleted custom plugins
 \add_action('wp_ajax_install-plugin', function ($plugin) {
-  \check_ajax_referer( 'updates' );
+  check_ajax_referer('updates');
 
-	if ( empty( $_POST['slug'] ) ) {
-		\wp_send_json_error(
-			[
-				'slug'         => '',
-				'errorCode'    => 'no_plugin_specified',
-				'errorMessage' => \__( 'No plugin specified.' ),
-			]
-		);
-	}
+  if (empty($_POST['slug'])) {
+    \wp_send_json_error(
+      [
+        'slug'         => '',
+        'errorCode'    => 'no_plugin_specified',
+        'errorMessage' => \__('No plugin specified.'),
+      ]
+    );
+  }
 
-	$status = [
-		'install' => 'plugin',
-		'slug'    => \sanitize_key( \wp_unslash( $_POST['slug'] ) ),
-	];
+  $status = [
+    'install' => 'plugin',
+    'slug'    => \sanitize_key(\wp_unslash($_POST['slug'])),
+  ];
 
-	if ( ! \current_user_can( 'install_plugins' ) ) {
-		$status['errorMessage'] = \__( 'Sorry, you are not allowed to install plugins on this site.' );
-		\wp_send_json_error( $status );
-	}
+  if (! \current_user_can('install_plugins')) {
+    $status['errorMessage'] = \__('Sorry, you are not allowed to install plugins on this site.');
+    \wp_send_json_error($status);
+  }
 
   $api = \plugins_api(
-		'plugin_information',
-		[
-			'slug'   => \sanitize_key( \wp_unslash( $_POST['slug'] ) ),
-			'fields' => [
-				'sections' => false,
-			],
-		]
-	);
+    'plugin_information',
+    [
+      'slug'   => \sanitize_key(\wp_unslash($_POST['slug'])),
+      'fields' => [
+        'sections' => false,
+      ],
+    ]
+  );
 
-	if ( \is_wp_error( $api ) ) {
-		$status['errorMessage'] = $api->get_error_message();
-		\wp_send_json_error( $status );
-	}
+  if (\is_wp_error($api)) {
+    $status['errorMessage'] = $api->get_error_message();
+    \wp_send_json_error($status);
+  }
 
   $deleted_custom_plugins = get_deleted_custom_plugins();
   foreach ($deleted_custom_plugins as $deleted_custom_plugin) {
-    $deleted_custom_plugin_slug = basename( dirname($deleted_custom_plugin));
-    if($deleted_custom_plugin_slug === $status['slug']) {
+    $deleted_custom_plugin_slug = basename(dirname($deleted_custom_plugin));
+    if ($deleted_custom_plugin_slug === $status['slug']) {
       unmark_custom_plugin_as_deleted($deleted_custom_plugin);
 
       $status['pluginName'] = is_object($api) ? $api->name : $api['name'];
-      $pagenow        = isset( $_POST['pagenow'] ) ? \sanitize_key( $_POST['pagenow'] ) : '';
+      $pagenow              = isset($_POST['pagenow']) ? \sanitize_key($_POST['pagenow']) : '';
       // If installation request is coming from import page, do not return network activation link.
-	    $plugins_url = ( 'import' === $pagenow ) ? \admin_url( 'plugins.php' ) : \network_admin_url( 'plugins.php' );
-      if ( \current_user_can( 'activate_plugin', $status['slug'] ) && \is_plugin_inactive( $status['slug'] ) ) {
-		    $status['activateUrl'] = \add_query_arg(
+      $plugins_url = ('import' === $pagenow) ? \admin_url('plugins.php') : \network_admin_url('plugins.php');
+      if (\current_user_can('activate_plugin', $status['slug']) && \is_plugin_inactive($status['slug'])) {
+        $status['activateUrl'] = \add_query_arg(
           [
-            '_wpnonce' => \wp_create_nonce( 'activate-plugin_' . $status['slug'] ),
+            '_wpnonce' => \wp_create_nonce('activate-plugin_' . $status['slug']),
             'action'   => 'activate',
             'plugin'   => $status['slug'],
           ],
           $plugins_url
         );
-	    }
+      }
 
-      if ( \is_multisite() && \current_user_can( 'manage_network_plugins' ) && 'import' !== $pagenow ) {
-        $status['activateUrl'] = \add_query_arg( [ 'networkwide' => 1 ], $status['activateUrl'] );
+      if (\is_multisite() && \current_user_can('manage_network_plugins') && 'import' !== $pagenow) {
+        $status['activateUrl'] = \add_query_arg([
+          'networkwide' => 1,
+        ], $status['activateUrl']);
       }
 
       \wp_send_json_success($status);
@@ -479,32 +479,30 @@ function get_custom_plugins(): array
 /*
   when a plugin gets installed, this hooks will be called to check for dependencies
   we override it to handle our custom plugins.
-
   this hook will be called when a plugin installation is requested via AJAX
-*/
-\add_action( 'wp_ajax_check_plugin_dependencies', function() {
-  \check_ajax_referer( 'updates' );
+ */
+\add_action('wp_ajax_check_plugin_dependencies', function () {
+  check_ajax_referer('updates');
 
-  if ( empty( $_POST['slug'] ) ) {
+  if (empty($_POST['slug'])) {
     \wp_send_json_error(
       [
         'slug'         => '',
         'pluginName'   => '',
         'errorCode'    => 'no_plugin_specified',
-        'errorMessage' => \__( 'No plugin specified.' ),
+        'errorMessage' => \__('No plugin specified.'),
       ]
     );
   }
 
-  $slug   = \sanitize_key( \wp_unslash( $_POST['slug'] ) );
-  $status = [ 'slug' => $slug ];
+  $slug   = \sanitize_key(\wp_unslash($_POST['slug']));
+  $status = [
+    'slug' => $slug,
+  ];
 
-  $custom_plugin = array_find(
-    get_custom_plugins(),
-    fn($custom_plugin) => $custom_plugin['slug'] === $slug,
-  );
+  $custom_plugin = array_find(get_custom_plugins(), fn ($custom_plugin) => $custom_plugin['slug'] === $slug);
 
-  if ( $custom_plugin===null) {
+  if ($custom_plugin===null) {
     // not a custom plugin, fallback to default handler
     return;
   }
@@ -512,92 +510,94 @@ function get_custom_plugins(): array
   $status['pluginName'] = $custom_plugin['data']['Name'];
   $status['plugin']     = $custom_plugin['key'];
 
-  if ( \current_user_can( 'activate_plugin', $custom_plugin['slug'] ) && \is_plugin_inactive( $custom_plugin['slug'] ) ) {
-    $status['activateUrl'] = \add_query_arg([
-      '_wpnonce' => \wp_create_nonce( 'activate-plugin_' . $custom_plugin['key'] ),
-      'action'   => 'activate',
-      'plugin'   => $custom_plugin['key'],
+  if (\current_user_can('activate_plugin', $custom_plugin['slug']) && \is_plugin_inactive(
+    $custom_plugin['slug']
+  )) {
+    $status['activateUrl'] = \add_query_arg(
+      [
+        '_wpnonce' => \wp_create_nonce('activate-plugin_' . $custom_plugin['key']),
+        'action'   => 'activate',
+        'plugin'   => $custom_plugin['key'],
       ],
-      \is_multisite() ? \network_admin_url( 'plugins.php' ) : \admin_url( 'plugins.php' )
+      \is_multisite() ? \network_admin_url('plugins.php') : \admin_url('plugins.php')
     );
   }
 
-  if ( \is_multisite() && \current_user_can( 'manage_network_plugins' ) ) {
-    $status['activateUrl'] = \add_query_arg( [ 'networkwide' => 1 ], $status['activateUrl'] );
+  if (\is_multisite() && \current_user_can('manage_network_plugins')) {
+    $status['activateUrl'] = \add_query_arg([
+      'networkwide' => 1,
+    ], $status['activateUrl']);
   }
 
   // @TODO: check for dependencies of the custom plugin if required
 
-  $status['message'] = \__( 'All required plugins are installed and activated.' );
-  \wp_send_json_success( $status );
+  $status['message'] = \__('All required plugins are installed and activated.');
+  \wp_send_json_success($status);
 });
 
 /*
   when a plugin gets activated using ajay this hook will be called
   we override it to handle our custom plugins.
 */
-\add_action( 'wp_ajax_activate_plugin', function() {
-  \check_ajax_referer( 'updates' );
+\add_action('wp_ajax_activate_plugin', function () {
+  check_ajax_referer('updates');
 
-	if ( empty( $_POST['name'] ) || empty( $_POST['slug'] ) || empty( $_POST['plugin'] ) ) {
-		\wp_send_json_error([
-      'slug'         => '',
-      'pluginName'   => '',
-      'plugin'       => '',
-      'errorCode'    => 'no_plugin_specified',
-      'errorMessage' => \__( 'No plugin specified.' ),
-			]
-		);
-	}
+  if (empty($_POST['name']) || empty($_POST['slug']) || empty($_POST['plugin'])) {
+    \wp_send_json_error(
+      [
+        'slug'         => '',
+        'pluginName'   => '',
+        'plugin'       => '',
+        'errorCode'    => 'no_plugin_specified',
+        'errorMessage' => \__('No plugin specified.'),
+      ]
+    );
+  }
 
-  $slug = \wp_unslash( $_POST['slug']);
+  $slug = \wp_unslash($_POST['slug']);
 
-  $custom_plugin = array_find(
-    get_custom_plugins(),
-    fn($custom_plugin) => $custom_plugin['slug'] === $slug,
-  );
+  $custom_plugin = array_find(get_custom_plugins(), fn ($custom_plugin) => $custom_plugin['slug'] === $slug);
 
-  if ( $custom_plugin===null) {
+  if ($custom_plugin===null) {
     // not a custom plugin, fallback to default handler
     return;
   }
 
-	$status = [
-		'activate'   => 'plugin',
-		'slug'       => $slug,
-		'pluginName' => \wp_unslash( $_POST['name'] ),
-		'plugin'     => \wp_unslash( $_POST['plugin'] ),
-	];
+  $status = [
+    'activate'   => 'plugin',
+    'slug'       => $slug,
+    'pluginName' => \wp_unslash($_POST['name']),
+    'plugin'     => \wp_unslash($_POST['plugin']),
+  ];
 
-	if ( ! \current_user_can( 'activate_plugin', $status['plugin'] ) ) {
-		$status['errorMessage'] = \__( 'Sorry, you are not allowed to activate plugins on this site.' );
-		\wp_send_json_error( $status );
-	}
+  if (! \current_user_can('activate_plugin', $status['plugin'])) {
+    $status['errorMessage'] = \__('Sorry, you are not allowed to activate plugins on this site.');
+    \wp_send_json_error($status);
+  }
 
-	if ( is_custom_plugin_active( $custom_plugin['key'] ) ) {
-		$status['errorMessage'] = sprintf(
-			/* translators: %s: Plugin name. */
-			\__( '%s is already active.' ),
-			$status['pluginName']
-		);
-	}
+  if (is_custom_plugin_active($custom_plugin['key'])) {
+    $status['errorMessage'] = sprintf(
+      /* translators: %s: Plugin name. */
+      \__('%s is already active.'),
+      $status['pluginName']
+    );
+  }
 
-	activate_custom_plugin($custom_plugin['key']);
+  activate_custom_plugin($custom_plugin['key']);
 
-	\wp_send_json_success( $status );
+  \wp_send_json_success($status);
 }, 0);
 
 /*
   WordPress calls 'delete_plugin' action when a plugin is deleted from the plugins list
-
   This hook works for both single and bulk deletions.
-*/
+ */
 \add_action('delete_plugin', function ($plugin_key) {
   if (str_starts_with($plugin_key, IONOS_CUSTOM_PLUGINS_PATH)) {
     // If this is an AJAX request, send JSON response
     if (\wp_doing_ajax()) {
       $plugin_file = IONOS_CUSTOM_DIR . '/' . $plugin_key;
-      if (!file_exists($plugin_file)) {
+      if (! file_exists($plugin_file)) {
         return;
       }
 
@@ -608,9 +608,9 @@ function get_custom_plugins(): array
       mark_custom_plugin_as_deleted($plugin_key);
 
       \wp_send_json_success([
-        'delete' => 'plugin',
-        'plugin'  => $plugin_key,
-        'slug'  => $plugin_key,
+        'delete'     => 'plugin',
+        'plugin'     => $plugin_key,
+        'slug'       => $plugin_key,
         'pluginName' => $plugin_data['Name'],
       ]);
     }
@@ -625,18 +625,18 @@ function get_custom_plugins(): array
 \add_filter('plugin_install_action_links', function ($links, $plugin) {
   $custom_plugin = array_find(
     get_custom_plugins(),
-    fn($custom_plugin) => $custom_plugin['slug'] === $plugin['slug'],
+    fn ($custom_plugin) => $custom_plugin['slug'] === $plugin['slug'],
   );
 
-  $is_active = false;
+  $is_active                  = false;
   $deleted_custom_plugin_slug = null;
 
-  if(is_array($custom_plugin)) {
+  if (is_array($custom_plugin)) {
     $is_active = is_custom_plugin_active($custom_plugin['key']);
   } else {
     $deleted_custom_plugin_slug = array_find(
       get_deleted_custom_plugins(),
-      fn($deleted_custom_plugin) => str_contains($deleted_custom_plugin, $plugin['slug']),
+      fn ($deleted_custom_plugin) => str_contains($deleted_custom_plugin, $plugin['slug']),
     );
   }
 
@@ -654,55 +654,61 @@ function get_custom_plugins(): array
           plugin exists as disabled custom plugin
         */
         // "<a class="install-now button" data-slug="extendify" href="http://localhost:8888/wp-admin/update.php?action=install-plugin&#038;plugin=extendify&#038;_wpnonce=f4bd11d090" aria-label="Install Extendify 2.3.1 now" data-name="Extendify 2.3.1" role="button">Install Now</a>"
-        $link = str_replace('plugin=' . \esc_attr($plugin['slug']), 'plugin=' . \esc_attr($deleted_custom_plugin_slug), $link);
+        $link = str_replace(
+          'plugin=' . \esc_attr($plugin['slug']),
+          'plugin=' . \esc_attr($deleted_custom_plugin_slug),
+          $link
+        );
 
         break;
       }
 
-      if($is_active) {
+      if ($is_active) {
         /*
           replace install link with disabled "active" link button for custom plugins if
           a plugin which is already provisioned as custom plugin is already active
         */
         $button = sprintf(
           '<button type="button" class="button button-disabled" disabled="disabled">%s</button>',
-          \_x( 'Active', 'plugin' )
+          \_x('Active', 'plugin')
         );
         $link = $button;
         break;
       }
 
-      if($custom_plugin !== null) {
+      if ($custom_plugin !== null) {
         /*
           replace install link with activate link for custom plugins if user wants
           to install a plugin which is already provisioned as custom plugin
         */
 
         // code borrowed and adapted from WP core (wp-admin/includes/class-wp-plugins-list-table.php)
-        $button_text = \_x( 'Activate', 'plugin' );
-        $button_label = \_x( 'Activate %s', 'plugin' );
+        $button_text  = \_x('Activate', 'plugin');
+        $button_label = \_x('Activate %s', 'plugin');
         $activate_url = \add_query_arg(
           [
-            '_wpnonce' => \wp_create_nonce( 'activate-plugin_' . $custom_plugin['key'] ),
+            '_wpnonce' => \wp_create_nonce('activate-plugin_' . $custom_plugin['key']),
             'action'   => 'activate',
             'plugin'   => $custom_plugin['key'],
           ],
-          \network_admin_url( 'plugins.php' )
+          \network_admin_url('plugins.php')
         );
 
-        if ( \is_network_admin() ) {
-          $button_text = \_x( 'Network Activate', 'plugin' );
-          $button_label = \_x( 'Network Activate %s', 'plugin' );
-          $activate_url = \add_query_arg( [ 'networkwide' => 1 ], $activate_url );
+        if (\is_network_admin()) {
+          $button_text  = \_x('Network Activate', 'plugin');
+          $button_label = \_x('Network Activate %s', 'plugin');
+          $activate_url = \add_query_arg([
+            'networkwide' => 1,
+          ], $activate_url);
         }
 
         $button = sprintf(
           '<a href="%1$s" data-name="%2$s" data-slug="%3$s" data-plugin="%4$s" class="button button-primary activate-now" aria-label="%5$s" role="button">%6$s</a>',
-          \esc_url( $activate_url ),
-          \esc_attr( $custom_plugin['data']['Name'] ),
-          \esc_attr( $custom_plugin['slug'] ),
-          \esc_attr( $custom_plugin['key'] ),
-          \esc_attr( sprintf( $button_label, $custom_plugin['data']['Name'] ) ),
+          \esc_url($activate_url),
+          \esc_attr($custom_plugin['data']['Name']),
+          \esc_attr($custom_plugin['slug']),
+          \esc_attr($custom_plugin['key']),
+          \esc_attr(sprintf($button_label, $custom_plugin['data']['Name'])),
           $button_text
         );
 
