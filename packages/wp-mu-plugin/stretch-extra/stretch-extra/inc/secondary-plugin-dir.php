@@ -403,6 +403,16 @@ function get_custom_plugins(): array
     }
   }
 
+  // Handle bulk deletion
+  if (isset($_POST['action']) && $_POST['action'] === 'delete-selected' && isset($_POST['checked'])) {
+    $plugins = array_map('\wp_unslash', $_POST['checked']);
+    foreach ($plugins as $plugin) {
+      if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+        mark_custom_plugin_as_deleted($plugin);
+      }
+    }
+  }
+
 
   // Handle deactivation
   if (isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'deactivate') {
