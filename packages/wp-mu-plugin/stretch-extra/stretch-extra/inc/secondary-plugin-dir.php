@@ -413,7 +413,6 @@ function get_custom_plugins(): array
     }
   }
 
-
   // Handle deactivation
   if (isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'deactivate') {
     $plugin = \wp_unslash($_GET['plugin']);
@@ -427,7 +426,7 @@ function get_custom_plugins(): array
 
   // Handle bulk enable auto updates
   if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'enable-auto-update-selected') {
-    $plugins = array_map('\wp_unslash', $_POST['checked']);
+    $plugins          = array_map('\wp_unslash', $_POST['checked']);
     $_POST['checked'] = [];
     foreach ($plugins as $plugin) {
       if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
@@ -439,7 +438,7 @@ function get_custom_plugins(): array
 
   // Handle bulk disable auto updates
   if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'disable-auto-update-selected') {
-    $plugins = array_map('\wp_unslash', $_POST['checked']);
+    $plugins          = array_map('\wp_unslash', $_POST['checked']);
     $_POST['checked'] = [];
     foreach ($plugins as $plugin) {
       if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
@@ -774,7 +773,7 @@ function get_custom_plugins(): array
   when a plugin gets deactivated using bulk action this hook will be called
   we override it to handle our custom plugins.
 */
-\add_action('deactivate_plugin', function($plugin, $network_deactivating) {
+\add_action('deactivate_plugin', function ($plugin, $network_deactivating) {
   if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
     deactivate_custom_plugin($plugin);
   }
