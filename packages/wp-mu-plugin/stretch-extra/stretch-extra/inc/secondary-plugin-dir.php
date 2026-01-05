@@ -436,6 +436,18 @@ function get_custom_plugins(): array
       $_POST['checked'][] = $plugin;
     }
   }
+
+  // Handle bulk disable auto updates
+  if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'disable-auto-update-selected') {
+    $plugins = array_map('\wp_unslash', $_POST['checked']);
+    $_POST['checked'] = [];
+    foreach ($plugins as $plugin) {
+      if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+        continue; // skip custom plugins
+      }
+      $_POST['checked'][] = $plugin;
+    }
+  }
 });
 
 // override default plugin installation AJAX handler to handle re-enabling of deleted custom plugins
