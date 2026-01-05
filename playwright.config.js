@@ -6,7 +6,7 @@ import baseConfig from '@wordpress/scripts/config/playwright.config';
 
 const config = defineConfig({
   ...baseConfig,
-  testMatch: 'wp-*-plugin/**/tests/e2e/*.spec.js',
+  testMatch: ['wp-plugin/**/tests/e2e/*.spec.js', 'wp-mu-plugin/**/tests/e2e/*.spec.js'],
   testDir: './packages',
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
   snapshotDir: './playwright/storybook/__snapshots__',
