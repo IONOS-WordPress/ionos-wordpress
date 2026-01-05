@@ -382,7 +382,7 @@ function get_custom_plugins(): array
  * This allows users to activate/deactivate/delete/installation of custom plugins from the admin interface
  */
 \add_action('admin_init', function () {
-  // Handle activation
+  // Handle single activation
   if (isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'activate') {
     $plugin = \wp_unslash($_GET['plugin']);
     if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
@@ -392,6 +392,17 @@ function get_custom_plugins(): array
       exit;
     }
   }
+
+  // Handle bulk activation
+  if (isset($_POST['action']) && $_POST['action'] === 'activate-selected' && isset($_POST['checked'])) {
+    $plugins = array_map('\wp_unslash', $_POST['checked']);
+    foreach ($plugins as $plugin) {
+      if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+        activate_custom_plugin($plugin);
+      }
+    }
+  }
+
 
   // Handle deactivation
   if (isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'deactivate') {
@@ -721,6 +732,10 @@ function get_custom_plugins(): array
   return $links;
 }, 10, 2);
 
+/*
+  when a plugin gets deactivated using bulk action this hook will be called
+  we override it to handle our custom plugins.
+*/
 \add_action('deactivate_plugin', function($plugin, $network_deactivating) {
   if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
     deactivate_custom_plugin($plugin);
