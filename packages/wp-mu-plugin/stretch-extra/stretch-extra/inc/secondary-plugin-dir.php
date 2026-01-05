@@ -720,3 +720,9 @@ function get_custom_plugins(): array
 
   return $links;
 }, 10, 2);
+
+\add_action('deactivate_plugin', function($plugin, $network_deactivating) {
+  if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+    deactivate_custom_plugin($plugin);
+  }
+}, 10, 2);
