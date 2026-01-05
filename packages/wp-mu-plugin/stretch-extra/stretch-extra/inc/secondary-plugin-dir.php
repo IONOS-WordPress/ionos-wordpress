@@ -394,7 +394,7 @@ function get_custom_plugins(): array
   }
 
   // Handle bulk activation
-  if (isset($_POST['action']) && $_POST['action'] === 'activate-selected' && isset($_POST['checked'])) {
+  if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'activate-selected') {
     $plugins = array_map('\wp_unslash', $_POST['checked']);
     foreach ($plugins as $plugin) {
       if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
@@ -404,7 +404,7 @@ function get_custom_plugins(): array
   }
 
   // Handle bulk deletion
-  if (isset($_POST['action']) && $_POST['action'] === 'delete-selected' && isset($_POST['checked'])) {
+  if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'delete-selected') {
     $plugins = array_map('\wp_unslash', $_POST['checked']);
     foreach ($plugins as $plugin) {
       if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
@@ -422,6 +422,18 @@ function get_custom_plugins(): array
       deactivate_custom_plugin($plugin);
       \wp_redirect(\admin_url('plugins.php?deactivate=true'));
       exit;
+    }
+  }
+
+  // Handle bulk enable auto updates
+  if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'enable-auto-update-selected') {
+    $plugins = array_map('\wp_unslash', $_POST['checked']);
+    $_POST['checked'] = [];
+    foreach ($plugins as $plugin) {
+      if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+        continue; // skip custom plugins
+      }
+      $_POST['checked'][] = $plugin;
     }
   }
 });
