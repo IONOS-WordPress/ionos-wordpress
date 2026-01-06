@@ -3,8 +3,8 @@
 namespace ionos\essentials\dashboard\blocks\next_best_actions;
 
 defined('ABSPATH') || exit();
-use ionos\essentials\Tenant;
 use const ionos\essentials\PLUGIN_FILE;
+use ionos\essentials\Tenant;
 
 function all_done_view(): void
 {

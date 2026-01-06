@@ -4,10 +4,10 @@ namespace ionos\essentials\wpscan;
 
 defined('ABSPATH') || exit();
 
-use ionos\essentials\Tenant;
 use function ionos\essentials\_is_plugin_active;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
+use ionos\essentials\Tenant;
 
 class WPScan
 {
