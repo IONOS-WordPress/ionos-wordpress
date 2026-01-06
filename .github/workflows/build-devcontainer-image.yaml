@@ -32,22 +32,37 @@ jobs:
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
 
       - uses: ./.github/shared/actions/devcontainer-image-name
         id: image_name
 
       - name: Login to GitHub Container Registry
         # devcontainer step that builds and pushes to registry is only needed for main and develop
-        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
+        # if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check if image exists in registry
+        id: check_image
+        run: |
+          IMAGE_NAME="${{ steps.image_name.outputs.image_name }}"
+          if docker manifest inspect "$IMAGE_NAME" > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Image $IMAGE_NAME already exists in registry"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Image $IMAGE_NAME does not exist in registry"
+          fi
+
       - name: Build dev container and push to GitHub Container Registry
+        if: steps.check_image.outputs.exists == 'false'
         uses: devcontainers/ci@v0.3
-        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' }}
         with:
           imageName: ${{ steps.image_name.outputs.image_name }}
           runCmd: |

@@ -476,7 +476,6 @@ main.ionos-maintenance-mode .ionos-maintenance-only{
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  padding-top: 2px;
   color: #001B41;
   padding: 4px 8px;
   border-radius: 24px;

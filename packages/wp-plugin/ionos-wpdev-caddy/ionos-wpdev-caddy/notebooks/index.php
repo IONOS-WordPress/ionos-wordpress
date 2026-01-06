@@ -102,8 +102,8 @@ function get_notebooks(): array
   \wp_add_inline_script(
     handle : NOTEBOOKS_PAGE_SLUG_PREFIX,
     data   : sprintf("wp['ionos-wpdev-caddy-notebooks'] = %s;", \wp_json_encode([
-        'current' => $notebook,
-      ])),
+      'current' => $notebook,
+    ])),
   );
 });
 

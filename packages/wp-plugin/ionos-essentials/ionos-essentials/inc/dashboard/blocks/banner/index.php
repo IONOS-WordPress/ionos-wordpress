@@ -5,6 +5,7 @@ namespace ionos\essentials\dashboard\blocks\banner;
 defined('ABSPATH') || exit();
 
 use ionos\essentials\Tenant;
+use function ionos\essentials\_is_plugin_active;
 use const ionos\essentials\PLUGIN_FILE;
 
 const BUTTON_TEMPLATE = '<a href="%s" class="button %s" title="%s" target="%s">%s</a>';
@@ -74,7 +75,7 @@ function render_callback(): void
 
 function get_ai_button(): array
 {
-  if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
+  if ('extendable' !== \get_option('stylesheet') || ! _is_plugin_active('extendify/extendify.php')) {
     return [];
   }
 
