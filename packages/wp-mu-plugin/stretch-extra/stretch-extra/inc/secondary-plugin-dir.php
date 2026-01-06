@@ -395,6 +395,7 @@ function get_custom_plugins(): array
 
   // Handle bulk activation
   if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'activate-selected') {
+    check_admin_referer('bulk-plugins');
     $plugins = array_map('\wp_unslash', $_POST['checked']);
     foreach ($plugins as $plugin) {
       if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
@@ -405,6 +406,7 @@ function get_custom_plugins(): array
 
   // Handle bulk deletion
   if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'delete-selected') {
+    check_admin_referer('bulk-plugins');
     $plugins = array_map('\wp_unslash', $_POST['checked']);
     foreach ($plugins as $plugin) {
       if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
@@ -426,6 +428,7 @@ function get_custom_plugins(): array
 
   // Handle bulk enable auto updates
   if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'enable-auto-update-selected') {
+    check_admin_referer('bulk-plugins');
     $plugins          = array_map('\wp_unslash', $_POST['checked']);
     $_POST['checked'] = [];
     foreach ($plugins as $plugin) {
@@ -438,6 +441,7 @@ function get_custom_plugins(): array
 
   // Handle bulk disable auto updates
   if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'disable-auto-update-selected') {
+    check_admin_referer('bulk-plugins');
     $plugins          = array_map('\wp_unslash', $_POST['checked']);
     $_POST['checked'] = [];
     foreach ($plugins as $plugin) {
