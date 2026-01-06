@@ -2,10 +2,10 @@
 
 namespace ionos\wpdev\caddy\notebook;
 
-use WP_Admin_Bar;
 use const ionos\wpdev\caddy\MENU_PAGE_SLUG;
 use const ionos\wpdev\caddy\PLUGIN_DIR;
 use const ionos\wpdev\caddy\PLUGIN_FILE;
+use WP_Admin_Bar;
 
 defined('ABSPATH') || exit();
 

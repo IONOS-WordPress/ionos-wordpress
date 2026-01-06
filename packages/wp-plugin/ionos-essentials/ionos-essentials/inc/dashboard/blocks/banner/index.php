@@ -4,9 +4,9 @@ namespace ionos\essentials\dashboard\blocks\banner;
 
 defined('ABSPATH') || exit();
 
-use ionos\essentials\Tenant;
 use function ionos\essentials\_is_plugin_active;
 use const ionos\essentials\PLUGIN_FILE;
+use ionos\essentials\Tenant;
 
 const BUTTON_TEMPLATE = '<a href="%s" class="button %s" title="%s" target="%s">%s</a>';
 function render_callback(): void

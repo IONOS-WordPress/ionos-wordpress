@@ -8,8 +8,8 @@ defined('ABSPATH') || exit();
 
 require_once PLUGIN_DIR . '/ionos-essentials/inc/class-tenant.php';
 
-use ionos\essentials\Tenant;
 use function ionos\essentials\_is_plugin_active;
+use ionos\essentials\Tenant;
 use function ionos\essentials\tenant\get_tenant_config;
 
 $data = get_tenant_config();

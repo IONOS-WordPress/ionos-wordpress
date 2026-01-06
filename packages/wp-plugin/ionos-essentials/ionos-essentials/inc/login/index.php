@@ -2,8 +2,8 @@
 
 namespace ionos\essentials\login;
 
-use ionos\essentials\Tenant;
 use const ionos\essentials\PLUGIN_FILE;
+use ionos\essentials\Tenant;
 
 defined('ABSPATH') || exit();
 

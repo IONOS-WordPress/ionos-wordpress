@@ -4,7 +4,6 @@ namespace ionos\essentials\dashboard;
 
 defined('ABSPATH') || exit();
 
-use ionos\essentials\Tenant;
 use function ionos\essentials\_is_plugin_active;
 use function ionos\essentials\is_stretch;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
@@ -13,6 +12,7 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_PEL;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
+use ionos\essentials\Tenant;
 
 function render_section(array $args): void
 {
