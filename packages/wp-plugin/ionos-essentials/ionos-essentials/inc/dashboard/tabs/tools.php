@@ -218,14 +218,14 @@ render_section([
           </section>
           <?php include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
-$plugin = _is_plugin_active('01-ext-ion8dhas7/01-ext-ion8dhas7.php');
+$_plugin = _is_plugin_active('01-ext-ion8dhas7/01-ext-ion8dhas7.php');
 
 $match = array_filter(array_keys(get_plugins()), fn ($k) => str_starts_with($k, '01-ext-'));
 
-$plugin = reset($match); // first match or false
+$_plugin = reset($match); // first match or false
 
 // Check if Site-assistant plugin is installed
-if ($plugin && \get_option('extendify_onboarding_completed')) { ?>
+if ($_plugin && \get_option('extendify_onboarding_completed')) { ?>
             <section class="sheet__section">
               <div class="grid">
                 <div class="grid-col grid-col--8 grid-col--small-12">
