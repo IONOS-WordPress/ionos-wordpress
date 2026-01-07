@@ -151,10 +151,7 @@ require_once __DIR__ . '/ionos-essentials/inc/mcp/index.php';
 // soc plugin components
 require_once __DIR__ . '/ionos-essentials/inc/migration/index.php';
 
-function is_stretch(): bool
-{
-  return str_starts_with(getcwd(), '/home/www/public');
-}
+define('IS_STRETCH', str_starts_with(getcwd(), '/home/www/public'));
 
 /**
  * Check if a plugin is active, including custom plugins loaded via ionos stretch extra
