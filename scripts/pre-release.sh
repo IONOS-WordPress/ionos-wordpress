@@ -81,7 +81,7 @@ pnpm install
 pnpm test
 
 # generate sbom file
-docker run -it --rm -v $(pwd):/project anchore/syft \
+docker run --rm -v $(pwd):/project anchore/syft \
   scan /project \
   --source-name ionos-wordpress \
   --select-catalogers "+javascript-package-cataloger,+github-actions-usage-cataloger,+php-composer-lock-cataloger" \
