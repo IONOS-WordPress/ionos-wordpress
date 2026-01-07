@@ -8,6 +8,11 @@
 # by setting it to false (CHECK_LEAKED_SECRETS='false') in your local .env.local file.
 #
 
+# skip when running in CI environment
+if [[ "$CI" == "true" ]]; then
+  exit 0
+fi
+
 # bootstrap the environment
 source "./scripts/includes/bootstrap.sh"
 
