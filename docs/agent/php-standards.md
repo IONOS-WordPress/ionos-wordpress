@@ -165,6 +165,7 @@ function handle_save(int $post_id): void {
 ## Asset Bundling & Enqueuing
 
 **All JavaScript and CSS files are bundled using `@wordpress/scripts`** which generates:
+
 - `build/index.js` - Bundled JavaScript
 - `build/index.css` - Bundled CSS (if exists)
 - `build/index.asset.php` - Dependency and version information
