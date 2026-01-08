@@ -454,7 +454,6 @@ EOF
       $(test -f $path/.distignore && echo "--exclude-from=$path/.distignore") \
       $path/ \
       $path/dist/$plugin_name-$PACKAGE_VERSION
-      ionos.wordpress.log_info "syncing plugin files done"
   fi
 
   if [[ "${USE[@]}" =~ all|wp-plugin:rector ]]; then

@@ -1,11 +1,5 @@
 # @ionos-wordpress/essentials
 
-## 1.4.4
-
-### Patch Changes
-
-- e260172: extended hosting data
-
 ## 1.4.3
 
 ### Patch Changes

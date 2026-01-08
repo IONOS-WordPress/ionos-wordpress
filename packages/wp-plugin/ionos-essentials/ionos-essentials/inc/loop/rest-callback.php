@@ -9,12 +9,12 @@ require_once __DIR__ . '/../dashboard/blocks/next-best-actions/class-nba.php';
 
 use FilterIterator;
 use ionos\essentials\dashboard\blocks\next_best_actions\NBA;
+use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN;
+use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 use ionos\essentials\Tenant;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
-use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN;
-use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 
 const IONOS_LOOP_EVENTS_OPTION = 'ionos-loop-events';
 const IONOS_LOOP_CLICKS_OPTION = 'ionos-loop-clicks';
@@ -88,6 +88,16 @@ function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
   \update_option(IONOS_LOOP_CLICKS_OPTION, $data);
 
   return \rest_ensure_response([]);
+}
+
+function _rest_sso_click_callback(\WP_REST_Request $request): \WP_REST_Response
+{
+  // Store the current timestamp when SSO button is clicked
+  \update_option(IONOS_LOOP_SSO_CLICK_OPTION, time());
+
+  return \rest_ensure_response([
+    'success' => true,
+  ]);
 }
 
 function _get_dashbord_data(): array

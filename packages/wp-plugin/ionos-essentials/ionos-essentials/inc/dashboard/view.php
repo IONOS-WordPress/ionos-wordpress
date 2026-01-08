@@ -2,8 +2,8 @@
 
 namespace ionos\essentials\dashboard;
 
-use ionos\essentials\Tenant;
 use function ionos\essentials\_is_plugin_active;
+use ionos\essentials\Tenant;
 
 defined('ABSPATH') || exit();
 
