@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- e260172: extended hosting data
+- a4ef2ab: extended hosting data
 
 ## 1.4.3
 
