@@ -1,5 +1,44 @@
 # JavaScript Coding Standards
 
+## Core Principles
+
+### No jQuery
+
+**IMPORTANT: Do not use jQuery functions or the jQuery library.**
+
+Modern browsers provide native APIs that are:
+- **Faster**: No library overhead
+- **Smaller**: No extra dependencies
+- **Standard**: Better long-term support
+- **Modern**: Support for latest features
+
+```javascript
+// ❌ NEVER use jQuery
+$('.element').addClass('active');
+$('.element').on('click', handler);
+$.ajax({ url: '/api/data' });
+
+// ✅ ALWAYS use native JavaScript
+document.querySelector('.element').classList.add('active');
+document.querySelector('.element').addEventListener('click', handler);
+await fetch('/api/data');
+
+// ✅ OR use WordPress packages
+import apiFetch from '@wordpress/api-fetch';
+await apiFetch({ path: '/wp/v2/posts' });
+```
+
+**Why no jQuery:**
+- Modern browsers have native equivalents for all jQuery functionality
+- Smaller bundle sizes and faster performance
+- Better integration with modern JavaScript (async/await, modules, etc.)
+- WordPress is moving away from jQuery dependency
+- Easier debugging with native APIs
+
+**If you encounter existing jQuery code:**
+- Refactor it to use native JavaScript or WordPress packages
+- See the DOM Manipulation section for native equivalents
+
 ## ECMAScript Version
 
 - **Target**: ES6+ (ESNext)
@@ -544,73 +583,616 @@ buttons.forEach((button) => {
 
 ## DOM Manipulation
 
+**Use modern native DOM manipulation and newer browser functions where possible.**
+
 ### Query Selectors
 
-```javascript
-// Single element (returns null if not found)
-const element = document.querySelector('.class-name');
-const byId = document.getElementById('element-id');
+**Prefer modern query methods:**
 
-// Multiple elements (returns NodeList)
+```javascript
+// ✅ Good - querySelector (modern, flexible)
+const element = document.querySelector('.class-name');
+const byId = document.querySelector('#element-id');
+
+// ✅ Good - querySelectorAll (returns NodeList)
 const elements = document.querySelectorAll('.class-name');
 
-// Safe access with optional chaining
+// ✅ Good - closest() for parent lookup
+const parent = element.closest('.parent-class');
+
+// ✅ Good - matches() for checking selectors
+if (element.matches('.active')) {
+  // Element matches selector
+}
+
+// ✅ Good - optional chaining for safe access
 document.querySelector('.button')?.addEventListener('click', handler);
+
+// ⚠️  Avoid - legacy methods (use querySelector instead)
+const byId = document.getElementById('element-id'); // querySelector preferred
+const byClass = document.getElementsByClassName('class'); // querySelectorAll preferred
+const byTag = document.getElementsByTagName('div'); // querySelectorAll preferred
+```
+
+**Modern query patterns:**
+
+```javascript
+// ✅ :has() selector (modern, no JS needed)
+const parent = document.querySelector('.container:has(> .child)');
+
+// ✅ :is() selector for grouping
+const elements = document.querySelectorAll(':is(button, a, input)');
+
+// ✅ :where() selector (lower specificity)
+const items = document.querySelectorAll(':where(.item, .element)');
+
+// ✅ :not() selector
+const nonActive = document.querySelectorAll('.item:not(.active)');
+```
+
+### Element Creation and Insertion
+
+**Use modern DOM insertion methods:**
+
+```javascript
+// ✅ Good - createElement with properties
+const button = document.createElement('button');
+button.textContent = __('Click me', 'text-domain');
+button.className = 'button button--primary';
+button.disabled = false;
+
+// ✅ Good - append() (modern, accepts multiple nodes and strings)
+container.append(button);
+container.append('Text node', anotherElement);
+
+// ✅ Good - prepend() (adds to beginning)
+container.prepend(newElement);
+
+// ✅ Good - before() and after() (sibling insertion)
+element.before(newElement);
+element.after(newElement);
+
+// ✅ Good - replaceWith() (replace element)
+oldElement.replaceWith(newElement);
+
+// ✅ Good - remove() (remove element)
+element.remove();
+
+// ⚠️  Avoid - legacy insertion methods
+container.appendChild(button);     // Use append() instead
+container.insertBefore(el, ref);   // Use before() instead
+parent.removeChild(element);       // Use element.remove() instead
+```
+
+**Clone elements:**
+
+```javascript
+// ✅ Good - cloneNode()
+const clone = element.cloneNode(true); // true = deep clone with children
+container.append(clone);
+```
+
+**Create from HTML string:**
+
+```javascript
+// ✅ Good - insertAdjacentHTML (efficient, position-aware)
+container.insertAdjacentHTML('beforeend', '<div class="item">Content</div>');
+
+// Positions: 'beforebegin', 'afterbegin', 'beforeend', 'afterend'
+
+// ✅ Good - DOMParser for complex HTML
+const parser = new DOMParser();
+const doc = parser.parseFromString('<div><p>Content</p></div>', 'text/html');
+const element = doc.body.firstElementChild;
+container.append(element);
+
+// ⚠️  Avoid - innerHTML for insertion (less precise)
+container.innerHTML += '<div>New content</div>'; // Destroys existing elements
 ```
 
 ### Class Manipulation
 
+**Use classList API (modern and chainable):**
+
 ```javascript
-// Add/remove classes
+// ✅ Add/remove classes
 element.classList.add('active');
 element.classList.remove('inactive');
 element.classList.toggle('expanded');
-element.classList.toggle('visible', isVisible);
+element.classList.toggle('visible', isVisible); // Second param forces state
 
-// Multiple classes
+// ✅ Multiple classes at once
 element.classList.add('active', 'highlighted', 'primary');
+element.classList.remove('inactive', 'disabled');
 
-// Check class
+// ✅ Replace class atomically
+element.classList.replace('old-class', 'new-class');
+
+// ✅ Check class
 if (element.classList.contains('active')) {
   // Do something
 }
+
+// ⚠️  Avoid - className string manipulation
+element.className = 'active'; // Replaces all classes
+element.className += ' new-class'; // Error-prone
 ```
 
 ### Attributes
 
+**Use modern attribute methods and properties:**
+
 ```javascript
-// Set attributes
+// ✅ Good - direct property access (when available)
+button.disabled = true;
+input.value = 'new value';
+link.href = '/path';
+img.src = '/image.jpg';
+
+// ✅ Good - setAttribute/getAttribute for custom attributes
 element.setAttribute('aria-expanded', 'true');
 element.setAttribute('data-value', '123');
-
-// Get attributes
 const value = element.getAttribute('data-value');
 
-// Remove attributes
+// ✅ Good - removeAttribute
 element.removeAttribute('disabled');
 
-// Data attributes
-const tabName = element.dataset.tab;       // Gets data-tab
-const nbaId = element.dataset.nbaId;       // Gets data-nba-id
+// ✅ Good - hasAttribute
+if (element.hasAttribute('data-loaded')) {
+  // Attribute exists
+}
+
+// ✅ Good - toggleAttribute (modern, returns new state)
+const isHidden = element.toggleAttribute('hidden');
+element.toggleAttribute('hidden', shouldHide); // Force state
+
+// ✅ Good - dataset API for data attributes
+element.dataset.tab = 'settings';     // Sets data-tab="settings"
+element.dataset.userId = '123';       // Sets data-user-id="123"
+const tabName = element.dataset.tab;  // Gets data-tab
+const userId = element.dataset.userId; // Gets data-user-id
 ```
 
 ### Content Manipulation
 
 ```javascript
-// Text content
-element.textContent = 'New text';
-element.innerText = __('Translated text', 'text-domain');
+// ✅ Good - textContent (fast, no HTML parsing)
+element.textContent = 'Plain text';
+element.textContent = __('Translated text', 'text-domain');
 
-// HTML content (use sparingly)
-element.innerHTML = '<p>HTML content</p>';
+// ✅ Good - innerText (respects CSS display/visibility)
+element.innerText = 'Visible text only';
 
-// Form values
+// ✅ Good - replaceChildren() (modern, clears and sets content)
+element.replaceChildren(newChild1, newChild2, 'Text node');
+element.replaceChildren(); // Clear all children
+
+// ⚠️  Caution - innerHTML (use sparingly, security risk)
+element.innerHTML = '<p>HTML content</p>'; // Only for trusted content
+
+// ✅ Good - form values
 input.value = 'new value';
 const checked = checkbox.checked;
 checkbox.checked = true;
 
-// Disable/enable
+// ✅ Good - form validation
+if (input.checkValidity()) {
+  // Input is valid
+}
+const validationMessage = input.validationMessage;
+
+// ✅ Good - disable/enable
 button.disabled = true;
+button.toggleAttribute('disabled'); // Toggle disabled state
+```
+
+### Modern DOM Traversal
+
+```javascript
+// ✅ Good - parent/child navigation
+const parent = element.parentElement;
+const firstChild = element.firstElementChild;
+const lastChild = element.lastElementChild;
+const children = element.children; // HTMLCollection of elements only
+
+// ✅ Good - sibling navigation
+const next = element.nextElementSibling;
+const prev = element.previousElementSibling;
+
+// ✅ Good - closest() for ancestor search
+const form = input.closest('form');
+const container = element.closest('[data-container]');
+
+// ⚠️  Avoid - node-based traversal (includes text nodes)
+const firstNode = element.firstChild; // Use firstElementChild
+const nextNode = element.nextSibling; // Use nextElementSibling
+```
+
+### Element Visibility and Display
+
+```javascript
+// ✅ Good - hidden attribute (semantic)
+element.hidden = true;  // Native hidden attribute
+element.toggleAttribute('hidden', !isVisible);
+
+// ✅ Good - check visibility with modern methods
+const isVisible = element.checkVisibility();
+const isVisibleInViewport = element.checkVisibility({
+  checkOpacity: true,
+  checkVisibilityCSS: true
+});
+
+// ✅ Good - inert attribute (disables all interactions)
+element.inert = true;
+
+// ✅ Good - style manipulation (avoid when CSS classes can do it)
+element.style.display = 'none';
+element.style.opacity = '0.5';
+```
+
+### Intersection Observer
+
+**Modern way to detect element visibility:**
+
+```javascript
+// ✅ Good - IntersectionObserver for lazy loading and scroll effects
+const observer = new IntersectionObserver((entries) => {
+  for (const entry of entries) {
+    if (entry.isIntersecting) {
+      // Element is visible
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target); // Stop observing if one-time
+    }
+  }
+}, {
+  threshold: 0.5, // 50% visible
+  rootMargin: '0px'
+});
+
+// Observe elements
+const elements = document.querySelectorAll('.lazy-load');
+for (const element of elements) {
+  observer.observe(element);
+}
+
+// Clean up
+observer.disconnect();
+```
+
+### Resize Observer
+
+**Modern way to detect element size changes:**
+
+```javascript
+// ✅ Good - ResizeObserver for responsive components
+const resizeObserver = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    const { width, height } = entry.contentRect;
+    console.log(`Element size: ${width}x${height}`);
+
+    // Adjust based on size
+    if (width < 600) {
+      entry.target.classList.add('compact');
+    } else {
+      entry.target.classList.remove('compact');
+    }
+  }
+});
+
+resizeObserver.observe(element);
+
+// Clean up
+resizeObserver.disconnect();
+```
+
+### Mutation Observer
+
+**Modern way to watch DOM changes:**
+
+```javascript
+// ✅ Good - MutationObserver for monitoring DOM changes
+const mutationObserver = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    if (mutation.type === 'childList') {
+      console.log('Children changed:', mutation.addedNodes);
+    } else if (mutation.type === 'attributes') {
+      console.log('Attribute changed:', mutation.attributeName);
+    }
+  }
+});
+
+mutationObserver.observe(element, {
+  childList: true,     // Watch for child additions/removals
+  attributes: true,    // Watch for attribute changes
+  characterData: true, // Watch for text changes
+  subtree: true        // Watch descendants too
+});
+
+// Clean up
+mutationObserver.disconnect();
+```
+
+### jQuery to Native JavaScript Migration
+
+**Complete reference for replacing jQuery with native JavaScript:**
+
+#### Selection
+
+```javascript
+// ❌ jQuery
+$('.class')
+$('#id')
+$('div')
+$('.class, .other')
+
+// ✅ Native
+document.querySelectorAll('.class')
+document.querySelector('#id')
+document.querySelectorAll('div')
+document.querySelectorAll('.class, .other')
+```
+
+#### Finding Elements
+
+```javascript
+// ❌ jQuery
+$('.parent').find('.child')
+$('.element').parent()
+$('.element').parents('.ancestor')
+$('.element').closest('.ancestor')
+$('.element').children()
+$('.element').siblings()
+$('.element').next()
+$('.element').prev()
+
+// ✅ Native
+document.querySelector('.parent').querySelectorAll('.child')
+element.parentElement
+element.closest('.ancestor')  // Finds ancestor (same as jQuery closest)
+element.closest('.ancestor')
+element.children
+Array.from(element.parentElement.children).filter(e => e !== element)
+element.nextElementSibling
+element.previousElementSibling
+```
+
+#### Classes
+
+```javascript
+// ❌ jQuery
+$('.element').addClass('active')
+$('.element').removeClass('inactive')
+$('.element').toggleClass('expanded')
+$('.element').hasClass('active')
+
+// ✅ Native
+element.classList.add('active')
+element.classList.remove('inactive')
+element.classList.toggle('expanded')
+element.classList.contains('active')
+```
+
+#### Attributes
+
+```javascript
+// ❌ jQuery
+$('.element').attr('data-id', '123')
+$('.element').attr('data-id')
+$('.element').removeAttr('disabled')
+$('.element').prop('disabled', true)
+$('.element').prop('disabled')
+
+// ✅ Native
+element.setAttribute('data-id', '123')
+element.getAttribute('data-id')
+element.removeAttribute('disabled')
+element.disabled = true
+element.disabled
+```
+
+#### Content
+
+```javascript
+// ❌ jQuery
+$('.element').text('content')
+$('.element').text()
+$('.element').html('<p>HTML</p>')
+$('.element').html()
+$('.element').val('value')
+$('.element').val()
+$('.element').empty()
+
+// ✅ Native
+element.textContent = 'content'
+element.textContent
+element.innerHTML = '<p>HTML</p>'
+element.innerHTML
+element.value = 'value'
+element.value
+element.replaceChildren()
+```
+
+#### DOM Manipulation
+
+```javascript
+// ❌ jQuery
+$('.container').append(element)
+$('.container').prepend(element)
+$('.element').before(newElement)
+$('.element').after(newElement)
+$('.element').remove()
+$('.element').clone()
+$('.element').replaceWith(newElement)
+
+// ✅ Native
+container.append(element)
+container.prepend(element)
+element.before(newElement)
+element.after(newElement)
+element.remove()
+element.cloneNode(true)
+element.replaceWith(newElement)
+```
+
+#### Events
+
+```javascript
+// ❌ jQuery
+$('.element').on('click', handler)
+$('.element').off('click', handler)
+$('.element').trigger('click')
+$('.element').one('click', handler)
+$(document).ready(handler)
+
+// ✅ Native
+element.addEventListener('click', handler)
+element.removeEventListener('click', handler)
+element.dispatchEvent(new Event('click'))
+element.addEventListener('click', handler, { once: true })
+// Use @wordpress/dom-ready instead:
+import domReady from '@wordpress/dom-ready';
+domReady(handler);
+```
+
+#### Event Delegation
+
+```javascript
+// ❌ jQuery
+$('.container').on('click', '.button', handler)
+
+// ✅ Native
+container.addEventListener('click', (event) => {
+  if (event.target.matches('.button')) {
+    handler.call(event.target, event);
+  }
+});
+```
+
+#### CSS and Display
+
+```javascript
+// ❌ jQuery
+$('.element').css('color', 'red')
+$('.element').css({ color: 'red', fontSize: '16px' })
+$('.element').show()
+$('.element').hide()
+$('.element').toggle()
+
+// ✅ Native
+element.style.color = 'red'
+Object.assign(element.style, { color: 'red', fontSize: '16px' })
+element.hidden = false
+element.hidden = true
+element.hidden = !element.hidden
+
+// ✅ Better - use CSS classes
+element.classList.remove('hidden')
+element.classList.add('hidden')
+element.classList.toggle('hidden')
+```
+
+#### Dimensions and Position
+
+```javascript
+// ❌ jQuery
+$('.element').width()
+$('.element').height()
+$('.element').offset()
+$('.element').position()
+
+// ✅ Native
+element.offsetWidth
+element.offsetHeight
+element.getBoundingClientRect()
+{ top: element.offsetTop, left: element.offsetLeft }
+```
+
+#### AJAX
+
+```javascript
+// ❌ jQuery
+$.ajax({
+  url: '/api/data',
+  method: 'GET',
+  success: (data) => console.log(data),
+  error: (error) => console.error(error)
+})
+
+$.get('/api/data', (data) => console.log(data))
+$.post('/api/data', data, (response) => console.log(response))
+
+// ✅ Native with async/await
+async function getData() {
+  try {
+    const response = await fetch('/api/data');
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// ✅ For WordPress REST API
+import apiFetch from '@wordpress/api-fetch';
+
+async function getWordPressData() {
+  try {
+    const data = await apiFetch({ path: '/wp/v2/posts' });
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
+
+#### Iteration
+
+```javascript
+// ❌ jQuery
+$('.elements').each(function(index, element) {
+  console.log(element);
+});
+
+// ✅ Native
+const elements = document.querySelectorAll('.elements');
+for (const element of elements) {
+  console.log(element);
+}
+
+// With index
+elements.forEach((element, index) => {
+  console.log(index, element);
+});
+```
+
+#### Data
+
+```javascript
+// ❌ jQuery
+$('.element').data('key', 'value')
+$('.element').data('key')
+
+// ✅ Native (dataset API)
+element.dataset.key = 'value'
+element.dataset.key
+```
+
+#### Utilities
+
+```javascript
+// ❌ jQuery
+$.extend(obj1, obj2)
+$.isArray(value)
+$.each(array, (index, item) => {})
+
+// ✅ Native
+Object.assign(obj1, obj2)
+Array.isArray(value)
+array.forEach((item, index) => {})
+// Or better: use for...of loop
+for (const item of array) {
+  // Process item
+}
 ```
 
 ## Event Handling
@@ -747,16 +1329,17 @@ async function callCustomEndpoint(data) {
 
 ### Declaration
 
-Declare global variables provided by PHP:
+Declare global variables provided by PHP (if needed):
 
 ```javascript
 /* global wpData:true */
-/* global jQuery:true */
 
 // Usage
 console.log(wpData.restUrl);
 console.log(wpData.nonce);
 ```
+
+**Note:** Do not declare or use jQuery globals. Use native JavaScript instead.
 
 ## Code Formatting
 
@@ -1257,20 +1840,172 @@ for (const button of buttons) {
 
 ## Browser APIs
 
-### LocalStorage
+**Use modern native browser APIs where possible.**
+
+### Web Storage API
+
+**LocalStorage and SessionStorage:**
 
 ```javascript
-// Save
+// ✅ LocalStorage - persists across sessions
 localStorage.setItem('key', 'value');
 localStorage.setItem('object', JSON.stringify(data));
 
 // Retrieve
 const value = localStorage.getItem('key');
-const object = JSON.parse(localStorage.getItem('object'));
+const object = JSON.parse(localStorage.getItem('object') || '{}');
 
 // Remove
 localStorage.removeItem('key');
+localStorage.clear(); // Clear all
+
+// ✅ SessionStorage - cleared when tab closes
+sessionStorage.setItem('temp-data', JSON.stringify(tempData));
+const tempData = JSON.parse(sessionStorage.getItem('temp-data') || '{}');
+
+// ✅ Check if key exists
+if (localStorage.getItem('key') !== null) {
+  // Key exists
+}
+
+// ✅ Get all keys
+const keys = Object.keys(localStorage);
+for (const key of keys) {
+  console.log(key, localStorage.getItem(key));
+}
 ```
+
+### URL API
+
+**Modern URL manipulation:**
+
+```javascript
+// ✅ Good - URL API (modern, safe)
+const url = new URL('https://example.com/path?foo=bar');
+url.searchParams.set('page', '2');
+url.searchParams.append('filter', 'active');
+url.searchParams.delete('foo');
+
+console.log(url.href); // Full URL
+console.log(url.pathname); // /path
+console.log(url.searchParams.get('page')); // 2
+
+// ✅ Good - URLSearchParams for query strings
+const params = new URLSearchParams(window.location.search);
+const page = params.get('page');
+const filters = params.getAll('filter');
+
+// Check if param exists
+if (params.has('page')) {
+  // Parameter exists
+}
+
+// Iterate over params
+for (const [key, value] of params) {
+  console.log(key, value);
+}
+
+// ⚠️  Avoid - manual string manipulation
+const url = 'https://example.com?foo=bar&page=' + pageNum; // Error-prone
+```
+
+### FormData API
+
+**Modern form handling:**
+
+```javascript
+// ✅ Good - FormData API
+const form = document.querySelector('form');
+const formData = new FormData(form);
+
+// Add/modify fields
+formData.set('field', 'value');
+formData.append('tags', 'tag1');
+formData.append('tags', 'tag2'); // Multiple values
+
+// Get values
+const value = formData.get('field');
+const allTags = formData.getAll('tags');
+
+// Check if field exists
+if (formData.has('field')) {
+  // Field exists
+}
+
+// Convert to object
+const data = Object.fromEntries(formData.entries());
+
+// Convert to URL params
+const params = new URLSearchParams(formData);
+
+// Iterate
+for (const [key, value] of formData) {
+  console.log(key, value);
+}
+
+// ✅ Good - submit with fetch
+const response = await fetch('/api/endpoint', {
+  method: 'POST',
+  body: formData, // Automatically sets multipart/form-data
+});
+```
+
+### Fetch API
+
+**Modern HTTP requests (for non-WordPress endpoints):**
+
+```javascript
+// ✅ Good - fetch with async/await
+async function fetchData() {
+  try {
+    const response = await fetch('/api/data');
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Fetch error:', error);
+    return null;
+  }
+}
+
+// ✅ Good - POST request
+async function postData(data) {
+  const response = await fetch('/api/data', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  return await response.json();
+}
+
+// ✅ Good - abort controller for cancellation
+const controller = new AbortController();
+const signal = controller.signal;
+
+fetch('/api/data', { signal })
+  .then(response => response.json())
+  .catch(error => {
+    if (error.name === 'AbortError') {
+      console.log('Request cancelled');
+    }
+  });
+
+// Cancel request
+controller.abort();
+
+// Note: For WordPress REST API, prefer @wordpress/api-fetch
+```
+
+### Intersection Observer API
+
+**Already covered in DOM Manipulation section - use for lazy loading and scroll effects.**
 
 ### Clipboard
 
