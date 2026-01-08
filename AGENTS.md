@@ -75,6 +75,7 @@ All coding standards are organized in `/docs/agent/`:
 - Use `@wordpress/i18n` for all translations
 - Async/await over Promise chains
 - **Dashboard (Essentials plugin)**: Use EXOS framework (`window.EXOS`) for React UI components
+- **Asset Enqueuing**: Entry files (`*index.js`, `*index.css`) bundled by wp-scripts generate `index.asset.php` - always `require` this file and use its `dependencies` and `version` in `\wp_enqueue_script()` / `\wp_enqueue_style()`
 - See [JavaScript Standards](docs/agent/javascript-standards.md) for details
 
 **CSS**:
@@ -211,6 +212,7 @@ domReady(() => {
 6. **Prepared Statements**: Always use `$wpdb->prepare()` for SQL
 7. **Late Binding**: Functions referenced in hooks use `__NAMESPACE__ . '\function_name'`
 8. **Commit Messages**: Use Commitizen format with plugin scope: `feat(plugin): description`
+9. **Asset Files**: Always `require` the auto-generated `index.asset.php` before enqueuing bundled scripts/styles
 
 ## Getting Help
 

@@ -147,7 +147,7 @@ check_ajax_referer('ajax-nonce', '_wpnonce');
 // Inline for single use
 \add_action('admin_enqueue_scripts', function (string $hook): void {
   if ($hook !== 'toplevel_page_plugin') return;
-  \wp_enqueue_script('script', \plugins_url('build/index.js', PLUGIN_FILE));
+  enqueue_bundled_script('script', 'build/index.js');
 });
 
 // Arrow function for single expression filters
@@ -160,6 +160,127 @@ check_ajax_referer('ajax-nonce', '_wpnonce');
 function handle_save(int $post_id): void {
   // Reused logic
 }
+```
+
+## Asset Bundling & Enqueuing
+
+**All JavaScript and CSS files are bundled using `@wordpress/scripts`** which generates:
+- `build/index.js` - Bundled JavaScript
+- `build/index.css` - Bundled CSS (if exists)
+- `build/index.asset.php` - Dependency and version information
+
+**ALWAYS use the generated `.asset.php` file for enqueuing:**
+
+```php
+function enqueue_dashboard_assets(): void {
+  $asset_file = include __DIR__ . '/build/index.asset.php';
+
+  // Enqueue JavaScript with auto-detected dependencies
+  \wp_enqueue_script(
+    handle: 'plugin-dashboard',
+    src: \plugins_url('build/index.js', PLUGIN_FILE),
+    deps: $asset_file['dependencies'],
+    ver: $asset_file['version']
+  );
+
+  // Enqueue CSS if it exists
+  $css_file = __DIR__ . '/build/index.css';
+  if (file_exists($css_file)) {
+    \wp_enqueue_style(
+      handle: 'plugin-dashboard',
+      src: \plugins_url('build/index.css', PLUGIN_FILE),
+      deps: [],
+      ver: $asset_file['version']
+    );
+  }
+}
+
+\add_action('admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_dashboard_assets');
+```
+
+**What `index.asset.php` contains:**
+
+```php
+<?php
+return [
+  'dependencies' => [
+    'wp-dom-ready',
+    'wp-api-fetch',
+    'wp-i18n',
+  ],
+  'version' => 'a1b2c3d4e5f6', // Hash based on file content
+];
+```
+
+**Inline data (localization):**
+
+```php
+function enqueue_with_data(): void {
+  $asset_file = include __DIR__ . '/build/index.asset.php';
+
+  \wp_enqueue_script(
+    handle: 'plugin-script',
+    src: \plugins_url('build/index.js', PLUGIN_FILE),
+    deps: $asset_file['dependencies'],
+    ver: $asset_file['version']
+  );
+
+  // Add inline data
+  \wp_add_inline_script(
+    handle: 'plugin-script',
+    data: sprintf(
+      'window.pluginData = %s;',
+      \wp_json_encode([
+        'apiUrl' => \rest_url('plugin/v1'),
+        'nonce' => \wp_create_nonce('plugin-action'),
+        'userId' => \get_current_user_id(),
+      ])
+    ),
+    position: 'before'
+  );
+}
+```
+
+**Conditional enqueuing:**
+
+```php
+\add_action('admin_enqueue_scripts', function (string $hook): void {
+  // Only on specific admin page
+  if ($hook !== 'toplevel_page_plugin-dashboard') return;
+
+  $asset_file = include __DIR__ . '/build/dashboard.asset.php';
+
+  \wp_enqueue_script(
+    handle: 'plugin-dashboard',
+    src: \plugins_url('build/dashboard.js', PLUGIN_FILE),
+    deps: $asset_file['dependencies'],
+    ver: $asset_file['version']
+  );
+});
+
+// Frontend only
+\add_action('wp_enqueue_scripts', function (): void {
+  if (\is_admin()) return;
+
+  $asset_file = include __DIR__ . '/build/frontend.asset.php';
+
+  \wp_enqueue_script(
+    handle: 'plugin-frontend',
+    src: \plugins_url('build/frontend.js', PLUGIN_FILE),
+    deps: $asset_file['dependencies'],
+    ver: $asset_file['version']
+  );
+});
+```
+
+**Block assets (Gutenberg):**
+
+```php
+\register_block_type(__DIR__ . '/build/blocks/custom-block', [
+  'render_callback' => __NAMESPACE__ . '\render_custom_block',
+]);
+
+// Assets are automatically enqueued from block.json
 ```
 
 ## Code Formatting
