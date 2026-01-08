@@ -43,6 +43,10 @@ All coding standards are organized in `/docs/agent/`:
 
 - **[WordPress Integration](docs/agent/wordpress-integration.md)** - Hooks, APIs, admin pages, database
 
+### Workflow
+
+- **[Git Conventions](docs/agent/git-conventions.md)** - Commitizen format, commit messages, branching
+
 ## Quick Reference
 
 **Important**: Every PHP / JS / CSS file should contain a header describing its contents.
@@ -199,6 +203,7 @@ domReady(() => {
 5. **API Fetch**: Use `@wordpress/api-fetch` not raw `fetch()` for WordPress REST
 6. **Prepared Statements**: Always use `$wpdb->prepare()` for SQL
 7. **Late Binding**: Functions referenced in hooks use `__NAMESPACE__ . '\function_name'`
+8. **Commit Messages**: Use Commitizen format with plugin scope: `feat(plugin): description`
 
 ## Getting Help
 
@@ -209,8 +214,11 @@ domReady(() => {
 ## Version Control
 
 - **Main Branch**: `develop`
-- **Commit Messages**: Clear, descriptive, conventional format when possible
+- **Commit Format**: [Commitizen](https://github.com/commitizen/cz-cli) standard (Conventional Commits)
+- **Commit Scope**: Include plugin/feature name for plugin changes (e.g., `feat(essentials): description`)
 - **Pull Requests**: Reference related issues, provide clear description
+
+See [Git Conventions](docs/agent/git-conventions.md) for detailed commit message format and examples.
 
 ---
 
