@@ -72,6 +72,7 @@ All coding standards are organized in `/docs/agent/`:
 - Use `@wordpress/api-fetch` for WordPress REST API
 - Use `@wordpress/i18n` for all translations
 - Async/await over Promise chains
+- **Dashboard (Essentials plugin)**: Use EXOS framework (`window.EXOS`) for React UI components
 - See [JavaScript Standards](docs/agent/javascript-standards.md) for details
 
 **CSS**:
@@ -108,7 +109,8 @@ All coding standards are organized in `/docs/agent/`:
 4. **Heredoc Templating** - Clean HTML output without tag switching
 5. **Late Escaping** - Escape at output, not before
 6. **Shadow DOM** - Dashboard uses Shadow DOM for isolation
-7. **Monorepo Structure** - Shared tooling and centralized standards
+7. **EXOS Framework** - Dashboard UI uses EXOS React components and CSS
+8. **Monorepo Structure** - Shared tooling and centralized standards
 
 ## Development Workflow
 

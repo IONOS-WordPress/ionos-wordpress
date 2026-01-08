@@ -555,6 +555,339 @@ async function fetchUser(userId) {
 }
 ```
 
+## EXOS Framework Integration
+
+### Overview
+
+**For dashboard and admin UI in the Essentials plugin, the EXOS JavaScript framework provides React-based UI components and utilities.**
+
+- **EXOS JavaScript URL**: `https://ce1.uicdn.net/exos/framework/3.0/exos.min.js`
+- **EXOS CSS URL**: `https://ce1.uicdn.net/exos/framework/3.0/exos.min.css`
+- **Global Object**: `window.EXOS`
+- **Framework**: React-based components exposed via global API
+
+The EXOS framework is loaded in the dashboard and provides pre-built UI components that integrate with the Shadow DOM structure.
+
+### When to Use EXOS
+
+**Use EXOS framework for:**
+- Dashboard UI components (buttons, cards, dialogs, snackbars)
+- Admin interface elements in Essentials plugin
+- Interactive components requiring React functionality
+- Standardized UI patterns across IONOS products
+
+**Don't use EXOS for:**
+- Frontend public-facing features
+- Simple vanilla JS interactions
+- Non-dashboard plugin features
+- Components outside the Essentials dashboard
+
+### User-Facing Notifications
+
+EXOS provides a snackbar API for user notifications:
+
+```javascript
+// Success notification (green)
+window.EXOS.snackbar.success(__('Operation completed successfully', 'text-domain'));
+
+// Warning notification (orange)
+window.EXOS.snackbar.warning(__('Please check your input', 'text-domain'));
+
+// Critical/Error notification (red)
+window.EXOS.snackbar.critical(__('An error occurred', 'text-domain'));
+
+// Info notification (blue)
+window.EXOS.snackbar.info(__('New feature available', 'text-domain'));
+```
+
+**Best Practices:**
+- Always translate messages using `__()`
+- Keep messages concise (under 50 characters)
+- Use appropriate severity level
+- Provide actionable feedback when possible
+
+### EXOS React Components
+
+EXOS exposes React components through `window.EXOS.react` for building interactive UI:
+
+#### Dialog Component
+
+```javascript
+// Show a dialog with React content
+const { Dialog } = window.EXOS.react;
+
+function showConfirmDialog() {
+  window.EXOS.dialog.show({
+    title: __('Confirm Action', 'text-domain'),
+    content: React.createElement(Dialog.Content, null,
+      __('Are you sure you want to proceed?', 'text-domain')
+    ),
+    actions: [
+      {
+        label: __('Cancel', 'text-domain'),
+        variant: 'secondary',
+        onClick: () => window.EXOS.dialog.hide(),
+      },
+      {
+        label: __('Confirm', 'text-domain'),
+        variant: 'primary',
+        onClick: async () => {
+          await performAction();
+          window.EXOS.dialog.hide();
+          window.EXOS.snackbar.success(__('Action completed', 'text-domain'));
+        },
+      },
+    ],
+  });
+}
+```
+
+#### Button Component
+
+```javascript
+const { Button } = window.EXOS.react;
+
+// Create EXOS button programmatically
+const button = React.createElement(Button, {
+  variant: 'primary', // 'primary', 'secondary', 'tertiary'
+  size: 'medium',     // 'small', 'medium', 'large'
+  disabled: false,
+  onClick: handleClick,
+}, __('Click Me', 'text-domain'));
+```
+
+#### Card Component
+
+```javascript
+const { Card } = window.EXOS.react;
+
+// Create dashboard card
+const card = React.createElement(Card, {
+  title: __('Dashboard Widget', 'text-domain'),
+  className: 'custom-widget',
+}, cardContent);
+```
+
+#### Loading Indicator
+
+```javascript
+const { Spinner } = window.EXOS.react;
+
+// Show loading state
+const loadingIndicator = React.createElement(Spinner, {
+  size: 'medium', // 'small', 'medium', 'large'
+  color: 'primary',
+});
+```
+
+### React Integration Patterns
+
+#### Rendering React Components in Dashboard
+
+```javascript
+import domReady from '@wordpress/dom-ready';
+
+domReady(() => {
+  const dashboard = getShadowRoot();
+  const container = dashboard.querySelector('#widget-container');
+
+  if (!container) {
+    return;
+  }
+
+  // Use EXOS React components
+  const { createElement } = React;
+  const { Button, Card } = window.EXOS.react;
+
+  const widget = createElement(Card, {
+    title: __('My Widget', 'text-domain'),
+  },
+    createElement(Button, {
+      variant: 'primary',
+      onClick: handleAction,
+    }, __('Take Action', 'text-domain'))
+  );
+
+  // Render into Shadow DOM
+  ReactDOM.render(widget, container);
+});
+```
+
+#### Using React Hooks with EXOS
+
+```javascript
+const { useState, useEffect } = React;
+const { Button } = window.EXOS.react;
+
+function DashboardWidget() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const result = await apiFetch({ path: '/endpoint' });
+        setData(result);
+      } catch (error) {
+        window.EXOS.snackbar.critical(__('Failed to load data', 'text-domain'));
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadData();
+  }, []);
+
+  if (loading) {
+    return React.createElement('div', null, __('Loading...', 'text-domain'));
+  }
+
+  return React.createElement('div', { className: 'dashboard-widget' },
+    React.createElement('h3', null, data.title),
+    React.createElement(Button, {
+      variant: 'primary',
+      onClick: () => handleAction(data.id),
+    }, __('Update', 'text-domain'))
+  );
+}
+```
+
+#### Component Lifecycle in Dashboard
+
+```javascript
+class DashboardPanel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [],
+      loading: true,
+    };
+  }
+
+  async componentDidMount() {
+    await this.loadItems();
+  }
+
+  async loadItems() {
+    try {
+      const items = await apiFetch({ path: '/items' });
+      this.setState({ items, loading: false });
+    } catch (error) {
+      window.EXOS.snackbar.critical(__('Failed to load items', 'text-domain'));
+      this.setState({ loading: false });
+    }
+  }
+
+  render() {
+    const { Card, Button } = window.EXOS.react;
+
+    return React.createElement(Card, {
+      title: __('Dashboard Panel', 'text-domain'),
+    },
+      this.state.loading
+        ? __('Loading...', 'text-domain')
+        : this.state.items.map(item =>
+            React.createElement(Button, {
+              key: item.id,
+              variant: 'secondary',
+              onClick: () => this.handleItem(item),
+            }, item.name)
+          )
+    );
+  }
+}
+```
+
+### EXOS Utility Functions
+
+#### Modal Management
+
+```javascript
+// Show modal
+window.EXOS.modal.show({
+  id: 'settings-modal',
+  title: __('Settings', 'text-domain'),
+  content: modalContent,
+  onClose: () => {
+    console.log('Modal closed');
+  },
+});
+
+// Hide modal
+window.EXOS.modal.hide('settings-modal');
+
+// Check if modal is open
+if (window.EXOS.modal.isOpen('settings-modal')) {
+  // Modal is visible
+}
+```
+
+#### Tooltip Management
+
+```javascript
+// Add tooltip to element
+window.EXOS.tooltip.add(element, {
+  content: __('Help text', 'text-domain'),
+  position: 'top', // 'top', 'bottom', 'left', 'right'
+});
+
+// Remove tooltip
+window.EXOS.tooltip.remove(element);
+```
+
+### Integration with WordPress Data
+
+```javascript
+import apiFetch from '@wordpress/api-fetch';
+
+// Fetch data and update React component
+async function updateDashboardWidget() {
+  try {
+    const data = await apiFetch({ path: '/vendor/v1/stats' });
+
+    // Update React component state
+    const dashboard = getShadowRoot();
+    const container = dashboard.querySelector('#stats-widget');
+
+    const { Card } = window.EXOS.react;
+    const widget = React.createElement(Card, {
+      title: __('Statistics', 'text-domain'),
+    },
+      React.createElement('div', null,
+        React.createElement('p', null, `${__('Total:', 'text-domain')} ${data.total}`),
+        React.createElement('p', null, `${__('Active:', 'text-domain')} ${data.active}`)
+      )
+    );
+
+    ReactDOM.render(widget, container);
+    window.EXOS.snackbar.success(__('Stats updated', 'text-domain'));
+  } catch (error) {
+    window.EXOS.snackbar.critical(__('Failed to update stats', 'text-domain'));
+  }
+}
+```
+
+### Best Practices for EXOS Components
+
+1. **Check EXOS Availability**: Always verify EXOS is loaded before using
+2. **Use EXOS Classes**: Combine with EXOS CSS classes for styling
+3. **Translate All Text**: Use `__()` for all user-facing strings
+4. **Handle Errors**: Show appropriate snackbar notifications
+5. **Clean Up**: Remove event listeners and unmount components properly
+6. **Shadow DOM Context**: Remember components render within Shadow DOM
+7. **React Best Practices**: Follow standard React patterns and hooks usage
+
+```javascript
+// Check EXOS availability
+if (!window.EXOS || !window.EXOS.react) {
+  console.error('EXOS framework not loaded');
+  return;
+}
+
+// Safe component usage
+const { Button } = window.EXOS.react;
+```
+
 ## Error Handling
 
 ### Console Methods
@@ -571,19 +904,6 @@ console.group('Feature Name');
 console.log('Step 1:', value1);
 console.log('Step 2:', value2);
 console.groupEnd();
-```
-
-### User-Facing Notifications
-
-```javascript
-// Success (green)
-window.EXOS.snackbar.success(__('Operation completed', 'text-domain'));
-
-// Warning (orange)
-window.EXOS.snackbar.warning(__('Please check input', 'text-domain'));
-
-// Critical/Error (red)
-window.EXOS.snackbar.critical(__('An error occurred', 'text-domain'));
 ```
 
 ## Performance Best Practices
