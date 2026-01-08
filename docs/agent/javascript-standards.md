@@ -2,2106 +2,257 @@
 
 ## Core Principles
 
-### No jQuery
-
-**IMPORTANT: Do not use jQuery functions or the jQuery library.**
-
-Modern browsers provide native APIs that are:
-- **Faster**: No library overhead
-- **Smaller**: No extra dependencies
-- **Standard**: Better long-term support
-- **Modern**: Support for latest features
-
-```javascript
-// ❌ NEVER use jQuery
-$('.element').addClass('active');
-$('.element').on('click', handler);
-$.ajax({ url: '/api/data' });
-
-// ✅ ALWAYS use native JavaScript
-document.querySelector('.element').classList.add('active');
-document.querySelector('.element').addEventListener('click', handler);
-await fetch('/api/data');
-
-// ✅ OR use WordPress packages
-import apiFetch from '@wordpress/api-fetch';
-await apiFetch({ path: '/wp/v2/posts' });
-```
-
-**Why no jQuery:**
-- Modern browsers have native equivalents for all jQuery functionality
-- Smaller bundle sizes and faster performance
-- Better integration with modern JavaScript (async/await, modules, etc.)
-- WordPress is moving away from jQuery dependency
-- Easier debugging with native APIs
-
-**If you encounter existing jQuery code:**
-- Refactor it to use native JavaScript or WordPress packages
-- See the DOM Manipulation section for native equivalents
-
-## ECMAScript Version
-
-- **Target**: ES6+ (ESNext)
-- **Transpilation**: Webpack via `@wordpress/scripts`
-- All modern JavaScript features are supported and transpiled automatically
+- **No jQuery** - Use native JavaScript or WordPress packages
+- **ES6+** - Modern syntax, transpiled via `@wordpress/scripts`
+- **Async/await** - Always prefer over `.then()` chains
+- **Native DOM** - Modern browser APIs, no library overhead
 
 ## Module System
 
-### ES6 Modules
-
-Always use ES6 import/export syntax:
-
 ```javascript
 import { __ } from '@wordpress/i18n';
 import domReady from '@wordpress/dom-ready';
 import apiFetch from '@wordpress/api-fetch';
-
-export function myFunction() {
-  // Implementation
-}
-
-export default MyComponent;
 ```
 
-### WordPress Package Imports
-
-Common WordPress packages:
+## Variables
 
 ```javascript
-import { __ } from '@wordpress/i18n';
-import domReady from '@wordpress/dom-ready';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import { speak } from '@wordpress/a11y';
+const API_ENDPOINT = '/wp/v2/posts';  // Immutable
+let count = 0;                        // Mutable
+// Never use var
 ```
 
-## Variable Declarations
-
-### Const and Let
-
-- **Use `const` by default** for values that won't be reassigned
-- **Use `let`** for values that will change
-- **Never use `var`**
-
-```javascript
-const API_ENDPOINT = '/wp/v2/posts';
-const container = document.querySelector('.container');
-
-let count = 0;
-let isActive = false;
-```
-
-## Initialization Pattern
-
-### DOM Ready
-
-Use `@wordpress/dom-ready` for initialization:
+## Initialization
 
 ```javascript
 import domReady from '@wordpress/dom-ready';
 
 domReady(() => {
-  initializeFeature();
-});
-
-function initializeFeature() {
-  const container = document.querySelector('.feature-container');
-
-  if (!container) {
-    return;
-  }
-
-  // Feature implementation
-}
-```
-
-### Shadow DOM Access
-
-For plugin dashboard with Shadow DOM:
-
-```javascript
-import domReady from '@wordpress/dom-ready';
-
-domReady(() => {
-  const parent = document.querySelector('.plugin-dashboard');
-
-  if (!parent) {
-    return;
-  }
-
-  const dashboard = parent.querySelector('#wpbody-content').shadowRoot;
-
-  // All queries within shadow root
-  dashboard.querySelector('.element')?.addEventListener('click', handler);
+  const container = document.querySelector('.feature');
+  if (!container) return;
+  // Initialize
 });
 ```
 
 ## Functions
 
-### Function Declarations
-
-#### Arrow Functions vs Anonymous Functions
-
-**Use arrow functions (`fn() =>`) for single-expression functions:**
-
+**Arrow functions for single expressions:**
 ```javascript
-// ✅ Good - single expression arrow function
 const multiply = (a, b) => a * b;
-const getUser = (id) => users.find((u) => u.id === id);
-const isActive = (item) => item.status === 'active';
-
-// Array methods with arrow functions
 const ids = items.map((item) => item.id);
-const active = items.filter((item) => item.active);
-const total = numbers.reduce((sum, n) => sum + n, 0);
 ```
 
-**Use anonymous functions (`function() {}`) for multi-line logic:**
-
+**Anonymous functions for multi-line:**
 ```javascript
-// ✅ Good - multi-line anonymous function
 button.addEventListener('click', async function (event) {
   event.target.disabled = true;
-  event.target.innerText = __('Loading...', 'text-domain');
-
   await performOperation();
-
   event.target.disabled = false;
-  event.target.innerText = __('Done', 'text-domain');
 });
-
-// Multi-line with complex logic
-const processItem = function (item) {
-  const result = performCalculation(item.value);
-  const formatted = formatResult(result);
-  updateUI(formatted);
-  return formatted;
-};
 ```
 
-**Use inline/anonymous functions when only used once:**
-
+**Named when reused:**
 ```javascript
-// ✅ Good - inline arrow function used once
-domReady(() => {
-  const container = document.querySelector('.feature-container');
-  if (container) {
-    initializeFeature(container);
-  }
-});
-
-// ✅ Good - inline anonymous function for event handler
-element.addEventListener('click', async function (event) {
-  event.preventDefault();
-  await handleClick(event.target);
-});
-
-// ❌ Avoid - unnecessary named function for one-time use
-function handleButtonClick(event) {
-  event.preventDefault();
-  // Only used once
-}
-button.addEventListener('click', handleButtonClick);
-```
-
-**Use named functions when reused multiple times:**
-
-```javascript
-// ✅ Good - reused function
 function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
-
-// Used multiple times
-if (!validateEmail(input1.value)) {
-  showError(input1);
-}
-if (!validateEmail(input2.value)) {
-  showError(input2);
-}
-
-// Async named function
-async function fetchData() {
-  const response = await fetch(url);
-  return await response.json();
-}
-```
-
-**Arrow functions maintain lexical `this` context:**
-
-```javascript
-// ✅ Good - arrow function preserves `this`
-class Component {
-  constructor() {
-    this.value = 42;
-  }
-
-  setup() {
-    button.addEventListener('click', () => {
-      console.log(this.value); // 42 - correct context
-    });
-  }
-}
-
-// ❌ Bad - anonymous function changes `this` context
-class Component {
-  constructor() {
-    this.value = 42;
-  }
-
-  setup() {
-    button.addEventListener('click', function () {
-      console.log(this.value); // undefined - wrong context
-    });
-  }
-}
-```
-
-**Summary:**
-- **Single expression**: Arrow function `() => value`
-- **Multi-line logic**: Anonymous function `function() {}`
-- **Used once**: Inline/anonymous function
-- **Used multiple times**: Named function
-- **Need `this` context**: Arrow function
-
-### Function Parameters
-
-Use default parameters and destructuring:
-
-```javascript
-function createUser(name, age = 18, options = {}) {
-  // Implementation
-}
-
-function processData({ id, name, email }) {
-  // Destructured parameters
-}
-
-// Arrow function with destructuring
-const formatUser = ({ firstName, lastName }) => `${firstName} ${lastName}`;
-
-// Default values in destructuring
-const getSettings = ({ theme = 'light', language = 'en' } = {}) => ({ theme, language });
 ```
 
 ## Async/Await
 
-### Preferred Pattern
-
-**Always use async/await syntax over `.then()` / `.catch()` chains:**
-
+**Always use try/catch:**
 ```javascript
-// ✅ Good - async/await with try/catch
 async function fetchUserData(userId) {
   try {
     const user = await apiFetch({ path: `/wp/v2/users/${userId}` });
-    const posts = await apiFetch({ path: `/wp/v2/posts?author=${userId}` });
-    return { user, posts };
+    return user;
   } catch (error) {
-    console.error('Failed to fetch data:', error);
-    return null;
-  }
-}
-
-// ❌ Avoid - Promise chains with .then()
-function fetchUserData(userId) {
-  return apiFetch({ path: `/wp/v2/users/${userId}` })
-    .then(user => apiFetch({ path: `/wp/v2/posts?author=${userId}` })
-      .then(posts => ({ user, posts })))
-    .catch(error => {
-      console.error(error);
-      return null;
-    });
-}
-```
-
-**Benefits of async/await:**
-- More readable and maintainable code
-- Easier error handling with try/catch
-- Simpler debugging with better stack traces
-- Natural control flow with `if`, `for`, `while`, etc.
-- Avoids "callback hell" and nested `.then()` chains
-
-**When you must use `.then()`:**
-- Only in very rare cases where you cannot use `await`
-- Even in callbacks, prefer making the callback `async` and using `await`
-
-### Error Handling
-
-**Always use try/catch with async/await:**
-
-```javascript
-// ✅ Good - proper error handling
-async function safeAPICall() {
-  try {
-    const data = await apiFetch({ path: '/endpoint' });
-    return data;
-  } catch (error) {
-    console.error('API Error:', error);
+    console.error('Failed:', error);
     window.EXOS.snackbar.warning(__('Request failed', 'text-domain'));
     return null;
   }
 }
-
-// ✅ Good - handling specific errors
-async function updateSettings(settings) {
-  try {
-    const response = await apiFetch({
-      path: '/settings',
-      method: 'POST',
-      data: settings,
-    });
-
-    window.EXOS.snackbar.success(__('Settings saved', 'text-domain'));
-    return response;
-  } catch (error) {
-    if (error.code === 'invalid_data') {
-      window.EXOS.snackbar.warning(__('Invalid settings data', 'text-domain'));
-    } else {
-      window.EXOS.snackbar.critical(__('Failed to save settings', 'text-domain'));
-    }
-    throw error; // Re-throw if caller needs to handle it
-  }
-}
-
-// ❌ Avoid - missing error handling
-async function riskyAPICall() {
-  const data = await apiFetch({ path: '/endpoint' }); // Can crash
-  return data;
-}
-
-// ❌ Avoid - using .catch() instead of try/catch
-async function mixedPattern() {
-  const data = await apiFetch({ path: '/endpoint' }).catch(error => {
-    console.error(error);
-    return null;
-  });
-  return data;
-}
 ```
 
-### Parallel Operations
-
-**Use `Promise.all()` with async/await for parallel operations:**
-
+**Parallel operations:**
 ```javascript
-// ✅ Good - parallel with Promise.all
-async function loadDashboardData() {
-  try {
-    const [user, settings, stats] = await Promise.all([
-      fetchUser(),
-      fetchSettings(),
-      fetchStats(),
-    ]);
-
-    return { user, settings, stats };
-  } catch (error) {
-    console.error('Failed to load dashboard:', error);
-    return null;
-  }
-}
-
-// ❌ Bad - sequential (slow)
-async function loadDashboardData() {
-  const user = await fetchUser();     // Wait for first
-  const settings = await fetchSettings(); // Wait for second
-  const stats = await fetchStats();   // Wait for third
-  return { user, settings, stats };
-}
-
-// ✅ Good - Promise.allSettled for handling partial failures
-async function loadOptionalData() {
-  const results = await Promise.allSettled([
-    fetchCriticalData(),
-    fetchOptionalData1(),
-    fetchOptionalData2(),
-  ]);
-
-  const [critical, optional1, optional2] = results;
-
-  if (critical.status === 'rejected') {
-    throw new Error('Critical data failed to load');
-  }
-
-  return {
-    critical: critical.value,
-    optional1: optional1.status === 'fulfilled' ? optional1.value : null,
-    optional2: optional2.status === 'fulfilled' ? optional2.value : null,
-  };
-}
-```
-
-### Top-Level Await in Event Handlers
-
-**Event handlers and callbacks should be async:**
-
-```javascript
-// ✅ Good - async event handler
-button.addEventListener('click', async (event) => {
-  event.preventDefault();
-
-  try {
-    const result = await processClick();
-    updateUI(result);
-    window.EXOS.snackbar.success(__('Done', 'text-domain'));
-  } catch (error) {
-    window.EXOS.snackbar.critical(__('Operation failed', 'text-domain'));
-  }
-});
-
-// ✅ Good - async callback
-domReady(async () => {
-  try {
-    const config = await fetchConfig();
-    initializeApp(config);
-  } catch (error) {
-    console.error('Initialization failed:', error);
-  }
-});
-
-// ❌ Avoid - using .then() in event handler
-button.addEventListener('click', (event) => {
-  event.preventDefault();
-  processClick().then(result => {
-    updateUI(result);
-  }).catch(error => {
-    console.error(error);
-  });
-});
+const [user, settings, stats] = await Promise.all([
+  fetchUser(),
+  fetchSettings(),
+  fetchStats(),
+]);
 ```
 
 ## Array Methods
 
-### Iteration
-
-#### For Loops vs forEach
-
-**Prefer `for` loops over `forEach()` for side effects and performance:**
-
+**Prefer `for` loops over `forEach()`:**
 ```javascript
-// ✅ Good - for...of loop for side effects
+// ✅ for...of - early exit, better performance
 for (const item of items) {
-  console.log(item);
-  updateUI(item);
-}
-
-// ✅ Good - traditional for loop with index
-for (let i = 0; i < items.length; i++) {
-  const item = items[i];
-  console.log(`Item ${i}:`, item);
-}
-
-// ✅ Good - for loop with early exit
-for (const item of items) {
-  if (item.invalid) {
-    break; // Can exit early
-  }
+  if (item.invalid) break;
   processItem(item);
 }
 
-// ❌ Avoid - forEach cannot break or return early
-items.forEach((item) => {
-  console.log(item); // Less performant, no early exit
-});
-```
-
-**Benefits of `for` loops:**
-- Better performance (no function call overhead)
-- Can use `break`, `continue`, and `return`
-- More readable for simple iterations
-- Works with async/await naturally
-
-**When to use `forEach()`:**
-- Never for simple side effects (use `for` loops instead)
-- Only when you specifically need a callback pattern with function scope
-
-#### Array Transformation Methods
-
-**Use functional methods for transforming arrays (not side effects):**
-
-```javascript
-// ✅ map - transform array
+// ✅ Functional methods for transformations
 const ids = items.map((item) => item.id);
-const doubled = numbers.map((n) => n * 2);
-
-// ✅ filter - select subset
 const active = items.filter((item) => item.active);
-const valid = inputs.filter((input) => input.value !== '');
-
-// ✅ find - get first match
 const user = users.find((u) => u.id === targetId);
-
-// ✅ some - check if any match
-const hasError = validations.some((v) => v.error);
-
-// ✅ every - check if all match
-const allValid = inputs.every((input) => input.checkValidity());
-
-// ✅ reduce - accumulate value
-const total = numbers.reduce((sum, n) => sum + n, 0);
 ```
-
-#### Async Iteration
-
-**For async operations, use `for...of` with `await`:**
-
-```javascript
-// ✅ Good - sequential async with for...of
-for (const item of items) {
-  await processItem(item);
-}
-
-// ✅ Good - parallel async with Promise.all and map
-await Promise.all(items.map((item) => processItem(item)));
-
-// ❌ Bad - forEach doesn't work with async/await
-items.forEach(async (item) => {
-  await processItem(item); // Doesn't wait properly
-});
-```
-
-#### Multiple Elements Event Handling
-
-```javascript
-// ✅ Good - for...of loop for event listeners
-const buttons = document.querySelectorAll('.button');
-for (const button of buttons) {
-  button.addEventListener('click', handleClick);
-}
-
-// ❌ Avoid - forEach for simple iteration
-buttons.forEach((button) => {
-  button.addEventListener('click', handleClick);
-});
-```
-
-**Summary:**
-- **Side effects / simple loops**: Use `for...of` or traditional `for` loop
-- **Transform array**: Use `map()`, `filter()`, `find()`, etc.
-- **Async iteration**: Use `for...of` with `await` or `Promise.all()` with `map()`
-- **Avoid `forEach()`**: Use `for` loops instead for better performance and control
 
 ## DOM Manipulation
 
-**Use modern native DOM manipulation and newer browser functions where possible.**
-
-### Query Selectors
-
-**Prefer modern query methods:**
-
 ```javascript
-// ✅ Good - querySelector (modern, flexible)
-const element = document.querySelector('.class-name');
-const byId = document.querySelector('#element-id');
+// Query
+const element = document.querySelector('.class');
+const elements = document.querySelectorAll('.items');
+const parent = element.closest('.parent');
 
-// ✅ Good - querySelectorAll (returns NodeList)
-const elements = document.querySelectorAll('.class-name');
-
-// ✅ Good - closest() for parent lookup
-const parent = element.closest('.parent-class');
-
-// ✅ Good - matches() for checking selectors
-if (element.matches('.active')) {
-  // Element matches selector
-}
-
-// ✅ Good - optional chaining for safe access
-document.querySelector('.button')?.addEventListener('click', handler);
-
-// ⚠️  Avoid - legacy methods (use querySelector instead)
-const byId = document.getElementById('element-id'); // querySelector preferred
-const byClass = document.getElementsByClassName('class'); // querySelectorAll preferred
-const byTag = document.getElementsByTagName('div'); // querySelectorAll preferred
-```
-
-**Modern query patterns:**
-
-```javascript
-// ✅ :has() selector (modern, no JS needed)
-const parent = document.querySelector('.container:has(> .child)');
-
-// ✅ :is() selector for grouping
-const elements = document.querySelectorAll(':is(button, a, input)');
-
-// ✅ :where() selector (lower specificity)
-const items = document.querySelectorAll(':where(.item, .element)');
-
-// ✅ :not() selector
-const nonActive = document.querySelectorAll('.item:not(.active)');
-```
-
-### Element Creation and Insertion
-
-**Use modern DOM insertion methods:**
-
-```javascript
-// ✅ Good - createElement with properties
+// Create & Insert
 const button = document.createElement('button');
-button.textContent = __('Click me', 'text-domain');
-button.className = 'button button--primary';
-button.disabled = false;
+button.textContent = __('Click', 'text-domain');
+container.append(button);  // Modern method
 
-// ✅ Good - append() (modern, accepts multiple nodes and strings)
-container.append(button);
-container.append('Text node', anotherElement);
-
-// ✅ Good - prepend() (adds to beginning)
-container.prepend(newElement);
-
-// ✅ Good - before() and after() (sibling insertion)
-element.before(newElement);
-element.after(newElement);
-
-// ✅ Good - replaceWith() (replace element)
-oldElement.replaceWith(newElement);
-
-// ✅ Good - remove() (remove element)
-element.remove();
-
-// ⚠️  Avoid - legacy insertion methods
-container.appendChild(button);     // Use append() instead
-container.insertBefore(el, ref);   // Use before() instead
-parent.removeChild(element);       // Use element.remove() instead
-```
-
-**Clone elements:**
-
-```javascript
-// ✅ Good - cloneNode()
-const clone = element.cloneNode(true); // true = deep clone with children
-container.append(clone);
-```
-
-**Create from HTML string:**
-
-```javascript
-// ✅ Good - insertAdjacentHTML (efficient, position-aware)
-container.insertAdjacentHTML('beforeend', '<div class="item">Content</div>');
-
-// Positions: 'beforebegin', 'afterbegin', 'beforeend', 'afterend'
-
-// ✅ Good - DOMParser for complex HTML
-const parser = new DOMParser();
-const doc = parser.parseFromString('<div><p>Content</p></div>', 'text/html');
-const element = doc.body.firstElementChild;
-container.append(element);
-
-// ⚠️  Avoid - innerHTML for insertion (less precise)
-container.innerHTML += '<div>New content</div>'; // Destroys existing elements
-```
-
-### Class Manipulation
-
-**Use classList API (modern and chainable):**
-
-```javascript
-// ✅ Add/remove classes
+// Classes
 element.classList.add('active');
-element.classList.remove('inactive');
 element.classList.toggle('expanded');
-element.classList.toggle('visible', isVisible); // Second param forces state
 
-// ✅ Multiple classes at once
-element.classList.add('active', 'highlighted', 'primary');
-element.classList.remove('inactive', 'disabled');
-
-// ✅ Replace class atomically
-element.classList.replace('old-class', 'new-class');
-
-// ✅ Check class
-if (element.classList.contains('active')) {
-  // Do something
-}
-
-// ⚠️  Avoid - className string manipulation
-element.className = 'active'; // Replaces all classes
-element.className += ' new-class'; // Error-prone
-```
-
-### Attributes
-
-**Use modern attribute methods and properties:**
-
-```javascript
-// ✅ Good - direct property access (when available)
+// Attributes
 button.disabled = true;
-input.value = 'new value';
-link.href = '/path';
-img.src = '/image.jpg';
+element.dataset.tab = 'settings';  // data-tab="settings"
 
-// ✅ Good - setAttribute/getAttribute for custom attributes
-element.setAttribute('aria-expanded', 'true');
-element.setAttribute('data-value', '123');
-const value = element.getAttribute('data-value');
-
-// ✅ Good - removeAttribute
-element.removeAttribute('disabled');
-
-// ✅ Good - hasAttribute
-if (element.hasAttribute('data-loaded')) {
-  // Attribute exists
-}
-
-// ✅ Good - toggleAttribute (modern, returns new state)
-const isHidden = element.toggleAttribute('hidden');
-element.toggleAttribute('hidden', shouldHide); // Force state
-
-// ✅ Good - dataset API for data attributes
-element.dataset.tab = 'settings';     // Sets data-tab="settings"
-element.dataset.userId = '123';       // Sets data-user-id="123"
-const tabName = element.dataset.tab;  // Gets data-tab
-const userId = element.dataset.userId; // Gets data-user-id
-```
-
-### Content Manipulation
-
-```javascript
-// ✅ Good - textContent (fast, no HTML parsing)
-element.textContent = 'Plain text';
-element.textContent = __('Translated text', 'text-domain');
-
-// ✅ Good - innerText (respects CSS display/visibility)
-element.innerText = 'Visible text only';
-
-// ✅ Good - replaceChildren() (modern, clears and sets content)
-element.replaceChildren(newChild1, newChild2, 'Text node');
-element.replaceChildren(); // Clear all children
-
-// ⚠️  Caution - innerHTML (use sparingly, security risk)
-element.innerHTML = '<p>HTML content</p>'; // Only for trusted content
-
-// ✅ Good - form values
-input.value = 'new value';
-const checked = checkbox.checked;
-checkbox.checked = true;
-
-// ✅ Good - form validation
-if (input.checkValidity()) {
-  // Input is valid
-}
-const validationMessage = input.validationMessage;
-
-// ✅ Good - disable/enable
-button.disabled = true;
-button.toggleAttribute('disabled'); // Toggle disabled state
-```
-
-### Modern DOM Traversal
-
-```javascript
-// ✅ Good - parent/child navigation
-const parent = element.parentElement;
-const firstChild = element.firstElementChild;
-const lastChild = element.lastElementChild;
-const children = element.children; // HTMLCollection of elements only
-
-// ✅ Good - sibling navigation
-const next = element.nextElementSibling;
-const prev = element.previousElementSibling;
-
-// ✅ Good - closest() for ancestor search
-const form = input.closest('form');
-const container = element.closest('[data-container]');
-
-// ⚠️  Avoid - node-based traversal (includes text nodes)
-const firstNode = element.firstChild; // Use firstElementChild
-const nextNode = element.nextSibling; // Use nextElementSibling
-```
-
-### Element Visibility and Display
-
-```javascript
-// ✅ Good - hidden attribute (semantic)
-element.hidden = true;  // Native hidden attribute
-element.toggleAttribute('hidden', !isVisible);
-
-// ✅ Good - check visibility with modern methods
-const isVisible = element.checkVisibility();
-const isVisibleInViewport = element.checkVisibility({
-  checkOpacity: true,
-  checkVisibilityCSS: true
-});
-
-// ✅ Good - inert attribute (disables all interactions)
-element.inert = true;
-
-// ✅ Good - style manipulation (avoid when CSS classes can do it)
-element.style.display = 'none';
-element.style.opacity = '0.5';
-```
-
-### Intersection Observer
-
-**Modern way to detect element visibility:**
-
-```javascript
-// ✅ Good - IntersectionObserver for lazy loading and scroll effects
-const observer = new IntersectionObserver((entries) => {
-  for (const entry of entries) {
-    if (entry.isIntersecting) {
-      // Element is visible
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target); // Stop observing if one-time
-    }
-  }
-}, {
-  threshold: 0.5, // 50% visible
-  rootMargin: '0px'
-});
-
-// Observe elements
-const elements = document.querySelectorAll('.lazy-load');
-for (const element of elements) {
-  observer.observe(element);
-}
-
-// Clean up
-observer.disconnect();
-```
-
-### Resize Observer
-
-**Modern way to detect element size changes:**
-
-```javascript
-// ✅ Good - ResizeObserver for responsive components
-const resizeObserver = new ResizeObserver((entries) => {
-  for (const entry of entries) {
-    const { width, height } = entry.contentRect;
-    console.log(`Element size: ${width}x${height}`);
-
-    // Adjust based on size
-    if (width < 600) {
-      entry.target.classList.add('compact');
-    } else {
-      entry.target.classList.remove('compact');
-    }
-  }
-});
-
-resizeObserver.observe(element);
-
-// Clean up
-resizeObserver.disconnect();
-```
-
-### Mutation Observer
-
-**Modern way to watch DOM changes:**
-
-```javascript
-// ✅ Good - MutationObserver for monitoring DOM changes
-const mutationObserver = new MutationObserver((mutations) => {
-  for (const mutation of mutations) {
-    if (mutation.type === 'childList') {
-      console.log('Children changed:', mutation.addedNodes);
-    } else if (mutation.type === 'attributes') {
-      console.log('Attribute changed:', mutation.attributeName);
-    }
-  }
-});
-
-mutationObserver.observe(element, {
-  childList: true,     // Watch for child additions/removals
-  attributes: true,    // Watch for attribute changes
-  characterData: true, // Watch for text changes
-  subtree: true        // Watch descendants too
-});
-
-// Clean up
-mutationObserver.disconnect();
-```
-
-### jQuery to Native JavaScript Migration
-
-**Complete reference for replacing jQuery with native JavaScript:**
-
-#### Selection
-
-```javascript
-// ❌ jQuery
-$('.class')
-$('#id')
-$('div')
-$('.class, .other')
-
-// ✅ Native
-document.querySelectorAll('.class')
-document.querySelector('#id')
-document.querySelectorAll('div')
-document.querySelectorAll('.class, .other')
-```
-
-#### Finding Elements
-
-```javascript
-// ❌ jQuery
-$('.parent').find('.child')
-$('.element').parent()
-$('.element').parents('.ancestor')
-$('.element').closest('.ancestor')
-$('.element').children()
-$('.element').siblings()
-$('.element').next()
-$('.element').prev()
-
-// ✅ Native
-document.querySelector('.parent').querySelectorAll('.child')
-element.parentElement
-element.closest('.ancestor')  // Finds ancestor (same as jQuery closest)
-element.closest('.ancestor')
-element.children
-Array.from(element.parentElement.children).filter(e => e !== element)
-element.nextElementSibling
-element.previousElementSibling
-```
-
-#### Classes
-
-```javascript
-// ❌ jQuery
-$('.element').addClass('active')
-$('.element').removeClass('inactive')
-$('.element').toggleClass('expanded')
-$('.element').hasClass('active')
-
-// ✅ Native
-element.classList.add('active')
-element.classList.remove('inactive')
-element.classList.toggle('expanded')
-element.classList.contains('active')
-```
-
-#### Attributes
-
-```javascript
-// ❌ jQuery
-$('.element').attr('data-id', '123')
-$('.element').attr('data-id')
-$('.element').removeAttr('disabled')
-$('.element').prop('disabled', true)
-$('.element').prop('disabled')
-
-// ✅ Native
-element.setAttribute('data-id', '123')
-element.getAttribute('data-id')
-element.removeAttribute('disabled')
-element.disabled = true
-element.disabled
-```
-
-#### Content
-
-```javascript
-// ❌ jQuery
-$('.element').text('content')
-$('.element').text()
-$('.element').html('<p>HTML</p>')
-$('.element').html()
-$('.element').val('value')
-$('.element').val()
-$('.element').empty()
-
-// ✅ Native
-element.textContent = 'content'
-element.textContent
-element.innerHTML = '<p>HTML</p>'
-element.innerHTML
-element.value = 'value'
-element.value
-element.replaceChildren()
-```
-
-#### DOM Manipulation
-
-```javascript
-// ❌ jQuery
-$('.container').append(element)
-$('.container').prepend(element)
-$('.element').before(newElement)
-$('.element').after(newElement)
-$('.element').remove()
-$('.element').clone()
-$('.element').replaceWith(newElement)
-
-// ✅ Native
-container.append(element)
-container.prepend(element)
-element.before(newElement)
-element.after(newElement)
-element.remove()
-element.cloneNode(true)
-element.replaceWith(newElement)
-```
-
-#### Events
-
-```javascript
-// ❌ jQuery
-$('.element').on('click', handler)
-$('.element').off('click', handler)
-$('.element').trigger('click')
-$('.element').one('click', handler)
-$(document).ready(handler)
-
-// ✅ Native
-element.addEventListener('click', handler)
-element.removeEventListener('click', handler)
-element.dispatchEvent(new Event('click'))
-element.addEventListener('click', handler, { once: true })
-// Use @wordpress/dom-ready instead:
-import domReady from '@wordpress/dom-ready';
-domReady(handler);
-```
-
-#### Event Delegation
-
-```javascript
-// ❌ jQuery
-$('.container').on('click', '.button', handler)
-
-// ✅ Native
-container.addEventListener('click', (event) => {
-  if (event.target.matches('.button')) {
-    handler.call(event.target, event);
-  }
-});
-```
-
-#### CSS and Display
-
-```javascript
-// ❌ jQuery
-$('.element').css('color', 'red')
-$('.element').css({ color: 'red', fontSize: '16px' })
-$('.element').show()
-$('.element').hide()
-$('.element').toggle()
-
-// ✅ Native
-element.style.color = 'red'
-Object.assign(element.style, { color: 'red', fontSize: '16px' })
-element.hidden = false
-element.hidden = true
-element.hidden = !element.hidden
-
-// ✅ Better - use CSS classes
-element.classList.remove('hidden')
-element.classList.add('hidden')
-element.classList.toggle('hidden')
-```
-
-#### Dimensions and Position
-
-```javascript
-// ❌ jQuery
-$('.element').width()
-$('.element').height()
-$('.element').offset()
-$('.element').position()
-
-// ✅ Native
-element.offsetWidth
-element.offsetHeight
-element.getBoundingClientRect()
-{ top: element.offsetTop, left: element.offsetLeft }
-```
-
-#### AJAX
-
-```javascript
-// ❌ jQuery
-$.ajax({
-  url: '/api/data',
-  method: 'GET',
-  success: (data) => console.log(data),
-  error: (error) => console.error(error)
-})
-
-$.get('/api/data', (data) => console.log(data))
-$.post('/api/data', data, (response) => console.log(response))
-
-// ✅ Native with async/await
-async function getData() {
-  try {
-    const response = await fetch('/api/data');
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// ✅ For WordPress REST API
-import apiFetch from '@wordpress/api-fetch';
-
-async function getWordPressData() {
-  try {
-    const data = await apiFetch({ path: '/wp/v2/posts' });
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-```
-
-#### Iteration
-
-```javascript
-// ❌ jQuery
-$('.elements').each(function(index, element) {
-  console.log(element);
-});
-
-// ✅ Native
-const elements = document.querySelectorAll('.elements');
-for (const element of elements) {
-  console.log(element);
-}
-
-// With index
-elements.forEach((element, index) => {
-  console.log(index, element);
-});
-```
-
-#### Data
-
-```javascript
-// ❌ jQuery
-$('.element').data('key', 'value')
-$('.element').data('key')
-
-// ✅ Native (dataset API)
-element.dataset.key = 'value'
-element.dataset.key
-```
-
-#### Utilities
-
-```javascript
-// ❌ jQuery
-$.extend(obj1, obj2)
-$.isArray(value)
-$.each(array, (index, item) => {})
-
-// ✅ Native
-Object.assign(obj1, obj2)
-Array.isArray(value)
-array.forEach((item, index) => {})
-// Or better: use for...of loop
-for (const item of array) {
-  // Process item
-}
+// Content
+element.textContent = 'Safe text';  // No HTML parsing
 ```
 
 ## Event Handling
 
-### Event Listeners
-
 ```javascript
 // Single element
-element.addEventListener('click', (event) => {
-  event.preventDefault();
-  // Handler logic
-});
-
-// Multiple elements - use for loop
-const buttons = document.querySelectorAll('.button');
-for (const button of buttons) {
-  button.addEventListener('click', handleClick);
-}
-
-// Async handler
 element.addEventListener('click', async (event) => {
   event.preventDefault();
-  const result = await processClick();
-  updateUI(result);
+  await handleClick();
 });
-```
 
-### Event Delegation
-
-For dynamic content:
-
-```javascript
+// Delegation for dynamic content
 container.addEventListener('click', (event) => {
-  if (event.target.matches('.dynamic-button')) {
-    handleDynamicClick(event.target);
-  }
-});
-```
-
-### Common Event Patterns
-
-**Button Click with Loading State**:
-```javascript
-button.addEventListener('click', async function (event) {
-  event.target.disabled = true;
-  event.target.innerText = __('Loading...', 'text-domain');
-
-  await performOperation();
-
-  event.target.disabled = false;
-  event.target.innerText = __('Done', 'text-domain');
-});
-```
-
-**Form Submission**:
-```javascript
-form.addEventListener('submit', async (event) => {
-  event.preventDefault();
-
-  const formData = new FormData(event.target);
-  const data = Object.fromEntries(formData.entries());
-
-  const response = await apiFetch({
-    path: '/endpoint',
-    method: 'POST',
-    data,
-  });
-
-  if (response) {
-    window.EXOS.snackbar.success(__('Saved', 'text-domain'));
+  if (event.target.matches('.button')) {
+    handleClick(event.target);
   }
 });
 ```
 
 ## API Communication
 
-### Using @wordpress/api-fetch
-
 ```javascript
 import apiFetch from '@wordpress/api-fetch';
 
-// GET request
-const posts = await apiFetch({
-  path: '/wp/v2/posts',
-  method: 'GET',
-});
+// GET
+const posts = await apiFetch({ path: '/wp/v2/posts' });
 
-// POST request
+// POST
 const result = await apiFetch({
-  path: '/vendor/plugin/endpoint/v1/update',
+  path: '/vendor/plugin/v1/endpoint',
   method: 'POST',
-  data: {
-    id: itemId,
-    value: itemValue,
-  },
-});
-
-// With query parameters
-const filteredPosts = await apiFetch({
-  path: '/wp/v2/posts?per_page=5&status=publish',
+  data: { id: 123, value: 'test' },
 });
 ```
 
-### Using Fetch API
+## EXOS Framework (Dashboard Only)
 
-For non-WordPress endpoints or custom nonce handling:
-
+**Snackbar notifications:**
 ```javascript
-async function callCustomEndpoint(data) {
-  try {
-    const response = await fetch(wpData.restUrl + 'custom/endpoint', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-WP-Nonce': wpData.nonce,
-      },
-      credentials: 'include',
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('API Error:', error);
-    return null;
-  }
-}
+window.EXOS.snackbar.success(__('Saved', 'text-domain'));
+window.EXOS.snackbar.warning(__('Check input', 'text-domain'));
+window.EXOS.snackbar.critical(__('Error occurred', 'text-domain'));
 ```
 
-## Global Variables
-
-### Declaration
-
-Declare global variables provided by PHP (if needed):
-
+**React components:**
 ```javascript
-/* global wpData:true */
+const { Button, Card } = window.EXOS.react;
 
-// Usage
-console.log(wpData.restUrl);
-console.log(wpData.nonce);
-```
-
-**Note:** Do not declare or use jQuery globals. Use native JavaScript instead.
-
-## Code Formatting
-
-### Prettier Configuration
-
-- **Indentation**: 2 spaces
-- **Line Length**: Maximum 120 characters
-- **Semicolons**: Always use
-- **Quotes**: Single quotes for strings
-- **Trailing Commas**: ES5 style (objects and arrays)
-- **Bracket Spacing**: Yes (`{ key: value }`)
-
-### Examples
-
-```javascript
-const config = {
-  option1: 'value1',
-  option2: 'value2',
-  nested: {
-    key: 'value',
-  },
-};
-
-const array = ['item1', 'item2', 'item3'];
-
-function example(param1, param2) {
-  const result = param1 + param2;
-  return result;
-}
-```
-
-## Object and Array Operations
-
-### Destructuring
-
-```javascript
-// Object destructuring
-const { id, name, email } = user;
-const { title = 'Default' } = post;
-
-// Array destructuring
-const [first, second, ...rest] = items;
-
-// Function parameters
-function processUser({ id, name, email }) {
-  // Use destructured properties
-}
-```
-
-### Spread Operator
-
-```javascript
-// Array spread
-const combined = [...array1, ...array2];
-const copy = [...original];
-
-// Object spread
-const merged = { ...defaults, ...options };
-const updated = { ...user, email: 'new@email.com' };
-```
-
-## Template Literals
-
-Use template literals for string interpolation:
-
-```javascript
-// ✅ Good
-const message = `Hello, ${name}! You have ${count} messages.`;
-const html = `<div class="${className}">${content}</div>`;
-
-// ❌ Avoid
-const message = 'Hello, ' + name + '! You have ' + count + ' messages.';
-```
-
-## Comments
-
-### Code Comments
-
-```javascript
-// Single-line comment
-
-/* Multi-line comment
-   for detailed explanations */
-
-// TODO: Add error handling
-// FIXME: This breaks with empty arrays
-```
-
-### Documentation Comments
-
-Keep minimal - prefer self-documenting code:
-
-```javascript
-/**
- * Fetches user data from the API.
- *
- * @param {number} userId - The user ID
- * @returns {Promise<Object>} User data object
- */
-async function fetchUser(userId) {
-  // Implementation
-}
-```
-
-## EXOS Framework Integration
-
-### Overview
-
-**For dashboard and admin UI in the Essentials plugin, the EXOS JavaScript framework provides React-based UI components and utilities.**
-
-- **EXOS JavaScript URL**: `https://ce1.uicdn.net/exos/framework/3.0/exos.min.js`
-- **EXOS CSS URL**: `https://ce1.uicdn.net/exos/framework/3.0/exos.min.css`
-- **Global Object**: `window.EXOS`
-- **Framework**: React-based components exposed via global API
-
-The EXOS framework is loaded in the dashboard and provides pre-built UI components that integrate with the Shadow DOM structure.
-
-### When to Use EXOS
-
-**Use EXOS framework for:**
-- Dashboard UI components (buttons, cards, dialogs, snackbars)
-- Admin interface elements in Essentials plugin
-- Interactive components requiring React functionality
-- Standardized UI patterns across IONOS products
-
-**Don't use EXOS for:**
-- Frontend public-facing features
-- Simple vanilla JS interactions
-- Non-dashboard plugin features
-- Components outside the Essentials dashboard
-
-### User-Facing Notifications
-
-EXOS provides a snackbar API for user notifications:
-
-```javascript
-// Success notification (green)
-window.EXOS.snackbar.success(__('Operation completed successfully', 'text-domain'));
-
-// Warning notification (orange)
-window.EXOS.snackbar.warning(__('Please check your input', 'text-domain'));
-
-// Critical/Error notification (red)
-window.EXOS.snackbar.critical(__('An error occurred', 'text-domain'));
-
-// Info notification (blue)
-window.EXOS.snackbar.info(__('New feature available', 'text-domain'));
-```
-
-**Best Practices:**
-- Always translate messages using `__()`
-- Keep messages concise (under 50 characters)
-- Use appropriate severity level
-- Provide actionable feedback when possible
-
-### EXOS React Components
-
-EXOS exposes React components through `window.EXOS.react` for building interactive UI:
-
-#### Dialog Component
-
-```javascript
-// Show a dialog with React content
-const { Dialog } = window.EXOS.react;
-
-function showConfirmDialog() {
-  window.EXOS.dialog.show({
-    title: __('Confirm Action', 'text-domain'),
-    content: React.createElement(Dialog.Content, null,
-      __('Are you sure you want to proceed?', 'text-domain')
-    ),
-    actions: [
-      {
-        label: __('Cancel', 'text-domain'),
-        variant: 'secondary',
-        onClick: () => window.EXOS.dialog.hide(),
-      },
-      {
-        label: __('Confirm', 'text-domain'),
-        variant: 'primary',
-        onClick: async () => {
-          await performAction();
-          window.EXOS.dialog.hide();
-          window.EXOS.snackbar.success(__('Action completed', 'text-domain'));
-        },
-      },
-    ],
-  });
-}
-```
-
-#### Button Component
-
-```javascript
-const { Button } = window.EXOS.react;
-
-// Create EXOS button programmatically
 const button = React.createElement(Button, {
-  variant: 'primary', // 'primary', 'secondary', 'tertiary'
-  size: 'medium',     // 'small', 'medium', 'large'
-  disabled: false,
+  variant: 'primary',
   onClick: handleClick,
 }, __('Click Me', 'text-domain'));
 ```
 
-#### Card Component
+## jQuery Migration Reference
 
 ```javascript
-const { Card } = window.EXOS.react;
+// Selection
+$('.class')              → document.querySelectorAll('.class')
+$('#id')                 → document.querySelector('#id')
 
-// Create dashboard card
-const card = React.createElement(Card, {
-  title: __('Dashboard Widget', 'text-domain'),
-  className: 'custom-widget',
-}, cardContent);
+// Classes
+$('.el').addClass('x')   → element.classList.add('x')
+$('.el').toggleClass()   → element.classList.toggle('x')
+
+// Content
+$('.el').text('x')       → element.textContent = 'x'
+$('.el').html('<p>')     → element.innerHTML = '<p>'
+$('.el').val('x')        → element.value = 'x'
+
+// DOM
+$('.c').append(el)       → container.append(el)
+$('.el').remove()        → element.remove()
+
+// Events
+$('.el').on('click', h)  → element.addEventListener('click', h)
+$(document).ready(fn)    → domReady(fn)
+
+// AJAX
+$.ajax()                 → apiFetch() or fetch()
 ```
 
-#### Loading Indicator
+## Code Formatting
 
+- **Indentation**: 2 spaces
+- **Line Length**: 120 characters max
+- **Semicolons**: Always
+- **Quotes**: Single quotes
+- **Trailing Commas**: ES5 style
+
+## Common Patterns
+
+**Form submission:**
 ```javascript
-const { Spinner } = window.EXOS.react;
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const data = Object.fromEntries(formData.entries());
 
-// Show loading state
-const loadingIndicator = React.createElement(Spinner, {
-  size: 'medium', // 'small', 'medium', 'large'
-  color: 'primary',
-});
-```
-
-### React Integration Patterns
-
-#### Rendering React Components in Dashboard
-
-```javascript
-import domReady from '@wordpress/dom-ready';
-
-domReady(() => {
-  const dashboard = getShadowRoot();
-  const container = dashboard.querySelector('#widget-container');
-
-  if (!container) {
-    return;
-  }
-
-  // Use EXOS React components
-  const { createElement } = React;
-  const { Button, Card } = window.EXOS.react;
-
-  const widget = createElement(Card, {
-    title: __('My Widget', 'text-domain'),
-  },
-    createElement(Button, {
-      variant: 'primary',
-      onClick: handleAction,
-    }, __('Take Action', 'text-domain'))
-  );
-
-  // Render into Shadow DOM
-  ReactDOM.render(widget, container);
-});
-```
-
-#### Using React Hooks with EXOS
-
-```javascript
-const { useState, useEffect } = React;
-const { Button } = window.EXOS.react;
-
-function DashboardWidget() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const result = await apiFetch({ path: '/endpoint' });
-        setData(result);
-      } catch (error) {
-        window.EXOS.snackbar.critical(__('Failed to load data', 'text-domain'));
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadData();
-  }, []);
-
-  if (loading) {
-    return React.createElement('div', null, __('Loading...', 'text-domain'));
-  }
-
-  return React.createElement('div', { className: 'dashboard-widget' },
-    React.createElement('h3', null, data.title),
-    React.createElement(Button, {
-      variant: 'primary',
-      onClick: () => handleAction(data.id),
-    }, __('Update', 'text-domain'))
-  );
-}
-```
-
-#### Component Lifecycle in Dashboard
-
-```javascript
-class DashboardPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: [],
-      loading: true,
-    };
-  }
-
-  async componentDidMount() {
-    await this.loadItems();
-  }
-
-  async loadItems() {
-    try {
-      const items = await apiFetch({ path: '/items' });
-      this.setState({ items, loading: false });
-    } catch (error) {
-      window.EXOS.snackbar.critical(__('Failed to load items', 'text-domain'));
-      this.setState({ loading: false });
-    }
-  }
-
-  render() {
-    const { Card, Button } = window.EXOS.react;
-
-    return React.createElement(Card, {
-      title: __('Dashboard Panel', 'text-domain'),
-    },
-      this.state.loading
-        ? __('Loading...', 'text-domain')
-        : this.state.items.map(item =>
-            React.createElement(Button, {
-              key: item.id,
-              variant: 'secondary',
-              onClick: () => this.handleItem(item),
-            }, item.name)
-          )
-    );
-  }
-}
-```
-
-### EXOS Utility Functions
-
-#### Modal Management
-
-```javascript
-// Show modal
-window.EXOS.modal.show({
-  id: 'settings-modal',
-  title: __('Settings', 'text-domain'),
-  content: modalContent,
-  onClose: () => {
-    console.log('Modal closed');
-  },
-});
-
-// Hide modal
-window.EXOS.modal.hide('settings-modal');
-
-// Check if modal is open
-if (window.EXOS.modal.isOpen('settings-modal')) {
-  // Modal is visible
-}
-```
-
-#### Tooltip Management
-
-```javascript
-// Add tooltip to element
-window.EXOS.tooltip.add(element, {
-  content: __('Help text', 'text-domain'),
-  position: 'top', // 'top', 'bottom', 'left', 'right'
-});
-
-// Remove tooltip
-window.EXOS.tooltip.remove(element);
-```
-
-### Integration with WordPress Data
-
-```javascript
-import apiFetch from '@wordpress/api-fetch';
-
-// Fetch data and update React component
-async function updateDashboardWidget() {
   try {
-    const data = await apiFetch({ path: '/vendor/v1/stats' });
-
-    // Update React component state
-    const dashboard = getShadowRoot();
-    const container = dashboard.querySelector('#stats-widget');
-
-    const { Card } = window.EXOS.react;
-    const widget = React.createElement(Card, {
-      title: __('Statistics', 'text-domain'),
-    },
-      React.createElement('div', null,
-        React.createElement('p', null, `${__('Total:', 'text-domain')} ${data.total}`),
-        React.createElement('p', null, `${__('Active:', 'text-domain')} ${data.active}`)
-      )
-    );
-
-    ReactDOM.render(widget, container);
-    window.EXOS.snackbar.success(__('Stats updated', 'text-domain'));
+    const response = await apiFetch({
+      path: '/endpoint',
+      method: 'POST',
+      data,
+    });
+    window.EXOS.snackbar.success(__('Saved', 'text-domain'));
   } catch (error) {
-    window.EXOS.snackbar.critical(__('Failed to update stats', 'text-domain'));
+    window.EXOS.snackbar.critical(__('Failed', 'text-domain'));
   }
-}
+});
 ```
 
-### Best Practices for EXOS Components
-
-1. **Check EXOS Availability**: Always verify EXOS is loaded before using
-2. **Use EXOS Classes**: Combine with EXOS CSS classes for styling
-3. **Translate All Text**: Use `__()` for all user-facing strings
-4. **Handle Errors**: Show appropriate snackbar notifications
-5. **Clean Up**: Remove event listeners and unmount components properly
-6. **Shadow DOM Context**: Remember components render within Shadow DOM
-7. **React Best Practices**: Follow standard React patterns and hooks usage
-
+**Debounce:**
 ```javascript
-// Check EXOS availability
-if (!window.EXOS || !window.EXOS.react) {
-  console.error('EXOS framework not loaded');
-  return;
-}
-
-// Safe component usage
-const { Button } = window.EXOS.react;
-```
-
-## Error Handling
-
-### Console Methods
-
-```javascript
-// Development debugging (remove before commit)
-console.log('Debug info:', data);
-console.error('Error:', error);
-console.warn('Warning:', warning);
-console.table(arrayOfObjects);
-
-// Grouped logging
-console.group('Feature Name');
-console.log('Step 1:', value1);
-console.log('Step 2:', value2);
-console.groupEnd();
-```
-
-## Performance Best Practices
-
-### Cache DOM Queries
-
-```javascript
-// ✅ Good - query once
-const dashboard = getShadowRoot();
-const elements = dashboard.querySelectorAll('.item');
-
-// ❌ Bad - query repeatedly
-for (let i = 0; i < count; i++) {
-  getShadowRoot().querySelector('.item');
-}
-```
-
-### Debounce Expensive Operations
-
-```javascript
-let debounceTimer;
+let timer;
 input.addEventListener('input', (event) => {
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(() => {
+  clearTimeout(timer);
+  timer = setTimeout(() => {
     handleInput(event.target.value);
   }, 300);
 });
 ```
 
-### Use Event Delegation
+## Performance
 
-```javascript
-// ✅ Good - one listener with event delegation
-container.addEventListener('click', (event) => {
-  if (event.target.matches('.button')) {
-    handleClick(event.target);
-  }
-});
-
-// ❌ Bad - listener per element (less performant)
-for (const button of buttons) {
-  button.addEventListener('click', handleClick);
-}
-```
-
-## Browser APIs
-
-**Use modern native browser APIs where possible.**
-
-### Web Storage API
-
-**LocalStorage and SessionStorage:**
-
-```javascript
-// ✅ LocalStorage - persists across sessions
-localStorage.setItem('key', 'value');
-localStorage.setItem('object', JSON.stringify(data));
-
-// Retrieve
-const value = localStorage.getItem('key');
-const object = JSON.parse(localStorage.getItem('object') || '{}');
-
-// Remove
-localStorage.removeItem('key');
-localStorage.clear(); // Clear all
-
-// ✅ SessionStorage - cleared when tab closes
-sessionStorage.setItem('temp-data', JSON.stringify(tempData));
-const tempData = JSON.parse(sessionStorage.getItem('temp-data') || '{}');
-
-// ✅ Check if key exists
-if (localStorage.getItem('key') !== null) {
-  // Key exists
-}
-
-// ✅ Get all keys
-const keys = Object.keys(localStorage);
-for (const key of keys) {
-  console.log(key, localStorage.getItem(key));
-}
-```
-
-### URL API
-
-**Modern URL manipulation:**
-
-```javascript
-// ✅ Good - URL API (modern, safe)
-const url = new URL('https://example.com/path?foo=bar');
-url.searchParams.set('page', '2');
-url.searchParams.append('filter', 'active');
-url.searchParams.delete('foo');
-
-console.log(url.href); // Full URL
-console.log(url.pathname); // /path
-console.log(url.searchParams.get('page')); // 2
-
-// ✅ Good - URLSearchParams for query strings
-const params = new URLSearchParams(window.location.search);
-const page = params.get('page');
-const filters = params.getAll('filter');
-
-// Check if param exists
-if (params.has('page')) {
-  // Parameter exists
-}
-
-// Iterate over params
-for (const [key, value] of params) {
-  console.log(key, value);
-}
-
-// ⚠️  Avoid - manual string manipulation
-const url = 'https://example.com?foo=bar&page=' + pageNum; // Error-prone
-```
-
-### FormData API
-
-**Modern form handling:**
-
-```javascript
-// ✅ Good - FormData API
-const form = document.querySelector('form');
-const formData = new FormData(form);
-
-// Add/modify fields
-formData.set('field', 'value');
-formData.append('tags', 'tag1');
-formData.append('tags', 'tag2'); // Multiple values
-
-// Get values
-const value = formData.get('field');
-const allTags = formData.getAll('tags');
-
-// Check if field exists
-if (formData.has('field')) {
-  // Field exists
-}
-
-// Convert to object
-const data = Object.fromEntries(formData.entries());
-
-// Convert to URL params
-const params = new URLSearchParams(formData);
-
-// Iterate
-for (const [key, value] of formData) {
-  console.log(key, value);
-}
-
-// ✅ Good - submit with fetch
-const response = await fetch('/api/endpoint', {
-  method: 'POST',
-  body: formData, // Automatically sets multipart/form-data
-});
-```
-
-### Fetch API
-
-**Modern HTTP requests (for non-WordPress endpoints):**
-
-```javascript
-// ✅ Good - fetch with async/await
-async function fetchData() {
-  try {
-    const response = await fetch('/api/data');
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Fetch error:', error);
-    return null;
-  }
-}
-
-// ✅ Good - POST request
-async function postData(data) {
-  const response = await fetch('/api/data', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-
-  return await response.json();
-}
-
-// ✅ Good - abort controller for cancellation
-const controller = new AbortController();
-const signal = controller.signal;
-
-fetch('/api/data', { signal })
-  .then(response => response.json())
-  .catch(error => {
-    if (error.name === 'AbortError') {
-      console.log('Request cancelled');
-    }
-  });
-
-// Cancel request
-controller.abort();
-
-// Note: For WordPress REST API, prefer @wordpress/api-fetch
-```
-
-### Intersection Observer API
-
-**Already covered in DOM Manipulation section - use for lazy loading and scroll effects.**
-
-### Clipboard
-
-```javascript
-// ✅ Good - async/await for clipboard operations
-async function copyToClipboard(text) {
-  try {
-    await navigator.clipboard.writeText(text);
-    window.EXOS.snackbar.success(__('Copied', 'text-domain'));
-  } catch (error) {
-    window.EXOS.snackbar.warning(__('Failed to copy', 'text-domain'));
-  }
-}
-
-// Usage in event handler
-button.addEventListener('click', async () => {
-  await copyToClipboard('Text to copy');
-});
-
-// ❌ Avoid - using .then()/.catch()
-button.addEventListener('click', () => {
-  navigator.clipboard.writeText(text)
-    .then(() => {
-      window.EXOS.snackbar.success(__('Copied', 'text-domain'));
-    })
-    .catch(() => {
-      window.EXOS.snackbar.warning(__('Failed to copy', 'text-domain'));
-    });
-});
-```
-
-### Hash Navigation
-
-```javascript
-// Get hash
-const hash = window.location.hash.substring(1);
-
-// Set hash
-window.location.hash = 'section-name';
-
-// Listen for changes
-window.addEventListener('hashchange', () => {
-  const newHash = window.location.hash.substring(1);
-  handleHashChange(newHash);
-});
-```
-
-## Code Organization
-
-### Feature Modules
-
-```javascript
-// Feature initialization
-function initializeDashboard() {
-  setupTabs();
-  setupDialogs();
-  setupEventTracking();
-}
-
-// Specific feature setup
-function setupTabs() {
-  const tabButtons = dashboard.querySelectorAll('[data-tab]');
-  for (const button of tabButtons) {
-    button.addEventListener('click', handleTabClick);
-  }
-}
-
-function handleTabClick(event) {
-  // Tab logic
-}
-
-// Initialize
-domReady(initializeDashboard);
-```
-
-### Helper Functions
-
-```javascript
-// Reusable utilities
-function updateItem(id, status) {
-  return apiFetch({
-    path: '/endpoint',
-    method: 'POST',
-    data: { id, status },
-  });
-}
-
-function getShadowRoot() {
-  const parent = document.querySelector('.plugin-dashboard');
-  return parent?.querySelector('#wpbody-content')?.shadowRoot;
-}
-```
+- Cache DOM queries
+- Use event delegation
+- Avoid layout thrashing
+- Prefer `transform` and `opacity` for animations
 
 ---
 
-**See Also**:
-- [WordPress Integration](wordpress-integration.md)
-- [E2E Testing](e2e-testing.md)
-- [Security Standards](security.md)
+**See Also**: [WordPress Integration](wordpress-integration.md), [E2E Testing](e2e-testing.md), [Security Standards](security.md)
