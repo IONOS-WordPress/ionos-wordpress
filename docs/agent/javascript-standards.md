@@ -25,6 +25,8 @@ let count = 0; // Mutable
 
 ## Initialization
 
+**ALWAYS use `@wordpress/dom-ready` - NEVER use native `DOMContentLoaded`:**
+
 ```javascript
 import domReady from '@wordpress/dom-ready';
 
@@ -32,6 +34,15 @@ domReady(() => {
   const container = document.querySelector('.feature');
   if (!container) return;
   // Initialize
+});
+```
+
+**❌ Don't:**
+
+```javascript
+// Never use native DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Bad - use domReady instead
 });
 ```
 
@@ -207,7 +218,11 @@ $('.el').remove()        → element.remove()
 
 // Events
 $('.el').on('click', h)  → element.addEventListener('click', h)
-$(document).ready(fn)    → domReady(fn)
+$(document).ready(fn)    → domReady(fn) // Import from @wordpress/dom-ready
+
+// DOM Ready (NEVER use native DOMContentLoaded)
+$(document).ready()      → domReady() // @wordpress/dom-ready
+DOMContentLoaded         → domReady() // ALWAYS use @wordpress package
 
 // AJAX
 $.ajax()                 → apiFetch() or fetch()
