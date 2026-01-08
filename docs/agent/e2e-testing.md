@@ -41,37 +41,32 @@ pnpm test:e2e --e2e-opts "--headed --slow-mo 1000"
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
-test.describe(
-  'plugin:feature description',
-  { tag: ['@plugin', '@feature'] },
-  () => {
-    test.beforeEach(async ({ page, admin }) => {
-      await admin.visitAdminPage('admin.php?page=plugin');
-    });
+test.describe('plugin:feature description', { tag: ['@plugin', '@feature'] }, () => {
+  test.beforeEach(async ({ page, admin }) => {
+    await admin.visitAdminPage('admin.php?page=plugin');
+  });
 
-    test('descriptive test name', async ({ page, admin }) => {
-      // Arrange
-      const button = page.locator('.action-button');
+  test('descriptive test name', async ({ page, admin }) => {
+    // Arrange
+    const button = page.locator('.action-button');
 
-      // Act
-      await button.click();
+    // Act
+    await button.click();
 
-      // Assert
-      await expect(page.locator('.success')).toBeVisible();
-    });
-  }
-);
+    // Assert
+    await expect(page.locator('.success')).toBeVisible();
+  });
+});
 ```
 
 ## Common Patterns
 
 **Console error detection:**
+
 ```javascript
 test('no console errors', async ({ page, admin }) => {
   const errors = [];
-  page.on('console', (_) =>
-    _.type() === 'error' && !_?.text().includes('favicon.ico') && errors.push(_)
-  );
+  page.on('console', (_) => _.type() === 'error' && !_?.text().includes('favicon.ico') && errors.push(_));
 
   await admin.visitAdminPage('/');
   await expect(errors).toHaveLength(0);
@@ -79,6 +74,7 @@ test('no console errors', async ({ page, admin }) => {
 ```
 
 **Element visibility:**
+
 ```javascript
 const element = page.locator('.feature');
 await expect(element).toBeVisible();
@@ -86,6 +82,7 @@ await expect(element).toContainText('Expected');
 ```
 
 **Form submission:**
+
 ```javascript
 await page.fill('#email', 'test@example.com');
 await page.click('[type="submit"]');
@@ -93,11 +90,10 @@ await expect(page.locator('.success')).toBeVisible();
 ```
 
 **Wait for API:**
+
 ```javascript
 const [response] = await Promise.all([
-  page.waitForResponse(resp =>
-    resp.url().includes('/wp-json/') && resp.status() === 200
-  ),
+  page.waitForResponse((resp) => resp.url().includes('/wp-json/') && resp.status() === 200),
   page.click('.load-data'),
 ]);
 
@@ -143,19 +139,19 @@ expect(response.status()).toBe(200);
 
 ```javascript
 // CSS
-page.locator('.class-name')
-page.locator('#id')
-page.locator('[data-test="value"]')
-page.locator('.item').nth(0)
-page.locator('.item').last()
+page.locator('.class-name');
+page.locator('#id');
+page.locator('[data-test="value"]');
+page.locator('.item').nth(0);
+page.locator('.item').last();
 
 // Text
-page.locator('text="Exact"')
-page.locator('text=/partial/i')
+page.locator('text="Exact"');
+page.locator('text=/partial/i');
 
 // Role (accessible)
-page.getByRole('button', { name: 'Submit' })
-page.getByRole('link', { name: 'Learn more' })
+page.getByRole('button', { name: 'Submit' });
+page.getByRole('link', { name: 'Learn more' });
 ```
 
 ## Best Practices

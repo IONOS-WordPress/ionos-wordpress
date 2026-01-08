@@ -54,6 +54,7 @@ All coding standards are organized in `/docs/agent/`:
 ### Critical Rules
 
 **PHP**:
+
 - `\` prefix for WordPress functions (e.g., `\add_action()`) **EXCEPT** `check_admin_referer()` and `check_ajax_referer()`
 - Heredoc-printf for HTML (avoid `<?php ?>` tag switching)
 - Late escaping: escape at output, not before storage
@@ -68,6 +69,7 @@ All coding standards are organized in `/docs/agent/`:
 - See [PHP Standards](docs/agent/php-standards.md) for details
 
 **JavaScript**:
+
 - Use `@wordpress/dom-ready` not `DOMContentLoaded`
 - Use `@wordpress/api-fetch` for WordPress REST API
 - Use `@wordpress/i18n` for all translations
@@ -76,6 +78,7 @@ All coding standards are organized in `/docs/agent/`:
 - See [JavaScript Standards](docs/agent/javascript-standards.md) for details
 
 **CSS**:
+
 - **Prefer EXOS CSS framework** (`https://ce1.uicdn.net/exos/framework/3.0/exos.min.css`) for dashboard/admin UI components
 - Native CSS nesting (not SCSS)
 - CSS Variables (not SCSS variables)
@@ -84,6 +87,7 @@ All coding standards are organized in `/docs/agent/`:
 - See [CSS Architecture](docs/agent/css-architecture.md) for details
 
 **Security** (see [Security Standards](docs/agent/security.md)):
+
 - [ ] Input: Sanitize (`\sanitize_text_field()`, `absint()`)
 - [ ] Output: Escape (`\esc_html()`, `\esc_attr()`, `\esc_url()`)
 - [ ] State changes: Verify nonce (`check_admin_referer()`)
@@ -91,6 +95,7 @@ All coding standards are organized in `/docs/agent/`:
 - [ ] Database: Use `$wpdb->prepare()` always
 
 **Testing** (see [PHPUnit](docs/agent/phpunit-testing.md) & [E2E](docs/agent/e2e-testing.md)):
+
 - PHPUnit: Extend `\WP_UnitTestCase`, use Arrange-Act-Assert
 - Playwright: Use `@wordpress/e2e-test-utils-playwright`, tag tests appropriately
 

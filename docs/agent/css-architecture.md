@@ -69,15 +69,20 @@ Write custom CSS only when EXOS doesn't provide the component or for unique plug
 
 ```css
 /* Block */
-.card { }
+.card {
+}
 
 /* Element */
-.card__header { }
-.card__content { }
+.card__header {
+}
+.card__content {
+}
 
 /* Modifier */
-.card--featured { }
-.card--large { }
+.card--featured {
+}
+.card--large {
+}
 ```
 
 ## Modern CSS Features
@@ -105,8 +110,8 @@ Write custom CSS only when EXOS doesn't provide the component or for unique plug
 
 /* Logical Properties */
 .card {
-  padding-block: 1rem;        /* top and bottom */
-  padding-inline: 2rem;       /* left and right */
+  padding-block: 1rem; /* top and bottom */
+  padding-inline: 2rem; /* left and right */
 }
 ```
 
@@ -135,7 +140,9 @@ Write custom CSS only when EXOS doesn't provide the component or for unique plug
 ```css
 /* ✅ GPU-accelerated */
 .element {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .element:hover {

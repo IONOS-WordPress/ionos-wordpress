@@ -128,6 +128,7 @@ $results = $wpdb->get_results(
 ## Common Vulnerabilities
 
 ### SQL Injection
+
 ```php
 // ❌ Vulnerable
 $wpdb->get_results("SELECT * FROM table WHERE id = {$_GET['id']}");
@@ -140,6 +141,7 @@ $wpdb->get_results($wpdb->prepare(
 ```
 
 ### XSS
+
 ```php
 // ❌ Vulnerable
 echo "<h1>" . $_POST['title'] . "</h1>";
@@ -149,6 +151,7 @@ echo "<h1>" . \esc_html($_POST['title'] ?? '') . "</h1>";
 ```
 
 ### CSRF
+
 ```php
 // ❌ Vulnerable
 if (isset($_POST['delete'])) {
@@ -166,6 +169,7 @@ delete_post(absint($_POST['id'] ?? 0));
 ## Security Checklist
 
 Before deployment:
+
 - [ ] All user input is sanitized
 - [ ] All output is escaped appropriately
 - [ ] Nonces are used for state-changing operations

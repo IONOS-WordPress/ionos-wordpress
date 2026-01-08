@@ -18,8 +18,8 @@ import apiFetch from '@wordpress/api-fetch';
 ## Variables
 
 ```javascript
-const API_ENDPOINT = '/wp/v2/posts';  // Immutable
-let count = 0;                        // Mutable
+const API_ENDPOINT = '/wp/v2/posts'; // Immutable
+let count = 0; // Mutable
 // Never use var
 ```
 
@@ -38,12 +38,14 @@ domReady(() => {
 ## Functions
 
 **Arrow functions for single expressions:**
+
 ```javascript
 const multiply = (a, b) => a * b;
 const ids = items.map((item) => item.id);
 ```
 
 **Anonymous functions for multi-line:**
+
 ```javascript
 button.addEventListener('click', async function (event) {
   event.target.disabled = true;
@@ -53,6 +55,7 @@ button.addEventListener('click', async function (event) {
 ```
 
 **Named when reused:**
+
 ```javascript
 function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -62,6 +65,7 @@ function validateEmail(email) {
 ## Async/Await
 
 **Always use try/catch:**
+
 ```javascript
 async function fetchUserData(userId) {
   try {
@@ -76,17 +80,15 @@ async function fetchUserData(userId) {
 ```
 
 **Parallel operations:**
+
 ```javascript
-const [user, settings, stats] = await Promise.all([
-  fetchUser(),
-  fetchSettings(),
-  fetchStats(),
-]);
+const [user, settings, stats] = await Promise.all([fetchUser(), fetchSettings(), fetchStats()]);
 ```
 
 ## Array Methods
 
 **Prefer `for` loops over `forEach()`:**
+
 ```javascript
 // ✅ for...of - early exit, better performance
 for (const item of items) {
@@ -111,7 +113,7 @@ const parent = element.closest('.parent');
 // Create & Insert
 const button = document.createElement('button');
 button.textContent = __('Click', 'text-domain');
-container.append(button);  // Modern method
+container.append(button); // Modern method
 
 // Classes
 element.classList.add('active');
@@ -119,10 +121,10 @@ element.classList.toggle('expanded');
 
 // Attributes
 button.disabled = true;
-element.dataset.tab = 'settings';  // data-tab="settings"
+element.dataset.tab = 'settings'; // data-tab="settings"
 
 // Content
-element.textContent = 'Safe text';  // No HTML parsing
+element.textContent = 'Safe text'; // No HTML parsing
 ```
 
 ## Event Handling
@@ -161,6 +163,7 @@ const result = await apiFetch({
 ## EXOS Framework (Dashboard Only)
 
 **Snackbar notifications:**
+
 ```javascript
 window.EXOS.snackbar.success(__('Saved', 'text-domain'));
 window.EXOS.snackbar.warning(__('Check input', 'text-domain'));
@@ -168,13 +171,18 @@ window.EXOS.snackbar.critical(__('Error occurred', 'text-domain'));
 ```
 
 **React components:**
+
 ```javascript
 const { Button, Card } = window.EXOS.react;
 
-const button = React.createElement(Button, {
-  variant: 'primary',
-  onClick: handleClick,
-}, __('Click Me', 'text-domain'));
+const button = React.createElement(
+  Button,
+  {
+    variant: 'primary',
+    onClick: handleClick,
+  },
+  __('Click Me', 'text-domain')
+);
 ```
 
 ## jQuery Migration Reference
@@ -216,6 +224,7 @@ $.ajax()                 → apiFetch() or fetch()
 ## Common Patterns
 
 **Form submission:**
+
 ```javascript
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -236,6 +245,7 @@ form.addEventListener('submit', async (event) => {
 ```
 
 **Debounce:**
+
 ```javascript
 let timer;
 input.addEventListener('input', (event) => {

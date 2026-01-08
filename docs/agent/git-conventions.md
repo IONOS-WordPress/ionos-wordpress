@@ -28,6 +28,7 @@ Based on [Commitizen](https://github.com/commitizen/cz-cli) / [Conventional Comm
 ## Scope (Contextual)
 
 **Plugin changes** - Use plugin name or feature:
+
 ```bash
 feat(essentials): add user profile export
 fix(stretch-extra): resolve activation conflict
@@ -35,6 +36,7 @@ docs(essentials/api): document REST endpoints
 ```
 
 **Monorepo changes** - Use area:
+
 ```bash
 chore(deps): update WordPress packages
 ci(playwright): add coverage reports
@@ -42,6 +44,7 @@ docs(agent): add commit guidelines
 ```
 
 **Optional** for repository-wide changes:
+
 ```bash
 chore: update dependencies
 docs: improve README

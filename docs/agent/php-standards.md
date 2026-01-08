@@ -121,6 +121,7 @@ EOF
 ```
 
 **Why heredoc:**
+
 - Context preservation
 - Forces data preparation before output
 - Better static analysis
