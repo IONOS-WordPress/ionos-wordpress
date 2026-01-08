@@ -249,10 +249,10 @@ const getSettings = ({ theme = 'light', language = 'en' } = {}) => ({ theme, lan
 
 ### Preferred Pattern
 
-Always use async/await over Promise chains:
+**Always use async/await syntax over `.then()` / `.catch()` chains:**
 
 ```javascript
-// ✅ Good - async/await
+// ✅ Good - async/await with try/catch
 async function fetchUserData(userId) {
   try {
     const user = await apiFetch({ path: `/wp/v2/users/${userId}` });
@@ -264,7 +264,7 @@ async function fetchUserData(userId) {
   }
 }
 
-// ❌ Avoid - Promise chains
+// ❌ Avoid - Promise chains with .then()
 function fetchUserData(userId) {
   return apiFetch({ path: `/wp/v2/users/${userId}` })
     .then(user => apiFetch({ path: `/wp/v2/posts?author=${userId}` })
@@ -276,11 +276,23 @@ function fetchUserData(userId) {
 }
 ```
 
+**Benefits of async/await:**
+- More readable and maintainable code
+- Easier error handling with try/catch
+- Simpler debugging with better stack traces
+- Natural control flow with `if`, `for`, `while`, etc.
+- Avoids "callback hell" and nested `.then()` chains
+
+**When you must use `.then()`:**
+- Only in very rare cases where you cannot use `await`
+- Even in callbacks, prefer making the callback `async` and using `await`
+
 ### Error Handling
 
-Always use try-catch with async/await:
+**Always use try/catch with async/await:**
 
 ```javascript
+// ✅ Good - proper error handling
 async function safeAPICall() {
   try {
     const data = await apiFetch({ path: '/endpoint' });
@@ -291,58 +303,244 @@ async function safeAPICall() {
     return null;
   }
 }
+
+// ✅ Good - handling specific errors
+async function updateSettings(settings) {
+  try {
+    const response = await apiFetch({
+      path: '/settings',
+      method: 'POST',
+      data: settings,
+    });
+
+    window.EXOS.snackbar.success(__('Settings saved', 'text-domain'));
+    return response;
+  } catch (error) {
+    if (error.code === 'invalid_data') {
+      window.EXOS.snackbar.warning(__('Invalid settings data', 'text-domain'));
+    } else {
+      window.EXOS.snackbar.critical(__('Failed to save settings', 'text-domain'));
+    }
+    throw error; // Re-throw if caller needs to handle it
+  }
+}
+
+// ❌ Avoid - missing error handling
+async function riskyAPICall() {
+  const data = await apiFetch({ path: '/endpoint' }); // Can crash
+  return data;
+}
+
+// ❌ Avoid - using .catch() instead of try/catch
+async function mixedPattern() {
+  const data = await apiFetch({ path: '/endpoint' }).catch(error => {
+    console.error(error);
+    return null;
+  });
+  return data;
+}
 ```
 
 ### Parallel Operations
 
-Use `Promise.all()` for parallel async operations:
+**Use `Promise.all()` with async/await for parallel operations:**
 
 ```javascript
-// Sequential (slow)
-const user = await fetchUser();
-const settings = await fetchSettings();
-const stats = await fetchStats();
+// ✅ Good - parallel with Promise.all
+async function loadDashboardData() {
+  try {
+    const [user, settings, stats] = await Promise.all([
+      fetchUser(),
+      fetchSettings(),
+      fetchStats(),
+    ]);
 
-// Parallel (fast)
-const [user, settings, stats] = await Promise.all([
-  fetchUser(),
-  fetchSettings(),
-  fetchStats(),
-]);
+    return { user, settings, stats };
+  } catch (error) {
+    console.error('Failed to load dashboard:', error);
+    return null;
+  }
+}
+
+// ❌ Bad - sequential (slow)
+async function loadDashboardData() {
+  const user = await fetchUser();     // Wait for first
+  const settings = await fetchSettings(); // Wait for second
+  const stats = await fetchStats();   // Wait for third
+  return { user, settings, stats };
+}
+
+// ✅ Good - Promise.allSettled for handling partial failures
+async function loadOptionalData() {
+  const results = await Promise.allSettled([
+    fetchCriticalData(),
+    fetchOptionalData1(),
+    fetchOptionalData2(),
+  ]);
+
+  const [critical, optional1, optional2] = results;
+
+  if (critical.status === 'rejected') {
+    throw new Error('Critical data failed to load');
+  }
+
+  return {
+    critical: critical.value,
+    optional1: optional1.status === 'fulfilled' ? optional1.value : null,
+    optional2: optional2.status === 'fulfilled' ? optional2.value : null,
+  };
+}
+```
+
+### Top-Level Await in Event Handlers
+
+**Event handlers and callbacks should be async:**
+
+```javascript
+// ✅ Good - async event handler
+button.addEventListener('click', async (event) => {
+  event.preventDefault();
+
+  try {
+    const result = await processClick();
+    updateUI(result);
+    window.EXOS.snackbar.success(__('Done', 'text-domain'));
+  } catch (error) {
+    window.EXOS.snackbar.critical(__('Operation failed', 'text-domain'));
+  }
+});
+
+// ✅ Good - async callback
+domReady(async () => {
+  try {
+    const config = await fetchConfig();
+    initializeApp(config);
+  } catch (error) {
+    console.error('Initialization failed:', error);
+  }
+});
+
+// ❌ Avoid - using .then() in event handler
+button.addEventListener('click', (event) => {
+  event.preventDefault();
+  processClick().then(result => {
+    updateUI(result);
+  }).catch(error => {
+    console.error(error);
+  });
+});
 ```
 
 ## Array Methods
 
 ### Iteration
 
-Prefer functional array methods:
+#### For Loops vs forEach
+
+**Prefer `for` loops over `forEach()` for side effects and performance:**
 
 ```javascript
-// forEach - side effects
-items.forEach((item) => {
+// ✅ Good - for...of loop for side effects
+for (const item of items) {
   console.log(item);
-});
+  updateUI(item);
+}
 
-// map - transform array
+// ✅ Good - traditional for loop with index
+for (let i = 0; i < items.length; i++) {
+  const item = items[i];
+  console.log(`Item ${i}:`, item);
+}
+
+// ✅ Good - for loop with early exit
+for (const item of items) {
+  if (item.invalid) {
+    break; // Can exit early
+  }
+  processItem(item);
+}
+
+// ❌ Avoid - forEach cannot break or return early
+items.forEach((item) => {
+  console.log(item); // Less performant, no early exit
+});
+```
+
+**Benefits of `for` loops:**
+- Better performance (no function call overhead)
+- Can use `break`, `continue`, and `return`
+- More readable for simple iterations
+- Works with async/await naturally
+
+**When to use `forEach()`:**
+- Never for simple side effects (use `for` loops instead)
+- Only when you specifically need a callback pattern with function scope
+
+#### Array Transformation Methods
+
+**Use functional methods for transforming arrays (not side effects):**
+
+```javascript
+// ✅ map - transform array
 const ids = items.map((item) => item.id);
 const doubled = numbers.map((n) => n * 2);
 
-// filter - select subset
+// ✅ filter - select subset
 const active = items.filter((item) => item.active);
 const valid = inputs.filter((input) => input.value !== '');
 
-// find - get first match
+// ✅ find - get first match
 const user = users.find((u) => u.id === targetId);
 
-// some - check if any match
+// ✅ some - check if any match
 const hasError = validations.some((v) => v.error);
 
-// every - check if all match
+// ✅ every - check if all match
 const allValid = inputs.every((input) => input.checkValidity());
 
-// reduce - accumulate value
+// ✅ reduce - accumulate value
 const total = numbers.reduce((sum, n) => sum + n, 0);
 ```
+
+#### Async Iteration
+
+**For async operations, use `for...of` with `await`:**
+
+```javascript
+// ✅ Good - sequential async with for...of
+for (const item of items) {
+  await processItem(item);
+}
+
+// ✅ Good - parallel async with Promise.all and map
+await Promise.all(items.map((item) => processItem(item)));
+
+// ❌ Bad - forEach doesn't work with async/await
+items.forEach(async (item) => {
+  await processItem(item); // Doesn't wait properly
+});
+```
+
+#### Multiple Elements Event Handling
+
+```javascript
+// ✅ Good - for...of loop for event listeners
+const buttons = document.querySelectorAll('.button');
+for (const button of buttons) {
+  button.addEventListener('click', handleClick);
+}
+
+// ❌ Avoid - forEach for simple iteration
+buttons.forEach((button) => {
+  button.addEventListener('click', handleClick);
+});
+```
+
+**Summary:**
+- **Side effects / simple loops**: Use `for...of` or traditional `for` loop
+- **Transform array**: Use `map()`, `filter()`, `find()`, etc.
+- **Async iteration**: Use `for...of` with `await` or `Promise.all()` with `map()`
+- **Avoid `forEach()`**: Use `for` loops instead for better performance and control
 
 ## DOM Manipulation
 
@@ -426,10 +624,11 @@ element.addEventListener('click', (event) => {
   // Handler logic
 });
 
-// Multiple elements
-elements.forEach((button) => {
+// Multiple elements - use for loop
+const buttons = document.querySelectorAll('.button');
+for (const button of buttons) {
   button.addEventListener('click', handleClick);
-});
+}
 
 // Async handler
 element.addEventListener('click', async (event) => {
@@ -1043,17 +1242,17 @@ input.addEventListener('input', (event) => {
 ### Use Event Delegation
 
 ```javascript
-// ✅ Good - one listener
+// ✅ Good - one listener with event delegation
 container.addEventListener('click', (event) => {
   if (event.target.matches('.button')) {
     handleClick(event.target);
   }
 });
 
-// ❌ Bad - listener per element
-buttons.forEach((button) => {
+// ❌ Bad - listener per element (less performant)
+for (const button of buttons) {
   button.addEventListener('click', handleClick);
-});
+}
 ```
 
 ## Browser APIs
@@ -1076,13 +1275,31 @@ localStorage.removeItem('key');
 ### Clipboard
 
 ```javascript
-navigator.clipboard.writeText(text)
-  .then(() => {
+// ✅ Good - async/await for clipboard operations
+async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
     window.EXOS.snackbar.success(__('Copied', 'text-domain'));
-  })
-  .catch(() => {
+  } catch (error) {
     window.EXOS.snackbar.warning(__('Failed to copy', 'text-domain'));
-  });
+  }
+}
+
+// Usage in event handler
+button.addEventListener('click', async () => {
+  await copyToClipboard('Text to copy');
+});
+
+// ❌ Avoid - using .then()/.catch()
+button.addEventListener('click', () => {
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      window.EXOS.snackbar.success(__('Copied', 'text-domain'));
+    })
+    .catch(() => {
+      window.EXOS.snackbar.warning(__('Failed to copy', 'text-domain'));
+    });
+});
 ```
 
 ### Hash Navigation
@@ -1116,9 +1333,9 @@ function initializeDashboard() {
 // Specific feature setup
 function setupTabs() {
   const tabButtons = dashboard.querySelectorAll('[data-tab]');
-  tabButtons.forEach((button) => {
+  for (const button of tabButtons) {
     button.addEventListener('click', handleTabClick);
-  });
+  }
 }
 
 function handleTabClick(event) {
