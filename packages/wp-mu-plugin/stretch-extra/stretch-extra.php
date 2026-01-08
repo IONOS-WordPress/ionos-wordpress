@@ -21,10 +21,10 @@ defined('ABSPATH') || exit();
 
 // Set SFS server variable to fake stretch-extra context
 if (! defined('SFS_IS_SET')) {
-    define('SFS_IS_SET', array_key_exists('SFS', $_SERVER));
+  define('SFS_IS_SET', array_key_exists('SFS', $_SERVER));
 }
 if (! SFS_IS_SET) {
-    $_SERVER['SFS'] = 'stretch-extra';
+  $_SERVER['SFS'] = 'stretch-extra';
 }
 
 // abort if called from WP-CLI to avoid issues with command line scripts
