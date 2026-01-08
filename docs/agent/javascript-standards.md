@@ -101,28 +101,129 @@ domReady(() => {
 
 ### Function Declarations
 
+#### Arrow Functions vs Anonymous Functions
+
+**Use arrow functions (`fn() =>`) for single-expression functions:**
+
 ```javascript
-// Named function
-function functionName(param1, param2) {
-  // Implementation
-  return result;
+// ✅ Good - single expression arrow function
+const multiply = (a, b) => a * b;
+const getUser = (id) => users.find((u) => u.id === id);
+const isActive = (item) => item.status === 'active';
+
+// Array methods with arrow functions
+const ids = items.map((item) => item.id);
+const active = items.filter((item) => item.active);
+const total = numbers.reduce((sum, n) => sum + n, 0);
+```
+
+**Use anonymous functions (`function() {}`) for multi-line logic:**
+
+```javascript
+// ✅ Good - multi-line anonymous function
+button.addEventListener('click', async function (event) {
+  event.target.disabled = true;
+  event.target.innerText = __('Loading...', 'text-domain');
+
+  await performOperation();
+
+  event.target.disabled = false;
+  event.target.innerText = __('Done', 'text-domain');
+});
+
+// Multi-line with complex logic
+const processItem = function (item) {
+  const result = performCalculation(item.value);
+  const formatted = formatResult(result);
+  updateUI(formatted);
+  return formatted;
+};
+```
+
+**Use inline/anonymous functions when only used once:**
+
+```javascript
+// ✅ Good - inline arrow function used once
+domReady(() => {
+  const container = document.querySelector('.feature-container');
+  if (container) {
+    initializeFeature(container);
+  }
+});
+
+// ✅ Good - inline anonymous function for event handler
+element.addEventListener('click', async function (event) {
+  event.preventDefault();
+  await handleClick(event.target);
+});
+
+// ❌ Avoid - unnecessary named function for one-time use
+function handleButtonClick(event) {
+  event.preventDefault();
+  // Only used once
+}
+button.addEventListener('click', handleButtonClick);
+```
+
+**Use named functions when reused multiple times:**
+
+```javascript
+// ✅ Good - reused function
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// Arrow function
-const arrowFunction = (param) => {
-  // Implementation
-  return result;
-};
+// Used multiple times
+if (!validateEmail(input1.value)) {
+  showError(input1);
+}
+if (!validateEmail(input2.value)) {
+  showError(input2);
+}
 
-// Short arrow function
-const multiply = (a, b) => a * b;
-
-// Async function
+// Async named function
 async function fetchData() {
   const response = await fetch(url);
   return await response.json();
 }
 ```
+
+**Arrow functions maintain lexical `this` context:**
+
+```javascript
+// ✅ Good - arrow function preserves `this`
+class Component {
+  constructor() {
+    this.value = 42;
+  }
+
+  setup() {
+    button.addEventListener('click', () => {
+      console.log(this.value); // 42 - correct context
+    });
+  }
+}
+
+// ❌ Bad - anonymous function changes `this` context
+class Component {
+  constructor() {
+    this.value = 42;
+  }
+
+  setup() {
+    button.addEventListener('click', function () {
+      console.log(this.value); // undefined - wrong context
+    });
+  }
+}
+```
+
+**Summary:**
+- **Single expression**: Arrow function `() => value`
+- **Multi-line logic**: Anonymous function `function() {}`
+- **Used once**: Inline/anonymous function
+- **Used multiple times**: Named function
+- **Need `this` context**: Arrow function
 
 ### Function Parameters
 
@@ -136,6 +237,12 @@ function createUser(name, age = 18, options = {}) {
 function processData({ id, name, email }) {
   // Destructured parameters
 }
+
+// Arrow function with destructuring
+const formatUser = ({ firstName, lastName }) => `${firstName} ${lastName}`;
+
+// Default values in destructuring
+const getSettings = ({ theme = 'light', language = 'en' } = {}) => ({ theme, language });
 ```
 
 ## Async/Await
