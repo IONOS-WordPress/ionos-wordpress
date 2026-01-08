@@ -10,21 +10,120 @@
 
 ## Running Tests
 
+### Basic Test Execution
+
 ```bash
 # Run all E2E tests
 pnpm test:e2e
 
-# Run specific test file
-pnpm test:e2e tests/e2e/feature.spec.js
+# Alternative syntax using unified test command
+pnpm test --use e2e
+```
 
-# Run tests with specific tag
-pnpm test:e2e --grep @dashboard
+### Running Specific Test Files
 
-# Run tests in headed mode (visible browser)
-pnpm test:e2e --headed
+Execute a single test file by providing its path or just the filename:
 
-# Run tests in debug mode
-pnpm test:e2e --debug
+```bash
+# Run specific test file with full path
+pnpm test:e2e packages/wp-plugin/ionos-essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js
+
+# Run by filename only (Playwright auto-discovers)
+pnpm test:e2e deep-links-block.spec.js
+
+# Alternative with unified command
+pnpm test --use e2e packages/wp-plugin/ionos-essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js
+```
+
+### Filtering Tests by Tags
+
+Use Playwright's [tag system](https://playwright.dev/docs/test-annotations#tag-tests) to filter tests:
+
+```bash
+# Run only tests tagged with @smoke
+pnpm test:e2e --e2e-opts "--grep @smoke"
+
+# Run only tests tagged with @dashboard
+pnpm test:e2e --e2e-opts "--grep @dashboard"
+
+# Run tests matching multiple tags (AND)
+pnpm test:e2e --e2e-opts "--grep \"@dashboard.*@critical\""
+
+# Exclude tests with specific tag
+pnpm test:e2e --e2e-opts "--grep-invert @slow"
+
+# Run all tests except those tagged with @editor
+pnpm test:e2e --e2e-opts "--grep-invert @editor"
+```
+
+### Debug Mode
+
+Run tests with Playwright's interactive debugger:
+
+```bash
+# Debug all tests
+pnpm test:e2e --e2e-opts "--debug"
+
+# Debug specific test file with full path
+pnpm test:e2e --e2e-opts "--debug" packages/wp-plugin/ionos-essentials/inc/dashboard/tests/e2e/deep-links-block.spec.js
+
+# Debug specific test file by name
+pnpm test:e2e --e2e-opts "--debug" deep-links-block.spec.js
+
+# Debug with specific tag
+pnpm test:e2e --e2e-opts "--debug --grep @dashboard"
+```
+
+### Browser Options
+
+```bash
+# Run in headed mode (visible browser)
+pnpm test:e2e --e2e-opts "--headed"
+
+# Run in a specific browser
+pnpm test:e2e --e2e-opts "--project chromium"
+pnpm test:e2e --e2e-opts "--project firefox"
+pnpm test:e2e --e2e-opts "--project webkit"
+
+# Slow down execution for observation
+pnpm test:e2e --e2e-opts "--headed --slow-mo 1000"
+```
+
+### Advanced Options
+
+```bash
+# Run tests in parallel with specific number of workers
+pnpm test:e2e --e2e-opts "--workers 4"
+
+# Run tests sequentially (one at a time)
+pnpm test:e2e --e2e-opts "--workers 1"
+
+# Generate trace for debugging
+pnpm test:e2e --e2e-opts "--trace on"
+
+# Update snapshots
+pnpm test:e2e --e2e-opts "--update-snapshots"
+
+# Retry failed tests
+pnpm test:e2e --e2e-opts "--retries 2"
+
+# Show browser console output
+pnpm test:e2e --e2e-opts "--headed" deep-links-block.spec.js
+```
+
+### Combining Options
+
+You can combine multiple options for powerful test execution:
+
+```bash
+# Debug specific tagged test in headed mode
+pnpm test:e2e --e2e-opts "--debug --headed --grep @critical"
+
+# Run specific file with trace and retries
+pnpm test:e2e --e2e-opts "--trace on --retries 2" deep-links-block.spec.js
+
+# Run tests excluding tags with visible browser
+pnpm test:e2e --e2e-opts "--headed --grep-invert @slow"
 ```
 
 ## Test File Structure
@@ -46,6 +145,18 @@ inc/feature/
 ### Test File Template
 
 ```javascript
+/**
+ * E2E tests for feature functionality.
+ *
+ * Run this test file:
+ *   pnpm test:e2e feature.spec.js
+ *
+ * Run with debug:
+ *   pnpm test:e2e --e2e-opts "--debug" feature.spec.js
+ *
+ * Run by tag:
+ *   pnpm test:e2e --e2e-opts "--grep @feature"
+ */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 test.describe(
@@ -442,6 +553,8 @@ use: {
 
 ### Using Tags
 
+Organize tests with tags for selective execution:
+
 ```javascript
 test.describe('plugin:dashboard', { tag: ['@dashboard', '@smoke'] }, () => {
   test('critical dashboard test', { tag: ['@critical'] }, async ({ page }) => {
@@ -450,11 +563,7 @@ test.describe('plugin:dashboard', { tag: ['@dashboard', '@smoke'] }, () => {
 });
 ```
 
-Run by tags:
-```bash
-pnpm test:e2e --grep @smoke
-pnpm test:e2e --grep "@dashboard.*@critical"
-```
+See [Filtering Tests by Tags](#filtering-tests-by-tags) for execution examples.
 
 ### Test Hooks
 
@@ -484,12 +593,20 @@ test.describe('feature tests', () => {
 
 ### Debug Mode
 
-```bash
-# Run in debug mode
-pnpm test:e2e --debug
+See [Debug Mode](#debug-mode) in the Running Tests section for all debug options.
 
-# Pause on specific line
-await page.pause();
+Within tests, use `page.pause()` to pause execution:
+
+```javascript
+test('debug test', async ({ page }) => {
+  await page.goto('/');
+
+  // Pause execution and open Playwright Inspector
+  await page.pause();
+
+  // Continue testing after inspecting
+  await page.click('.button');
+});
 ```
 
 ### Console Logging
