@@ -90,6 +90,16 @@ function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
   return \rest_ensure_response([]);
 }
 
+function _rest_sso_click_callback(\WP_REST_Request $request): \WP_REST_Response
+{
+  // Store the current timestamp when SSO button is clicked
+  \update_option(IONOS_LOOP_SSO_CLICK_OPTION, time());
+
+  return \rest_ensure_response([
+    'success' => true,
+  ]);
+}
+
 function _get_dashbord_data(): array
 {
   $data = [
