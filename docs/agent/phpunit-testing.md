@@ -10,15 +10,87 @@
 
 ## Running Tests
 
+### Basic Test Execution
+
 ```bash
-# Run all tests
+# Run all PHPUnit tests
 pnpm test:php
 
-# Run specific test file
-pnpm test:php --php-opts "--filter TestClassName"
+# Alternative syntax using unified test command
+pnpm test --use php
+```
 
-# Run tests with coverage
+### Filtering Tests
+
+#### By Test Method Name
+
+Filter tests by method name (matches test methods containing the specified string):
+
+```bash
+# Using test:php script
+pnpm test:php --php-opts "--filter test_login_admin"
+
+# Using unified test command
+pnpm test --use php --php-opts "--filter test_login_admin"
+```
+
+#### By Test Class Name
+
+Filter tests by class name (matches test classes containing the specified string):
+
+```bash
+# Using test:php script
+pnpm test:php --php-opts "--filter LoginTest"
+
+# Using unified test command
+pnpm test --use php --php-opts "--filter LoginTest"
+
+# Alternative unified syntax
+pnpm test -- --use php --php-opts "--filter LoginTest"
+```
+
+### Running Test Groups
+
+Execute tests that belong to specific `@group` tags:
+
+```bash
+# Using test:php script
+pnpm test:php --php-opts "--group test-plugin"
+
+# Using unified test command
+pnpm test --use php --php-opts "--group test-plugin"
+
+# Exclude specific groups
+pnpm test:php --php-opts "--exclude-group slow"
+```
+
+### Coverage Reports
+
+```bash
+# Generate HTML coverage report
 pnpm test:php --php-opts "--coverage-html coverage"
+
+# Generate text coverage report
+pnpm test:php --php-opts "--coverage-text"
+
+# Generate Clover XML coverage (for CI)
+pnpm test:php --php-opts "--coverage-clover coverage.xml"
+```
+
+### Advanced Options
+
+```bash
+# Stop on first failure
+pnpm test:php --php-opts "--stop-on-failure"
+
+# Verbose output
+pnpm test:php --php-opts "--verbose"
+
+# Debug output
+pnpm test:php --php-opts "--debug"
+
+# Combine multiple options
+pnpm test:php --php-opts "--filter LoginTest --stop-on-failure --verbose"
 ```
 
 ## Test File Structure
@@ -49,7 +121,11 @@ use function vendor\plugin\feature\_function_to_test;
 /**
  * Tests for feature functionality.
  *
- * Run with: pnpm test:php --php-opts "--filter FeatureTest"
+ * Run this test class:
+ *   pnpm test:php --php-opts "--filter FeatureTest"
+ *
+ * Run by group:
+ *   pnpm test:php --php-opts "--group feature"
  *
  * @group plugin
  * @group feature
@@ -398,6 +474,8 @@ public function tearDown(): void {
 
 ### Using @group Tags
 
+Organize tests into groups for selective execution:
+
 ```php
 /**
  * @group plugin
@@ -409,11 +487,7 @@ class SecurityTest extends \WP_UnitTestCase {
 }
 ```
 
-Run specific groups:
-```bash
-pnpm test:php --php-opts "--group security"
-pnpm test:php --php-opts "--exclude-group slow"
-```
+See [Running Test Groups](#running-test-groups) for execution examples.
 
 ### Using Data Providers
 
