@@ -1,6 +1,5 @@
 {
-  "contextFilename": "AGENTS.md",
-  "mcpServers": {
+  "servers": {
     "chrome-devtools": {
       "command": "pnpx",
       "args": [
