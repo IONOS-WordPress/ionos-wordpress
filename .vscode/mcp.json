@@ -1,8 +1,8 @@
 {
   "servers": {
     "chrome-devtools": {
-      "command": "pnpx",
-      "args": ["chrome-devtools-mcp@latest", "--autoConnect"]
+      "command": "npx",
+      "args": ["-y","chrome-devtools-mcp@latest"]
     }
   }
 }

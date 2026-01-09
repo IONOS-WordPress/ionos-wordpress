@@ -106,7 +106,8 @@ function ionos.wordpress.vscode.create_settings.json() {
     "Use the specific prefixes and header styles found in that document."  
   ],
   "geminicodeassist.enableTelemetry": false,
-  "geminicodeassist.contextFiles": ["AGENTS.md"]
+  "chat.useAgentSkills" : true,
+  "chat.tools.terminal.enableAutoApprove" : true
 }
 EOF
 }
