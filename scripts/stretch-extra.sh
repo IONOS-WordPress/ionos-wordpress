@@ -33,17 +33,31 @@ ionos.wordpress.stretch-extra.clean() {
 ionos.wordpress.stretch-extra.install() {
   echo "Installing plugins and themes using configuration '${STRETCH_EXTRA_CONFIG_PATH}' into stretch-extra..."
 
-  # Read all top-level properties from the config file into a bash array
-  mapfile -t top_level_keys < <(jq -r 'keys[]' "${STRETCH_EXTRA_CONFIG_PATH}")
+  readonly STRETCH_EXTRA_CONFIG_JSON=$(docker run --rm -i --quiet -v "$(pwd):/app" -w /app php:8.3-cli php <<'EOF'
+<?php
+    define('ABSPATH', '');
+    $config = require_once('packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/stretch-extra-config.php');
 
-  [[ "$VERBOSE" != '' ]] && ionos.wordpress.log_info "read configuration \n\n$(cat "${STRETCH_EXTRA_CONFIG_PATH}")"
+    $output = [
+        'plugins' => array_map(fn($item) => [ 'url' => $item['url'] ], $config['plugins'] ?? []),
+        'themes'  => array_map(fn($item) => [ 'url' => $item['url'] ], $config['themes'] ?? [])
+    ];
+
+    echo json_encode($output, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+EOF
+  )
+
+  [[ "$VERBOSE" != '' ]] && ionos.wordpress.log_info "about to install the following assets ${STRETCH_EXTRA_CONFIG_JSON}"
+
+  # Read all top-level properties from the config file into a bash array
+  mapfile -t top_level_keys < <(echo "${STRETCH_EXTRA_CONFIG_JSON}" | jq -r 'keys[]')
 
   # Loop over all keys in top_level_keys
   for top_level_key in "${top_level_keys[@]}"; do
     [[ "$VERBOSE" != '' ]] && ionos.wordpress.log_info "Processing ${top_level_key}"
 
     # Get the number of items for this key
-    local item_count=$(jq -r ".${top_level_key} | length" "${STRETCH_EXTRA_CONFIG_PATH}")
+    local item_count=$(echo "${STRETCH_EXTRA_CONFIG_JSON}" | jq -r ".${top_level_key} | length")
 
     # Loop over all items in the current key (plugins|themes|...)
     for ((i=0; i<item_count; i++)); do
@@ -51,7 +65,7 @@ ionos.wordpress.stretch-extra.install() {
       declare -A item
       while IFS="=" read -r key value; do
         item["$key"]="$value"
-      done < <(jq -r ".${top_level_key}[$i] | to_entries | .[] | \"\(.key)=\(.value)\"" "${STRETCH_EXTRA_CONFIG_PATH}")
+      done < <(echo "${STRETCH_EXTRA_CONFIG_JSON}" | jq -r ".${top_level_key}[$i] | to_entries | .[] | \"\(.key)=\(.value)\"")
 
       # process the item based on the top-level key
       case "${top_level_key}" in
@@ -186,15 +200,8 @@ done
 
 [[ -z "$ACTION" ]] && ACTION='help'
 
-[[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=("${STRETCH_EXTRA_BUNDLE_DIR}/stretch-extra.json")
-# Abort if more than one additional argument is given
-if [[ ${#POSITIONAL_ARGS[@]} -gt 1 ]]; then
-  ionos.wordpress.log_error "Error: Only one configuration file path can be provided."
-  exit 1
-fi
-
 export VERBOSE FORCE
-export STRETCH_EXTRA_CONFIG_PATH="${POSITIONAL_ARGS[0]}"
+export STRETCH_EXTRA_CONFIG_PATH="${STRETCH_EXTRA_BUNDLE_DIR}/stretch-extra/inc/stretch-extra-config.php"
 
 ionos.wordpress.stretch-extra."${ACTION}"
 
@@ -205,9 +212,7 @@ Syntax: 'pnpm run stretch-extra [options] [additional-args]'
 
 stretch-extra manages configured plugins and themes into mu plugin 'stretch-extra'.
 
-The default configuration file is located at './packages/wp-mu-plugin/stretch-extra/stretch-extra/stretch-extra/stretch-extra.json".
-It can be overridden by providing the configuration file to use as additional argument.
-E.g. 'pnpm run stretch-extra --bundle ./my-stretch-extra.json'
+The default configuration file is located at './packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/stretch-extra-config.php".
 
 Options:
 
