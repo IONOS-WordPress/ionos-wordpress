@@ -13,7 +13,7 @@
   OAO.q = OAO.q || {};
   OAO.q.c = OAO.q.c || [];
 
-  OAO.q.c.push(['setFrontendToken', '']);
+  OAO.q.c.push(['setFrontendToken', '<?php echo esc_js($_GET['token'] ?? 'adserver_default_token'); ?>']);
   OAO.q.c.push(['setPageName', 'Testseite']); // please use: [a-zA-Z_]
 
   </script>
