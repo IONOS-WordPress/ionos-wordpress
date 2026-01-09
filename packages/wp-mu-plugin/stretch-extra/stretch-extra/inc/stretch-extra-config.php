@@ -16,7 +16,7 @@ return [
       ],
     ],
     [
-      'url'  => "https://downloads.wordpress.org/plugin/extendify.zip",
+      'url'  => 'https://downloads.wordpress.org/plugin/extendify.zip',
       'key'  => 'plugins/extendify/extendify.php',
       'file' => ABSPATH . '/wp-content/mu-plugins/stretch-extra/plugins/extendify/extendify.php',
       'slug' => 'extendify',
@@ -36,7 +36,7 @@ return [
   ],
   'themes' => [
     [
-      'url' => "https://downloads.wordpress.org/theme/extendable.zip",
+      'url' => 'https://downloads.wordpress.org/theme/extendable.zip',
     ],
   ],
 ];

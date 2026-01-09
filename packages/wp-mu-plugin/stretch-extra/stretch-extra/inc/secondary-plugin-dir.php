@@ -135,7 +135,7 @@ function get_custom_plugins(): array
   static $all_custom_plugins = null;
 
   if ($all_custom_plugins === null) {
-    $bundle_config = require_once __DIR__ . '/stretch-extra-config.php';
+    $bundle_config      = require_once __DIR__ . '/stretch-extra-config.php';
     $all_custom_plugins = $bundle_config['plugins'];
   }
   // Filter out deleted plugins
