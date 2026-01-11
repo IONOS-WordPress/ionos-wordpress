@@ -37,7 +37,7 @@ The `chrome-devtools` mcp server id defined in @/.mcp.json and to be started
 
 - **URL:** http://localhost:8888
 - **Admin Username:** `admin`
-- **Admin Password:** Read from `.env` file (`WP_PASSWORD` variable)
+- **Admin Password:** Read from ./.env file in project root (`WP_PASSWORD` variable)
 - **WP-CLI Access:** `pnpm wp-env run cli wp ...`
 
 ## Test Recipes
