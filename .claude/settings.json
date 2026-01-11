@@ -1,16 +1,8 @@
 {
-  "enabledMcpjsonServers": [
-    "chrome-devtools"
-  ],
+  "enabledMcpjsonServers": ["chrome-devtools"],
   "enableAllProjectMcpServers": true,
   "permissions": {
-    "allow": [
-      "mcp__chrome-devtools__*",
-      "Bash(pnpm wp-env run cli wp *)",
-      "Bash(curl:*)"
-    ]
+    "allow": ["mcp__chrome-devtools__*", "Bash(pnpm wp-env run cli wp *)", "Bash(curl:*)"]
   },
-  "skillDirs": [
-    "./docs/skills"
-  ]
+  "skillDirs": ["./docs/skills"]
 }

@@ -61,6 +61,7 @@ pnpm wp-env run cli wp plugin list --name=wordpress-mcp --fields=name,status
 ```
 
 Expected output:
+
 - Plugin name: `wordpress-mcp`
 - Status: `active`
 

@@ -5,6 +5,7 @@ This directory contains E2E test recipes for the WordPress monorepo. Each recipe
 ## What is a Recipe?
 
 A recipe is a markdown file that describes:
+
 - **What to test** (the scenario)
 - **How to set up** WordPress (optional WP-CLI commands)
 - **Step-by-step instructions** for the E2E test
@@ -106,6 +107,7 @@ pnpm wp-env run cli wp user delete testuser --yes
 ## Chrome DevTools MCP
 
 The agent uses Chrome DevTools MCP to:
+
 - Navigate to URLs
 - Find elements by selector, text, or attributes
 - Click, type, and interact with page elements
@@ -156,6 +158,7 @@ pnpm wp-env run cli wp plugin deactivate my-plugin
 ## Contributing Recipes
 
 When adding new recipes:
+
 1. Create a new `.md` file in this directory
 2. Follow the template structure
 3. Test the recipe to ensure it works

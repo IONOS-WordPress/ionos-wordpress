@@ -12,11 +12,13 @@ This skill enables interactive E2E testing of the WordPress monorepo using Chrom
 Before running any test recipe, verify Chrome remote debugging is available:
 
 1. **Check if Chrome debugging is running:**
+
    ```bash
    curl -s http://127.0.0.1:9222/json/version
    ```
 
 2. **If not available, spawn Chrome with remote debugging :**
+
    ```bash
    google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-profile-stable &
    ```
@@ -29,7 +31,7 @@ Before running any test recipe, verify Chrome remote debugging is available:
 
 4. **start mcp server**
 
-  The `chrome-devtools` mcp server id defined in @/.mcp.json and to be started
+The `chrome-devtools` mcp server id defined in @/.mcp.json and to be started
 
 ## WordPress Environment
 
@@ -124,6 +126,7 @@ Parse filenames List to recipes extract recipe names (e.g., `login-flow.md` → 
 ### Step 6: Report Results
 
 Provide clear summary:
+
 - Recipe executed
 - Setup steps completed
 - Test steps performed
@@ -142,6 +145,7 @@ Brief description of what this recipe tests.
 ## Setup (Optional)
 
 WP-CLI commands to prepare WordPress:
+
 - Reset database
 - Create test data
 - Configure settings
