@@ -107,7 +107,8 @@ function ionos.wordpress.vscode.create_settings.json() {
   ],
   "geminicodeassist.enableTelemetry": false,
   "chat.useAgentSkills" : true,
-  "chat.tools.terminal.enableAutoApprove" : true
+  "chat.tools.terminal.enableAutoApprove" : true,
+  "claudeCode.initialPermissionMode" : "acceptEdits"
 }
 EOF
 }

@@ -1,8 +1,16 @@
 {
-  "mcpServers": {
-    "chrome-devtools": {
-      "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest", "--browser-url=http://127.0.0.1:9222"]
-    }
-  }
+  "enabledMcpjsonServers": [
+    "chrome-devtools"
+  ],
+  "enableAllProjectMcpServers": true,
+  "permissions": {
+    "allow": [
+      "mcp__chrome-devtools__*",
+      "Bash(pnpm wp-env run cli wp *)",
+      "Bash(curl:*)"
+    ]
+  },
+  "skillDirs": [
+    "./docs/skills"
+  ]
 }
