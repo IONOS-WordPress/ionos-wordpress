@@ -18,8 +18,8 @@ function render_callback(): void
         <div class="ionos-site-health-overview">
           <div class="ionos-site-health-overview__iframe" style="width: 240px; height: 150px; overflow: hidden;">
   <?php
-  $iframe_url_live             = add_query_arg('hidetoolbar', '1', \get_option('siteurl', ''));
-  $iframe_url_maintenance_mode =  \plugins_url(
+  $iframe_url_live             = \add_query_arg('hidetoolbar', '1', \get_option('siteurl', ''));
+  $iframe_url_maintenance_mode = \plugins_url(
     'ionos-essentials/inc/maintenance_mode/assets/maintenance.html',
     PLUGIN_FILE
   );
