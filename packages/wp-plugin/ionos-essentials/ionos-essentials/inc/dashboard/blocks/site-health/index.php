@@ -3,6 +3,7 @@
 namespace ionos\essentials\dashboard\blocks\site_health;
 
 use const ionos\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_FILE;
 
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/vulnerability/index.php';
 
@@ -16,8 +17,23 @@ function render_callback(): void
       <section class="card__section ionos-site-health">
         <div class="ionos-site-health-overview">
           <div class="ionos-site-health-overview__iframe" style="width: 240px; height: 150px; overflow: hidden;">
+  <?php
+  $iframe_url_live             = add_query_arg('hidetoolbar', '1', \get_option('siteurl', ''));
+  $iframe_url_maintenance_mode =  \plugins_url(
+    'ionos-essentials/inc/maintenance_mode/assets/maintenance.html',
+    PLUGIN_FILE
+  );
+
+  \wp_localize_script('ionos-essentials-dashboard', 'ionosMaintenanceMode', [
+    'siteUrlLive'            => $iframe_url_live,
+    'siteUrlMaintenanceMode' => $iframe_url_maintenance_mode,
+  ]);
+
+  $iframe_url =  (\ionos\essentials\maintenance_mode\is_maintenance_mode()) ? $iframe_url_maintenance_mode : $iframe_url_live;
+  ?>
             <iframe
-              src="<?php echo \esc_url(\get_option('siteurl', '')); ?>/?hidetoolbar=1"
+              id="ionos-site-preview"
+              src="<?php echo \esc_url($iframe_url); ?>"
               style="
                 width: 1440px;
                 height: 900px;
@@ -33,7 +49,7 @@ function render_callback(): void
             <span class="badge badge--warning-solid ionos-maintenance-only" style="width: fit-content; margin-bottom: 10px;"><?php \esc_html_e('Maintenance page active', 'ionos-essentials'); ?></span>
             <div class="ionos-site-health-overview__info-homeurl">
               <?php
-                $title = \esc_attr__('Current SSL-Status', 'ionos-essentials');
+      $title           = \esc_attr__('Current SSL-Status', 'ionos-essentials');
   $status              = \esc_attr__('Secure', 'ionos-essentials');
   $icon                = 'exos-icon exos-icon-nav-lock-close-16';
   $style               = '';
