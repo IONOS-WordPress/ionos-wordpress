@@ -54,37 +54,7 @@ The intial connection setup will get a lot easier with the release of the upcomi
 
 Skills will be derived by vscode/copilot from the claude/gemini settings and given project structure.
 
-## Examples
+## Usage
 
-```
-create a new testing skill recipe dasbboard/mcp-activation.md which should
+see docs/10-ai-integration.md
 
-- login to wordpress
-- go to ionos dashboard and enable mcp
-- verify mcp is enabled by
-  - testing plugin 'wordpress-mcp' is  installed and activated using wp-cli
-  - testing an application password was generated
-
-before the recipe the following wp-cli commands should be excuted
-
-wp plugin delete wordpress-mcp
-option delete wordpress_mcp_settingsuser application-password delete 1
-```
-
----
-
-```
-list /testing recipes
-```
-
----
-
-```
-execute /testing skill recipe login-flow
-```
-
----
-
-```
-execute /testing skill recipe activate mcp
-```
