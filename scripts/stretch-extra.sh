@@ -33,9 +33,14 @@ ionos.wordpress.stretch-extra.clean() {
 ionos.wordpress.stretch-extra.install() {
   echo "Installing plugins and themes using configuration '${STRETCH_EXTRA_CONFIG_PATH}' into stretch-extra..."
 
+  # Interpret the stretch-extra php configuration file, extract the download URLs and return as JSON
   readonly STRETCH_EXTRA_CONFIG_JSON=$(docker run --rm -i --quiet -v "$(pwd):/app" -w /app php:8.3-cli php <<'EOF'
 <?php
-    define('ABSPATH', '');
+    namespace ionos\stretch_extra;
+
+    // trick to avoid errors due to missing IONOS_CUSTOM_DIR constant during config file evaluation
+    const IONOS_CUSTOM_DIR  = '';
+
     $config = require_once('packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/stretch-extra-config.php');
 
     $output = [
