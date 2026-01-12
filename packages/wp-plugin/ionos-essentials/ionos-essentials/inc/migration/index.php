@@ -90,7 +90,7 @@ function _install()
       \add_option('ionos_loop_consent', $ionos_loop_consent_given);
 
       // install the performance plugin for all non stretch spaces
-      if (\ionos\essentials\is_stretch() === false                  &&
+      if (! IS_STRETCH &&
       ! is_plugin_active('ionos-performance/ionos-performance.php') &&
       false == strpos(home_url(), 'localhost')) {
         install_plugin_from_url(
