@@ -57,4 +57,3 @@ Skills will be derived by vscode/copilot from the claude/gemini settings and giv
 ## Usage
 
 see docs/10-ai-integration.md
-
