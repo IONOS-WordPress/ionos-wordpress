@@ -25,4 +25,7 @@ ionos.wordpress.log_info "Setting up git hooks"
 git config core.hookspath "./.githooks"
 
 # link skills to gemini cli
-ln -s ./docs/skills ./.gemini/skills
+rm -rf ./.gemini/skills && ln -sr ./docs/skills ./.gemini/skills
+
+# install stretch extra plugins and themes
+pnpm stretch-extra --install
