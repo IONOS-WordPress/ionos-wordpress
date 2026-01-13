@@ -2,7 +2,7 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { execTestCLI } from '../../../../../../../playwright/wp-env';
 import { execSync } from 'node:child_process';
 
-test.skip(
+test.describe(
   'stretch-extra:secondary-plugin-dir functionality',
   {
     tag: ['@stretch-extra', '@secondary-plugin-dir'],
