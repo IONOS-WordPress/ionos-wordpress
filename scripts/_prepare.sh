@@ -25,4 +25,10 @@ ionos.wordpress.log_info "Setting up git hooks"
 git config core.hookspath "./.githooks"
 
 # link skills to gemini cli
-ln -s ./docs/skills ./.gemini/skills
+# ln -s ./docs/skills ./.gemini/skills
+
+# if ./docs/skills does not point to ./docs/skills then create the symlink
+if [ ! -L "./.gemini/skills" ] || [ "$(readlink ./.gemini/skills)" != "./docs/skills" ]; then
+  ionos.wordpress.log_info "Linking ./docs/skills to ./.gemini/skills"
+  ln -s ../docs/skills ./.gemini/skills
+fi
