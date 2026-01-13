@@ -16,4 +16,4 @@ const IONOS_MIGRATION_OPTION = 'IONOS_MIGRATION_OPTION';
     'user_email' => \get_option('admin_email'),
   ]);
   update_option(IONOS_MIGRATION_OPTION, '1.0.0', true);
-});
+}, 5);
