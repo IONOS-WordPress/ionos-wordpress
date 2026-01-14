@@ -6,7 +6,8 @@ use const ionos\stretch_extra\IONOS_CUSTOM_DIR;
 
 defined('ABSPATH') || exit();
 
-const IONOS_CUSTOM_THEMES_DIR  = IONOS_CUSTOM_DIR . '/themes';
+const IONOS_CUSTOM_THEMES_DIR            = IONOS_CUSTOM_DIR . '/themes';
+const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
 
 \register_theme_directory(IONOS_CUSTOM_THEMES_DIR);
 
@@ -114,3 +115,64 @@ const IONOS_CUSTOM_THEMES_DIR  = IONOS_CUSTOM_DIR . '/themes';
   10,
   2
 );
+
+/**
+ * Handle theme deletion in custom theme directory
+ */
+\add_action('delete_theme', function ($stylesheet) {
+  // Only process themes from our custom directory
+  $theme = \wp_get_theme($stylesheet);
+  error_log('Try to delete theme: ' . $stylesheet);
+  if (! $theme->exists() || ! str_contains($theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR)) {
+    return;
+  }
+  error_log('Theme deletion detected for custom theme: ' . $stylesheet);
+  mark_custom_theme_as_deleted($stylesheet);
+}, 10, 1);
+
+function mark_custom_theme_as_deleted($theme_key)
+{
+  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
+
+  $deleted_themes[] = $theme_key;
+  $deleted_themes   = array_unique($deleted_themes);
+
+  \update_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, $deleted_themes, true);
+}
+
+/**
+ * Filter installed themes to exclude deleted custom themes
+ */
+\add_filter('wp_prepare_themes_for_js', function ($prepared_themes) {
+  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
+
+  if (empty($deleted_themes)) {
+    return $prepared_themes;
+  }
+
+  foreach ($deleted_themes as $deleted_theme) {
+    unset($prepared_themes[$deleted_theme]);
+  }
+
+  return $prepared_themes;
+});
+
+/**
+ * Handle theme activation in custom theme directory
+ */
+\add_action('switch_theme', function ($new_name, $new_theme, $old_theme) {
+  // Only process themes from our custom directory
+  if (! str_contains($new_theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR)) {
+    return;
+  }
+
+  error_log('Theme activation detected for custom theme: ' . $new_name);
+
+  $theme_key = $new_theme->get_stylesheet();
+
+  // Remove from deleted themes list if it was marked as deleted
+  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
+  $theme_key      = $new_theme->get_stylesheet();
+  $deleted_themes = array_filter($deleted_themes, fn ($theme) => $theme !== $theme_key);
+  \update_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, $deleted_themes, true);
+}, 10, 3);
