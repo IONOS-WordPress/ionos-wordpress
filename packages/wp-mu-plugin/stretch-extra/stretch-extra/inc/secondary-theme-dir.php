@@ -178,7 +178,7 @@ function mark_custom_theme_as_deleted($theme_key)
 
 /**
  * Modify _wpThemeSettings JavaScript variable on theme-install page
- * to manipulate infos on deleted custom themes
+ * to indicate deleted custom themes
  */
 \add_action('admin_print_scripts-theme-install.php', function () {
   $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
@@ -194,16 +194,57 @@ document.addEventListener('DOMContentLoaded', function() {
   if (typeof _wpThemeSettings !== 'undefined') {
     // List of deleted custom themes to exclude
     const deletedThemes = %s;
-
     // Override _wpThemeSettings if needed
     if (_wpThemeSettings && _wpThemeSettings.installedThemes) {
-      _wpThemeSettings.installedThemes = _wpThemeSettings.installedThemes.filter(function(theme) {
-        return false;
-      });
+      _wpThemeSettings.installedThemes = _wpThemeSettings.installedThemes.filter(theme => !deletedThemes.includes(theme));
     }
   }
 });
 </script>
 HTML
     , \wp_json_encode($deleted_themes));
+});
+
+/**
+ * Add JavaScript to theme-install page to handle custom theme directory behavior
+ */
+\add_action('admin_print_scripts-theme-install.php', function () {
+
+  echo <<<'HTML'
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    const targetNode = document.querySelector('.theme-browser');
+    const callback = (mutationsList, observer) => {
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+
+              const newBtn = document.querySelector('[data-slug=go] a.theme-install');
+              if (!newBtn || newBtn.dataset.listenerAttached === 'true') {
+                  return;
+              }
+
+              newBtn.addEventListener('click', function(event) {
+                event.stopPropagation();
+                event.preventDefault();
+
+                const noticeDiv = document.createElement('div');
+                noticeDiv.className = 'notice notice-success notice-alt';
+                noticeDiv.innerHTML = '<p>Installiert</p>';
+                event.target.closest('.theme').appendChild(noticeDiv);
+
+                wp.updates.installThemeSuccess({slug:'go', activateUrl: 'http://localhost:8888/wp-admin/themes.php?action=activate&stylesheet=go&nonce=example-nonce'});
+                _wpThemeSettings.installedThemes.push('go')
+
+                return false;
+              });
+              newBtn.dataset.listenerAttached = 'true';
+
+            }
+        }
+    };
+    const observer = new MutationObserver(callback);
+    observer.observe(targetNode, { childList: true, subtree: true });
+  });
+</script>
+HTML;
 });
