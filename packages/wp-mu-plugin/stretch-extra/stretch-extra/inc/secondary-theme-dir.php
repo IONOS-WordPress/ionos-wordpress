@@ -145,7 +145,6 @@ function mark_custom_theme_as_deleted($theme_key)
  */
 \add_filter('wp_prepare_themes_for_js', function ($prepared_themes) {
   $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
-
   if (empty($deleted_themes)) {
     return $prepared_themes;
   }
@@ -176,3 +175,35 @@ function mark_custom_theme_as_deleted($theme_key)
   $deleted_themes = array_filter($deleted_themes, fn ($theme) => $theme !== $theme_key);
   \update_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, $deleted_themes, true);
 }, 10, 3);
+
+/**
+ * Modify _wpThemeSettings JavaScript variable on theme-install page
+ * to manipulate infos on deleted custom themes
+ */
+\add_action('admin_print_scripts-theme-install.php', function () {
+  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
+
+  if (empty($deleted_themes)) {
+    return;
+  }
+
+  // JavaScript to modify _wpThemeSettings
+  printf(<<<'HTML'
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof _wpThemeSettings !== 'undefined') {
+    // List of deleted custom themes to exclude
+    const deletedThemes = %s;
+
+    // Override _wpThemeSettings if needed
+    if (_wpThemeSettings && _wpThemeSettings.installedThemes) {
+      _wpThemeSettings.installedThemes = _wpThemeSettings.installedThemes.filter(function(theme) {
+        return false;
+      });
+    }
+  }
+});
+</script>
+HTML
+    , \wp_json_encode($deleted_themes));
+});
