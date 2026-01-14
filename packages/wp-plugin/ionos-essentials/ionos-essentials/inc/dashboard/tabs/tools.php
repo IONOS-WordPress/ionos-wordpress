@@ -149,7 +149,7 @@ function get_settings_value($key)
                 'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
               ]);
 
-if (! IS_STRETCH) {
+if (! IONOS_IS_STRETCH) {
   render_section([
     'title'       => \esc_html__('Block XML-RPC access', 'ionos-essentials'),
     'id'          => IONOS_SECURITY_FEATURE_OPTION_XMLRPC,

@@ -4,10 +4,10 @@ namespace ionos\essentials\tenant;
 
 defined('ABSPATH')                          || exit();
 
-if (! defined('SFS_IS_SET')) {
-  define('SFS_IS_SET', array_key_exists('SFS', $_SERVER));
+if (! defined('IONOS_IS_STRETCH_SFS') && IONOS_IS_STRETCH ) {
+  define('IONOS_IS_STRETCH_SFS', array_key_exists('SFS', $_SERVER));
 }
-$is_sfs = SFS_IS_SET || get_option('sfs_website_id');
+$is_sfs = IONOS_IS_STRETCH_SFS || get_option('sfs_website_id');
 
 $links = $is_sfs ? [
   [

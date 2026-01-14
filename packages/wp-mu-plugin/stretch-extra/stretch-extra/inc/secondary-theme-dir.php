@@ -40,8 +40,8 @@ const IONOS_CUSTOM_THEMES_DIR  = IONOS_CUSTOM_DIR . '/themes';
   'stylesheet_directory_uri',
   function ($stylesheet_dir_uri, $stylesheet, $theme_root_uri) {
     // if its not one of our themes just return the original url
-    // array_key_exists('SFS', $_SERVER) or constant SFS_IS_SET is required to work in local wp-env
-    if (! str_ends_with($theme_root_uri, '/extra/themes') && ! SFS_IS_SET) {
+    // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required to work in local wp-env
+    if (! str_ends_with($theme_root_uri, '/extra/themes') && ! IONOS_IS_STRETCH_SFS) {
       return $stylesheet_dir_uri;
     }
 
@@ -65,8 +65,8 @@ const IONOS_CUSTOM_THEMES_DIR  = IONOS_CUSTOM_DIR . '/themes';
   'theme_file_uri',
   function ($url, $file) {
     // if its not one of our themes just return the original url
-    // array_key_exists('SFS', $_SERVER) or constant SFS_IS_SET is required to work in local wp-env
-    if (! str_contains($url, '/extra/themes/') && ! SFS_IS_SET) {
+    // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required to work in local wp-env
+    if (! str_contains($url, '/extra/themes/') && ! IONOS_IS_STRETCH_SFS) {
       return $url;
     }
 
@@ -88,8 +88,8 @@ const IONOS_CUSTOM_THEMES_DIR  = IONOS_CUSTOM_DIR . '/themes';
   'template_directory_uri',
   function ($template_dir_uri, $template, $theme_root_uri) {
     // if its not one of our themes just return the original url
-    // array_key_exists('SFS', $_SERVER) or constant SFS_IS_SET is required to work in local wp-env
-    if (! str_ends_with($theme_root_uri, '/extra/themes') && ! SFS_IS_SET) {
+    // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required to work in local wp-env
+    if (! str_ends_with($theme_root_uri, '/extra/themes') && ! IONOS_IS_STRETCH_SFS) {
       return $template_dir_uri;
     }
 
@@ -103,8 +103,8 @@ const IONOS_CUSTOM_THEMES_DIR  = IONOS_CUSTOM_DIR . '/themes';
 \add_filter(
   'theme_root_uri',
   function ($theme_root_uri, $siteurl) {
-    // array_key_exists('SFS', $_SERVER) or constant SFS_IS_SET is required to work in local wp-env
-    if (! str_ends_with($theme_root_uri, '/extra/themes') && ! SFS_IS_SET) {
+    // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required to work in local wp-env
+    if (! str_ends_with($theme_root_uri, '/extra/themes') && ! IONOS_IS_STRETCH_SFS) {
       return $theme_root_uri;
     }
 

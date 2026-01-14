@@ -16,6 +16,8 @@ use function ionos\essentials\dashboard\install_plugin_from_url;
 
 defined('ABSPATH') || exit();
 
+define('IS_LOCAL', wp_get_environment_type() === 'local');
+
 use const ionos\essentials\PLUGIN_FILE;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;
@@ -90,9 +92,9 @@ function _install()
       \add_option('ionos_loop_consent', $ionos_loop_consent_given);
 
       // install the performance plugin for all non stretch spaces
-      if (! IS_STRETCH                                              &&
+      if (! IONOS_IS_STRETCH                                              &&
       ! is_plugin_active('ionos-performance/ionos-performance.php') &&
-      false == strpos(home_url(), 'localhost')) {
+      ! IS_LOCAL ) {
         install_plugin_from_url(
           'https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-group/ionos-performance.latest.zip'
         );

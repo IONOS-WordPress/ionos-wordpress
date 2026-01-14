@@ -37,7 +37,7 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
   }
 
   require_once __DIR__ . '/ssl.php';
-  if (! IS_STRETCH) {
+  if (! IONOS_IS_STRETCH) {
     if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]) {
       require_once __DIR__ . '/xmlrpc.php';
     }
