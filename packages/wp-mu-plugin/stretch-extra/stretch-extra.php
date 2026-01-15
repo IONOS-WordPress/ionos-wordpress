@@ -20,10 +20,10 @@ namespace ionos\stretch_extra;
 defined('ABSPATH') || exit();
 
 // Set SFS server variable to fake stretch-extra context
-if (! defined('IONOS_IS_STRETCH_SFS')  && defined('IONOS_IS_STRETCH') && IONOS_IS_STRETCH) {
+if (! defined('IONOS_IS_STRETCH_SFS')  && defined('IONOS_IS_STRETCH') && \IONOS_IS_STRETCH) {
   define('IONOS_IS_STRETCH_SFS', array_key_exists('SFS', $_SERVER));
 }
-if (! IONOS_IS_STRETCH_SFS) {
+if (! \IONOS_IS_STRETCH_SFS) {
   $_SERVER['SFS'] = 'stretch-extra';
 }
 
