@@ -515,7 +515,7 @@ function get_custom_plugins(): array
     'slug' => $slug,
   ];
 
-  $custom_plugin = array_find(get_custom_plugins(), fn ($custom_plugin) => $custom_plugin['slug'] === $slug);
+  $custom_plugin = array_find(get_custom_plugins(), fn ($_) => $_['slug'] === $slug);
 
   if ($custom_plugin===null) {
     // not a custom plugin, fallback to default handler
@@ -571,7 +571,7 @@ function get_custom_plugins(): array
 
   $slug = \wp_unslash($_POST['slug']);
 
-  $custom_plugin = array_find(get_custom_plugins(), fn ($custom_plugin) => $custom_plugin['slug'] === $slug);
+  $custom_plugin = array_find(get_custom_plugins(), fn ($_) => $_['slug'] === $slug);
 
   if ($custom_plugin===null) {
     // not a custom plugin, fallback to default handler
@@ -640,7 +640,9 @@ function get_custom_plugins(): array
 \add_filter('plugin_install_action_links', function ($links, $plugin) {
   $custom_plugin = array_find(
     get_custom_plugins(),
-    fn ($custom_plugin) => $custom_plugin['slug'] === $plugin['slug'],
+    // CAVEAT: we cannot name it $custom plugin since rector will name it also $custom_plugin_*
+    // fn ($custom_plugin) => $custom_plugin['slug'] === $plugin['slug'],
+    fn ($_) => $_['slug'] === $plugin['slug'],
   );
 
   $is_active                  = false;
@@ -651,7 +653,7 @@ function get_custom_plugins(): array
   } else {
     $deleted_custom_plugin_slug = array_find(
       get_deleted_custom_plugins(),
-      fn ($deleted_custom_plugin) => str_contains($deleted_custom_plugin, $plugin['slug']),
+      fn ($_) => str_contains($_, $plugin['slug']),
     );
   }
 

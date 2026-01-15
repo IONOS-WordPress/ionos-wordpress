@@ -46,7 +46,7 @@ fi
   # generate launch configuration
   cat << EOF | jq > '.wp-env.json'
   {
-    "core": null,
+    "core": "${WP_ENV_CORE:-latest}",
     "phpVersion": "8.3",
     "plugins": [
       $(plugins | sed '$ s/,$//')

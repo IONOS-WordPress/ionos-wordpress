@@ -7,13 +7,12 @@
 
 set -eo pipefail
 
-if [[ "${CI:-}" == "true" ]]; then
-  exit 0
-fi
+# install stretch extra plugins and themes
+pnpm -w run stretch-extra --install
 
 # Copy plugins and themes folders to the dist directory
-readonly DIST_TARGET="./dist/stretch-extra-*-php*/stretch-extra/stretch-extra"
+readonly DIST_TARGET="$(echo ./dist/stretch-extra-*-php*/stretch-extra/stretch-extra)"
 
-rsync -a -q --exclude="README.md" "./stretch-extra/plugins" ${DIST_TARGET}/
-rsync -a -q --exclude="README.md" "./stretch-extra/themes" ${DIST_TARGET}/
+rsync -a -q --exclude=README.md "./stretch-extra/plugins" "${DIST_TARGET}/"
+rsync -a -q --exclude=README.md "./stretch-extra/themes" "${DIST_TARGET}/"
 
