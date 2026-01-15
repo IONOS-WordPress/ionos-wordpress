@@ -150,7 +150,6 @@ function delete_theme($stylesheet)
   if (! $theme->exists() || ! str_contains($theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR)) {
     return;
   }
-  error_log('Theme deletion detected for custom theme: ' . $stylesheet);
   mark_custom_theme_as_deleted($stylesheet);
 }
 
@@ -160,8 +159,6 @@ function switch_theme($new_name, $new_theme, $old_theme)
   if (! str_contains($new_theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR)) {
     return;
   }
-
-  error_log('Theme activation detected for custom theme: ' . $new_name);
 
   $theme_key = $new_theme->get_stylesheet();
 
@@ -181,11 +178,10 @@ function admin_print_scripts_theme_install_php()
   // JavaScript to modify _wpThemeSettings
   printf(<<<'HTML'
 <script type="text/javascript">
-  const deletedThemes = %s;
+  const deletedThemes = JSON.parse('%s');
   const ionosExtraCustomThemes = %s;
   document.addEventListener('DOMContentLoaded', function() {
     if (typeof _wpThemeSettings !== 'undefined') {
-      // Override _wpThemeSettings if needed
       if (_wpThemeSettings && _wpThemeSettings.installedThemes) {
         _wpThemeSettings.installedThemes = _wpThemeSettings.installedThemes.filter(theme => !deletedThemes.includes(theme));
       }
@@ -193,7 +189,7 @@ function admin_print_scripts_theme_install_php()
   });
 </script>
 HTML
-    , \wp_json_encode($deleted_themes), \wp_json_encode(array_keys($custom_themes)));
+    , \wp_json_encode(array_values($deleted_themes)), \wp_json_encode(array_keys($custom_themes)));
 
   printf(
     <<<'HTML'
@@ -201,46 +197,53 @@ HTML
   document.addEventListener('DOMContentLoaded', function() {
     const targetNode = document.querySelector('.theme-browser');
     const callback = (mutationsList, observer) => {
-        for (const mutation of mutationsList) {
-            if (mutation.type === 'childList') {
-              for (const themeSlug of ionosExtraCustomThemes) {
-                const newBtn = document.querySelector(`[data-slug=${themeSlug}] a.theme-install`);
-                if (!newBtn || newBtn.dataset.listenerAttached === 'true') {
-                    continue;
-                }
-                newBtn.addEventListener('click', function(event) {
-                  event.stopPropagation();
-                  event.preventDefault();
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          for (const themeSlug of ionosExtraCustomThemes) {
+            const newBtn = document.querySelector(`[data-slug=${themeSlug}] a.theme-install`);
+            if (!newBtn || newBtn.dataset.listenerAttached === 'true') {
+                continue;
+            }
+            newBtn.addEventListener('click',() => ionosStretchNewButtonClick(event, themeSlug));
+            newBtn.dataset.listenerAttached = 'true';
+            newBtn.removeAttribute('data-slug');
+            newBtn.removeEventListener('click', arguments.callee);
+          }
 
-                  fetch('/wp-json/ionos/stretch-extra/v1/restore-theme', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'X-WP-Nonce': '%s'
-                    },
-                    body: JSON.stringify({ theme_slug: themeSlug })
-                  }).then(response => response.json()).then(data => {
-
-                    const noticeDiv = document.createElement('div');
-                    noticeDiv.className = 'notice notice-success notice-alt';
-                    noticeDiv.innerHTML = `<p>${data.message}</p>`;
-                    event.target.closest('.theme').appendChild(noticeDiv);
-
-                    wp.updates.installThemeSuccess({slug: themeSlug, activateUrl: data.activate_url});
-                    _wpThemeSettings.installedThemes.push(themeSlug)
-
-                    newBtn.removeAttribute('data-slug');
-                    newBtn.removeEventListener('click', arguments.callee);
-                  });
-
-                  return false;
-                });
-                newBtn.dataset.listenerAttached = 'true';
-
-              }
+          installButton = document.querySelector(`.theme-install-overlay a.theme-install`);
+          if (installButton) {
+            installButton.addEventListener('click',() => ionosStretchNewButtonClick(event, installButton.dataset.slug) );
+            installButton.classList.remove('theme-install');
           }
         }
+      }
+      return;
     };
+
+    function ionosStretchNewButtonClick(event, themeSlug) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      fetch('/wp-json/ionos/stretch-extra/v1/restore-theme', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-WP-Nonce': '%s'
+        },
+        body: JSON.stringify({ theme_slug: themeSlug })
+      }).then(response => response.json()).then(data => {
+
+        const noticeDiv = document.createElement('div');
+        noticeDiv.className = 'notice notice-success notice-alt';
+        noticeDiv.innerHTML = `<p>${data.message}</p>`;
+        event.target.closest('.theme').appendChild(noticeDiv);
+
+        wp.updates.installThemeSuccess({slug: themeSlug, activateUrl: data.activate_url});
+        _wpThemeSettings.installedThemes.push(themeSlug)
+      });
+
+      return false;
+    }
     const observer = new MutationObserver(callback);
     observer.observe(targetNode, { childList: true, subtree: true });
   });
