@@ -195,7 +195,7 @@ HTML
     <<<'HTML'
 <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', function() {
-    const targetNode = document.querySelector('.theme-browser');
+    const targetNode = document.querySelector('.wrap');
     const callback = (mutationsList, observer) => {
       for (const mutation of mutationsList) {
         if (mutation.type === 'childList') {
@@ -209,10 +209,12 @@ HTML
             newBtn.removeAttribute('data-slug');
 
           }
-
           installButton = document.querySelector(`.theme-install-overlay a.theme-install`);
           if (installButton) {
-            installButton.addEventListener('click',() => ionosStretchNewButtonClick(event, installButton.dataset.slug) );
+
+            installButton.addEventListener('click', (event) => {
+              ionosStretchNewButtonClick(event, event.target.dataset.slug);
+            }, { once: true });
             installButton.classList.remove('theme-install');
           }
         }
