@@ -11,12 +11,121 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
 
 \register_theme_directory(IONOS_CUSTOM_THEMES_DIR);
 
+/**
+ * @TODO: theme_file_uri filter will only fire if:
+ *
+ * The theme explicitly calls get_theme_file_uri('some/path.ext') in PHP code
+ * Or calls get_parent_theme_file_uri('some/path.ext')
+ *
+ * Most themes will enqueue assets using wp_enqueue_style or wp_enqueue_script
+ * with URLs generated via functions like get_stylesheet_directory_uri() or get_template_directory_uri()
+ */
+\add_filter('theme_file_uri', __NAMESPACE__ . '\theme_file_uri', 10, 2);
+\add_filter('stylesheet_directory_uri', __NAMESPACE__ . '\stylesheet_directory_uri', 10, 3);
+\add_filter('template_directory_uri', __NAMESPACE__ . '\template_directory_uri', 10, 3);
+\add_filter('theme_root_uri', __NAMESPACE__ . '\theme_root_uri', 10, 2);
+\add_filter('wp_prepare_themes_for_js', __NAMESPACE__ . '\filter_prepared_themes_for_js', 10, 1);
+\add_filter('pre_set_site_transient_update_themes', __NAMESPACE__ . '\no_updates_for_custom_themes');
+\add_filter('site_transient_update_themes', __NAMESPACE__ . '\no_updates_for_custom_themes');
+
 /*
   @TODO: the theme can be preset in the database template
   Alternative workaround : Alex can set the theme to extendable when provisioning the account
   if this is the case the code below can be removed
 */
-\add_action('muplugins_loaded', function () {
+\add_action('muplugins_loaded', __NAMESPACE__ . '\muplugins_loaded', 1);
+\add_action('delete_theme', __NAMESPACE__ . '\delete_theme', 10, 1);
+\add_action('switch_theme', __NAMESPACE__ . '\switch_theme', 10, 3);
+\add_action('admin_print_scripts-theme-install.php', __NAMESPACE__ . '\admin_print_scripts_theme_install_php');
+\add_action('rest_api_init', __NAMESPACE__ . '\rest_api_init');
+
+/////////////////////////////////
+// Filter Functions
+/////////////////////////////////
+function stylesheet_directory_uri($stylesheet_dir_uri, $stylesheet, $theme_root_uri)
+{
+  // if its not one of our themes just return the original url
+  // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
+  if (! str_ends_with($theme_root_uri, '/extra/themes') && ! array_key_exists('SFS', $_SERVER)) {
+    return $stylesheet_dir_uri;
+  }
+
+  // if we run in stretch sfs : replace the standard themes URL part with sfs stretch mapping
+  return str_replace('/extra/themes/', '/wp-sfsxtra/themes/', $stylesheet_dir_uri);
+}
+
+function theme_file_uri($url, $file)
+{
+  // if its not one of our themes just return the original url
+  // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
+  if (! str_contains($url, '/extra/themes/') && ! array_key_exists('SFS', $_SERVER)) {
+    return $url;
+  }
+
+  // if we run in stretch sfs : replace the standard themes URL part with sfs stretch mapping
+  return str_replace('/extra/themes/', '/wp-sfsxtra/themes/', $url);
+}
+
+function template_directory_uri($template_dir_uri, $template, $theme_root_uri)
+{
+  // if its not one of our themes just return the original url
+  // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
+  if (! str_ends_with($theme_root_uri, '/extra/themes') && ! array_key_exists('SFS', $_SERVER)) {
+    return $template_dir_uri;
+  }
+
+  // if we run in stretch sfs : replace the standard themes URL part with sfs stretch mapping
+  return str_replace('/extra/themes', '/wp-sfsxtra/themes', $template_dir_uri);
+}
+
+function theme_root_uri($theme_root_uri, $siteurl)
+{
+  // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
+  if (! str_ends_with($theme_root_uri, '/extra/themes') && ! array_key_exists('SFS', $_SERVER)) {
+    return $theme_root_uri;
+  }
+
+  // if we run in stretch sfs : replace the standard themes URL part with sfs stretch mapping
+  return str_replace('/extra/themes', '/wp-sfsxtra/themes', $theme_root_uri);
+}
+
+function filter_prepared_themes_for_js($prepared_themes)
+{
+  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
+  foreach ($deleted_themes as $deleted_theme) {
+    unset($prepared_themes[$deleted_theme]);
+  }
+
+  return $prepared_themes;
+}
+
+function no_updates_for_custom_themes($value)
+{
+  if (! isset($value->checked)) {
+    return $value;
+  }
+
+  $custom_themes = get_custom_themes();
+
+  // Remove custom themes from update check
+  foreach (array_keys($custom_themes) as $theme_slug) {
+    unset($value->checked[$theme_slug]);
+    if (isset($value->response[$theme_slug])) {
+      unset($value->response[$theme_slug]);
+    }
+    if (isset($value->no_update[$theme_slug])) {
+      unset($value->no_update[$theme_slug]);
+    }
+  }
+
+  return $value;
+}
+
+//////////////////////////////////
+// Action Functions
+//////////////////////////////////
+function muplugins_loaded()
+{
   $is_initialized = \get_option('stretch_extra_extendable_theme_dir_initialized', false) || \get_option(
     'stylesheet'
   ) === 'extendable';
@@ -31,95 +140,10 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
   }
 
   \update_option('stretch_extra_extendable_theme_dir_initialized', true, true);
-});
+}
 
-/**
- * Register custom theme directory URL handling
- * This allows get_stylesheet_directory_uri() to return correct URLs for our custom themes
- */
-\add_filter(
-  'stylesheet_directory_uri',
-  function ($stylesheet_dir_uri, $stylesheet, $theme_root_uri) {
-    // if its not one of our themes just return the original url
-    // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
-    if (! str_ends_with($theme_root_uri, '/extra/themes') && ! array_key_exists('SFS', $_SERVER)) {
-      return $stylesheet_dir_uri;
-    }
-
-    // if we run in stretch sfs : replace the standard themes URL part with sfs stretch mapping
-    return str_replace('/extra/themes/', '/wp-sfsxtra/themes/', $stylesheet_dir_uri);
-  },
-  10,
-  3
-);
-
-/**
- * @TODO: theme_file_uri filter will only fire if:
- *
- * The theme explicitly calls get_theme_file_uri('some/path.ext') in PHP code
- * Or calls get_parent_theme_file_uri('some/path.ext')
- *
- * Most themes will enqueue assets using wp_enqueue_style or wp_enqueue_script
- * with URLs generated via functions like get_stylesheet_directory_uri() or get_template_directory_uri()
- */
-\add_filter(
-  'theme_file_uri',
-  function ($url, $file) {
-    // if its not one of our themes just return the original url
-    // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
-    if (! str_contains($url, '/extra/themes/') && ! array_key_exists('SFS', $_SERVER)) {
-      return $url;
-    }
-
-    // if we run in stretch sfs : replace the standard themes URL part with sfs stretch mapping
-    return str_replace('/extra/themes/', '/wp-sfsxtra/themes/', $url);
-  },
-  10,
-  2
-);
-
-/**
- * Filters the active theme directory URI.
- *
- * @param string $template_dir_uri The URI to the active theme's directory.
- * @param string $template         The name of the active theme.
- * @param string $theme_root_uri     The URI of the theme root (usually /wp-content/themes).
- */
-\add_filter(
-  'template_directory_uri',
-  function ($template_dir_uri, $template, $theme_root_uri) {
-    // if its not one of our themes just return the original url
-    // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
-    if (! str_ends_with($theme_root_uri, '/extra/themes') && ! array_key_exists('SFS', $_SERVER)) {
-      return $template_dir_uri;
-    }
-
-    // if we run in stretch sfs : replace the standard themes URL part with sfs stretch mapping
-    return str_replace('/extra/themes', '/wp-sfsxtra/themes', $template_dir_uri);
-  },
-  10,
-  3
-);
-
-\add_filter(
-  'theme_root_uri',
-  function ($theme_root_uri, $siteurl) {
-    // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
-    if (! str_ends_with($theme_root_uri, '/extra/themes') && ! array_key_exists('SFS', $_SERVER)) {
-      return $theme_root_uri;
-    }
-
-    // if we run in stretch sfs : replace the standard themes URL part with sfs stretch mapping
-    return str_replace('/extra/themes', '/wp-sfsxtra/themes', $theme_root_uri);
-  },
-  10,
-  2
-);
-
-/**
- * Handle theme deletion in custom theme directory
- */
-\add_action('delete_theme', function ($stylesheet) {
+function delete_theme($stylesheet)
+{
   // Only process themes from our custom directory
   $theme = \wp_get_theme($stylesheet);
   error_log('Try to delete theme: ' . $stylesheet);
@@ -128,34 +152,10 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
   }
   error_log('Theme deletion detected for custom theme: ' . $stylesheet);
   mark_custom_theme_as_deleted($stylesheet);
-}, 10, 1);
-
-function mark_custom_theme_as_deleted($theme_key)
-{
-  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
-
-  $deleted_themes[] = $theme_key;
-  $deleted_themes   = array_unique($deleted_themes);
-
-  \update_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, $deleted_themes, true);
 }
 
-/**
- * Filter installed themes to exclude deleted custom themes
- */
-\add_filter('wp_prepare_themes_for_js', function ($prepared_themes) {
-  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
-  foreach ($deleted_themes as $deleted_theme) {
-    unset($prepared_themes[$deleted_theme]);
-  }
-
-  return $prepared_themes;
-});
-
-/**
- * Handle theme activation in custom theme directory
- */
-\add_action('switch_theme', function ($new_name, $new_theme, $old_theme) {
+function switch_theme($new_name, $new_theme, $old_theme)
+{
   // Only process themes from our custom directory
   if (! str_contains($new_theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR)) {
     return;
@@ -170,13 +170,10 @@ function mark_custom_theme_as_deleted($theme_key)
   $theme_key      = $new_theme->get_stylesheet();
   $deleted_themes = array_filter($deleted_themes, fn ($theme) => $theme !== $theme_key);
   \update_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, $deleted_themes, true);
-}, 10, 3);
+}
 
-/**
- * Modify _wpThemeSettings JavaScript variable on theme-install page
- * to indicate deleted custom themes
- */
-\add_action('admin_print_scripts-theme-install.php', function () {
+function admin_print_scripts_theme_install_php()
+{
   $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
 
   $custom_themes = get_custom_themes();
@@ -252,12 +249,10 @@ HTML
     ,
     \wp_create_nonce('wp_rest')
   );
-});
+}
 
-/**
- * Register REST API endpoint for fake theme installation
- */
-\add_action('rest_api_init', function () {
+function rest_api_init()
+{
   \register_rest_route('ionos/stretch-extra/v1', '/restore-theme', [
     'methods'             => 'POST',
     'callback'            => __NAMESPACE__ . '\handle_restore_theme',
@@ -275,11 +270,11 @@ HTML
       ],
     ],
   ]);
-});
+}
 
-/**
- * Handle fake theme installation REST API request
- */
+///////////////////////////////////
+// REST API Handlers
+///////////////////////////////////
 function handle_restore_theme(\WP_REST_Request $request): \WP_REST_Response
 {
   $theme_slug = $request->get_param('theme_slug');
@@ -308,38 +303,24 @@ function handle_restore_theme(\WP_REST_Request $request): \WP_REST_Response
       ),
   ], 200);
 }
-/**
- * Disable update checks for custom themes
- */
-\add_filter('pre_set_site_transient_update_themes', __NAMESPACE__ . '\no_updates_for_custom_themes');
-\add_filter('site_transient_update_themes', __NAMESPACE__ . '\no_updates_for_custom_themes');
 
-function no_updates_for_custom_themes($value)
-{
-  if (! isset($value->checked)) {
-    return $value;
-  }
-
-  $custom_themes = get_custom_themes();
-
-  // Remove custom themes from update check
-  foreach (array_keys($custom_themes) as $theme_slug) {
-    unset($value->checked[$theme_slug]);
-    if (isset($value->response[$theme_slug])) {
-      unset($value->response[$theme_slug]);
-    }
-    if (isset($value->no_update[$theme_slug])) {
-      unset($value->no_update[$theme_slug]);
-    }
-  }
-
-  return $value;
-}
-
+///////////////////////////////////
+// Helper Functions
+///////////////////////////////////
 function get_custom_themes()
 {
   $themes = \wp_get_themes();
   return array_filter($themes, function ($theme) {
     return str_contains($theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR);
   });
+}
+
+function mark_custom_theme_as_deleted($theme_key)
+{
+  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
+
+  $deleted_themes[] = $theme_key;
+  $deleted_themes   = array_unique($deleted_themes);
+
+  \update_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, $deleted_themes, true);
 }
