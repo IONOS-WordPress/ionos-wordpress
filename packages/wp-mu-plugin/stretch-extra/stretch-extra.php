@@ -19,10 +19,13 @@ namespace ionos\stretch_extra;
 
 defined('ABSPATH') || exit();
 
-// // Set SFS server variable to fake stretch-extra context
-// if (!array_key_exists('SFS', $_SERVER)) {
-//   $_SERVER['SFS'] = 'stretch-extra';
-// }
+// Set SFS server variable to fake stretch-extra context
+if (! defined('IONOS_IS_STRETCH_SFS')  && defined('IONOS_IS_STRETCH') && \IONOS_IS_STRETCH) {
+  define('IONOS_IS_STRETCH_SFS', array_key_exists('SFS', $_SERVER));
+}
+if (defined('IONOS_IS_STRETCH_SFS') && ! \IONOS_IS_STRETCH_SFS) {
+  $_SERVER['SFS'] = 'stretch-extra';
+}
 
 // abort if called from WP-CLI to avoid issues with command line scripts
 // (need to prevent execution while wp was loaded by wp-cli)
