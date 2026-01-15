@@ -1,6 +1,14 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 import { execTestCLI } from '../../../../../../../playwright/wp-env';
-import { execSync } from 'node:child_process';
+
+const RESET_IONOS_STRETCH_OPTIONS_CLI_COMMANDS = `
+  # reset stretch-extra theme option
+  wp option delete stretch_extra_extendable_theme_dir_initialized
+  # prevent auto initialization of stretch-extra provisioned plugins
+  wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
+  # reset deleted custom plugins
+  wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '[]' --format=json
+`;
 
 test.describe(
   'stretch-extra:secondary-plugin-dir functionality',
@@ -11,39 +19,19 @@ test.describe(
     test.beforeAll(async () => {
       execTestCLI(`
         wp plugin deactivate ionos-essentials
-
-        # prevent auto initialization of stretch-extra provisioned plugins
-        wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
-
-        # reset deleted custom plugins
-        wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '[]' --format=json
-
-        # reset stretch-extra options 
-        # is needed here to allow re-initialization of the extendable theme dir 
+        ${RESET_IONOS_STRETCH_OPTIONS_CLI_COMMANDS}
+        # is needed here to allow re-initialization of the extendable theme dir
         # since first wp call is made by requestUtils.activateTheme('twentytwentyfive'),
         # in a real world scenario this would only be needed once
         wp option delete stretch_extra_extendable_theme_dir_initialized
       `);
-      // install stretch-extra provisioned plugins and themes
-      execSync('pnpm stretch-extra --install');
     });
 
     test.afterAll(async () => {
       execTestCLI(`
         # reset to default theme
         wp theme activate twentytwentyfive
-      `);
-
-      // install stretch-extra provisioned plugins and themes
-      execSync('pnpm stretch-extra --clean');
-
-      execTestCLI(`
-        # reset stretch-extra options
-        wp option delete \
-          IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION \
-          IONOS_CUSTOM_DELETED_PLUGINS_OPTION \
-          stretch_extra_extendable_theme_dir_initialized
-
+        ${RESET_IONOS_STRETCH_OPTIONS_CLI_COMMANDS}
         # reactivate ionos-essentials plugin
         wp plugin activate ionos-essentials
       `);
@@ -169,84 +157,76 @@ test.describe(
       } finally {
         execTestCLI(`
           wp plugin uninstall ${performanceLabPluginSlug} --deactivate ||:
-          wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
         `);
       }
     });
 
-    test('yyy test deletion / re installation of plugins', async ({ admin, page }) => {
+    test('test deletion / re installation of plugins', async ({ admin, page }) => {
       const extendifyPluginSlug = 'extendify';
 
       const customExtendifyPluginRowSelector = `tr[data-plugin="plugins/${extendifyPluginSlug}/${extendifyPluginSlug}.php"]`;
 
-      try {
-        // try installing extendify plugin using the wp-admin interface
-        await admin.visitAdminPage('/plugin-install.php?s=extendify&tab=search&type=term');
+      // try installing extendify plugin using the wp-admin interface
+      await admin.visitAdminPage('/plugin-install.php?s=extendify&tab=search&type=term');
 
-        // install button should no be there for the extendify plugin since it's already installed as custom plugin
-        const installPluginButton = page.locator(`.plugin-card.plugin-card-extendify a.install-now`);
-        await expect(
-          installPluginButton,
-          'install button should not be present for already installed custom plugin'
-        ).toHaveCount(0);
+      // install button should no be there for the extendify plugin since it's already installed as custom plugin
+      const installPluginButton = page.locator(`.plugin-card.plugin-card-extendify a.install-now`);
+      await expect(
+        installPluginButton,
+        'install button should not be present for already installed custom plugin'
+      ).toHaveCount(0);
 
-        const activatePluginButton = page.locator(`.plugin-card.plugin-card-extendify a.activate-now`);
-        await expect(
-          activatePluginButton,
-          'activate button should be present for already installed custom plugin'
-        ).toHaveCount(1);
+      const activatePluginButton = page.locator(`.plugin-card.plugin-card-extendify a.activate-now`);
+      await expect(
+        activatePluginButton,
+        'activate button should be present for already installed custom plugin'
+      ).toHaveCount(1);
 
-        // click the activate button to activate the plugin
-        await activatePluginButton.click();
+      // click the activate button to activate the plugin
+      await activatePluginButton.click();
 
-        // wait for the plugin to be activated
-        await expect(page.locator(`${customExtendifyPluginRowSelector}.active`)).toBeVisible();
+      // wait for the plugin to be activated
+      await expect(page.locator(`${customExtendifyPluginRowSelector}.active`)).toBeVisible();
 
-        // now delete the plugin using the wp-admin interface
-        await admin.visitAdminPage('/plugins.php');
+      // now delete the plugin using the wp-admin interface
+      await admin.visitAdminPage('/plugins.php');
 
-        // deactivate the plugin first if it's active
-        const deactivateLink = page.locator(`${customExtendifyPluginRowSelector} .deactivate a`);
-        await deactivateLink.click();
+      // deactivate the plugin first if it's active
+      const deactivateLink = page.locator(`${customExtendifyPluginRowSelector} .deactivate a`);
+      await deactivateLink.click();
 
-        // wait for deactivation to complete
-        await expect(page.locator(`${customExtendifyPluginRowSelector}:not(.active)`)).toBeVisible();
+      // wait for deactivation to complete
+      await expect(page.locator(`${customExtendifyPluginRowSelector}:not(.active)`)).toBeVisible();
 
-        // append confirmation listener to the deletion in the dialog
-        page.on('dialog', async (dialog) => {
-          expect(dialog.type()).toBe('confirm');
-          await dialog.accept();
-        });
+      // append confirmation listener to the deletion in the dialog
+      page.on('dialog', async (dialog) => {
+        expect(dialog.type()).toBe('confirm');
+        await dialog.accept();
+      });
 
-        const deleteLink = page.locator(`${customExtendifyPluginRowSelector} .delete a`);
-        await deleteLink.click();
+      const deleteLink = page.locator(`${customExtendifyPluginRowSelector} .delete a`);
+      await deleteLink.click();
 
-        // wait for the plugin row to be removed from the list
-        await expect(page.locator(`${customExtendifyPluginRowSelector}.deleted`)).toHaveCount(1);
+      // wait for the plugin row to be removed from the list
+      await expect(page.locator(`${customExtendifyPluginRowSelector}.deleted`)).toHaveCount(1);
 
-        // now try reinstalling the plugin using wp admin interface
-        await admin.visitAdminPage('/plugin-install.php?s=extendify&tab=search&type=term');
+      // now try reinstalling the plugin using wp admin interface
+      await admin.visitAdminPage('/plugin-install.php?s=extendify&tab=search&type=term');
 
-        const reinstallPluginButton = page.locator(`.plugin-card.plugin-card-extendify a.install-now`);
-        await expect(reinstallPluginButton, 'reinstall button should be present for deleted custom plugin').toHaveCount(
-          1
-        );
+      const reinstallPluginButton = page.locator(`.plugin-card.plugin-card-extendify a.install-now`);
+      await expect(reinstallPluginButton, 'reinstall button should be present for deleted custom plugin').toHaveCount(
+        1
+      );
 
-        // click the reinstall button
-        await reinstallPluginButton.click();
+      // click the reinstall button
+      await reinstallPluginButton.click();
 
-        // wait for the plugin to be reinstalled
-        await expect(page.locator(`.plugin-card.plugin-card-extendify a.activate-now`)).toBeVisible();
+      // wait for the plugin to be reinstalled
+      await expect(page.locator(`.plugin-card.plugin-card-extendify a.activate-now`)).toBeVisible();
 
-        // check the plugin page to have the plugin listed as installed
-        await admin.visitAdminPage('/plugins.php');
-        await expect(page.locator(`${customExtendifyPluginRowSelector}.inactive`)).toBeVisible();
-      } finally {
-        execTestCLI(`
-          wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
-          wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '[]' --format=json
-        `);
-      }
+      // check the plugin page to have the plugin listed as installed
+      await admin.visitAdminPage('/plugins.php');
+      await expect(page.locator(`${customExtendifyPluginRowSelector}.inactive`)).toBeVisible();
     });
   }
 );
