@@ -204,8 +204,9 @@ HTML
             if (!newBtn || newBtn.dataset.listenerAttached === 'true') {
                 continue;
             }
-            newBtn.addEventListener('click',() => ionosStretchNewButtonClick(event, themeSlug), { once: true });
+            newBtn.addEventListener('click',() => ionosStretchThemeListClick(event, themeSlug), { once: true });
             newBtn.dataset.listenerAttached = 'true';
+            newBtn.classList.remove('theme-install');
             newBtn.removeAttribute('data-slug');
 
           }
@@ -213,7 +214,7 @@ HTML
           if (installButton) {
 
             installButton.addEventListener('click', (event) => {
-              ionosStretchNewButtonClick(event, event.target.dataset.slug);
+              ionosStretchThemeSingleClick(event);
             }, { once: true });
             installButton.classList.remove('theme-install');
           }
@@ -222,14 +223,14 @@ HTML
       return;
     };
 
-    function ionosStretchNewButtonClick(event, themeSlug) {
+    function ionosStretchThemeListClick(event, themeSlug) {
       event.stopPropagation();
       event.preventDefault();
       fetch('/wp-json/ionos/stretch-extra/v1/restore-theme', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-WP-Nonce': '%s'
+          'X-WP-Nonce': '%1$s'
         },
         body: JSON.stringify({ theme_slug: themeSlug })
       }).then(response => response.json()).then(data => {
@@ -240,6 +241,27 @@ HTML
         event.target.closest('.theme').appendChild(noticeDiv);
 
         wp.updates.installThemeSuccess({slug: themeSlug, activateUrl: data.activate_url});
+        _wpThemeSettings.installedThemes.push(themeSlug)
+      });
+
+      return false;
+    }
+
+    function ionosStretchThemeSingleClick(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      const themeSlug = event.target.dataset.slug
+      fetch('/wp-json/ionos/stretch-extra/v1/restore-theme', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-WP-Nonce': '%1$s'
+        },
+        body: JSON.stringify({ theme_slug: themeSlug })
+      }).then(response => response.json()).then(data => {
+
+        event.target.innerText = "WIEDER DA";
+       // wp.updates.installThemeSuccess({slug: themeSlug, activateUrl: data.activate_url});
         _wpThemeSettings.installedThemes.push(themeSlug)
       });
 
