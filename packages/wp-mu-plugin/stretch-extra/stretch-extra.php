@@ -23,7 +23,7 @@ defined('ABSPATH') || exit();
 if (! defined('IONOS_IS_STRETCH_SFS')  && defined('IONOS_IS_STRETCH') && \IONOS_IS_STRETCH) {
   define('IONOS_IS_STRETCH_SFS', array_key_exists('SFS', $_SERVER));
 }
-if ( defined('IONOS_IS_STRETCH_SFS') && !\IONOS_IS_STRETCH_SFS) {
+if (defined('IONOS_IS_STRETCH_SFS') && ! \IONOS_IS_STRETCH_SFS) {
   $_SERVER['SFS'] = 'stretch-extra';
 }
 
