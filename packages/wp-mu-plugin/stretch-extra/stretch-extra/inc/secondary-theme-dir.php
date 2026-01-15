@@ -306,9 +306,8 @@ function handle_restore_theme(\WP_REST_Request $request): \WP_REST_Response
     'success'      => true,
     'message'      => \esc_html__('Theme successfully restored', 'stretch-extra'),
     'theme_slug'   => $theme_slug,
-    'activate_url' => \wp_nonce_url(
-      \admin_url("themes.php?action=activate&stylesheet={$theme_slug}"),
-      "switch-theme_{$theme_slug}"
+    'activate_url' =>
+      \admin_url("themes.php?action=activate&stylesheet={$theme_slug}") . '&_wpnonce=' . \wp_create_nonce('switch-theme_' . $theme_slug
     ),
   ], 200);
 }
