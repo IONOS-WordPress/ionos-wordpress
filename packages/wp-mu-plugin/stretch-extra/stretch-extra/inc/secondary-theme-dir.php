@@ -37,7 +37,7 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
 \add_action('delete_theme', __NAMESPACE__ . '\delete_theme', 10, 1);
 \add_action('switch_theme', __NAMESPACE__ . '\switch_theme', 10, 3);
 \add_action('admin_print_scripts-theme-install.php', __NAMESPACE__ . '\admin_print_scripts_theme_install_php');
-\add_action('rest_api_init', __NAMESPACE__ . '\rest_api_init');
+\add_action('wp_ajax_install-theme', __NAMESPACE__ . '\ajax_theme_install', 0);
 
 /////////////////////////////////
 // Filter Functions
@@ -142,20 +142,23 @@ function muplugins_loaded()
   \update_option('stretch_extra_extendable_theme_dir_initialized', true, true);
 }
 
-function delete_theme($stylesheet)
+function delete_theme($slug)
 {
   // Only process themes from our custom directory
-  $theme = \wp_get_theme($stylesheet);
-  error_log('Try to delete theme: ' . $stylesheet);
+  $theme = \wp_get_theme($slug);
   if (! $theme->exists() || ! str_contains($theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR)) {
     return;
   }
-  mark_custom_theme_as_deleted($stylesheet);
+  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
+
+  $deleted_themes[] = $slug;
+  $deleted_themes   = array_unique($deleted_themes);
+
+  \update_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, $deleted_themes, true);
 }
 
 function switch_theme($new_name, $new_theme, $old_theme)
 {
-  // Only process themes from our custom directory
   if (! str_contains($new_theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR)) {
     return;
   }
@@ -190,144 +193,35 @@ function admin_print_scripts_theme_install_php()
 </script>
 HTML
     , \wp_json_encode(array_values($deleted_themes)), \wp_json_encode(array_keys($custom_themes)));
-
-  printf(
-    <<<'HTML'
-<script type="text/javascript">
-  document.addEventListener('DOMContentLoaded', function() {
-    const targetNode = document.querySelector('.wrap');
-    const callback = (mutationsList, observer) => {
-      for (const mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-          for (const themeSlug of ionosExtraCustomThemes) {
-            const newBtn = document.querySelector(`[data-slug=${themeSlug}] a.theme-install`);
-            if (!newBtn || newBtn.dataset.listenerAttached === 'true') {
-                continue;
-            }
-            newBtn.addEventListener('click',() => ionosStretchThemeListClick(event, themeSlug), { once: true });
-            newBtn.dataset.listenerAttached = 'true';
-            newBtn.classList.remove('theme-install');
-            newBtn.removeAttribute('data-slug');
-
-          }
-          installButton = document.querySelector(`.theme-install-overlay a.theme-install`);
-          if (installButton) {
-
-            installButton.addEventListener('click', (event) => {
-              ionosStretchThemeSingleClick(event);
-            }, { once: true });
-            installButton.classList.remove('theme-install');
-          }
-        }
-      }
-      return;
-    };
-
-    function ionosStretchThemeListClick(event, themeSlug) {
-      event.stopPropagation();
-      event.preventDefault();
-      fetch('/wp-json/ionos/stretch-extra/v1/restore-theme', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': '%1$s'
-        },
-        body: JSON.stringify({ theme_slug: themeSlug })
-      }).then(response => response.json()).then(data => {
-
-        const noticeDiv = document.createElement('div');
-        noticeDiv.className = 'notice notice-success notice-alt';
-        noticeDiv.innerHTML = `<p>${data.message}</p>`;
-        event.target.closest('.theme').appendChild(noticeDiv);
-
-        wp.updates.installThemeSuccess({slug: themeSlug, activateUrl: data.activate_url});
-        _wpThemeSettings.installedThemes.push(themeSlug)
-      });
-
-      return false;
-    }
-
-    function ionosStretchThemeSingleClick(event) {
-      event.stopPropagation();
-      event.preventDefault();
-      const themeSlug = event.target.dataset.slug
-      fetch('/wp-json/ionos/stretch-extra/v1/restore-theme', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': '%1$s'
-        },
-        body: JSON.stringify({ theme_slug: themeSlug })
-      }).then(response => response.json()).then(data => {
-
-        event.target.innerText = "WIEDER DA";
-       // wp.updates.installThemeSuccess({slug: themeSlug, activateUrl: data.activate_url});
-        _wpThemeSettings.installedThemes.push(themeSlug)
-      });
-
-      return false;
-    }
-    const observer = new MutationObserver(callback);
-    observer.observe(targetNode, { childList: true, subtree: true });
-  });
-</script>
-HTML
-    ,
-    \wp_create_nonce('wp_rest')
-  );
 }
 
-function rest_api_init()
+function ajax_theme_install()
 {
-  \register_rest_route('ionos/stretch-extra/v1', '/restore-theme', [
-    'methods'             => 'POST',
-    'callback'            => __NAMESPACE__ . '\handle_restore_theme',
-    'permission_callback' => function () {
-      return \current_user_can('install_themes');
-    },
-    'args'                => [
-      'theme_slug' => [
-        'required'          => true,
-        'type'              => 'string',
-        'sanitize_callback' => '\sanitize_text_field',
-        'validate_callback' => function ($param) {
-          return ! empty($param) && is_string($param);
-        },
-      ],
-    ],
-  ]);
-}
+  $slug = $_POST['slug'] ?? '';
 
-///////////////////////////////////
-// REST API Handlers
-///////////////////////////////////
-function handle_restore_theme(\WP_REST_Request $request): \WP_REST_Response
-{
-  $theme_slug = $request->get_param('theme_slug');
+  if (empty($slug)) {
+    return;
+  }
+  $slug = \sanitize_text_field($slug);
 
-  // Remove theme from deleted themes list
-  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
-  $deleted_themes = array_filter($deleted_themes, fn ($theme) => $theme !== $theme_slug);
-  \update_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, $deleted_themes, true);
-
-  // Check if theme exists in custom directory
-  $theme = \wp_get_theme($theme_slug);
-  if (! $theme->exists() || ! str_contains($theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR)) {
-    return new \WP_REST_Response([
-      'success' => false,
-      'message' => \esc_html__('Theme not found in custom directory', 'stretch-extra'),
-    ], 404);
+  $custom_themes = get_custom_themes();
+  if (! array_key_exists($slug, $custom_themes)) {
+    return;
   }
 
-  return new \WP_REST_Response([
-    'success'      => true,
-    'message'      => \esc_html__('Installed', 'default'),
-    'theme_slug'   => $theme_slug,
-    'activate_url' =>
-      \admin_url("themes.php?action=activate&stylesheet={$theme_slug}") . '&_wpnonce=' . \wp_create_nonce(
-        'switch-theme_' . $theme_slug
-      ),
-  ], 200);
+  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
+  $deleted_themes = array_filter($deleted_themes, fn ($theme) => $theme !== $slug);
+  \update_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, $deleted_themes, true);
+
+  $response = [
+    'install'     => 'theme',
+    'slug'        => $slug,
+    'themeName'   => $custom_themes[$slug]->get('Name'),
+    'activateUrl' => \admin_url("themes.php?action=activate&stylesheet={$slug}") . '&_wpnonce=' . \wp_create_nonce(
+      'switch-theme_' . $slug
+    ),
+  ];
+  wp_send_json_success($response);
 }
 
 ///////////////////////////////////
@@ -339,14 +233,4 @@ function get_custom_themes()
   return array_filter($themes, function ($theme) {
     return str_contains($theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR);
   });
-}
-
-function mark_custom_theme_as_deleted($theme_key)
-{
-  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
-
-  $deleted_themes[] = $theme_key;
-  $deleted_themes   = array_unique($deleted_themes);
-
-  \update_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, $deleted_themes, true);
 }
