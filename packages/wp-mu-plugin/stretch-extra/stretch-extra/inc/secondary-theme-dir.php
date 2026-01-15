@@ -204,10 +204,10 @@ HTML
             if (!newBtn || newBtn.dataset.listenerAttached === 'true') {
                 continue;
             }
-            newBtn.addEventListener('click',() => ionosStretchNewButtonClick(event, themeSlug));
+            newBtn.addEventListener('click',() => ionosStretchNewButtonClick(event, themeSlug), { once: true });
             newBtn.dataset.listenerAttached = 'true';
             newBtn.removeAttribute('data-slug');
-            newBtn.removeEventListener('click', arguments.callee);
+
           }
 
           installButton = document.querySelector(`.theme-install-overlay a.theme-install`);
@@ -223,7 +223,6 @@ HTML
     function ionosStretchNewButtonClick(event, themeSlug) {
       event.stopPropagation();
       event.preventDefault();
-
       fetch('/wp-json/ionos/stretch-extra/v1/restore-theme', {
         method: 'POST',
         headers: {
