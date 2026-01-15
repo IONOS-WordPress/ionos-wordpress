@@ -179,11 +179,7 @@ function mark_custom_theme_as_deleted($theme_key)
 \add_action('admin_print_scripts-theme-install.php', function () {
   $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
 
-  $themes = \wp_get_themes();
-  // Filter themes to only include those from custom theme directory
-  $custom_themes = array_filter($themes, function ($theme) {
-    return str_contains($theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR);
-  });
+  $custom_themes = get_custom_themes();
 
   // JavaScript to modify _wpThemeSettings
   printf(<<<'HTML'
@@ -307,7 +303,43 @@ function handle_restore_theme(\WP_REST_Request $request): \WP_REST_Response
     'message'      => \esc_html__('Installed', 'default'),
     'theme_slug'   => $theme_slug,
     'activate_url' =>
-      \admin_url("themes.php?action=activate&stylesheet={$theme_slug}") . '&_wpnonce=' . \wp_create_nonce('switch-theme_' . $theme_slug
-    ),
+      \admin_url("themes.php?action=activate&stylesheet={$theme_slug}") . '&_wpnonce=' . \wp_create_nonce(
+        'switch-theme_' . $theme_slug
+      ),
   ], 200);
+}
+/**
+ * Disable update checks for custom themes
+ */
+\add_filter('pre_set_site_transient_update_themes', __NAMESPACE__ . '\no_updates_for_custom_themes');
+\add_filter('site_transient_update_themes', __NAMESPACE__ . '\no_updates_for_custom_themes');
+
+function no_updates_for_custom_themes($value)
+{
+  if (! isset($value->checked)) {
+    return $value;
+  }
+
+  $custom_themes = get_custom_themes();
+
+  // Remove custom themes from update check
+  foreach (array_keys($custom_themes) as $theme_slug) {
+    unset($value->checked[$theme_slug]);
+    if (isset($value->response[$theme_slug])) {
+      unset($value->response[$theme_slug]);
+    }
+    if (isset($value->no_update[$theme_slug])) {
+      unset($value->no_update[$theme_slug]);
+    }
+  }
+
+  return $value;
+}
+
+function get_custom_themes()
+{
+  $themes = \wp_get_themes();
+  return array_filter($themes, function ($theme) {
+    return str_contains($theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR);
+  });
 }
