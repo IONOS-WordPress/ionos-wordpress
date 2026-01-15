@@ -227,7 +227,7 @@ HTML
                     },
                     body: JSON.stringify({ theme_slug: themeSlug })
                   }).then(response => response.json()).then(data => {
-                   console.log("Restore theme response:", data);
+
                     const noticeDiv = document.createElement('div');
                     noticeDiv.className = 'notice notice-success notice-alt';
                     noticeDiv.innerHTML = `<p>${data.message}</p>`;
@@ -243,7 +243,7 @@ HTML
                   return false;
                 });
                 newBtn.dataset.listenerAttached = 'true';
-                newBtn.textContent = 'Restore';
+
               }
           }
         }
@@ -304,7 +304,7 @@ function handle_restore_theme(\WP_REST_Request $request): \WP_REST_Response
 
   return new \WP_REST_Response([
     'success'      => true,
-    'message'      => \esc_html__('Theme successfully restored', 'stretch-extra'),
+    'message'      => \esc_html__('Installed', 'default'),
     'theme_slug'   => $theme_slug,
     'activate_url' =>
       \admin_url("themes.php?action=activate&stylesheet={$theme_slug}") . '&_wpnonce=' . \wp_create_nonce('switch-theme_' . $theme_slug
