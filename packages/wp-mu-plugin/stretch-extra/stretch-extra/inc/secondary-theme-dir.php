@@ -182,7 +182,6 @@ function admin_print_scripts_theme_install_php()
   printf(<<<'HTML'
 <script type="text/javascript">
   const deletedThemes = JSON.parse('%s');
-  const ionosExtraCustomThemes = %s;
   document.addEventListener('DOMContentLoaded', function() {
     if (typeof _wpThemeSettings !== 'undefined') {
       if (_wpThemeSettings && _wpThemeSettings.installedThemes) {
@@ -192,11 +191,15 @@ function admin_print_scripts_theme_install_php()
   });
 </script>
 HTML
-    , \wp_json_encode(array_values($deleted_themes)), \wp_json_encode(array_keys($custom_themes)));
+    , \wp_json_encode(array_values($deleted_themes)));
 }
 
 function ajax_theme_install()
 {
+  if (! isset($_POST['_ajax_nonce']) || ! check_ajax_referer('updates', '_ajax_nonce', false)) {
+    \wp_die('Security check failed');
+  }
+
   $slug = $_POST['slug'] ?? '';
 
   if (empty($slug)) {
