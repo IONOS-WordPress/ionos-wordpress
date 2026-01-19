@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\mcp;
 
+use function ionos\essentials\_is_plugin_active;
+
 defined('ABSPATH') || exit();
 
 const APPLICATION_NAME = 'Essentials MCP';
@@ -115,7 +117,7 @@ function activate_mcp_server(): bool
     }
   }
 
-  if (! is_plugin_active('wordpress-mcp/wordpress-mcp.php')) {
+  if (! _is_plugin_active('wordpress-mcp/wordpress-mcp.php')) {
     \activate_plugin('wordpress-mcp/wordpress-mcp.php');
   }
 

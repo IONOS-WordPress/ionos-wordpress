@@ -1106,3 +1106,15 @@ msgstr "Cache-Verwaltung"
 #: ionos-essentials/inc/mcp/view.php
 msgid "Enter the following JSON into your preferred AI Clients settings file (under 'mcpServers' / 'servers')"
 msgstr "Geben Sie das folgende JSON in die Einstellungsdatei Ihres bevorzugten KI-Diensts ein (unter 'mcpServers' / 'servers')"
+
+#: ionos-essentials/inc/dashboard/blocks/site-health/index.php
+msgid "Current SSL-Status"
+msgstr "Aktueller SSL-Status"
+
+#: ionos-essentials/inc/dashboard/blocks/site-health/index.php
+msgid "Secure"
+msgstr "Sicher"
+
+#: ionos-essentials/inc/dashboard/blocks/site-health/index.php
+msgid "Insecure"
+msgstr "Unsicher"

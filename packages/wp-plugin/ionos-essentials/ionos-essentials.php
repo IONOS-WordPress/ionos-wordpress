@@ -6,7 +6,7 @@
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
- * Version:           1.4.2
+ * Version:           1.4.4
  * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials
  * License:           GPL-2.0-or-later
@@ -153,7 +153,29 @@ require_once __DIR__ . '/ionos-essentials/inc/migration/index.php';
 
 function is_stretch(): bool
 {
-  return str_starts_with(getcwd(), '/home/www/public');
+  return str_starts_with(getcwd(), '/home/www/public') || array_key_exists('SFS', $_SERVER);
+}
+
+/**
+ * Check if a plugin is active, including custom plugins loaded via ionos stretch extra
+ *
+ * This function should always be used in favor of WordPress function is_plugin_active
+ * to take custom loaded plugins from stretch-extra into account
+ */
+function _is_plugin_active(string $plugin): bool
+{
+  if (function_exists('\ionos\stretch_extra\secondary_plugin_dir\is_custom_plugin_active')) {
+    $_plugin   = 'plugins/' . $plugin;
+    $is_active = \ionos\stretch_extra\secondary_plugin_dir\is_custom_plugin_active($_plugin);
+    if ($is_active) {
+      return $is_active;
+    }
+  }
+
+  if (! function_exists('is_plugin_active')) {
+    require_once ABSPATH . 'wp-admin/includes/plugin.php';
+  }
+  return is_plugin_active($plugin);
 }
 
 // TODO: evaluate for other tenants than IONOS

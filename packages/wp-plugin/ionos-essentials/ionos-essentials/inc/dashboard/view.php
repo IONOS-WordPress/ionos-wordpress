@@ -2,6 +2,7 @@
 
 namespace ionos\essentials\dashboard;
 
+use function ionos\essentials\_is_plugin_active;
 use ionos\essentials\Tenant;
 
 defined('ABSPATH') || exit();
@@ -183,13 +184,13 @@ blocks\popup\render_callback();
 
 // Check theme and plugins
 $theme     = (get_stylesheet() === 'extendable');
-$extendify = is_plugin_active('extendify/extendify.php');
+$extendify = _is_plugin_active('extendify/extendify.php');
 
 // Detect ANY plugin that starts with "01-ext-"
 $match = array_filter(array_keys(\get_plugins()), fn ($k) => str_starts_with($k, '01-ext-'));
 
 $ext01_plugin_path = reset($match);
-$ext01             = $ext01_plugin_path && is_plugin_active($ext01_plugin_path);
+$ext01             = $ext01_plugin_path && _is_plugin_active($ext01_plugin_path);
 
 // Build array of missing items
 $missing_items = [];

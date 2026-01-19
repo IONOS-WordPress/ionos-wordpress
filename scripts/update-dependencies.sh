@@ -113,6 +113,9 @@ for package_path in $(find packages -mindepth 2 -maxdepth 2 -type d); do
   fi
 done
 
+# check for malicious packages using safedep vet
+docker run --rm -v $(pwd):/workspace ghcr.io/safedep/vet:latest scan -D /workspace
+
 exit
 
 ###help-message

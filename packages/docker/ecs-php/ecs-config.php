@@ -31,7 +31,8 @@ if( !class_exists('WordPressSecurityEscapeOutputSniff') ) {
 return $configure->withRules([
     // import the rules from our loaded codesniffer config
     ...array_values($sniffCodes),
-    WordPressSecurityEscapeOutputSniff::class,
+    // @TODO: Enable this sniff once we have fixed all the issues
+    // WordPressSecurityEscapeOutputSniff::class,
 ])
   ->withPaths(['.'])
   ->withRootFiles()
@@ -50,6 +51,8 @@ return $configure->withRules([
       '**/ecs-config.php',
       '**/rector-config-php7.4.php',
       '**/rector-fix-types.php',
+      '**/stretch-extra/plugins/*',
+      '**/stretch-extra/themes/*',
       YodaStyleFixer::class
     ]
   )

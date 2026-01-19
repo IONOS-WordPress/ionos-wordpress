@@ -4,9 +4,10 @@ namespace ionos\essentials\wpscan;
 
 defined('ABSPATH') || exit();
 
-use ionos\essentials\Tenant;
+use function ionos\essentials\_is_plugin_active;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
+use ionos\essentials\Tenant;
 
 class WPScan
 {
@@ -177,7 +178,7 @@ class WPScan
 
     printf(
       '<tr class="plugin-update-tr %s ionos-wpscan-notice"><td colspan="4" class="plugin-update colspanchange %s"><div class="update-message notice inline %s notice-alt">%s %s. <a href="%s">%s.</a></div></td></tr>',
-      \is_plugin_active($plugin_file) ? 'active' : 'inactive',
+      _is_plugin_active($plugin_file) ? 'active' : 'inactive',
       \esc_attr($noshadowclass ?? ''),
       \esc_attr('notice-error'),
       \esc_html__('The vulnerability scan has found issues for', 'ionos-essentials'),

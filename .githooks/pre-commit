@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+# script implements the precommit hook for automatically check for leaked secrets on "git commit"
+#
+# this feature is a opt-out - it will be executed if the CHECK_LEAKED_SECRETS is set to true in the .env file
+#
+# If you want to disable git hooks for some reason you can disable it
+# by setting it to false (CHECK_LEAKED_SECRETS='false') in your local .env.local file.
+#
+
+# skip when running in CI environment
+if [[ "$CI" == "true" ]]; then
+  exit 0
+fi
+
+# bootstrap the environment
+source "./scripts/includes/bootstrap.sh"
+
+
+[[ "$CHECK_LEAKED_SECRETS" =~ true|yes ]] || exit 0
+
+# test if docker image is locally available, otherwise pull it
+if [[ -z $(docker images -q zricethezav/gitleaks:latest) ]]; then
+  ionos.wordpress.log_info "pulling gitleaks docker image (only done on first run) ..."
+  docker pull zricethezav/gitleaks:latest
+fi
+
+docker run --rm -v "$(pwd):/path" zricethezav/gitleaks:latest protect --source="/path" --staged -v

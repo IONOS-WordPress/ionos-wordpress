@@ -1,5 +1,17 @@
 # @ionos-wordpress/essentials
 
+## 1.4.4
+
+### Patch Changes
+
+- a4ef2ab: extended hosting data
+
+## 1.4.3
+
+### Patch Changes
+
+- b00d0e1: several bug fixes
+
 ## 1.4.2
 
 ### Patch Changes

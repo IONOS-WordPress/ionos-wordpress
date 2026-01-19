@@ -2,15 +2,14 @@
 
 namespace ionos\wpdev\caddy\notebook;
 
-use WP_Admin_Bar;
-
 use const ionos\wpdev\caddy\MENU_PAGE_SLUG;
 use const ionos\wpdev\caddy\PLUGIN_DIR;
 use const ionos\wpdev\caddy\PLUGIN_FILE;
+use WP_Admin_Bar;
 
 defined('ABSPATH') || exit();
 
-const NOTEBOOKS_DIR = __DIR__ . '/notebooks';
+const NOTEBOOKS_DIR              = __DIR__ . '/notebooks';
 const NOTEBOOKS_PAGE_SLUG_PREFIX = MENU_PAGE_SLUG . '-notebook-';
 
 function get_notebooks(): array
@@ -28,24 +27,24 @@ function get_notebooks(): array
     }
 
     $dir = NOTEBOOKS_DIR . '/' . $name;
-    if (!is_dir($dir)) {
+    if (! is_dir($dir)) {
       continue;
     }
 
     $cells = [];
     foreach (scandir($dir) as $php_filename) {
       $php_file = $dir . '/' . $php_filename;
-      if (is_dir($php_file) || !str_ends_with($php_file, '.php')) {
+      if (is_dir($php_file) || ! str_ends_with($php_file, '.php')) {
         continue;
       }
 
       $cells[] = [
         'name'    => $php_filename,
-        'value' => file_get_contents($php_file),
+        'value'   => file_get_contents($php_file),
       ];
     }
 
-    $slug = NOTEBOOKS_PAGE_SLUG_PREFIX . \sanitize_title($name);
+    $slug        = NOTEBOOKS_PAGE_SLUG_PREFIX . \sanitize_title($name);
     $notebooks[] = [
       'name'    => $name,
       'slug'    => $slug,
@@ -59,27 +58,27 @@ function get_notebooks(): array
 \add_action(
   hook_name: 'admin_menu',
   callback: function () {
-    foreach(get_notebooks() as $notebook) {
+    foreach (get_notebooks() as $notebook) {
       \add_submenu_page(
         parent_slug: MENU_PAGE_SLUG,
         page_title : $notebook['name'],
         menu_title : $notebook['name'],
         capability : 'manage_options',
         menu_slug  : $notebook['slug'],
-        callback   : fn() => _render_notebook_page($notebook),
+        callback   : fn () => _render_notebook_page($notebook),
       );
     }
   }
 );
 
-\add_action( 'admin_enqueue_scripts', function(string $hook_suffix) {
-  if ( strpos( $hook_suffix, NOTEBOOKS_PAGE_SLUG_PREFIX ) === false ) {
+\add_action('admin_enqueue_scripts', function (string $hook_suffix) {
+  if (strpos($hook_suffix, NOTEBOOKS_PAGE_SLUG_PREFIX) === false) {
     return;
   }
 
   $notebook_slug = strstr($hook_suffix, MENU_PAGE_SLUG);
 
-  foreach(get_notebooks() as $notebook) {
+  foreach (get_notebooks() as $notebook) {
     if ($notebook['slug'] === $notebook_slug) {
       break;
     }
@@ -95,19 +94,16 @@ function get_notebooks(): array
   \wp_enqueue_style(
     handle  : NOTEBOOKS_PAGE_SLUG_PREFIX,
     src     : \plugin_dir_url(PLUGIN_FILE) . 'ionos-wpdev-caddy/notebooks/index.css',
-    deps    : ['code-editor',],
+    deps    : ['code-editor'],
     ver     : filemtime(PLUGIN_DIR . '/ionos-wpdev-caddy/notebooks/index.css'),
   );
 
   // inject our array of snippet catalog urls to load on the frontend
   \wp_add_inline_script(
     handle : NOTEBOOKS_PAGE_SLUG_PREFIX,
-    data   : sprintf(
-      "wp['ionos-wpdev-caddy-notebooks'] = %s;",
-      \wp_json_encode([
-        'current' => $notebook,
-      ])
-    ),
+    data   : sprintf("wp['ionos-wpdev-caddy-notebooks'] = %s;", \wp_json_encode([
+      'current' => $notebook,
+    ])),
   );
 });
 
@@ -165,7 +161,6 @@ function _render_notebook_page(array $notebook): void
     <div class="wrap">
       <h1>{page_title}</h1>
       <p>{page_title} helps IONOS WordPress development team finding issues and bugs.</p>
-
       <form>
         <dl>
           <dt>
@@ -174,14 +169,12 @@ function _render_notebook_page(array $notebook): void
           <dd>
           <select id="catalogs"></select>
           </dd>
-
           <dt>
             <label for="catalog_snippet">Snippet</label>
           </dt>
           <dd>
           <select id="catalog_snippet"></select>
           </dd>
-
           <dt>
             <label data-editor_label="1">PHP Code</label>
           </dt>
@@ -223,8 +216,6 @@ function _render_notebook_page(array $notebook): void
           </dd>
         </dl>
       </form>
-
-
       <dialog id="import_dialog" class="wp-dialog" closedby="any">
         <h3>Import Catalog</h3>
         <p>Use the textarea below to paste a snippet catalog in JSON format.</p>
@@ -245,7 +236,6 @@ function _render_notebook_page(array $notebook): void
           <em>(Click on backdrop to close dialog.)</em>
         </p>
       </dialog>
-
       <dialog id="export_dialog" class="wp-dialog" closedby="any">
         <h3>Export Catalog</h3>
         <p>You can copy the snippet catalog from textarea below to the clipboard</p>
@@ -275,7 +265,7 @@ function _render_notebook_page(array $notebook): void
 \add_action(
   hook_name: 'admin_bar_menu',
   callback: function (WP_Admin_Bar $wp_admin_bar) {
-    foreach(get_notebooks() as $notebook) {
+    foreach (get_notebooks() as $notebook) {
       $wp_admin_bar->add_node([
         'id'    => $notebook['slug'],
         'title' => $notebook['name'],

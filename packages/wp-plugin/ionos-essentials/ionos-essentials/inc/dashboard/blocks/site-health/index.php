@@ -3,6 +3,7 @@
 namespace ionos\essentials\dashboard\blocks\site_health;
 
 use const ionos\essentials\PLUGIN_DIR;
+use const ionos\essentials\PLUGIN_FILE;
 
 require_once PLUGIN_DIR . '/ionos-essentials/inc/dashboard/blocks/vulnerability/index.php';
 
@@ -16,8 +17,23 @@ function render_callback(): void
       <section class="card__section ionos-site-health">
         <div class="ionos-site-health-overview">
           <div class="ionos-site-health-overview__iframe" style="width: 240px; height: 150px; overflow: hidden;">
+  <?php
+  $iframe_url_live             = \add_query_arg('hidetoolbar', '1', \get_option('siteurl', ''));
+  $iframe_url_maintenance_mode = \plugins_url(
+    'ionos-essentials/inc/maintenance_mode/assets/maintenance.html',
+    PLUGIN_FILE
+  );
+
+  \wp_localize_script('ionos-essentials-dashboard', 'ionosMaintenanceMode', [
+    'siteUrlLive'            => $iframe_url_live,
+    'siteUrlMaintenanceMode' => $iframe_url_maintenance_mode,
+  ]);
+
+  $iframe_url =  (\ionos\essentials\maintenance_mode\is_maintenance_mode()) ? $iframe_url_maintenance_mode : $iframe_url_live;
+  ?>
             <iframe
-              src="<?php echo \esc_url(\get_option('siteurl', '')); ?>/?hidetoolbar=1"
+              id="ionos-site-preview"
+              src="<?php echo \esc_url($iframe_url); ?>"
               style="
                 width: 1440px;
                 height: 900px;
@@ -32,11 +48,19 @@ function render_callback(): void
           <div class="ionos-site-health-overview__info">
             <span class="badge badge--warning-solid ionos-maintenance-only" style="width: fit-content; margin-bottom: 10px;"><?php \esc_html_e('Maintenance page active', 'ionos-essentials'); ?></span>
             <div class="ionos-site-health-overview__info-homeurl">
-              <?php if (\is_ssl()) { ?>
-                <i class="exos-icon exos-icon-nav-lock-close-16"></i>
-              <?php } else { ?>
-                <i class="exos-icon exos-icon-nav-lock-16" style="color: #c90a00;"></i>
-              <?php } ?>
+              <?php
+      $title           = \esc_attr__('Current SSL-Status', 'ionos-essentials');
+  $status              = \esc_attr__('Secure', 'ionos-essentials');
+  $icon                = 'exos-icon exos-icon-nav-lock-close-16';
+  $style               = '';
+  if (! \is_ssl()) {
+    $status = \esc_attr__('Insecure', 'ionos-essentials');
+    $icon   = 'exos-icon exos-icon-nav-lock-16';
+    $style  = 'color: #c90a00;';
+  }
+
+  printf('<i class="%s" style="%s" title="%s: %s"></i>', $icon, $style, $title, $status);
+  ?>
               <h2 class="headline headline--sub"><?php echo \esc_url(parse_url(\get_option('siteurl', ''), PHP_URL_HOST)); ?></h2>
             </div>
             <div class="ionos-site-health-overview__info-items">

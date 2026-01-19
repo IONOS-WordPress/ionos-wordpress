@@ -96,13 +96,11 @@ if [[ "${TEST_PRODUCTION:-}" == 'true' ]]; then
 
     # echoes comma separated list of unpacked transpiled mu-plugins
     function mu_plugins {
-      # start with a comma in case there are at least a single mu-plugin
-      (find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d &>/dev/null) && echo ',';
       for PLUGIN in $(find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-        echo "\"wp-content/mu-plugins/${PLUGIN}.php\" : \"./packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}.php\","
         if [[ -d "./packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}" ]]; then
           zip_archive=$(find packages/wp-mu-plugin/${PLUGIN} -regex ".*\.zip" -printf '%f\n' 2>/dev/null || echo '')
-          echo "\"wp-content/mu-plugins/${PLUGIN}\" : \"./packages/wp-mu-plugin/${PLUGIN}/dist/${zip_archive%.zip}/${PLUGIN}\","
+          echo "\"wp-content/mu-plugins/${PLUGIN}.php\" : \"./packages/wp-mu-plugin/${PLUGIN}/dist/${zip_archive%.zip}/${PLUGIN}/${PLUGIN}.php\","
+          echo "\"wp-content/mu-plugins/${PLUGIN}\" : \"./packages/wp-mu-plugin/${PLUGIN}/dist/${zip_archive%.zip}/${PLUGIN}/${PLUGIN}\","
         fi
       done
     }

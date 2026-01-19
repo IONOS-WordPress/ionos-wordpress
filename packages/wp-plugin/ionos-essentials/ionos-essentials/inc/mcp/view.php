@@ -68,17 +68,17 @@ defined('ABSPATH') || exit();
         </div>
 
         <?php
-        $label     = \esc_html('Generate application password for user', 'ionos-essentials');
-$revokeAppPassword = 0;
+        $label      = \esc_html('Generate application password for user', 'ionos-essentials');
+$revoke_app_password= 0;
 if (\WP_Application_Passwords::application_name_exists_for_user(wp_get_current_user()->ID, APPLICATION_NAME)) {
-  $label             = \esc_html('Regenerate application password for user', 'ionos-essentials');
-  $revokeAppPassword = 1;
+  $label              = \esc_html('Regenerate application password for user', 'ionos-essentials');
+  $revoke_app_password= 1;
 }
 
 printf(
   '<button class="button button--primary ionos-essentials-mcp-activate %s" data-revoke-app-password="%s">%s</button>',
   (IONOS_ESSENTIALS_MCP_SERVER_ACTIVE) ? '' : 'hidden',
-  $revokeAppPassword,
+  $revoke_app_password,
   $label
 );
 ?>
