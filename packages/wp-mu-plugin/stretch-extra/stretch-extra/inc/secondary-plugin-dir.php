@@ -140,7 +140,7 @@ function get_custom_plugins(bool $include_deleted = false): array
   }
 
   if ($include_deleted) {
-      return $all_custom_plugins;
+    return $all_custom_plugins;
   }
 
   // Filter out deleted plugins
