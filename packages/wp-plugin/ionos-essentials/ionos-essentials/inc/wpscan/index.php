@@ -3,7 +3,7 @@
 namespace ionos\essentials\wpscan;
 
 defined('ABSPATH') || exit();
-
+use function ionos\stretch_extra\secondary_plugin_dir\get_custom_plugins;
 require_once __DIR__ . '/controller/class-wpscan.php';
 require_once __DIR__ . '/controller/class-wpscanmiddleware.php';
 require_once __DIR__ . '/views/summary.php';
@@ -39,13 +39,20 @@ function instant_check()
   if (empty($slug)) {
     \wp_send_json_error(null, 500);
   }
-  $middleware   = new WPScanMiddleware();
 
-  $issue_type = $middleware->get_instant_data($type, $slug);
-  if (false === $issue_type) {
-    \wp_send_json_error(null, 500);
+  $custom_plugins = get_custom_plugins(true);
+  $custom_installed_plugin_slugs = array_column($custom_plugins, 'slug');
+
+  if ( in_array($slug, $custom_installed_plugin_slugs)) {
+    \wp_send_json_success("nothing_found", 200);
+  } else {
+    $middleware   = new WPScanMiddleware();
+    $issue_type = $middleware->get_instant_data($type, $slug);
+    if (false === $issue_type) {
+      \wp_send_json_error(null, 500);
+    }
+    \wp_send_json_success($issue_type, 200);
   }
-  \wp_send_json_success($issue_type, 200);
 }
 
 function recommended_action(\WP_REST_Request $request)

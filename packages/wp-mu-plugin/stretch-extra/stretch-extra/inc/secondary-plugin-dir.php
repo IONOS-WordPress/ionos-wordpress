@@ -130,7 +130,7 @@ function deactivate_custom_plugin($plugin_key)
  * Get all custom plugins from the custom plugins directory (excluding deleted ones)
  * Returns an array of plugin info: ['key' => plugin_key, 'file' => plugin_file, 'data' => plugin_data]
  */
-function get_custom_plugins(): array
+function get_custom_plugins(bool $include_deleted = false): array
 {
   static $all_custom_plugins = null;
 
@@ -138,6 +138,11 @@ function get_custom_plugins(): array
     $bundle_config      = require_once __DIR__ . '/stretch-extra-config.php';
     $all_custom_plugins = $bundle_config['plugins'];
   }
+
+  if ($include_deleted) {
+      return $all_custom_plugins;
+  }
+
   // Filter out deleted plugins
   $deleted_plugins = get_deleted_custom_plugins();
   return array_filter($all_custom_plugins, function ($plugin_info) use ($deleted_plugins) {
