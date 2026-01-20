@@ -974,7 +974,7 @@ msgstr "Nuovo agente AI con funzionalità migliorate"
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Our new AI Agent is here to change the way you edit your site! Simply point and click on elements to make changes and try the new capabilities, from font and style changes to rearranging content."
-msgstr "Il nostro nuovo agente AI rivoluzionerà il modo di editare il tuo sito web! Basta un clic su qualsiasi elemento per modificarlo, testare nuove funzioni, cambiare font o riorganizzare i contenuti.”
+msgstr "Il nostro nuovo agente AI rivoluzionerà il modo di editare il tuo sito web! Basta un clic su qualsiasi elemento per modificarlo, testare nuove funzioni, cambiare font o riorganizzare i contenuti."
 
 #: ionos-essentials/inc/switch-page/view.php
 msgid "A native WordPress website in minutes. Our powerful AI generates design, images and content based on your needs."
