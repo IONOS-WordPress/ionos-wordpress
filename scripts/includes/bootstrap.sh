@@ -130,6 +130,9 @@ export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)
 # docker flags to use if docker containers will be invoked
 export DOCKER_FLAGS='-q'
 
+# composer flags to use if composer will be invoked
+export COMPOSER_FLAGS='--quiet'
+
 # if docker container should be started with same uid:guid mapping as in host system apply this setting to docker run
 export DOCKER_USER="$(id -u $USER):$(id -g $USER)"
 

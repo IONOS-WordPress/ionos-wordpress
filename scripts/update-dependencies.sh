@@ -92,8 +92,8 @@ function ionos.wordpress.update_composer_dependencies() {
     ionos.wordpress.log_header "checking '$composer_json' for updates ..."
     (
       cd "$(dirname $composer_json)"
-      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest update --no-install --no-scripts
-      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest composer outdated --locked --direct
+      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest update $COMPOSER_FLAGS --no-install --no-scripts
+      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest composer outdated $COMPOSER_FLAGS --locked --direct
     )
   done
 }
