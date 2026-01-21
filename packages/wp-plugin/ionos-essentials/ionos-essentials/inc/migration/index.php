@@ -92,9 +92,9 @@ function _install()
       \add_option('ionos_loop_consent', $ionos_loop_consent_given);
 
       // install the performance plugin for all non stretch spaces
-      if (! \IONOS_IS_STRETCH                                              &&
+      if (! defined('IONOS_IS_STRETCH')                                              &&
       ! is_plugin_active('ionos-performance/ionos-performance.php')        &&
-      ! \IS_LOCAL) {
+      ! defined('IS_LOCAL')) {
         install_plugin_from_url(
           'https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-group/ionos-performance.latest.zip'
         );
