@@ -160,6 +160,9 @@ importers:
       '@ionos-wordpress/ecs-php':
         specifier: workspace:*
         version: link:../../docker/ecs-php
+      '@ionos-wordpress/essentials':
+        specifier: workspace:*
+        version: link:../../wp-plugin/ionos-essentials
       '@ionos-wordpress/potrans':
         specifier: workspace:*
         version: link:../../docker/potrans
