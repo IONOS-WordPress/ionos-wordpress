@@ -19,9 +19,9 @@ source "./scripts/includes/bootstrap.sh"
 
 [[ "$CHECK_LEAKED_SECRETS" =~ true|yes ]] || exit 0
 
-# test if docker image is locally available, otherwise pull it
+# test if (newer) docker image is locally available, otherwise pull it
 if [[ -z $(docker images -q zricethezav/gitleaks:latest) ]]; then
-  ionos.wordpress.log_info "pulling gitleaks docker image (only done on first run) ..."
+  ionos.wordpress.log_info "pulling/updating gitleaks docker image (only done on first run) ..."
   docker pull zricethezav/gitleaks:latest
 fi
 
