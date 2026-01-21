@@ -19,7 +19,6 @@ namespace ionos\stretch_extra;
 
 defined('ABSPATH') || exit();
 
-
 // abort if called from WP-CLI to avoid issues with command line scripts
 // (need to prevent execution while wp was loaded by wp-cli)
 if (defined('WP_CLI')) {
