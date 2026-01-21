@@ -113,14 +113,9 @@ for package_path in $(find packages -mindepth 2 -maxdepth 2 -type d); do
   fi
 done
 
-# test if (newer) docker image is locally available, otherwise pull it
-if [[ -z $(docker images -q ghcr.io/safedep/vet:latest) ]]; then
-  ionos.wordpress.log_info "pulling/updating vet docker image ..."
-  docker pull ghcr.io/safedep/vet:latest
-fi
-
 # check for malicious packages using safedep vet
-docker run --rm -v $(pwd):/workspace ghcr.io/safedep/vet:latest scan -D /workspace
+# --pull=always is the cheapest way to ensure latest vet database is used
+docker run $DOCKER_FLAGS --pull=always --rm -v $(pwd):/workspace ghcr.io/safedep/vet:latest scan -D /workspace
 
 exit
 
