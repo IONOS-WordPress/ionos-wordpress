@@ -1089,7 +1089,7 @@ msgstr "Kopieren in die Zwischenablage ist fehlgeschlagen"
 
 #: ionos-essentials/inc/mcp/view.php
 msgid "Grant external AI Clients like Gemini & Claude secure access to your content, with the WordPress-MCP plugin."
-msgstr "Gewähren Sie externen KI-Diensten wie Gemini & Claude mit dem WordPress-MCP-Plugin sicheren Zugriff auf Ihre Inhalte."
+msgstr "Gewähren Sie externen KI-Clients wie Gemini & Claude mit dem WordPress-MCP-Plugin sicheren Zugriff auf Ihre Inhalte."
 
 #: ionos-essentials/inc/dashboard/view.php
 msgid "The Site-Assistant plugin is not activated. You need to do this before you can continue."
@@ -1105,7 +1105,7 @@ msgstr "Cache-Verwaltung"
 
 #: ionos-essentials/inc/mcp/view.php
 msgid "Enter the following JSON into your preferred AI Clients settings file (under 'mcpServers' / 'servers')"
-msgstr "Geben Sie das folgende JSON in die Einstellungsdatei Ihres bevorzugten KI-Diensts ein (unter 'mcpServers' / 'servers')"
+msgstr "Geben Sie das folgende JSON in die Einstellungsdatei Ihres bevorzugten KI-Clients ein (unter 'mcpServers' / 'servers')"
 
 #: ionos-essentials/inc/dashboard/blocks/site-health/index.php
 msgid "Current SSL-Status"
