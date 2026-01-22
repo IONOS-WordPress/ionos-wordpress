@@ -123,65 +123,63 @@ function get_notebooks(): array
 
 function _render_notebook_page(array $notebook): void
 {
+  $page_title = \esc_html($notebook['name']);
   printf(
-    strtr(<<<HTML
-    <div class="wrap">
-      <h1>{$notebook['name']}</h1>
-      <p>
-        Notebooks helps IONOS WordPress development team finding issues and bugs.
-      </p>
-      <p>
-        Cells are executed in the context of the currently loaded WordPress installation.
-        Execute cells with care - they run with your full WordPress user privileges.
-      </p>
+    <<<HTML
+      <div class="wrap">
+        <h1>{$page_title}</h1>
+        <p>
+          Notebooks helps IONOS WordPress development team finding issues and bugs.
+        </p>
+        <p>
+          Cells are executed in the context of the currently loaded WordPress installation.
+          Execute cells with care - they run with your full WordPress user privileges.
+        </p>
 
-      <form>
-        <dl id="ionos-wpdev-caddy-notebooks"></dl>
-      </form>
+        <form>
+          <dl id="ionos-wpdev-caddy-notebooks"></dl>
+        </form>
 
-      <template id="notebook-cell-template">
-        <dt>
-          <p>
-            <label class="notebook-cell-name"></label>
-          </p>
-        </dt>
-        <dd>
-          <div class="notebook-cell-body">
-            <textarea class="notebook-cell-editor"></textarea>
-          </div>
-          <p>
-            <button type="button" class="notebook-cell-execute button button-primary" title="Execute PHP cell on the server in WordPress context">
-              Execute cell
-            </button>
-            <span>&nbsp;</span>
-            <button type="button" class="notebook-cell-reset button button-secondary" title="Reset the editor content to the original cell content">
-              Reset Editor
-            </button>
-            <button type="button" class="notebook-cell-save button button-secondary" title="Save the current editor content to the server">
-              Save
-            </button>
-            <button type="button" class="notebook-cell-rename button button-secondary" title="Rename the current cell">
-              Rename
-            </button>
-          </p>
-          <div>
-            <label class="notebook-cell-output-label">Output:</label>
-            <textarea class="notebook-cell-output" rows="10" cols="50" readonly></textarea>
-          </div>
-          <hr>
-        </dd>
-      </template>
+        <template id="notebook-cell-template">
+          <dt>
+            <p>
+              <label class="notebook-cell-name"></label>
+            </p>
+          </dt>
+          <dd>
+            <div class="notebook-cell-body">
+              <textarea class="notebook-cell-editor"></textarea>
+            </div>
+            <p>
+              <button type="button" class="notebook-cell-execute button button-primary" title="Execute PHP cell on the server in WordPress context">
+                Execute cell
+              </button>
+              <span>&nbsp;</span>
+              <button type="button" class="notebook-cell-reset button button-secondary" title="Reset the editor content to the original cell content">
+                Reset Editor
+              </button>
+              <button type="button" class="notebook-cell-save button button-secondary" title="Save the current editor content to the server">
+                Save
+              </button>
+              <button type="button" class="notebook-cell-rename button button-secondary" title="Rename the current cell">
+                Rename
+              </button>
+            </p>
+            <div>
+              <label class="notebook-cell-output-label">Output:</label>
+              <textarea class="notebook-cell-output" rows="10" cols="50" readonly></textarea>
+            </div>
+            <hr>
+          </dd>
+        </template>
 
-      <p>
-        <em>
-          Cells are ordered alphabetically by their file name.
-        </em>
-      </p>
-    </div>
+        <p>
+          <em>
+            Cells are ordered alphabetically by their file name.
+          </em>
+        </p>
+      </div>
     HTML
-      , [
-        '{page_title}' => esc_html($notebook['name']),
-      ])
   );
 }
 

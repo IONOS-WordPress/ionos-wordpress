@@ -18,9 +18,8 @@
 
 namespace ionos\wpdev\caddy;
 
-use WP_Admin_Bar;
-
 use function ionos\wpdev\caddy\notebook\get_notebooks;
+use WP_Admin_Bar;
 
 defined('ABSPATH') || exit();
 
@@ -55,7 +54,8 @@ function _render_admin_page(): void
       <h2>Notebooks</h2>
       <p>Notebooks are small tools to help with debugging and development.</p>
       <ul>
-    HTML,
+    HTML
+    ,
   );
 
   foreach (get_notebooks() as $notebook) {
