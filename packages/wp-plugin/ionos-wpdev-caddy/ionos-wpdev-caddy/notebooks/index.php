@@ -12,7 +12,7 @@ defined('ABSPATH') || exit();
 const NOTEBOOKS_DIR              = __DIR__ . '/notebooks';
 const NOTEBOOKS_PAGE_SLUG_PREFIX = MENU_PAGE_SLUG . '-notebook-';
 
-const ACTION_SAVE = NOTEBOOKS_PAGE_SLUG_PREFIX . 'save-cell-value';
+const ACTION_SAVE    = NOTEBOOKS_PAGE_SLUG_PREFIX . 'save-cell-value';
 const ACTION_RENAME  = NOTEBOOKS_PAGE_SLUG_PREFIX . 'rename-cell';
 
 function get_notebooks(): array
@@ -47,11 +47,11 @@ function get_notebooks(): array
       ];
     }
 
-    usort($cells, function($l, $r) {
+    usort($cells, function ($l, $r) {
       return $l['name'] <=> $r['name'];
     });
 
-    $slug = NOTEBOOKS_PAGE_SLUG_PREFIX . \sanitize_title($name);
+    $slug        = NOTEBOOKS_PAGE_SLUG_PREFIX . \sanitize_title($name);
     $notebooks[] = [
       'name'    => $name,
       'slug'    => $slug,
@@ -187,19 +187,19 @@ function _render_notebook_page(array $notebook): void
 
 \add_action('wp_ajax_' . ACTION_SAVE, function () {
   // since we utilize the automatically available nonce from wp-api-fetch we need to use the expected key '_ajax_nonce' here
-  \check_ajax_referer('wp_rest', '_ajax_nonce');
+  check_ajax_referer('wp_rest', '_ajax_nonce');
 
   $notebook = $_POST['notebook'];
-  $cell = $_POST['cell'];
-  $value = \wp_unslash($_POST['value']);
+  $cell     = $_POST['cell'];
+  $value    = \wp_unslash($_POST['value']);
 
   $notebook_dir = NOTEBOOKS_DIR . '/' . $notebook;
-  if (!is_dir($notebook_dir)) {
+  if (! is_dir($notebook_dir)) {
     \wp_send_json_error(sprintf("Notebook '%s' does not exist.", $notebook));
   }
 
   $php_file = $notebook_dir . '/' . $cell;
-  if (!is_file($php_file)) {
+  if (! is_file($php_file)) {
     \wp_send_json_error(sprintf("Cell '%s' does not exist in notebook '%s'.", $cell, $notebook));
   }
 
@@ -210,19 +210,19 @@ function _render_notebook_page(array $notebook): void
 
 \add_action('wp_ajax_' . ACTION_RENAME, function () {
   // since we utilize the automatically available nonce from wp-api-fetch we need to use the expected key '_ajax_nonce' here
-  \check_ajax_referer('wp_rest', '_ajax_nonce');
+  check_ajax_referer('wp_rest', '_ajax_nonce');
 
-  $notebook = $_POST['notebook'];
+  $notebook       = $_POST['notebook'];
   $from_cell_name = $_POST['from_cell_name'];
-  $to_cell_name = $_POST['to_cell_name'];
+  $to_cell_name   = $_POST['to_cell_name'];
 
   $notebook_dir = NOTEBOOKS_DIR . '/' . $notebook;
-  if (!is_dir($notebook_dir)) {
+  if (! is_dir($notebook_dir)) {
     \wp_send_json_error(sprintf("Notebook '%s' does not exist.", $notebook));
   }
 
   $php_file = $notebook_dir . '/' . $from_cell_name;
-  if (!is_file($php_file)) {
+  if (! is_file($php_file)) {
     \wp_send_json_error(sprintf("Cell '%s' does not exist in notebook '%s'.", $from_cell_name, $notebook));
   }
 
@@ -231,8 +231,10 @@ function _render_notebook_page(array $notebook): void
     \wp_send_json_error(sprintf("Cell '%s' already exists in notebook '%s'.", $to_cell_name, $notebook));
   }
 
-  if (!rename($php_file, $to_php_file)) {
-    \wp_send_json_error(sprintf("Could not rename cell '%s' to '%s' in notebook '%s'.", $from_cell_name, $to_cell_name, $notebook));
+  if (! rename($php_file, $to_php_file)) {
+    \wp_send_json_error(
+      sprintf("Could not rename cell '%s' to '%s' in notebook '%s'.", $from_cell_name, $to_cell_name, $notebook)
+    );
   }
 
   \wp_send_json_success(sprintf("Successfully saved value of cell '%s' in notebook '%s'.", $from_cell_name, $notebook));
