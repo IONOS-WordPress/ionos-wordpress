@@ -180,8 +180,8 @@ function get_installed_custom_plugins(): array
  */
 \add_filter('plugins_url', function ($url, $path, $plugin) {
   // if its not one of our plugins just return the original url
-  // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
-  if (! str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR) && ! array_key_exists('SFS', $_SERVER)) {
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required to work in local wp-env
+  if (! str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR) && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $url;
   }
 
