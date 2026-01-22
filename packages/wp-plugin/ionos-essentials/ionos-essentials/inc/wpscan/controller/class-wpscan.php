@@ -4,9 +4,10 @@ namespace ionos\essentials\wpscan;
 
 defined('ABSPATH') || exit();
 
-use ionos\essentials\Tenant;
+use function ionos\essentials\_is_plugin_active;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
+use ionos\essentials\Tenant;
 
 class WPScan
 {
@@ -88,12 +89,14 @@ class WPScan
   public function add_issue_on_theme_install(): void
   {
     $screen = get_current_screen();
-    if (! $screen || 'theme-install' !== $screen->id) {
+    if (! $screen || ('theme-install' !== $screen->id)) {
       return;
     }
 
+    \wp_enqueue_script('ionos-essentials-theme-install');
+
     \wp_localize_script(
-      'ionos-essentials-wpscan',
+      'ionos-essentials-theme-install',
       'ionosWPScanThemes',
       [
         'issues'  => $this->get_issues(),
@@ -105,14 +108,15 @@ class WPScan
 
   public function add_issue_on_plugin_install(): void
   {
-
     $screen = get_current_screen();
-    if (! $screen || 'plugin-install' !== $screen->id) {
+    if (! $screen || ('plugin-install' !== $screen->id)) {
       return;
     }
 
+    \wp_enqueue_script('ionos-essentials-plugin-install');
+
     \wp_localize_script(
-      'ionos-essentials-wpscan',
+      'ionos-essentials-plugin-install',
       'ionosWPScanPlugins',
       [
         'issues'  => $this->get_issues(),
@@ -125,20 +129,20 @@ class WPScan
   public function add_theme_issues_notice(): void
   {
     $screen = get_current_screen();
-    if (! $screen || 'themes' !== $screen->id) {
+    if (! $screen || ('themes' !== $screen->id)) {
       return;
     }
-    $isses  = $this->get_issues();
-    $issues = array_filter($isses, function ($issue) {
-      return 'theme' === $issue['type'];
-    });
+
+    $issues = array_filter($this->get_issues(), fn ($issue) => 'theme' === $issue['type']);
 
     if (0 === count($issues)) {
       return;
     }
 
+    \wp_enqueue_script('ionos-essentials-theme-overview');
+
     \wp_localize_script(
-      'ionos-essentials-wpscan',
+      'ionos-essentials-theme-overview',
       'ionosWPScanThemes',
       [
         'slugs' => array_column($issues, 'slug'),
@@ -174,7 +178,7 @@ class WPScan
 
     printf(
       '<tr class="plugin-update-tr %s ionos-wpscan-notice"><td colspan="4" class="plugin-update colspanchange %s"><div class="update-message notice inline %s notice-alt">%s %s. <a href="%s">%s.</a></div></td></tr>',
-      \is_plugin_active($plugin_file) ? 'active' : 'inactive',
+      _is_plugin_active($plugin_file) ? 'active' : 'inactive',
       \esc_attr($noshadowclass ?? ''),
       \esc_attr('notice-error'),
       \esc_html__('The vulnerability scan has found issues for', 'ionos-essentials'),

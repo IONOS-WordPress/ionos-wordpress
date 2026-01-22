@@ -1,23 +1,23 @@
 msgid ""
 msgstr ""
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: es_MX\n"
+"Language-Team: none\n"
+"Last-Translator: Automatically generated\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2025-08-05 22:39+0200\n"
+"POT-Creation-Date: 2025-04-09T08:51:38+00:00\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: ionos-essentials 0.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-09T08:51:38+00:00\n"
-"PO-Revision-Date: 2025-08-05 22:39+0200\n"
-"Language: es_MX\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: ionos-essentials\n"
 "X-Generator: Poedit 3.6\n"
 
 #. Description of the plugin
 #: ionos-essentials.php
 msgid "The Essentials plugin provides hosting specific functionality."
-msgstr "El plugin Essentials proporciona funcionalidades específicas para el hosting."
+msgstr "El plugin Essentials proporciona funcionalidades específicas para tu hosting."
 
 #. Author of the plugin
 #: ionos-essentials.php
@@ -41,6 +41,7 @@ msgstr "Iniciar el creador de páginas web con IA"
 msgid "Account Management"
 msgstr "Gestión de cuenta"
 
+#: ionos-essentials/inc/adminbar/index.php
 #: ionos-essentials/inc/dashboard/blocks/my-account/index.php
 #: ionos-essentials/inc/tenants/homepl.php
 msgid "Manage Hosting"
@@ -272,7 +273,7 @@ msgstr "Facturas"
 
 #: ionos-essentials/inc/tenants/strato.php
 msgid "Package overview"
-msgstr "Vista general del panel"
+msgstr "Vista general de planes"
 
 #: ionos-essentials/inc/tenants/strato.php
 msgid "Your invoices"
@@ -343,14 +344,6 @@ msgstr "Instalando..."
 msgid "Essentials"
 msgstr "Essentials"
 
-#: ionos-essentials/inc/dashboard/blocks/banner/index.php
-msgid "Rebuild Website"
-msgstr "Rehacer la página web"
-
-#: ionos-essentials/inc/dashboard/blocks/banner/index.php
-msgid "It is possible to rebuild your AI-created website within 72 hours"
-msgstr "Es posible volver a confeccionar tu página web creada con IA en 72 horas"
-
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Legally compliant selling with German Market Light"
 msgstr "Venta conforme a la legislación con German Market Light"
@@ -374,24 +367,8 @@ msgid "How do you want to create your new website?"
 msgstr "¿Cómo quieres crear tu nueva página web?"
 
 #: ionos-essentials/inc/switch-page/view.php
-msgid "Online in a few minutes"
-msgstr "Online en unos minutos"
-
-#: ionos-essentials/inc/switch-page/view.php
 msgid "With AI"
 msgstr "Con IA"
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "Automatic website creation based on your preferences and requirements. Including ready-to-go copy and images."
-msgstr "Creación automática de páginas web en función de tus preferencias y requisitos. Incluye textos e imágenes listos para usar."
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "100% WordPress"
-msgstr "100% WordPress"
-
-#: ionos-essentials/inc/switch-page/view.php
-msgid "You decide how to create your website. No worries, you can also start the AI creation from the WordPress Dashboard later."
-msgstr "Tú decides cómo crear tu página web. No te preocupes, también podrás iniciar la funcionalidad para confeccionarla con IA desde el panel de WordPress más tarde."
 
 #. translators: %1$s, %2$s, %3$s and %4$s are placeholders for html tags.
 #: ionos-essentials/inc/switch-page/view.php
@@ -541,7 +518,7 @@ msgstr "Tu opinión nos importa"
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php
 #: ionos-essentials/inc/dashboard/blocks/whats-new/index.php
 msgid "We're always looking for ways to make your WordPress hosting experience even better. Please take a few minutes to fill out a quick online survey."
-msgstr "Siempre estamos buscando formas de mejorar tu experiencia con el hosting de WordPress. Por favor, dedica unos minutos a realizar una breve encuesta online."
+msgstr "Siempre estamos buscando formas de mejorar tu experiencia con el hosting para WordPress. Por favor, dedica unos minutos a realizar una breve encuesta online."
 
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 #: ionos-essentials/inc/dashboard/blocks/popup/index.php
@@ -591,7 +568,7 @@ msgid "Your %s plugin team"
 msgstr "Tu equipo de plugins %s"
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscan.php
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "More information"
 msgstr "Más información"
 
@@ -641,31 +618,34 @@ msgstr "Escáner de vulnerabilidades"
 msgid "issue found"
 msgstr "problema detectado"
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Checking for vulnerabilities..."
 msgstr "Buscando vulnerabilidades..."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Warnings found. Installation is not recommended."
 msgstr "Alertas detectadas. No se recomienda la instalación."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "Critical vulnerabilities found! Installation is not possible."
 msgstr "¡Vulnerabilidades críticas detectadas! La instalación no es posible."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-install-index.js
 msgid "No vulnerabilities found. You can safely install this theme."
 msgstr "No se encontraron vulnerabilidades. Puedes instalar este tema de forma segura."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/plugin-install-index.js
 msgid "No vulnerabilities found. You can safely install this plugin."
 msgstr "No se encontraron vulnerabilidades. Puedes instalar este plugin de forma segura."
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "The vulnerability scan has found issues"
 msgstr "El escáner de vulnerabilidades detectó problemas"
 
-#: ionos-essentials/build/wpscan/index.js
+#: ionos-essentials/build/wpscan/theme-overview-index.js
 msgid "Activation is not recommended"
 msgstr "La activación no es recomendable"
 
@@ -987,3 +967,154 @@ msgstr "Seleccionar un tema"
 #: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
 msgid "Choose a theme that matches your website's purpose and your comfort level."
 msgstr "Elige un tema que represente la esencia de tu página web y que encaje con tus expectativas de comodidad."
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "New AI Agent with Enhanced Capabilities"
+msgstr "Tu nuevo agente de IA con funcionalidades mejoradas"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Our new AI Agent is here to change the way you edit your site! Simply point and click on elements to make changes and try the new capabilities, from font and style changes to rearranging content."
+msgstr "Nuestro nuevo agente de IA cambiará la forma en que editas tu página web: solo tienes que hacer clic en un elemento para cambiarlo. Desde editar el estilo o fuente hasta reorganizar todo el contenido."
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "A native WordPress website in minutes. Our powerful AI generates design, images and content based on your needs."
+msgstr "Crea tu página con la aplicación de WordPress de forma sencilla en cuestión de minutos. Nuestra potente herramienta de IA genera el diseño, las imágenes y el contenido en función de tus necesidades."
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "Continue with AI"
+msgstr "Continuar con la IA"
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "Take full control of the creative process. You can easily switch over to the AI builder later from inside Wordpress."
+msgstr "Toma el control total del proceso creativo. Puedes cambiar fácilmente al AI builder más tarde desde dentro de Wordpress."
+
+#: ionos-essentials/inc/switch-page/view.php
+msgid "Create manually"
+msgstr "Crear manualmente"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Try it"
+msgstr "Probar ahora"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Create Legal Notice"
+msgstr "Crear aviso legal"
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Insert the necessary data for your company and your industry (or industries) into the legal notice (Impressum) template in order to operate your new website in a legally compliant manner."
+msgstr "Introduce los datos necesarios de tu empresa y tu sector o sectores en la plantilla de aviso legal para que tu nueva página web esté en conformidad con la normativa."
+
+#: ionos-essentials/inc/dashboard/blocks/next-best-actions/config.php
+msgid "Edit now"
+msgstr "Editar ahora"
+
+#. translators: %s is placeholder for the tenant name
+#: ionos-essentials/inc/dashboard/tabs/tools.php
+#: ionos-essentials/inc/dashboard/view.php
+msgid "Restart AI Sitebuilder"
+msgstr "Reiniciar el creador de páginas web con IA"
+
+#. translators: %s is placeholder for the tenant name
+#: ionos-essentials/inc/dashboard/tabs/tools.php
+msgid "Restart the AI Sitebuilder setup wizard to generate a new site from scratch. This will allow you to re-do the entire creation process."
+msgstr "Reinicia el creador de páginas web con IA para generar una nueva página desde cero. Esto te permitirá volver a comenzar el proceso de creación desde el principio."
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "This will permanently reset all content and data created by the AI Sitebuilder on this WordPress website."
+msgstr "Esta acción restablecerá permanentemente todo el contenido y los datos generados por el creador de páginas web con IA en esta página web de WordPress."
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "Pages initially created without the use of the AI Sitebuilder will be kept."
+msgstr "Se conservarán las páginas elaboradas originalmente sin el creador de páginas web con IA."
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "The Extendable theme is not installed or set as the active theme. You need to do this before you can continue."
+msgstr "El tema Extendable no está instalado o no está activo. Necesitas activarlo antes de continuar."
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "Manage themes"
+msgstr "Gestionar temas"
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "The Extendify plugin is not installed or activated. You need to do this before you can continue."
+msgstr "El plugin Extendify no está instalado o activado. Necesitas activarlo antes de continuar."
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "Manage plugins"
+msgstr "Gestionar plugins"
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Allow AI to control your WordPress via MCP"
+msgstr "Permitir que la IA gestione tu WordPress mediante MCP"
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "For developers"
+msgstr "Para desarrolladores"
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Installing MCP capabilities"
+msgstr "Instalando funciones de MCP"
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Please take note of this as this is not stored and can not be viewed again."
+msgstr "Por favor, toma nota de este detalle. No se almacenará y no podrás volver a verlo."
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Copy to clipboard"
+msgstr "Copiar al portapapeles"
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "An error occured while enabling WordPress MCP."
+msgstr "Ocurrió un error al activar MCP para WordPress."
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "WordPress MCP disabled"
+msgstr "MCP para WordPress está desactivado"
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "WordPress MCP enabled"
+msgstr "MCP para WordPress está habilitado"
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "Copied to clipboard"
+msgstr "Copiado al portapapeles"
+
+#: ionos-essentials/build/dashboard/index.js
+msgid "Failed to copy to clipboard"
+msgstr "Error al copiar al portapapeles"
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Grant external AI Clients like Gemini & Claude secure access to your content, with the WordPress-MCP plugin."
+msgstr "Concede a clientes externos de IA, como Gemini y Claude, acceso seguro a tu contenido con el plugin WordPress-MCP."
+
+#: ionos-essentials/inc/dashboard/view.php
+msgid "The Site-Assistant plugin is not activated. You need to do this before you can continue."
+msgstr "El plugin Site-Assistant no está activado. Necesitas activarlo antes de continuar."
+
+#: ionos-essentials/inc/tenants/ionos.php
+msgid "Log Analysis"
+msgstr "Análisis de registros (logs)"
+
+#: ionos-essentials/inc/tenants/ionos.php
+msgid "Manage Cache"
+msgstr "Gestionar caché"
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Enter the following JSON into your preferred AI Clients settings file (under 'mcpServers' / 'servers')"
+msgstr "Introduce el siguiente JSON en el archivo de configuración de tu cliente de IA preferido (en 'mcpServers' / 'servers')"
+
+#: ionos-essentials/inc/dashboard/blocks/site-health/index.php
+msgid "Current SSL-Status"
+msgstr "Estado actual de SSL"
+
+#: ionos-essentials/inc/dashboard/blocks/site-health/index.php
+msgid "Secure"
+msgstr "Seguro"
+
+#: ionos-essentials/inc/dashboard/blocks/site-health/index.php
+msgid "Insecure"
+msgstr "No seguro"

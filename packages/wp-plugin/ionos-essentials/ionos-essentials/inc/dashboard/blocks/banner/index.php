@@ -4,19 +4,21 @@ namespace ionos\essentials\dashboard\blocks\banner;
 
 defined('ABSPATH') || exit();
 
-use ionos\essentials\Tenant;
+use function ionos\essentials\_is_plugin_active;
 use const ionos\essentials\PLUGIN_FILE;
+use ionos\essentials\Tenant;
 
-const BUTTON_TEMPLATE = '<a href="%s" class="button %s" title="%s">%s</a>';
+const BUTTON_TEMPLATE = '<a href="%s" class="button %s" title="%s" target="%s">%s</a>';
 function render_callback(): void
 {
   $button_list = [];
 
   $view_site = [
     [
-      'link'           => \home_url(),
-      'text'           => \__('View Site', 'ionos-essentials'),
-      'css-class'      => 'button--primary',
+      'link'            => \home_url(),
+      'text'            => \__('View Site', 'ionos-essentials'),
+      'title'           => \__('View Site', 'ionos-essentials'),
+      'css-class'       => 'button--primary',
     ],
   ];
 
@@ -29,6 +31,7 @@ function render_callback(): void
     \esc_url($button['link'] ?? '#'),
     $button['css-class'] ?? 'button--secondary',
     $button['title']     ?? '',
+    $button['target']    ?? '_self',
     \esc_html($button['text'] ?? '')
   ), $button_list));
 
@@ -72,7 +75,7 @@ function render_callback(): void
 
 function get_ai_button(): array
 {
-  if ('extendable' !== \get_option('stylesheet') || ! \is_plugin_active('extendify/extendify.php')) {
+  if ('extendable' !== \get_option('stylesheet') || ! _is_plugin_active('extendify/extendify.php')) {
     return [];
   }
 
@@ -82,19 +85,8 @@ function get_ai_button(): array
       [
         'link'           => \admin_url('admin.php?page=extendify-launch'),
         'text'           => \__('Start AI Sitebuilder', 'ionos-essentials'),
+        'title'          => \__('Start AI Sitebuilder', 'ionos-essentials'),
         'css-class'      => 'button--promoting',
-        'target'         => '_blank',
-      ], ];
-  }
-
-  if (strtotime($launch_completed) > time() - (3 * 24 * 60 * 60)) {
-    return [
-      [
-        'link'           => \admin_url('admin.php?page=extendify-launch'),
-        'text'           => \__('Rebuild Website', 'ionos-essentials'),
-        'css-class'      => 'button--promoting',
-        'title'          => \__('It is possible to rebuild your AI-created website within 72 hours', 'ionos-essentials'),
-        'target'         => '_blank',
       ], ];
   }
 

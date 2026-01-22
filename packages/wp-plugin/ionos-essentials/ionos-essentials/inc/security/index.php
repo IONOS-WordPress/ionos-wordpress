@@ -2,8 +2,8 @@
 
 namespace ionos\essentials\security;
 
-use ionos\essentials\Tenant;
 use function ionos\essentials\is_stretch;
+use ionos\essentials\Tenant;
 
 defined('ABSPATH') || exit();
 

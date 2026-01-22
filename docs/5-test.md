@@ -83,6 +83,11 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
   >
   > There is a GitHub feature request to make this step unnecessary: https://github.com/microsoft/playwright/issues/34572 - but until then, we have to do this step manually.
 
+## Loggin out in e2e-tests
+
+If you logout within a test, please re-login afterwards with `await requestUtils.setupRest();`.
+See the the _maintenance_-test for real life example.
+
 # Linux bare metal testing (without being in devcontainer)
 
 Everything works exactly as in DevContainer, but you need to have the requirements installed globall :
@@ -104,6 +109,8 @@ to test the production build :
 - run the test command (excluding editor tests which are not available in the production build) : `pnpm run test`
 
 Alternatively you can destroy wp-env and start the everything at once by doing `TEST_PRODUCTION=true pnpm run test`.
+
+> When starting wp-env with `TEST_PRODUCTION=true` a `.wp-env.json.override` will be created to mount the transpiled php files into `wp-env`. **This file will not automatically be removed on `pnpm destroy` by intention - you have to do it manually.**
 
 # links
 

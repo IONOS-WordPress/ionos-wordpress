@@ -31,7 +31,8 @@ jobs:
     uses: ./.github/workflows/build-devcontainer-image.yaml
     secrets: inherit
 
-  test:
+  build:
+    name: build and test
     runs-on: ubuntu-latest
     needs:
       - devcontainer
@@ -49,26 +50,67 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: build_project
+        name: install project
         with:
           runCmd: |
             pnpm install --frozen-lockfile
-            # pnpm test
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: build project
+        with:
+          runCmd: |
+            pnpm run build
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: test project
+        with:
+          runCmd: |
             TEST_PRODUCTION=true pnpm run test
-
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts
         name: gather_workflow_artifacts
+        if: always()
         with:
           runCmd: |
             pnpm exec ./scripts/_get-workflow-artefacts.sh
 
       - name: attach workflow artifacts
         uses: actions/upload-artifact@v4
+        if: always()
         with:
+          include-hidden-files: true
           # see https://github.com/actions/upload-artifact/issues/424
           path: |-
             ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
+
+  lint:
+    runs-on: ubuntu-latest
+    needs:
+      - devcontainer
+    steps:
+      - name: checkout branch from git
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: install
+        with:
+          runCmd: |
+            pnpm install --frozen-lockfile
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: build necessary dockers
+        with:
+          runCmd: |
+            pnpm run build --filter ecs-php --filter dennis-i18n
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: lint_project
+        with:
+          runCmd: |
+            pnpm run lint
 
       # # automatically approve and merge dependabot PRs
       # dependabot:

@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\jetpack_flow;
 
+use function ionos\essentials\_is_plugin_active;
+
 defined('ABSPATH') || exit();
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -84,7 +86,7 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
     return;
   }
 
-  if (\is_plugin_active(JETPACK_PLUGIN_FILE)) {
+  if (_is_plugin_active(JETPACK_PLUGIN_FILE)) {
     if (str_contains(
       $_SERVER['REQUEST_URI'],
       'page=ionos-assistant&setup_action=partner&usecase=jetpack-backup&coupon='

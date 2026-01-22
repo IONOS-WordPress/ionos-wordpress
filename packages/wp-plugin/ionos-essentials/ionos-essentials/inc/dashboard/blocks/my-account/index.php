@@ -60,6 +60,7 @@ function render_callback(): void
     'link'           => $data['domain'] . $managehosting,
     'target'         => '_blank',
     'text'           => \esc_html__('Manage Hosting', 'ionos-essentials'),
+    'title'          => \esc_html__('Manage Hosting', 'ionos-essentials'),
     'css-attributes' => 'deeplink',
   ];
   return $button_list;

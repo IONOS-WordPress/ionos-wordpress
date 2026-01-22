@@ -1,5 +1,35 @@
 # @ionos-wordpress/essentials
 
+## 1.4.4
+
+### Patch Changes
+
+- a4ef2ab: extended hosting data
+
+## 1.4.3
+
+### Patch Changes
+
+- b00d0e1: several bug fixes
+
+## 1.4.2
+
+### Patch Changes
+
+- 0bc29dd: Add htaccess-info to loop data
+
+## 1.4.1
+
+### Patch Changes
+
+- ab10e6f: fix permission check for click tracking
+
+## 1.4.0
+
+### Minor Changes
+
+- 4f464f1: Adding Loop
+
 ## 1.3.3
 
 ### Patch Changes

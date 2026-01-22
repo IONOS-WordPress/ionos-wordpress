@@ -8,6 +8,7 @@ defined('ABSPATH') || exit();
 
 require_once PLUGIN_DIR . '/ionos-essentials/inc/class-tenant.php';
 
+use function ionos\essentials\_is_plugin_active;
 use ionos\essentials\Tenant;
 use function ionos\essentials\tenant\get_tenant_config;
 
@@ -30,7 +31,7 @@ NBA::register(
   categories: ['setup-ai']
 );
 
-if (is_plugin_active('extendify/extendify.php')) {
+if (_is_plugin_active('extendify/extendify.php')) {
   NBA::register(
     id: 'help-center',
     title: \__('Discover Help Center', 'ionos-essentials'),
@@ -45,7 +46,7 @@ if (is_plugin_active('extendify/extendify.php')) {
   );
 }
 
-if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
+if (_is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
   NBA::register(
     id: 'contact-form',
     title: \__('Set Up Contact Form', 'ionos-essentials'),
@@ -57,7 +58,7 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
   );
 }
 
-if (is_plugin_active('woocommerce/woocommerce.php')) {
+if (_is_plugin_active('woocommerce/woocommerce.php')) {
   $woo_onboarding_status = get_option('woocommerce_onboarding_profile');
 
   NBA::register(
@@ -107,7 +108,9 @@ if (null !== $data) {
     ),
     link: $data['domain'] . $connectdomain,
     anchor: \__('Connect Domain', 'ionos-essentials'),
-    completed: false === strpos(home_url(), 'live-website.com'),
+    completed: false === strpos(home_url(), 'live-website.com') &&
+      false          === strpos(home_url(), 'stretch.love')     &&
+      false          === strpos(home_url(), 'stretch.monster'),
     categories: ['setup-ai', 'setup-noai']
   );
 
@@ -131,7 +134,7 @@ if (null !== $data) {
 
 $tenant        = Tenant::get_slug();
 $market        = strtolower(\get_option($tenant . '_market', 'de'));
-if ('de' === $market && is_plugin_active('woocommerce/woocommerce.php') && ! is_plugin_active(
+if ('de' === $market && _is_plugin_active('woocommerce/woocommerce.php') && ! _is_plugin_active(
   'woocommerce-german-market-light/woocommerce-german-market-light.php'
 )) {
   NBA::register(
@@ -140,7 +143,7 @@ if ('de' === $market && is_plugin_active('woocommerce/woocommerce.php') && ! is_
     description: \__('Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner.', 'ionos-essentials'),
     link: '#',
     anchor: \__('Install now', 'ionos-essentials'),
-    completed: is_plugin_active(
+    completed: _is_plugin_active(
       'woocommerce-german-market-light/WooCommerce-German-Market-Light.php'
     ), // when gml is installed and activate
     categories: ['after-setup']
@@ -222,6 +225,63 @@ if ($contact_post_id) {
     anchor: \__('Personalize business data', 'ionos-essentials'),
     complete_on_click: true,
     categories: ['setup-ai']
+  );
+}
+
+function has_legal_page_for_locale(&$post_id = null)
+{
+  $locale = \get_locale();
+
+  // Check if locale is a variation of German or French
+  if (strpos($locale, 'de') === 0) {
+    $keyword = 'impressum';
+  } elseif (strpos($locale, 'fr') === 0) {
+    $keyword = 'mentions-legales';
+  } else {
+    return false;
+  }
+
+  $pages = \get_pages([
+    'post_status' => 'publish',
+  ]);
+
+  foreach ($pages as $page) {
+    $slug = strtolower($page->post_name);
+
+    if (strpos($slug, $keyword) !== false) {
+      $post_id = $page->ID;
+      return true;
+    }
+  }
+
+  return false;
+}
+
+$legal_post_id = null;
+
+if (has_legal_page_for_locale($legal_post_id)) {
+  NBA::register(
+    id: 'extendify-imprint',
+    title: __('Create Legal Notice', 'ionos-essentials'),
+    description: __('Insert the necessary data for your company and your industry (or industries) into the legal notice (Impressum) template in order to operate your new website in a legally compliant manner.', 'ionos-essentials'),
+    link: \admin_url('post.php?post=' . $legal_post_id . '&action=edit'),
+    anchor: __('Edit now', 'ionos-essentials'),
+    complete_on_click: true,
+    categories: ['setup-ai']
+  );
+}
+
+if ('extendable' === get_stylesheet() && \get_option('extendify_onboarding_completed')) {
+  NBA::register(
+    id: 'extendify-agent',
+    title: \__('New AI Agent with Enhanced Capabilities', 'ionos-essentials'),
+    description: \__('Our new AI Agent is here to change the way you edit your site! Simply point and click on elements to make changes and try the new capabilities, from font and style changes to rearranging content.', 'ionos-essentials'),
+    link: \add_query_arg('ionos-highlight', 'chatbot', home_url()),
+    anchor: \__('Try it', 'ionos-essentials'),
+    complete_on_click: true,
+    categories: ['always'],
+    exos_icon: 'machine-learning',
+    expanded: true
   );
 }
 

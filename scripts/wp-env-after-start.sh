@@ -133,6 +133,7 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     # emulate ionos brand by default
     wp --quiet option update ionos_group_brand ionos
     wp --quiet option update ionos_group_brand_menu IONOS
+    wp --quiet option update ionos_market de
 
     if [[ -n "${WPSCAN_TOKEN:-}" ]]; then
       wp --quiet option update ionos_security_wpscan_token "${WPSCAN_TOKEN}"
@@ -145,6 +146,10 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     # reset the user meta for compromised credentials check (in case of wp-env restart)
     wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2 &>/dev/null || true
 
+    # disable stretch-extra thirdparty plugin activation
+    # (=> this would result in activating both stretch-extra and real ionos-essentials for example)
+    wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
+    
     # fix permissions for mu-plugins folder if any
     # (leaving the permisions as-is will result in an error on destroy restart wp-env)
     if find /var/www/html/wp-content/mu-plugins -mindepth 1 -maxdepth 1 -type d -printf '%f\n' &>/dev/null; then

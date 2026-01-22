@@ -7,10 +7,14 @@ defined('ABSPATH') || exit();
 require_once __DIR__ . '/../dashboard/blocks/next-best-actions/index.php';
 require_once __DIR__ . '/../dashboard/blocks/next-best-actions/class-nba.php';
 
+use FilterIterator;
 use ionos\essentials\dashboard\blocks\next_best_actions\NBA;
-use ionos\essentials\Tenant;
 use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN;
 use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
+use ionos\essentials\Tenant;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
 
 const IONOS_LOOP_EVENTS_OPTION = 'ionos-loop-events';
 const IONOS_LOOP_CLICKS_OPTION = 'ionos-loop-clicks';
@@ -49,6 +53,10 @@ function _rest_loop_callback(): \WP_REST_Response
       'extendify' => [
         'extendify_onboarding_completed' => (bool) \get_option('extendify_onboarding_completed', null),
       ],
+      'mcp' => [
+        'settings' => \get_option('wordpress_mcp_settings', false),
+        'tracking' => \get_option('ionos_loop_mcp_tracking', []),
+      ],
     ],
   ];
 
@@ -82,6 +90,16 @@ function _rest_loop_click_callback(\WP_REST_Request $request): \WP_REST_Response
   return \rest_ensure_response([]);
 }
 
+function _rest_sso_click_callback(\WP_REST_Request $request): \WP_REST_Response
+{
+  // Store the current timestamp when SSO button is clicked
+  \update_option(IONOS_LOOP_SSO_CLICK_OPTION, time());
+
+  return \rest_ensure_response([
+    'success' => true,
+  ]);
+}
+
 function _get_dashbord_data(): array
 {
   $data = [
@@ -104,6 +122,140 @@ function _get_dashbord_data(): array
   return $data;
 }
 
+function _get_all_htaccess_md5(): array
+{
+  // Setup Iterators for deep search
+  $iterator = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator(ABSPATH, RecursiveDirectoryIterator::SKIP_DOTS)
+  );
+
+  // Filter the iterator to only include actual .htaccess files.
+  $htaccess_files = iterator_to_array(new class($iterator) extends FilterIterator {
+    public function accept(): bool
+    {
+      $file = $this->current();
+      return $file->isFile() && $file->getFilename() === '.htaccess';
+    }
+  });
+
+  $result = [];
+
+  foreach ($htaccess_files as $file) {
+    $path          = str_replace(ABSPATH, '', $file->getRealPath());
+    $result[$path] = _analyze_htaccess_file($file);
+  }
+
+  return $result;
+}
+
+function _analyze_htaccess_file(SplFileInfo $file): array
+{
+  $real_path = $file->getRealPath();
+  $checksum  = md5_file($real_path);
+  $content   = file_get_contents($real_path);
+
+  if ($content === false) {
+    return [
+      'md5'       => $checksum,
+      'use_cases' => ['htaccess_error_reading_file'],
+    ];
+  }
+
+  // Normalize content for analysis
+  $normalized = trim($content);
+
+  $use_cases = [];
+
+  // Check for exact "deny from all" (Apache 2.2 style)
+  if (preg_match('/^\s*deny\s+from\s+all\s*$/im', $content)) {
+    $use_cases[] = 'htaccess_deny_from_all';
+  }
+
+  // Check for Apache 2.4 "Require all denied"
+  if (preg_match('/^\s*Require\s+all\s+denied\s*$/im', $content)) {
+    $use_cases[] = 'htaccess_require_all_denied';
+  }
+
+  // Check for WordPress default permalink rules
+  if (strpos($content, 'BEGIN WordPress') !== false && strpos($content, 'END WordPress') !== false) {
+    $use_cases[] = 'htaccess_wordpress_permalinks';
+  }
+
+  // Check for index file blocking
+  if (preg_match('/Options\s+-Indexes/i', $content)) {
+    $use_cases[] = 'htaccess_disable_directory_listing';
+  }
+
+  // Check for redirect rules
+  if (preg_match('/Redirect(Match)?\s+(301|302|permanent|temp)/i', $content) ||
+      preg_match('/RewriteRule.*\[R=\d{3}\]/i', $content)) {
+    $use_cases[] = 'htaccess_redirect_rules';
+  }
+
+  // Check for HTTPS enforcement
+  if (preg_match('/RewriteCond.*HTTPS.*off/i', $content) ||
+      preg_match('/RewriteRule.*https:/i', $content)) {
+    $use_cases[] = 'htaccess_force_https';
+  }
+
+  // Check for security headers
+  if (preg_match(
+    '/Header\s+set\s+(X-Content-Type-Options|X-Frame-Options|X-XSS-Protection|Strict-Transport-Security|Content-Security-Policy)/i',
+    $content
+  )) {
+    $use_cases[] = 'htaccess_security_headers';
+  }
+
+  // Check for file protection rules
+  if (preg_match('/<Files[^>]*>.*deny.*<\/Files>/is', $content) ||
+      preg_match('/<FilesMatch[^>]*>.*deny.*<\/FilesMatch>/is', $content)) {
+    $use_cases[] = 'htaccess_file_protection';
+  }
+
+  // Check for IP blocking/allowing
+  if (preg_match('/(Allow|Deny)\s+from\s+\d+\.\d+\.\d+\.\d+/i', $content) ||
+      preg_match('/Require\s+(ip|not\s+ip)\s+\d+\.\d+\.\d+\.\d+/i', $content)) {
+    $use_cases[] = 'htaccess_ip_filtering';
+  }
+
+  // Check for custom error pages
+  if (preg_match('/ErrorDocument\s+\d{3}/i', $content)) {
+    $use_cases[] = 'htaccess_custom_error_pages';
+  }
+
+  // Check for caching rules
+  if (preg_match('/(mod_expires|ExpiresActive|ExpiresByType|Cache-Control)/i', $content)) {
+    $use_cases[] = 'htaccess_caching_rules';
+  }
+
+  // Check for PHP settings
+  if (preg_match_all('/php_(value|flag)\s+(\S+)/i', $content, $matches)) {
+    foreach ($matches[2] as $setting_name) {
+      $use_cases[] = 'htaccess_php_settings_' . $setting_name;
+    }
+  }
+
+  // Check for RewriteEngine usage (generic rewrite rules)
+  if (preg_match('/RewriteEngine\s+On/i', $content)) {
+    $use_cases[] = 'htaccess_rewrite_engine_active';
+  }
+
+  // Check if file is empty
+  if (empty($normalized)) {
+    $use_cases[] = 'htaccess_empty_file';
+  }
+
+  // Check for WooCommerce protection patterns
+  if (preg_match('/woocommerce.*uploads/i', $content)) {
+    $use_cases[] = 'htaccess_woocommerce_protection';
+  }
+
+  return [
+    'md5'       => $checksum,
+    'use_cases' => array_unique($use_cases),
+  ];
+}
+
 function _get_hosting(): array
 {
   return [
@@ -114,6 +266,7 @@ function _get_hosting(): array
     'core_version'        => \get_bloginfo('version'),
     'php_version'         => PHP_VERSION,
     'instance_created'    => _get_instance_creation_date(),
+    'htaccess_md5'        => (object) _get_all_htaccess_md5(),
   ];
 }
 

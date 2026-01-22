@@ -23,3 +23,6 @@ ionos.wordpress.vscode.create_settings.json
 # Example : `git commit --no-verify`
 ionos.wordpress.log_info "Setting up git hooks"
 git config core.hookspath "./.githooks"
+
+# link skills to gemini cli
+rm -rf ./.gemini/skills && ln -sr ./docs/skills ./.gemini/skills

@@ -311,7 +311,7 @@ function ionos.wordpress.wordpress_plugin() {
   exit_code=0
 
   # loop over all plugin directories
-  for dir in $(find ./packages/wp-plugin $([[ -d ./packages/wp-mu-plugin ]] && ./packages/wp-mu-plugin) -maxdepth 1 -mindepth 1 -type d); do
+  for dir in $(find ./packages/{wp-plugin,wp-mu-plugin} -maxdepth 1 -mindepth 1 -type d); do
     for plugin_file in $(ionos.wordpress.get_plugin_filenames $dir); do
       echo "checking $dir/$plugin_file"
 
@@ -341,11 +341,6 @@ function ionos.wordpress.wordpress_plugin() {
         exit_code=1
       fi
 
-      # test 'Update URI' field
-      if ! grep -qoP "Update URI:\s*.+$" $dir/$plugin_file; then
-        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Update URI' is missing or empty"
-        exit_code=1
-      fi
 
       # test 'Author' field
       if ! grep -qoP "Author:\s*.+$" $dir/$plugin_file; then
@@ -364,11 +359,24 @@ function ionos.wordpress.wordpress_plugin() {
         ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Domain Path: <languages-dir-path>' is missing or invalid"
         exit_code=1
       fi
+
+      # following checks are only for plugins in wp-plugin (not mu-plugins)
+      if [[ "$(dirname $dir)" == './packages/wp-mu-plugin' ]]; then
+        continue
+      fi
+      # test 'Update URI' field
+      if (! grep -qoP "Update URI:\s*.+$" $dir/$plugin_file); then
+        ionos.wordpress.log_error "$dir/$plugin_file:1 : plugin header 'Update URI' is missing or empty"
+        exit_code=1
+      fi
     done
   done
 
   return $exit_code
 }
+
+# ensure required docker images are built
+pnpm build --filter dennis-i18n --filter potrans --filter ecs-php > /dev/null
 
 declare -A summaries=()
 
