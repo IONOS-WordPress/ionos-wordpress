@@ -20,6 +20,8 @@ namespace ionos\wpdev\caddy;
 
 use WP_Admin_Bar;
 
+use function ionos\wpdev\caddy\notebook\get_notebooks;
+
 defined('ABSPATH') || exit();
 
 const PLUGIN_DIR      = __DIR__;
@@ -39,186 +41,31 @@ const MENU_PAGE_URI   = 'admin.php?page=' . MENU_PAGE_SLUG;
       menu_slug  : MENU_PAGE_SLUG,
       callback   : __NAMESPACE__ . '\_render_admin_page',
     );
-
-    // enqueue assets only on our plugin page
-    \add_action(
-      hook_name: "load-{$page_hook_suffix}",
-      callback: function () {
-        \wp_enqueue_code_editor([
-          'type' => 'application/x-httpd-php', // Specify the language mode
-          // Set the CodeMirror theme (e.g., 'default', 'ambiance', 'monokai', etc.)
-          'theme'      => 'monokai',
-          'codemirror' => [
-            'lineNumbers'    => true,
-            'tabSize'        => 2,
-            'indentUnit'     => 2,
-            'indentWithTabs' => false,
-            'lineWrapping'   => false,
-          ],
-        ]);
-
-        // enqueue our own script and styles
-        \wp_enqueue_script_module(
-          id      : MENU_PAGE_SLUG,
-          src     : \plugin_dir_url(PLUGIN_FILE) . 'ionos-wpdev-caddy/ionos-wpdev-caddy.js',
-          version : filemtime(PLUGIN_DIR . '/ionos-wpdev-caddy/ionos-wpdev-caddy.js'),
-        );
-        \wp_enqueue_style(
-          handle  : MENU_PAGE_SLUG,
-          src     : \plugin_dir_url(PLUGIN_FILE) . 'ionos-wpdev-caddy/ionos-wpdev-caddy.css',
-          ver     : filemtime(PLUGIN_DIR . '/ionos-wpdev-caddy/ionos-wpdev-caddy.css'),
-        );
-
-        // needed for doing the ajax call to our custom wp_ajax action
-        // @TODO: we cannot add it to the deps of our enqueued script since it's a module
-        \wp_enqueue_script('wp-api-fetch');
-
-        // inject our array of snippet catalog urls to load on the frontend
-        \wp_add_inline_script(
-          handle : 'wp-api-fetch', // @TODO: using our js module handle does not work here (probably since it's a module) - 'wp-api-fetch' is a workaround
-          data   : strtr(
-            <<<JS
-            wp['{MENU_PAGE_SLUG}'] = {
-              catalogs    : {catalogs},
-              ajax_url    : '{ajax_url}',
-              ajax_action : '{ajax_action}',
-            };
-            JS
-            ,
-            [
-              '{MENU_PAGE_SLUG}' => MENU_PAGE_SLUG,
-              // ajax_url is only here to be super self contained -> admin pages always contain the line "var ajaxurl = '/wp-admin/admin-ajax.php'"
-              '{ajax_url}'    => \admin_url('admin-ajax.php'),
-              '{ajax_action}' => MENU_PAGE_SLUG,
-              '{catalogs}'    => \wp_json_encode(
-                array_values(array_map(
-                  fn (string $file): string => \plugin_dir_url(
-                    PLUGIN_FILE
-                  ) . 'ionos-wpdev-caddy/catalogs/' . \sanitize_file_name($file),
-                  array_filter(
-                    scandir(PLUGIN_DIR . '/ionos-wpdev-caddy/catalogs'),
-                    fn (string $file): bool => str_ends_with($file, '.json') && $file !== 'schema.json'
-                  )
-                ))
-              ),
-            ]
-          )
-        );
-      },
-    );
   }
 );
 
 function _render_admin_page(): void
 {
   printf(
-    strtr(<<<HTML
+    <<<HTML
     <div class="wrap">
-      <h1>{page_title}</h1>
-      <p>{page_title} helps IONOS WordPress development team finding issues and bugs.</p>
+      <h1>WPDev Caddy</h1>
+      <p>WPDev Caddy helps IONOS WordPress development team finding issues and bugs.</p>
 
-      <form>
-        <dl>
-          <dt>
-            <label for="catalogs">Snippet catalog</label>
-          </dt>
-          <dd>
-          <select id="catalogs"></select>
-          </dd>
-
-          <dt>
-            <label for="catalog_snippet">Snippet</label>
-          </dt>
-          <dd>
-          <select id="catalog_snippet"></select>
-          </dd>
-
-          <dt>
-            <label data-editor_label="1">PHP Code</label>
-          </dt>
-          <dd>
-            <textarea
-              id="php_editor"
-              rows="10"
-              cols="50"><?php
-        // Your PHP code goes here
-            </textarea>
-          </dd>
-          <dt></dt>
-          <dd>
-            <p>
-              <button type="button" id="execute" class="button button-primary" title="Execute PHP Snippet on the server in WordPress context">
-                Execute Snippet
-              </button>
-              <span>&nbsp;</span>
-              <button type="button" id="reset" class="button button-secondary" title="Reset the editor content to the original snippet content">
-                Reset Editor
-              </button>
-              <button type="button" id="save" class="button button-secondary" title="Save the current editor content back to the snippet catalog">
-                Save Snippet
-              </button>
-              <span>&nbsp;</span>
-              <button type="button" id="export" class="button button-secondary" title="Export the current snippet catalog to the javascript console">
-                Export catalog
-              </button>
-              <button type="button" id="import" class="button button-secondary" title="Import snippet catalog">
-                Import catalog
-              </button>
-            </p>
-          </dd>
-          <dt>
-            <label for="output">Output:</label>
-          </dt>
-          <dd>
-            <textarea id="output" rows="10" cols="50" readonly></textarea>
-          </dd>
-        </dl>
-      </form>
-
-
-      <dialog id="import_dialog" class="wp-dialog" closedby="any">
-        <h3>Import Catalog</h3>
-        <p>Use the textarea below to paste a snippet catalog in JSON format.</p>
-        <textarea
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-          is="syntax-highlight"
-          language="json"
-        ></textarea>
-        <p>
-          <button type="button" id="import_catalog" class="button button-primary" title="Import snippet catalog into browser memory">
-            Import catalog
-          </button>
-        </p>
-        <p>
-          <em>(Click on backdrop to close dialog.)</em>
-        </p>
-      </dialog>
-
-      <dialog id="export_dialog" class="wp-dialog" closedby="any">
-        <h3>Export Catalog</h3>
-        <p>You can copy the snippet catalog from textarea below to the clipboard</p>
-        <textarea
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-          is="syntax-highlight"
-          language="json"
-        ></textarea>
-        <!-- <syntax-highlight language="js"></syntax-highlight> -->
-        <p>
-          <em>(Click on backdrop to close dialog.)</em>
-        </p>
-      </dialog>
-    </div>
-    HTML
-      , [
-        '{page_title}' => esc_html(MENU_PAGE_TITLE),
-      ])
+      <h2>Notebooks</h2>
+      <p>Notebooks are small tools to help with debugging and development.</p>
+      <ul>
+    HTML,
   );
+
+  foreach (get_notebooks() as $notebook) {
+    printf(
+      '<li><a href="%s">%s</a></li>',
+      \admin_url('admin.php?page=' . $notebook['slug']),
+      \esc_html($notebook['name']),
+    );
+  }
+  echo '</ul></div>';
 }
 
 \add_action('wp_ajax_' . MENU_PAGE_SLUG, function () {
