@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
 
+#
 # Wrapper script for stretch.sh from private repository
+# https://github.com/IONOS-WordPress/ionos-wordpress-private
 # Downloads the actual script on-demand and executes it
+#
+# This script transparently handles fetching and executing the latest version of the stretch.sh script
+#
+# Usage:
+#   ./stretch.sh [--update] [args...]
+#
+#   --update : Force re-download of the script
+#
 
 set -euo pipefail
 
