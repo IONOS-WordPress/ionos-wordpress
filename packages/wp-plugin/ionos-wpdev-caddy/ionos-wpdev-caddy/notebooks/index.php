@@ -12,6 +12,9 @@ defined('ABSPATH') || exit();
 const NOTEBOOKS_DIR              = __DIR__ . '/notebooks';
 const NOTEBOOKS_PAGE_SLUG_PREFIX = MENU_PAGE_SLUG . '-notebook-';
 
+const ACTION_SAVE    = NOTEBOOKS_PAGE_SLUG_PREFIX . 'save-cell-value';
+const ACTION_RENAME  = NOTEBOOKS_PAGE_SLUG_PREFIX . 'rename-cell';
+
 function get_notebooks(): array
 {
   static $notebooks = null;
@@ -43,6 +46,10 @@ function get_notebooks(): array
         'value'   => file_get_contents($php_file),
       ];
     }
+
+    usort($cells, function ($l, $r) {
+      return $l['name'] <=> $r['name'];
+    });
 
     $slug        = NOTEBOOKS_PAGE_SLUG_PREFIX . \sanitize_title($name);
     $notebooks[] = [
@@ -98,170 +105,140 @@ function get_notebooks(): array
     ver     : filemtime(PLUGIN_DIR . '/ionos-wpdev-caddy/notebooks/index.css'),
   );
 
-  // inject our array of snippet catalog urls to load on the frontend
   \wp_add_inline_script(
     handle : NOTEBOOKS_PAGE_SLUG_PREFIX,
-    data   : sprintf("wp['ionos-wpdev-caddy-notebooks'] = %s;", \wp_json_encode([
-      'current' => $notebook,
-    ])),
+    data   : sprintf(
+      "wp['ionos-wpdev-caddy-notebooks'] = %s;",
+      \wp_json_encode([
+        'current' => $notebook,
+        'actions' => [
+          'execute' => MENU_PAGE_SLUG,
+          'save'    => ACTION_SAVE,
+          'rename'  => ACTION_RENAME,
+        ],
+      ])
+    ),
   );
 });
 
 function _render_notebook_page(array $notebook): void
 {
+  $page_title = \esc_html($notebook['name']);
   printf(
-    strtr(<<<HTML
-    <div class="wrap">
-      <h1>{$notebook['name']}</h1>
-      <p>Notebooks helps IONOS WordPress development team finding issues and bugs.</p>
+    <<<HTML
+      <div class="wrap">
+        <h1>{$page_title}</h1>
+        <p>
+          Notebooks helps IONOS WordPress development team finding issues and bugs.
+        </p>
+        <p>
+          Cells are executed in the context of the currently loaded WordPress installation.
+          Execute cells with care - they run with your full WordPress user privileges.
+        </p>
 
-      <form>
-        <dl id="ionos-wpdev-caddy-notebooks"></dl>
-      </form>
+        <form>
+          <dl id="ionos-wpdev-caddy-notebooks"></dl>
+        </form>
 
-      <template id="notebook-cell-template">
-        <dt>
-          <p>
-            <label class="notebook-cell-name"></label>
-          </p>
-        </dt>
-        <dd>
-          <div class="notebook-cell-body">
-            <textarea class="notebook-cell-editor"></textarea>
-          </div>
-          <p>
-            <button type="button" class="action-execute button button-primary" title="Execute PHP Snippet on the server in WordPress context">
-              Execute Snippet
-            </button>
-            <span>&nbsp;</span>
-            <button type="button" class="action-reset button button-secondary" title="Reset the editor content to the original snippet content">
-              Reset Editor
-            </button>
-            <button type="button" class="action-save button button-secondary" title="Save the current editor content back to the snippet catalog">
-              Save Snippet
-            </button>
-          </p>
-          <div>
-            <label class="notebook-cell-output-label">Output:</label>
-            <textarea class="notebook-cell-output" rows="10" cols="50" readonly></textarea>
-          </div>
-          <hr>
-        </dd>
-      </template>
-    </div>
-    HTML
-      , [
-        '{page_title}' => esc_html($notebook['name']),
-      ])
-  );
-
-  /*
-  printf(
-    strtr(<<<HTML
-    <div class="wrap">
-      <h1>{page_title}</h1>
-      <p>{page_title} helps IONOS WordPress development team finding issues and bugs.</p>
-      <form>
-        <dl>
+        <template id="notebook-cell-template">
           <dt>
-            <label for="catalogs">Snippet catalog</label>
-          </dt>
-          <dd>
-          <select id="catalogs"></select>
-          </dd>
-          <dt>
-            <label for="catalog_snippet">Snippet</label>
-          </dt>
-          <dd>
-          <select id="catalog_snippet"></select>
-          </dd>
-          <dt>
-            <label data-editor_label="1">PHP Code</label>
-          </dt>
-          <dd>
-            <textarea
-              id="php_editor"
-              rows="10"
-              cols="50"><?php
-        // Your PHP code goes here
-            </textarea>
-          </dd>
-          <dt></dt>
-          <dd>
             <p>
-              <button type="button" id="execute" class="button button-primary" title="Execute PHP Snippet on the server in WordPress context">
-                Execute Snippet
+              <label class="notebook-cell-name"></label>
+            </p>
+          </dt>
+          <dd>
+            <div class="notebook-cell-body">
+              <textarea class="notebook-cell-editor"></textarea>
+            </div>
+            <p>
+              <button type="button" class="notebook-cell-execute button button-primary" title="Execute PHP cell on the server in WordPress context">
+                Execute cell
               </button>
               <span>&nbsp;</span>
-              <button type="button" id="reset" class="button button-secondary" title="Reset the editor content to the original snippet content">
+              <button type="button" class="notebook-cell-reset button button-secondary" title="Reset the editor content to the original cell content">
                 Reset Editor
               </button>
-              <button type="button" id="save" class="button button-secondary" title="Save the current editor content back to the snippet catalog">
-                Save Snippet
+              <button type="button" class="notebook-cell-save button button-secondary" title="Save the current editor content to the server">
+                Save
               </button>
-              <span>&nbsp;</span>
-              <button type="button" id="export" class="button button-secondary" title="Export the current snippet catalog to the javascript console">
-                Export catalog
-              </button>
-              <button type="button" id="import" class="button button-secondary" title="Import snippet catalog">
-                Import catalog
+              <button type="button" class="notebook-cell-rename button button-secondary" title="Rename the current cell">
+                Rename
               </button>
             </p>
+            <div>
+              <label class="notebook-cell-output-label">Output:</label>
+              <textarea class="notebook-cell-output" rows="10" cols="50" readonly></textarea>
+            </div>
+            <hr>
           </dd>
-          <dt>
-            <label for="output">Output:</label>
-          </dt>
-          <dd>
-            <textarea id="output" rows="10" cols="50" readonly></textarea>
-          </dd>
-        </dl>
-      </form>
-      <dialog id="import_dialog" class="wp-dialog" closedby="any">
-        <h3>Import Catalog</h3>
-        <p>Use the textarea below to paste a snippet catalog in JSON format.</p>
-        <textarea
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-          is="syntax-highlight"
-          language="json"
-        ></textarea>
+        </template>
+
         <p>
-          <button type="button" id="import_catalog" class="button button-primary" title="Import snippet catalog into browser memory">
-            Import catalog
-          </button>
+          <em>
+            Cells are ordered alphabetically by their file name.
+          </em>
         </p>
-        <p>
-          <em>(Click on backdrop to close dialog.)</em>
-        </p>
-      </dialog>
-      <dialog id="export_dialog" class="wp-dialog" closedby="any">
-        <h3>Export Catalog</h3>
-        <p>You can copy the snippet catalog from textarea below to the clipboard</p>
-        <textarea
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-          is="syntax-highlight"
-          language="json"
-        ></textarea>
-        <!-- <syntax-highlight language="js"></syntax-highlight> -->
-        <p>
-          <em>(Click on backdrop to close dialog.)</em>
-        </p>
-      </dialog>
-    </div>
+      </div>
     HTML
-      , [
-        '{page_title}' => esc_html(MENU_PAGE_TITLE),
-      ])
-    */
+  );
 }
 
-// ui sugar - not really needed
+\add_action('wp_ajax_' . ACTION_SAVE, function () {
+  // since we utilize the automatically available nonce from wp-api-fetch we need to use the expected key '_ajax_nonce' here
+  check_ajax_referer('wp_rest', '_ajax_nonce');
 
+  $notebook = $_POST['notebook'];
+  $cell     = $_POST['cell'];
+  $value    = \wp_unslash($_POST['value']);
+
+  $notebook_dir = NOTEBOOKS_DIR . '/' . $notebook;
+  if (! is_dir($notebook_dir)) {
+    \wp_send_json_error(sprintf("Notebook '%s' does not exist.", $notebook));
+  }
+
+  $php_file = $notebook_dir . '/' . $cell;
+  if (! is_file($php_file)) {
+    \wp_send_json_error(sprintf("Cell '%s' does not exist in notebook '%s'.", $cell, $notebook));
+  }
+
+  file_put_contents($php_file, $value);
+
+  \wp_send_json_success(sprintf("Successfully saved value of cell '%s' in notebook '%s'.", $cell, $notebook));
+});
+
+\add_action('wp_ajax_' . ACTION_RENAME, function () {
+  // since we utilize the automatically available nonce from wp-api-fetch we need to use the expected key '_ajax_nonce' here
+  check_ajax_referer('wp_rest', '_ajax_nonce');
+
+  $notebook       = $_POST['notebook'];
+  $from_cell_name = $_POST['from_cell_name'];
+  $to_cell_name   = $_POST['to_cell_name'];
+
+  $notebook_dir = NOTEBOOKS_DIR . '/' . $notebook;
+  if (! is_dir($notebook_dir)) {
+    \wp_send_json_error(sprintf("Notebook '%s' does not exist.", $notebook));
+  }
+
+  $php_file = $notebook_dir . '/' . $from_cell_name;
+  if (! is_file($php_file)) {
+    \wp_send_json_error(sprintf("Cell '%s' does not exist in notebook '%s'.", $from_cell_name, $notebook));
+  }
+
+  $to_php_file = $notebook_dir . '/' . $to_cell_name;
+  if (is_file($to_php_file)) {
+    \wp_send_json_error(sprintf("Cell '%s' already exists in notebook '%s'.", $to_cell_name, $notebook));
+  }
+
+  if (! rename($php_file, $to_php_file)) {
+    \wp_send_json_error(
+      sprintf("Could not rename cell '%s' to '%s' in notebook '%s'.", $from_cell_name, $to_cell_name, $notebook)
+    );
+  }
+
+  \wp_send_json_success(sprintf("Successfully saved value of cell '%s' in notebook '%s'.", $from_cell_name, $notebook));
+});
+
+// ui sugar - not really needed
 \add_action(
   hook_name: 'admin_bar_menu',
   callback: function (WP_Admin_Bar $wp_admin_bar) {

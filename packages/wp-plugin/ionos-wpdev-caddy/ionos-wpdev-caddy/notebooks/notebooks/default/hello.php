@@ -1,4 +1,6 @@
 <?php
 
-// Your PHP code goes here
+/*
+  hello world
+*/
 echo 'Hello from the default snippet!';
