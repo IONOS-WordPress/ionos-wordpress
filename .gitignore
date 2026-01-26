@@ -32,3 +32,4 @@ packages/*/*/webpack.config.js
 mcp.log
 .gemini/skills
 packages/docker/*/vendor
+scripts/stretch.sh
