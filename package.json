@@ -44,7 +44,7 @@
     "playground": "./scripts/playground.sh",
     "prepare": "./scripts/_prepare.sh",
     "stretch-extra": "./scripts/stretch-extra.sh",
-    "stretch": "[[ ! -f ./scripts/stretch.sh ]] && echo 'You need to download ./scripts/stretch.sh from Google Drive' || ./scripts/stretch.sh"
+    "stretch": "./scripts/stretch.sh"
   },
   "keywords": [
     "pnpm",
