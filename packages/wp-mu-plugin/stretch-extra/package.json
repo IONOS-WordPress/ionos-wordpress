@@ -6,7 +6,6 @@
     "postpack": "./scripts/postpack.sh"
   },
   "devDependencies": {
-    "@ionos-wordpress/essentials": "workspace:*",
     "@ionos-wordpress/rector-php": "workspace:*",
     "@ionos-wordpress/ecs-php": "workspace:*",
     "@ionos-wordpress/potrans": "workspace:*",

@@ -167,7 +167,7 @@ function ionos.wordpress.build_workspace_package_docker() {
 
   # generate/update composer.lock file if composer.json exists in docker workspace package
   if [[ -f "$path/composer.json" ]]; then
-    docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd)/$path":/app -w /app composer:latest install $COMPOSER_FLAGS --no-scripts
+    docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd)/$path":/app -w /app composer:latest update --no-install --no-scripts
   fi
 
   rm -rf $path/{dist,build,build-info}

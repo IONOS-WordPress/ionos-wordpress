@@ -19,5 +19,10 @@ source "./scripts/includes/bootstrap.sh"
 
 [[ "$CHECK_LEAKED_SECRETS" =~ true|yes ]] || exit 0
 
-# --pull=always is the cheapest way to ensure latest gitleaks database is used
-docker run $DOCKER_FLAGS --pull=always --rm -v "$(pwd):/path" zricethezav/gitleaks:latest protect --source="/path" --staged -v
+# test if docker image is locally available, otherwise pull it
+if [[ -z $(docker images -q zricethezav/gitleaks:latest) ]]; then
+  ionos.wordpress.log_info "pulling gitleaks docker image (only done on first run) ..."
+  docker pull zricethezav/gitleaks:latest
+fi
+
+docker run --rm -v "$(pwd):/path" zricethezav/gitleaks:latest protect --source="/path" --staged -v

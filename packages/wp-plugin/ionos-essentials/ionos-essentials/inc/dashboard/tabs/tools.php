@@ -5,6 +5,7 @@ namespace ionos\essentials\dashboard;
 defined('ABSPATH') || exit();
 
 use function ionos\essentials\_is_plugin_active;
+use function ionos\essentials\is_stretch;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
@@ -149,7 +150,7 @@ function get_settings_value($key)
                 'checked'   => get_settings_value(IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING) ? 'checked' : '',
               ]);
 
-if (! defined('IONOS_IS_STRETCH')) {
+if (! is_stretch()) {
   render_section([
     'title'       => \esc_html__('Block XML-RPC access', 'ionos-essentials'),
     'id'          => IONOS_SECURITY_FEATURE_OPTION_XMLRPC,

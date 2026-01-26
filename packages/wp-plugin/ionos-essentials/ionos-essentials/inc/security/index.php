@@ -2,6 +2,7 @@
 
 namespace ionos\essentials\security;
 
+use function ionos\essentials\is_stretch;
 use ionos\essentials\Tenant;
 
 defined('ABSPATH') || exit();
@@ -37,7 +38,7 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
   }
 
   require_once __DIR__ . '/ssl.php';
-  if (! defined('IONOS_IS_STRETCH')) {
+  if (! is_stretch()) {
     if (true === $security_options[IONOS_SECURITY_FEATURE_OPTION_XMLRPC]) {
       require_once __DIR__ . '/xmlrpc.php';
     }

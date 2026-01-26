@@ -375,9 +375,6 @@ function ionos.wordpress.wordpress_plugin() {
   return $exit_code
 }
 
-# ensure required docker images are built
-pnpm build --filter dennis-i18n --filter potrans --filter ecs-php > /dev/null
-
 declare -A summaries=()
 
 set +e

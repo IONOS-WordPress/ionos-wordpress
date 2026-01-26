@@ -26,3 +26,6 @@ git config core.hookspath "./.githooks"
 
 # link skills to gemini cli
 rm -rf ./.gemini/skills && ln -sr ./docs/skills ./.gemini/skills
+
+# install stretch extra plugins and themes
+pnpm stretch-extra --install

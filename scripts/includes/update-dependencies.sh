@@ -16,7 +16,7 @@ source "$(git rev-parse --show-toplevel)/scripts/includes/bootstrap.sh"
 #   local COMPOSER_PACKAGE_NAME=$1
 #   local ENVIRONMENT_VARIABLE_NAME=$2
 #   local CURRENT_VERSION="${!ENVIRONMENT_VARIABLE_NAME}"
-#   local LATEST_VERSION="$(docker run $DOCKER_FLAGS --rm composer:latest composer show $COMPOSER_FLAGS -a --format json $COMPOSER_PACKAGE_NAME 2>/dev/null | jq -r '.versions[0]')"
+#   local LATEST_VERSION="$(docker run $DOCKER_FLAGS --rm composer:latest composer show -a --format json $COMPOSER_PACKAGE_NAME 2>/dev/null | jq -r '.versions[0]')"
 
 #   if [[ "$LATEST_VERSION" != "$CURRENT_VERSION" ]]; then
 #     PACKAGE_VERSION=$(jq -r '.name' package.json)

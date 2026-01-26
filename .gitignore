@@ -31,4 +31,3 @@ packages/*/*/webpack.config.js
 .go-waas.env
 mcp.log
 .gemini/skills
-packages/docker/*/vendor
