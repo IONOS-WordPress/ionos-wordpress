@@ -152,7 +152,7 @@ HTML
 });
 
 \add_action('wp_ajax_install-theme', function () {
-  if (! isset($_POST['_ajax_nonce']) || ! check_ajax_referer('updates', '_ajax_nonce', false)) {
+  if (! check_ajax_referer('updates', '_ajax_nonce', false)) {
     \wp_die('Security check failed');
   }
 
