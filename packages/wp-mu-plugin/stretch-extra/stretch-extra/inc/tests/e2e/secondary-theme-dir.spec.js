@@ -6,7 +6,7 @@ const RESET_IONOS_STRETCH_OPTIONS_CLI_COMMANDS = `
   wp option delete stretch_extra_extendable_theme_dir_initialized
 `;
 
-const TEST_THEME_SLUG = 'extenable';
+const TEST_THEME_SLUG = 'extendable';
 
 test.describe(
   'stretch-extra:secondary-theme-dir',
