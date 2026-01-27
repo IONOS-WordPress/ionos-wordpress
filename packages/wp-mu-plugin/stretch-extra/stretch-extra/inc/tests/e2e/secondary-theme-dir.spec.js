@@ -23,7 +23,7 @@ test.describe(
         # in a real world scenario this would only be needed once
         wp option delete stretch_extra_extendable_theme_dir_initialized
         wp option delete IONOS_CUSTOM_DELETED_THEMES_OPTION
-        wp theme activate twentytwentyfive
+        wp theme activate twentyeleven
       `);
     });
 
