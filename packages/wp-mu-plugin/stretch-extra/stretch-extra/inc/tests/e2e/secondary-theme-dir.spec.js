@@ -23,13 +23,12 @@ test.describe(
         # in a real world scenario this would only be needed once
         wp option delete stretch_extra_extendable_theme_dir_initialized
         wp option delete IONOS_CUSTOM_DELETED_THEMES_OPTION
+        wp theme activate twentytwentyfive
       `);
     });
 
     test.afterAll(async () => {
       execTestCLI(`
-        # reset to default theme
-        wp theme activate twentytwentyfive
         ${RESET_IONOS_STRETCH_OPTIONS_CLI_COMMANDS}
         # reactivate ionos-essentials plugin
         wp plugin activate ionos-essentials
