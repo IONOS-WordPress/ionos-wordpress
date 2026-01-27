@@ -2,4 +2,4 @@
 'ionos-wordpress': patch
 ---
 
-refactoring for stretch instances
+change thumbnail behavior in maintenance mode
