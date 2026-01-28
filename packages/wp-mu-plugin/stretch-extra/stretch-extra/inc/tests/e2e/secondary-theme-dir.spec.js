@@ -11,26 +11,14 @@ test.describe(
   () => {
     test.beforeAll(async () => {
       execTestCLI(`
-        wp option delete stretch_extra_extendable_theme_dir_initialized
         wp theme activate twentytwentyfive
       `);
     });
 
-    test.afterAll(async () => {
-      execTestCLI(`
-        wp option delete stretch_extra_extendable_theme_dir_initialized
-      `);
-    });
-
     test('deletable', async ({ admin, page }) => {
-      const r = await execTestCLI(`wp theme list`);
-      console.log(r);
-
       await admin.visitAdminPage('/users.php');
       await admin.visitAdminPage('/plugins.php');
-
       await admin.visitAdminPage('/themes.php?search=' + TEST_THEME_SLUG);
-      await page.screenshot({ path: 'screenshot-before-delete.png' });
 
       page.once('dialog', async (dialog) => {
         await dialog.accept();
@@ -38,6 +26,8 @@ test.describe(
 
       await page.locator(`.theme[data-slug=${TEST_THEME_SLUG}]`).click();
       await page.locator('a.delete-theme').click();
+
+      await admin.visitAdminPage('/users.php');
       await admin.visitAdminPage('/themes.php');
       await expect(page.locator(`.theme[data-slug=${TEST_THEME_SLUG}]`)).toHaveCount(0);
     });
