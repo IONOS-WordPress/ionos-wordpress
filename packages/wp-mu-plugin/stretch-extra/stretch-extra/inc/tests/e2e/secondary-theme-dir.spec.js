@@ -11,13 +11,18 @@ test.describe(
   () => {
     test.beforeAll(async () => {
       execTestCLI(`
+        wp option delete stretch_extra_extendable_theme_dir_initialized
         wp theme activate twentytwentyfive
       `);
     });
 
+    test.afterAll(async () => {
+      execTestCLI(`
+        wp option delete stretch_extra_extendable_theme_dir_initialized
+      `);
+    });
+
     test('deletable', async ({ admin, page }) => {
-
-
       const r = await execTestCLI(`wp theme list`);
       console.log(r);
 
