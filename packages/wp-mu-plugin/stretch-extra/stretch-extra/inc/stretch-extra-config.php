@@ -35,6 +35,15 @@ return [
         'Name' => 'Essentials',
       ],
     ],
+    [
+      'url'  => 'https://downloads.wordpress.org/plugin/patchstack.zip',
+      'key'  => 'plugins/patchstack/patchstack.php',
+      'file' => IONOS_CUSTOM_DIR . '/plugins/patchstack/patchstack.php',
+      'slug' => 'patchstack',
+      'data' => [
+        'Name' => 'Patchstack',
+      ],
+    ],
   ],
   'themes' => [
     [
