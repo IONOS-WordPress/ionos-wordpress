@@ -43,9 +43,8 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 });
 
 \add_action('init', function (): void {
-  $script_name = $_SERVER['SCRIPT_NAME'] ?? '';
 
-  if ($script_name !== '' && str_contains(wp_login_url(), $script_name)) {
+  if (! isset($_SERVER['SCRIPT_NAME']) && str_contains(wp_login_url(), $script_name)) {
     \add_filter(
       'ionos_login_redirect_to',
       function ($redirect_to, $requested_redirect_to, $logged_user): string {
