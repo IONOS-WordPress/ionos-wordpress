@@ -17,6 +17,7 @@ const IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION = 'IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION';
 const IONOS_CUSTOM_DELETED_PLUGINS_OPTION = 'IONOS_CUSTOM_DELETED_PLUGINS_OPTION';
 
 // @TODO: hack just for beta : on first run activate all custom plugins
+// will be done in "spaceman" via sql: https://github.com/IONOS-Hosting/spaceman
 \add_action('plugins_loaded', function () {
   $is_initialized = \get_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION);
   if ($is_initialized !== false) {
@@ -29,7 +30,7 @@ const IONOS_CUSTOM_DELETED_PLUGINS_OPTION = 'IONOS_CUSTOM_DELETED_PLUGINS_OPTION
   \update_option('extendify_insights_stop', true, true);
 
   // Initialize the active plugins option as an empty array
-  foreach (get_custom_plugins() as $plugin_info) {
+  foreach (get_installed_custom_plugins() as $plugin_info) {
     // Activate all custom plugins by default on first run
     // @TODO: activate all in one update_option call
     activate_custom_plugin($plugin_info['key']);
@@ -126,55 +127,26 @@ function deactivate_custom_plugin($plugin_key)
 }
 
 /**
- * Get all custom plugins from the custom plugins directory (excluding deleted ones)
- * Returns an array of plugin info: ['key' => plugin_key, 'file' => plugin_file, 'data' => plugin_data]
+ * Get all custom plugins from the custom plugins directory
  */
-//@TODO: optimize: hardcode list of plugins. simplifiy, avoid glob and get_file_data calls
-function get_custom_plugins(): array
+function get_all_custom_plugins(): array
 {
   static $all_custom_plugins = null;
 
   if ($all_custom_plugins === null) {
-    $all_custom_plugins = [];
-
-    if (! is_dir(IONOS_CUSTOM_PLUGINS_DIR)) {
-      error_log(
-        sprintf(
-          'secondary-plugin-dir: skip loading plugins from custom directory(=%s) - directory does not exist or no valid plugins found',
-          IONOS_CUSTOM_PLUGINS_DIR,
-        )
-      );
-
-      return $all_custom_plugins;
-    }
-
-    $plugin_dirs = glob(IONOS_CUSTOM_PLUGINS_DIR . '*', GLOB_ONLYDIR);
-
-    foreach ($plugin_dirs as $plugin_dir) {
-      $plugin_slug  = basename($plugin_dir);
-      $plugin_files = glob($plugin_dir . '/*.php');
-
-      foreach ($plugin_files as $plugin_file) {
-        if (file_exists($plugin_file)) {
-          // Check if it's a valid plugin file by looking for plugin headers
-          $plugin_data = \get_file_data($plugin_file, [
-            'Name' => 'Plugin Name',
-          ]);
-          if (! empty($plugin_data['Name'])) {
-            $plugin_key           = IONOS_CUSTOM_PLUGINS_PATH . $plugin_slug . '/' . basename($plugin_file);
-            $all_custom_plugins[] = [
-              'key'  => $plugin_key,
-              'file' => $plugin_file,
-              'slug' => $plugin_slug,
-              'data' => $plugin_data,
-            ];
-            break; // Only process one main plugin file per directory
-          }
-        }
-      }
-    }
+    $bundle_config      = require_once __DIR__ . '/stretch-extra-config.php';
+    $all_custom_plugins = $bundle_config['plugins'];
   }
 
+  return $all_custom_plugins;
+}
+
+/**
+ * Get installed (not deleted) custom plugins
+ */
+function get_installed_custom_plugins(): array
+{
+  $all_custom_plugins = get_all_custom_plugins();
   // Filter out deleted plugins
   $deleted_plugins = get_deleted_custom_plugins();
   return array_filter($all_custom_plugins, function ($plugin_info) use ($deleted_plugins) {
@@ -186,7 +158,7 @@ function get_custom_plugins(): array
  * Inject activated custom plugins
  */
 \add_action('plugins_loaded', function () {
-  $custom_plugins = get_custom_plugins();
+  $custom_plugins = get_installed_custom_plugins();
   $active_plugins = get_active_custom_plugins();
 
   foreach ($custom_plugins as $plugin_info) {
@@ -208,8 +180,8 @@ function get_custom_plugins(): array
  */
 \add_filter('plugins_url', function ($url, $path, $plugin) {
   // if its not one of our plugins just return the original url
-  // array_key_exists('SFS', $_SERVER) is required to work in local wp-env
-  if (! str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR) && ! array_key_exists('SFS', $_SERVER)) {
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required to work in local wp-env
+  if (! str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR) && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $url;
   }
 
@@ -226,7 +198,7 @@ function get_custom_plugins(): array
 
   switch ($pagenow) {
     case 'plugins.php':
-      $custom_plugins  = get_custom_plugins();
+      $custom_plugins  = get_installed_custom_plugins();
       $deleted_plugins = get_deleted_custom_plugins();
 
       foreach ($custom_plugins as $plugin_info) {
@@ -258,7 +230,7 @@ function get_custom_plugins(): array
     return $result;
   }
 
-  $custom_plugins                = get_custom_plugins();
+  $custom_plugins                = get_installed_custom_plugins();
   $custom_installed_plugin_slugs = array_column($custom_plugins, 'slug');
   $custom_installed_plugin_slugs = array_merge(
     array_map(fn ($slug) => basename(dirname($slug)), get_deleted_custom_plugins()),
@@ -297,7 +269,7 @@ function get_custom_plugins(): array
  */
 \add_filter('upgrader_pre_install', function ($response, $hook_extra) {
   if (isset($hook_extra['plugin'])) {
-    $custom_plugins = get_custom_plugins();
+    $custom_plugins = get_installed_custom_plugins();
     $custom_slugs   = array_column($custom_plugins, 'slug');
 
     // Extract slug from plugin path
@@ -552,7 +524,7 @@ function get_custom_plugins(): array
     'slug' => $slug,
   ];
 
-  $custom_plugin = array_find(get_custom_plugins(), fn ($custom_plugin) => $custom_plugin['slug'] === $slug);
+  $custom_plugin = array_find(get_installed_custom_plugins(), fn ($_) => $_['slug'] === $slug);
 
   if ($custom_plugin===null) {
     // not a custom plugin, fallback to default handler
@@ -608,7 +580,7 @@ function get_custom_plugins(): array
 
   $slug = \wp_unslash($_POST['slug']);
 
-  $custom_plugin = array_find(get_custom_plugins(), fn ($custom_plugin) => $custom_plugin['slug'] === $slug);
+  $custom_plugin = array_find(get_installed_custom_plugins(), fn ($_) => $_['slug'] === $slug);
 
   if ($custom_plugin===null) {
     // not a custom plugin, fallback to default handler
@@ -676,8 +648,10 @@ function get_custom_plugins(): array
 */
 \add_filter('plugin_install_action_links', function ($links, $plugin) {
   $custom_plugin = array_find(
-    get_custom_plugins(),
-    fn ($custom_plugin) => $custom_plugin['slug'] === $plugin['slug'],
+    get_installed_custom_plugins(),
+    // CAVEAT: we cannot name it $custom plugin since rector will name it also $custom_plugin_*
+    // fn ($custom_plugin) => $custom_plugin['slug'] === $plugin['slug'],
+    fn ($_) => $_['slug'] === $plugin['slug'],
   );
 
   $is_active                  = false;
@@ -688,7 +662,7 @@ function get_custom_plugins(): array
   } else {
     $deleted_custom_plugin_slug = array_find(
       get_deleted_custom_plugins(),
-      fn ($deleted_custom_plugin) => str_contains($deleted_custom_plugin, $plugin['slug']),
+      fn ($_) => str_contains($_, $plugin['slug']),
     );
   }
 

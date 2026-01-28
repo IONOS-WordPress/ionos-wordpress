@@ -11,7 +11,8 @@ RUN export DEBIAN_FRONTEND=noninteractive
 # Install the xz-utils package
 # RUN apt-get update && apt-get install -y xz-utils
 
-RUN (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarn-archive-keyring.gpg \
+  && (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
   && sudo mkdir -p -m 755 /etc/apt/keyrings \
   && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
   && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
@@ -68,7 +69,7 @@ USER $USERNAME
 # ENV WP_ENV_HOME /home/$USERNAME/.wp-env
 
 ENV PNPM_VERSION 9.15.9
-ENV PNPM_NODEJS_VERSION 24.12.0
+ENV PNPM_NODEJS_VERSION 24.13.0
 ENV XDEBUG_MODE off
 
 # install pnpm

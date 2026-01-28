@@ -30,5 +30,5 @@ packages/*/*/webpack.config.js
 .DS_Store
 .go-waas.env
 mcp.log
-.gemini/settings.json
-.vscode/mcp.json
+.gemini/skills
+packages/docker/*/vendor
