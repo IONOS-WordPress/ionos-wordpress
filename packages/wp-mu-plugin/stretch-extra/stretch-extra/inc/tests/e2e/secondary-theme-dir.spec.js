@@ -26,6 +26,9 @@ test.describe(
       const r = await execTestCLI(`wp theme list`);
       console.log(r);
 
+      await admin.visitAdminPage('/users.php');
+      await admin.visitAdminPage('/plugins.php');
+
       await admin.visitAdminPage('/themes.php?search=' + TEST_THEME_SLUG);
       await page.screenshot({ path: 'screenshot-before-delete.png' });
 
