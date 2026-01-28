@@ -11,6 +11,7 @@ test.describe(
   () => {
     test.beforeAll(async () => {
       execTestCLI(`
+        wp option set stretch_extra_extendable_theme_dir_initialized 1
         wp theme activate twentytwentyfive
       `);
     });
