@@ -16,7 +16,13 @@ test.describe(
     });
 
     test('deletable', async ({ admin, page }) => {
-      await admin.visitAdminPage('/themes.php');
+
+
+      const r = await execTestCLI(`wp theme list`);
+      console.log(r);
+
+      await admin.visitAdminPage('/themes.php?search=' + TEST_THEME_SLUG);
+      await page.screenshot({ path: 'screenshot-before-delete.png' });
 
       page.once('dialog', async (dialog) => {
         await dialog.accept();
@@ -28,7 +34,7 @@ test.describe(
       await expect(page.locator(`.theme[data-slug=${TEST_THEME_SLUG}]`)).toHaveCount(0);
     });
 
-    test.skip('installable', async ({ admin, page }) => {
+    test('installable', async ({ admin, page }) => {
       await admin.visitAdminPage(`/theme-install.php?theme=${TEST_THEME_SLUG}`);
       await page.locator('.wp-full-overlay-header a.theme-install').click();
       await page.waitForTimeout(1000);
@@ -41,7 +47,7 @@ test.describe(
       expect(themeDirs).not.toContain(TEST_THEME_SLUG);
     });
 
-    test.skip('no update message', async ({ admin, page }) => {
+    test('no update message', async ({ admin, page }) => {
       await admin.visitAdminPage('/themes.php');
       await expect(page.locator(`.theme[data-slug=${TEST_THEME_SLUG}] .update-message`)).toHaveCount(0);
     });
