@@ -1,11 +1,5 @@
 # ionos-wordpress
 
-## 1.0.1
-
-### Patch Changes
-
-- 239f397: change thumbnail behavior in maintenance mode
-
 ## 0.0.6
 
 ### Patch Changes
