@@ -9,4 +9,3 @@ The real stretch script implementation will be downloaded on demand (=> first ex
 You can update/re-download the stretch script implementation at any time using `pnpm stretch --update`
 
 Please refer to https://github.com/IONOS-WordPress/ionos-wordpress-private/blob/main/scripts/README.md for detailed documentation and workflows.
-
