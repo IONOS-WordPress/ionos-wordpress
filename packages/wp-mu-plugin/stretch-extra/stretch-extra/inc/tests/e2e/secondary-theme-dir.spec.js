@@ -17,8 +17,6 @@ test.describe(
     });
 
     test('deletable', async ({ admin, page }) => {
-      await admin.visitAdminPage('/users.php');
-      await admin.visitAdminPage('/plugins.php');
       await admin.visitAdminPage('/themes.php?search=' + TEST_THEME_SLUG);
 
       page.once('dialog', async (dialog) => {
@@ -28,7 +26,6 @@ test.describe(
       await page.locator(`.theme[data-slug=${TEST_THEME_SLUG}]`).click();
       await page.locator('a.delete-theme').click();
 
-      await admin.visitAdminPage('/users.php');
       await admin.visitAdminPage('/themes.php');
       await expect(page.locator(`.theme[data-slug=${TEST_THEME_SLUG}]`)).toHaveCount(0);
     });
