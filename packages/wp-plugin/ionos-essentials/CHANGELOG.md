@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.4.5
+
+### Patch Changes
+
+- 4a25ec5: change thumbnail behavior in maintenance mode
+
 ## 1.4.4
 
 ### Patch Changes
