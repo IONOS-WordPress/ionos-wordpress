@@ -18,6 +18,10 @@ $info = strip_tags($info);
 $info = html_entity_decode($info);
 
 // 4. Optional: Clean up excessive whitespace/newlines
-$info = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $info);
+$info = preg_replace(
+  "/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/",
+  "\n",
+  $info
+);
 
 echo $info;
