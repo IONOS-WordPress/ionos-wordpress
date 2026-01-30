@@ -35,6 +35,15 @@ return [
         'Name' => 'Essentials',
       ],
     ],
+    [
+      'url' => 'https://wordpress.rankingcoach.com/update/archives/beyond-seo.zip',
+      'key' => 'plugins/beyond-seo/beyond-seo.php',
+      'file' => IONOS_CUSTOM_DIR . '/plugins/beyond-seo/beyond-seo.php',
+      'slug' => 'beyond-seo',
+      'data' => [
+        'Name' => 'BeyondSEO',
+      ],
+    ],
   ],
   'themes' => [
     [
