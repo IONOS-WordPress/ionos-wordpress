@@ -8,6 +8,7 @@
 set -eo pipefail
 
 # install stretch extra plugins and themes
+pnpm -w run stretch-extra --clean
 pnpm -w run stretch-extra --install
 
 # Copy plugins and themes folders to the dist directory
