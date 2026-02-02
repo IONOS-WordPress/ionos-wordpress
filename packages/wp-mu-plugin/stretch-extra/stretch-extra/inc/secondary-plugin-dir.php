@@ -29,10 +29,25 @@ const IONOS_CUSTOM_DELETED_PLUGINS_OPTION = 'IONOS_CUSTOM_DELETED_PLUGINS_OPTION
   // guessed ; it fails otherwise when php gets precompiled (OPCACHE)
   \update_option('extendify_insights_stop', true, true);
 
+  // workaround to get our PHP 7.4 CI tests working (=> BeyoundSEO requires PHP 8.0 as of now)
+  foreach (get_all_custom_plugins() as $plugin_info) {
+    $plugin_data = \get_plugin_data($plugin_info['file'], false, false);
+    // mark plugins as deleted if the minimal required php version is not met by the current environment
+    if (isset($plugin_data['RequiresPHP']) && version_compare(PHP_VERSION, $plugin_data['RequiresPHP'], '<')) {
+      mark_custom_plugin_as_deleted($plugin_info['key']);
+    }
+  }
+
   // Initialize the active plugins option as an empty array
   foreach (get_installed_custom_plugins() as $plugin_info) {
     // Activate all custom plugins by default on first run
     // @TODO: activate all in one update_option call
+
+    // workaround for wp-cli : if a plugin with same name is already active (=>ionos-essentials), skip activation to avoid conflicts
+    if (\is_plugin_active(str_replace('plugins/', '', $plugin_info['key']))) {
+      continue;
+    }
+
     activate_custom_plugin($plugin_info['key']);
   }
 });
