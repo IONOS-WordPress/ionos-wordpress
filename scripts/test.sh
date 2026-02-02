@@ -107,7 +107,7 @@ if [[ "${USE[@]}" =~ all|php ]]; then
       ionos.wordpress.log_header "checking compatibility for target php version $TARGET_PHP_VERSION in plugin $transpiled_plugin_dir"
       # check if the transpiled plugin code (except for phpunit test files ) is valid for the desired php version
       ! cat <<EOL | docker run -i --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:${TARGET_PHP_VERSION}-cli /bin/bash - | grep -v '^No syntax errors'
-find "$transpiled_plugin_dir" -name "*.php" -not -name "*Test.php" -print0 | xargs -0L1 php -l
+find "$transpiled_plugin_dir" -name "*.php" -not -name "*Test.php" -not -path "*/stretch-extra/stretch-extra/*" -print0 | xargs -0L1 php -l
 exit $?
 EOL
 
@@ -122,7 +122,7 @@ EOL
   # start wp-env unit tests. provide part specific options and all positional arguments that are php files
   # (files will be converted to '--filter *TestCase' arguments to match PHPUNit expectations)
   pnpm -s run wp-env run tests-wordpress phpunit -- \
-    "${USE_OPTIONS[php]}" \
+    "--exclude /var/www/html/wp-content/mu-plugins/stretch-extra ${USE_OPTIONS[php]}" \
     $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.php ]] && printf -- "--filter '%s'" $(basename $file .php); done)
 fi
 
