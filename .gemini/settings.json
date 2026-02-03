@@ -3,7 +3,15 @@
   "mcpServers": {
     "chrome-devtools": {
       "command": "pnpm",
-      "args": ["exec", "npx", "-y", "chrome-devtools-mcp@latest", "--no-usage-statistics", "--browser-url=http://127.0.0.1:9222", "--autoConnect"]
+      "args": [
+        "exec",
+        "npx",
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--no-usage-statistics",
+        "--browser-url=http://127.0.0.1:9222",
+        "--autoConnect"
+      ]
     }
   },
   "experimental": {
