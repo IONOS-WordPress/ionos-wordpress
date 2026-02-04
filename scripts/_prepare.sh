@@ -25,4 +25,4 @@ ionos.wordpress.log_info "Setting up git hooks"
 git config core.hookspath "./.githooks"
 
 # link skills to gemini cli
-rm -rf ./.gemini/skills && ln -sr ./docs/skills ./.gemini/skills
+rm -rf ./.gemini/skills && ln -s $(pwd)/docs/skills $(pwd)/.gemini/skills
