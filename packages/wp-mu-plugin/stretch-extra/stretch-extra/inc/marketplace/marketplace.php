@@ -20,7 +20,7 @@ add_filter( 'install_plugins_tabs', function ( $tabs ) {
 add_action( 'install_plugins_pre_ionos', function () {
   global $wp_list_table;
 
-  $config = require_once __DIR__ . '/marketplace-config.php';
+  $config = require_once __DIR__ . '/config.php';
 
   // 1. Define the plugin slugs you want
   $slugs = $config['wordpress_org_plugins'];
@@ -105,7 +105,7 @@ add_filter( 'plugins_api', function ( $result, $action, $args ) {
 			return $result;
 		}
 
-    $config = require_once __DIR__ . '/marketplace-config.php';
+    $config = require_once __DIR__ . '/config.php';
     if ( ! in_array( $args->slug, array_keys( $config['ionos_plugins'] ), true ) ) {
       return $result;
     }
