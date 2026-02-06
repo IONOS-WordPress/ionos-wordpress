@@ -57,11 +57,20 @@ add_action( 'install_plugins_pre_ionos', function () {
   usort($wp_list_table->items, fn($a, $b) => array_search($a['slug'], $slugs) <=> array_search($b['slug'], $slugs));
 
   // 6. Prepend IONOS Plugins
+  $ionos_plupings = $config['ionos_plugins'];
 
-  array_unshift(
-      $wp_list_table->items,
-      $config['ionos_plugins']['ionos-essentials'],
-  );
+  array_walk( $ionos_plupings, function ( &$plugin ) {
+    $plugin['rating'] = 0;
+    $plugin['ratings'] = [ '5' => 0, '4' => 0, '3' => 0, '2' => 0, '1' => 0 ];
+    $plugin['num_ratings'] = 0;
+    $plugin['active_installs'] = 0;
+  } );
+
+
+  $wp_list_table->items = array_merge(
+    $ionos_plupings,
+    $wp_list_table->items,
+);
 
 } );
 
@@ -82,7 +91,8 @@ add_action( 'install_plugins_ionos', function () {
 add_action( 'admin_head-plugin-install.php', function () {
   echo '
     <style>
-        div[class*="plugin-card-ionos-"] {
+       div[class*="plugin-card-ionos-"],
+       div.plugin-card-woocommerce-german-market-light {
           .column-downloaded, .column-rating {
             display: none;
           }
