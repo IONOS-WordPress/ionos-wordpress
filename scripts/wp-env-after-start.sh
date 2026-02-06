@@ -35,6 +35,11 @@ if [[ "${CI:-}" != "true" ]]; then
       cat <<EOF | docker exec --interactive -u root "${WP_ENV_HASH}-${suffix}" sh -
         grep -q 'xdebug.log_level=' /usr/local/etc/php/php.ini || \
           echo "xdebug.log_level=0" >> /usr/local/etc/php/php.ini
+
+          # enable apcu extension
+          echo 'n' | pecl install apcu
+          docker-php-ext-enable apcu
+          apache2ctl graceful
 EOF
     done
   )
