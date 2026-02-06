@@ -24,11 +24,6 @@ const IONOS_CUSTOM_DELETED_PLUGINS_OPTION = 'IONOS_CUSTOM_DELETED_PLUGINS_OPTION
     return;
   }
 
-  // @TODO: investigate and fix: https://hosting-jira.1and1.org/browse/GPHWPP-4243
-  // suppress extendify insights cron job on stretch (stretch-extra/stretch-extra/plugins/01-ext-ion8dhas7/01-ext-ion8dhas7.php)
-  // guessed ; it fails otherwise when php gets precompiled (OPCACHE)
-  \update_option('extendify_insights_stop', true, true);
-
   // workaround to get our PHP 7.4 CI tests working (=> BeyoundSEO requires PHP 8.0 as of now)
   foreach (get_all_custom_plugins() as $plugin_info) {
     $plugin_data = \get_plugin_data($plugin_info['file'], false, false);
@@ -37,7 +32,6 @@ const IONOS_CUSTOM_DELETED_PLUGINS_OPTION = 'IONOS_CUSTOM_DELETED_PLUGINS_OPTION
       mark_custom_plugin_as_deleted($plugin_info['key']);
     }
   }
-
   // Initialize the active plugins option as an empty array
   foreach (get_installed_custom_plugins() as $plugin_info) {
     // Activate all custom plugins by default on first run
@@ -172,7 +166,7 @@ function get_installed_custom_plugins(): array
 /**
  * Inject activated custom plugins
  */
-\add_action('plugins_loaded', function () {
+\add_action('muplugins_loaded', function () {
   $custom_plugins = get_installed_custom_plugins();
   $active_plugins = get_active_custom_plugins();
 
