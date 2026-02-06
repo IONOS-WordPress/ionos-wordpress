@@ -28,6 +28,12 @@ const IONOS_CUSTOM_DELETED_PLUGINS_OPTION = 'IONOS_CUSTOM_DELETED_PLUGINS_OPTION
   foreach (get_installed_custom_plugins() as $plugin_info) {
     // Activate all custom plugins by default on first run
     // @TODO: activate all in one update_option call
+
+    // workaround for wp-cli : if a plugin with same name is already active (=>ionos-essentials), skip activation to avoid conflicts
+    if (\is_plugin_active(str_replace('plugins/', '', $plugin_info['key']))) {
+      continue;
+    }
+
     activate_custom_plugin($plugin_info['key']);
   }
 });

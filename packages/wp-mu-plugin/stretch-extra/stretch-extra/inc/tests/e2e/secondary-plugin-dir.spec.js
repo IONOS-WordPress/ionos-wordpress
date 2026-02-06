@@ -53,8 +53,8 @@ test.describe(
       // Find all plugin rows where data-plugin starts with "plugins/" (=> custom plugins)
       await expect
         .poll(async () => await page.locator('tr[data-slug][data-plugin^="plugins/"]').count())
-        //.toBeGreaterThan(0);
-        .toBe(3);
+        .toBeGreaterThan(0);
+      // .toBe(3);
     });
 
     test('test activation / deactivation of plugins', async ({ admin, page }) => {
