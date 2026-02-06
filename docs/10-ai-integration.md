@@ -73,7 +73,7 @@ Example usage:
 ```
 install and activate the plugins 'akisment' and 'woocommerce' in the wp-env development instance using `pnpm wp-env run cli wp ...`
 
-use mcp server `chrome-devtools` to login to http://localhost:8888 using user `admin`and the password declared in WP_PASSWORD in the project .env file and go to the woocommerce plugin settings file.
+use mcp server chrome-devtools to login to http://localhost:8888 using user `admin`and the password declared in WP_PASSWORD in the project .env file and go to the woocommerce plugin settings file.
 ```
 
 ### Browser Setup
