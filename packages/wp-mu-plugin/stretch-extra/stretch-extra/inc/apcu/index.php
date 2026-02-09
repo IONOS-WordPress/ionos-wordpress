@@ -54,11 +54,11 @@ function apcu_object_cache_enabled_option_changed($value) : void {
     return;
   }
 
-  \add_option(
-    option: IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION,
-    value : true,
-    autoload :true,
-  );
+  // \add_option(
+  //   option: IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION,
+  //   value : true,
+  //   autoload :true,
+  // );
 
-  apcu_object_cache_enabled_option_changed(true);
+  // apcu_object_cache_enabled_option_changed(true);
 });
