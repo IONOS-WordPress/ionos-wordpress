@@ -1,12 +1,72 @@
 <?php
 
 /*
-Plugin Name: WordPress APCu Object Cache Backend
+Plugin Name: WordPress APCu Object Cache Backend (Write-Back)
 Plugin URI: https://github.com/l3rady/object-cache-apcu
-Description: APCu backend for WordPress' Object Cache
-Version: 1.2
-Author: Scott Cariss
+Description: APCu backend for WordPress' Object Cache with write-back functionality
+Version: 2.0
+Author: Scott Cariss (Modified with Write-Back)
 Author URI: https://cariss.dev
+
+Write-Back Cache Implementation:
+================================
+This object cache implements a write-back (also called write-behind) caching strategy
+to improve performance by reducing the number of immediate APCu operations.
+
+How Write-Back Works:
+- Write operations (set, add, replace, delete) are buffered in memory
+- Buffered operations are flushed to APCu automatically at shutdown
+- Read operations check the buffer first before querying APCu
+- This reduces APCu operations and improves write performance
+
+Configuration:
+--------------
+Add these constants to wp-config.php to configure behavior:
+
+1. Enable/Disable Write-Back:
+   define('WP_APCU_WRITE_BACK', true);  // default: true
+   Set to false to revert to write-through behavior (immediate writes)
+
+2. Auto-Flush Buffer Size:
+   define('WP_APCU_WRITE_BACK_BUFFER_SIZE', 100);  // default: 0 (disabled)
+   Set to > 0 to automatically flush when buffer reaches this size
+   Set to 0 to flush only at shutdown (best performance)
+
+3. Local Cache (unchanged):
+   define('WP_APCU_LOCAL_CACHE', true);  // default: true
+   Keep an in-memory copy of cached data for even faster reads
+
+4. Key Salt (unchanged):
+   define('WP_APCU_KEY_SALT', 'wp');  // default: 'wp'
+   Prefix for cache keys (useful for shared hosting)
+
+Manual Flush:
+-------------
+To manually flush pending writes before shutdown:
+   wp_cache_flush_dirty_buffer();
+
+Statistics:
+-----------
+Get buffer status:
+   $cache = WP_Object_Cache::instance();
+   $cache->getDirtyBufferCount();   // Number of pending writes
+   $cache->getDirtyDeletesCount();  // Number of pending deletes
+   $cache->getTotalDirtyCount();    // Total pending operations
+
+Performance Considerations:
+---------------------------
+- Write-back provides better write performance by batching operations
+- Best for write-heavy workloads with many cache updates
+- Increment/decrement operations are still immediate for atomicity
+- Buffer is flushed at shutdown, ensuring data consistency
+- If buffer size limit is set, flush happens when limit is reached
+
+Important Notes:
+----------------
+- Data is guaranteed to be written to APCu before request ends
+- Reads always see the latest data (buffer checked first)
+- Local cache still provides fast in-memory reads
+- No data loss on normal shutdown
 */
 
 /*  Copyright 2024  Scott Cariss  (email : scott@cariss.dev)
@@ -325,6 +385,19 @@ function wp_cache_supports($feature)
 }
 
 /**
+ * Manually flush the write-back dirty buffer to APCu
+ *
+ * This writes all pending writes and deletes from the write-back buffer to APCu immediately.
+ * Normally this happens automatically at shutdown, but you can call this manually if needed.
+ *
+ * @return bool True on success, false on failure
+ */
+function wp_cache_flush_dirty_buffer()
+{
+  return WP_Object_Cache::instance()->flush_dirty_buffer();
+}
+
+/**
  * WordPress APCu Object Cache Backend
  *
  * The WordPress Object Cache is used to save on trips to the database. The
@@ -398,6 +471,31 @@ class WP_Object_Cache
    */
   private $_siteVersions = [];
 
+  /**
+   * @var array Write-back buffer for pending writes (key => ['data' => mixed, 'ttl' => int, 'operation' => string])
+   */
+  private $_dirtyBuffer = [];
+
+  /**
+   * @var array Write-back buffer for pending deletes (key => true)
+   */
+  private $_dirtyDeletes = [];
+
+  /**
+   * @var bool Flag to indicate if write-back is enabled
+   */
+  private $_writeBackEnabled = true;
+
+  /**
+   * @var int Maximum size of dirty buffer before auto-flush (0 = no limit)
+   */
+  private $_writeBackBufferSize = 0;
+
+  /**
+   * @var bool Flag to prevent recursive flush during shutdown
+   */
+  private $_isFlushing = false;
+
   private static $_instance;
 
   /**
@@ -423,10 +521,33 @@ class WP_Object_Cache
       define('WP_APCU_LOCAL_CACHE', true);
     }
 
-    $this->_absPath       = md5(ABSPATH);
-    $this->_apcuAvailable = (extension_loaded('apcu') && ini_get('apc.enabled'));
-    $this->_multiSite     = is_multisite();
-    $this->_blogPrefix    = $this->_multiSite ? $blog_id : 1;
+    /**
+     * define('WP_APCU_WRITE_BACK', false) to disable write-back caching
+     * and revert to write-through behavior
+     */
+    if (! defined('WP_APCU_WRITE_BACK')) {
+      define('WP_APCU_WRITE_BACK', true);
+    }
+
+    /**
+     * define('WP_APCU_WRITE_BACK_BUFFER_SIZE', 100) to set max buffer size
+     * before auto-flush. 0 means no auto-flush (flush only on shutdown)
+     */
+    if (! defined('WP_APCU_WRITE_BACK_BUFFER_SIZE')) {
+      define('WP_APCU_WRITE_BACK_BUFFER_SIZE', 0);
+    }
+
+    $this->_absPath             = md5(ABSPATH);
+    $this->_apcuAvailable       = (extension_loaded('apcu') && ini_get('apc.enabled'));
+    $this->_multiSite           = is_multisite();
+    $this->_blogPrefix          = $this->_multiSite ? $blog_id : 1;
+    $this->_writeBackEnabled    = WP_APCU_WRITE_BACK;
+    $this->_writeBackBufferSize = WP_APCU_WRITE_BACK_BUFFER_SIZE;
+
+    // Register shutdown hook to flush dirty buffer
+    if ($this->_writeBackEnabled && $this->_apcuAvailable) {
+      register_shutdown_function([$this, 'flush_dirty_buffer']);
+    }
   }
 
   /**
@@ -455,6 +576,22 @@ class WP_Object_Cache
     echo '<p>';
     echo "<strong>Cache Hits:</strong> {$this->cache_hits}<br />";
     echo "<strong>Cache Misses:</strong> {$this->cache_misses}<br />";
+
+    if ($this->_writeBackEnabled) {
+      echo "<strong>Write-Back Mode:</strong> Enabled<br />";
+      echo "<strong>Pending Writes:</strong> " . count($this->_dirtyBuffer) . "<br />";
+      echo "<strong>Pending Deletes:</strong> " . count($this->_dirtyDeletes) . "<br />";
+      echo "<strong>Total Dirty:</strong> " . $this->getTotalDirtyCount() . "<br />";
+
+      if ($this->_writeBackBufferSize > 0) {
+        echo "<strong>Auto-Flush Size:</strong> {$this->_writeBackBufferSize}<br />";
+      } else {
+        echo "<strong>Auto-Flush:</strong> Disabled (flush on shutdown only)<br />";
+      }
+    } else {
+      echo "<strong>Write-Back Mode:</strong> Disabled (write-through)<br />";
+    }
+
     echo '</p>';
     echo '<ul>';
 
@@ -606,6 +743,8 @@ class WP_Object_Cache
   public function flush()
   {
     $this->_nonPersistentCache = [];
+    $this->_dirtyBuffer        = [];
+    $this->_dirtyDeletes       = [];
 
     if (WP_APCU_LOCAL_CACHE) {
       $this->_localCache = [];
@@ -626,6 +765,8 @@ class WP_Object_Cache
   public function flush_runtime()
   {
     $this->_nonPersistentCache = [];
+    $this->_dirtyBuffer        = [];
+    $this->_dirtyDeletes       = [];
 
     if (WP_APCU_LOCAL_CACHE) {
       $this->_localCache = [];
@@ -686,6 +827,60 @@ class WP_Object_Cache
     }
 
     return true;
+  }
+
+  /**
+   * Flush all pending writes from the dirty buffer to APCu
+   *
+   * @return bool True on success
+   */
+  public function flush_dirty_buffer()
+  {
+    if ($this->_isFlushing || ! $this->_apcuAvailable) {
+      return false;
+    }
+
+    $this->_isFlushing = true;
+
+    try {
+      // Process pending deletes first
+      foreach ($this->_dirtyDeletes as $key => $_) {
+        apcu_delete($key);
+        unset($this->_localCache[$key]);
+      }
+      $this->_dirtyDeletes = [];
+
+      // Process pending writes
+      foreach ($this->_dirtyBuffer as $key => $entry) {
+        $operation = $entry['operation'];
+        $data      = $entry['data'];
+        $ttl       = $entry['ttl'];
+
+        switch ($operation) {
+          case 'add':
+            apcu_add($key, $data, max((int) $ttl, 0));
+            break;
+          case 'set':
+            apcu_store($key, $data, max((int) $ttl, 0));
+            break;
+          case 'replace':
+            // For replace, we need to check if key exists first
+            if (apcu_exists($key)) {
+              apcu_store($key, $data, max((int) $ttl, 0));
+            }
+            break;
+        }
+
+        if (WP_APCU_LOCAL_CACHE) {
+          $this->_localCache[$key] = $data;
+        }
+      }
+      $this->_dirtyBuffer = [];
+
+      return true;
+    } finally {
+      $this->_isFlushing = false;
+    }
   }
 
   /**
@@ -927,6 +1122,46 @@ class WP_Object_Cache
   }
 
   /**
+   * @return bool
+   */
+  public function getWriteBackEnabled()
+  {
+    return $this->_writeBackEnabled;
+  }
+
+  /**
+   * @return int
+   */
+  public function getWriteBackBufferSize()
+  {
+    return $this->_writeBackBufferSize;
+  }
+
+  /**
+   * @return int
+   */
+  public function getDirtyBufferCount()
+  {
+    return count($this->_dirtyBuffer);
+  }
+
+  /**
+   * @return int
+   */
+  public function getDirtyDeletesCount()
+  {
+    return count($this->_dirtyDeletes);
+  }
+
+  /**
+   * @return int
+   */
+  public function getTotalDirtyCount()
+  {
+    return count($this->_dirtyBuffer) + count($this->_dirtyDeletes);
+  }
+
+  /**
    * Adds data to APCu cache, if the cache key does not already exist.
    *
    * @param string $key The cache key to use for retrieval later
@@ -937,6 +1172,38 @@ class WP_Object_Cache
    */
   private function _add($key, $var, $ttl)
   {
+    // Write-back: check if key exists in buffer or cache
+    if ($this->_writeBackEnabled) {
+      // Check if key already exists in dirty buffer or cache
+      if (array_key_exists($key, $this->_dirtyBuffer) ||
+          (WP_APCU_LOCAL_CACHE && array_key_exists($key, $this->_localCache)) ||
+          apcu_exists($key)) {
+        return false;
+      }
+
+      if (is_object($var)) {
+        $var = clone $var;
+      }
+
+      // Add to dirty buffer
+      $this->_dirtyBuffer[$key] = [
+        'data'      => $var,
+        'ttl'       => $ttl,
+        'operation' => 'add',
+      ];
+
+      // Update local cache immediately
+      if (WP_APCU_LOCAL_CACHE) {
+        $this->_localCache[$key] = $var;
+      }
+
+      // Check if buffer size limit reached
+      $this->_check_buffer_size();
+
+      return true;
+    }
+
+    // Write-through: immediate write to APCu
     if (apcu_add($key, $var, max((int) $ttl, 0))) {
       if (WP_APCU_LOCAL_CACHE) {
         $this->_localCache[$key] = is_object($var) ? clone $var : $var;
@@ -976,6 +1243,11 @@ class WP_Object_Cache
     $this->_get($key, $success);
     if (! $success) {
       return false;
+    }
+
+    // Flush this key from dirty buffer first to ensure atomicity
+    if ($this->_writeBackEnabled) {
+      $this->_flush_key($key);
     }
 
     $value = apcu_dec($key, max((int) $offset, 0));
@@ -1018,6 +1290,24 @@ class WP_Object_Cache
    */
   private function _delete($key)
   {
+    // Write-back: buffer the delete
+    if ($this->_writeBackEnabled) {
+      // Remove from dirty buffer if present
+      unset($this->_dirtyBuffer[$key]);
+
+      // Add to delete buffer
+      $this->_dirtyDeletes[$key] = true;
+
+      // Remove from local cache immediately
+      unset($this->_localCache[$key]);
+
+      // Check if buffer size limit reached
+      $this->_check_buffer_size();
+
+      return true;
+    }
+
+    // Write-through: immediate delete from APCu
     unset($this->_localCache[$key]);
     return apcu_delete($key);
   }
@@ -1064,8 +1354,17 @@ class WP_Object_Cache
    */
   private function _get($key, &$success = null)
   {
-    if (WP_APCU_LOCAL_CACHE && array_key_exists($key, $this->_localCache)
-    ) {
+    // Check if key is marked for deletion in write-back buffer
+    if ($this->_writeBackEnabled && isset($this->_dirtyDeletes[$key])) {
+      $success = false;
+      return false;
+    }
+
+    // Check dirty buffer first (most recent write)
+    if ($this->_writeBackEnabled && array_key_exists($key, $this->_dirtyBuffer)) {
+      $success = true;
+      $var     = $this->_dirtyBuffer[$key]['data'];
+    } elseif (WP_APCU_LOCAL_CACHE && array_key_exists($key, $this->_localCache)) {
       $success = true;
       $var     = $this->_localCache[$key];
     } else {
@@ -1191,6 +1490,11 @@ class WP_Object_Cache
       return false;
     }
 
+    // Flush this key from dirty buffer first to ensure atomicity
+    if ($this->_writeBackEnabled) {
+      $this->_flush_key($key);
+    }
+
     $value = apcu_inc($key, max((int) $offset, 0));
     if ($value !== false && WP_APCU_LOCAL_CACHE) {
       $this->_localCache[$key] = $value;
@@ -1270,8 +1574,35 @@ class WP_Object_Cache
   private function _replace($key, $var, $ttl)
   {
     $this->_get($key, $success);
-    if ($success) {
+    if (! $success) {
       return false;
+    }
+
+    // Write-back: use same logic as _set since key exists
+    if ($this->_writeBackEnabled) {
+      if (is_object($var)) {
+        $var = clone $var;
+      }
+
+      // Remove from delete buffer if present
+      unset($this->_dirtyDeletes[$key]);
+
+      // Add to dirty buffer
+      $this->_dirtyBuffer[$key] = [
+        'data'      => $var,
+        'ttl'       => $ttl,
+        'operation' => 'replace',
+      ];
+
+      // Update local cache immediately
+      if (WP_APCU_LOCAL_CACHE) {
+        $this->_localCache[$key] = $var;
+      }
+
+      // Check if buffer size limit reached
+      $this->_check_buffer_size();
+
+      return true;
     }
 
     return $this->_set($key, $var, $ttl);
@@ -1309,6 +1640,30 @@ class WP_Object_Cache
       $var = clone $var;
     }
 
+    // Write-back: buffer the write
+    if ($this->_writeBackEnabled) {
+      // Remove from delete buffer if present
+      unset($this->_dirtyDeletes[$key]);
+
+      // Add to dirty buffer
+      $this->_dirtyBuffer[$key] = [
+        'data'      => $var,
+        'ttl'       => $ttl,
+        'operation' => 'set',
+      ];
+
+      // Update local cache immediately for consistency
+      if (WP_APCU_LOCAL_CACHE) {
+        $this->_localCache[$key] = $var;
+      }
+
+      // Check if buffer size limit reached
+      $this->_check_buffer_size();
+
+      return true;
+    }
+
+    // Write-through: immediate write to APCu
     if (apcu_store($key, $var, max((int) $ttl, 0))) {
       if (WP_APCU_LOCAL_CACHE) {
         $this->_localCache[$key] = $var;
@@ -1373,5 +1728,66 @@ class WP_Object_Cache
   private function _set_site_cache_version($site, $version)
   {
     $this->_set_cache_version($this->_get_cache_version_key('SiteVersion', $site), $version);
+  }
+
+  /**
+   * Check if dirty buffer size limit is reached and flush if necessary
+   *
+   * @return void
+   */
+  private function _check_buffer_size()
+  {
+    if ($this->_writeBackBufferSize <= 0) {
+      return;
+    }
+
+    $bufferSize = count($this->_dirtyBuffer) + count($this->_dirtyDeletes);
+    if ($bufferSize >= $this->_writeBackBufferSize) {
+      $this->flush_dirty_buffer();
+    }
+  }
+
+  /**
+   * Flush a specific key from the dirty buffer to APCu
+   *
+   * @param string $key The key to flush
+   * @return void
+   */
+  private function _flush_key($key)
+  {
+    if (! $this->_apcuAvailable) {
+      return;
+    }
+
+    // Handle delete
+    if (isset($this->_dirtyDeletes[$key])) {
+      apcu_delete($key);
+      unset($this->_dirtyDeletes[$key]);
+      return;
+    }
+
+    // Handle write
+    if (isset($this->_dirtyBuffer[$key])) {
+      $entry     = $this->_dirtyBuffer[$key];
+      $operation = $entry['operation'];
+      $data      = $entry['data'];
+      $ttl       = $entry['ttl'];
+
+      switch ($operation) {
+        case 'add':
+          apcu_add($key, $data, max((int) $ttl, 0));
+          break;
+        case 'set':
+          apcu_store($key, $data, max((int) $ttl, 0));
+          break;
+        case 'replace':
+          if (apcu_exists($key)) {
+            apcu_store($key, $data, max((int) $ttl, 0));
+          }
+          break;
+      }
+
+      unset($this->_dirtyBuffer[$key]);
+    }
   }
 }

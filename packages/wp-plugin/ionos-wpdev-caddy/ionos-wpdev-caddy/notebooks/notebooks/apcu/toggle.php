@@ -10,21 +10,16 @@ $value  = get_option($option, null);
 switch ($value) {
   case null:
     printf("stretch-extra apcu object cache was not initialized.\n");
-    // no break
-  case '1':
-  case 1:
   case true:
     printf("disabling stretch-extra apcu object cache...\n");
-    update_option($option, false, true);
+    update_option($option, false);
     break;
-  case '0':
-  case 0:
   case false:
     printf("enabling stretch-extra apcu object cache...\n");
-    update_option($option, true, true);
+    update_option($option, true);
     break;
   default:
     printf("Error: option '%s' contains invalid value(=%s).\n", $option, print_r($value, true));
 }
 
-printf(get_option($option));
+printf("%s(=%s)", $option, print_r(get_option($option, null), true));

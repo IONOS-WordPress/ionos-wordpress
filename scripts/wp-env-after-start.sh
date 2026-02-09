@@ -36,10 +36,10 @@ if [[ "${CI:-}" != "true" ]]; then
         grep -q 'xdebug.log_level=' /usr/local/etc/php/php.ini || \
           echo "xdebug.log_level=0" >> /usr/local/etc/php/php.ini
 
-          # enable apcu extension
-          echo 'n' | pecl install apcu
-          docker-php-ext-enable apcu
-          apache2ctl graceful ||:
+      # enable apcu extension
+      echo 'n' | pecl install apcu
+      docker-php-ext-enable apcu
+      apache2ctl graceful ||:
 EOF
     done
   )
@@ -155,7 +155,7 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     # disable stretch-extra thirdparty plugin activation
     # (=> this would result in activating both stretch-extra and real ionos-essentials for example)
     wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
-    
+
     # fix permissions for mu-plugins folder if any
     # (leaving the permisions as-is will result in an error on destroy restart wp-env)
     if find /var/www/html/wp-content/mu-plugins -mindepth 1 -maxdepth 1 -type d -printf '%f\n' &>/dev/null; then
