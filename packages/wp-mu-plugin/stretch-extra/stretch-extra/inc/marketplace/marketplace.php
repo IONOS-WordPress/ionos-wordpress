@@ -56,7 +56,12 @@ add_action('install_plugins_pre_ionos', function () {
   usort($wp_list_table->items, fn ($a, $b) => array_search($a['slug'], $slugs) <=> array_search($b['slug'], $slugs));
 
   // 6. Prepend IONOS Plugins
-  $ionos_plugins = $config['ionos_plugins'];
+  $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins']);
+
+  $wp_list_table->items = array_merge($ionos_plugins, $wp_list_table->items);
+});
+
+function gather_infos_for_ionos_plugins($ionos_plugins) {
   array_walk($ionos_plugins, function (&$plugin) {
     $plugin['rating']  = 0;
     $plugin['ratings'] = [
@@ -77,9 +82,8 @@ add_action('install_plugins_pre_ionos', function () {
       $plugin['download_link'] = $new_info['download_url'] ?? '';
     }
   });
-
-  $wp_list_table->items = array_merge($ionos_plugins, $wp_list_table->items);
-});
+  return $ionos_plugins;
+}
 
 add_action('install_plugins_ionos', function () {
   global $wp_list_table;
@@ -154,3 +158,24 @@ function render_changelog( $changelog ) {
   return $response;
 }
 
+add_filter( 'plugins_api_result', function( $result, $action, $args ) {
+  // Only target plugin searches
+  if ( 'query_plugins' !== $action || empty( $args->search ) ) {
+      return $result;
+  }
+
+  if (!str_contains($args->search, 'ionos')) {
+      return $result; // Skip if the search query is for the custom plugin itself
+  }
+
+  $config = require __DIR__ . '/config.php';
+  $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins']);
+
+
+  // Prepend to the results array
+  if ( isset( $result->plugins ) && is_array( $result->plugins ) ) {
+      $result->plugins = array_merge( $ionos_plugins, $result->plugins );
+  }
+
+  return $result;
+}, 10, 3 );
