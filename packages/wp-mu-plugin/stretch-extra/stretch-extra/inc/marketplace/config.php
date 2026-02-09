@@ -9,10 +9,10 @@ return [
       [
         'info_url' => 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json',
         'name' => 'Essentials',
-        'short_description' => 'The essentials plugin provides IONOS hosting specific functionality.',
+        'short_description' => __('The essentials plugin provides IONOS hosting specific functionality.', 'stretch-extra'),
         'version' => 'latest',
         'author' => '<a href="https://www.ionos-group.com/brands.html">IONOS</a>',
-        'slug' => 'ionos-essentials/ionos-essentials.php',
+        'slug' => 'ionos-essentials',
         'icons' => [
           '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg'
         ],

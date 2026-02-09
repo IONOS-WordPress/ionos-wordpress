@@ -42,3 +42,7 @@ msgstr "https://www.ionos-group.com/brands.html"
 #: stretch-extra/inc/marketplace/marketplace.php
 msgid "recommends"
 msgstr "recommends"
+
+#: stretch-extra/inc/marketplace/config.php
+msgid "The essentials plugin provides IONOS hosting specific functionality."
+msgstr ""

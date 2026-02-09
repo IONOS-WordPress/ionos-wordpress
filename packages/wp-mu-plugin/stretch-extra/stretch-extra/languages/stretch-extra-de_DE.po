@@ -41,4 +41,8 @@ msgstr ""
 
 #: stretch-extra/inc/marketplace/marketplace.php
 msgid "recommends"
+msgstr "empfiehlt"
+
+#: stretch-extra/inc/marketplace/config.php
+msgid "The essentials plugin provides IONOS hosting specific functionality."
 msgstr ""
