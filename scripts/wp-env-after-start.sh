@@ -39,7 +39,7 @@ if [[ "${CI:-}" != "true" ]]; then
           # enable apcu extension
           echo 'n' | pecl install apcu
           docker-php-ext-enable apcu
-          apache2ctl graceful
+          apache2ctl graceful ||:
 EOF
     done
   )
