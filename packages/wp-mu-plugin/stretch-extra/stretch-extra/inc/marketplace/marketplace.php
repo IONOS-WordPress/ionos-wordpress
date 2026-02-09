@@ -12,7 +12,7 @@ add_filter( 'install_plugins_tabs', function ( $tabs ) {
     unset( $tabs['featured'] );
 
     return array_merge(
-			[ 'ionos' => 'IONOS ' . __('recommends', 'ionos-stretch-extra') ],
+			[ 'ionos' => 'IONOS ' . __('recommends', 'stretch-extra') ],
 			$tabs
 		);
 } );
@@ -57,20 +57,27 @@ add_action( 'install_plugins_pre_ionos', function () {
   usort($wp_list_table->items, fn($a, $b) => array_search($a['slug'], $slugs) <=> array_search($b['slug'], $slugs));
 
   // 6. Prepend IONOS Plugins
-  $ionos_plupings = $config['ionos_plugins'];
-
-  array_walk( $ionos_plupings, function ( &$plugin ) {
+  $ionos_plugins = $config['ionos_plugins'];
+  array_walk( $ionos_plugins, function ( &$plugin ) {
     $plugin['rating'] = 0;
     $plugin['ratings'] = [ '5' => 0, '4' => 0, '3' => 0, '2' => 0, '1' => 0 ];
     $plugin['num_ratings'] = 0;
     $plugin['active_installs'] = 0;
+
+    $new_info = wp_remote_get( $plugin['info_url'] );
+    if ( !is_wp_error( $new_info ) &&wp_remote_retrieve_response_code( $new_info ) === 200 ) {
+      $new_info = json_decode( wp_remote_retrieve_body( $new_info ), true );
+      $plugin['last_updated'] = $new_info['last_updated'] ?? $plugin['last_updated'];
+      $plugin['version'] = $new_info['version'] ?? $plugin['version'];
+    }
+
   } );
 
 
   $wp_list_table->items = array_merge(
-    $ionos_plupings,
+    $ionos_plugins,
     $wp_list_table->items,
-);
+  );
 
 } );
 
@@ -110,20 +117,20 @@ add_filter( 'plugins_api', function ( $result, $action, $args ) {
       return $result;
     }
 
-    $response = wp_remote_get( 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json' );
+    $response = wp_remote_get( $config['ionos_plugins'][ $args->slug ]['info_url'] );
     $pi       = json_decode( wp_remote_retrieve_body( $response ) );
     if ( ! is_object( $pi ) ) {
       return $result;
     }
 
-    $pi->name          = 'Essentials';
+    $pi->name          = $config['ionos_plugins'][ $args->slug ]['name'];
     $pi->slug          = $args->slug;
-    $pi->download_link = $pi->package;
-    $pi->version       = $pi->version;
+    $pi->download_link = $pi->download_url;
+    $pi->version       = $pi->latest_version;
     $pi->requires      = '6.0';
     $pi->sections      = [
-      _x( 'Description', 'Plugin installer section title' ) => __( $config['ionos_plugins']['ionos-essentials']['short_description'], 'ionos-stretch-extra' ),
-      _x( 'Changelog', 'Plugin installer section title' )   => $pi->sections->changelog,
+      _x( 'Description', 'Plugin installer section title' ) => __( $config['ionos_plugins'][ $args->slug ]['short_description'], 'stretch-extra' ),
+      _x( 'Changelog', 'Plugin installer section title' )   => 'Changes',
     ];
 
     return $pi;

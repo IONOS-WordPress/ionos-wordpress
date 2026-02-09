@@ -7,12 +7,12 @@ return [
   'ionos_plugins' => [
       'ionos-essentials' =>
       [
-        'url' => 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json',
+        'info_url' => 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json',
         'name' => 'Essentials',
         'short_description' => 'The essentials plugin provides IONOS hosting specific functionality.',
         'version' => 'latest',
         'author' => '<a href="https://www.ionos-group.com/brands.html">IONOS</a>',
-        'slug' => 'ionos-essentials',
+        'slug' => 'ionos-essentials/ionos-essentials.php',
         'icons' => [
           '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg'
         ],
@@ -20,7 +20,7 @@ return [
       ],
   'ionos-sso' =>
       [
-        'url' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos-group/ionos-sso.info.json',
+        'info_url' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos-group/ionos-sso.info.json',
         'name' => 'Ionos Login',
         'short_description' => 'IONOS Login allows you to log in with your IONOS customer ID and password through the IONOS Control Panel login page. You then have an active session in both your WordPress and your Control Panel and can jump easily from one to the other.',
         'version' => 'latest',
@@ -33,7 +33,7 @@ return [
       ],
   'woocommerce-german-market-light' =>
       [
-        'url' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos-group/woocommerce-german-market-light.info.json',
+        'info_url' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos-group/woocommerce-german-market-light.info.json',
         'name' => 'WooCommerce German Market Light',
         'short_description' => 'Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria.',
         'version' => 'latest',
