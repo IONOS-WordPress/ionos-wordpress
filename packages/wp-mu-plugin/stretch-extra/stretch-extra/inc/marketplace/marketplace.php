@@ -1,68 +1,96 @@
 <?php
 
+/**
+ * IONOS Marketplace Integration
+ *
+ * Customizes the WordPress plugin installation interface to feature IONOS
+ * recommended plugins and integrates with the WordPress.org plugin API.
+ */
+
 namespace ionos\stretch_extra\marketplace;
 
 defined('ABSPATH') || exit();
 
-if (\get_option('ionos_group_brand' !== 'ionos')) {
+if (\get_option('ionos_group_brand') !== 'ionos') {
   return;
 }
 
-add_filter('install_plugins_tabs', function ($tabs) {
-  unset($tabs['featured']);
+\add_filter(
+  hook_name: 'install_plugins_tabs',
+  callback: function (array $tabs): array {
+    unset($tabs['featured']);
 
-  return array_merge([
-    'ionos' => 'IONOS ' . __('recommends', 'stretch-extra'),
-  ], $tabs);
-});
-
-add_action('install_plugins_pre_ionos', function () {
-  global $wp_list_table;
-
-  $config = require_once __DIR__ . '/config.php';
-
-  // 1. Define the plugin slugs you want
-  $slugs = $config['wordpress_org_plugins'];
-
-  // 2. Build an array of request definitions
-  $field_query_string = '';
-  foreach (['short_description', 'icons'] as $name => $value) {
-    $field_query_string .= "&fields[{$name}]={$value}";
-  }
-
-  $requests = [];
-  foreach ($slugs as $slug) {
-    $requests[] = [
-      'url'  => "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug={$slug}{$field_query_string}",
-      'type' => \WpOrg\Requests\Requests::GET,
-      'data' => [
-        'locale' => get_user_locale(),
-      ],
+    return [
+      'ionos' => 'IONOS ' . \__('recommends', 'stretch-extra'),
+      ...$tabs,
     ];
   }
+);
 
-  // 3. Execute all requests simultaneously
-  $responses = \WpOrg\Requests\Requests::request_multiple($requests);
+\add_action(
+  hook_name: 'install_plugins_pre_ionos',
+  callback: function (): void {
+    global $wp_list_table;
 
-  // 4. Process the data
-  $plugins = [];
-  foreach ($responses as $slug => $response) {
-    if ($response instanceof \WpOrg\Requests\Response && $response->success) {
-      $wp_list_table->items[] = json_decode($response->body, true);
+    $config = require_once __DIR__ . '/config.php';
+
+    // 1. Define the plugin slugs you want
+    $slugs = $config['wordpress_org_plugins'] ?? [];
+    if (empty($slugs)) {
+      return;
     }
+
+    // 2. Build an array of request definitions
+    $field_query_string = \http_build_query([
+      'fields[short_description]' => 'short_description',
+      'fields[icons]'             => 'icons',
+    ]);
+
+    $requests = [];
+    foreach ($slugs as $slug) {
+      $requests[] = [
+        'url'  => "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug={$slug}&{$field_query_string}",
+        'type' => \WpOrg\Requests\Requests::GET,
+        'data' => [
+          'locale' => \get_user_locale(),
+        ],
+      ];
+    }
+
+    // 3. Execute all requests simultaneously
+    $responses = \WpOrg\Requests\Requests::request_multiple($requests);
+
+    // 4. Process the data
+    $plugins = [];
+    foreach ($responses as $slug => $response) {
+      if ($response instanceof \WpOrg\Requests\Response && $response->success) {
+        $decoded_data = \json_decode($response->body, true);
+        if (\json_last_error() === JSON_ERROR_NONE && isset($decoded_data['slug'])) {
+          $wp_list_table->items[] = $decoded_data;
+        }
+      }
+    }
+
+    // 5. Sort items by original slug order
+    \usort(
+      $wp_list_table->items,
+      fn (array $a, array $b): int => \array_search($a['slug'], $slugs, true) <=> \array_search(
+        $b['slug'],
+        $slugs,
+        true
+      )
+    );
+
+    // 6. Prepend IONOS Plugins
+    $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
+
+    $wp_list_table->items = [...$ionos_plugins, ...$wp_list_table->items];
   }
+);
 
-  // 5. Sort items by slug
-  usort($wp_list_table->items, fn ($a, $b) => array_search($a['slug'], $slugs) <=> array_search($b['slug'], $slugs));
-
-  // 6. Prepend IONOS Plugins
-  $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins']);
-
-  $wp_list_table->items = array_merge($ionos_plugins, $wp_list_table->items);
-});
-
-function gather_infos_for_ionos_plugins($ionos_plugins) {
-  array_walk($ionos_plugins, function (&$plugin) {
+function gather_infos_for_ionos_plugins(array $ionos_plugins): array
+{
+  \array_walk($ionos_plugins, function (array &$plugin): void {
     $plugin['rating']  = 0;
     $plugin['ratings'] = [
       '5' => 0,
@@ -74,108 +102,167 @@ function gather_infos_for_ionos_plugins($ionos_plugins) {
     $plugin['num_ratings']     = 0;
     $plugin['active_installs'] = 0;
 
-    $new_info = wp_remote_get($plugin['info_url']);
-    if (! is_wp_error($new_info) &&wp_remote_retrieve_response_code($new_info) === 200) {
-      $new_info               = json_decode(wp_remote_retrieve_body($new_info), true);
-      $plugin['last_updated'] = $new_info['last_updated'] ?? '';
-      $plugin['version']      = $new_info['version'] ?? '';
-      $plugin['download_link'] = $new_info['download_url'] ?? '';
+    if (! isset($plugin['info_url'])) {
+      return;
+    }
+
+    $response = \wp_remote_get($plugin['info_url']);
+    if (
+      ! \is_wp_error($response) &&
+      \wp_remote_retrieve_response_code($response) === 200
+    ) {
+      $body     = \wp_remote_retrieve_body($response);
+      $new_info = \json_decode($body, true);
+
+      if (\json_last_error() === JSON_ERROR_NONE && \is_array($new_info)) {
+        $plugin['last_updated']  = $new_info['last_updated'] ?? '';
+        $plugin['version']       = $new_info['version']      ?? '';
+        $plugin['download_link'] = $new_info['download_url'] ?? '';
+      }
     }
   });
+
   return $ionos_plugins;
 }
 
-add_action('install_plugins_ionos', function () {
-  global $wp_list_table;
+\add_action(
+  hook_name: 'install_plugins_ionos',
+  callback: function (): void {
+    global $wp_list_table;
 
-  $wp_list_table->set_pagination_args(
-    [
-      'total_items' => count($wp_list_table->items),
-      'total_pages' => ceil(count($wp_list_table->items) / 10),
-      'per_page'    => 10,
-    ]
-  );
+    $total_items = \count($wp_list_table->items ?? []);
+    $per_page    = 10;
 
-  display_plugins_table();
-});
+    $wp_list_table->set_pagination_args([
+      'total_items' => $total_items,
+      'total_pages' => (int) \ceil($total_items / $per_page),
+      'per_page'    => $per_page,
+    ]);
 
-add_action('admin_head-plugin-install.php', function () {
-  echo '
-    <style>
-       div[class*="plugin-card-ionos-"],
-       div.plugin-card-woocommerce-german-market-light {
-          .column-downloaded, .column-rating {
+    \display_plugins_table();
+  }
+);
+
+\add_action(
+  hook_name: 'admin_head-plugin-install.php',
+  callback: function (): void {
+    \printf(
+      <<<HTML
+      <style>
+        div[class*="plugin-card-ionos-"],
+        div.plugin-card-woocommerce-german-market-light {
+          .column-downloaded,
+          .column-rating {
             display: none;
           }
         }
-    </style>';
-});
-
-add_filter('plugins_api', function ($result, $action, $args) {
-  if ($action !== 'plugin_information') {
-    return $result;
+      </style>
+      HTML
+    );
   }
+);
 
-  // no require_once, because while installing the plugin, the file is already included
-  $config = require __DIR__ . '/config.php';
-
-  if ( ! in_array($args->slug, array_keys($config['ionos_plugins']), true)) {
-    return $result;
-  }
-
-  $response = wp_remote_get($config['ionos_plugins'][$args->slug]['info_url']);
-  $pi       = json_decode(wp_remote_retrieve_body($response));
-  if (! is_object($pi)) {
-    return $result;
-  }
-
-  $pi->name          = $config['ionos_plugins'][$args->slug]['name'];
-  $pi->slug          = $args->slug;
-  $pi->download_link = $pi->download_url ?? '';
-  $pi->version       = $pi->latest_version ?? '';
-  $pi->requires      = '6.0';
-  $pi->sections      = [
-    _x('Description', 'Plugin installer section title') => $config['ionos_plugins'][$args->slug]['short_description'],
-    _x('Changelog', 'Plugin installer section title')   => (str_contains($args->slug, 'ionos-essentials')) ? $pi->sections->changelog : render_changelog($pi->changelog),
-  ];
-
-  return $pi;
-}, 20, 3);
-
-function render_changelog( $changelog ) {
-  $response = '';
-
-  foreach ( $changelog as $item ) {
-    $response .= '<h4>' . $item->version . '</h4><ul>';
-
-    foreach ( $item->changes as $c ) {
-      $response .= '<li>' . $c . '</li>';
+\add_filter(
+  hook_name: 'plugins_api',
+  callback: function (mixed $result, string $action, object $args): mixed {
+    if ($action !== 'plugin_information' || ! isset($args->slug)) {
+      return $result;
     }
 
-    $response .= '</ul>';
+    // no require_once, because while installing the plugin, the file is already included
+    $config = require __DIR__ . '/config.php';
+
+    $ionos_plugins = $config['ionos_plugins'] ?? [];
+    if (! \array_key_exists($args->slug, $ionos_plugins)) {
+      return $result;
+    }
+
+    $plugin_info = $ionos_plugins[$args->slug];
+    if (! isset($plugin_info['info_url'])) {
+      return $result;
+    }
+
+    $response = \wp_remote_get($plugin_info['info_url']);
+    if (\is_wp_error($response) || \wp_remote_retrieve_response_code($response) !== 200) {
+      return $result;
+    }
+
+    $body = \wp_remote_retrieve_body($response);
+    $pi   = \json_decode($body);
+
+    if (! \is_object($pi) || \json_last_error() !== JSON_ERROR_NONE) {
+      return $result;
+    }
+
+    $pi->name          = $plugin_info['name'];
+    $pi->slug          = $args->slug;
+    $pi->download_link = $pi->download_url   ?? '';
+    $pi->version       = $pi->latest_version ?? '';
+    $pi->requires      = '6.0';
+    $pi->sections      = [
+      \_x('Description', 'Plugin installer section title') => $plugin_info['short_description'],
+      \_x('Changelog', 'Plugin installer section title')   => \str_contains($args->slug, 'ionos-essentials')
+        ? ($pi->sections->changelog ?? '')
+        : render_changelog($pi->changelog ?? []),
+    ];
+
+    return $pi;
+  },
+  priority: 20,
+  accepted_args: 3
+);
+
+function render_changelog(array $changelog): string
+{
+  if (empty($changelog)) {
+    return '';
   }
 
-  return $response;
+  $output = [];
+
+  foreach ($changelog as $item) {
+    if (! \is_object($item) || ! isset($item->version, $item->changes)) {
+      continue;
+    }
+
+    $version  = \esc_html($item->version);
+    $output[] = "<h4>{$version}</h4><ul>";
+
+    if (\is_array($item->changes)) {
+      foreach ($item->changes as $change) {
+        $escaped_change = \esc_html($change);
+        $output[]       = "<li>{$escaped_change}</li>";
+      }
+    }
+
+    $output[] = '</ul>';
+  }
+
+  return \implode('', $output);
 }
 
-add_filter( 'plugins_api_result', function( $result, $action, $args ) {
-  // Only target plugin searches
-  if ( 'query_plugins' !== $action || empty( $args->search ) ) {
+\add_filter(
+  hook_name: 'plugins_api_result',
+  callback: function (mixed $result, string $action, object $args): mixed {
+    // Only target plugin searches
+    if ($action !== 'query_plugins' || empty($args->search)) {
       return $result;
-  }
+    }
 
-  if (!str_contains($args->search, 'ionos')) {
-      return $result; // Skip if the search query is for the custom plugin itself
-  }
+    if (! \str_contains($args->search, 'ionos')) {
+      return $result;
+    }
 
-  $config = require __DIR__ . '/config.php';
-  $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins']);
+    $config        = require __DIR__ . '/config.php';
+    $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
 
+    // Prepend to the results array
+    if (\is_object($result) && isset($result->plugins) && \is_array($result->plugins)) {
+      $result->plugins = [...$ionos_plugins, ...$result->plugins];
+    }
 
-  // Prepend to the results array
-  if ( isset( $result->plugins ) && is_array( $result->plugins ) ) {
-      $result->plugins = array_merge( $ionos_plugins, $result->plugins );
-  }
-
-  return $result;
-}, 10, 3 );
+    return $result;
+  },
+  priority: 10,
+  accepted_args: 3
+);
