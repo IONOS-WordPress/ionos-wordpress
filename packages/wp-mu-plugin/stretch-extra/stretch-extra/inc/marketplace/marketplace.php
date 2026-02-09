@@ -132,17 +132,13 @@ add_filter('plugins_api', function ($result, $action, $args) {
   $pi->requires      = '6.0';
   $pi->sections      = [
     _x('Description', 'Plugin installer section title') => $config['ionos_plugins'][$args->slug]['short_description'],
-    _x('Changelog', 'Plugin installer section title')   => render_changelog($pi->changelog ?? $pi->sections->changelog ?? []),
+    _x('Changelog', 'Plugin installer section title')   => (str_contains($args->slug, 'ionos-essentials')) ? $pi->sections->changelog : render_changelog($pi->changelog),
   ];
 
   return $pi;
 }, 20, 3);
 
 function render_changelog( $changelog ) {
-  if(is_string($changelog) && preg_match('/<h[1-4]>/', $changelog)) {
-    return $changelog;
-  }
-
   $response = '';
 
   foreach ( $changelog as $item ) {
@@ -157,3 +153,4 @@ function render_changelog( $changelog ) {
 
   return $response;
 }
+
