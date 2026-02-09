@@ -112,10 +112,8 @@ add_filter('plugins_api', function ($result, $action, $args) {
     return $result;
   }
 
-  $config = require_once __DIR__ . '/config.php';
-  if (empty($config['ionos_plugins'])) {
-    return $result; // Heaven knows, why: While installing, $config is true, but not in X-Debug.
-  }
+  // no require_once, because while installing the plugin, the file is already included
+  $config = require __DIR__ . '/config.php';
 
   if ( ! in_array($args->slug, array_keys($config['ionos_plugins']), true)) {
     return $result;
@@ -134,8 +132,28 @@ add_filter('plugins_api', function ($result, $action, $args) {
   $pi->requires      = '6.0';
   $pi->sections      = [
     _x('Description', 'Plugin installer section title') => $config['ionos_plugins'][$args->slug]['short_description'],
-    _x('Changelog', 'Plugin installer section title')   => 'Changes',
+    _x('Changelog', 'Plugin installer section title')   => render_changelog($pi->changelog ?? $pi->sections->changelog ?? []),
   ];
 
   return $pi;
 }, 20, 3);
+
+function render_changelog( $changelog ) {
+  if(is_string($changelog) && preg_match('/<h[1-4]>/', $changelog)) {
+    return $changelog;
+  }
+
+  $response = '';
+
+  foreach ( $changelog as $item ) {
+    $response .= '<h4>' . $item->version . '</h4><ul>';
+
+    foreach ( $item->changes as $c ) {
+      $response .= '<li>' . $c . '</li>';
+    }
+
+    $response .= '</ul>';
+  }
+
+  return $response;
+}
