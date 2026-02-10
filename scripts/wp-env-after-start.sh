@@ -149,6 +149,7 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     # disable stretch-extra thirdparty plugin activation
     # (=> this would result in activating both stretch-extra and real ionos-essentials for example)
     wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
+    # wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '["plugins/ionos-essentials/ionos-essentials.php", "plugins/beyond-seo/beyond-seo.php"]' --format=json
     
     # fix permissions for mu-plugins folder if any
     # (leaving the permisions as-is will result in an error on destroy restart wp-env)
