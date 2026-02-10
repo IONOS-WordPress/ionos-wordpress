@@ -8,19 +8,18 @@ $option = 'IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION';
 $value  = get_option($option, null);
 
 switch ($value) {
-  case null:
-    printf("stretch-extra apcu object cache was not initialized.\n");
-    // no break
-  case true:
+  case '1':
     printf("disabling stretch-extra apcu object cache...\n");
-    update_option($option, false);
+    delete_option($option);
     break;
-  case false:
-    printf("enabling stretch-extra apcu object cache...\n");
-    update_option($option, true);
-    break;
+  case null:
   default:
-    printf("Error: option '%s' contains invalid value(=%s).\n", $option, print_r($value, true));
+    printf("enabling stretch-extra apcu object cache...\n");
+    update_option($option, '1');
+    break;
 }
 
-printf('%s(=%s)', $option, print_r(get_option($option, null), true));
+printf("%s(=%s)\n", $option, print_r(get_option($option, null), true));
+
+$object_cache_php = WP_CONTENT_DIR . '/object-cache.php';
+printf("\$WP_CONTENT_DIR/object-cache.php exists: %s\n", print_r(file_exists($object_cache_php)));

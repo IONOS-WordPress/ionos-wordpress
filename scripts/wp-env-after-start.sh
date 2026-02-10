@@ -39,6 +39,11 @@ if [[ "${CI:-}" != "true" ]]; then
       # enable apcu extension
       echo 'n' | pecl install apcu
       docker-php-ext-enable apcu
+
+      # configure APCu to be enabled
+      echo "apc.enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
+      echo "apc.enable_cli=1" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
+
       apache2ctl graceful ||:
 EOF
     done
@@ -88,6 +93,7 @@ EOF
 $(plugins)
 $(mu_plugins)
 $(themes)
+        "/var/www/html/wp-content/object-cache.php": "\${workspaceFolder}/packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/apcu/object-cache.php",
         "/var/www/html": "\${workspaceFolder}/${WPENV_INSTALLPATH}/WordPress",
         // phpunit test path mappings
         "/wordpress-phpunit/includes": "\${workspaceFolder}/${WPENV_INSTALLPATH}/tests-WordPress-PHPUnit/tests/phpunit/includes",

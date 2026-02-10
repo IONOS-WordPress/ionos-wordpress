@@ -51,5 +51,3 @@ if ($hit_rate < 80 && $total > 50) {
 if ($load_pct > 90) {
   echo "(!) DANGER: Memory is nearly full (apc.shm_size).\n";
 }
-
-echo "\n[End of Report]\n";

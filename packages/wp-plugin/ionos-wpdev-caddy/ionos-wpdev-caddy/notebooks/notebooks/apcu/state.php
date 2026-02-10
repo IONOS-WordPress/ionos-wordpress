@@ -5,22 +5,19 @@
 */
 
 if (! function_exists('apcu_enabled')) {
-  printf('apcu extension not loaded');
+  printf("apcu extension not loaded\n");
 }
 
-if (! apcu_enabled()) {
-  printf('apcu extension not enabled');
+if (function_exists('apcu_enabled') && !apcu_enabled()) {
+  printf("apcu extension not enabled\n");
 }
 
 $value = get_option('IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION', null);
 printf("stretch-extra apcu %s\n", match ($value) {
   null    => 'not initialized',
-  true    => 'enabled',
-  false   => 'disabled',
-  default => sprintf('contains invalid value(=%s)', print_r($value)),
+  '1'     => 'enabled',
+  default => 'disabled',
 });
 
 $object_cache_php = WP_CONTENT_DIR . '/object-cache.php';
-if (! file_exists($object_cache_php)) {
-  printf("Error: file '%s' does not exist.\n", $object_cache_php);
-}
+printf("\$WP_CONTENT_DIR/object-cache.php exists: %s\n", print_r(file_exists($object_cache_php)));

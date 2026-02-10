@@ -26,3 +26,4 @@ if (! defined('IONOS_IS_STRETCH_SFS')) {
 require_once __DIR__ . '/inc/migration.php';
 require_once __DIR__ . '/inc/secondary-plugin-dir.php';
 require_once __DIR__ . '/inc/secondary-theme-dir.php';
+require_once __DIR__ . '/inc/apcu.php';
