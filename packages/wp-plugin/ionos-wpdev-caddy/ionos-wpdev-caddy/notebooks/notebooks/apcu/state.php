@@ -14,9 +14,9 @@ if (! apcu_enabled()) {
 
 $value = get_option('IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION', null);
 printf("stretch-extra apcu %s\n", match ($value) {
-  null => 'not initialized',
-  true => 'enabled',
-  false => 'disabled',
+  null    => 'not initialized',
+  true    => 'enabled',
+  false   => 'disabled',
   default => sprintf('contains invalid value(=%s)', print_r($value)),
 });
 
