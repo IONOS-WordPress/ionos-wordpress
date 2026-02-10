@@ -90,39 +90,41 @@ if (\get_option('ionos_group_brand') !== 'ionos') {
 
 function gather_infos_for_ionos_plugins(array $ionos_plugins): array
 {
-
   $requests = [];
   foreach ($ionos_plugins as $plugin) {
-    if( ! isset($plugin['info_url']) ) {
+    if (!isset($plugin['info_url'])) {
       continue;
     }
     $requests[] = [
-      'url'   => $plugin['info_url'],
-      'type'  => \WpOrg\Requests\Requests::GET,
+      'url'  => $plugin['info_url'],
+      'type' => \WpOrg\Requests\Requests::GET,
       'slug' => $plugin['slug'] ?? '',
     ];
   }
 
-  // 3. Execute all requests simultaneously
+  // Execute all requests simultaneously
   $responses = \WpOrg\Requests\Requests::request_multiple($requests);
 
-  // 4. Process the data
-  $remote_data=[];
+  // Process the data
+  $remote_data = [];
   foreach ($responses as $i => $response) {
-    if ($response instanceof \WpOrg\Requests\Response && $response->success) {
-      $decoded_data = \json_decode($response->body, true);
-      if (\json_last_error() !== JSON_ERROR_NONE) {
-        continue;
-      }
-      $slug = $requests[$i]['slug'] ?? '';
-      $remote_data[$slug] = $decoded_data;
+    if (!($response instanceof \WpOrg\Requests\Response) || !$response->success) {
+      continue;
     }
+
+    $decoded_data = \json_decode($response->body, true);
+    if (\json_last_error() !== JSON_ERROR_NONE) {
+      continue;
+    }
+
+    $slug = $requests[$i]['slug'] ?? '';
+    $remote_data[$slug] = $decoded_data;
   }
 
-  \array_walk($ionos_plugins, function (array &$plugin) use (&$remote_data): void {
+  \array_walk($ionos_plugins, function (array &$plugin) use ($remote_data): void {
     $slug = $plugin['slug'] ?? '';
-    $plugin['rating']  = 0;
-    $plugin['ratings'] = [
+    $plugin['rating']          = 0;
+    $plugin['ratings']         = [
       '5' => 0,
       '4' => 0,
       '3' => 0,
@@ -132,9 +134,10 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
     $plugin['num_ratings']     = 0;
     $plugin['active_installs'] = 0;
 
-    $plugin['last_updated']  = $remote_data[$slug]['last_updated'] ?? \date('Y-m-d', \strtotime('-2 years'));
-    $plugin['version']       = $remote_data[$slug]['version']      ?? '';
-    if (isset($remote_data[$slug]['download_url']) ){
+    $plugin['last_updated'] = $remote_data[$slug]['last_updated'] ?? \date('Y-m-d', \strtotime('-2 years'));
+    $plugin['version']      = $remote_data[$slug]['version'] ?? '';
+
+    if (isset($remote_data[$slug]['download_url'])) {
       $plugin['download_link'] = $remote_data[$slug]['download_url'];
     }
   });
@@ -226,7 +229,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       return render_beyond_seo_info($plugin_info, $pi, $args);
     }
 
-    if (str_contains($args->slug, 'ionos-essentials')) {
+    if (\str_contains($args->slug, 'ionos-essentials')) {
       return render_essentials($plugin_info, $pi, $args);
     }
 
@@ -236,11 +239,11 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
   accepted_args: 3
 );
 
-function render_essentials($plugin_info, $pi, $args)
+function render_essentials(array $plugin_info, object $pi, object $args): object
 {
   $pi->name          = $plugin_info['name'];
   $pi->slug          = $args->slug;
-  $pi->download_link = $pi->download_url   ?? '';
+  $pi->download_link = $pi->download_url ?? '';
   $pi->version       = $pi->latest_version ?? '';
   $pi->requires      = '6.0';
   $pi->sections      = [
@@ -251,11 +254,11 @@ function render_essentials($plugin_info, $pi, $args)
   return $pi;
 }
 
-function render_legacy_ionos_plugins($plugin_info, $pi, $args)
+function render_legacy_ionos_plugins(array $plugin_info, object $pi, object $args): object
 {
   $pi->name          = $plugin_info['name'];
   $pi->slug          = $args->slug;
-  $pi->download_link = $pi->download_url   ?? '';
+  $pi->download_link = $pi->download_url ?? '';
   $pi->version       = $pi->latest_version ?? '';
   $pi->requires      = '6.0';
   $pi->sections      = [
@@ -266,11 +269,11 @@ function render_legacy_ionos_plugins($plugin_info, $pi, $args)
   return $pi;
 }
 
-function render_beyond_seo_info($plugin_info, $pi, $args)
+function render_beyond_seo_info(array $plugin_info, object $pi, object $args): object
 {
   $pi->name          = $plugin_info['name'];
   $pi->slug          = $args->slug;
-  $pi->download_link = $pi->download_url   ?? '';
+  $pi->download_link = $pi->download_url ?? '';
   $pi->sections      = (array) $pi->sections;
   $pi->banners       = [];
 
