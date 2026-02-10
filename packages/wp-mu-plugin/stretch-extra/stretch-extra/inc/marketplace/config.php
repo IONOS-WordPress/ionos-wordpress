@@ -22,7 +22,7 @@ return [
       [
         'info_url' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos-group/ionos-sso.info.json',
         'name' => 'Ionos Login',
-        'short_description' => 'IONOS Login allows you to log in with your IONOS customer ID and password through the IONOS Control Panel login page. You then have an active session in both your WordPress and your Control Panel and can jump easily from one to the other.',
+        'short_description' => __('IONOS Login allows you to log in with your IONOS customer ID and password through the IONOS Control Panel login page. You then have an active session in both your WordPress and your Control Panel and can jump easily from one to the other.', 'stretch-extra'),
         'version' => 'latest',
         'author' => '<a href="https://www.ionos-group.com/brands.html">IONOS</a>',
         'slug' => 'ionos-sso',
@@ -35,7 +35,7 @@ return [
       [
         'info_url' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos-group/woocommerce-german-market-light.info.json',
         'name' => 'WooCommerce German Market Light',
-        'short_description' => 'Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria.',
+        'short_description' => __('Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria.', 'stretch-extra'),
         'version' => 'latest',
         'author' => '<a href="https://marketpress.de/shop/plugins/woocommerce/woocommerce-german-market/">MarketPress</a>',
         'slug' => 'woocommerce-german-market-light',

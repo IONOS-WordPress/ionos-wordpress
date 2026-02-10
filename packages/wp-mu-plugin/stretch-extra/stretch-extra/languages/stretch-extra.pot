@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-09T09:53:50+00:00\n"
+"POT-Creation-Date: 2026-02-10T08:28:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: stretch-extra\n"
@@ -41,6 +41,14 @@ msgstr ""
 
 #: stretch-extra/inc/marketplace/config.php
 msgid "The essentials plugin provides IONOS hosting specific functionality."
+msgstr ""
+
+#: stretch-extra/inc/marketplace/config.php
+msgid "IONOS Login allows you to log in with your IONOS customer ID and password through the IONOS Control Panel login page. You then have an active session in both your WordPress and your Control Panel and can jump easily from one to the other."
+msgstr ""
+
+#: stretch-extra/inc/marketplace/config.php
+msgid "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."
 msgstr ""
 
 #: stretch-extra/inc/marketplace/marketplace.php
