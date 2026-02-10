@@ -344,7 +344,7 @@ EOF
           # generate/update pot file
           ionos.wordpress.build_workspace_package_wp_plugin.wp_cli i18n make-pot \
             --domain=$text_domain  \
-            --exclude=tests/,vendor/,package.json,node_modules/,src/ \
+            --exclude=tests/,vendor/,package.json,node_modules/,src/,stretch-extra/plugins,stretch-extra/themes  \
             ./ $LANGUAGES_DIR/$text_domain.pot
 
           # generate po files if WP_CLI_I18N_LOCALES is set
