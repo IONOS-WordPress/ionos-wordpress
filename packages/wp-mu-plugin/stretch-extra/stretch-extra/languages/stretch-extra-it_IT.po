@@ -53,4 +53,4 @@ msgstr "IONOS Login ti permette di accedere alla tua istanza di WordPress tramit
 
 #: stretch-extra/inc/marketplace/config.php
 msgid "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."
-msgstr "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."
+msgstr ""

@@ -49,7 +49,7 @@ msgstr "El plugin essentials proporciona funcionalidades específicas para el al
 
 #: stretch-extra/inc/marketplace/config.php
 msgid "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."
-msgstr "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."
+msgstr ""
 
 #: stretch-extra/inc/marketplace/config.php
 msgid "IONOS Login allows you to log in with your IONOS customer ID and password through the IONOS Control Panel login page. You then have an active session in both your WordPress and your Control Panel and can jump easily from one to the other."

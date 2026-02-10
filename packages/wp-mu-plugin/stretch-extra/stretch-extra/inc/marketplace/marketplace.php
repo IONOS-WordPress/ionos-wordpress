@@ -150,10 +150,20 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       <<<HTML
       <style>
         div[class*="plugin-card-ionos-"],
+        div.plugin-card-beyond-seo,
+        div.plugin-card-01-ext-ion8dhas7,
         div.plugin-card-woocommerce-german-market-light {
           .column-downloaded,
           .column-rating {
             display: none;
+          }
+        }
+
+        div.plugin-card-01-ext-ion8dhas7{
+          .plugin-action-buttons{
+            .open-plugin-details-modal{
+              display: none;
+            }
           }
         }
       </style>
@@ -177,9 +187,10 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       return $result;
     }
 
+    // No info_url means that there is no additional info to fetch, so we can return the basic info from config.php. Site Assistant uses this.
     $plugin_info = $ionos_plugins[$args->slug];
     if (! isset($plugin_info['info_url'])) {
-      return $result;
+      return (object) $ionos_plugins[$args->slug];
     }
 
     $response = \wp_remote_get($plugin_info['info_url']);
@@ -194,23 +205,60 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       return $result;
     }
 
-    $pi->name          = $plugin_info['name'];
-    $pi->slug          = $args->slug;
-    $pi->download_link = $pi->download_url   ?? '';
-    $pi->version       = $pi->latest_version ?? '';
-    $pi->requires      = '6.0';
-    $pi->sections      = [
-      \_x('Description', 'Plugin installer section title') => $plugin_info['short_description'],
-      \_x('Changelog', 'Plugin installer section title')   => \str_contains($args->slug, 'ionos-essentials')
-        ? ($pi->sections->changelog ?? '')
-        : render_changelog($pi->changelog ?? []),
-    ];
+    if ($args->slug === 'beyond-seo') {
+      return render_beyond_seo_info($plugin_info, $pi, $args);
+    }
 
-    return $pi;
+    if (str_contains($args->slug, 'ionos-essentials')) {
+      return render_essentials($plugin_info, $pi, $args);
+    }
+
+    return render_legacy_ionos_plugins($plugin_info, $pi, $args);
   },
   priority: 20,
   accepted_args: 3
 );
+
+function render_essentials($plugin_info, $pi, $args)
+{
+  $pi->name          = $plugin_info['name'];
+  $pi->slug          = $args->slug;
+  $pi->download_link = $pi->download_url   ?? '';
+  $pi->version       = $pi->latest_version ?? '';
+  $pi->requires      = '6.0';
+  $pi->sections      = [
+    \_x('Description', 'Plugin installer section title') => $plugin_info['short_description'],
+    \_x('Changelog', 'Plugin installer section title')   => $pi->sections->changelog ?? '',
+  ];
+
+  return $pi;
+}
+
+function render_legacy_ionos_plugins($plugin_info, $pi, $args)
+{
+  $pi->name          = $plugin_info['name'];
+  $pi->slug          = $args->slug;
+  $pi->download_link = $pi->download_url   ?? '';
+  $pi->version       = $pi->latest_version ?? '';
+  $pi->requires      = '6.0';
+  $pi->sections      = [
+    \_x('Description', 'Plugin installer section title') => $plugin_info['short_description'],
+    \_x('Changelog', 'Plugin installer section title')   => render_changelog($pi->changelog ?? []),
+  ];
+
+  return $pi;
+}
+
+function render_beyond_seo_info($plugin_info, $pi, $args)
+{
+  $pi->name          = $plugin_info['name'];
+  $pi->slug          = $args->slug;
+  $pi->download_link = $pi->download_url   ?? '';
+  $pi->sections      = (array) $pi->sections;
+  $pi->banners       = [];
+
+  return $pi;
+}
 
 function render_changelog(array $changelog): string
 {

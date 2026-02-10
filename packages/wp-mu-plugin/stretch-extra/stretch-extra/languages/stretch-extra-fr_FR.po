@@ -53,4 +53,4 @@ msgstr "Ce plugin vous permet de vous connecter à votre compte IONOS avec votre
 
 #: stretch-extra/inc/marketplace/config.php
 msgid "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."
-msgstr "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."
+msgstr ""

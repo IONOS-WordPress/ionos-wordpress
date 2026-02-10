@@ -44,9 +44,36 @@ return [
         ],
         'last_updated' => '2024-05-15 12:00:00',
       ],
-    ],
+  'beyond-seo' =>
+      [
+        'info_url' => 'https://wordpress.rankingcoach.com/update/archives/beyond-seo.json',
+        'name' => 'BeyondSEO',
+        'short_description' => __('BeyondSEO is a comprehensive WordPress SEO plugin designed to enhance Google search rankings and online visibility.<br><br>It provides advanced SEO analysis, content optimization, keyword research with competition metrics, automated meta tag management, AI-powered content suggestions, local SEO tools, and seamless integrations with external services. <br><br>The plugin features a robust onboarding system, multi-language support, and deep WordPress integration for effective online marketing and SEO management.', 'stretch-extra'),
+        'version' => 'latest',
+        'author' => 'BeyondSEO Team',
+        'slug' => 'beyond-seo',
+        'icons' => [
+          '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg'
+        ],
+        'last_updated' => '2024-05-15 12:00:00',
+      ],
+  '01-ext-ion8dhas7' =>
+      [
+        'name' => 'Site Assistant',
+        'short_description' => __('To be done', 'stretch-extra'),
+        'version' => 'latest',
+        'download_link' => 'hhttps://s3-eu-central-1.ionoscloud.com/web-hosting/extendify/01-ext-ion8dhas7.zip',
+        'author' => '<a href="https://profiles.wordpress.org/extendify/">Extendify</a>',
+        'slug' => '01-ext-ion8dhas7',
+        'icons' => [
+          '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg'
+        ],
+        'last_updated' => '2024-05-15 12:00:00',
+      ],
+  ],
   'wordpress_org_plugins' =>
     [
+      'extendify',
       'antispam-bee',
       'limit-login-attempts-reloaded',
       'jetpack',
