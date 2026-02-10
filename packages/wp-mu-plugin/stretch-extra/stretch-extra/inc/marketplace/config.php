@@ -2,7 +2,6 @@
 
 namespace ionos\stretch_extra;
 
-
 return [
   'ionos_plugins' => [
       'ionos-essentials' =>

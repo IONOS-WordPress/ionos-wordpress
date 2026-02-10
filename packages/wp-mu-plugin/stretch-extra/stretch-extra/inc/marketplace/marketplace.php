@@ -90,7 +90,37 @@ if (\get_option('ionos_group_brand') !== 'ionos') {
 
 function gather_infos_for_ionos_plugins(array $ionos_plugins): array
 {
-  \array_walk($ionos_plugins, function (array &$plugin): void {
+
+  $requests = [];
+  foreach ($ionos_plugins as $plugin) {
+    if( ! isset($plugin['info_url']) ) {
+      continue;
+    }
+    $requests[] = [
+      'url'   => $plugin['info_url'],
+      'type'  => \WpOrg\Requests\Requests::GET,
+      'slug' => $plugin['slug'] ?? '',
+    ];
+  }
+
+  // 3. Execute all requests simultaneously
+  $responses = \WpOrg\Requests\Requests::request_multiple($requests);
+
+  // 4. Process the data
+  $remote_data=[];
+  foreach ($responses as $i => $response) {
+    if ($response instanceof \WpOrg\Requests\Response && $response->success) {
+      $decoded_data = \json_decode($response->body, true);
+      if (\json_last_error() !== JSON_ERROR_NONE) {
+        continue;
+      }
+      $slug = $requests[$i]['slug'] ?? '';
+      $remote_data[$slug] = $decoded_data;
+    }
+  }
+
+  \array_walk($ionos_plugins, function (array &$plugin) use (&$remote_data): void {
+    $slug = $plugin['slug'] ?? '';
     $plugin['rating']  = 0;
     $plugin['ratings'] = [
       '5' => 0,
@@ -102,24 +132,9 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
     $plugin['num_ratings']     = 0;
     $plugin['active_installs'] = 0;
 
-    if (! isset($plugin['info_url'])) {
-      return;
-    }
-
-    $response = \wp_remote_get($plugin['info_url']);
-    if (
-      ! \is_wp_error($response) &&
-      \wp_remote_retrieve_response_code($response) === 200
-    ) {
-      $body     = \wp_remote_retrieve_body($response);
-      $new_info = \json_decode($body, true);
-
-      if (\json_last_error() === JSON_ERROR_NONE && \is_array($new_info)) {
-        $plugin['last_updated']  = $new_info['last_updated'] ?? '';
-        $plugin['version']       = $new_info['version']      ?? '';
-        $plugin['download_link'] = $new_info['download_url'] ?? '';
-      }
-    }
+    $plugin['last_updated']  = $remote_data[$slug]['last_updated'] ?? \date('Y-m-d', \strtotime('-2 years'));
+    $plugin['version']       = $remote_data[$slug]['version']      ?? '';
+    $plugin['download_link'] = $remote_data[$slug]['download_url'] ?? '';
   });
 
   return $ionos_plugins;
