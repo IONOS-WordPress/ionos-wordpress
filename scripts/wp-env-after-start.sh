@@ -132,9 +132,6 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     # activate twentytwenty-five theme in all wp-env instances (test and development)
     wp --quiet theme activate twentytwentyfive
 
-    # activate all installed plugins in all wp-env instances (test and development)
-    wp --quiet plugin activate --all
-
     # emulate ionos brand by default
     wp --quiet option update ionos_group_brand ionos
     wp --quiet option update ionos_group_brand_menu IONOS
@@ -154,8 +151,12 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     # disable stretch-extra thirdparty plugin activation
     # (=> this would result in activating both stretch-extra and real ionos-essentials for example)
     wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
-    # wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '["plugins/ionos-essentials/ionos-essentials.php", "plugins/beyond-seo/beyond-seo.php"]' --format=json
-    
+    # @TODO: disable beyondseo until it's php 7.4 compatible to prevent wp-env errors in php 7.4 environments (e.g. CI)
+    wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '["plugins/ionos-essentials/ionos-essentials.php", "plugins/beyond-seo/beyond-seo.php"]' --format=json
+
+    # activate all installed plugins in all wp-env instances (test and development)
+    wp --quiet plugin activate --all
+
     # fix permissions for mu-plugins folder if any
     # (leaving the permisions as-is will result in an error on destroy restart wp-env)
     if find /var/www/html/wp-content/mu-plugins -mindepth 1 -maxdepth 1 -type d -printf '%f\n' &>/dev/null; then
