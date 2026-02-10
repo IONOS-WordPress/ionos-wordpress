@@ -45,11 +45,11 @@ msgstr "raccomanda"
 
 #: stretch-extra/inc/marketplace/config.php
 msgid "The essentials plugin provides IONOS hosting specific functionality."
-msgstr "Il plugin essentials fornisce funzionalit\u00e0 specifiche per l'hosting IONOS."
+msgstr "Il plugin essentials fornisce funzionalità specifiche per l'hosting IONOS."
 
 #: stretch-extra/inc/marketplace/config.php
 msgid "IONOS Login allows you to log in with your IONOS customer ID and password through the IONOS Control Panel login page. You then have an active session in both your WordPress and your Control Panel and can jump easily from one to the other."
-msgstr "IONOS Login ti permette di accedere alla tua istanza di WordPress tramite la pagina di accesso al tuo account IONOS, inserendo il tuo ID cliente e la tua password. In questo modo potrai accedere contemporaneamente sia al tuo account IONOS che alla tua istanza di WordPress, e potrai passare da uno all\u2019altro in maniera semplice e veloce."
+msgstr "IONOS Login ti permette di accedere alla tua istanza di WordPress tramite la pagina di accesso al tuo account IONOS, inserendo il tuo ID cliente e la tua password. In questo modo potrai accedere contemporaneamente sia al tuo account IONOS che alla tua istanza di WordPress, e potrai passare da uno all’altro in maniera semplice e veloce."
 
 #: stretch-extra/inc/marketplace/config.php
 msgid "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."

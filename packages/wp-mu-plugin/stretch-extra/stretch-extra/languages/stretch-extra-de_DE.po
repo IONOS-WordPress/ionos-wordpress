@@ -52,6 +52,5 @@ msgid "IONOS Login allows you to log in with your IONOS customer ID and password
 msgstr "Mit dem Plugin IONOS Login, Kundennummer und Passwort können Sie sich in Ihrem IONOS Kundenkonto anmelden. Sie können dadurch leicht zwischen WordPress und Ihrem IONOS Kundenkonto hin und her springen."
 
 #: stretch-extra/inc/marketplace/config.php
-# Was not translated in the legacy config
 msgid "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."
 msgstr "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."
