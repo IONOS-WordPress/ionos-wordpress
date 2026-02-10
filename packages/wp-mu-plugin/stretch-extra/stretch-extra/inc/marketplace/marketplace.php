@@ -134,7 +134,9 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
 
     $plugin['last_updated']  = $remote_data[$slug]['last_updated'] ?? \date('Y-m-d', \strtotime('-2 years'));
     $plugin['version']       = $remote_data[$slug]['version']      ?? '';
-    $plugin['download_link'] = $remote_data[$slug]['download_url'] ?? '';
+    if (isset($remote_data[$slug]['download_url']) ){
+      $plugin['download_link'] = $remote_data[$slug]['download_url'];
+    }
   });
 
   return $ionos_plugins;
