@@ -20,48 +20,20 @@ defined('ABSPATH') || exit();
  */
 class WP_Object_Cache {
   /**
-   * Cache group prefix
+   * Cache group prefix, local cache, statistics, and non-persistent groups
    */
-  private string $prefix = 'wp_';
-
-  /**
-   * Non-persistent groups (not cached in APCu)
-   */
-  private array $non_persistent_groups = [];
-
-  /**
-   * Local cache for current request
-   */
-  private array $cache = [];
-
-  /**
-   * Cache statistics
-   */
-  private array $stats = [
-    'hits' => 0,
-    'misses' => 0,
-  ];
-
-  /**
-   * Constructor
-   */
-  public function __construct() {
-    // Set default non-persistent groups
-    $this->non_persistent_groups = [
-      'counts',
-      'plugins',
-      'themes',
-    ];
-  }
+  public function __construct(
+    private string $prefix = md5(NONCE_KEY) . '_',
+    private array $cache = [],
+    private array $stats = ['hits' => 0, 'misses' => 0],
+    private array $non_persistent_groups = ['counts', 'plugins', 'themes'],
+  ) {}
 
   /**
    * Generate cache key
    */
   private function key(string $key, string $group = 'default'): string {
-    if (empty($group)) {
-      $group = 'default';
-    }
-    return $this->prefix . $group . ':' . $key;
+    return $this->prefix . ($group ?: 'default') . ':' . $key;
   }
 
   /**
@@ -97,32 +69,22 @@ class WP_Object_Cache {
    * Set data in cache
    */
   public function set(int|string $key, mixed $data, string $group = 'default', int $expire = 0): bool {
-    if (empty($group)) {
-      $group = 'default';
-    }
+    $group = $group ?: 'default';
 
     // Always store in local cache
-    if (!isset($this->cache[$group])) {
-      $this->cache[$group] = [];
-    }
-    $this->cache[$group][$key] = $data;
+    ($this->cache[$group] ??= [])[$key] = $data;
 
     // Store in APCu if persistent group
-    if ($this->is_persistent_group($group)) {
-      $cache_key = $this->key($key, $group);
-      return apcu_store($cache_key, $data, $expire);
-    }
-
-    return true;
+    return $this->is_persistent_group($group)
+      ? apcu_store($this->key($key, $group), $data, $expire)
+      : true;
   }
 
   /**
    * Get data from cache
    */
   public function get(int|string $key, string $group = 'default', bool $force = false, bool &$found = null): mixed {
-    if (empty($group)) {
-      $group = 'default';
-    }
+    $group = $group ?: 'default';
 
     // Check local cache first
     if (!$force && isset($this->cache[$group][$key])) {
@@ -133,20 +95,12 @@ class WP_Object_Cache {
 
     // Check APCu for persistent groups
     if ($this->is_persistent_group($group)) {
-      $cache_key = $this->key($key, $group);
-      $data = apcu_fetch($cache_key, $success);
+      $data = apcu_fetch($this->key($key, $group), $success);
 
       if ($success) {
         $found = true;
         $this->stats['hits']++;
-
-        // Store in local cache
-        if (!isset($this->cache[$group])) {
-          $this->cache[$group] = [];
-        }
-        $this->cache[$group][$key] = $data;
-
-        return $data;
+        return ($this->cache[$group] ??= [])[$key] = $data;
       }
     }
 
@@ -159,22 +113,12 @@ class WP_Object_Cache {
    * Delete data from cache
    */
   public function delete(int|string $key, string $group = 'default'): bool {
-    if (empty($group)) {
-      $group = 'default';
-    }
+    $group = $group ?: 'default';
+    unset($this->cache[$group][$key]);
 
-    // Remove from local cache
-    if (isset($this->cache[$group][$key])) {
-      unset($this->cache[$group][$key]);
-    }
-
-    // Remove from APCu
-    if ($this->is_persistent_group($group)) {
-      $cache_key = $this->key($key, $group);
-      return apcu_delete($cache_key);
-    }
-
-    return true;
+    return $this->is_persistent_group($group)
+      ? apcu_delete($this->key($key, $group))
+      : true;
   }
 
   /**
@@ -189,9 +133,7 @@ class WP_Object_Cache {
    * Flush cache for specific group
    */
   public function flush_group(string $group): bool {
-    if (isset($this->cache[$group])) {
-      unset($this->cache[$group]);
-    }
+    unset($this->cache[$group]);
 
     // For APCu, we need to iterate and delete matching keys
     // This is not as efficient, but APCu doesn't support group operations
@@ -199,11 +141,9 @@ class WP_Object_Cache {
       $prefix = $this->prefix . $group . ':';
       $info = apcu_cache_info();
 
-      if (isset($info['cache_list'])) {
-        foreach ($info['cache_list'] as $entry) {
-          if (isset($entry['info']) && str_starts_with($entry['info'], $prefix)) {
-            apcu_delete($entry['info']);
-          }
+      foreach ($info['cache_list'] ?? [] as $entry) {
+        if (isset($entry['info']) && str_starts_with($entry['info'], $prefix)) {
+          apcu_delete($entry['info']);
         }
       }
     }
@@ -215,62 +155,33 @@ class WP_Object_Cache {
    * Get multiple values
    */
   public function get_multiple(array $keys, string $group = 'default', bool $force = false): array {
-    $values = [];
-
-    foreach ($keys as $key) {
-      $values[$key] = $this->get($key, $group, $force);
-    }
-
-    return $values;
+    return array_combine($keys, array_map(fn($key) => $this->get($key, $group, $force), $keys));
   }
 
   /**
    * Set multiple values
    */
   public function set_multiple(array $data, string $group = 'default', int $expire = 0): array {
-    $results = [];
-
-    foreach ($data as $key => $value) {
-      $results[$key] = $this->set($key, $value, $group, $expire);
-    }
-
-    return $results;
+    return array_map(fn($key, $value) => $this->set($key, $value, $group, $expire), array_keys($data), $data);
   }
 
   /**
    * Delete multiple values
    */
   public function delete_multiple(array $keys, string $group = 'default'): array {
-    $results = [];
-
-    foreach ($keys as $key) {
-      $results[$key] = $this->delete($key, $group);
-    }
-
-    return $results;
+    return array_combine($keys, array_map(fn($key) => $this->delete($key, $group), $keys));
   }
 
   /**
    * Increment numeric cache item value
    */
   public function incr(int|string $key, int $offset = 1, string $group = 'default'): int|false {
-    if (empty($group)) {
-      $group = 'default';
-    }
-
-    $value = $this->get($key, $group);
-
+    $value = $this->get($key, $group ?: 'default');
     if ($value === false) {
       return false;
     }
 
-    if (!is_numeric($value)) {
-      $value = 0;
-    }
-
-    $offset = (int) $offset;
     $value = (int) $value + $offset;
-
     $this->set($key, $value, $group);
 
     return $value;
@@ -280,28 +191,12 @@ class WP_Object_Cache {
    * Decrement numeric cache item value
    */
   public function decr(int|string $key, int $offset = 1, string $group = 'default'): int|false {
-    if (empty($group)) {
-      $group = 'default';
-    }
-
-    $value = $this->get($key, $group);
-
+    $value = $this->get($key, $group ?: 'default');
     if ($value === false) {
       return false;
     }
 
-    if (!is_numeric($value)) {
-      $value = 0;
-    }
-
-    $offset = (int) $offset;
-    $value = (int) $value - $offset;
-
-    // Ensure value doesn't go below 0
-    if ($value < 0) {
-      $value = 0;
-    }
-
+    $value = max(0, (int) $value - $offset);
     $this->set($key, $value, $group);
 
     return $value;
@@ -344,10 +239,7 @@ class WP_Object_Cache {
    */
   public function reset(): void {
     $this->cache = [];
-    $this->stats = [
-      'hits' => 0,
-      'misses' => 0,
-    ];
+    $this->stats = ['hits' => 0, 'misses' => 0];
   }
 }
 
