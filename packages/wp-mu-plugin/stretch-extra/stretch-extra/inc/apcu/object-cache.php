@@ -26,6 +26,11 @@ class WP_Object_Cache {
   private array $stats = ['hits' => 0, 'misses' => 0];
   private array $non_persistent_groups = ['counts', 'plugins', 'themes'];
 
+  public function __construct()
+  {
+    define('APCU_OBJECT_CACHE_INSTANTIATED', true);
+  }
+
   /**
    * Generate cache key
    */
@@ -304,4 +309,8 @@ function wp_cache_add_non_persistent_groups(array|string $groups): void {
 
 function wp_cache_reset(): void {
   $GLOBALS['wp_object_cache']->reset();
+}
+
+function wp_cache_close() {
+	return true;
 }
