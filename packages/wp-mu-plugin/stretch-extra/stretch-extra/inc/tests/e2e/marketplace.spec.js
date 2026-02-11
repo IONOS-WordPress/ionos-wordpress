@@ -1,0 +1,15 @@
+import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+
+test.describe(
+  'stretch-extra:marketplace',
+  {
+    tag: ['@stretch-extra', '@marketplace'],
+  },
+  () => {
+    test('ionos tab is present', async ({ admin, page }) => {
+      await admin.visitAdminPage('/plugin-install.php');
+      await expect(page.locator('.plugin-install-ionos')).toHaveCount(1);
+      await expect(page.locator('.plugin-card-01-ext-ion8dhas7')).toHaveCount(1);
+    });
+  }
+);
