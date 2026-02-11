@@ -19,7 +19,6 @@ switch ($value) {
     break;
 }
 
-printf("%s(=%s)\n", $option, print_r(get_option($option, null), true));
+printf("%s(=%s)\n\n", $option, print_r(get_option($option, null), true));
 
-$object_cache_php = WP_CONTENT_DIR . '/object-cache.php';
-printf("\$WP_CONTENT_DIR/object-cache.php exists: %s\n", print_r(file_exists($object_cache_php)));
+printf("[wp-env] CAVEAT: object-cache.php is only %s on next request !\n", ($value === '1' ? 'enabled' : 'disabled'));

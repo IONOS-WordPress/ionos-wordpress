@@ -20,4 +20,4 @@ printf("stretch-extra apcu %s\n", match ($value) {
 });
 
 $object_cache_php = WP_CONTENT_DIR . '/object-cache.php';
-printf("\$WP_CONTENT_DIR/object-cache.php exists: %s\n", print_r(file_exists($object_cache_php)));
+printf("\$WP_CONTENT_DIR/object-cache.php exists: %s\n", file_exists($object_cache_php) ? 'yes' : 'no');
