@@ -54,3 +54,11 @@ msgstr ""
 #: stretch-extra/inc/marketplace/config.php
 msgid "IONOS Login allows you to log in with your IONOS customer ID and password through the IONOS Control Panel login page. You then have an active session in both your WordPress and your Control Panel and can jump easily from one to the other."
 msgstr "Este plugin te permite iniciar sesión en tu cuenta IONOS con tu ID de cliente y contraseña correspondiente. De este modo, estarás conectado tanto en tu WordPress como en tu área de cliente de IONOS habitual y podrás cambiar fácilmente de una interfaz a otra."
+
+#: stretch-extra/inc/marketplace/config.php
+msgid "BeyondSEO is a comprehensive WordPress SEO plugin designed to enhance Google search rankings and online visibility.<br><br>It provides advanced SEO analysis, content optimization, keyword research with competition metrics, automated meta tag management, AI-powered content suggestions, local SEO tools, and seamless integrations with external services. <br><br>The plugin features a robust onboarding system, multi-language support, and deep WordPress integration for effective online marketing and SEO management."
+msgstr ""
+
+#: stretch-extra/inc/marketplace/config.php
+msgid "Provides guided onboarding and a Site Assistant in the WordPress admin."
+msgstr ""
