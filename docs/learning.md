@@ -73,6 +73,53 @@ function handle_option_change() { }
 
 ---
 
+## Inline Functions in WordPress Hooks
+
+**Pattern**: Functions used only once in `add_filter()` or `add_action()` can be **inlined as anonymous functions**. If the function body consists of only a **single statement**, use an **arrow function** (`fn() =>`).
+
+**Example - Anonymous function**:
+
+```php
+// Multi-line function body
+\add_action(
+  hook_name: 'init',
+  callback: function(): void {
+    $option = \get_option('some_option');
+    process_option($option);
+  }
+);
+```
+
+**Example - Arrow function**:
+
+```php
+// Single statement - use arrow function
+\add_filter(
+  hook_name: 'the_content',
+  callback: fn(string $content): string => wpautop($content)
+);
+
+\add_action(
+  hook_name: 'init',
+  callback: fn(): void => register_custom_post_types()
+);
+```
+
+**Why**:
+- **Inline functions** reduce code clutter when callbacks are only used once
+- **Arrow functions** are more concise for single-expression callbacks
+- Both improve code locality by keeping related code together
+
+**When to use named functions instead**:
+- Function is reused in multiple places
+- Function body is complex or multi-line
+- Function needs to be tested independently
+- Function should be documented separately
+
+**Agent Documentation Status**: ✅ Documented in AGENTS.md: "Arrow functions `fn() =>` for single expressions, anonymous `function() {}` for multi-line" and "Inline/anonymous functions if only used once, named functions when reused"
+
+---
+
 ## Dynamic Hook Names (update*option*)
 
 **Pattern**: WordPress provides dynamic hooks for option changes using the pattern `update_option_{$option_name}`.
