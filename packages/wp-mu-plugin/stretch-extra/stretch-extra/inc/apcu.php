@@ -80,15 +80,22 @@ function handle_option_change(mixed $value): void {
   callback: __NAMESPACE__ . '\disable_cache',
 );
 
-// @TODO: check if cache file is in sync with option
-// register only in wp-env environment, to avoid performance issues in production
-\add_action('init', function() {
-  // Ensure cache state matches option value on init (useful after wp-cli changes)
-  $enabled = get_option(IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION);
-  if ($enabled === '1') {
-    enable_cache();
-  }
-  else {
-    disable_cache();
-  }
-});
+/*
+  WORKAROUND for wp-env :
+  pnpm wp-env run cli wp commands run in the cli (!) container but not in the web container
+  Therefore, when the option is changed via wp-cli, the web container does not reflect the change
+  (=> create/delete WP_CONTENT_DIR/object-cache.php).
+  this workaround ensures that on init, the web container checks the option value and syncs the state
+  (=> create/delete WP_CONTENT_DIR/object-cache.php).
+*/
+if (!defined('WP_CLI') && getenv('WP_TESTS_DIR')!== false && in_array(wp_get_environment_type(), ['local'], true)) {
+  \add_action('init', function() {
+    // Ensure cache state matches option value on init (useful after wp-cli changes)
+    $enabled = \get_option(IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION) === '1';
+    if ($enabled && !file_exists(OBJECT_CACHE_PATH)) {
+      enable_cache();
+    } else if (!$enabled && file_exists(OBJECT_CACHE_PATH)) {
+      disable_cache();
+    }
+  });
+}
