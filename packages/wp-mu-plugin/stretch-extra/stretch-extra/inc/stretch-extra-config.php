@@ -9,10 +9,10 @@ namespace ionos\stretch_extra;
 return [
   'plugins' => [
     [
-      'url'  => 'https://s3-eu-central-1.ionoscloud.com/web-hosting/extendify/01-ext-ion8dhas7.zip',
-      'key'  => 'plugins/01-ext-ion8dhas7/01-ext-ion8dhas7.php',
-      'file' => IONOS_CUSTOM_DIR . '/plugins/01-ext-ion8dhas7/01-ext-ion8dhas7.php',
-      'slug' => '01-ext-ion8dhas7',
+      'url'  => 'https://s3-eu-central-1.ionoscloud.com/web-hosting/extendify/01-ext-ion8dhas7-stretch.zip',
+      'key'  => 'plugins/01-ext-ion8dhas7-stretch/01-ext-ion8dhas7-stretch.php',
+      'file' => IONOS_CUSTOM_DIR . '/plugins/01-ext-ion8dhas7-stretch/01-ext-ion8dhas7-stretch.php',
+      'slug' => '01-ext-ion8dhas7-stretch',
       'data' => [
         'Name' => 'Site Assistant',
       ],
