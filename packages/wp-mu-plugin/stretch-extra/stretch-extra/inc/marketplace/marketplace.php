@@ -92,7 +92,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
 {
   $requests = [];
   foreach ($ionos_plugins as $plugin) {
-    if (!isset($plugin['info_url'])) {
+    if (! isset($plugin['info_url'])) {
       continue;
     }
     $requests[] = [
@@ -108,7 +108,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
   // Process the data
   $remote_data = [];
   foreach ($responses as $i => $response) {
-    if (!($response instanceof \WpOrg\Requests\Response) || !$response->success) {
+    if (! ($response instanceof \WpOrg\Requests\Response) || ! $response->success) {
       continue;
     }
 
@@ -117,12 +117,12 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       continue;
     }
 
-    $slug = $requests[$i]['slug'] ?? '';
+    $slug               = $requests[$i]['slug'] ?? '';
     $remote_data[$slug] = $decoded_data;
   }
 
   \array_walk($ionos_plugins, function (array &$plugin) use ($remote_data): void {
-    $slug = $plugin['slug'] ?? '';
+    $slug                      = $plugin['slug'] ?? '';
     $plugin['rating']          = 0;
     $plugin['ratings']         = [
       '5' => 0,
@@ -135,7 +135,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
     $plugin['active_installs'] = 0;
 
     $plugin['last_updated'] = $remote_data[$slug]['last_updated'] ?? \date('Y-m-d', \strtotime('-2 years'));
-    $plugin['version']      = $remote_data[$slug]['version'] ?? '';
+    $plugin['version']      = $remote_data[$slug]['version']      ?? '';
 
     if (isset($remote_data[$slug]['download_url'])) {
       $plugin['download_link'] = $remote_data[$slug]['download_url'];
@@ -243,7 +243,7 @@ function render_essentials(array $plugin_info, object $pi, object $args): object
 {
   $pi->name          = $plugin_info['name'];
   $pi->slug          = $args->slug;
-  $pi->download_link = $pi->download_url ?? '';
+  $pi->download_link = $pi->download_url   ?? '';
   $pi->version       = $pi->latest_version ?? '';
   $pi->requires      = '6.0';
   $pi->sections      = [
@@ -258,7 +258,7 @@ function render_legacy_ionos_plugins(array $plugin_info, object $pi, object $arg
 {
   $pi->name          = $plugin_info['name'];
   $pi->slug          = $args->slug;
-  $pi->download_link = $pi->download_url ?? '';
+  $pi->download_link = $pi->download_url   ?? '';
   $pi->version       = $pi->latest_version ?? '';
   $pi->requires      = '6.0';
   $pi->sections      = [
