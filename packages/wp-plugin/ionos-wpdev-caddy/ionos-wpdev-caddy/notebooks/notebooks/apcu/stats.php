@@ -44,10 +44,7 @@ $format_row = fn (string $label, string $value): string =>
  *
  * @return array Formatted dividers
  */
-$top_border    = '┌' . str_repeat(
-  '─',
-  $box_width - 2
-) . '┐';
+$top_border    = '┌' . str_repeat('─', $box_width - 2) . '┐';
 $middle_border = '├' . str_repeat('─', $box_width - 2) . '┤';
 $bottom_border = '└' . str_repeat('─', $box_width - 2) . '┘';
 
