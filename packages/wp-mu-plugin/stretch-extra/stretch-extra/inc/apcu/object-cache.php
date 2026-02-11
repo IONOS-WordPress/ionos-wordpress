@@ -19,15 +19,12 @@ defined('ABSPATH') || exit();
  * WordPress Object Cache class using APCu
  */
 class WP_Object_Cache {
-  /**
-   * Cache group prefix, local cache, statistics, and non-persistent groups
-   */
-  public function __construct(
-    private string $prefix = md5(NONCE_KEY) . '_',
-    private array $cache = [],
-    private array $stats = ['hits' => 0, 'misses' => 0],
-    private array $non_persistent_groups = ['counts', 'plugins', 'themes'],
-  ) {}
+  public const APCU_OBJECT_CACHE_INSTANTIATED = true;
+
+  private string $prefix = 'wp_';
+  private array $cache = [];
+  private array $stats = ['hits' => 0, 'misses' => 0];
+  private array $non_persistent_groups = ['counts', 'plugins', 'themes'];
 
   /**
    * Generate cache key
@@ -72,7 +69,8 @@ class WP_Object_Cache {
     $group = $group ?: 'default';
 
     // Always store in local cache
-    ($this->cache[$group] ??= [])[$key] = $data;
+    $this->cache[$group] ??= [];
+    $this->cache[$group][$key] = $data;
 
     // Store in APCu if persistent group
     return $this->is_persistent_group($group)
@@ -100,7 +98,8 @@ class WP_Object_Cache {
       if ($success) {
         $found = true;
         $this->stats['hits']++;
-        return ($this->cache[$group] ??= [])[$key] = $data;
+        $this->cache[$group] ??= [];
+        return $this->cache[$group][$key] = $data;
       }
     }
 
