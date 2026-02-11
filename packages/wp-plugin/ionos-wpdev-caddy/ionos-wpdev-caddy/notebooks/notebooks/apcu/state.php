@@ -8,7 +8,7 @@ if (! function_exists('apcu_enabled')) {
   printf("apcu extension not loaded\n");
 }
 
-if (function_exists('apcu_enabled') && !apcu_enabled()) {
+if (function_exists('apcu_enabled') && ! apcu_enabled()) {
   printf("apcu extension not enabled\n");
 }
 

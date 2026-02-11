@@ -25,7 +25,7 @@ $progress  = (int) round($load_pct / (100 / $bar_width));
 $bar       = str_repeat('█', $progress) . str_repeat('░', $bar_width - $progress);
 
 // Formatting constants
-$box_width = 59;
+$box_width   = 59;
 $label_width = 18;
 $value_width = $box_width - $label_width - 5; // 5 = '| ' (2) + ' ' (1) + ' |' (2)
 
@@ -36,7 +36,7 @@ $value_width = $box_width - $label_width - 5; // 5 = '| ' (2) + ' ' (1) + ' |' (
  * @param string $value Right-aligned value
  * @return string Formatted row
  */
-$format_row = fn(string $label, string $value): string =>
+$format_row = fn (string $label, string $value): string =>
   '│ ' . str_pad($label . ':', $label_width) . ' ' . str_pad($value, $value_width, ' ', STR_PAD_LEFT) . ' │';
 
 /**
@@ -44,7 +44,10 @@ $format_row = fn(string $label, string $value): string =>
  *
  * @return array Formatted dividers
  */
-$top_border    = '┌' . str_repeat('─', $box_width - 2) . '┐';
+$top_border    = '┌' . str_repeat(
+  '─',
+  $box_width - 2
+) . '┐';
 $middle_border = '├' . str_repeat('─', $box_width - 2) . '┤';
 $bottom_border = '└' . str_repeat('─', $box_width - 2) . '┘';
 
@@ -54,7 +57,7 @@ $bottom_border = '└' . str_repeat('─', $box_width - 2) . '┘';
  * @param string $text Header text
  * @return string Formatted header
  */
-$format_header = fn(string $text): string =>
+$format_header = fn (string $text): string =>
   '│ ' . str_pad($text, $box_width - 4, ' ', STR_PAD_BOTH) . ' │';
 
 // Build output

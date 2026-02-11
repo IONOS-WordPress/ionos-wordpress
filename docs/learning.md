@@ -7,11 +7,13 @@ This document captures important patterns and conventions discovered during the 
 **Pattern**: WordPress options in this codebase use **string values**, not booleans.
 
 **Example from migration.php**:
+
 ```php
 if (\get_option(IONOS_MIGRATION_OPTION) === '1.0.0') {
 ```
 
 **APCu implementation**:
+
 ```php
 const IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION = 'IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION';
 
@@ -32,6 +34,7 @@ if (\get_option(IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION) === '1') {
 **Pattern**: Use **named parameters** for `add_action()` and `add_filter()` calls to improve code clarity.
 
 **Example**:
+
 ```php
 \add_action(
   hook_name: 'update_option_' . IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION,
@@ -52,6 +55,7 @@ if (\get_option(IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION) === '1') {
 **Pattern**: When passing callbacks to WordPress hooks from within a namespace, use `__NAMESPACE__ . '\function_name'`.
 
 **Example**:
+
 ```php
 namespace ionos\stretch_extra\apcu;
 
@@ -69,11 +73,12 @@ function handle_option_change() { }
 
 ---
 
-## Dynamic Hook Names (update_option_)
+## Dynamic Hook Names (update*option*)
 
 **Pattern**: WordPress provides dynamic hooks for option changes using the pattern `update_option_{$option_name}`.
 
 **Example**:
+
 ```php
 \add_action(
   hook_name: 'update_option_' . IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION,
@@ -88,6 +93,7 @@ function handle_option_change(mixed $old_value, mixed $new_value, string $option
 ```
 
 **Parameters**:
+
 1. `$old_value` - The previous option value
 2. `$new_value` - The new option value
 3. `$option` - The option name
@@ -103,6 +109,7 @@ function handle_option_change(mixed $old_value, mixed $new_value, string $option
 **Pattern**: Implement a **sync mechanism** on `init` hook to ensure state consistency when options are changed via WP-CLI.
 
 **Example**:
+
 ```php
 \add_action(
   hook_name: 'init',
@@ -133,12 +140,14 @@ function sync_cache_state(): void {
 **Pattern**: WordPress automatically loads `WP_CONTENT_DIR/object-cache.php` if it exists, replacing the default transient-based cache.
 
 **Implementation Requirements**:
+
 1. Define a `WP_Object_Cache` class
 2. Implement all standard cache methods (`get`, `set`, `delete`, `flush`, etc.)
 3. Define global functions (`wp_cache_get`, `wp_cache_set`, etc.) that proxy to the class
 4. Initialize a global `$wp_object_cache` instance
 
 **Example structure**:
+
 ```php
 class WP_Object_Cache {
   public function get($key, $group = 'default', $force = false, &$found = null) { }
@@ -164,6 +173,7 @@ function wp_cache_get($key, $group = '', $force = false, &$found = null) {
 **Pattern**: Some cache groups should **not** be persisted across requests (e.g., `counts`, `plugins`, `themes`).
 
 **Example**:
+
 ```php
 private array $non_persistent_groups = ['counts', 'plugins', 'themes'];
 
@@ -183,12 +193,14 @@ private function is_persistent_group(string $group): bool {
 **Observation**: The ionos-wpdev-caddy plugin has a notebook system in `packages/wp-plugin/ionos-wpdev-caddy/ionos-wpdev-caddy/notebooks/notebooks/`.
 
 **Structure**:
+
 - Each feature has its own directory (e.g., `apcu/`)
 - Contains small PHP scripts for testing/debugging
 - Scripts use WordPress functions directly
 - Common patterns: `info.php`, `state.php`, `stats.php`, `toggle.php`, `reset.php`
 
 **Example files**:
+
 - `state.php` - Check current feature state
 - `toggle.php` - Enable/disable feature
 - `stats.php` - Display formatted statistics
@@ -224,11 +236,13 @@ private function is_persistent_group(string $group): bool {
 The APCu object cache implementation revealed several undocumented patterns in the codebase:
 
 ✅ **Worked Well**:
+
 - Namespace organization
 - Function-first approach
 - Late binding with `__NAMESPACE__`
 
 ❌ **Not Documented**:
+
 - String values for options (not booleans)
 - WP-CLI sync pattern
 - Drop-in plugin architecture
