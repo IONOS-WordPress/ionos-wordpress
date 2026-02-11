@@ -61,7 +61,7 @@ return [
           'name'              => 'Site Assistant',
           'short_description' => __('Provides guided onboarding and a Site Assistant in the WordPress admin.', 'stretch-extra'),
           'version'           => 'latest',
-          'download_link'     => 'hhttps://s3-eu-central-1.ionoscloud.com/web-hosting/extendify/01-ext-ion8dhas7.zip',
+          'download_link'     => 'https://s3-eu-central-1.ionoscloud.com/web-hosting/extendify/01-ext-ion8dhas7.zip',
           'author'            => '<a href="https://profiles.wordpress.org/extendify/">Extendify</a>',
           'slug'              => '01-ext-ion8dhas7',
           'icons'             => [
