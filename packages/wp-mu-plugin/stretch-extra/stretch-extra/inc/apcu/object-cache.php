@@ -351,213 +351,66 @@ class WP_Object_Cache {
   }
 }
 
-/**
- * Global cache object
- */
-$GLOBALS['wp_object_cache'] = new WP_Object_Cache();
-
-/**
- * WordPress cache functions
- *
- * These functions are wrapped in function_exists() checks for backwards compatibility:
- * - WordPress 6.9+: cache.php is loaded first and defines these functions, so they won't be redefined
- * - Older WordPress: object-cache.php completely replaces cache.php, so these functions must be defined
- */
-
-if (!function_exists('wp_cache_add')) {
-  /**
-   * Adds data to the cache, if the cache key doesn't already exist.
-   *
-   * @param int|string $key The cache key to use for retrieval later.
-   * @param mixed $data The data to add to the cache.
-   * @param string $group Optional. The group to add the cache to. Default empty.
-   * @param int $expire Optional. When the cache data should expire, in seconds. Default 0 (no expiration).
-   * @return bool True on success, false if cache key already exists.
-   */
-  function wp_cache_add(int|string $key, mixed $data, string $group = '', int $expire = 0): bool {
-    return $GLOBALS['wp_object_cache']->add($key, $data, $group, $expire);
-  }
+function wp_cache_init(): void {
+  $GLOBALS['wp_object_cache'] = new WP_Object_Cache();
 }
 
-if (!function_exists('wp_cache_replace')) {
-  /**
-   * Replaces the contents of the cache with new data.
-   *
-   * @param int|string $key The cache key to use for retrieval later.
-   * @param mixed $data The data to replace in the cache.
-   * @param string $group Optional. The group to add the cache to. Default empty.
-   * @param int $expire Optional. When the cache data should expire, in seconds. Default 0 (no expiration).
-   * @return bool False if the cache key doesn't exist, true otherwise.
-   */
-  function wp_cache_replace(int|string $key, mixed $data, string $group = '', int $expire = 0): bool {
-    return $GLOBALS['wp_object_cache']->replace($key, $data, $group, $expire);
-  }
+function wp_cache_add(int|string $key, mixed $data, string $group = '', int $expire = 0): bool {
+  return $GLOBALS['wp_object_cache']->add($key, $data, $group, $expire);
 }
 
-if (!function_exists('wp_cache_set')) {
-  /**
-   * Saves the data to the cache.
-   *
-   * @param int|string $key The cache key to use for retrieval later.
-   * @param mixed $data The data to save in the cache.
-   * @param string $group Optional. The group to add the cache to. Default empty.
-   * @param int $expire Optional. When the cache data should expire, in seconds. Default 0 (no expiration).
-   * @return bool True on success, false on failure.
-   */
-  function wp_cache_set(int|string $key, mixed $data, string $group = '', int $expire = 0): bool {
-    return $GLOBALS['wp_object_cache']->set($key, $data, $group, $expire);
-  }
+function wp_cache_replace(int|string $key, mixed $data, string $group = '', int $expire = 0): bool {
+  return $GLOBALS['wp_object_cache']->replace($key, $data, $group, $expire);
 }
 
-if (!function_exists('wp_cache_get')) {
-  /**
-   * Retrieves the cache contents from the cache by key and group.
-   *
-   * @param int|string $key The cache key to retrieve.
-   * @param string $group Optional. The group the cache is in. Default empty.
-   * @param bool $force Optional. Whether to force an update of the local cache. Default false.
-   * @param bool &$found Optional. Whether the key was found in the cache. Default null.
-   * @return mixed The cache contents on success, false on failure.
-   */
-  function wp_cache_get(int|string $key, string $group = '', bool $force = false, bool &$found = null): mixed {
-    return $GLOBALS['wp_object_cache']->get($key, $group, $force, $found);
-  }
+function wp_cache_set(int|string $key, mixed $data, string $group = '', int $expire = 0): bool {
+  return $GLOBALS['wp_object_cache']->set($key, $data, $group, $expire);
 }
 
-if (!function_exists('wp_cache_delete')) {
-  /**
-   * Removes the cache contents matching key and group.
-   *
-   * @param int|string $key The cache key to delete.
-   * @param string $group Optional. The group the cache is in. Default empty.
-   * @return bool True on successful removal, false on failure.
-   */
-  function wp_cache_delete(int|string $key, string $group = ''): bool {
+function wp_cache_get(int|string $key, string $group = '', bool $force = false, bool &$found = null): mixed {
+  return $GLOBALS['wp_object_cache']->get($key, $group, $force, $found);
+}
+
+function wp_cache_delete(int|string $key, string $group = ''): bool {
     return $GLOBALS['wp_object_cache']->delete($key, $group);
   }
+
+function wp_cache_flush(): bool {
+  return $GLOBALS['wp_object_cache']->flush();
 }
 
-if (!function_exists('wp_cache_flush')) {
-  /**
-   * Removes all cache items.
-   *
-   * @return bool True on success, false on failure.
-   */
-  function wp_cache_flush(): bool {
-    return $GLOBALS['wp_object_cache']->flush();
-  }
+function wp_cache_flush_group(string $group): bool {
+  return $GLOBALS['wp_object_cache']->flush_group($group);
 }
 
-if (!function_exists('wp_cache_flush_group')) {
-  /**
-   * Removes all cache items in a group.
-   *
-   * @param string $group The group to flush.
-   * @return bool True on success, false on failure.
-   */
-  function wp_cache_flush_group(string $group): bool {
-    return $GLOBALS['wp_object_cache']->flush_group($group);
-  }
+function wp_cache_get_multiple(array $keys, string $group = '', bool $force = false): array {
+  return $GLOBALS['wp_object_cache']->get_multiple($keys, $group, $force);
 }
 
-if (!function_exists('wp_cache_get_multiple')) {
-  /**
-   * Retrieves multiple values from the cache in one call.
-   *
-   * @param array $keys Array of keys to retrieve.
-   * @param string $group Optional. The group the cache is in. Default empty.
-   * @param bool $force Optional. Whether to force an update of the local cache. Default false.
-   * @return array Array of values, indexed by key.
-   */
-  function wp_cache_get_multiple(array $keys, string $group = '', bool $force = false): array {
-    return $GLOBALS['wp_object_cache']->get_multiple($keys, $group, $force);
-  }
+function wp_cache_set_multiple(array $data, string $group = '', int $expire = 0): array {
+  return $GLOBALS['wp_object_cache']->set_multiple($data, $group, $expire);
 }
 
-if (!function_exists('wp_cache_set_multiple')) {
-  /**
-   * Sets multiple values to the cache in one call.
-   *
-   * @param array $data Array of key => value pairs to set.
-   * @param string $group Optional. The group to add the cache to. Default empty.
-   * @param int $expire Optional. When the cache data should expire, in seconds. Default 0 (no expiration).
-   * @return array Array of return values, indexed by key.
-   */
-  function wp_cache_set_multiple(array $data, string $group = '', int $expire = 0): array {
-    return $GLOBALS['wp_object_cache']->set_multiple($data, $group, $expire);
-  }
+function wp_cache_delete_multiple(array $keys, string $group = ''): array {
+  return $GLOBALS['wp_object_cache']->delete_multiple($keys, $group);
 }
 
-if (!function_exists('wp_cache_delete_multiple')) {
-  /**
-   * Deletes multiple values from the cache in one call.
-   *
-   * @param array $keys Array of keys to delete.
-   * @param string $group Optional. The group the cache is in. Default empty.
-   * @return array Array of return values, indexed by key.
-   */
-  function wp_cache_delete_multiple(array $keys, string $group = ''): array {
-    return $GLOBALS['wp_object_cache']->delete_multiple($keys, $group);
-  }
+function wp_cache_incr(int|string $key, int $offset = 1, string $group = ''): int|false {
+  return $GLOBALS['wp_object_cache']->incr($key, $offset, $group);
 }
 
-if (!function_exists('wp_cache_incr')) {
-  /**
-   * Increments numeric cache item's value.
-   *
-   * @param int|string $key The cache key to increment.
-   * @param int $offset Optional. The amount by which to increment. Default 1.
-   * @param string $group Optional. The group the cache is in. Default empty.
-   * @return int|false The item's new value on success, false on failure.
-   */
-  function wp_cache_incr(int|string $key, int $offset = 1, string $group = ''): int|false {
-    return $GLOBALS['wp_object_cache']->incr($key, $offset, $group);
-  }
+function wp_cache_decr(int|string $key, int $offset = 1, string $group = ''): int|false {
+  return $GLOBALS['wp_object_cache']->decr($key, $offset, $group);
 }
 
-if (!function_exists('wp_cache_decr')) {
-  /**
-   * Decrements numeric cache item's value.
-   *
-   * @param int|string $key The cache key to decrement.
-   * @param int $offset Optional. The amount by which to decrement. Default 1.
-   * @param string $group Optional. The group the cache is in. Default empty.
-   * @return int|false The item's new value on success, false on failure.
-   */
-  function wp_cache_decr(int|string $key, int $offset = 1, string $group = ''): int|false {
-    return $GLOBALS['wp_object_cache']->decr($key, $offset, $group);
-  }
+function wp_cache_switch_to_blog(int $blog_id): void {
+  $GLOBALS['wp_object_cache']->switch_to_blog($blog_id);
 }
 
-if (!function_exists('wp_cache_switch_to_blog')) {
-  /**
-   * Switches the internal blog ID.
-   *
-   * This changes the blog ID used to create keys in blog-specific groups.
-   *
-   * @param int $blog_id Blog ID.
-   */
-  function wp_cache_switch_to_blog(int $blog_id): void {
-    $GLOBALS['wp_object_cache']->switch_to_blog($blog_id);
-  }
+function wp_cache_add_non_persistent_groups(array|string $groups): void {
+  $GLOBALS['wp_object_cache']->add_non_persistent_groups($groups);
 }
 
-if (!function_exists('wp_cache_add_non_persistent_groups')) {
-  /**
-   * Adds a group or set of groups to the list of non-persistent groups.
-   *
-   * @param string|array $groups A group or an array of groups to add.
-   */
-  function wp_cache_add_non_persistent_groups(array|string $groups): void {
-    $GLOBALS['wp_object_cache']->add_non_persistent_groups($groups);
-  }
-}
-
-if (!function_exists('wp_cache_reset')) {
-  /**
-   * Resets cache keys.
-   */
-  function wp_cache_reset(): void {
-    $GLOBALS['wp_object_cache']->reset();
-  }
+function wp_cache_reset(): void {
+  $GLOBALS['wp_object_cache']->reset();
 }
