@@ -317,15 +317,21 @@ function render_changelog(array $changelog): string
       return $result;
     }
 
-    if (! \str_contains($args->search, 'ionos')) {
-      return $result;
-    }
-
     $config        = require __DIR__ . '/config.php';
     $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
 
+    if ($args->search !== 'ionos') {
+      $ionos_plugins = \array_filter(
+        $ionos_plugins,
+        fn (array $plugin): bool => \str_contains(
+          \strtolower($plugin['short_description'] ?? '' . $plugin['name'] ?? ''),
+          \strtolower($args->search)
+        )
+      );
+    }
+
     // Prepend to the results array
-    if (\is_object($result) && isset($result->plugins) && \is_array($result->plugins)) {
+    if (\is_object($result) && isset($result->plugins) && \is_array($result->plugins) && ! empty($ionos_plugins)) {
       $result->plugins = [...$ionos_plugins, ...$result->plugins];
     }
 
