@@ -75,7 +75,7 @@ All coding standards are organized in `/docs/agent/`:
 - Use `@wordpress/i18n` for all translations
 - Async/await over Promise chains
 - **Dashboard (Essentials plugin)**: Use EXOS framework (`window.EXOS`) for React UI components
-- **Asset Enqueuing**: Entry files (`*index.js`, `*index.css`) bundled by wp-scripts generate `index.asset.php` - always `require` this file and use its `dependencies` and `version` in `\wp_enqueue_script()` / `\wp_enqueue_style()`
+- **Asset Enqueuing**: Entry files (`*index.js`, `*index.css`) bundled by wp-scripts generate `index.asset.php` - always `require_once` this file and use its `dependencies` and `version` in `\wp_enqueue_script()` / `\wp_enqueue_style()`
 - See [JavaScript Standards](docs/agent/javascript-standards.md) for details
 
 **CSS**:
@@ -207,12 +207,13 @@ domReady(() => {
 1. **Nonce Functions**: NO backslash for `check_admin_referer()` and `check_ajax_referer()`
 2. **Tag Switching**: Avoid `<?php ?>` tag switching - use heredoc pattern
 3. **Early Escaping**: Don't escape before storage - escape at output
-4. **DOM Ready**: Use `@wordpress/dom-ready` not native `DOMContentLoaded`
-5. **API Fetch**: Use `@wordpress/api-fetch` not raw `fetch()` for WordPress REST
-6. **Prepared Statements**: Always use `$wpdb->prepare()` for SQL
-7. **Late Binding**: Functions referenced in hooks use `__NAMESPACE__ . '\function_name'`
-8. **Commit Messages**: Use Commitizen format with plugin scope: `feat(plugin): description`
-9. **Asset Files**: Always `require` the auto-generated `index.asset.php` before enqueuing bundled scripts/styles
+4. **Option Values**: Use string values (e.g., `'enabled'`/`'disabled'`) not booleans for WordPress options to avoid type coercion issues
+5. **DOM Ready**: Use `@wordpress/dom-ready` not native `DOMContentLoaded`
+6. **API Fetch**: Use `@wordpress/api-fetch` not raw `fetch()` for WordPress REST
+7. **Prepared Statements**: Always use `$wpdb->prepare()` for SQL
+8. **Late Binding**: Functions referenced in hooks use `__NAMESPACE__ . '\function_name'`
+9. **Commit Messages**: Use Commitizen format with plugin scope: `feat(plugin): description`
+10. **Asset Files**: Always `include` the auto-generated `index.asset.php` before enqueuing bundled scripts/styles
 
 ## Getting Help
 

@@ -79,8 +79,9 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
   @TODO: the theme can be preset in the database template
   Alternative workaround : Alex can set the theme to extendable when provisioning the account
   if this is the case the code below can be removed
+  dont initialize in wp-cli calls to prevent issues with command line scripts in wp-env
 */
-\add_action('muplugins_loaded', function () {
+defined('WP_CLI') || \add_action('muplugins_loaded', function () {
   $is_initialized = \get_option('stretch_extra_extendable_theme_dir_initialized', false) || \get_option(
     'stylesheet'
   ) === 'extendable';

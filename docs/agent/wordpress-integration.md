@@ -26,21 +26,110 @@ function handle_save(int $post_id, \WP_Post $post): void {
 }
 ```
 
-## APIs
+### Dynamic Hooks
+
+WordPress provides dynamic hooks that include variable parts. These are powerful for reacting to specific option changes, metadata updates, or post type operations.
+
+**Common dynamic hook patterns:**
 
 ```php
-// Options
+// Option-specific hooks - triggered when specific option changes
+\add_action(
+  hook_name: 'update_option_' . MY_OPTION_NAME,
+  callback: __NAMESPACE__ . '\handle_option_change',
+  priority: 10,
+  accepted_args: 3
+);
+
+function handle_option_change(mixed $old_value, mixed $new_value, string $option): void {
+  // React to specific option change
+  if ($old_value !== $new_value) {
+    perform_sync_action($new_value);
+  }
+}
+
+// Post type specific hooks
+\add_action('save_post_product', __NAMESPACE__ . '\handle_product_save', 10, 3);
+\add_action('delete_post_product', __NAMESPACE__ . '\handle_product_delete');
+
+// Meta-specific hooks
+\add_action('update_user_meta', __NAMESPACE__ . '\handle_meta_update', 10, 4);
+\add_filter('get_user_metadata', __NAMESPACE__ . '\filter_user_meta', 10, 4);
+
+// Custom taxonomy hooks
+\add_action('create_product_category', __NAMESPACE__ . '\handle_term_create');
+\add_action('edited_product_category', __NAMESPACE__ . '\handle_term_edit');
+```
+
+**Why use dynamic hooks:**
+
+- More targeted than generic hooks
+- Better performance (only fires for specific items)
+- Clearer intent in code
+- Reduces conditional logic in callbacks
+
+## APIs
+
+### Options
+
+**Prefer string values over booleans** for WordPress options to avoid type ambiguity:
+
+```php
+// ✅ GOOD - String values are explicit and unambiguous
+const FEATURE_ENABLED = 'enabled';
+const FEATURE_DISABLED = 'disabled';
+
+$status = \get_option('feature_status', FEATURE_DISABLED);
+$is_enabled = $status === FEATURE_ENABLED;
+
+// When updating
+\update_option('feature_status', FEATURE_ENABLED, true);
+
+// ❌ AVOID - Boolean values can be ambiguous when stored
+// MySQL/WordPress may convert true/false to '1'/'' which can cause issues
+\update_option('feature_enabled', true); // Stored as '1'
+$enabled = \get_option('feature_enabled'); // Returns '1' (string, not boolean)
+```
+
+**Why string values:**
+
+- Explicit state representation
+- No type coercion issues
+- Better for serialization
+- Clearer intent in code
+- Easier to extend (add more states later)
+
+**Standard option operations:**
+
+```php
+// Get with default
 $value = \get_option('option_name', 'default');
+
+// Update with autoload flag
 \update_option('option_name', $value, true);
 
-// Transients
+// Delete
+\delete_option('option_name');
+
+// Check existence
+if (\get_option('option_name') !== false) {
+  // Option exists
+}
+```
+
+### Transients
+
+```php
 $cached = \get_transient('cache_key');
 if ($cached === false) {
   $cached = expensive_operation();
   \set_transient('cache_key', $cached, HOUR_IN_SECONDS);
 }
+```
 
-// User Meta
+### User Meta
+
+```php
 $meta = \get_user_meta(\get_current_user_id(), 'meta_key', true);
 \update_user_meta($user_id, 'meta_key', $value);
 ```
@@ -224,6 +313,123 @@ $wpdb->update(
   \wp_send_json_success(process_data($data));
 });
 ```
+
+## Drop-in Plugins
+
+Drop-in plugins are special WordPress files placed in `wp-content/` that override core WordPress functionality. They load very early in the WordPress lifecycle, before most plugins.
+
+**Common drop-ins:**
+
+- `object-cache.php` - Custom object caching implementation
+- `db.php` - Custom database class
+- `advanced-cache.php` - Advanced caching for page content
+- `db-error.php` - Custom database error page
+- `maintenance.php` - Custom maintenance mode page
+
+### Object Cache Drop-in Pattern
+
+**Use case:** Implement persistent object caching (Redis, Memcached, APCu, etc.)
+
+**Implementation pattern:**
+
+```php
+<?php
+// wp-content/object-cache.php
+
+// Must implement WordPress cache functions
+function wp_cache_add(int|string $key, mixed $data, string $group = '', int $expire = 0): bool { }
+function wp_cache_set(int|string $key, mixed $data, string $group = '', int $expire = 0): bool { }
+function wp_cache_get(int|string $key, string $group = '', bool $force = false, bool &$found = null): mixed { }
+function wp_cache_delete(int|string $key, string $group = ''): bool { }
+function wp_cache_flush(): bool { }
+
+// Additional functions
+function wp_cache_add_global_groups(string|array $groups): void { }
+function wp_cache_add_non_persistent_groups(string|array $groups): void { }
+```
+
+**Sync pattern for file-based drop-ins:**
+
+When a drop-in needs to be enabled/disabled based on an option:
+
+```php
+// In plugin code
+function sync_dropin_file(): void {
+  $dropin_path = WP_CONTENT_DIR . '/object-cache.php';
+  $source_path = __DIR__ . '/includes/object-cache.php';
+
+  $enabled = \get_option('feature_status') === 'enabled';
+
+  if ($enabled && !file_exists($dropin_path)) {
+    // Enable: Copy source to wp-content/
+    copy($source_path, $dropin_path);
+    \wp_cache_flush(); // Clear any cached data
+  } elseif (!$enabled && file_exists($dropin_path)) {
+    // Disable: Remove drop-in
+    unlink($dropin_path);
+    \wp_cache_flush();
+  }
+}
+
+// Sync on option change
+\add_action(
+  hook_name: 'update_option_feature_status',
+  callback: __NAMESPACE__ . '\sync_dropin_file',
+  priority: 10,
+  accepted_args: 3
+);
+
+// Sync on plugin activation/deactivation
+register_activation_hook(PLUGIN_FILE, __NAMESPACE__ . '\sync_dropin_file');
+register_deactivation_hook(PLUGIN_FILE, __NAMESPACE__ . '\sync_dropin_file');
+```
+
+**WP-CLI integration for drop-ins:**
+
+```php
+// Ensure WP-CLI can detect state changes immediately
+if (defined('WP_CLI') && WP_CLI) {
+  \add_action('init', __NAMESPACE__ . '\sync_dropin_file');
+}
+```
+
+**Why WP-CLI sync is needed:**
+
+- WP-CLI operations may bypass normal WordPress hooks
+- File-based features need immediate filesystem sync
+- Ensures `wp option update` commands work as expected
+
+### Non-Persistent Cache Groups
+
+Some data should never be cached persistently (even with object caching enabled):
+
+```php
+// During cache initialization
+function register_cache_groups(): void {
+  \wp_cache_add_non_persistent_groups([
+    'counts',           // Post counts change frequently
+    'plugins',          // Plugin data changes on activation
+    'themes',           // Theme data changes on switch
+    'comment',          // Comment data is user-specific
+    'blog-details',     // Multisite blog details
+    'blog-lookup',      // Multisite lookups
+    'site-options',     // Multisite site options
+    'site-transient',   // Temporary cross-site data
+    'rss',              // Feed data is external
+    'global-posts',     // Multisite global posts
+  ]);
+}
+
+// Call early in object-cache.php
+register_cache_groups();
+```
+
+**Why non-persistent groups:**
+
+- Data is user-specific or request-specific
+- Data changes too frequently for persistent caching
+- Data is environment-specific (not shareable across servers)
+- Prevents stale data issues in load-balanced environments
 
 ## Common Functions
 

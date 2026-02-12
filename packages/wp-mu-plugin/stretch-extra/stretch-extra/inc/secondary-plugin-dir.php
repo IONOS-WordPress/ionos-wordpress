@@ -18,20 +18,13 @@ const IONOS_CUSTOM_DELETED_PLUGINS_OPTION = 'IONOS_CUSTOM_DELETED_PLUGINS_OPTION
 
 // @TODO: hack just for beta : on first run activate all custom plugins
 // will be done in "spaceman" via sql: https://github.com/IONOS-Hosting/spaceman
-\add_action('plugins_loaded', function () {
+// dont initialize in wp-cli calls to prevent issues with command line scripts in wp-env
+defined('WP_CLI') || \add_action('plugins_loaded', function () {
   $is_initialized = \get_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION);
   if ($is_initialized !== false) {
     return;
   }
 
-  // workaround to get our PHP 7.4 CI tests working (=> BeyoundSEO requires PHP 8.0 as of now)
-  foreach (get_all_custom_plugins() as $plugin_info) {
-    $plugin_data = \get_plugin_data($plugin_info['file'], false, false);
-    // mark plugins as deleted if the minimal required php version is not met by the current environment
-    if (isset($plugin_data['RequiresPHP']) && version_compare(PHP_VERSION, $plugin_data['RequiresPHP'], '<')) {
-      mark_custom_plugin_as_deleted($plugin_info['key']);
-    }
-  }
   // Initialize the active plugins option as an empty array
   foreach (get_installed_custom_plugins() as $plugin_info) {
     // Activate all custom plugins by default on first run
@@ -166,7 +159,7 @@ function get_installed_custom_plugins(): array
 /**
  * Inject activated custom plugins
  */
-\add_action('muplugins_loaded', function () {
+defined('WP_CLI') || \add_action('muplugins_loaded', function () {
   $custom_plugins = get_installed_custom_plugins();
   $active_plugins = get_active_custom_plugins();
 
