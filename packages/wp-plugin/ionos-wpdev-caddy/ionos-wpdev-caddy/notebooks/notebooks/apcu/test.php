@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Object Cache Validation Test
  *
@@ -9,8 +10,11 @@
 defined('ABSPATH') || exit();
 
 // Test configuration
-$test_key = 'cache_test_' . time();
-$test_value = ['data' => 'test', 'timestamp' => time()];
+$test_key   = 'cache_test_' . time();
+$test_value = [
+  'data'      => 'test',
+  'timestamp' => time(),
+];
 $test_group = 'test_group';
 
 printf("Testing APCu Object Cache...\n\n");
@@ -21,10 +25,10 @@ printf("✓ Set cache: %s\n", $set_result ? 'SUCCESS' : 'FAILED');
 
 // Test 2: Get cache
 $get_result = \wp_cache_get($test_key, $test_group);
-$matches = $get_result === $test_value;
+$matches    = $get_result === $test_value;
 printf("✓ Get cache: %s\n", $matches ? 'SUCCESS' : 'FAILED');
 
-if (!$matches) {
+if (! $matches) {
   printf("  Expected: %s\n", print_r($test_value, true));
   printf("  Got: %s\n", print_r($get_result, true));
 }
@@ -39,15 +43,12 @@ printf("✓ Delete cache: %s\n", $delete_result ? 'SUCCESS' : 'FAILED');
 
 // Test 5: Verify deletion
 $verify_deleted = \wp_cache_get($test_key, $test_group);
-$is_deleted = $verify_deleted === false;
+$is_deleted     = $verify_deleted === false;
 printf("✓ Verify deletion: %s\n\n", $is_deleted ? 'SUCCESS' : 'FAILED');
 
 // Summary
 $all_passed = $set_result && $matches && $delete_result && $is_deleted;
-printf(
-  "Result: %s\n",
-  $all_passed ? '✅ All tests passed' : '❌ Some tests failed'
-);
+printf("Result: %s\n", $all_passed ? '✅ All tests passed' : '❌ Some tests failed');
 
 if ($is_persistent) {
   printf("\nAPCu Stats:\n");

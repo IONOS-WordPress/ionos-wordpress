@@ -106,11 +106,13 @@ function handle_option_change() { }
 ```
 
 **Why**:
+
 - **Inline functions** reduce code clutter when callbacks are only used once
 - **Arrow functions** are more concise for single-expression callbacks
 - Both improve code locality by keeping related code together
 
 **When to use named functions instead**:
+
 - Function is reused in multiple places
 - Function body is complex or multi-line
 - Function needs to be tested independently

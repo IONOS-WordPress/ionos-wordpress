@@ -23,6 +23,7 @@ pnpm wp-env run cli wp --quiet option update IONOS_APCU_OBJECT_CACHE_ENABLED_OPT
 ```
 
 This command:
+
 1. Sets the enable flag in WordPress options
 2. Copies `object-cache.php` to `WP_CONTENT_DIR/object-cache.php`
 3. Activates persistent caching for all WordPress cache operations
@@ -38,6 +39,7 @@ pnpm wp-env run cli wp --quiet option delete IONOS_APCU_OBJECT_CACHE_ENABLED_OPT
 ```
 
 This command:
+
 1. Removes the enable flag
 2. Deletes the `object-cache.php` drop-in file
 3. Flushes the APCu cache
@@ -74,13 +76,14 @@ WordPress setup :
 Follow these steps to prepare a WordPress site to perform a Server-Timing benchmark using the Performance Lab plugin:
 
 - Install and activate the [Performance Lab plugin](https://wordpress.org/plugins/performance-lab/).
-- Go to the *Settings > Performance* screen, uncheck all module checkboxes and save. This ensures none of the Performance Lab’s other features are loaded, which could affect the performance of your actual comparison.
+- Go to the _Settings > Performance_ screen, uncheck all module checkboxes and save. This ensures none of the Performance Lab’s other features are loaded, which could affect the performance of your actual comparison.
 - Enable output-buffering for Server Timing via WP Admin > Tools > Server Timing and check the “Enable output buffering of template rendering” checkbox.
 - (Optional, but recommended) Disable any debugging features of WordPress, e.g. set constants like `WP_DEBUG`, `SCRIPT_DEBUG`, `SAVEQUERIES`, to false.
 
 Here's a simple approach to compare performance with and without APCu:
 
 1. **Baseline (without APCu)**:
+
    ```bash
    # Disable APCu
    pnpm wp-env run cli wp --quiet option delete IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION
@@ -92,6 +95,7 @@ Here's a simple approach to compare performance with and without APCu:
    ```
 
 2. **With APCu enabled**:
+
    ```bash
    # Enable APCu
    pnpm wp-env run cli wp --quiet option update IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION '1'
