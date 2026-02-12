@@ -69,6 +69,8 @@ To measure the performance impact of the APCu object cache, you can use WordPres
 
 **[Benchmarking PHP Performance with Server-Timing](https://make.wordpress.org/performance/handbook/measuring-performance/benchmarking-php-performance-with-server-timing/#preparing-a-wordpress-site-for-server-timing-benchmarks)**
 
+**[wp-cli profile](https://github.com/wp-cli/profile-command)** can also be used fopr profiling
+
 ### Quick Performance Test
 
 WordPress setup :
