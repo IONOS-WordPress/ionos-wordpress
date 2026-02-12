@@ -31,13 +31,21 @@ $value_width = $box_width - $label_width - 5; // 5 = '| ' (2) + ' ' (1) + ' |' (
 
 /**
  * Format a row with label and value, properly aligned.
+ * Handles multi-byte characters correctly by using display width instead of byte length.
  *
  * @param string $label Left-aligned label
  * @param string $value Right-aligned value
  * @return string Formatted row
  */
-$format_row = fn (string $label, string $value): string =>
-  '│ ' . str_pad($label . ':', $label_width) . ' ' . str_pad($value, $value_width, ' ', STR_PAD_LEFT) . ' │';
+$format_row = function (string $label, string $value) use ($label_width, $value_width): string {
+  $label_text     = $label . ':';
+  $label_padded   = str_pad($label_text, $label_width);
+  $value_width_mb = mb_strwidth($value);
+  $padding        = $value_width - $value_width_mb;
+  $value_padded   = str_repeat(' ', max(0, $padding)) . $value;
+
+  return '│ ' . $label_padded . ' ' . $value_padded . ' │';
+};
 
 /**
  * Create divider lines with box-drawing characters.
