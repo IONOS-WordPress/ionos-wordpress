@@ -19,17 +19,10 @@ defined('ABSPATH') || exit();
  * WordPress Object Cache class using APCu
  */
 class WP_Object_Cache {
-  public const APCU_OBJECT_CACHE_INSTANTIATED = true;
-
   private string $prefix = 'wp_';
   private array $cache = [];
   private array $stats = ['hits' => 0, 'misses' => 0];
   private array $non_persistent_groups = ['counts', 'plugins', 'themes'];
-
-  public function __construct()
-  {
-    define('APCU_OBJECT_CACHE_INSTANTIATED', true);
-  }
 
   /**
    * Generate cache key
@@ -313,4 +306,9 @@ function wp_cache_reset(): void {
 
 function wp_cache_close() {
 	return true;
+}
+
+function wp_cache_add_global_groups(array $global_groups) {
+  // @TODO: performance optimization we could can prepopulate the cach objects $this->cache[$group] instead
+  // of checking'em on every cache request for existence
 }
