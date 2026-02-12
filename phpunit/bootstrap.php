@@ -7,31 +7,6 @@ if (false !== $_phpunit_polyfills_path) {
   define('WP_TESTS_PHPUNIT_POLYFILLS_PATH', $_phpunit_polyfills_path);
 }
 
-{
-  /*
-   * This bootstrap file is responsible for setting up the testing environment for the APCu object cache tests.
-   */
-
-  $target_drop_in = '/var/www/html/wp-content/object-cache.php';
-  $apcu_object_cache = '/var/www/html/wp-content/mu-plugins/stretch-extra/inc/apcu/object-cache.php';
-
-  // Check if we are in the specific process that needs the cache
-  if ( getenv('PHPUNIT_INSTALL_APCU_OBJECT_CACHE') === '1' ) {
-    copy($apcu_object_cache, $target_drop_in);
-
-    // Clean up immediately after this specific process exits
-    register_shutdown_function(function() use ($target_drop_in) {
-      if (file_exists($target_drop_in)) {
-        unlink($target_drop_in);
-      }
-    });
-  } else {
-    // Ensure the file is NOT there for all other tests
-    if (file_exists($target_drop_in)) {
-      unlink($target_drop_in);
-    }
-  }
-}
 require_once getenv('HOME') . '/.composer/vendor/autoload.php';
 
 // Give access to tests_add_filter() function.
