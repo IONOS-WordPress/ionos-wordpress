@@ -53,7 +53,7 @@ pnpm wp-env run cli wp --quiet eval "apcu_clear_cache(); echo 'APCu cache cleare
 ### Check if object-cache.php drop-in is active
 
 ```bash
-pnpm wp-env run cli wp --quiet eval "echo file_exists(WP_CONTENT_DIR . '/object-cache.php') ? 'Active' : 'Not active';"
+pnpm wp-env run wordpress ls -la wp-content/object-cache.php
 ```
 
 **Note**: The APCu extension must be installed and enabled in PHP for the object cache to work. When you enable the cache, the system will copy the `object-cache.php` drop-in file to `WP_CONTENT_DIR`. When you disable it, the drop-in file is removed and the APCu cache is flushed.
