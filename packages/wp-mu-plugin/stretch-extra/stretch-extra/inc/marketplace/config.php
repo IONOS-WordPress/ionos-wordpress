@@ -20,7 +20,7 @@ return [
     'ionos-sso' =>
         [
           'info_url'          => 'https://s3-de-central.profitbricks.com/web-hosting/ionos-group/ionos-sso.info.json',
-          'name'              => 'Ionos Login',
+          'name'              => 'IONOS Login',
           'short_description' => __('IONOS Login allows you to log in with your IONOS customer ID and password through the IONOS Control Panel login page. You then have an active session in both your WordPress and your Control Panel and can jump easily from one to the other.', 'stretch-extra'),
           'version'           => 'latest',
           'author'            => '<a href="https://www.ionos-group.com/brands.html">IONOS</a>',
