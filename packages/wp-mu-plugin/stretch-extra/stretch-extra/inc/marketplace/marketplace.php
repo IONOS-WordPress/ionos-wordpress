@@ -171,7 +171,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       <style>
         div[class*="plugin-card-ionos-"],
         div.plugin-card-beyond-seo,
-        div.plugin-card-01-ext-ion8dhas7,
+        div.plugin-card-01-ext-ion8dhas7-stretch,
         div.plugin-card-woocommerce-german-market-light {
           .column-downloaded,
           .column-rating {
@@ -179,7 +179,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
           }
         }
 
-        div.plugin-card-01-ext-ion8dhas7{
+        div.plugin-card-01-ext-ion8dhas7-stretch{
           .plugin-action-buttons{
             .open-plugin-details-modal{
               display: none;

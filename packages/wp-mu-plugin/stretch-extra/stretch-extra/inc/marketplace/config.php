@@ -63,7 +63,7 @@ return [
           'version'           => 'latest',
           'download_link'     => 'https://s3-eu-central-1.ionoscloud.com/web-hosting/extendify/01-ext-ion8dhas7.zip',
           'author'            => '<a href="https://profiles.wordpress.org/extendify/">Extendify</a>',
-          'slug'              => '01-ext-ion8dhas7',
+          'slug'              => '01-ext-ion8dhas7-stretch',
           'icons'             => [
             '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg',
           ],
