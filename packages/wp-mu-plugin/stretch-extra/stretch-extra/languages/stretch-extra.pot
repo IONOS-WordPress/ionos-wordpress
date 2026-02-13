@@ -1,0 +1,64 @@
+# Copyright (C) 2026 IONOS Group
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: stretch-extra 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-02-11T10:50:16+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: stretch-extra\n"
+
+#. Plugin Name of the plugin
+#: stretch-extra.php
+msgid "stretch-extra"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: stretch-extra.php
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-mu-plugin/stretch-extra"
+msgstr ""
+
+#. Description of the plugin
+#: stretch-extra.php
+msgid "stretch-extra acts as a wp-env shim to include the php code targeting /opt/WordPress/extra/index.php"
+msgstr ""
+
+#. Author of the plugin
+#: stretch-extra.php
+msgid "IONOS Group"
+msgstr ""
+
+#. Author URI of the plugin
+#: stretch-extra.php
+msgid "https://www.ionos-group.com/brands.html"
+msgstr ""
+
+#: stretch-extra/inc/marketplace/config.php
+msgid "The essentials plugin provides IONOS hosting specific functionality."
+msgstr ""
+
+#: stretch-extra/inc/marketplace/config.php
+msgid "IONOS Login allows you to log in with your IONOS customer ID and password through the IONOS Control Panel login page. You then have an active session in both your WordPress and your Control Panel and can jump easily from one to the other."
+msgstr ""
+
+#: stretch-extra/inc/marketplace/config.php
+msgid "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."
+msgstr ""
+
+#: stretch-extra/inc/marketplace/config.php
+msgid "BeyondSEO is a comprehensive WordPress SEO plugin designed to enhance Google search rankings and online visibility.<br><br>It provides advanced SEO analysis, content optimization, keyword research with competition metrics, automated meta tag management, AI-powered content suggestions, local SEO tools, and seamless integrations with external services. <br><br>The plugin features a robust onboarding system, multi-language support, and deep WordPress integration for effective online marketing and SEO management."
+msgstr ""
+
+#: stretch-extra/inc/marketplace/config.php
+msgid "Provides guided onboarding and a Site Assistant in the WordPress admin."
+msgstr ""
+
+#: stretch-extra/inc/marketplace/marketplace.php
+msgid "recommends"
+msgstr ""
