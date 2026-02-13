@@ -147,7 +147,7 @@ require_once __DIR__ . '/ionos-essentials/inc/adminbar/index.php';
 
 require_once __DIR__ . '/ionos-essentials/inc/extendify/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/mcp/index.php';
-require_once __DIR__ . '/ionos-essentials/inc/automatic_updates/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/automatic-core-updates/index.php';
 
 // soc plugin components
 require_once __DIR__ . '/ionos-essentials/inc/migration/index.php';
