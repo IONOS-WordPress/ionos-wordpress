@@ -300,6 +300,13 @@ function install_plugin_from_url($plugin_url)
 
         if (empty($option)) {
           \update_option($key, $value);
+
+          if ($key === 'ionos_essentials_maintenance_mode' and class_exists(
+            \Ionos\Performance\Controllers\Cache\HDDCache::class
+          )) {
+            \Ionos\Performance\Controllers\Cache\HDDCache::flush_total_cache();
+          }
+
         } else {
           $options       = \get_option($option, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
           $options[$key] = $value;
