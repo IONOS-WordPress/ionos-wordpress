@@ -18,10 +18,11 @@ if (\get_option('ionos_group_brand') !== 'ionos') {
   return;
 }
 
-function get_config() {
+function get_config()
+{
   static $config = null;
 
-  if($config === null) {
+  if ($config === null) {
     $config = require_once __DIR__ . '/config.php';
   }
 
@@ -125,7 +126,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
     }
 
     $decoded_data = json_decode($response->body, true);
-    if ($decoded_data===NULL) {
+    if ($decoded_data===null) {
       continue;
     }
 
