@@ -22,7 +22,7 @@ class NBA
     public readonly string $description,
     public readonly string $link,
     public readonly string $anchor,
-    private readonly bool $completed,
+    public readonly bool $completed,
     public readonly bool $complete_on_click,
     public readonly array $categories,
     public readonly string $exos_icon,
@@ -90,19 +90,6 @@ class NBA
       $exos_icon,
       $expanded
     );
-  }
-
-  public function to_array(): array
-  {
-    return [
-      'id'          => $this->id,
-      'title'       => $this->title,
-      'description' => $this->description,
-      'link'        => $this->link,
-      'anchor'      => $this->anchor,
-      'completed'   => $this->completed,
-      'categories'  => $this->categories,
-    ];
   }
 
   private static function _get_option()
