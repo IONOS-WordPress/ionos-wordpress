@@ -9,10 +9,23 @@
 
 namespace ionos\stretch_extra\marketplace;
 
+use WpOrg\Requests\Requests;
+use WpOrg\Requests\Response;
+
 defined('ABSPATH') || exit();
 
 if (\get_option('ionos_group_brand') !== 'ionos') {
   return;
+}
+
+function get_config() {
+  static $config = null;
+
+  if($config === null) {
+    $config = require_once __DIR__ . '/config.php';
+  }
+
+  return $config;
 }
 
 \add_filter(
@@ -32,14 +45,13 @@ if (\get_option('ionos_group_brand') !== 'ionos') {
   callback: function (): void {
     global $wp_list_table;
 
-    $config = require_once __DIR__ . '/config.php';
+    $config = get_config();
 
     // 1. Define the plugin slugs you want
     $slugs = $config['wordpress_org_plugins'] ?? [];
     if (empty($slugs)) {
       return;
     }
-
     // 2. Build an array of request definitions
     $field_query_string = \http_build_query([
       'fields[short_description]' => 'short_description',
@@ -50,7 +62,7 @@ if (\get_option('ionos_group_brand') !== 'ionos') {
     foreach ($slugs as $slug) {
       $requests[] = [
         'url'  => "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug={$slug}&{$field_query_string}",
-        'type' => \WpOrg\Requests\Requests::GET,
+        'type' => Requests::GET,
         'data' => [
           'locale' => \get_user_locale(),
         ],
@@ -58,14 +70,14 @@ if (\get_option('ionos_group_brand') !== 'ionos') {
     }
 
     // 3. Execute all requests simultaneously
-    $responses = \WpOrg\Requests\Requests::request_multiple($requests);
+    $responses = Requests::request_multiple($requests);
 
     // 4. Process the data
     $plugins = [];
     foreach ($responses as $slug => $response) {
-      if ($response instanceof \WpOrg\Requests\Response && $response->success) {
-        $decoded_data = \json_decode($response->body, true);
-        if (\json_last_error() === JSON_ERROR_NONE && isset($decoded_data['slug'])) {
+      if ($response instanceof Response && $response->success) {
+        $decoded_data = json_decode($response->body, true);
+        if (isset($decoded_data['slug'])) {
           $wp_list_table->items[] = $decoded_data;
         }
       }
@@ -74,7 +86,7 @@ if (\get_option('ionos_group_brand') !== 'ionos') {
     // 5. Sort items by original slug order
     \usort(
       $wp_list_table->items,
-      fn (array $a, array $b): int => \array_search($a['slug'], $slugs, true) <=> \array_search(
+      fn (array $a, array $b): int => array_search($a['slug'], $slugs, true) <=> array_search(
         $b['slug'],
         $slugs,
         true
@@ -97,23 +109,23 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
     }
     $requests[] = [
       'url'  => $plugin['info_url'],
-      'type' => \WpOrg\Requests\Requests::GET,
+      'type' => Requests::GET,
       'slug' => $plugin['slug'] ?? '',
     ];
   }
 
   // Execute all requests simultaneously
-  $responses = \WpOrg\Requests\Requests::request_multiple($requests);
+  $responses = Requests::request_multiple($requests);
 
   // Process the data
   $remote_data = [];
   foreach ($responses as $i => $response) {
-    if (! ($response instanceof \WpOrg\Requests\Response) || ! $response->success) {
+    if (! ($response instanceof Response) || ! $response->success) {
       continue;
     }
 
-    $decoded_data = \json_decode($response->body, true);
-    if (\json_last_error() !== JSON_ERROR_NONE) {
+    $decoded_data = json_decode($response->body, true);
+    if ($decoded_data===NULL) {
       continue;
     }
 
@@ -150,12 +162,12 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
   callback: function (): void {
     global $wp_list_table;
 
-    $total_items = \count($wp_list_table->items ?? []);
+    $total_items = count($wp_list_table->items ?? []);
     $per_page    = 10;
 
     $wp_list_table->set_pagination_args([
       'total_items' => $total_items,
-      'total_pages' => (int) \ceil($total_items / $per_page),
+      'total_pages' => (int) ceil($total_items / $per_page),
       'per_page'    => $per_page,
     ]);
 
@@ -199,11 +211,10 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       return $result;
     }
 
-    // no require_once, because while installing the plugin, the file is already included
-    $config = require __DIR__ . '/config.php';
+    $config = get_config();
 
     $ionos_plugins = $config['ionos_plugins'] ?? [];
-    if (! \array_key_exists($args->slug, $ionos_plugins)) {
+    if (! array_key_exists($args->slug, $ionos_plugins)) {
       return $result;
     }
 
@@ -219,9 +230,9 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
     }
 
     $body = \wp_remote_retrieve_body($response);
-    $pi   = \json_decode($body);
+    $pi   = json_decode($body);
 
-    if (! \is_object($pi) || \json_last_error() !== JSON_ERROR_NONE) {
+    if (! is_object($pi)) {
       return $result;
     }
 
@@ -229,7 +240,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       return render_beyond_seo_info($plugin_info, $pi, $args);
     }
 
-    if (\str_contains($args->slug, 'ionos-essentials')) {
+    if (str_contains($args->slug, 'ionos-essentials')) {
       return render_essentials($plugin_info, $pi, $args);
     }
 
@@ -289,7 +300,7 @@ function render_changelog(array $changelog): string
   $output = [];
 
   foreach ($changelog as $item) {
-    if (! \is_object($item) || ! isset($item->version, $item->changes)) {
+    if (! is_object($item) || ! isset($item->version, $item->changes)) {
       continue;
     }
 
@@ -306,7 +317,7 @@ function render_changelog(array $changelog): string
     $output[] = '</ul>';
   }
 
-  return \implode('', $output);
+  return implode('', $output);
 }
 
 \add_filter(
@@ -317,26 +328,25 @@ function render_changelog(array $changelog): string
       return $result;
     }
 
-    $config        = require __DIR__ . '/config.php';
+    $config        = get_config();
     $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
 
     if ($args->search !== 'ionos') {
-      $ionos_plugins = \array_filter(
+      $ionos_plugins = array_filter(
         $ionos_plugins,
-        fn (array $plugin): bool => \str_contains(
-          \strtolower($plugin['short_description'] ?? '' . $plugin['name'] ?? ''),
-          \strtolower($args->search)
+        fn (array $plugin): bool => str_contains(
+          strtolower($plugin['short_description'] ?? '' . $plugin['name'] ?? ''),
+          strtolower($args->search)
         )
       );
     }
 
     // Prepend to the results array
-    if (\is_object($result) && isset($result->plugins) && \is_array($result->plugins) && ! empty($ionos_plugins)) {
+    if (is_object($result) && isset($result->plugins) && \is_array($result->plugins) && ! empty($ionos_plugins)) {
       $result->plugins = [...$ionos_plugins, ...$result->plugins];
     }
 
     return $result;
   },
-  priority: 10,
   accepted_args: 3
 );
