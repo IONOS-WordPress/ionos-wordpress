@@ -92,17 +92,18 @@ class NBA
     );
   }
 
-  public function to_array(): array {
+  public function to_array(): array
+  {
     return [
-        'id'          => $this->id,
-        'title'       => $this->title,
-        'description' => $this->description,
-        'link'        => $this->link,
-        'anchor'      => $this->anchor,
-        'completed'   => $this->completed,
-        'categories'  => $this->categories,
+      'id'          => $this->id,
+      'title'       => $this->title,
+      'description' => $this->description,
+      'link'        => $this->link,
+      'anchor'      => $this->anchor,
+      'completed'   => $this->completed,
+      'categories'  => $this->categories,
     ];
-}
+  }
 
   private static function _get_option()
   {

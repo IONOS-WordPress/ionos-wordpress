@@ -56,13 +56,13 @@ function render(): void
 
   $args['completed_actions'] = count(array_filter($args['actions'], fn ($action) => $action->active === false));
 
-  foreach($args['actions'] as $action) {
+  foreach ($args['actions'] as $action) {
     if ($action->to_array()['completed']) {
       $nba = NBA::get_nba($action->id);
       $nba->set_status('completed', true);
     }
   }
-  
+
   $args['total_actions']     = count($args['actions']);
 
   if (empty($args['actions'])) {
