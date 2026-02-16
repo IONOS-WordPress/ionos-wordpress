@@ -236,7 +236,7 @@ function install_plugin_from_url($plugin_url)
   $issue_counts = \get_transient('ionos_site_health_issue_count');
   if (is_string($issue_counts)) {
     $decoded = json_decode($issue_counts, true);
-    if (json_last_error() === JSON_ERROR_NONE) {
+    if (is_array($decoded)) {
       $issue_counts = $decoded;
     } else {
       $issue_counts = [];
