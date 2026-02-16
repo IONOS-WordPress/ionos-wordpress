@@ -53,6 +53,7 @@ return $configure->withRules([
       '**/rector-fix-types.php',
       '**/stretch-extra/plugins/*',
       '**/stretch-extra/themes/*',
+      '**/stretch-extra/inc/apcu/object-cache.php',
       YodaStyleFixer::class
     ]
   )
