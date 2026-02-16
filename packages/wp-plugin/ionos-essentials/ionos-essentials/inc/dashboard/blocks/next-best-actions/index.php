@@ -56,7 +56,6 @@ function render(): void
 
   $args['completed_actions'] = count(array_filter($args['actions'], fn ($action) => $action->active === false));
 
-
   foreach ($args['actions'] as $action) {
     if ($action->completed) {
       $nba = NBA::get_nba($action->id);
