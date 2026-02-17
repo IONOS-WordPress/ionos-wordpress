@@ -6,6 +6,18 @@ use ionos\essentials\Tenant;
 
 defined('ABSPATH') || exit();
 
+const ONBOARDING_OPTION = 'ionos_essentials_ai_onboarding';
+const ONBOARDING_QUERY_ARG = 'ionos_ai_onboarding';
+
+\add_action(
+  'admin_init',
+  function () {
+    if (isset($_GET['ionos_ai_onboarding'])) {
+      \update_option(ONBOARDING_OPTION, (bool) $_GET['ionos_ai_onboarding']);
+    }
+  }
+);
+
 /**
  * Add onboarding menu page.
  */
@@ -28,8 +40,8 @@ defined('ABSPATH') || exit();
 );
 
 /**
- * Redirects to extendify-launch are caught.
- * We send the user to the ai-switch-page
+ * Redirects to extendify-pages are caught.
+ * We send the user to the switch page or their configured dashboard
  */
 \add_filter(
   'wp_redirect',

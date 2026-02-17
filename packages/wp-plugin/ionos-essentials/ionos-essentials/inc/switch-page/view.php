@@ -76,7 +76,7 @@ if (file_exists($theme_file)) {
               'ionos-essentials'
             ); ?></p>
             <a href="<?php echo \esc_attr(
-              \admin_url('admin.php?page=extendify-launch')
+              \admin_url('admin.php?page=extendify-launch&' . ONBOARDING_QUERY_ARG . '=1')
             ); ?>" class="button button--primary"><?php \esc_html_e('Continue with AI', 'ionos-essentials'); ?></a>
           </div>
         </div>
@@ -92,7 +92,7 @@ if (file_exists($theme_file)) {
               'ionos-essentials'
             ); ?></p>
             <a href="<?php echo \esc_attr(
-              \admin_url('admin.php?page=' . Tenant::get_slug())
+              \admin_url('admin.php?page=' . Tenant::get_slug() . '&' . ONBOARDING_QUERY_ARG . '=0')
             ); ?>" class="button button--secondary"><?php \esc_html_e('Create manually', 'ionos-essentials'); ?></a>
           </div>
         </div>
