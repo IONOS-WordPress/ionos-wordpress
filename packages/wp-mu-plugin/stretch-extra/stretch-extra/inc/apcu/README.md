@@ -2,6 +2,10 @@
 
 This directory contains the APCu-based object cache implementation for WordPress. It provides persistent in-memory caching using the APCu PHP extension, significantly improving WordPress performance by reducing database queries.
 
+# object cache will not be used at SFS Stretch
+
+sfs stretch provides its own baked in object cache implementation. so this implementation will never be enabled on SFS Stretch.
+
 ## Overview
 
 The APCu object cache replaces WordPress's default transient object cache with a persistent in-memory cache. When enabled, it copies `object-cache.php` as a drop-in to `WP_CONTENT_DIR`, allowing WordPress to cache database query results, options, and other data in memory.
