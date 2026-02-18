@@ -15,228 +15,386 @@
 
 defined('ABSPATH') || exit();
 
+if (!function_exists('apcu_enabled') || !apcu_enabled()) {
+  return; // APCu not available - let WordPress fall back to wp-includes/cache.php
+}
+
 /**
  * WordPress Object Cache class using APCu
  */
 class WP_Object_Cache {
-  private string $prefix = 'wp_';
-  private array $cache = [];
-  private array $stats = ['hits' => 0, 'misses' => 0];
-  private array $non_persistent_groups = ['counts', 'plugins', 'themes'];
+  /**
+   * Key prefix derived from $table_prefix to isolate this WP install's cache entries,
+   * preventing collisions when multiple WordPress installs share one APCu instance.
+   */
+  private string $prefix;
 
   /**
-   * Generate cache key
+   * Per-request runtime cache keyed by [$group][$key].
    */
-  private function key(string $key, string $group = 'default'): string {
-    return $this->prefix . ($group ?: 'default') . ':' . $key;
+  private array $cache = [];
+
+  /**
+   * Groups that must not be stored in APCu (runtime-only).
+   * Stored as [$group => true] for O(1) lookup.
+   */
+  private array $non_persistent_groups = [];
+
+  /**
+   * Per-group version numbers used to implement efficient flush_group().
+   * Incrementing a group's version makes all its existing APCu entries
+   * unreachable without having to iterate the cache.
+   */
+  private array $group_versions = [];
+
+  public function __construct() {
+    global $table_prefix;
+    $this->prefix = $table_prefix ?? 'wp_';
   }
 
   /**
-   * Check if group should be cached persistently
+   * Build the APCu key for a given group and cache key.
+   * Includes the group's current version to support efficient flush_group().
+   */
+  private function key($key, string $group): string {
+    return $this->prefix . '//' . $group . '//v' . $this->get_group_version($group) . '//' . $key;
+  }
+
+  /**
+   * Return the current version number for a group.
+   * Fetches from APCu on first access per request; cached in memory thereafter.
+   */
+  private function get_group_version(string $group): int {
+    if (!isset($this->group_versions[$group])) {
+      $version = apcu_fetch($this->prefix . '//~ver~' . $group, $success);
+      $this->group_versions[$group] = $success ? (int) $version : 0;
+    }
+    return $this->group_versions[$group];
+  }
+
+  /**
+   * Clone objects on return to enforce value semantics.
+   * Without this a caller can mutate a retrieved object and inadvertently
+   * corrupt the in-process cache for the rest of the request.
+   */
+  private function clone_value($value) {
+    return is_object($value) ? clone $value : $value;
+  }
+
+  /**
+   * Return true if the group should be stored persistently in APCu.
    */
   private function is_persistent_group(string $group): bool {
-    return !in_array($group, $this->non_persistent_groups, true);
+    return !array_key_exists($group, $this->non_persistent_groups);
   }
 
   /**
-   * Add data to cache
+   * Add data to cache only if the key does not already exist.
    */
-  public function add(int|string $key, mixed $data, string $group = 'default', int $expire = 0): bool {
-    if ($this->_exists($key, $group)) {
+  public function add($key, $data, string $group = 'default', int $expire = 0): bool {
+    if (wp_suspend_cache_addition()) {
       return false;
     }
 
-    return $this->set($key, $data, $group, $expire);
-  }
-
-  /**
-   * Replace data in cache
-   */
-  public function replace(int|string $key, mixed $data, string $group = 'default', int $expire = 0): bool {
-    if (!$this->_exists($key, $group)) {
-      return false;
-    }
-
-    return $this->set($key, $data, $group, $expire);
-  }
-
-  /**
-   * Set data in cache
-   */
-  public function set(int|string $key, mixed $data, string $group = 'default', int $expire = 0): bool {
     $group = $group ?: 'default';
 
-    // Always store in local cache
+    if (isset($this->cache[$group]) && array_key_exists($key, $this->cache[$group])) {
+      return false;
+    }
+
+    $data = $this->clone_value($data);
+
+    if ($this->is_persistent_group($group)) {
+      // apcu_add() is atomic: it fails if the key already exists in shared memory.
+      if (!apcu_add($this->key($key, $group), $data, $expire)) {
+        return false;
+      }
+    }
+
+    $this->cache[$group] ??= [];
+    $this->cache[$group][$key] = $data;
+    return true;
+  }
+
+  /**
+   * Replace existing cache data (no-op if key does not exist).
+   */
+  public function replace($key, $data, string $group = 'default', int $expire = 0): bool {
+    $group = $group ?: 'default';
+    $data = $this->clone_value($data);
+
+    if (!$this->is_persistent_group($group)) {
+      if (!isset($this->cache[$group]) || !array_key_exists($key, $this->cache[$group])) {
+        return false;
+      }
+    } else {
+      $full_key = $this->key($key, $group);
+      if ((!isset($this->cache[$group]) || !array_key_exists($key, $this->cache[$group])) && !apcu_exists($full_key)) {
+        return false;
+      }
+      apcu_store($full_key, $data, $expire);
+    }
+
+    $this->cache[$group] ??= [];
+    $this->cache[$group][$key] = $data;
+    return true;
+  }
+
+  /**
+   * Store data in the cache (overwrites existing).
+   */
+  public function set($key, $data, string $group = 'default', int $expire = 0): bool {
+    $group = $group ?: 'default';
+    $data = $this->clone_value($data);
+
     $this->cache[$group] ??= [];
     $this->cache[$group][$key] = $data;
 
-    // Store in APCu if persistent group
-    return $this->is_persistent_group($group)
-      ? apcu_store($this->key($key, $group), $data, $expire)
-      : true;
-  }
-
-  /**
-   * Get data from cache
-   */
-  public function get(int|string $key, string $group = 'default', bool $force = false, bool &$found = null): mixed {
-    $group = $group ?: 'default';
-
-    // Check local cache first
-    if (!$force && isset($this->cache[$group][$key])) {
-      $found = true;
-      $this->stats['hits']++;
-      return $this->cache[$group][$key];
-    }
-
-    // Check APCu for persistent groups
     if ($this->is_persistent_group($group)) {
-      $data = apcu_fetch($this->key($key, $group), $success);
-
-      if ($success) {
-        $found = true;
-        $this->stats['hits']++;
-        $this->cache[$group] ??= [];
-        return $this->cache[$group][$key] = $data;
-      }
-    }
-
-    $found = false;
-    $this->stats['misses']++;
-    return false;
-  }
-
-  /**
-   * Delete data from cache
-   */
-  public function delete(int|string $key, string $group = 'default'): bool {
-    $group = $group ?: 'default';
-    unset($this->cache[$group][$key]);
-
-    return $this->is_persistent_group($group)
-      ? apcu_delete($this->key($key, $group))
-      : true;
-  }
-
-  /**
-   * Flush all cache
-   */
-  public function flush(): bool {
-    $this->cache = [];
-    return apcu_clear_cache();
-  }
-
-  /**
-   * Flush cache for specific group
-   */
-  public function flush_group(string $group): bool {
-    unset($this->cache[$group]);
-
-    // For APCu, we need to iterate and delete matching keys
-    // This is not as efficient, but APCu doesn't support group operations
-    if ($this->is_persistent_group($group)) {
-      $prefix = $this->prefix . $group . ':';
-      $info = apcu_cache_info();
-
-      foreach ($info['cache_list'] ?? [] as $entry) {
-        if (isset($entry['info']) && str_starts_with($entry['info'], $prefix)) {
-          apcu_delete($entry['info']);
-        }
-      }
+      return apcu_store($this->key($key, $group), $data, $expire);
     }
 
     return true;
   }
 
   /**
-   * Get multiple values
+   * Retrieve data from the cache.
+   * Objects are cloned on return to prevent callers from mutating the cached copy.
+   */
+  public function get($key, string $group = 'default', bool $force = false, bool &$found = null) {
+    $group = $group ?: 'default';
+
+    if (!$force && isset($this->cache[$group]) && array_key_exists($key, $this->cache[$group])) {
+      $found = true;
+      return $this->clone_value($this->cache[$group][$key]);
+    }
+
+    if ($this->is_persistent_group($group)) {
+      $data = apcu_fetch($this->key($key, $group), $success);
+      if ($success) {
+        $found = true;
+        $this->cache[$group] ??= [];
+        $this->cache[$group][$key] = $this->clone_value($data);
+        return $data;
+      }
+    }
+
+    $found = false;
+    return false;
+  }
+
+  /**
+   * Retrieve multiple cache values using a single APCu batch call for efficiency.
    */
   public function get_multiple(array $keys, string $group = 'default', bool $force = false): array {
-    return array_combine($keys, array_map(fn($key) => $this->get($key, $group, $force), $keys));
+    $group = $group ?: 'default';
+    $result = [];
+    $not_found = [];
+    $persistent = $this->is_persistent_group($group);
+
+    $this->cache[$group] ??= [];
+
+    foreach ($keys as $key) {
+      if (!$force && array_key_exists($key, $this->cache[$group])) {
+        $result[$key] = $this->clone_value($this->cache[$group][$key]);
+      } else {
+        $not_found[$this->key($key, $group)] = $key;
+      }
+    }
+
+    if ($persistent && !empty($not_found)) {
+      // Single APCu call retrieves all missing keys at once.
+      $fetched = apcu_fetch(array_keys($not_found)) ?: [];
+      foreach ($fetched as $full_key => $value) {
+        $key = $not_found[$full_key];
+        unset($not_found[$full_key]);
+        $this->cache[$group][$key] = $this->clone_value($value);
+        $result[$key] = $value;
+      }
+    }
+
+    foreach ($not_found as $key) {
+      $result[$key] = false;
+    }
+
+    return $result;
   }
 
   /**
-   * Set multiple values
+   * Store multiple cache values.
    */
   public function set_multiple(array $data, string $group = 'default', int $expire = 0): array {
-    return array_map(fn($key, $value) => $this->set($key, $value, $group, $expire), array_keys($data), $data);
+    $result = [];
+    foreach ($data as $key => $value) {
+      $result[$key] = $this->set($key, $value, $group, $expire);
+    }
+    return $result;
   }
 
   /**
-   * Delete multiple values
+   * Delete a cache entry.
    */
-  public function delete_multiple(array $keys, string $group = 'default'): array {
-    return array_combine($keys, array_map(fn($key) => $this->delete($key, $group), $keys));
-  }
+  public function delete($key, string $group = 'default'): bool {
+    $group = $group ?: 'default';
 
-  /**
-   * Increment numeric cache item value
-   */
-  public function incr(int|string $key, int $offset = 1, string $group = 'default'): int|false {
-    $value = $this->get($key, $group ?: 'default');
-    if ($value === false) {
-      return false;
+    $found = isset($this->cache[$group]) && array_key_exists($key, $this->cache[$group]);
+    if ($found) {
+      unset($this->cache[$group][$key]);
     }
 
-    $value = (int) $value + $offset;
-    $this->set($key, $value, $group);
-
-    return $value;
-  }
-
-  /**
-   * Decrement numeric cache item value
-   */
-  public function decr(int|string $key, int $offset = 1, string $group = 'default'): int|false {
-    $value = $this->get($key, $group ?: 'default');
-    if ($value === false) {
-      return false;
+    if ($this->is_persistent_group($group)) {
+      if (apcu_delete($this->key($key, $group))) {
+        return true;
+      }
     }
 
-    $value = max(0, (int) $value - $offset);
-    $this->set($key, $value, $group);
-
-    return $value;
-  }
-
-  /**
-   * Switch blog prefix (multisite support)
-   */
-  public function switch_to_blog(int $blog_id): void {
-    $this->prefix = 'wp_' . $blog_id . '_';
-    $this->cache = [];
-  }
-
-  /**
-   * Add non-persistent groups
-   */
-  public function add_non_persistent_groups(array|string $groups): void {
-    $groups = (array) $groups;
-    $this->non_persistent_groups = array_unique(array_merge($this->non_persistent_groups, $groups));
-  }
-
-  /**
-   * Get cache statistics
-   */
-  public function stats(): array {
-    return $this->stats;
-  }
-
-  /**
-   * Check if key exists (internal method)
-   */
-  private function _exists(int|string $key, string $group = 'default'): bool {
-    $found = false;
-    $this->get($key, $group, false, $found);
     return $found;
   }
 
   /**
-   * Reset cache
+   * Delete multiple cache entries.
+   */
+  public function delete_multiple(array $keys, string $group = 'default'): array {
+    $result = [];
+    foreach ($keys as $key) {
+      $result[$key] = $this->delete($key, $group);
+    }
+    return $result;
+  }
+
+  /**
+   * Flush all cache entries.
+   */
+  public function flush(): bool {
+    $this->cache = [];
+    $this->group_versions = [];
+    return apcu_clear_cache();
+  }
+
+  /**
+   * Flush all cache entries for a specific group in O(1) time.
+   *
+   * Uses a version counter stored in APCu: incrementing the version makes all
+   * existing APCu keys for this group unreachable without iterating the cache.
+   * Stale entries are evicted naturally by APCu's TTL/LRU mechanism.
+   */
+  public function flush_group(string $group): bool {
+    unset($this->cache[$group]);
+
+    if ($this->is_persistent_group($group)) {
+      $version_key = $this->prefix . '//~ver~' . $group;
+      $new_version = apcu_inc($version_key, 1, $success);
+      if (!$success) {
+        apcu_store($version_key, 1);
+        $new_version = 1;
+      }
+      $this->group_versions[$group] = (int) $new_version;
+    }
+
+    return true;
+  }
+
+  /**
+   * Increment a numeric cache value.
+   * Uses atomic apcu_inc() for persistent groups to avoid read-modify-write races.
+   */
+  public function incr($key, int $offset = 1, string $group = 'default') {
+    $group = $group ?: 'default';
+
+    if (isset($this->cache[$group]) && array_key_exists($key, $this->cache[$group])) {
+      $value = $this->cache[$group][$key];
+      if (is_numeric($value)) {
+        $value = (int) $value + $offset;
+        $this->cache[$group][$key] = $value;
+        if ($this->is_persistent_group($group)) {
+          apcu_store($this->key($key, $group), $value);
+        }
+        return $value;
+      }
+    }
+
+    if (!$this->is_persistent_group($group)) {
+      $this->cache[$group] ??= [];
+      $this->cache[$group][$key] = $offset;
+      return $offset;
+    }
+
+    $full_key = $this->key($key, $group);
+    $value = apcu_inc($full_key, $offset);
+    if (!is_numeric($value)) {
+      $value = $offset;
+      apcu_store($full_key, $value);
+    }
+    $this->cache[$group] ??= [];
+    $this->cache[$group][$key] = $value;
+    return $value;
+  }
+
+  /**
+   * Decrement a numeric cache value (floor of zero).
+   * Uses atomic apcu_dec() for persistent groups to avoid read-modify-write races.
+   */
+  public function decr($key, int $offset = 1, string $group = 'default') {
+    $group = $group ?: 'default';
+
+    if (isset($this->cache[$group]) && array_key_exists($key, $this->cache[$group])) {
+      $value = $this->cache[$group][$key];
+      if (is_numeric($value)) {
+        $value = (int) $value - $offset;
+        if ($value < 0) {
+          $value = 0;
+        }
+        $this->cache[$group][$key] = $value;
+        if ($this->is_persistent_group($group)) {
+          apcu_store($this->key($key, $group), $value);
+        }
+        return $value;
+      }
+    }
+
+    if (!$this->is_persistent_group($group)) {
+      $this->cache[$group] ??= [];
+      $this->cache[$group][$key] = 0;
+      return 0;
+    }
+
+    $full_key = $this->key($key, $group);
+    $value = apcu_dec($full_key, $offset);
+    if (!is_numeric($value) || $value < 0) {
+      $value = 0;
+      apcu_store($full_key, $value);
+    }
+    $this->cache[$group] ??= [];
+    $this->cache[$group][$key] = $value;
+    return $value;
+  }
+
+  /**
+   * Switch blog context (multisite support).
+   * Rebuilds the key prefix from $table_prefix so that per-blog entries are
+   * properly isolated even when multiple WP installs share an APCu instance.
+   */
+  public function switch_to_blog(int $blog_id): void {
+    global $table_prefix;
+    $this->prefix = ($table_prefix ?? 'wp_') . $blog_id . '_';
+    $this->cache = [];
+    $this->group_versions = [];
+  }
+
+  /**
+   * Register groups that must not be stored in APCu (runtime-only).
+   */
+  public function add_non_persistent_groups($groups): void {
+    foreach ((array) $groups as $group) {
+      $this->non_persistent_groups[$group] = true;
+    }
+  }
+
+  /**
+   * Clear the in-process runtime cache (deprecated wp_cache_reset() support).
    */
   public function reset(): void {
     $this->cache = [];
-    $this->stats = ['hits' => 0, 'misses' => 0];
   }
 }
 
@@ -244,25 +402,44 @@ function wp_cache_init(): void {
   $GLOBALS['wp_object_cache'] = new WP_Object_Cache();
 }
 
-function wp_cache_add(int|string $key, mixed $data, string $group = '', int $expire = 0): bool {
+/**
+ * @param int|string $key
+ * @param mixed $data
+ */
+function wp_cache_add($key, $data, string $group = '', int $expire = 0): bool {
   return $GLOBALS['wp_object_cache']->add($key, $data, $group, $expire);
 }
 
-function wp_cache_replace(int|string $key, mixed $data, string $group = '', int $expire = 0): bool {
+/**
+ * @param int|string $key
+ * @param mixed $data
+ */
+function wp_cache_replace($key, $data, string $group = '', int $expire = 0): bool {
   return $GLOBALS['wp_object_cache']->replace($key, $data, $group, $expire);
 }
 
-function wp_cache_set(int|string $key, mixed $data, string $group = '', int $expire = 0): bool {
+/**
+ * @param int|string $key
+ * @param mixed $data
+ */
+function wp_cache_set($key, $data, string $group = '', int $expire = 0): bool {
   return $GLOBALS['wp_object_cache']->set($key, $data, $group, $expire);
 }
 
-function wp_cache_get(int|string $key, string $group = '', bool $force = false, bool &$found = null): mixed {
+/**
+ * @param int|string $key
+ * @return mixed
+ */
+function wp_cache_get($key, string $group = '', bool $force = false, bool &$found = null) {
   return $GLOBALS['wp_object_cache']->get($key, $group, $force, $found);
 }
 
-function wp_cache_delete(int|string $key, string $group = ''): bool {
-    return $GLOBALS['wp_object_cache']->delete($key, $group);
-  }
+/**
+ * @param int|string $key
+ */
+function wp_cache_delete($key, string $group = ''): bool {
+  return $GLOBALS['wp_object_cache']->delete($key, $group);
+}
 
 function wp_cache_flush(): bool {
   return $GLOBALS['wp_object_cache']->flush();
@@ -284,11 +461,19 @@ function wp_cache_delete_multiple(array $keys, string $group = ''): array {
   return $GLOBALS['wp_object_cache']->delete_multiple($keys, $group);
 }
 
-function wp_cache_incr(int|string $key, int $offset = 1, string $group = ''): int|false {
+/**
+ * @param int|string $key
+ * @return int|false
+ */
+function wp_cache_incr($key, int $offset = 1, string $group = '') {
   return $GLOBALS['wp_object_cache']->incr($key, $offset, $group);
 }
 
-function wp_cache_decr(int|string $key, int $offset = 1, string $group = ''): int|false {
+/**
+ * @param int|string $key
+ * @return int|false
+ */
+function wp_cache_decr($key, int $offset = 1, string $group = '') {
   return $GLOBALS['wp_object_cache']->decr($key, $offset, $group);
 }
 
@@ -296,19 +481,23 @@ function wp_cache_switch_to_blog(int $blog_id): void {
   $GLOBALS['wp_object_cache']->switch_to_blog($blog_id);
 }
 
-function wp_cache_add_non_persistent_groups(array|string $groups): void {
+/**
+ * @param mixed[]|string $groups
+ */
+function wp_cache_add_non_persistent_groups($groups): void {
   $GLOBALS['wp_object_cache']->add_non_persistent_groups($groups);
 }
 
+function wp_cache_close(): bool {
+  return true;
+}
+
+function wp_cache_add_global_groups(array $global_groups): void {
+  // Global groups are only relevant for multisite network-wide caching.
+  // All groups are stored with the per-site key prefix by default.
+}
+
 function wp_cache_reset(): void {
+  // Deprecated. Clears only the in-process runtime cache.
   $GLOBALS['wp_object_cache']->reset();
-}
-
-function wp_cache_close() {
-	return true;
-}
-
-function wp_cache_add_global_groups(array $global_groups) {
-  // @TODO: performance optimization we could can prepopulate the cach objects $this->cache[$group] instead
-  // of checking'em on every cache request for existence
 }

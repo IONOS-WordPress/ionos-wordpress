@@ -40,11 +40,14 @@ if (\ini_get('apc.enabled')) {
   $info = \apcu_cache_info(true);
   echo "\nCache Stats:\n";
   echo \str_repeat('-', 60) . "\n";
+  $mem_used_pct = $info['mem_size'] > 0
+    ? (($info['mem_size'] - $info['avail_mem']) / $info['mem_size']) * 100
+    : 0.0;
   printf(
     "Entries: %d | Hits: %d | Misses: %d | Memory: %.2f%%\n",
     $info['num_entries'],
     $info['num_hits'],
     $info['num_misses'],
-    (($info['mem_size'] - $info['avail_mem']) / $info['mem_size']) * 100
+    $mem_used_pct
   );
 }
