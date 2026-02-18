@@ -67,7 +67,14 @@ class WP_Object_Cache {
   private function get_group_version(string $group): int {
     if (!isset($this->group_versions[$group])) {
       $version = apcu_fetch($this->prefix . '//~ver~' . $group, $success);
-      $this->group_versions[$group] = $success ? (int) $version : 0;
+      if (!$success) {
+        // Lazily initialize the version key in APCu so subsequent requests
+        // get a hit instead of a miss. apcu_add() is atomic: if two processes
+        // race on first access, only one stores; both end up with version 0.
+        apcu_add($this->prefix . '//~ver~' . $group, 0);
+        $version = 0;
+      }
+      $this->group_versions[$group] = (int) $version;
     }
     return $this->group_versions[$group];
   }
@@ -175,7 +182,7 @@ class WP_Object_Cache {
         $found = true;
         $this->cache[$group] ??= [];
         $this->cache[$group][$key] = $this->clone_value($data);
-        return $data;
+        return $this->cache[$group][$key];
       }
     }
 
