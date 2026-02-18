@@ -24,8 +24,9 @@ if (!function_exists('apcu_enabled') || !apcu_enabled()) {
  */
 class WP_Object_Cache {
   /**
-   * Key prefix derived from $table_prefix to isolate this WP install's cache entries,
-   * preventing collisions when multiple WordPress installs share one APCu instance.
+   * Key prefix used to isolate this WP install's APCu entries from other installs
+   * sharing the same APCu instance. Derived from WP_CACHE_KEY_SALT when defined,
+   * otherwise falls back to $table_prefix.
    */
   private string $prefix;
 
@@ -49,7 +50,7 @@ class WP_Object_Cache {
 
   public function __construct() {
     global $table_prefix;
-    $this->prefix = $table_prefix ?? 'wp_';
+    $this->prefix = defined('WP_CACHE_KEY_SALT') ? WP_CACHE_KEY_SALT : ($table_prefix ?? 'wp_');
   }
 
   /**
@@ -378,12 +379,13 @@ class WP_Object_Cache {
 
   /**
    * Switch blog context (multisite support).
-   * Rebuilds the key prefix from $table_prefix so that per-blog entries are
-   * properly isolated even when multiple WP installs share an APCu instance.
+   * Rebuilds the key prefix with the blog ID appended so that per-blog entries
+   * are properly isolated even when multiple WP installs share an APCu instance.
    */
   public function switch_to_blog(int $blog_id): void {
     global $table_prefix;
-    $this->prefix = ($table_prefix ?? 'wp_') . $blog_id . '_';
+    $base = defined('WP_CACHE_KEY_SALT') ? WP_CACHE_KEY_SALT : ($table_prefix ?? 'wp_');
+    $this->prefix = $base . $blog_id . '_';
     $this->cache = [];
     $this->group_versions = [];
   }
