@@ -85,7 +85,7 @@ To use the `chrome-devtools` MCP server, launch Chrome with remote debugging ena
 google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug
 ```
 
-Once Chrome is running with remote debugging, the MCP server can connect and provide browser control to AI agents. Future Chrome versions (145+) will simplify this setup with the `--autoconnect` flag, eliminating manual browser launch requirements.
+Once Chrome is running with remote debugging, the MCP server can connect and provide browser control to AI agents. Future Chrome versions (145+) will simplify this setup with the `--auto-connect` flag, eliminating manual browser launch requirements.
 
 ## Skills
 
