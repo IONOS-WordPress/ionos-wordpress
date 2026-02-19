@@ -127,6 +127,11 @@ EOF
     done
   done
 
+  # workaround for stretch-extra packaged plugins / themes containing phpunit tests :
+  # remove tests from stretch-extra installed plugins/themes to avoid conflicts with our phpunit tests
+  find . -path "*/stretch-extra/stretch-extra/plugins/*" -name "*Test.php" -delete
+  find . -path "*/stretch-extra/stretch-extra/themes/*" -name "*Test.php" -delete
+
   ionos.wordpress.log_info "Installed plugins/themes\n\n$(find ${STRETCH_EXTRA_BUNDLE_DIR}/{plugins,themes,mu-plugins} -maxdepth 1 -mindepth 1 -type d 2>/dev/null || true)"
 }
 

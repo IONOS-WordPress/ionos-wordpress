@@ -70,7 +70,8 @@ fi
       "WP_DEBUG_LOG": true,
       "SAVEQUERIES": true,
       "FS_METHOD": "direct",
-      "WP_DEVELOPMENT_MODE": "all"
+      "WP_DEVELOPMENT_MODE": "all",
+      "WP_CACHE": true
     },
     "lifecycleScripts": {
       "afterStart": "./scripts/wp-env-after-start.sh",

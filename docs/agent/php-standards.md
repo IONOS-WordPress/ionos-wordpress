@@ -81,6 +81,34 @@ $all_valid = array_all($items, fn ($item) => $item['valid']);
 );
 ```
 
+**Named parameters for WordPress hooks improve clarity:**
+
+```php
+// add_action with named parameters
+\add_action(
+  hook_name: 'admin_init',
+  callback: __NAMESPACE__ . '\handle_admin_init',
+  priority: 10,
+  accepted_args: 1
+);
+
+// add_filter with named parameters
+\add_filter(
+  hook_name: 'the_content',
+  callback: __NAMESPACE__ . '\modify_content',
+  priority: 20,
+  accepted_args: 2
+);
+
+// Dynamic hooks with named parameters
+\add_action(
+  hook_name: 'update_option_' . MY_OPTION_NAME,
+  callback: __NAMESPACE__ . '\handle_option_change',
+  priority: 10,
+  accepted_args: 3
+);
+```
+
 ## File Structure
 
 ```php

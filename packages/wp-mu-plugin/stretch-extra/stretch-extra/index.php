@@ -23,6 +23,12 @@ if (! defined('IONOS_IS_STRETCH_SFS')) {
   $_SERVER['SFS'] = 'stretch-extra';
 }
 
+\add_action('plugins_loaded', function () {
+  \load_muplugin_textdomain(domain: 'stretch-extra', mu_plugin_rel_path: 'stretch-extra/languages/');
+});
+
 require_once __DIR__ . '/inc/migration.php';
 require_once __DIR__ . '/inc/secondary-plugin-dir.php';
 require_once __DIR__ . '/inc/secondary-theme-dir.php';
+require_once __DIR__ . '/inc/apcu.php';
+require_once __DIR__ . '/inc/marketplace/marketplace.php';

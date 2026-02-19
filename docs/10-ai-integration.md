@@ -73,7 +73,7 @@ Example usage:
 ```
 install and activate the plugins 'akisment' and 'woocommerce' in the wp-env development instance using `pnpm wp-env run cli wp ...`
 
-use mcp server `chrome-devtools` to login to http://localhost:8888 using user `admin`and the password declared in WP_PASSWORD in the project .env file and go to the woocommerce plugin settings file.
+use mcp server chrome-devtools to login to http://localhost:8888 using user `admin`and the password declared in WP_PASSWORD in the project .env file and go to the woocommerce plugin settings file.
 ```
 
 ### Browser Setup
@@ -85,7 +85,7 @@ To use the `chrome-devtools` MCP server, launch Chrome with remote debugging ena
 google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug
 ```
 
-Once Chrome is running with remote debugging, the MCP server can connect and provide browser control to AI agents. Future Chrome versions (145+) will simplify this setup with the `--autoconnect` flag, eliminating manual browser launch requirements.
+Once Chrome is running with remote debugging, the MCP server can connect and provide browser control to AI agents. Future Chrome versions (145+) will simplify this setup with the `--auto-connect` flag, eliminating manual browser launch requirements.
 
 ## Skills
 
