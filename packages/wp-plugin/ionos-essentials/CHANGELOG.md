@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.4.6
+
+### Patch Changes
+
+- a03297b: add apcu feature
+
 ## 1.4.5
 
 ### Patch Changes
