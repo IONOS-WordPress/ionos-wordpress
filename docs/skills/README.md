@@ -6,7 +6,7 @@ Skills extend AI client capabilities
 
 The `chrome-devtools-mcp` MCP server provides the AI client access to the chrome browser.
 
-The intial connection setup will get a lot easier with the release of the upcoming Chrome 145 (mcp setting `--autoconnect` will do the magic in the future).
+The intial connection setup will get a lot easier with the release of the upcoming Chrome 145 (mcp setting `--auto-connect` will do the magic in the future).
 
 # Cloude Code
 
