@@ -27,6 +27,12 @@ if (! defined('IONOS_IS_STRETCH_SFS')) {
   \load_muplugin_textdomain(domain: 'stretch-extra', mu_plugin_rel_path: 'stretch-extra/languages/');
 });
 
+require_once __DIR__ . '/inc/maintenance/index.php';
+
+if (file_exists(WP_CONTENT_DIR . '/stretch-extra-maintenance-mode.php')) {
+  include_once WP_CONTENT_DIR . '/stretch-extra-maintenance-mode.php';
+}
+
 require_once __DIR__ . '/inc/migration.php';
 require_once __DIR__ . '/inc/secondary-plugin-dir.php';
 require_once __DIR__ . '/inc/secondary-theme-dir.php';
