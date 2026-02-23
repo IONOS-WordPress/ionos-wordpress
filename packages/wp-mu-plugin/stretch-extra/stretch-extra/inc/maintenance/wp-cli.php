@@ -21,7 +21,7 @@ defined('ABSPATH') || exit();
  * Manages WordPress maintenance mode for hosting platforms with a read-only
  * WordPress root directory.
  */
-class Maintenance_Mode_Command {
+\WP_CLI::add_command('maintenance-mode', new class() {
   /**
    * Activate maintenance mode.
    *
@@ -35,7 +35,8 @@ class Maintenance_Mode_Command {
    *
    * @subcommand activate
    */
-  public function activate(array $args, array $assoc_args): void {
+  public function activate(array $args, array $assoc_args): void
+  {
     if (! activate()) {
       \WP_CLI::error('Failed to activate maintenance mode. Check file system permissions.');
     }
@@ -55,7 +56,8 @@ class Maintenance_Mode_Command {
    *
    * @subcommand deactivate
    */
-  public function deactivate(array $args, array $assoc_args): void {
+  public function deactivate(array $args, array $assoc_args): void
+  {
     if (! deactivate()) {
       \WP_CLI::error('Failed to deactivate maintenance mode. Check file system permissions.');
     }
@@ -79,7 +81,8 @@ class Maintenance_Mode_Command {
    *
    * @subcommand status
    */
-  public function status(array $args, array $assoc_args): void {
+  public function status(array $args, array $assoc_args): void
+  {
     $status = _get_maintenance_mode_status();
 
     if ($status['timestamp'] === null) {
@@ -99,10 +102,7 @@ class Maintenance_Mode_Command {
     }
 
     if ($status['active']) {
-      \WP_CLI::success(sprintf(
-        'Maintenance mode is active (activated %d seconds ago).',
-        $age,
-      ));
+      \WP_CLI::success(sprintf('Maintenance mode is active (activated %d seconds ago).', $age));
       return;
     }
 
@@ -121,11 +121,10 @@ class Maintenance_Mode_Command {
    *
    * @subcommand is-active
    */
-  public function is_active(): void {
+  public function is_active(): void
+  {
     $status = _get_maintenance_mode_status();
 
     \WP_CLI::halt($status['active'] ? 0 : 1);
   }
-}
-
-\WP_CLI::add_command('maintenance-mode', Maintenance_Mode_Command::class);
+});

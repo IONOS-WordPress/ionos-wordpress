@@ -9,7 +9,7 @@
  * without an explicit deactivate call.
  *
  * Activation creates:
- *   - Symlink: WP_CONTENT_DIR/stretch-extra-maintenance-mode.php → handler file
+ *   - Symlink: WP_CONTENT_DIR/maintenance-mode.php → handler file
  *   - Sentinel: WP_CONTENT_DIR/.stretch-extra-maintenance (PHP file with $upgrading timestamp)
  *
  * Deactivation removes both.
@@ -20,12 +20,13 @@ namespace ionos\stretch_extra\maintenance;
 defined('ABSPATH') || exit();
 
 use const ionos\stretch_extra\IONOS_CUSTOM_DIR;
+use const ionos\stretch_extra\MAINTENANCE_HANDLER_LINK_PATH;
 
 /** Path to the sentinel file that stores the activation timestamp. */
-const SENTINEL_PATH = WP_CONTENT_DIR . '/.stretch-extra-maintenance';
+const MAINTENANCE_SENTINEL_PATH = WP_CONTENT_DIR . '/.stretch-extra-maintenance';
 
-/** Path where the handler symlink is created on activation. */
-const HANDLER_LINK_PATH = WP_CONTENT_DIR . '/maintenance-mode.php';
+/** Path to the handler file that the symlink points to. */
+const MAINTENANCE_HANDLER_SOURCE = IONOS_CUSTOM_DIR . '/inc/maintenance/maintenance-mode.php';
 
 /** Number of seconds after which maintenance mode auto-expires. */
 const MAINTENANCE_EXPIRY_SECONDS = 600; // 10 minutes
@@ -39,18 +40,17 @@ const MAINTENANCE_EXPIRY_SECONDS = 600; // 10 minutes
  *
  * @return bool True on success, false on failure.
  */
-function activate(): bool {
-  $handler_source = IONOS_CUSTOM_DIR . '/inc/maintenance/maintenance-mode.php';
-
-  if (! file_exists(HANDLER_LINK_PATH)) {
-    if (! symlink($handler_source, HANDLER_LINK_PATH)) {
+function activate(): bool
+{
+  if (! file_exists(MAINTENANCE_HANDLER_LINK_PATH)) {
+    if (! symlink(MAINTENANCE_HANDLER_SOURCE, MAINTENANCE_HANDLER_LINK_PATH)) {
       return false;
     }
   }
 
   $content = sprintf("<?php \$upgrading = %d; ?>\n", time());
 
-  return file_put_contents(SENTINEL_PATH, $content) !== false;
+  return file_put_contents(MAINTENANCE_SENTINEL_PATH, $content) !== false;
 }
 
 /**
@@ -61,15 +61,16 @@ function activate(): bool {
  *
  * @return bool True on success (including no-op), false if any removal failed.
  */
-function deactivate(): bool {
+function deactivate(): bool
+{
   $success = true;
 
-  if (is_link(HANDLER_LINK_PATH) || file_exists(HANDLER_LINK_PATH)) {
-    $success = unlink(HANDLER_LINK_PATH) && $success;
+  if (is_link(MAINTENANCE_HANDLER_LINK_PATH) || file_exists(MAINTENANCE_HANDLER_LINK_PATH)) {
+    $success = unlink(MAINTENANCE_HANDLER_LINK_PATH) && $success;
   }
 
-  if (file_exists(SENTINEL_PATH)) {
-    $success = unlink(SENTINEL_PATH) && $success;
+  if (file_exists(MAINTENANCE_SENTINEL_PATH)) {
+    $success = unlink(MAINTENANCE_SENTINEL_PATH) && $success;
   }
 
   return $success;
@@ -80,20 +81,29 @@ function deactivate(): bool {
  *
  * @return array{active: bool, timestamp: int|null, expired: bool}
  */
-function _get_maintenance_mode_status(): array {
-  if (! file_exists(SENTINEL_PATH)) {
-    return ['active' => false, 'timestamp' => null, 'expired' => false];
+function _get_maintenance_mode_status(): array
+{
+  if (! file_exists(MAINTENANCE_SENTINEL_PATH)) {
+    return [
+      'active'    => false,
+      'timestamp' => null,
+      'expired'   => false,
+    ];
   }
 
   $upgrading = null;
-  include SENTINEL_PATH; // sets $upgrading
+  include MAINTENANCE_SENTINEL_PATH; // sets $upgrading
 
   if (! is_int($upgrading)) {
-    return ['active' => false, 'timestamp' => null, 'expired' => false];
+    return [
+      'active'    => false,
+      'timestamp' => null,
+      'expired'   => false,
+    ];
   }
 
-  $expired       = (time() - $upgrading) >= MAINTENANCE_EXPIRY_SECONDS;
-  $symlink_active = is_link(HANDLER_LINK_PATH) || file_exists(HANDLER_LINK_PATH);
+  $expired        = (time() - $upgrading) >= MAINTENANCE_EXPIRY_SECONDS;
+  $symlink_active = is_link(MAINTENANCE_HANDLER_LINK_PATH) || file_exists(MAINTENANCE_HANDLER_LINK_PATH);
 
   return [
     'active'    => $symlink_active && ! $expired,

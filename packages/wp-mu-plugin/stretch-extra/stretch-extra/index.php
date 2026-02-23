@@ -10,6 +10,9 @@ defined('ABSPATH') || exit();
 
 const IONOS_CUSTOM_DIR  = __DIR__;
 
+/** Path where the handler symlink is created on activation. */
+const MAINTENANCE_HANDLER_LINK_PATH = WP_CONTENT_DIR . '/maintenance-mode.php';
+
 if (! defined('IONOS_IS_STRETCH')) {
   define('IONOS_IS_STRETCH', strncmp(getcwd(), '/home/www/public', strlen('/home/www/public')) === 0);
 }
@@ -29,8 +32,8 @@ if (! defined('IONOS_IS_STRETCH_SFS')) {
 
 require_once __DIR__ . '/inc/maintenance/index.php';
 
-if (file_exists(WP_CONTENT_DIR . '/stretch-extra-maintenance-mode.php')) {
-  include_once WP_CONTENT_DIR . '/stretch-extra-maintenance-mode.php';
+if (file_exists(MAINTENANCE_HANDLER_LINK_PATH)) {
+  include_once MAINTENANCE_HANDLER_LINK_PATH;
 }
 
 require_once __DIR__ . '/inc/migration.php';
