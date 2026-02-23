@@ -46,6 +46,7 @@ All coding standards are organized in `/docs/agent/`:
 ### Workflow
 
 - **[Git Conventions](docs/agent/git-conventions.md)** - Commitizen format, commit messages, branching
+- **[Changeset Workflow](docs/agent/changeset-workflow.md)** - Versioning, changeset files, bump types
 
 ## Quick Reference
 
@@ -119,6 +120,25 @@ All coding standards are organized in `/docs/agent/`:
 8. **Monorepo Structure** - Shared tooling and centralized standards
 
 ## Development Workflow
+
+### Changeset (required for features and fixes)
+
+When implementing a new feature, bug fix, or breaking change, **always create a changeset file**:
+
+1. Infer the affected package, bump type, and description from the user's request
+2. Ask interactively only for information you cannot determine from context
+3. Present the full changeset content and filename for user confirmation before writing
+4. Write the file to `.changeset/<descriptive-name>.md` — do **not** run `changeset add`
+
+```md
+---
+'@ionos-wordpress/essentials': minor
+---
+
+add user profile export feature
+```
+
+See [Changeset Workflow](docs/agent/changeset-workflow.md) for bump type rules, package names, and examples.
 
 ### Running Tests
 
@@ -214,6 +234,7 @@ domReady(() => {
 8. **Late Binding**: Functions referenced in hooks use `__NAMESPACE__ . '\function_name'`
 9. **Commit Messages**: Use Commitizen format with plugin scope: `feat(plugin): description`
 10. **Asset Files**: Always `include` the auto-generated `index.asset.php` before enqueuing bundled scripts/styles
+11. **Changeset Required**: Every feature/fix needs a `.changeset/*.md` file — present it to the user for approval before writing
 
 ## Getting Help
 
