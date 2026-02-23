@@ -34,18 +34,18 @@ add user profile export feature
 
 ### Fields
 
-| Field | Description |
-|---|---|
+| Field        | Description                                                         |
+| ------------ | ------------------------------------------------------------------- |
 | Package name | The `name` from the affected package's `package.json` (with quotes) |
-| Bump type | `patch`, `minor`, or `major` (see rules below) |
-| Body | One-line imperative description matching the commit message subject |
+| Bump type    | `patch`, `minor`, or `major` (see rules below)                      |
+| Body         | One-line imperative description matching the commit message subject |
 
 ### Bump Type Rules
 
-| Type | When to use |
-|---|---|
-| `patch` | Bug fix, small tweak, non-visible refactor |
-| `minor` | New backward-compatible feature or enhancement |
+| Type    | When to use                                                          |
+| ------- | -------------------------------------------------------------------- |
+| `patch` | Bug fix, small tweak, non-visible refactor                           |
+| `minor` | New backward-compatible feature or enhancement                       |
 | `major` | Breaking change: removed API, changed behavior, incompatible upgrade |
 
 ### Multiple Packages
@@ -65,15 +65,15 @@ add shared maintenance mode API
 
 Packages in this monorepo and their names as used in changesets:
 
-| Package directory | Changeset name |
-|---|---|
-| `packages/wp-plugin/essentials/` | `@ionos-wordpress/essentials` |
+| Package directory                      | Changeset name                   |
+| -------------------------------------- | -------------------------------- |
+| `packages/wp-plugin/essentials/`       | `@ionos-wordpress/essentials`    |
 | `packages/wp-mu-plugin/stretch-extra/` | `@ionos-wordpress/stretch-extra` |
-| `packages/npm/ecs-php/` | `@ionos-wordpress/ecs-php` |
-| `packages/npm/dennis-i18n/` | `@ionos-wordpress/dennis-i18n` |
-| `packages/npm/potrans/` | `@ionos-wordpress/potrans` |
-| `packages/npm/rector-php/` | `@ionos-wordpress/rector-php` |
-| `packages/docker/wpdev-caddy/` | `@ionos-wordpress/wpdev-caddy` |
+| `packages/npm/ecs-php/`                | `@ionos-wordpress/ecs-php`       |
+| `packages/npm/dennis-i18n/`            | `@ionos-wordpress/dennis-i18n`   |
+| `packages/npm/potrans/`                | `@ionos-wordpress/potrans`       |
+| `packages/npm/rector-php/`             | `@ionos-wordpress/rector-php`    |
+| `packages/docker/wpdev-caddy/`         | `@ionos-wordpress/wpdev-caddy`   |
 
 When in doubt, check the `name` field in the relevant `package.json`.
 
@@ -110,6 +110,7 @@ Only ask for information you could not determine from context. Ask one focused q
 - Clarification on the description wording
 
 Example questions:
+
 - "Should this be a `patch` (bug fix) or `minor` (new feature) release bump?"
 - "Does this change also affect `@ionos-wordpress/stretch-extra`, or only `@ionos-wordpress/essentials`?"
 
