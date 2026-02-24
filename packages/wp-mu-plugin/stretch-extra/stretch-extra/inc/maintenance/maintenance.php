@@ -15,6 +15,8 @@
 
 namespace ionos\stretch_extra\maintenance;
 
+use const ionos\stretch_extra\MAINTENANCE_HANDLER_LINK_PATH;
+
 defined('ABSPATH') || exit();
 
 // Exit early if running in WP-CLI context to avoid blocking CLI commands with maintenance mode.
@@ -47,12 +49,11 @@ if (PHP_SAPI === 'cli') {
       return;
     }
 
-    // Serve custom maintenance.php drop-in if present
-    $maintenance_page = WP_CONTENT_DIR . '/maintenance.php';
-    if (file_exists($maintenance_page)) {
-      require_once $maintenance_page;
-      exit;
-    }
+    // // Serve custom maintenance.php drop-in if present
+    // if (file_exists(MAINTENANCE_HANDLER_LINK_PATH)) {
+    //   require_once MAINTENANCE_HANDLER_LINK_PATH;
+    //   exit;
+    // }
 
     // Default fallback: 503 with Retry-After header
     \wp_die(

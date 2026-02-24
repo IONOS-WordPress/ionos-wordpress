@@ -11,7 +11,7 @@ defined('ABSPATH') || exit();
 const IONOS_CUSTOM_DIR  = __DIR__;
 
 /** Path where the handler symlink is created on activation. */
-const MAINTENANCE_HANDLER_LINK_PATH = WP_CONTENT_DIR . '/maintenance-mode.php';
+const MAINTENANCE_HANDLER_LINK_PATH = WP_CONTENT_DIR . '/maintenance.php';
 
 if (! defined('IONOS_IS_STRETCH')) {
   define('IONOS_IS_STRETCH', strncmp(getcwd(), '/home/www/public', strlen('/home/www/public')) === 0);

@@ -26,7 +26,7 @@ use const ionos\stretch_extra\MAINTENANCE_HANDLER_LINK_PATH;
 const MAINTENANCE_SENTINEL_PATH = WP_CONTENT_DIR . '/.stretch-extra-maintenance';
 
 /** Path to the handler file that the symlink points to. */
-const MAINTENANCE_HANDLER_SOURCE = IONOS_CUSTOM_DIR . '/inc/maintenance/maintenance-mode.php';
+const MAINTENANCE_HANDLER_SOURCE = IONOS_CUSTOM_DIR . '/inc/maintenance/maintenance.php';
 
 /** Number of seconds after which maintenance mode auto-expires. */
 const MAINTENANCE_EXPIRY_SECONDS = 600; // 10 minutes
