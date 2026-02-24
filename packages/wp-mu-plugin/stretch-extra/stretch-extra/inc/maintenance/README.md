@@ -59,10 +59,10 @@ inactive (no-op).
 
 ### Automatic integration with WordPress updates
 
-| Hook | Action |
-|---|---|
-| `upgrader_pre_install` | `activate()` — turns on maintenance mode before an update or install begins |
-| `upgrader_process_complete` | `deactivate()` — turns off maintenance mode after the update finishes |
+| Hook                        | Action                                                                      |
+| --------------------------- | --------------------------------------------------------------------------- |
+| `upgrader_pre_install`      | `activate()` — turns on maintenance mode before an update or install begins |
+| `upgrader_process_complete` | `deactivate()` — turns off maintenance mode after the update finishes       |
 
 This means maintenance mode is always cleaned up after an update completes,
 even if it was triggered outside the WP-CLI command (e.g. via the WP admin or
@@ -72,9 +72,9 @@ another tool).
 
 ## Files created at runtime
 
-| Path | Description |
-|---|---|
-| `wp-content/maintenance.php` | Symlink → `stretch-extra/inc/maintenance/maintenance.php`. WordPress serves this file on maintenance requests. |
+| Path                                    | Description                                                                                                                                           |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `wp-content/maintenance.php`            | Symlink → `stretch-extra/inc/maintenance/maintenance.php`. WordPress serves this file on maintenance requests.                                        |
 | `wp-content/.stretch-extra-maintenance` | PHP sentinel file. Contains `$upgrading = <unix-timestamp>;`. Read by the handler to determine whether the mode is active and whether it has expired. |
 
 Both files are removed on deactivation.
@@ -83,27 +83,27 @@ Both files are removed on deactivation.
 
 ## Source files
 
-| File | Description |
-|---|---|
-| `index.php` | Core logic: `activate()`, `deactivate()`, `_get_maintenance_mode_status()`. Also registers the `upgrader_pre_install` / `upgrader_process_complete` hooks. Conditionally loads `wp-cli.php` when running under WP-CLI. |
-| `maintenance.php` | Request handler. Symlinked into `wp-content/` on activation. Registers the `muplugins_loaded` hook that enforces the 503 response. No-op in CLI context. |
-| `wp-cli.php` | WP-CLI command class. Overrides the built-in `wp maintenance-mode` command with an implementation that uses the symlink / sentinel mechanism. |
+| File              | Description                                                                                                                                                                                                            |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index.php`       | Core logic: `activate()`, `deactivate()`, `_get_maintenance_mode_status()`. Also registers the `upgrader_pre_install` / `upgrader_process_complete` hooks. Conditionally loads `wp-cli.php` when running under WP-CLI. |
+| `maintenance.php` | Request handler. Symlinked into `wp-content/` on activation. Registers the `muplugins_loaded` hook that enforces the 503 response. No-op in CLI context.                                                               |
+| `wp-cli.php`      | WP-CLI command class. Overrides the built-in `wp maintenance-mode` command with an implementation that uses the symlink / sentinel mechanism.                                                                          |
 
 ---
 
 ## Difference to the ionos-essentials maintenance feature
 
-| Aspect | stretch-extra (`this feature`) | ionos-essentials |
-|---|---|---|
-| **Purpose** | Technical maintenance during update processes; read-only-root compatible | User-facing "coming soon" / site-under-construction page |
-| **Trigger** | WP-CLI command or automatic upgrade hooks | WordPress admin option (`ionos_essentials_maintenance_mode`) |
-| **Hook depth** | `muplugins_loaded` — plugins and themes are never loaded | `init` — full WordPress bootstrap has already run |
-| **HTTP response** | 503 + `Retry-After` header (crawler-safe) | 302 redirect to `/maintenance` page |
-| **Logged-in users** | Blocked like everyone else (only CLI bypasses) | Allowed through; admin bar indicator shown |
-| **Auto-expiry** | Yes — 10 minutes, even without explicit deactivation | No — stays active until manually disabled |
-| **WP root writable?** | Not required — uses `wp-content/` only | Not applicable (uses WP option) |
-| **Custom page** | Default `wp_die()` page (or `enable_maintenance_mode` filter) | Branded HTML page (`assets/maintenance.html`) |
-| **WP-CLI support** | Full (`activate`, `deactivate`, `status`, `is-active`) | None |
+| Aspect                | stretch-extra (`this feature`)                                           | ionos-essentials                                             |
+| --------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| **Purpose**           | Technical maintenance during update processes; read-only-root compatible | User-facing "coming soon" / site-under-construction page     |
+| **Trigger**           | WP-CLI command or automatic upgrade hooks                                | WordPress admin option (`ionos_essentials_maintenance_mode`) |
+| **Hook depth**        | `muplugins_loaded` — plugins and themes are never loaded                 | `init` — full WordPress bootstrap has already run            |
+| **HTTP response**     | 503 + `Retry-After` header (crawler-safe)                                | 302 redirect to `/maintenance` page                          |
+| **Logged-in users**   | Blocked like everyone else (only CLI bypasses)                           | Allowed through; admin bar indicator shown                   |
+| **Auto-expiry**       | Yes — 10 minutes, even without explicit deactivation                     | No — stays active until manually disabled                    |
+| **WP root writable?** | Not required — uses `wp-content/` only                                   | Not applicable (uses WP option)                              |
+| **Custom page**       | Default `wp_die()` page (or `enable_maintenance_mode` filter)            | Branded HTML page (`assets/maintenance.html`)                |
+| **WP-CLI support**    | Full (`activate`, `deactivate`, `status`, `is-active`)                   | None                                                         |
 
 ---
 
@@ -160,6 +160,16 @@ wp maintenance-mode deactivate
 wp maintenance-mode is-active && echo "site is in maintenance"
 ```
 
+---
+
+# Caddy plugin notebook
+
+There is a caddy plugin notebook for playing with the stretch-extra maintenance feature at
+
+packages/wp-plugin/ionos-wpdev-caddy/ionos-wpdev-caddy/notebooks/notebooks/stretch-maintenance
+
+---
+
 # References
 
 - Make the `.maintenance` file location more configurable :
@@ -173,4 +183,3 @@ wp maintenance-mode is-active && echo "site is in maintenance"
   > In some hosting situations, ABSPATH is not writeable and WP_CONTENT_DIR is. Plugins and themes can update but the .maintenance file is unable to be written in its hard-coded ABSPATH . '.maintenance' location. Because of the very early check for this file in the load order, substituting a similar behavior via mu-plugin is not quite as direct, and there are no appropriate filters to allow altering the .maintenance file location.
   > We can resolve this by allowing a constant to override the initial path and using that if available (as would happen in cases where WP is installed with non-standard directory structures). A filter could be implemented for environments using auto_prepend_file -- the wp_maintenance() check in wp-settings.php runs well before mu-plugins and plugins are loaded, so adding changes to a plugin defeats the purpose of moving the file correction up to the wp_maintenance() check.
   > Falling back specifically to WP_CONTENT_DIR would work for my use case but may not be a general solution that would benefit other hosting configurations.
-
