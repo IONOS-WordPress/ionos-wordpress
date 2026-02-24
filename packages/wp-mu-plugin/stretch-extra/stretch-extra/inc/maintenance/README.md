@@ -159,3 +159,18 @@ wp maintenance-mode deactivate
 # Check in a shell conditional:
 wp maintenance-mode is-active && echo "site is in maintenance"
 ```
+
+# References
+
+- Make the `.maintenance` file location more configurable :
+
+  https://core.trac.wordpress.org/ticket/62489
+
+  https://github.com/WordPress/wordpress-develop/pull/8896
+
+  This PR proposes exactly what we need - a configurable .maintenance location
+
+  > In some hosting situations, ABSPATH is not writeable and WP_CONTENT_DIR is. Plugins and themes can update but the .maintenance file is unable to be written in its hard-coded ABSPATH . '.maintenance' location. Because of the very early check for this file in the load order, substituting a similar behavior via mu-plugin is not quite as direct, and there are no appropriate filters to allow altering the .maintenance file location.
+  > We can resolve this by allowing a constant to override the initial path and using that if available (as would happen in cases where WP is installed with non-standard directory structures). A filter could be implemented for environments using auto_prepend_file -- the wp_maintenance() check in wp-settings.php runs well before mu-plugins and plugins are loaded, so adding changes to a plugin defeats the purpose of moving the file correction up to the wp_maintenance() check.
+  > Falling back specifically to WP_CONTENT_DIR would work for my use case but may not be a general solution that would benefit other hosting configurations.
+
