@@ -9,26 +9,29 @@
  * Requires a running WordPress HTTP server (pnpm start).
  *
  * Run:   pnpm test:php --php-opts "--filter MaintenanceTest"
- * Group: pnpm test:php --php-opts "--group maintenance"
- *
- * @group stretch-extra
- * @group maintenance
+ * Group: pnpm test:php --php-opts "--group stretch-extra"
  */
 
 use function ionos\stretch_extra\maintenance\activate;
 use function ionos\stretch_extra\maintenance\deactivate;
 
-class MaintenanceTest extends \WP_UnitTestCase {
+class MaintenanceTest extends \WP_UnitTestCase
+{
+  public const TEST_URL = 'http://host.docker.internal:8889';
 
-  const TEST_URL = 'http://host.docker.internal:8889';
-  const HTTP_ARGS = ['timeout' => 10, 'sslverify' => false];
+  public const HTTP_ARGS = [
+    'timeout'   => 10,
+    'sslverify' => false,
+  ];
 
-  public function setUp(): void {
+  protected function setUp(): void
+  {
     parent::setUp();
     deactivate(); // ensure a clean state before each test
   }
 
-  public function tearDown(): void {
+  protected function tearDown(): void
+  {
     deactivate(); // clean up sentinel file and symlink after each test
     parent::tearDown();
   }
@@ -43,7 +46,8 @@ class MaintenanceTest extends \WP_UnitTestCase {
    * 4. Deactivate.
    * 5. After deactivation – site must return HTTP 200 again.
    */
-  public function test_http_status_changes_with_maintenance_mode(): void {
+  public function testHttpStatusChangesWithMaintenanceMode(): void
+  {
     // 1. Before maintenance mode: site is accessible.
     $response = \wp_remote_get(self::TEST_URL, self::HTTP_ARGS);
     $this->assertNotWPError($response, 'HTTP request before activation should not return a WP_Error');
