@@ -50,7 +50,11 @@ function activate(): bool
 
   $content = sprintf("<?php \$upgrading = %d; ?>\n", time());
 
-  return file_put_contents(MAINTENANCE_SENTINEL_PATH, $content) !== false;
+  $retval = file_put_contents(MAINTENANCE_SENTINEL_PATH, $content) !== false;
+
+  error_log('Maintenance mode activated. Sentinel file updated with timestamp: ' . time());
+
+  return $retval;
 }
 
 /**
@@ -72,6 +76,8 @@ function deactivate(): bool
   if (file_exists(MAINTENANCE_SENTINEL_PATH)) {
     $success = unlink(MAINTENANCE_SENTINEL_PATH) && $success;
   }
+
+  error_log('Maintenance mode deactivated. Sentinel file and handler link removed if they existed.');
 
   return $success;
 }
@@ -115,3 +121,36 @@ function _get_maintenance_mode_status(): array
 if (defined('WP_CLI')) {
   require_once __DIR__ . '/wp-cli.php';
 }
+
+/**
+ * deactivate() is called on the upgrader_process_complete hook after plugin/theme/core updates.
+ * This ensures that maintenance mode is turned off after updates complete, even if the process
+ * was initiated outside of our CLI command (e.g. via the WP admin or another tool).
+ */
+\add_action(
+  hook_name: 'upgrader_process_complete',
+  callback: function ($upgrader, $options) {
+    // $options['type'] will be 'plugin', 'theme', 'core', or 'translation'
+    // $options['action'] will be 'update' or 'install'
+
+    deactivate();
+  },
+  accepted_args: 2,
+);
+
+/**
+ * activate() is called before an update or installation begins.
+ * This ensures that maintenance mode is turned on during the update process.
+ * Note: This will activate maintenance mode for the entire duration of the update process,
+ * which may be longer than expected. The upgrader_process_complete hook will ensure it is
+ * deactivated afterward.
+ */
+\add_filter(
+  'upgrader_pre_install',
+  function ($response, $hook_extra) {
+    // $hook_extra['type'] will be 'plugin', 'theme', 'core', or 'translation'
+    // $hook_extra['action'] will be 'update' or 'install'
+    activate();
+  },
+  accepted_args: 2,
+);
