@@ -73,7 +73,7 @@ jobs:
             pnpm exec ./scripts/_get-workflow-artefacts.sh
 
       - name: attach workflow artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           include-hidden-files: true
