@@ -44,7 +44,7 @@ const WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION = 'plugin-version';
  * Attention: if our plugin once will take effect in published posts, we should hook into
  * 'init' instead of 'admin-init' to make sure the migration runs always.
  */
-\add_action('admin_init', __NAMESPACE__ . '\_install');
+\add_action('admin_init', __NAMESPACE__ . '\_install', 1);
 
 // can be left off if no uninstall logic is needed
 \register_uninstall_hook(__FILE__, __NAMESPACE__ . '\_uninstall');
@@ -100,6 +100,10 @@ function _install()
         );
         \activate_plugin('ionos-performance/ionos-performance.php');
       }
+
+      // initialize wpscan results empty
+      \set_transient('ionos_wpscan_last_scan', time());
+      \set_transient('ionos_wpscan_issues', []);
 
       // no break because we want to run all migrations sequentially
     case version_compare($last_installed_version, '1.0.4', '<'):

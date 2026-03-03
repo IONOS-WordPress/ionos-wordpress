@@ -10,9 +10,13 @@ require_once __DIR__ . '/controller/class-wpscanmiddleware.php';
 require_once __DIR__ . '/views/summary.php';
 require_once __DIR__ . '/views/issues.php';
 
-\add_action('init', function () {
+\add_action('admin_init', function () {
   global $wpscan;
   $wpscan = new WPScan();
+
+  if (! \wp_next_scheduled('ionos_wpscan')) {
+    \wp_schedule_event(time(), 'daily', 'ionos_wpscan');
+  }
 });
 
 function get_wpscan(): WPScan
@@ -120,12 +124,6 @@ function recommended_action(\WP_REST_Request $request)
   $message .= ('delete' === $action) ? __('was deleted', 'ionos-essentials') : __('was updated', 'ionos-essentials');
   \wp_send_json_success($message, 200);
 }
-
-\add_action('init', function () {
-  if (! \wp_next_scheduled('ionos_wpscan')) {
-    \wp_schedule_event(time(), 'daily', 'ionos_wpscan');
-  }
-});
 
 \add_action('ionos_wpscan', function () {
   $wpscan = new WPScan();
