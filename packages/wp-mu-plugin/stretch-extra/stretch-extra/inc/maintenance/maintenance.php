@@ -57,8 +57,8 @@ if (PHP_SAPI === 'cli') {
 
     // Default fallback: 503 with Retry-After header
     \wp_die(
-      message: \__('Briefly unavailable for scheduled maintenance. Check back in a minute.', 'stretch-extra'),
-      title: \__('Maintenance', 'stretch-extra'),
+      message: \__('Briefly unavailable for scheduled maintenance. Check back in a minute.'),
+      title: \__('Maintenance'),
       args: [
         'response'           => 503,
         'additional_headers' => [
