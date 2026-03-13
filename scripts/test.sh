@@ -88,7 +88,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # ensure wp-env is running
   # - if the install path does not exist
   # - or if the containers are not running
-  WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
+  WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env status --json | jq -r .installPath))"
   if [[ ! -d "$WPENV_INSTALLPATH/WordPress" ]] || [[ "$(docker ps -q --filter "name=$(basename $WPENV_INSTALLPATH)" | wc -l)" -lt '6' ]]; then
     pnpm start
   fi
