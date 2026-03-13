@@ -152,7 +152,7 @@ fi
 # and as a result a floolow up pnpm start will fail with EACCES : permission denied
 # we can workaround that by deleting the mapped files and let wp-env recreate them
 (
-  WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
+  WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env status --json | jq -r .installPath))"
   # if at least a single WordPress installation exists in WP_ENV_HOME wp-env is not fully up and running
   if [[ -d "$WPENV_INSTALLPATH/WordPress" ]] && [[ "$(docker ps -q --filter "name=$(basename $WPENV_INSTALLPATH)" | wc -l)" -lt '6' ]]; then
     # for each wordpress installation in wp-env
