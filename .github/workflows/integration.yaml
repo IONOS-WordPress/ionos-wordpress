@@ -64,10 +64,12 @@ jobs:
         with:
           runCmd: |
             TEST_PRODUCTION=true pnpm run test
+            
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts
         name: gather_workflow_artifacts
         if: always()
+        continue-on-error: true
         with:
           runCmd: |
             pnpm exec ./scripts/_get-workflow-artefacts.sh
