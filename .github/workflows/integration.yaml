@@ -64,7 +64,7 @@ jobs:
         with:
           runCmd: |
             TEST_PRODUCTION=true pnpm run test
-            
+
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts
         name: gather_workflow_artifacts
