@@ -76,7 +76,7 @@ jobs:
 
       - name: attach workflow artifacts
         uses: actions/upload-artifact@v6
-        if: always()
+        if: steps.gather_workflow_artifacts.outcome == 'success' && steps.gather_workflow_artifacts.outputs.runCmdOutput != ''
         with:
           include-hidden-files: true
           # see https://github.com/actions/upload-artifact/issues/424
