@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 // tell eslint that the global variable exists when this file gets executed
 /* global wpData:true */
@@ -414,11 +415,19 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       // set the transient so we do not have to run the tests on every page load
-      jQuery.post(wpData.ajaxUrl, {
-        action: 'ionos-set-site-health-issues',
-        issues: JSON.stringify(wpData.siteHealthIssueCount),
-        _wpnonce: wpData.nonce,
-      });
+      try {
+        await apiFetch({
+          url: window.ajaxurl || '/wp-admin/admin-ajax.php',
+          method: 'POST',
+          body: new URLSearchParams({
+            action: 'ionos-set-site-health-issues',
+            issues: JSON.stringify(wpData.siteHealthIssueCount),
+            _wpnonce: wpData.nonce,
+          }),
+        });
+      } catch (error) {
+        console.error('Failed to dismiss notice:', error);
+      }
     })();
 
     dashboard.querySelectorAll('.expandable > .panel__item-header').forEach((header) => {

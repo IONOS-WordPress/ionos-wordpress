@@ -224,11 +224,10 @@ function install_plugin_from_url($plugin_url)
       wp_send_json_error([
         'message' => 'Something went wrong.',
       ], 403);
-      wp_die();
     }
 
     \set_transient('ionos_site_health_issue_count', $issues, 5 * MINUTE_IN_SECONDS);
-    \wp_die();
+    \wp_send_json_success();
   }
 );
 
