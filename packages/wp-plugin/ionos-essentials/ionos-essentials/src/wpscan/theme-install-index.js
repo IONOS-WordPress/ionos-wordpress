@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
           'notice-alt',
           'ionos-theme-issues'
         );
-        themeCard.appendChild(notice);
+        themeCard?.appendChild(notice);
 
         try {
           await apiFetch({
