@@ -7,7 +7,7 @@ defined('ABSPATH') || exit();
 if (! \get_transient('ionos-ssl-check-notice-dismissed')) {
   \add_action('admin_notices', function () {
     if (is_ssl()) {
-      return;
+      //return;
     }
 
     $notice = __('Your WordPress website is currently <strong>without SSL</strong>, which means that the connection between your website and users\' browsers is not encrypted. It is highly <strong>recommended to activate SSL</strong> to protect sensitive information and to provide a secure browsing.', 'ionos-essentials');
@@ -29,5 +29,5 @@ if (! \get_transient('ionos-ssl-check-notice-dismissed')) {
 
 \add_action(
   'wp_ajax_ionos-ssl-check-dismiss-notice',
-  fn () => (\set_transient('ionos-ssl-check-notice-dismissed', true, 0) && \wp_die())
+  fn () => (\set_transient('ionos-ssl-check-notice-dismissed', true, 0) && \wp_send_json_success())
 );
