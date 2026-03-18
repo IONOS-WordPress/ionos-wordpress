@@ -14,7 +14,7 @@ use WpOrg\Requests\Response;
 
 defined('ABSPATH') || exit();
 
-if (\get_option('ionos_group_brand') !== 'ionos') {
+if (\get_option('ionos_group_brand', 'ionos') !== 'ionos') {
   return;
 }
 
