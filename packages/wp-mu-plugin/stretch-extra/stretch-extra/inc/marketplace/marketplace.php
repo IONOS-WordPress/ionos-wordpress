@@ -336,8 +336,8 @@ function render_changelog(array $changelog): string
       $ionos_plugins = array_filter(
         $ionos_plugins,
         fn (array $plugin): bool => str_contains(
-          strtolower($plugin['short_description'] ?? '' . $plugin['name'] ?? ''),
-          strtolower($args->search)
+          strtolower(($plugin['short_description'] ?? '') . ($plugin['name'] ?? '') . ($plugin['slug'] ?? '')),
+          strtolower(urldecode($args->search))
         )
       );
     }
