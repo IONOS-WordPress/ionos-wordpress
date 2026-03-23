@@ -18,7 +18,7 @@ return [
       ],
     ],
     [
-      'url'  => 'https://downloads.wordpress.org/plugin/extendify.zip',
+      'url'  => 'https://downloads.wordpress.org/plugin/extendify.2.4.1.zip',
       'key'  => 'plugins/extendify/extendify.php',
       'file' => IONOS_CUSTOM_DIR . '/plugins/extendify/extendify.php',
       'slug' => 'extendify',
@@ -42,12 +42,13 @@ return [
     //   'slug' => 'beyond-seo',
     //   'data' => [
     //     'Name' => 'BeyondSEO',
+    //     'Update URI' => 'https://wordpress.rankingcoach.com/update/archives/beyond-seo.json'
     //   ],
     // ],
   ],
   'themes' => [
     [
-      'url' => 'https://downloads.wordpress.org/theme/extendable.zip',
+      'url' => 'https://downloads.wordpress.org/theme/extendable.2.1.3.zip',
     ],
   ],
 ];
