@@ -70,7 +70,7 @@ function deactivate_disallowed_plugins() {
     if ( ! empty( $messages ) ) {
         add_action( 'admin_notices', function() use ( $messages ) {
             foreach ( $messages as $message ) {
-                echo '<div class="notice notice-warning"><p>' . wp_kses_post( $message ) . '</p></div>';
+                echo '<div class="notice notice-error is-dismissible"><p>' . wp_kses_post( $message ) . '</p></div>';
             }
         });
     }
