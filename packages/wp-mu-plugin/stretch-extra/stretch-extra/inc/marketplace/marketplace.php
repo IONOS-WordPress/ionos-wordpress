@@ -84,6 +84,10 @@ function get_config()
       }
     }
 
+    if (empty($wp_list_table->items)) {
+      $wp_list_table->items = [];
+    }
+
     // 5. Sort items by original slug order
     \usort(
       $wp_list_table->items,
