@@ -43,7 +43,7 @@ jobs:
           fetch-depth: 0
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -75,7 +75,7 @@ jobs:
             pnpm exec ./scripts/_get-workflow-artefacts.sh
 
       - name: attach workflow artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: steps.gather_workflow_artifacts.outcome == 'success' && steps.gather_workflow_artifacts.outputs.runCmdOutput != ''
         with:
           include-hidden-files: true
@@ -93,7 +93,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
