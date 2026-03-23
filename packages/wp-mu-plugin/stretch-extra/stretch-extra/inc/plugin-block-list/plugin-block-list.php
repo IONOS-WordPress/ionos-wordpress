@@ -12,8 +12,17 @@ function disable_plugin_install_link( $action_links, $plugin ) {
 
     // Extra disallowed slugs
     $extra_disallowed_plugins = [
-        'gslider-blocks',
-        'lordicon'
+        'bwp-minify',
+        'e-mail-broadcasting',
+		'send-email-from-admin',
+		'mailit',
+		'nginx-helper',
+		'stopbadbots',
+		'w3-total-cache',
+		'wp-fastest-cache',
+		'wp-super-cache',
+		'wp-rest-api-log',
+		'website-file-changes-monitor'
     ];
 
     $all_disallowed = array_merge( array_keys( $disallowed_plugins ), $extra_disallowed_plugins );
