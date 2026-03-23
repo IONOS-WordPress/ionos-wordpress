@@ -74,12 +74,26 @@ function get_config()
     $responses = Requests::request_multiple($requests);
 
     // 4. Process the data
-    $plugins = [];
+    $plugins                = [];
+    $admin_notice_displayed = false;
     foreach ($responses as $slug => $response) {
       if ($response instanceof Response && $response->success) {
         $decoded_data = json_decode($response->body, true);
         if (isset($decoded_data['slug'])) {
           $wp_list_table->items[] = $decoded_data;
+        }
+      } else {
+        if (! $admin_notice_displayed) {
+          add_action(
+            hook_name: 'admin_notices',
+            callback: function () use ($slug): void {
+              \printf(
+                '<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
+                sprintf(\__('Failed to fetch data in marketplace.', 'stretch-extra'), esc_html($slug))
+              );
+            }
+          );
+          $admin_notice_displayed = true;
         }
       }
     }
