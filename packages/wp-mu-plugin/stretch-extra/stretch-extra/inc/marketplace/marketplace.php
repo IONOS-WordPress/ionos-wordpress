@@ -86,10 +86,11 @@ function get_config()
         if (! $admin_notice_displayed) {
           add_action(
             hook_name: 'admin_notices',
-            callback: function () use ($slug): void {
+            callback: function () use ($slug, $response): void {
+
               \printf(
                 '<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
-                sprintf(\__('Failed to fetch data in marketplace.', 'stretch-extra'), esc_html($slug))
+                esc_html(sprintf('Failed to fetch data in marketplace: %s', $response->getReason()))
               );
             }
           );
