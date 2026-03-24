@@ -6,6 +6,15 @@ use ionos\essentials\Tenant;
 
 defined('ABSPATH') || exit();
 
+const ONBOARDING_OPTION    = 'IONOS_ESSENTIALS_ONBOARDING';
+const ONBOARDING_QUERY_ARG = 'ionos_onboarding';
+
+if (isset($_GET[ONBOARDING_QUERY_ARG])) {
+  \add_action('admin_init', function () {
+    \update_option(ONBOARDING_OPTION, $_GET[ONBOARDING_QUERY_ARG]);
+  });
+}
+
 /**
  * Add onboarding menu page.
  */
@@ -28,21 +37,26 @@ defined('ABSPATH') || exit();
 );
 
 /**
- * Redirects to extendify-launch are caught.
- * We send the user to the ai-switch-page
+ * Redirects to extendify-pages are caught.
+ * We send the user to the switch page or their configured dashboard
  */
 \add_filter(
   'wp_redirect',
   function ($location) {
     // extendify-launch always opens switch page
     if (\admin_url('admin.php?page=extendify-launch') === $location) {
+      // avoid redirect loops
+      update_option('extendify_attempted_redirect_count', 3);
       return \admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding');
     }
-    // wp-admin and extendify dashboard redirect to our dashboard OR the default wp-admin dashboard
+    // other dashboards should redirect to our switch page, or the configured wp-admin dashboard
     $redirects = ['wp-admin/', admin_url(), \admin_url('admin.php?page=extendify-assist')];
     if (in_array($location, $redirects)) {
-      $show_ionos_dashboard = (\get_option('ionos_essentials_dashboard_mode', true));
-      return $show_ionos_dashboard ? \admin_url('admin.php?page=' . Tenant::get_slug()) : \admin_url();
+      if (! get_option(ONBOARDING_OPTION)) {
+        return \admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding');
+      }
+      $default_to_ionos_dashboard = (\get_option('ionos_essentials_dashboard_mode', true));
+      return $default_to_ionos_dashboard ? \admin_url('admin.php?page=' . Tenant::get_slug()) : \admin_url();
     }
     return $location;
   },
@@ -52,7 +66,7 @@ defined('ABSPATH') || exit();
 
 \add_action(
   'load-toplevel_page_extendify-assist',
-  fn () => \wp_safe_redirect(\admin_url('admin.php?page=' . Tenant::get_slug()))
+  fn () => \wp_safe_redirect(\admin_url('admin.php?page=' . Tenant::get_slug())) && exit
 );
 
 \add_filter(
