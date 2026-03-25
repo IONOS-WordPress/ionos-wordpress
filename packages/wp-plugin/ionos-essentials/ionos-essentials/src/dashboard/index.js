@@ -464,20 +464,16 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    function ionos_loop_track_click(anchor, href) {
-      fetch(wpData.restUrl + 'ionos/essentials/loop/v1/click', {
+    async function ionos_loop_track_click(anchor, href) {
+      await apiFetch({
+        url: '/wp-json/ionos/essentials/loop/v1/click',
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wpData.nonce,
-        },
-        body: JSON.stringify({ anchor }),
-        credentials: 'include',
-      }).then(() => {
-        if (href) {
-          window.location.href = href;
-        }
+        data: { anchor },
       });
+
+      if (href) {
+        window.location.href = href;
+      }
     }
   }
 });
