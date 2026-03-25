@@ -224,11 +224,10 @@ function install_plugin_from_url($plugin_url)
       wp_send_json_error([
         'message' => 'Something went wrong.',
       ], 403);
-      wp_die();
     }
 
     \set_transient('ionos_site_health_issue_count', $issues, 5 * MINUTE_IN_SECONDS);
-    \wp_die();
+    \wp_send_json_success();
   }
 );
 
@@ -337,7 +336,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 
 \add_action(
   'wp_ajax_ionos-popup-dismiss',
-  fn () => (\delete_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp') && \wp_die())
+  fn () => (\delete_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp') && \wp_send_json_success())
 );
 
 /* hide admin bar, when query param /?hidetoolbar=1 is set */

@@ -1,8 +1,8 @@
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 // tell eslint that the global variable exists when this file gets executed
 /* global wpData:true */
-/* global jQuery:true */
 document.addEventListener('DOMContentLoaded', function () {
   // Welcome dialog
   const parent = document.querySelector('.ionos-dashboard');
@@ -23,8 +23,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     dashboard.querySelectorAll('.ionos-popup-dismiss')?.forEach((button) => {
-      button.addEventListener('click', function () {
-        jQuery.post(wpData.ajaxUrl, { action: 'ionos-popup-dismiss' });
+      button.addEventListener('click', async function () {
+        try {
+          await apiFetch({
+            url: window.ajaxurl || '/wp-admin/admin-ajax.php',
+            method: 'POST',
+            body: new URLSearchParams({
+              action: 'ionos-popup-dismiss',
+            }),
+          });
+        } catch (error) {
+          console.error('Failed to dismiss notice:', error);
+        }
         dashboard.querySelector('#ionos-essentials-popup').close();
       });
     });
@@ -92,12 +102,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     dashboard.querySelectorAll('.ionos_finish_setup')?.forEach((button) => {
-      button.addEventListener('click', function (event) {
-        jQuery.post(wpData.ajaxUrl, {
-          action: 'ionos-nba-setup-complete',
-          status: event.target.dataset.status,
-          _wpnonce: wpData.nonce,
-        });
+      button.addEventListener('click', async function (event) {
+        try {
+          await apiFetch({
+            url: window.ajaxurl || '/wp-admin/admin-ajax.php',
+            method: 'POST',
+            body: new URLSearchParams({
+              action: 'ionos-nba-setup-complete',
+              status: event.target.dataset.status,
+              _wpnonce: wpData.nonce,
+            }),
+          });
+        } catch (error) {
+          console.error('Failed to dismiss notice:', error);
+        }
 
         if (event.target.dataset.status === 'finished') {
           dashboard.querySelector('#ionos_nba_setup_container').remove();
@@ -414,11 +432,19 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       // set the transient so we do not have to run the tests on every page load
-      jQuery.post(wpData.ajaxUrl, {
-        action: 'ionos-set-site-health-issues',
-        issues: JSON.stringify(wpData.siteHealthIssueCount),
-        _wpnonce: wpData.nonce,
-      });
+      try {
+        await apiFetch({
+          url: window.ajaxurl || '/wp-admin/admin-ajax.php',
+          method: 'POST',
+          body: new URLSearchParams({
+            action: 'ionos-set-site-health-issues',
+            issues: JSON.stringify(wpData.siteHealthIssueCount),
+            _wpnonce: wpData.nonce,
+          }),
+        });
+      } catch (error) {
+        console.error('Failed to dismiss notice:', error);
+      }
     })();
 
     dashboard.querySelectorAll('.expandable > .panel__item-header').forEach((header) => {

@@ -1,11 +1,11 @@
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 // tell eslint that the global variable exists when this file gets executed
 /* global ionosWPScanPlugins:true */
-/* global jQuery:true */
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.install-now').forEach(function (button) {
-    button.addEventListener('click', function (event) {
+    button.addEventListener('click', async function (event) {
       if (!event.target.dataset.safe) {
         event.preventDefault();
         event.stopPropagation();
@@ -23,14 +23,17 @@ document.addEventListener('DOMContentLoaded', function () {
       message.innerHTML = `<p>${__('Checking for vulnerabilities...', 'ionos-essentials')}</p>`;
       pluginCard?.insertBefore(message, pluginCard.firstChild);
 
-      jQuery
-        .post(ionosWPScanPlugins.ajaxUrl, {
-          action: 'ionos-wpscan-instant-check',
-          _ajax_nonce: ionosWPScanPlugins.nonce,
-          slug: event.target.dataset.slug,
-          type: 'plugin',
-        })
-        .always(function (response) {
+      try {
+        await apiFetch({
+          url: window.ajaxurl || '/wp-admin/admin-ajax.php',
+          method: 'POST',
+          body: new URLSearchParams({
+            action: 'ionos-wpscan-instant-check',
+            _ajax_nonce: ionosWPScanPlugins.nonce,
+            slug: event.target.dataset.slug,
+            type: 'plugin',
+          }),
+        }).then((response) => {
           switch (response.data) {
             case 'warnings_found':
               message.innerHTML = `<p>${__('Warnings found. Installation is not recommended.', 'ionos-essentials')}</p>`;
@@ -52,6 +55,9 @@ document.addEventListener('DOMContentLoaded', function () {
               break;
           }
         });
+      } catch (error) {
+        console.error('Failed to load vulnerabilities:', error);
+      }
     });
   });
 });

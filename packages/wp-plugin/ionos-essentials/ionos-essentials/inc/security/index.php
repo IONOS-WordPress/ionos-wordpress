@@ -85,6 +85,6 @@ if (\get_transient('ionos_security_migrated_notice_show')) {
 
   \add_action(
     'wp_ajax_ionos-security-migrated-notice',
-    fn () => (\delete_transient('ionos_security_migrated_notice_show') && \wp_die())
+    fn () => (\delete_transient('ionos_security_migrated_notice_show') && \wp_send_json_success())
   );
 }
