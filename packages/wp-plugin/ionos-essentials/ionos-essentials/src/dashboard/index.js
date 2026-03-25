@@ -10,15 +10,12 @@ document.addEventListener('DOMContentLoaded', function () {
   if (parent) {
     const dashboard = parent.querySelector('#wpbody-content').shadowRoot;
 
-    dashboard.querySelector('#ionos-welcome-close')?.addEventListener('click', function () {
+    dashboard.querySelector('#ionos-welcome-close')?.addEventListener('click', async function () {
       dashboard.querySelector('#essentials-welcome_block').close();
-      fetch(wpData.restUrl + 'ionos/essentials/dashboard/welcome/v1/closer', {
+
+      await apiFetch({
+        url: '/wp-json/ionos/essentials/dashboard/welcome/v1/closer',
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wpData.nonce,
-        },
-        credentials: 'include',
       });
     });
 
