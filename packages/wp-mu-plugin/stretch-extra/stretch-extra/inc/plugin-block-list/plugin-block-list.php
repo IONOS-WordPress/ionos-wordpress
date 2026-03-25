@@ -1,7 +1,10 @@
 <?php
- 
 /**
- * Return list of disallowed plugin slugs
+ * MU Plugin: Block disallowed plugins from UI and WP-CLI
+ */
+
+/**
+ * List of disallowed plugins (plugin_file => reason)
  */
 function get_disallowed_plugins() {
     return [
@@ -23,10 +26,7 @@ function get_disallowed_plugins() {
  * Disable install button for disallowed plugins
  */
 function disable_plugin_install_link( $action_links, $plugin ) {
-    $disallowed = get_disallowed_plugins();
-
-    // Compare using slug (derived from plugin file keys)
-    $disallowed_slugs = array_map( 'dirname', array_keys( $disallowed ) );
+    $disallowed_slugs = array_map( 'dirname', array_keys( get_disallowed_plugins() ) );
 
     if ( in_array( $plugin['slug'], $disallowed_slugs, true ) ) {
         return [
@@ -36,6 +36,7 @@ function disable_plugin_install_link( $action_links, $plugin ) {
 
     return $action_links;
 }
+add_filter( 'plugin_install_action_links', 'disable_plugin_install_link', 0, 2 );
 
 /**
  * Disable activate button for disallowed plugins
@@ -50,36 +51,66 @@ function disable_plugin_activate_link( $actions, $plugin_file ) {
 
     return $actions;
 }
+add_filter( 'plugin_action_links', 'disable_plugin_activate_link', 10, 2 );
+add_filter( 'network_admin_plugin_action_links', 'disable_plugin_activate_link', 10, 2 );
 
 /**
  * Deactivate disallowed plugins if they are active
  */
 function deactivate_disallowed_plugins() {
     $disallowed = get_disallowed_plugins();
-    $messages   = [];
-
     foreach ( $disallowed as $plugin_file => $message ) {
-        if ( ! is_plugin_active( $plugin_file ) ) {
-            continue;
-        }
-
-        deactivate_plugins( $plugin_file );
-        $messages[] = $message;
-    }
-
-    if ( ! empty( $messages ) ) {
-        add_action( 'admin_notices', function() use ( $messages ) {
-            foreach ( $messages as $message ) {
+        if ( is_plugin_active( $plugin_file ) ) {
+            deactivate_plugins( $plugin_file );
+            add_action( 'admin_notices', function() use ( $message ) {
                 echo '<div class="notice notice-error is-dismissible"><p>' . wp_kses_post( $message ) . '</p></div>';
-            }
-        });
+            });
+        }
     }
 }
+add_action( 'admin_init', 'deactivate_disallowed_plugins', 0 );
 
-// Replace "Install" plugin link for plugins that not should not be activated (plugin-install.php)
-add_filter( 'plugin_install_action_links', 'disable_plugin_install_link', 0, 2 );
-// Replace "Activate" plugin link for plugins that should not be activated (plugins.php)
-add_filter( 'plugin_action_links', 'disable_plugin_activate_link', 10, 2 );
-add_filter( 'network_admin_plugin_action_links', 'disable_plugin_activate_link', 10, 2 );// Deal with disallowed plugins on the platform.
 
-add_action( 'admin_init', 'deactivate_disallowed_plugins', 10 );
+/**
+ * Disallow installation of blocked plugins via the installer
+ */
+function block_disallowed_post_install( $true, $hook_extra, $result ) {
+    $disallowed = get_disallowed_plugins();
+
+    if ( empty( $result['destination'] ) || ! is_dir( $result['destination'] ) ) {
+        return $true;
+    }
+
+    $plugin_folder = basename( $result['destination'] );
+    $files = scandir( $result['destination'] );
+
+    // ✅ Print normal text after "Unpacking the package…"
+    echo '<p style="margin:0 0 8px 0; font-style:italic; color:#555;">Validating against blocked plugins…</p>';
+
+    foreach ( $files as $file ) {
+        if ( substr( $file, -4 ) === '.php' ) {
+            $plugin_file = "$plugin_folder/$file";
+
+            if ( isset( $disallowed[ $plugin_file ] ) ) {
+                // Delete unpacked folder immediately
+                $it = new RecursiveDirectoryIterator( $result['destination'], RecursiveDirectoryIterator::SKIP_DOTS );
+                $files_iter = new RecursiveIteratorIterator( $it, RecursiveIteratorIterator::CHILD_FIRST );
+                foreach( $files_iter as $fileinfo ) {
+                    $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+                    $todo($fileinfo->getRealPath());
+                }
+                rmdir( $result['destination'] );
+
+                // ✅ Return WP_Error styled like a notice-error but **inline in installer**
+                $error_message = '<div style="padding:12px; border-left:4px solid #d63638; background-color:rgba(214,54,56,0.05); margin:0 0 12px 0;">' .
+                                 '<p>This plugin is not supported on our Managed WordPress platform. <a href="' . admin_url('plugins.php') . '">Full list of blocked plugins</a>.</p>' . // TODO link to documentation
+                                 '</div>';
+
+                return new WP_Error( 'plugin_blocked', $error_message );
+            }
+        }
+    }
+
+    return $true;
+}
+add_filter( 'upgrader_post_install', 'block_disallowed_post_install', 10, 3 );
