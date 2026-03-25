@@ -260,27 +260,22 @@ document.addEventListener('DOMContentLoaded', function () {
         const description = event.target.dataset.description ?? '';
 
         try {
-          const response = await fetch(wpData.restUrl + 'ionos/essentials/option/set', {
+          const response = await apiFetch({
+            path: '/ionos/essentials/option/set',
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-WP-Nonce': wpData.nonce,
-            },
-            body: JSON.stringify({
+            data: {
               option,
               key,
               value,
-            }),
+            },
           });
 
-          if (!response.ok) {
+          if (!response.status) {
             window.EXOS.snackbar.warning('Error updating option ' + key);
             return;
           }
 
-          const data = await response.json();
-
-          if (data.value) {
+          if (response.value) {
             window.EXOS.snackbar.success(description + ' ' + __('activated.', 'ionos-essentials'));
           } else {
             window.EXOS.snackbar.critical(description + ' ' + __('deactivated.', 'ionos-essentials'));
