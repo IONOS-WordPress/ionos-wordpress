@@ -195,33 +195,24 @@ document.addEventListener('DOMContentLoaded', function () {
         button_element.classList.add('hidden');
 
         try {
-          const response = await fetch(wpData.restUrl + 'ionos/essentials/mcp/action', {
+          const response = await apiFetch({
+            path: '/ionos/essentials/mcp/action',
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-WP-Nonce': wpData.nonce,
-            },
-            body: JSON.stringify({
+            data: {
               activate: dashboard.querySelector('#ionos-essentials-mcp').checked,
               revokeAppPassword: button.dataset.revokeAppPassword ?? 0,
-            }),
+            },
           });
 
           loading_element.classList.add('hidden');
-          if (!response.ok) {
-            window.EXOS.snackbar.warning(__('An error occured while enabling WordPress MCP.', 'ionos-essentials'));
-            return;
-          }
 
-          const data = await response.json();
-
-          if (data.active === '0') {
+          if (response.active === '0') {
             window.EXOS.snackbar.warning(__('WordPress MCP disabled', 'ionos-essentials'));
             return;
           }
 
-          if (data.snippet) {
-            code_element.querySelector('code').innerText = data.snippet;
+          if (response.snippet) {
+            code_element.querySelector('code').innerText = response.snippet;
             code_element.classList.remove('hidden');
           } else {
             button_element.classList.remove('hidden');
