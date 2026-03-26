@@ -1,8 +1,4 @@
 <?php
-
-namespace ionos\stretch_extra\plugin_block_list;
-
-defined('ABSPATH') || exit();
 /**
  * MU Plugin: Block disallowed plugins from UI and WP-CLI
  */
