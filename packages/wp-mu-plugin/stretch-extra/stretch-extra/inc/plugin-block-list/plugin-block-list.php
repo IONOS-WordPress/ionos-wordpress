@@ -1,4 +1,5 @@
 <?php
+
 /**
  * MU Plugin: Block disallowed plugins from UI and WP-CLI
  */
@@ -111,15 +112,7 @@ function block_disallowed_post_install($true, $hook_extra, $result)
         rmdir($result['destination']);
 
         // Inline error styled like a notice
-        $error_message = '<div style="padding:12px; border-left:4px solid #d63638; background-color:rgba(214,54,56,0.05); margin:0 0 12px 0;">' .
-                         '<p>' . sprintf(
-                           /* translators: %s: link to blocked plugins list */
-                           __('This plugin is not supported on our Managed WordPress platform. %s', 'stretch-extra'),
-                           '<a href="' . admin_url(
-                             'plugins.php'
-                           ) . '">' . __('Full list of blocked plugins', 'stretch-extra') . '</a>'
-                         ) . '</p>' .
-                         '</div>';
+        $error_message = error_notice_for_blocked_plugin();
 
         return new WP_Error('plugin_blocked', $error_message);
       }
@@ -129,6 +122,19 @@ function block_disallowed_post_install($true, $hook_extra, $result)
   return $true;
 }
 add_filter('upgrader_post_install', 'block_disallowed_post_install', 10, 3);
+
+function error_notice_for_blocked_plugin()
+{
+  return '<div style="padding:12px; border-left:4px solid #d63638; background-color:rgba(214,54,56,0.05); margin:0 0 12px 0;">' .
+                         '<p>' . sprintf(
+                           /* translators: %s: link to blocked plugins list */
+                           __('This plugin is not supported on our Managed WordPress platform. %s', 'stretch-extra'),
+                           '<a href="' . admin_url(
+                             'plugins.php'
+                           ) . '">' . __('Full list of blocked plugins', 'stretch-extra') . '</a>'
+                         ) . '</p>' .
+                         '</div>';
+}
 
 if (defined('WP_CLI') && \WP_CLI) {
   add_filter(
@@ -146,3 +152,42 @@ if (defined('WP_CLI') && \WP_CLI) {
     2
   );
 }
+
+add_action('admin_enqueue_scripts', function ($hook) {
+  if ($hook === 'plugin-install.php') {
+    wp_add_inline_script('jquery-core', "
+            jQuery(document).ready(function($){
+                $('.plugin-card').each(function(){
+                    var pluginBox = $(this).find('.plugin-card-top');
+
+                    // Check if the plugin has a 'Not Supported' button
+                    if (pluginBox.find('.button-disabled:contains(\"" . __('Not Supported', 'stretch-extra') . "\")').length) {
+                        // Avoid duplicate notices
+                        if (!pluginBox.hasClass('blocked-notice-added')) {
+                            var noticeHtml = '" . str_replace([
+                          "\n", "'"],
+      ['', "\\'"],
+      error_notice_for_blocked_plugin()
+    ) . "';
+                            pluginBox.prepend(noticeHtml);
+                            pluginBox.addClass('blocked-notice-added');
+                        }
+                    }
+                });
+            });
+        ");
+  }
+});
+
+add_action('admin_head', function () {
+  $screen = get_current_screen();
+  if ($screen && $screen->id === 'plugin-install') {
+    echo '<style>
+            /* Move absolute elements down for blocked plugins */
+            .plugin-card-top.blocked-notice-added .plugin-icon,
+            .plugin-card-top.blocked-notice-added .action-links {
+                top: 100px !important;
+            }
+        </style>';
+  }
+});
