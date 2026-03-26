@@ -62,3 +62,69 @@ msgstr ""
 #: stretch-extra/inc/marketplace/config.php
 msgid "Provides guided onboarding and a Site Assistant in the WordPress admin."
 msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "BWP Minify (as of 1.3.3) is not ready for use. The plugin writes a configuration file that must be edited manually to support plugins and themes installed via symlinks. Because it breaks sites upon activation, we have automatically deactivated the plugin to keep your site working. In the interest of making BWP Minify compatible, we provided <a href=\"https://github.com/OddOneOut/bwp-minify/pull/67\">this patch</a> to the author in May 2016. If you choose to fix the configuration file yourself, you may skip the automatic deactivation by renaming <code>bwp-minify/bwp-minify.php</code>."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "The use of \"E-Mail Broadcasting\" is not allowed."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "The use of \"Send Email From Admin\" is not allowed."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "The use of \"Mail It!\" is not allowed."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "The use of Nginx Helper can interfere with caching, which is automatically provided for this site. Nginx Helper has been deactivated."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "The use of Stop Bad Bots is not allowed."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "The use of W3 Total Cache can interfere with caching, which is automatically provided for this site. W3 Total Cache has been deactivated."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "The use of WP Fastest Cache can interfere with caching, which is automatically provided for this site. WP Fastest Cache has been deactivated."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "The use of WP Super Cache can interfere with caching, which is automatically provided for this site. WP Super Cache has been deactivated."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "WP REST API Log inflates post table size beyond normal usage levels."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Melapress File Monitor inflates the options table size beyond normal usage levels."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Not Supported"
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Disabled"
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Validating against blocked plugins…"
+msgstr ""
+
+#. translators: %s: link to blocked plugins list
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+#, php-format
+msgid "This plugin is not supported on our Managed WordPress platform. %s"
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Full list of blocked plugins"
+msgstr ""
