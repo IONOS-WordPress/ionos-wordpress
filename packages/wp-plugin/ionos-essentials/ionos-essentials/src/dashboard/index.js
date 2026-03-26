@@ -164,24 +164,24 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     };
 
-    dashboard.querySelector('#ionos_essentials_install_gml')?.addEventListener('click', function (event) {
+    dashboard.querySelector('#ionos_essentials_install_gml')?.addEventListener('click', async function (event) {
       event.target.disabled = true;
       event.target.innerText = __('Installing...', 'ionos-essentials');
 
-      fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/install-gml', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wpData.nonce,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === 'success') {
-            location.reload();
-          }
+      try {
+        const response = await apiFetch({
+          url: wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/install-gml',
+          method: 'GET',
         });
+
+        if (response.status === 'success') {
+          location.reload();
+        }
+      } catch (error) {
+        console.error('Failed to install GML:', error);
+        event.target.disabled = false;
+        event.target.innerText = __('Install', 'ionos-essentials');
+      }
     });
 
     dashboard.querySelectorAll('.ionos-essentials-mcp-activate').forEach((button) => {
