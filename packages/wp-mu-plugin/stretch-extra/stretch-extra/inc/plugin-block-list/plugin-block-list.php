@@ -1,4 +1,8 @@
 <?php
+
+namespace ionos\stretch_extra\plugin_block_list;
+
+defined('ABSPATH') || exit();
 /**
  * MU Plugin: Block disallowed plugins from UI and WP-CLI
  */
@@ -117,3 +121,22 @@ function block_disallowed_post_install( $true, $hook_extra, $result ) {
     return $true;
 }
 add_filter( 'upgrader_post_install', 'block_disallowed_post_install', 10, 3 );
+
+if (defined('WP_CLI') && \WP_CLI ) {
+	add_filter(
+		'validate_plugin_requirements',
+		function ( $met_requirements, $plugin ) {
+			$disallowed = get_disallowed_plugins();
+
+			if ( array_key_exists( $plugin, $disallowed ) ) {
+				return new WP_Error(
+					'plugin_not_supported', $disallowed[ $plugin ]
+				);
+			}
+
+			return $met_requirements;
+		},
+		10,
+		2
+	);
+};
