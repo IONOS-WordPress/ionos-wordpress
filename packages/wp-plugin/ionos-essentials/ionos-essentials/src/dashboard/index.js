@@ -330,38 +330,34 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     dashboard.querySelectorAll('[data-wpscan]').forEach((element) => {
-      element.addEventListener('click', function (event) {
+      element.addEventListener('click', async function (event) {
+        event.preventDefault();
         element.disabled = true;
         const payload = JSON.parse(element.dataset.wpscan);
         element.innerText =
           payload.action === 'delete' ? __('deleting...', 'ionos-essentials') : __('updating...', 'ionos-essentials');
-        event.preventDefault();
-        fetch(wpData.restUrl + 'ionos/essentials/wpscan/recommended-action', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-WP-Nonce': wpData.nonce,
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-            data: element.dataset.wpscan,
-          }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              window.EXOS.snackbar.critical(response.statusText);
-              return Promise.reject();
-            }
-            return response.json();
-          })
-          .then((data) => {
-            element.parentElement.parentElement.remove();
-            window.EXOS.snackbar.success(data.data);
 
-            window.setTimeout(() => {
-              window.location.reload();
-            }, 10000);
+        try {
+          const data = await apiFetch({
+            path: '/ionos/essentials/wpscan/recommended-action',
+            method: 'POST',
+            data: {
+              data: element.dataset.wpscan,
+            },
           });
+
+          element.parentElement.parentElement.remove();
+          window.EXOS.snackbar.success(data.data);
+
+          window.setTimeout(() => {
+            window.location.reload();
+          }, 10000);
+        } catch (error) {
+          window.EXOS.snackbar.critical(error.message || 'An error occurred');
+          element.disabled = false;
+          element.innerText =
+            payload.action === 'delete' ? __('Delete', 'ionos-essentials') : __('Update', 'ionos-essentials');
+        }
       });
     });
 
