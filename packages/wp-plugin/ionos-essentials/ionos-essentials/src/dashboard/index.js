@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       try {
         const response = await apiFetch({
-          url: wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/install-gml',
+          url: '/wp-json/ionos/essentials/dashboard/nba/v1/install-gml',
           method: 'GET',
         });
 

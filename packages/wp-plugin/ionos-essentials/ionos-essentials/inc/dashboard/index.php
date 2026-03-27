@@ -274,9 +274,6 @@ function install_plugin_from_url($plugin_url)
 
   \wp_localize_script('ionos-essentials-dashboard', 'wpData', [
     'nonce'                  => \wp_create_nonce('wp_rest'),
-    'healthCheckNonce'       => \wp_create_nonce('health-check-site-status-result'),
-    'restUrl'                => \esc_url_raw(rest_url()),
-    'ajaxUrl'                => admin_url('admin-ajax.php'),
     'securityOptionName'     => IONOS_SECURITY_FEATURE_OPTION,
     'tenant'                 => Tenant::get_slug(),
     'siteHealthIssueCount'   => $issue_counts,
