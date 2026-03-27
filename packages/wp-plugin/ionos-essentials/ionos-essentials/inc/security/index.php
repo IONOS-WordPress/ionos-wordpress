@@ -50,8 +50,6 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
   }
 });
 
-
-
 if (\get_transient('ionos_security_migrated_notice_show')) {
 
   \add_action('admin_notices', function () {
