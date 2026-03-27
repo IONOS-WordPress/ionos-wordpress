@@ -136,18 +136,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const updateNbaItem = async (target, status) => {
-      fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/update', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wpData.nonce,
-        },
-        credentials: 'include',
-        body: JSON.stringify({ id: target.dataset.nbaId, status }),
-      }).then((response) => {
-        if (!response.ok) {
-          return;
-        }
+      try {
+        await apiFetch({
+          url: '/wp-json/ionos/essentials/dashboard/nba/v1/update',
+          method: 'POST',
+          data: {
+            id: target.dataset.nbaId,
+            status,
+          },
+        });
 
         dashboard.getElementById(target.dataset.nbaId).classList.add('ionos_nba_dismissed');
         setTimeout(() => {
@@ -161,7 +158,9 @@ document.addEventListener('DOMContentLoaded', function () {
             location.reload();
           }
         }, 800);
-      });
+      } catch (error) {
+        console.error('Failed to update NBA item:', error);
+      }
     };
 
     dashboard.querySelector('#ionos_essentials_install_gml')?.addEventListener('click', async function (event) {
