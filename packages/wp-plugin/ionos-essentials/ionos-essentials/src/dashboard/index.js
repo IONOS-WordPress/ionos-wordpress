@@ -364,25 +364,16 @@ document.addEventListener('DOMContentLoaded', function () {
     (async () => {
       for (const test of wpData.siteHealthAsyncTests) {
         try {
-          let headers = {
-            'Content-Type': 'application/json',
-            'X-WP-Nonce': wpData.nonce,
-          };
-
-          if (test === 'authorization-header') {
-            // this test requires an additional nonce
-            headers['Authorization'] = 'Basic ' + btoa('user:pwd');
-          }
-
-          const response = await fetch(wpData.restUrl + 'wp-site-health/v1/tests/' + test, {
+          const data = await apiFetch({
+            path: '/wp-site-health/v1/tests/' + test,
             method: 'GET',
-            headers: headers,
-            credentials: 'include',
+            headers:
+              test === 'authorization-header'
+                ? {
+                    Authorization: 'Basic ' + btoa('user:pwd'),
+                  }
+                : {},
           });
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const data = await response.json();
           wpData.siteHealthIssueCount[data.status] = parseInt(wpData.siteHealthIssueCount[data.status] ?? 0) + 1;
         } catch (error) {
           // eslint-disable-next-line no-console
