@@ -1,0 +1,18 @@
+name: 'devcontainer load image'
+description: |
+  restore the devcontainer image from GHA cache and load it into the local Docker daemon.
+runs:
+  using: 'composite'
+  steps:
+    - uses: './.github/shared/actions/devcontainer-image-name'
+      id: image_name
+
+    - uses: actions/cache/restore@v4
+      with:
+        path: /tmp/devcontainer-image.tar.zst
+        key: devcontainer-${{ steps.image_name.outputs.image_name }}
+        fail-on-cache-miss: true
+
+    - name: Load devcontainer image into Docker daemon
+      shell: bash
+      run: zstd -d -c /tmp/devcontainer-image.tar.zst | docker load

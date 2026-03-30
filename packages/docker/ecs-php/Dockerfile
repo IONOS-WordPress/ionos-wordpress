@@ -24,7 +24,7 @@ RUN <<EOF
     php${PHP_VERSION//./}-xmlreader \
     php${PHP_VERSION//./}-xmlwriter \
     composer
-  
+
   rm -rf /var/cache/apk/*
 
   composer global install
@@ -38,7 +38,7 @@ EOF
 COPY --chmod=755 <<EOF /usr/bin/entrypoint.sh
 #!/bin/sh
 
-exec /composer/vendor/bin/ecs \$@
+exec php -d memory_limit=512M /composer/vendor/bin/ecs \$@
 EOF
 
 # create user/group to run ecs as non-root

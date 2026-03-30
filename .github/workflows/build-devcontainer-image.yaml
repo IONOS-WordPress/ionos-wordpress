@@ -72,3 +72,16 @@ jobs:
             echo "pnpm version: $(pnpm --version)"
             echo "node --version: $(node --version)"
             gh --version
+
+      - name: Pull existing devcontainer image
+        if: steps.check_image.outputs.exists == 'true'
+        run: docker pull ${{ steps.image_name.outputs.image_name }}
+
+      - name: Save devcontainer image to tar
+        run: docker save ${{ steps.image_name.outputs.image_name }} | zstd -T0 > /tmp/devcontainer-image.tar.zst
+
+      - name: Cache devcontainer image
+        uses: actions/cache/save@v4
+        with:
+          path: /tmp/devcontainer-image.tar.zst
+          key: devcontainer-${{ steps.image_name.outputs.image_name }}
