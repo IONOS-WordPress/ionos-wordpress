@@ -16,7 +16,7 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-site-health.php';
 use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
-use const ionos\essentials\switch_page\ONBOARDING_OPTION;
+use const ionos\essentials\switch_page\IONOS_ONBOARDING_OPTION;
 
 const REQUIRED_USER_CAPABILITIES = 'read';
 
@@ -27,7 +27,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 
   // redirect to onboarding if dashboard is accessed but onboarding is not completed yet
   \add_action('load-' . ADMIN_PAGE_HOOK, function () {
-    if (! get_option(ONBOARDING_OPTION)) {
+    if (! get_option(IONOS_ONBOARDING_OPTION)) {
       \wp_safe_redirect(\admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding'));
       exit;
     }
@@ -88,7 +88,7 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 // we want to be presented as "default page" in wp-admin
 // redirect to our custom dashboard page if /wp-admin/ is requested
 \add_action('load-index.php', function () {
-  if (! get_option(ONBOARDING_OPTION)) {
+  if (! get_option(IONOS_ONBOARDING_OPTION)) {
     \wp_safe_redirect(\admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding'));
     exit;
   }

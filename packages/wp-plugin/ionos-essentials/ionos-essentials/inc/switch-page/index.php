@@ -6,12 +6,12 @@ use ionos\essentials\Tenant;
 
 defined('ABSPATH') || exit();
 
-const ONBOARDING_OPTION    = 'IONOS_ESSENTIALS_ONBOARDING';
-const ONBOARDING_QUERY_ARG = 'ionos_onboarding';
+const IONOS_ONBOARDING_OPTION    = 'IONOS_ESSENTIALS_ONBOARDING';
+const IONOS_ONBOARDING_QUERY_ARG = 'ionos_onboarding';
 
-if (isset($_GET[ONBOARDING_QUERY_ARG])) {
+if (isset($_GET[IONOS_ONBOARDING_QUERY_ARG])) {
   \add_action('admin_init', function () {
-    \update_option(ONBOARDING_OPTION, $_GET[ONBOARDING_QUERY_ARG], true);
+    \update_option(IONOS_ONBOARDING_OPTION, $_GET[IONOS_ONBOARDING_QUERY_ARG], true);
   });
 }
 
@@ -52,7 +52,7 @@ if (isset($_GET[ONBOARDING_QUERY_ARG])) {
     // other dashboards should redirect to our switch page, or the configured wp-admin dashboard
     $redirects = ['wp-admin/', admin_url(), \admin_url('admin.php?page=extendify-assist')];
     if (in_array($location, $redirects)) {
-      if (! get_option(ONBOARDING_OPTION)) {
+      if (! get_option(IONOS_ONBOARDING_OPTION)) {
         return \admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding');
       }
       $default_to_ionos_dashboard = (\get_option('ionos_essentials_dashboard_mode', true));
