@@ -50,13 +50,6 @@ const IONOS_SECURITY_FEATURE_OPTION_DEFAULT = [
   }
 });
 
-\add_action('admin_enqueue_scripts', function () {
-  \wp_localize_script('ionos-essentials-security', 'ionosSecurityWpData', [
-    'nonce'              => \wp_create_nonce('wp_rest'),
-    'ajaxUrl'            => admin_url('admin-ajax.php'),
-  ]);
-});
-
 if (\get_transient('ionos_security_migrated_notice_show')) {
 
   \add_action('admin_notices', function () {
