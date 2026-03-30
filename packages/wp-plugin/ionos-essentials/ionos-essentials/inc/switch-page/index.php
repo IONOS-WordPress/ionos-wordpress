@@ -11,7 +11,7 @@ const ONBOARDING_QUERY_ARG = 'ionos_onboarding';
 
 if (isset($_GET[ONBOARDING_QUERY_ARG])) {
   \add_action('admin_init', function () {
-    \update_option(ONBOARDING_OPTION, $_GET[ONBOARDING_QUERY_ARG]);
+    \update_option(ONBOARDING_OPTION, $_GET[ONBOARDING_QUERY_ARG], true);
   });
 }
 
