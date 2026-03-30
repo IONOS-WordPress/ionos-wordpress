@@ -14,7 +14,7 @@ use WpOrg\Requests\Response;
 
 defined('ABSPATH') || exit();
 
-if (\get_option('ionos_group_brand') !== 'ionos') {
+if (\get_option('ionos_group_brand', 'ionos') !== 'ionos') {
   return;
 }
 
@@ -74,14 +74,33 @@ function get_config()
     $responses = Requests::request_multiple($requests);
 
     // 4. Process the data
-    $plugins = [];
+    $plugins                = [];
+    $admin_notice_displayed = false;
     foreach ($responses as $slug => $response) {
       if ($response instanceof Response && $response->success) {
         $decoded_data = json_decode($response->body, true);
         if (isset($decoded_data['slug'])) {
           $wp_list_table->items[] = $decoded_data;
         }
+      } else {
+        if (! $admin_notice_displayed) {
+          add_action(
+            hook_name: 'admin_notices',
+            callback: function () use ($slug, $response): void {
+
+              \printf(
+                '<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
+                esc_html(sprintf('Failed to fetch data in marketplace: %s', $response->getReason()))
+              );
+            }
+          );
+          $admin_notice_displayed = true;
+        }
       }
+    }
+
+    if (empty($wp_list_table->items)) {
+      $wp_list_table->items = [];
     }
 
     // 5. Sort items by original slug order
@@ -336,8 +355,8 @@ function render_changelog(array $changelog): string
       $ionos_plugins = array_filter(
         $ionos_plugins,
         fn (array $plugin): bool => str_contains(
-          strtolower($plugin['short_description'] ?? '' . $plugin['name'] ?? ''),
-          strtolower($args->search)
+          strtolower(($plugin['short_description'] ?? '') . ($plugin['name'] ?? '') . ($plugin['slug'] ?? '')),
+          strtolower(urldecode($args->search))
         )
       );
     }
