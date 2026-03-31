@@ -98,26 +98,35 @@ function block_disallowed_post_install($true, $hook_extra, $result)
   ) . '</p>';
 
   foreach ($files as $file) {
-    if (substr($file, -4) === '.php') {
-      $plugin_file = "{$plugin_folder}/{$file}";
 
-      if (isset($disallowed[$plugin_file])) {
-        // Delete unpacked folder immediately
-        $it         = new RecursiveDirectoryIterator($result['destination'], RecursiveDirectoryIterator::SKIP_DOTS);
-        $files_iter = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
-        foreach ($files_iter as $fileinfo) {
-          $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
-          $todo($fileinfo->getRealPath());
-        }
-        rmdir($result['destination']);
-
-        // Inline error styled like a notice
-        $error_message = error_notice_for_blocked_plugin();
-
-        return new WP_Error('plugin_blocked', $error_message);
-      }
+    // Guard: skip non-PHP files
+    if (substr($file, -4) !== '.php') {
+        continue;
     }
-  }
+
+    $plugin_file = "{$plugin_folder}/{$file}";
+
+    // Guard: skip allowed plugins
+    if (!isset($disallowed[$plugin_file])) {
+        continue;
+    }
+
+
+    $it = new RecursiveDirectoryIterator($result['destination'], RecursiveDirectoryIterator::SKIP_DOTS);
+    $files_iter = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+
+    foreach ($files_iter as $fileinfo) {
+        $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+        $todo($fileinfo->getRealPath());
+    }
+
+    rmdir($result['destination']);
+
+    return new WP_Error(
+        'plugin_blocked',
+        error_notice_for_blocked_plugin()
+    );
+}
 
   return $true;
 }
@@ -154,36 +163,47 @@ if (defined('WP_CLI') && \WP_CLI) {
 }
 
 add_action('admin_enqueue_scripts', function ($hook) {
-  if ($hook === 'plugin-install.php') {
-    wp_add_inline_script('jquery-core', "
-            jQuery(document).ready(function($){
-                $('.plugin-card').each(function(){
-                    var pluginBox = $(this).find('.plugin-card-top');
+    if ($hook !== 'plugin-install.php') {
+        return;
+    }
 
-                    // Check if the plugin has a 'Not Supported' button
-                    if (pluginBox.find('.button-disabled:contains(\"" . __('Not Supported', 'stretch-extra') . "\")').length) {
-                        // Avoid duplicate notices
-                        if (!pluginBox.hasClass('blocked-notice-added')) {
-                            var noticeHtml = '" . str_replace([
-                          "\n", "'"],
-      ['', "\\'"],
-      error_notice_for_blocked_plugin()
-    ) . "';
-                            pluginBox.prepend(noticeHtml);
-                            pluginBox.addClass('blocked-notice-added');
-                        }
-                    }
+    // Get the HTML notice from your PHP function
+    $notice_html = str_replace(
+        ["\n", "'"],
+        ['', "\\'"],
+        error_notice_for_blocked_plugin()
+    );
+
+    // Get the "Not Supported" text for the JS check
+    $not_supported_text = __('Not Supported', 'stretch-extra');
+
+    // Add inline vanilla JS
+    wp_add_inline_script('jquery-core', "
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.plugin-card').forEach(function (card) {
+                var pluginBox = card.querySelector('.plugin-card-top');
+                if (!pluginBox) return;
+
+                // Check if a button contains the 'Not Supported' text
+                var buttons = pluginBox.querySelectorAll('.button-disabled');
+                var hasNotSupported = Array.from(buttons).some(function(btn) {
+                    return btn.textContent.includes('{$not_supported_text}');
                 });
+
+                if (hasNotSupported && !pluginBox.classList.contains('blocked-notice-added')) {
+                    pluginBox.insertAdjacentHTML('afterbegin', '{$notice_html}');
+                    pluginBox.classList.add('blocked-notice-added');
+                }
             });
-        ");
-  }
+        });
+    ");
 });
 
 add_action('admin_head', function () {
   $screen = get_current_screen();
   if ($screen && $screen->id === 'plugin-install') {
     echo '<style>
-            /* Move absolute elements down for blocked plugins */
+            /* Absolute elements have to be moved down, otherwise notice is not shown correct */
             .plugin-card-top.blocked-notice-added .plugin-icon,
             .plugin-card-top.blocked-notice-added .action-links {
                 top: 100px !important;
