@@ -101,32 +101,28 @@ function block_disallowed_post_install($true, $hook_extra, $result)
 
     // Guard: skip non-PHP files
     if (substr($file, -4) !== '.php') {
-        continue;
+      continue;
     }
 
     $plugin_file = "{$plugin_folder}/{$file}";
 
     // Guard: skip allowed plugins
-    if (!isset($disallowed[$plugin_file])) {
-        continue;
+    if (! isset($disallowed[$plugin_file])) {
+      continue;
     }
 
-
-    $it = new RecursiveDirectoryIterator($result['destination'], RecursiveDirectoryIterator::SKIP_DOTS);
+    $it         = new RecursiveDirectoryIterator($result['destination'], RecursiveDirectoryIterator::SKIP_DOTS);
     $files_iter = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
 
     foreach ($files_iter as $fileinfo) {
-        $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
-        $todo($fileinfo->getRealPath());
+      $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+      $todo($fileinfo->getRealPath());
     }
 
     rmdir($result['destination']);
 
-    return new WP_Error(
-        'plugin_blocked',
-        error_notice_for_blocked_plugin()
-    );
-}
+    return new WP_Error('plugin_blocked', error_notice_for_blocked_plugin());
+  }
 
   return $true;
 }
@@ -163,22 +159,18 @@ if (defined('WP_CLI') && \WP_CLI) {
 }
 
 add_action('admin_enqueue_scripts', function ($hook) {
-    if ($hook !== 'plugin-install.php') {
-        return;
-    }
+  if ($hook !== 'plugin-install.php') {
+    return;
+  }
 
-    // Get the HTML notice from your PHP function
-    $notice_html = str_replace(
-        ["\n", "'"],
-        ['', "\\'"],
-        error_notice_for_blocked_plugin()
-    );
+  // Get the HTML notice from your PHP function
+  $notice_html = str_replace(["\n", "'"], ['', "\\'"], error_notice_for_blocked_plugin());
 
-    // Get the "Not Supported" text for the JS check
-    $not_supported_text = __('Not Supported', 'stretch-extra');
+  // Get the "Not Supported" text for the JS check
+  $not_supported_text = __('Not Supported', 'stretch-extra');
 
-    // Add inline vanilla JS
-    wp_add_inline_script('jquery-core', "
+  // Add inline vanilla JS
+  wp_add_inline_script('jquery-core', "
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.plugin-card').forEach(function (card) {
                 var pluginBox = card.querySelector('.plugin-card-top');
