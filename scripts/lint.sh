@@ -100,7 +100,7 @@ function ionos.wordpress.ecs() {
     ionos-wordpress/ecs-php \
     check \
       $([[ "$FIX" == 'yes' ]] && echo -n "--fix" ||:) \
-      --no-diffs --clear-cache --config ./packages/docker/ecs-php/ecs-config.php --no-progress-bar \
+      --no-diffs --clear-cache --config ./packages/docker/ecs-php/ecs-config.php --no-progress-bar --memory-limit=1G \
       ${POSITIONAL_ARGS[@]}
 }
 
