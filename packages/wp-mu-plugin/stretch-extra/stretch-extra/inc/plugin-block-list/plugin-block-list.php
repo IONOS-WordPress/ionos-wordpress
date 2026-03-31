@@ -92,7 +92,18 @@ function block_disallowed_post_install($true, $hook_extra, $result)
   $files         = scandir($result['destination']);
 
   // Normal text after "Unpacking the package…"
-  echo '<p style="margin:0 0 8px 0; font-style:italic; color:#555;">' . esc_html__(
+  wp_register_style('stretch-extra-inline', false);
+  wp_enqueue_style('stretch-extra-inline');
+
+  wp_add_inline_style('stretch-extra-inline', '
+      .zip-upload-text {
+          margin: 0 0 8px 0;
+          font-style: italic;
+          color: #555;
+      }
+  ');
+
+  echo '<p class="zip-upload-text">' . esc_html__(
     'Validating against blocked plugins…',
     'stretch-extra'
   ) . '</p>';
