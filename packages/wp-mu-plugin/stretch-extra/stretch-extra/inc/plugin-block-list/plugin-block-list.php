@@ -3,7 +3,7 @@
 /**
  * MU Plugin: Block disallowed plugins from UI and WP-CLI
  */
-
+defined('ABSPATH') || exit();
 /**
  * List of disallowed plugins (plugin_file => reason)
  */
@@ -170,21 +170,31 @@ function error_notice_for_blocked_plugin()
                          '</div>';
 }
 
-if (defined('WP_CLI') && \WP_CLI) {
-  add_filter(
-    'validate_plugin_requirements',
-    function ($met_requirements, $plugin) {
-      $disallowed = get_disallowed_plugins();
+// Only run in WP-CLI
+if (defined('WP_CLI') && WP_CLI) {
 
-      if (array_key_exists($plugin, $disallowed)) {
-        return new WP_Error('plugin_not_supported', $disallowed[$plugin]);
+  // Intercept plugin activation command
+  \WP_CLI::add_command('plugin', function($args, $assoc_args) {
+
+    // This only intercepts activate/install commands
+    $disallowed = get_disallowed_plugins();
+    $command = isset($args[0]) ? $args[0] : '';
+
+    if ($command === 'activate' || ($command === 'install' && isset($assoc_args['activate']))) {
+
+      $plugin = isset($args[1]) ? $args[1] : '';
+      if (in_array($plugin, $disallowed, true)) {
+        $error_message = sprintf(
+          __('The use of "%s" is not allowed and cannot be activated. Uninstall is recommended.', 'stretch-extra'),
+          $plugin
+        );
+        \WP_CLI::error($error_message);
       }
+    }
 
-      return $met_requirements;
-    },
-    10,
-    2
-  );
+    // If not blocked, fallback to default plugin command
+    \WP_CLI::run_command($args, $assoc_args);
+  });
 }
 
 add_action('admin_enqueue_scripts', function ($hook) {
