@@ -10,17 +10,17 @@
 function get_disallowed_plugins()
 {
   return [
-    'bwp-minify/bwp-minify.php'                                     => __('BWP Minify (as of 1.3.3) is not ready for use. The plugin writes a configuration file that must be edited manually to support plugins and themes installed via symlinks. Because it breaks sites upon activation, we have automatically deactivated the plugin to keep your site working. In the interest of making BWP Minify compatible, we provided <a href="https://github.com/OddOneOut/bwp-minify/pull/67">this patch</a> to the author in May 2016. If you choose to fix the configuration file yourself, you may skip the automatic deactivation by renaming <code>bwp-minify/bwp-minify.php</code>.', 'stretch-extra'),
-    'e-mail-broadcasting/e-mail-broadcasting.php'                   => __('The use of "E-Mail Broadcasting" is not allowed.', 'stretch-extra'),
-    'send-email-from-admin/send-email-from-admin.php'               => __('The use of "Send Email From Admin" is not allowed.', 'stretch-extra'),
-    'mailit/mailit.php'                                             => __('The use of "Mail It!" is not allowed.', 'stretch-extra'),
-    'nginx-helper/nginx-helper.php'                                 => __('The use of Nginx Helper can interfere with caching, which is automatically provided for this site. Nginx Helper has been deactivated.', 'stretch-extra'),
-    'stopbadbots/stopbadbots.php'                                   => __('The use of Stop Bad Bots is not allowed.', 'stretch-extra'),
-    'w3-total-cache/w3-total-cache.php'                             => __('The use of W3 Total Cache can interfere with caching, which is automatically provided for this site. W3 Total Cache has been deactivated.', 'stretch-extra'),
-    'wp-fastest-cache/wpFastestCache.php'                           => __('The use of WP Fastest Cache can interfere with caching, which is automatically provided for this site. WP Fastest Cache has been deactivated.', 'stretch-extra'),
-    'wp-super-cache/wp-cache.php'                                   => __('The use of WP Super Cache can interfere with caching, which is automatically provided for this site. WP Super Cache has been deactivated.', 'stretch-extra'),
-    'wp-rest-api-log/wp-rest-api-log.php'                           => __('WP REST API Log inflates post table size beyond normal usage levels.', 'stretch-extra'),
-    'website-file-changes-monitor/website-file-changes-monitor.php' => __('Melapress File Monitor inflates the options table size beyond normal usage levels.', 'stretch-extra'),
+    'bwp-minify/bwp-minify.php',
+    'e-mail-broadcasting/e-mail-broadcasting.php',
+    'send-email-from-admin/send-email-from-admin.php',
+    'mailit/mailit.php',
+    'nginx-helper/nginx-helper.php',
+    'stopbadbots/stopbadbots.php',
+    'w3-total-cache/w3-total-cache.php',
+    'wp-fastest-cache/wpFastestCache.php',
+    'wp-super-cache/wp-cache.php',
+    'wp-rest-api-log/wp-rest-api-log.php',
+    'website-file-changes-monitor/website-file-changes-monitor.php',
   ];
 }
 
@@ -29,7 +29,7 @@ function get_disallowed_plugins()
  */
 function disable_plugin_install_link($action_links, $plugin)
 {
-  $disallowed_slugs = array_map('dirname', array_keys(get_disallowed_plugins()));
+  $disallowed_slugs = array_map('dirname', get_disallowed_plugins());
 
   if (in_array($plugin['slug'], $disallowed_slugs, true)) {
     return [
@@ -48,7 +48,7 @@ function disable_plugin_activate_link($actions, $plugin_file)
 {
   $disallowed = get_disallowed_plugins();
 
-  if (isset($actions['activate']) && array_key_exists($plugin_file, $disallowed)) {
+  if (isset($actions['activate']) && in_array($plugin_file, $disallowed, true)) {
     $actions['activate'] = __('Disabled', 'stretch-extra');
     unset($actions['edit']);
   }
@@ -63,12 +63,32 @@ add_filter('network_admin_plugin_action_links', 'disable_plugin_activate_link', 
  */
 function deactivate_disallowed_plugins()
 {
+  // Make sure plugin functions are available
+  require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
   $disallowed = get_disallowed_plugins();
-  foreach ($disallowed as $plugin_file => $message) {
+
+  foreach ($disallowed as $plugin_file) {
     if (is_plugin_active($plugin_file)) {
+
+      // Get plugin data (real name from header)
+      $plugin_data = get_plugin_data(WP_PLUGIN_DIR . '/' . $plugin_file);
+      $plugin_name = ! empty($plugin_data['Name'])
+        ? $plugin_data['Name']
+        : $plugin_file; // fallback
+
       deactivate_plugins($plugin_file);
-      add_action('admin_notices', function () use ($message) {
-        echo '<div class="notice notice-error is-dismissible"><p>' . wp_kses_post($message) . '</p></div>';
+
+      add_action('admin_notices', function () use ($plugin_name) {
+
+        $message = sprintf(
+          __('The use of "%s" is not allowed and cannot be activated. Uninstall is recommended.', 'stretch-extra'),
+          $plugin_name
+        );
+
+        echo '<div class="notice notice-error is-dismissible"><p>' .
+          wp_kses_post($message) .
+          '</p></div>';
       });
     }
   }
@@ -108,15 +128,15 @@ function block_disallowed_post_install($true, $hook_extra, $result)
 
   foreach ($files as $file) {
 
-    // Guard: skip non-PHP files
+    // skip non-PHP files
     if (substr($file, -4) !== '.php') {
       continue;
     }
 
     $plugin_file = "{$plugin_folder}/{$file}";
 
-    // Guard: skip allowed plugins
-    if (! isset($disallowed[$plugin_file])) {
+    // skip allowed plugins
+    if (! in_array($plugin_file, $disallowed, true)) {
       continue;
     }
 
