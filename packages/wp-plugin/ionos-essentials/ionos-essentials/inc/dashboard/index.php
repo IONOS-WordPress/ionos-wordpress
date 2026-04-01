@@ -16,6 +16,7 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-site-health.php';
 use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
+use const ionos\essentials\switch_page\IONOS_ONBOARDING_OPTION;
 
 const REQUIRED_USER_CAPABILITIES = 'read';
 
@@ -23,6 +24,14 @@ const REQUIRED_USER_CAPABILITIES = 'read';
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', Tenant::get_label());
   define('ADMIN_PAGE_SLUG', Tenant::get_slug());
   define('ADMIN_PAGE_HOOK', 'toplevel_page_' . ADMIN_PAGE_SLUG);
+
+  // redirect to onboarding if dashboard is accessed but onboarding is not completed yet
+  \add_action('load-' . ADMIN_PAGE_HOOK, function () {
+    if (! get_option(IONOS_ONBOARDING_OPTION)) {
+      \wp_safe_redirect(\admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding'));
+      exit;
+    }
+  });
 });
 
 \add_action('admin_menu', function () {
@@ -78,20 +87,21 @@ const REQUIRED_USER_CAPABILITIES = 'read';
 
 // we want to be presented as "default page" in wp-admin
 // redirect to our custom dashboard page if /wp-admin/ is requested
-if (\get_option('ionos_essentials_dashboard_mode', true)) {
-  \add_action('load-index.php', function () {
-    if (\current_user_can(REQUIRED_USER_CAPABILITIES)) {
-      $current_url = \home_url($_SERVER['REQUEST_URI']);
-      $admin_url   = \get_admin_url();
+\add_action('load-index.php', function () {
+  if (! get_option(IONOS_ONBOARDING_OPTION)) {
+    \wp_safe_redirect(\admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding'));
+    exit;
+  }
+  if (\get_option('ionos_essentials_dashboard_mode', true) && \current_user_can(REQUIRED_USER_CAPABILITIES)) {
+    $current_url = \home_url($_SERVER['REQUEST_URI']);
+    $admin_url   = \get_admin_url();
 
-      if ($current_url !== $admin_url) { // only redirect if we are on empty /wp-admin/
-        return;
-      }
-
+    if ($current_url === $admin_url) {
       \wp_safe_redirect(\menu_page_url(ADMIN_PAGE_SLUG, false));
+      exit;
     }
-  });
-}
+  }
+});
 
 // fixes the displayed page title for our custom admin page.
 \add_filter(
@@ -224,11 +234,10 @@ function install_plugin_from_url($plugin_url)
       wp_send_json_error([
         'message' => 'Something went wrong.',
       ], 403);
-      wp_die();
     }
 
     \set_transient('ionos_site_health_issue_count', $issues, 5 * MINUTE_IN_SECONDS);
-    \wp_die();
+    \wp_send_json_success();
   }
 );
 
@@ -275,9 +284,6 @@ function install_plugin_from_url($plugin_url)
 
   \wp_localize_script('ionos-essentials-dashboard', 'wpData', [
     'nonce'                  => \wp_create_nonce('wp_rest'),
-    'healthCheckNonce'       => \wp_create_nonce('health-check-site-status-result'),
-    'restUrl'                => \esc_url_raw(rest_url()),
-    'ajaxUrl'                => admin_url('admin-ajax.php'),
     'securityOptionName'     => IONOS_SECURITY_FEATURE_OPTION,
     'tenant'                 => Tenant::get_slug(),
     'siteHealthIssueCount'   => $issue_counts,
@@ -337,7 +343,7 @@ require_once __DIR__ . '/blocks/quick-links/index.php';
 
 \add_action(
   'wp_ajax_ionos-popup-dismiss',
-  fn () => (\delete_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp') && \wp_die())
+  fn () => (\delete_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp') && \wp_send_json_success())
 );
 
 /* hide admin bar, when query param /?hidetoolbar=1 is set */

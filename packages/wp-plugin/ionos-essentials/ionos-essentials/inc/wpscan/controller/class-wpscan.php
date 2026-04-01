@@ -100,7 +100,6 @@ class WPScan
       'ionosWPScanThemes',
       [
         'issues'  => $this->get_issues(),
-        'ajaxUrl' => admin_url('admin-ajax.php'),
         'nonce'   => \wp_create_nonce('ionos-wpscan-instant-check'),
       ]
     );
@@ -120,7 +119,6 @@ class WPScan
       'ionosWPScanPlugins',
       [
         'issues'  => $this->get_issues(),
-        'ajaxUrl' => admin_url('admin-ajax.php'),
         'nonce'   => \wp_create_nonce('ionos-wpscan-instant-check'),
       ]
     );

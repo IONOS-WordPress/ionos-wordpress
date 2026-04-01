@@ -84,7 +84,7 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
 defined('WP_CLI') || \add_action('muplugins_loaded', function () {
   $is_initialized = \get_option('stretch_extra_extendable_theme_dir_initialized', false) || \get_option(
     'stylesheet'
-  ) === 'extendable';
+  ) === 'extendable'  && \get_option('template') === 'extendable';
   if ($is_initialized !== false) {
     return;
   }

@@ -147,6 +147,12 @@ EOF
   done
 fi
 
+# workaround for workaround: rm doesnt work after shutdown without "wp-env stop"
+if [[ -d "$WP_ENV_HOME" ]]; then
+  docker run --rm -v $WP_ENV_HOME:/wp-env-home library/bash chmod -R a+w /wp-env-home
+  docker run --rm -v $WP_ENV_HOME:/wp-env-home library/bash chmod -R a+w /wp-env-home
+fi
+
 # wp-env workaround: if wp-env was not able to start successfully
 # it might happen that some mapped files within wp-env-home do not have the correct permissons
 # and as a result a floolow up pnpm start will fail with EACCES : permission denied
@@ -164,6 +170,7 @@ fi
     done
   fi
 )
+
 
 # start wp-env with xdebug enabled by default
 pnpm exec wp-env start $([[ "${CI:-}" != "true" ]] && echo '--xdebug') ${WP_ENV_START_OPTS:-}
