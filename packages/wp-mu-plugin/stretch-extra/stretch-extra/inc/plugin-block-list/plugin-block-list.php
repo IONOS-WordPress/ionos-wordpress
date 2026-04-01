@@ -69,7 +69,7 @@ function deactivate_disallowed_plugins()
       deactivate_plugins($plugin_file);
       add_action('admin_notices', function () use ($message) {
         echo '<div class="notice notice-error is-dismissible"><p>' . wp_kses_post(
-          __($message, 'stretch-extra')
+          $message
         ) . '</p></div>';
       });
     }
