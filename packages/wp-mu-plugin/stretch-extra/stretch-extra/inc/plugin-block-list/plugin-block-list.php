@@ -24,12 +24,14 @@ function get_disallowed_plugins()
   ];
 }
 
-function get_blocked_plugins_slug(){
-    return array_map('dirname', get_disallowed_plugins());
+function get_blocked_plugins_slug()
+{
+  return array_map('dirname', get_disallowed_plugins());
 }
 
-function get_plugin_slug($plugin) {
-    return strpos($plugin, '/') !== false ? dirname($plugin) : $plugin;
+function get_plugin_slug($plugin)
+{
+  return str_contains($plugin, '/') ? dirname($plugin) : $plugin;
 }
 
 /**
@@ -163,8 +165,8 @@ function block_disallowed_post_install($true, $hook_extra, $result)
 
   return $true;
 }
-if ( ! ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-    add_filter( 'upgrader_post_install', 'block_disallowed_post_install', 10, 3 );
+if (! (defined('WP_CLI') && WP_CLI)) {
+  add_filter('upgrader_post_install', 'block_disallowed_post_install', 10, 3);
 }
 
 function error_notice_for_blocked_plugin()
@@ -182,88 +184,91 @@ function error_notice_for_blocked_plugin()
 
 // Only run in WP-CLI
 if (defined('WP_CLI') && WP_CLI) {
-    // Helper variables and functions to block plugin activation via WP-CLI for disallowed plugins
-    $blocked_slugs = get_blocked_plugins_slug();
-    $blocked_slug_map = array_flip($blocked_slugs);
+  // Helper variables and functions to block plugin activation via WP-CLI for disallowed plugins
+  $blocked_slugs    = get_blocked_plugins_slug();
+  $blocked_slug_map = array_flip($blocked_slugs);
 
-    $get_plugin_slug = function($plugin) {
-        return strpos($plugin, '/') !== false ? dirname($plugin) : $plugin;
-    };
+  $get_plugin_slug = function ($plugin) {
+    return str_contains($plugin, '/') ? dirname($plugin) : $plugin;
+  };
 
-    $is_disallowed = function($plugin) use ($blocked_slug_map, $get_plugin_slug) {
-        $slug = $get_plugin_slug($plugin);
-        return isset($blocked_slug_map[$slug]);
-    };
+  $is_disallowed = function ($plugin) use ($blocked_slug_map, $get_plugin_slug) {
+    $slug = $get_plugin_slug($plugin);
+    return isset($blocked_slug_map[$slug]);
+  };
 
-    // Extract plugin slugs from CLI command
-    $extract_plugins_from_argv = function($command) {
-        $argv = $_SERVER['argv'] ?? [];
-        $plugins = [];
-        $found_command = false;
+  // Extract plugin slugs from CLI command
+  $extract_plugins_from_argv = function ($command) {
+    $argv          = $_SERVER['argv'] ?? [];
+    $plugins       = [];
+    $found_command = false;
 
-        foreach ($argv as $arg) {
-            // Start collecting after the command (activate / install)
-            if ($found_command) {
-                $plugins[] = $arg;
-            }
-            if ($arg === $command) {
-                $found_command = true;
-            }
-        }
+    foreach ($argv as $arg) {
+      // Start collecting after the command (activate / install)
+      if ($found_command) {
+        $plugins[] = $arg;
+      }
+      if ($arg === $command) {
+        $found_command = true;
+      }
+    }
 
-        return $plugins;
-    };
+    return $plugins;
+  };
 
-    // Block "wp plugin activate"
-    \WP_CLI::add_hook('before_invoke:plugin activate', function($args, $assoc_args = []) use ($is_disallowed, $extract_plugins_from_argv) {
+  // Block "wp plugin activate"
+  \WP_CLI::add_hook('before_invoke:plugin activate', function ($args, $assoc_args = []) use (
+    $is_disallowed,
+    $extract_plugins_from_argv
+  ) {
 
-        $plugins = $extract_plugins_from_argv('activate');
+    $plugins = $extract_plugins_from_argv('activate');
 
-        foreach ($plugins as $plugin) {
-            if ($is_disallowed($plugin)) {
-                \WP_CLI::error(sprintf(
-                    __('The use of "%s" is not allowed and cannot be activated. Uninstall is recommended.', 'stretch-extra'),
-                    $plugin
-                ));
-            }
-        }
-    });
+    foreach ($plugins as $plugin) {
+      if ($is_disallowed($plugin)) {
+        \WP_CLI::error(sprintf(
+          __('The use of "%s" is not allowed and cannot be activated. Uninstall is recommended.', 'stretch-extra'),
+          $plugin
+        ));
+      }
+    }
+  });
 
-    // Block "wp plugin install --activate"
-    \WP_CLI::add_hook('before_invoke:plugin install', function($args, $assoc_args = []) use ($is_disallowed) {
+  // Block "wp plugin install --activate"
+  \WP_CLI::add_hook('before_invoke:plugin install', function ($args, $assoc_args = []) use ($is_disallowed) {
 
     $argv = $_SERVER['argv'] ?? [];
 
     // Only run blocking if --activate is present
-    if (!in_array('--activate', $argv, true)) {
-        return;
+    if (! in_array('--activate', $argv, true)) {
+      return;
     }
 
     // Collect all plugin slugs after "install"
-    $plugins = [];
+    $plugins       = [];
     $found_install = false;
     foreach ($argv as $arg) {
-        if ($found_install) {
-            // stop at any option starting with --
-            if (str_starts_with($arg, '--')) {
-                break;
-            }
-            $plugins[] = $arg;
+      if ($found_install) {
+        // stop at any option starting with --
+        if (str_starts_with($arg, '--')) {
+          break;
         }
-        if ($arg === 'install') {
-            $found_install = true;
-        }
+        $plugins[] = $arg;
+      }
+      if ($arg === 'install') {
+        $found_install = true;
+      }
     }
 
     foreach ($plugins as $plugin) {
-        if ($is_disallowed($plugin)) {
-            \WP_CLI::error(sprintf(
-                __('The use of "%s" is not allowed and cannot be activated via install. Uninstall is recommended.', 'stretch-extra'),
-                $plugin
-            ));
-        }
+      if ($is_disallowed($plugin)) {
+        \WP_CLI::error(sprintf(
+          __('The use of "%s" is not allowed and cannot be activated via install. Uninstall is recommended.', 'stretch-extra'),
+          $plugin
+        ));
+      }
     }
-});
+  });
 }
 
 add_action('admin_enqueue_scripts', function ($hook) {
