@@ -65,3 +65,43 @@ function render_callback(): void
   ];
   return $button_list;
 });
+
+\add_action('admin_bar_menu', function ($wp_admin_bar) {
+    $data = \ionos\essentials\tenant\get_tenant_config();
+
+    if (empty($data) || empty($data['links'])) {
+        return;
+    }
+
+    // Parent menu: [Tenant] Links
+    $tenant_name = ! empty($data['tenant']) ? $data['tenant'] : __('Tenant', 'ionos-essentials');
+
+    $wp_admin_bar->add_node([
+        'id'    => 'ionos_tenant_links',
+        'title' => sprintf('%s Links', $tenant_name),
+        'href'  => false, // parent item itself doesn’t need a link
+    ]);
+
+    // Add tenant links as children
+    foreach ($data['links'] as $link) {
+        $wp_admin_bar->add_node([
+            'id'     => 'ionos_link_' . sanitize_title($link['anchor']),
+            'title'  => $link['anchor'],
+            'parent' => 'ionos_tenant_links',
+            'href'   => esc_url($data['domain'] . $link['url']),
+            'meta'   => ['target' => '_blank'], // open in new tab
+        ]);
+    }
+
+    // Add webmail if present
+    if (! empty($data['webmail'])) {
+        $wp_admin_bar->add_node([
+            'id'     => 'ionos_webmail',
+            'title'  => __('Webmail Login', 'ionos-essentials'),
+            'parent' => 'ionos_tenant_links',
+            'href'   => esc_url($data['webmail']),
+            'meta'   => ['target' => '_blank'],
+        ]);
+    }
+
+}, 100);
