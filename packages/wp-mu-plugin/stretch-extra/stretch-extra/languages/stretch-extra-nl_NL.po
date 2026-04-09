@@ -62,3 +62,30 @@ msgstr ""
 #: stretch-extra/inc/marketplace/config.php
 msgid "Provides guided onboarding and a Site Assistant in the WordPress admin."
 msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Not Supported"
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Disabled"
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Validating against blocked plugins…"
+msgstr ""
+
+#. translators: %s: link to blocked plugins list
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+#, php-format
+msgid "This plugin is not supported on our Managed WordPress platform. %s"
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Full list of blocked plugins"
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+#, php-format
+msgid "The use of \"%s\" is not allowed and cannot be activated. Uninstall is recommended."
+msgstr ""
