@@ -90,7 +90,7 @@ function deactivate_disallowed_plugins()
       deactivate_plugins($plugin_file);
 
       add_action('admin_notices', function () use ($plugin_name) {
-
+        /* translators: %s: Plugin name. */
         $message = sprintf(
           __('The use of "%s" is not allowed and cannot be activated. Uninstall is recommended.', 'stretch-extra'),
           $plugin_name
@@ -226,6 +226,7 @@ if (defined('WP_CLI') && WP_CLI) {
 
     foreach ($plugins as $plugin) {
       if ($is_disallowed($plugin)) {
+        /* translators: %s: Plugin name. */
         \WP_CLI::error(sprintf(
           __('The use of "%s" is not allowed and cannot be activated. Uninstall is recommended.', 'stretch-extra'),
           $plugin
@@ -262,6 +263,7 @@ if (defined('WP_CLI') && WP_CLI) {
 
     foreach ($plugins as $plugin) {
       if ($is_disallowed($plugin)) {
+        /* translators: %s: Plugin name. */
         \WP_CLI::error(sprintf(
           __('The use of "%s" is not allowed and cannot be activated via install. Uninstall is recommended.', 'stretch-extra'),
           $plugin
