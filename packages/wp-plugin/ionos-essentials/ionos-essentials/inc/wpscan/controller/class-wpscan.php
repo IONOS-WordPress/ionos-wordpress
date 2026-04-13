@@ -206,7 +206,7 @@ class WPScan
       return false;
     }
 
-    $user_knows_about = \get_transient('ionos_wpscan_issues_sent_to_user') ?: [];
+    $user_knows_about = \get_option('ionos_wpscan_issues_sent_to_user') ?: [];
 
     $type_and_slugs = array_map(fn ($issue) => $issue['type'] . ':' . $issue['slug'], $this->get_issues());
 
@@ -216,7 +216,7 @@ class WPScan
       return false;
     }
 
-    \set_transient('ionos_wpscan_issues_sent_to_user', $type_and_slugs, 6 * MONTH_IN_SECONDS);
+    \update_option('ionos_wpscan_issues_sent_to_user', $type_and_slugs);
 
     $unknown_names = [];
     foreach ($this->get_issues() as $issue) {
