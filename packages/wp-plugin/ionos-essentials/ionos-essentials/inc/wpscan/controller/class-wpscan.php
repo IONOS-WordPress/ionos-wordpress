@@ -33,6 +33,7 @@ class WPScan
     \add_action('admin_footer', [$this, 'add_theme_issues_notice']);
     \add_action('admin_footer', [$this, 'add_issue_on_plugin_install']);
     \add_action('admin_footer', [$this, 'add_issue_on_theme_install']);
+    \add_action('admin_enqueue_scripts', [$this, 'remove_notice_during_plugin_deletion']);
 
     \add_action('upgrader_process_complete', function () {
       \delete_transient('ionos_wpscan_issues');
@@ -149,6 +150,26 @@ class WPScan
     );
   }
 
+  public function remove_notice_during_plugin_deletion(): void 
+  {
+    $screen = get_current_screen();
+
+    if (!$screen || 'plugins' !== $screen->id) {
+        return;
+    }
+
+    \wp_enqueue_script('ionos-essentials-plugin-delete');
+
+    \wp_localize_script(
+      'ionos-essentials-plugin-delete',
+      'ionosWPScanPlugins',
+      [
+        'issues'  => $this->get_issues(),
+        'nonce'   => \wp_create_nonce('ionos-wpscan-instant-check'),
+      ]
+    );
+  }
+
   public function add_plugin_issue_notice($plugin_file, array $plugin_data, $status): void
   {
 
@@ -174,9 +195,16 @@ class WPScan
 
     $brand = Tenant::get_slug();
 
+    $plugin_slug = dirname($plugin_file); 
+    // If the plugin is a single file in the root, dirname returns '.', so check for that
+    if ('.' === $plugin_slug) {
+        $plugin_slug = str_replace('.php', '', $plugin_file);
+    }
+
     printf(
-      '<tr class="plugin-update-tr %s ionos-wpscan-notice"><td colspan="4" class="plugin-update colspanchange %s"><div class="update-message notice inline %s notice-alt">%s %s. <a href="%s">%s.</a></div></td></tr>',
+      '<tr class="plugin-update-tr %s ionos-wpscan-notice" data-parent-slug="%s"><td colspan="4" class="plugin-update colspanchange %s"><div class="update-message notice inline %s notice-alt">%s %s. <a href="%s">%s.</a></div></td></tr>',
       _is_plugin_active($plugin_file) ? 'active' : 'inactive',
+      \esc_attr($plugin_slug),
       \esc_attr($noshadowclass ?? ''),
       \esc_attr('notice-error'),
       \esc_html__('The vulnerability scan has found issues for', 'ionos-essentials'),
