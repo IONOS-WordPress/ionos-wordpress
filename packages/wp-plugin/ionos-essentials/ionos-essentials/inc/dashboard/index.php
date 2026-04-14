@@ -157,7 +157,6 @@ function install_plugin_from_url($plugin_url)
   \register_rest_route('ionos/essentials/dashboard/nba/v1', '/update', [
     'methods'  => 'POST',
     'callback' => function ($request) {
-      require_once __DIR__ . '/blocks/my-account/index.php';
       require_once __DIR__ . '/blocks/next-best-actions/class-nba.php';
       $params = $request->get_params();
       $nba_id = $params['id'];
@@ -340,6 +339,7 @@ add_action('admin_enqueue_scripts', function () {
 });
 
 require_once __DIR__ . '/blocks/quick-links/index.php';
+require_once __DIR__ . '/blocks/my-account/index.php';
 
 \add_action(
   'wp_ajax_ionos-popup-dismiss',
