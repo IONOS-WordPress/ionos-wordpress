@@ -150,12 +150,12 @@ class WPScan
     );
   }
 
-  public function remove_notice_during_plugin_deletion(): void 
+  public function remove_notice_during_plugin_deletion(): void
   {
     $screen = get_current_screen();
 
-    if (!$screen || 'plugins' !== $screen->id) {
-        return;
+    if (! $screen || 'plugins' !== $screen->id) {
+      return;
     }
 
     \wp_enqueue_script('ionos-essentials-plugin-delete');
@@ -195,10 +195,10 @@ class WPScan
 
     $brand = Tenant::get_slug();
 
-    $plugin_slug = dirname($plugin_file); 
+    $plugin_slug = dirname($plugin_file);
     // If the plugin is a single file in the root, dirname returns '.', so check for that
     if ('.' === $plugin_slug) {
-        $plugin_slug = str_replace('.php', '', $plugin_file);
+      $plugin_slug = str_replace('.php', '', $plugin_file);
     }
 
     printf(
