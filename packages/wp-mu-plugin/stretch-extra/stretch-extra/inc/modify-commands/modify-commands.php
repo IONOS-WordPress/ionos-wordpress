@@ -6,17 +6,15 @@ if (defined('WP_CLI') && WP_CLI) {
 
     /**
      * 1. THE PRE-EMPTIVE STRIKE
-     * WordPress calls get_plugin_data() which triggers the file_get_contents warning.
-     * By returning data here, we stop WP from ever trying to open the file.
      */
     add_filter('pre_get_plugin_data', function($data, $plugin_file) {
-        if (strpos($plugin_file, '01-ext-ion8dhas7-stretch') !== false) {
+        if (strpos($plugin_file, '01-ext-ion8dhas7-stretch') !== false || strpos($plugin_file, 'extendify') !== false) {
             return [
-                'Name'        => '01-ext-ion8dhas7-stretch',
+                'Name'        => basename(dirname($plugin_file)),
                 'Version'     => '1.0.0',
                 'Description' => 'IONOS Stretch Asset (Virtual)',
                 'Author'      => 'IONOS',
-                'TextDomain'  => '01-ext-ion8dhas7-stretch',
+                'TextDomain'  => basename(dirname($plugin_file)),
             ];
         }
         return $data;
@@ -24,20 +22,17 @@ if (defined('WP_CLI') && WP_CLI) {
 
     /**
      * 2. THE PATH CORRECTOR
-     * This forces WordPress to look at the real physical path instead of
-     * the "ghost" path in public_html.
      */
     add_filter('plugin_file_path', function($path, $plugin) {
-        if (strpos($path, '01-ext-ion8dhas7-stretch') !== false) {
-            $helper_path = dirname(__DIR__) . '/secondary-plugin-dir.php';
-            if (file_exists($helper_path)) {
-                @require_once $helper_path;
-                if (function_exists('\ionos\stretch_extra\secondary_plugin_dir\get_all_custom_plugins')) {
-                    $all = \ionos\stretch_extra\secondary_plugin_dir\get_all_custom_plugins();
-                    foreach ($all as $entry) {
-                        if (strpos($entry['key'], $plugin) !== false) {
-                            return $entry['file'];
-                        }
+        $helper_path = dirname(__DIR__) . '/secondary-plugin-dir.php';
+        if (file_exists($helper_path)) {
+            @require_once $helper_path;
+            if (function_exists('\ionos\stretch_extra\secondary_plugin_dir\get_all_custom_plugins')) {
+                $all = \ionos\stretch_extra\secondary_plugin_dir\get_all_custom_plugins();
+                foreach ($all as $entry) {
+                    $slug = str_replace('plugins/', '', $entry['key']);
+                    if ($slug === $plugin || $entry['key'] === $plugin) {
+                        return $entry['file'];
                     }
                 }
             }
@@ -46,66 +41,88 @@ if (defined('WP_CLI') && WP_CLI) {
     }, 1, 2);
 
     /**
-     * 3. THE LIST CLEANER
-     * WP-CLI generates the "Warning" because 'all_plugins' contains keys that
-     * don't exist on disk. We replace those keys with the REAL path.
+     * 3. THE LIST CLEANER & UI SYNC
      */
     add_filter('all_plugins', function($plugins) {
         $helper_path = dirname(__DIR__) . '/secondary-plugin-dir.php';
         if (!file_exists($helper_path)) return $plugins;
 
         @require_once $helper_path;
-        if (!function_exists('\ionos\stretch_extra\secondary_plugin_dir\get_all_custom_plugins')) return $plugins;
+        $ns = '\ionos\stretch_extra\secondary_plugin_dir\\';
 
-        $mounted = \ionos\stretch_extra\secondary_plugin_dir\get_all_custom_plugins();
+        if (!function_exists($ns . 'get_all_custom_plugins')) return $plugins;
+
+        $mounted = ($ns . 'get_all_custom_plugins')();
         foreach ($mounted as $entry) {
-            $ghost_path = str_replace('plugins/', '', $entry['key']);
-            $real_path  = $entry['file'];
-
-            // If the ghost entry exists, remove it to stop the warning
-            if (isset($plugins[$ghost_path])) {
-                unset($plugins[$ghost_path]);
+            // Check if deleted via the helper's logic
+            if (function_exists($ns . 'is_custom_plugin_deleted') && ($ns . 'is_custom_plugin_deleted')($entry['key'])) {
+                continue;
             }
 
-            // Add the plugin using its REAL path as the key
-            $plugins[$real_path] = [
-                'Name'        => $entry['data']['Name'] ?? $ghost_path,
+            $slug = str_replace('plugins/', '', $entry['key']);
+
+            // Remove full path keys to keep the list clean
+            if (isset($plugins[$entry['file']])) unset($plugins[$entry['file']]);
+            if (isset($plugins[$entry['key']])) unset($plugins[$entry['key']]);
+
+            $plugins[$slug] = [
+                'Name'        => $entry['data']['Name'] ?? $slug,
                 'Version'     => $entry['version'] ?? '1.0.0',
                 'Description' => 'IONOS Stretch Asset',
                 'Author'      => 'IONOS',
-                'Title'       => $entry['data']['Name'] ?? $ghost_path,
-                'TextDomain'  => $ghost_path,
+                'Title'       => $entry['data']['Name'] ?? $slug,
+                'TextDomain'  => $slug,
             ];
         }
         return $plugins;
     }, 999);
 
     /**
-     * 4. COMMAND HIJACK (Activate/Deactivate)
+     * 4. COMMAND HIJACK (Synced with UI State)
      */
     WP_CLI::add_hook('before_invoke:plugin', function() {
         $runner = WP_CLI::get_runner();
         $subcommand = $runner->arguments[1] ?? '';
         $slug = $runner->arguments[2] ?? '';
 
-        if (!in_array($subcommand, ['activate', 'deactivate'])) return;
+        if (!in_array($subcommand, ['install', 'activate', 'deactivate', 'delete'])) return;
 
         $helper_path = dirname(__DIR__) . '/secondary-plugin-dir.php';
         if (!file_exists($helper_path)) return;
         @require_once $helper_path;
+        $ns = '\ionos\stretch_extra\secondary_plugin_dir\\';
 
-        $all = \ionos\stretch_extra\secondary_plugin_dir\get_all_custom_plugins();
+        $all = ($ns . 'get_all_custom_plugins')();
         foreach ($all as $entry) {
             $clean_key = str_replace('plugins/', '', $entry['key']);
+
+            // Match the CLI input to our virtual plugin
             if ($entry['slug'] === $slug || $clean_key === $slug) {
-                if ($subcommand === 'activate') {
-                    \ionos\stretch_extra\secondary_plugin_dir\activate_custom_plugin($entry['key']);
-                    WP_CLI::success("Activated: $slug");
-                } else {
-                    \ionos\stretch_extra\secondary_plugin_dir\deactivate_custom_plugin($entry['key']);
-                    WP_CLI::success("Deactivated: $slug");
+                switch ($subcommand) {
+                    case 'install':
+                        ($ns . 'unmark_custom_plugin_as_deleted')($entry['key']);
+                        WP_CLI::success("Installed: $slug");
+                        break;
+                    case 'activate':
+                        ($ns . 'activate_custom_plugin')($entry['key']);
+                        WP_CLI::success("Activated: $slug");
+                        break;
+                    case 'deactivate':
+                        ($ns . 'deactivate_custom_plugin')($entry['key']);
+                        WP_CLI::success("Deactivated: $slug");
+                        break;
+                    case 'delete':
+                        ($ns . 'mark_custom_plugin_as_deleted')($entry['key']);
+                        WP_CLI::success("Deleted: $slug");
+                        break;
                 }
-                exit; // Exit early to prevent WP core from doing a file check
+
+                // CRITICAL: Flush object cache so the UI sees the DB change immediately
+                if (function_exists('wp_cache_flush')) {
+                    wp_cache_flush();
+                }
+
+                exit;
             }
         }
     });
