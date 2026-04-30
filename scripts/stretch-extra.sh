@@ -166,8 +166,15 @@ ionos.wordpress.stretch-extra.update() {
 }
 
 ionos.wordpress.stretch-extra.check() {
-  echo "Checking if plugins and themes using configuration ${STRETCH_EXTRA_CONFIG_PATH} in stretch-extra are up to date..."
-  # Placeholder for actual check logic
+  [[ "$VERBOSE" != '' ]] && echo "Checking plugin and theme updates of stretch extra configuration ${STRETCH_EXTRA_CONFIG_PATH} ..."
+
+  # Interpret the stretch-extra php configuration file, extract the download URLs and return as JSON
+  export readonly STRETCH_EXTRA_CONFIG_JSON=$(
+    docker run --rm -v "$(pwd):/app" -w /app php:8.3-cli-alpine php \
+      -r "const IONOS_CUSTOM_DIR=''; echo json_encode(require 'packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/stretch-extra-config.php', JSON_UNESCAPED_SLASHES);"
+  )
+
+  node "$(pwd)/scripts/_stretch-extra-check.mjs"
 }
 
 POSITIONAL_ARGS=()
@@ -190,11 +197,11 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --verbose)
-      VERBOSE=true
+      export VERBOSE=true
       shift
       ;;
     --force)
-      VERBOSE=true
+      export VERBOSE=true
       shift
       ;;
     -*|--*)

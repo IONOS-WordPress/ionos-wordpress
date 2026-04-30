@@ -7,7 +7,7 @@
 
 set -eo pipefail
 
-readonly WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
+readonly WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env status --json | jq -r .installPath))"
 
 readonly WP_ENV_HASH=$(basename "$WPENV_INSTALLPATH")
 
@@ -93,7 +93,9 @@ EOF
 $(plugins)
 $(mu_plugins)
 $(themes)
+
         "/var/www/html/wp-content/object-cache.php": "\${workspaceFolder}/packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/apcu/object-cache.php",
+        "/var/www/html/wp-content/maintenance.php": "\${workspaceFolder}/packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/maintenance/maintenance.php",
         "/var/www/html": "\${workspaceFolder}/${WPENV_INSTALLPATH}/WordPress",
         // phpunit test path mappings
         "/wordpress-phpunit/includes": "\${workspaceFolder}/${WPENV_INSTALLPATH}/tests-WordPress-PHPUnit/tests/phpunit/includes",

@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-11T10:50:16+00:00\n"
+"POT-Creation-Date: 2026-04-01T14:13:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stretch-extra\n"
 
 #. Plugin Name of the plugin
@@ -61,4 +61,31 @@ msgstr ""
 
 #: stretch-extra/inc/marketplace/marketplace.php
 msgid "recommends"
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Not Supported"
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Disabled"
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+#, php-format
+msgid "The use of \"%s\" is not allowed and cannot be activated. Uninstall is recommended."
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Validating against blocked plugins…"
+msgstr ""
+
+#. translators: %s: link to blocked plugins list
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+#, php-format
+msgid "This plugin is not supported on our Managed WordPress platform. %s"
+msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+msgid "Full list of blocked plugins"
 msgstr ""

@@ -8,7 +8,11 @@ test.describe(
   },
   () => {
     test.beforeAll(async () => {
-      execTestCLI(`wp --quiet user meta delete 1 ionos_essentials_welcome`);
+      execTestCLI(`
+        # simulate switch page decision
+        wp --quiet option update IONOS_ESSENTIALS_ONBOARDING diy
+        wp --quiet user meta delete 1 ionos_essentials_welcome
+        `);
     });
 
     test('test welcome banner has tenant title', async ({ admin, page }) => {

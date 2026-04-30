@@ -8,7 +8,10 @@ test.describe(
   },
   () => {
     test('/dashboard uses wp-admin language', async ({ admin, page }) => {
-      execTestCLI(`wp --quiet user meta delete 1 ionos_essentials_welcome || true`);
+      execTestCLI(`wp --quiet user meta delete 1 ionos_essentials_welcome || true
+        # simulate switch page decision
+        wp --quiet option update IONOS_ESSENTIALS_ONBOARDING diy
+        `);
 
       const targetLanguageName = 'de_DE';
 

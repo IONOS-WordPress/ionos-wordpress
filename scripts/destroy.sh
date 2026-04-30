@@ -10,8 +10,8 @@
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
 if [[ -d "$WP_ENV_HOME" ]]; then
-  docker run -it --rm -v $WP_ENV_HOME:/wp-env-home library/bash chmod -R a+w /wp-env-home
-  docker run -it --rm -v $WP_ENV_HOME:/wp-env-home library/bash chmod -R a+w /wp-env-home
+  docker run --rm -v $WP_ENV_HOME:/wp-env-home library/bash chmod -R a+w /wp-env-home
+  docker run --rm -v $WP_ENV_HOME:/wp-env-home library/bash chmod -R a+w /wp-env-home
 fi
 
 if docker ps --filter "name=tests-wordpress" --format '{{.Names}}' | grep -q 'tests-wordpress'; then

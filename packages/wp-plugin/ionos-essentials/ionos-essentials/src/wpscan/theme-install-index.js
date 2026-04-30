@@ -1,12 +1,12 @@
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 // tell eslint that the global variable exists when this file gets executed
 /* global ionosWPScanThemes:true */
-/* global jQuery:true */
 document.addEventListener('DOMContentLoaded', function () {
   function addInstallListener() {
     document.querySelectorAll('.theme-actions .theme-install').forEach(function (button) {
-      button.addEventListener('click', function (event) {
+      button.addEventListener('click', async function (event) {
         if (!event.target.dataset.safe) {
           event.preventDefault();
           event.stopPropagation();
@@ -33,14 +33,17 @@ document.addEventListener('DOMContentLoaded', function () {
         );
         themeCard?.appendChild(notice);
 
-        jQuery
-          .post(ionosWPScanThemes.ajaxUrl, {
-            action: 'ionos-wpscan-instant-check',
-            _ajax_nonce: ionosWPScanThemes.nonce,
-            slug: event.target.dataset.slug,
-            type: 'theme',
-          })
-          .always(function (response) {
+        try {
+          await apiFetch({
+            url: window.ajaxurl || '/wp-admin/admin-ajax.php',
+            method: 'POST',
+            body: new URLSearchParams({
+              action: 'ionos-wpscan-instant-check',
+              _ajax_nonce: ionosWPScanThemes.nonce,
+              slug: event.target.dataset.slug,
+              type: 'theme',
+            }),
+          }).then((response) => {
             switch (response.data) {
               case 'warnings_found':
                 notice.innerHTML = `<p>${__('Warnings found. Installation is not recommended.', 'ionos-essentials')}</p>`;
@@ -63,6 +66,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             }
           });
+        } catch (error) {
+          console.error('Failed to load vulnerabilities:', error);
+        }
       });
     });
   }
