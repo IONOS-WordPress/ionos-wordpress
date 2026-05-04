@@ -359,7 +359,7 @@ defined('WP_CLI') || \add_action('muplugins_loaded', function () {
   // 1. Handle single activation (Updated to support Clean Slugs)
   if (isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'activate') {
     $plugin = \wp_unslash($_GET['plugin']);
-    
+
     foreach (get_all_custom_plugins() as $entry) {
       $clean_slug = str_replace(IONOS_CUSTOM_PLUGINS_PATH, '', $entry['key']);
       if ($plugin === $clean_slug || $plugin === $entry['key']) {
@@ -374,7 +374,7 @@ defined('WP_CLI') || \add_action('muplugins_loaded', function () {
   // 2. Handle single deactivation (Updated to support Clean Slugs)
   if (isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'deactivate') {
     $plugin = \wp_unslash($_GET['plugin']);
-    
+
     foreach (get_all_custom_plugins() as $entry) {
       $clean_slug = str_replace(IONOS_CUSTOM_PLUGINS_PATH, '', $entry['key']);
       if ($plugin === $clean_slug || $plugin === $entry['key']) {
@@ -778,21 +778,21 @@ defined('WP_CLI') || \add_action('muplugins_loaded', function () {
  * This removes the error notice from the UI entirely.
  */
 \add_filter('wp_admin_notice_markup', function ($markup, $message, array $args) {
-    // Check if it's an error message and contains the problematic text
-    if (
-        ($args['type'] === 'error' || 
-        (isset($args['additional_classes']) && in_array('error', $args['additional_classes']))) &&
-        str_contains($message, __('Plugin file does not exist.'))
-    ) {
-        // Define the slugs we want to protect
-        $protected_slugs = ['extendify', 'ionos-essentials', '01-ext-'];
+  // Check if it's an error message and contains the problematic text
+  if (
+    ($args['type'] === 'error' ||
+    (isset($args['additional_classes']) && in_array('error', $args['additional_classes']))) &&
+    str_contains($message, __('Plugin file does not exist.'))
+  ) {
+    // Define the slugs we want to protect
+    $protected_slugs = ['extendify', 'ionos-essentials', '01-ext-'];
 
-        foreach ($protected_slugs as $slug) {
-            if (str_contains($message, $slug)) {
-                return ''; // Return nothing, hiding the notice
-            }
-        }
+    foreach ($protected_slugs as $slug) {
+      if (str_contains($message, $slug)) {
+        return ''; // Return nothing, hiding the notice
+      }
     }
+  }
 
-    return $markup;
+  return $markup;
 }, 10, 3);
