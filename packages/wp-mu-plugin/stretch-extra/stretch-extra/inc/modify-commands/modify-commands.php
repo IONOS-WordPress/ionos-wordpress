@@ -83,6 +83,7 @@ add_filter('plugin_file_path', function ($path, $plugin) {
 
 /**
  * 3. THE STATUS BRIDGE
+ * Synchronizes the UI status with the IONOS database (Handles both ON and OFF).
  */
 add_filter('option_active_plugins', function ($active_plugins) {
   $helper_path = dirname(__DIR__) . '/secondary-plugin-dir.php';
@@ -91,18 +92,33 @@ add_filter('option_active_plugins', function ($active_plugins) {
   @require_once $helper_path;
   $ns = '\ionos\stretch_extra\secondary_plugin_dir\\';
   
-  // Get the real active list (with 'plugins/...') from the DB
-  $custom_active = (function_exists($ns . 'get_active_custom_plugins')) ? ($ns . 'get_active_custom_plugins')() : [];
+  if (!function_exists($ns . 'get_active_custom_plugins')) return $active_plugins;
+
+  $custom_active = ($ns . 'get_active_custom_plugins')(); 
+  $all_custom    = ($ns . 'get_all_custom_plugins')();    
   $active_plugins = is_array($active_plugins) ? $active_plugins : [];
 
+  $custom_slug_map = [];
+  foreach ($all_custom as $entry) {
+    $custom_slug_map[] = str_replace('plugins/', '', $entry['key']);
+  }
+
+  // Remove custom plugins from global list if they are INACTIVE in IONOS DB
+  $active_plugins = array_filter($active_plugins, function($plugin) use ($custom_slug_map, $custom_active) {
+    if (!in_array($plugin, $custom_slug_map)) return true;
+    return in_array('plugins/' . $plugin, $custom_active);
+  });
+
+  // Add custom plugins if they are ACTIVE in IONOS DB
   foreach ($custom_active as $full_key) {
-    $slug = str_replace('plugins/', '', $full_key);
-    if (!in_array($slug, $active_plugins)) {
-      $active_plugins[] = $slug; // Inject the clean slug for the UI to match
+    $plugin_key = str_replace('plugins/', '', $full_key);
+    if (!in_array($plugin_key, $active_plugins)) {
+      $active_plugins[] = $plugin_key;
     }
   }
+
   return array_values(array_unique($active_plugins));
-}, 20);
+}, 1);
 
 /**
  * 4. THE LIST CLEANER
@@ -116,17 +132,12 @@ add_filter('all_plugins', function ($plugins) {
   if (!function_exists($ns . 'get_all_custom_plugins')) return $plugins;
 
   $mounted = ($ns . 'get_all_custom_plugins')();
-  $mounted = is_array($mounted) ? $mounted : [];
-
   foreach ($mounted as $entry) {
     if (function_exists($ns . 'is_custom_plugin_deleted') && ($ns . 'is_custom_plugin_deleted')($entry['key'])) {
       continue;
     }
 
-    // This is the "Clean Slug" you want to see in the UI
     $slug = str_replace('plugins/', '', $entry['key']);
-    
-    // Remove the original path-based entry to avoid showing "plugins/..."
     unset($plugins[$entry['file']], $plugins[$entry['key']]);
 
     $plugins[$slug] = [
@@ -152,44 +163,67 @@ if (defined('WP_CLI') && WP_CLI) {
   WP_CLI::add_hook('before_invoke:plugin', function () {
     $runner     = WP_CLI::get_runner();
     $subcommand = $runner->arguments[1] ?? '';
-    $slug       = $runner->arguments[2] ?? '';
-    $assoc_args = $runner->assoc_args;
+    $user_slug  = $runner->arguments[2] ?? '';
 
-    if (!in_array($subcommand, ['install', 'activate', 'deactivate', 'delete'])) return;
+    if (!in_array($subcommand, ['activate', 'deactivate'])) return;
 
     $helper_path = dirname(__DIR__) . '/secondary-plugin-dir.php';
     if (!file_exists($helper_path)) return;
-
     @require_once $helper_path;
     $ns = '\ionos\stretch_extra\secondary_plugin_dir\\';
 
-    $all = ($ns . 'get_all_custom_plugins')();
-    foreach ($all as $entry) {
-      $clean_key = str_replace('plugins/', '', $entry['key']);
+    foreach (($ns . 'get_all_custom_plugins')() as $entry) {
+      $full_key  = $entry['key'];
+      $clean_key = str_replace('plugins/', '', $full_key);
+      $dir_slug  = dirname($clean_key);
 
-      if ($entry['slug'] === $slug || $clean_key === $slug) {
-        switch ($subcommand) {
-          case 'install':
-            ($ns . 'unmark_custom_plugin_as_deleted')($entry['key']); //
-            if (isset($assoc_args['activate'])) ($ns . 'activate_custom_plugin')($entry['key']);
-            break;
-          case 'activate':
-            ($ns . 'activate_custom_plugin')($entry['key']); //
-            break;
-          case 'deactivate':
-            ($ns . 'deactivate_custom_plugin')($entry['key']); //
-            break;
-          case 'delete':
-            ($ns . 'mark_custom_plugin_as_deleted')($entry['key']); //
-            break;
+      if ($user_slug === $entry['slug'] || $user_slug === $dir_slug || $user_slug === $clean_key) {
+        
+        if ($subcommand === 'activate') {
+          ($ns . 'activate_custom_plugin')($full_key);
+        } else {
+          ($ns . 'deactivate_custom_plugin')($full_key);
         }
 
-        // Use the option name defined in your helper
+        // Standard WordPress Cache clearing
+        wp_cache_delete('alloptions', 'options');
+        wp_cache_delete('active_plugins', 'options');
         wp_cache_delete('IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION', 'options');
-        if (function_exists('wp_cache_flush')) wp_cache_flush();
-        WP_CLI::success("Done with {$slug}");
+        
+        if (function_exists('apcu_clear_cache')) {
+          apcu_clear_cache();
+        }
+
+        WP_CLI::success("Successfully {$subcommand}d {$user_slug} and cleared APCu cache.");
         exit;
       }
     }
   });
 }
+
+/**
+ * DEBUG: Plugin Status Monitor
+ */
+add_action('admin_notices', function () {
+    if (!current_user_can('manage_options')) return;
+    $helper_path = dirname(__DIR__) . '/secondary-plugin-dir.php';
+    if (!file_exists($helper_path)) return;
+    @require_once $helper_path;
+    $ns = '\ionos\stretch_extra\secondary_plugin_dir\\';
+    
+    $db_active = ($ns . 'get_active_custom_plugins')();
+    $wp_active = get_option('active_plugins', []);
+    
+    echo '<div class="notice notice-info is-dismissible" style="border-left-color: #007cba;">';
+    echo '<h3>🔍 IONOS Plugin Debugger</h3>';
+    echo '<table style="text-align: left; margin-bottom: 10px;">';
+    echo '<thead><tr><th>Plugin Slug</th><th>IONOS DB Status</th><th>WP Global Array</th></tr></thead><tbody>';
+
+    foreach (($ns . 'get_all_custom_plugins')() as $entry) {
+        $ui_slug  = str_replace('plugins/', '', $entry['key']);
+        $in_ionos = in_array($entry['key'], $db_active) ? '✅ ACTIVE' : '❌ INACTIVE';
+        $in_wp    = in_array($ui_slug, $wp_active)   ? '✅ FOUND'  : '⚠️ MISSING';
+        echo "<tr><td><strong>$ui_slug</strong></td><td>$in_ionos</td><td>$in_wp</td></tr>";
+    }
+    echo '</tbody></table></div>';
+});
