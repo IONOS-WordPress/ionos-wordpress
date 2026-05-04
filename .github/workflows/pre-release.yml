@@ -57,6 +57,9 @@ jobs:
           runCmd: |
             export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
             export GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK="${{ secrets.GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK }}"
+            # Please not remove. To do push and merge operations in git repository
+            git config user.name "github-actions"
+            git config user.email "github-actions@github.com"
 
             pnpm install --frozen-lockfile
             pnpm pre-release
