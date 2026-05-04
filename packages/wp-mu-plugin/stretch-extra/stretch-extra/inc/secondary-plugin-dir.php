@@ -356,61 +356,47 @@ defined('WP_CLI') || \add_action('muplugins_loaded', function () {
  * This allows users to activate/deactivate/delete/installation of custom plugins from the admin interface
  */
 \add_action('admin_init', function () {
-  // 1. Handle single activation (Updated to support Clean Slugs)
+  // Handle single activation
   if (isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'activate') {
     $plugin = \wp_unslash($_GET['plugin']);
-
-    foreach (get_all_custom_plugins() as $entry) {
-      $clean_slug = str_replace(IONOS_CUSTOM_PLUGINS_PATH, '', $entry['key']);
-      if ($plugin === $clean_slug || $plugin === $entry['key']) {
-        \check_admin_referer('activate-plugin_' . $plugin);
-        activate_custom_plugin($entry['key']); // Always use full path for logic
-        \wp_redirect(\admin_url('plugins.php?activate=true'));
-        exit;
-      }
+    if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+      \check_admin_referer('activate-plugin_' . $plugin);
+      activate_custom_plugin($plugin);
+      \wp_redirect(\admin_url('plugins.php?activate=true'));
+      exit;
     }
   }
 
-  // 2. Handle single deactivation (Updated to support Clean Slugs)
-  if (isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'deactivate') {
-    $plugin = \wp_unslash($_GET['plugin']);
-
-    foreach (get_all_custom_plugins() as $entry) {
-      $clean_slug = str_replace(IONOS_CUSTOM_PLUGINS_PATH, '', $entry['key']);
-      if ($plugin === $clean_slug || $plugin === $entry['key']) {
-        \check_admin_referer('deactivate-plugin_' . $plugin);
-        deactivate_custom_plugin($entry['key']); // Always use full path for logic
-        \wp_redirect(\admin_url('plugins.php?deactivate=true'));
-        exit;
-      }
-    }
-  }
-
-  // 3. Handle bulk activation
+  // Handle bulk activation
   if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'activate-selected') {
     check_admin_referer('bulk-plugins');
     $plugins = array_map('\wp_unslash', $_POST['checked']);
-    foreach ($plugins as $p) {
-      foreach (get_all_custom_plugins() as $entry) {
-        $clean_slug = str_replace(IONOS_CUSTOM_PLUGINS_PATH, '', $entry['key']);
-        if ($p === $clean_slug || $p === $entry['key']) {
-          activate_custom_plugin($entry['key']);
-        }
+    foreach ($plugins as $plugin) {
+      if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+        activate_custom_plugin($plugin);
       }
     }
   }
 
-  // 4. Handle bulk deletion
+  // Handle bulk deletion
   if (isset($_POST['action'], $_POST['checked']) && $_POST['action'] === 'delete-selected') {
     check_admin_referer('bulk-plugins');
     $plugins = array_map('\wp_unslash', $_POST['checked']);
-    foreach ($plugins as $p) {
-      foreach (get_all_custom_plugins() as $entry) {
-        $clean_slug = str_replace(IONOS_CUSTOM_PLUGINS_PATH, '', $entry['key']);
-        if ($p === $clean_slug || $p === $entry['key']) {
-          mark_custom_plugin_as_deleted($entry['key']);
-        }
+    foreach ($plugins as $plugin) {
+      if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+        mark_custom_plugin_as_deleted($plugin);
       }
+    }
+  }
+
+  // Handle deactivation
+  if (isset($_GET['action'], $_GET['plugin']) && $_GET['action'] === 'deactivate') {
+    $plugin = \wp_unslash($_GET['plugin']);
+    if (str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_PATH)) {
+      \check_admin_referer('deactivate-plugin_' . $plugin);
+      deactivate_custom_plugin($plugin);
+      \wp_redirect(\admin_url('plugins.php?deactivate=true'));
+      exit;
     }
   }
 
@@ -772,27 +758,3 @@ defined('WP_CLI') || \add_action('muplugins_loaded', function () {
     deactivate_custom_plugin($plugin);
   }
 }, 10, 2);
-
-/**
- * BRUTE FORCE: Suppress "Plugin file does not exist" errors for custom plugins.
- * This removes the error notice from the UI entirely.
- */
-\add_filter('wp_admin_notice_markup', function ($markup, $message, array $args) {
-  // Check if it's an error message and contains the problematic text
-  if (
-    ($args['type'] === 'error' ||
-    (isset($args['additional_classes']) && in_array('error', $args['additional_classes']))) &&
-    str_contains($message, __('Plugin file does not exist.'))
-  ) {
-    // Define the slugs we want to protect
-    $protected_slugs = ['extendify', 'ionos-essentials', '01-ext-'];
-
-    foreach ($protected_slugs as $slug) {
-      if (str_contains($message, $slug)) {
-        return ''; // Return nothing, hiding the notice
-      }
-    }
-  }
-
-  return $markup;
-}, 10, 3);
