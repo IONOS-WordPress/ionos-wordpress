@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.4.8
+
+### Patch Changes
+
+- 7d67d9b: hotfix for ai switch-page
+
 ## 1.4.7
 
 ### Patch Changes
