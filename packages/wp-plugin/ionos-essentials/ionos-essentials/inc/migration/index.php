@@ -151,7 +151,6 @@ function _install()
       // no break
     case version_compare($last_installed_version, '1.4.6', '<='):
       \update_option('ionos_wpscan_issues_sent_to_user', \get_transient('ionos_wpscan_issues_sent_to_user'), []);
-
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }

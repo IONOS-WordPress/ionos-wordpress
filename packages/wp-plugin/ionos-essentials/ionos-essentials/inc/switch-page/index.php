@@ -6,15 +6,6 @@ use ionos\essentials\Tenant;
 
 defined('ABSPATH') || exit();
 
-const IONOS_ONBOARDING_OPTION    = 'IONOS_ESSENTIALS_ONBOARDING';
-const IONOS_ONBOARDING_QUERY_ARG = 'ionos_onboarding';
-
-if (isset($_GET[IONOS_ONBOARDING_QUERY_ARG])) {
-  \add_action('admin_init', function () {
-    \update_option(IONOS_ONBOARDING_OPTION, $_GET[IONOS_ONBOARDING_QUERY_ARG], true);
-  });
-}
-
 /**
  * Add onboarding menu page.
  */
@@ -37,26 +28,21 @@ if (isset($_GET[IONOS_ONBOARDING_QUERY_ARG])) {
 );
 
 /**
- * Redirects to extendify-pages are caught.
- * We send the user to the switch page or their configured dashboard
+ * Redirects to extendify-launch are caught.
+ * We send the user to the ai-switch-page
  */
 \add_filter(
   'wp_redirect',
   function ($location) {
     // extendify-launch always opens switch page
     if (\admin_url('admin.php?page=extendify-launch') === $location) {
-      // avoid redirect loops
-      update_option('extendify_attempted_redirect_count', 3);
       return \admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding');
     }
-    // other dashboards should redirect to our switch page, or the configured wp-admin dashboard
+    // wp-admin and extendify dashboard redirect to our dashboard OR the default wp-admin dashboard
     $redirects = ['wp-admin/', admin_url(), \admin_url('admin.php?page=extendify-assist')];
     if (in_array($location, $redirects)) {
-      if (! get_option(IONOS_ONBOARDING_OPTION)) {
-        return \admin_url('admin.php?page=' . Tenant::get_slug() . '-onboarding');
-      }
-      $default_to_ionos_dashboard = (\get_option('ionos_essentials_dashboard_mode', true));
-      return $default_to_ionos_dashboard ? \admin_url('admin.php?page=' . Tenant::get_slug()) : \admin_url();
+      $show_ionos_dashboard = (\get_option('ionos_essentials_dashboard_mode', true));
+      return $show_ionos_dashboard ? \admin_url('admin.php?page=' . Tenant::get_slug()) : \admin_url();
     }
     return $location;
   },
@@ -66,7 +52,7 @@ if (isset($_GET[IONOS_ONBOARDING_QUERY_ARG])) {
 
 \add_action(
   'load-toplevel_page_extendify-assist',
-  fn () => \wp_safe_redirect(\admin_url('admin.php?page=' . Tenant::get_slug())) && exit
+  fn () => \wp_safe_redirect(\admin_url('admin.php?page=' . Tenant::get_slug()))
 );
 
 \add_filter(
