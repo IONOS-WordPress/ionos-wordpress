@@ -76,7 +76,7 @@ add_filter('plugin_file_path', function ($path, $plugin) {
       $slug = str_replace('plugins/', '', $entry['key']);
 
       if ($slug === $plugin || $entry['key'] === $plugin) {
-        return $entry['file']; 
+        return $entry['file'];
       }
     }
   }
@@ -179,10 +179,14 @@ if (defined('WP_CLI') && WP_CLI) {
     $user_slug  = $runner->arguments[2] ?? '';
     $assoc_args = $runner->assoc_args;
 
-    if (! in_array($subcommand, ['activate', 'deactivate', 'delete', 'install'])) return;
+    if (! in_array($subcommand, ['activate', 'deactivate', 'delete', 'install'])) {
+      return;
+    }
 
     $helper_path = dirname(__DIR__) . '/secondary-plugin-dir.php';
-    if (! file_exists($helper_path)) return;
+    if (! file_exists($helper_path)) {
+      return;
+    }
     @require_once $helper_path;
     $ns = '\ionos\stretch_extra\secondary_plugin_dir\\';
 
@@ -192,7 +196,7 @@ if (defined('WP_CLI') && WP_CLI) {
       $dir_slug  = dirname($clean_key);
 
       if ($user_slug === $entry['slug'] || $user_slug === $dir_slug || $user_slug === $clean_key) {
-        
+
         switch ($subcommand) {
           case 'install':
             // 1. "Restore" it to the user's eye if it was deleted
@@ -202,7 +206,7 @@ if (defined('WP_CLI') && WP_CLI) {
             // 2. If they DID provide --activate, turn it on
             if (isset($assoc_args['activate'])) {
               ($ns . 'activate_custom_plugin')($full_key);
-              WP_CLI::log("Activating...");
+              WP_CLI::log('Activating...');
             } else {
               // Just a friendly notice that it's ready but not active
               WP_CLI::log("Plugin is now available in the list. Run 'wp plugin activate {$user_slug}' to enable.");
@@ -275,28 +279,27 @@ add_action('admin_notices', function () {
  * This removes the error notice from the UI entirely.
  */
 \add_filter('wp_admin_notice_markup', function ($markup, $message, array $args) {
-    // Check if it's an error message
-    $is_error = ($args['type'] === 'error' || (isset($args['additional_classes']) && in_array('error', $args['additional_classes'])));
+  // Check if it's an error message
+  $is_error = ($args['type'] === 'error' || (isset($args['additional_classes']) && in_array(
+    'error',
+    $args['additional_classes']
+  )));
 
-    if ($is_error && str_contains($message, 'has been deactivated due to an error')) {
-        // List of slugs to protect from showing deactivation errors
-        $protected_slugs = [
-            'extendify', 
-            'ionos-essentials', 
-            '01-ext-'
-        ];
+  if ($is_error && str_contains($message, 'has been deactivated due to an error')) {
+    // List of slugs to protect from showing deactivation errors
+    $protected_slugs = ['extendify', 'ionos-essentials', '01-ext-'];
 
-        foreach ($protected_slugs as $slug) {
-            if (str_contains($message, $slug)) {
-                return ''; // Delete the markup, making the error invisible
-            }
-        }
+    foreach ($protected_slugs as $slug) {
+      if (str_contains($message, $slug)) {
+        return ''; // Delete the markup, making the error invisible
+      }
     }
+  }
 
-    // Also catch the direct "Plugin file does not exist" translation
-    if ($is_error && str_contains($message, __('Plugin file does not exist.'))) {
-        return ''; 
-    }
+  // Also catch the direct "Plugin file does not exist" translation
+  if ($is_error && str_contains($message, __('Plugin file does not exist.'))) {
+    return '';
+  }
 
-    return $markup;
+  return $markup;
 }, 10, 3);
