@@ -75,7 +75,7 @@ jobs:
             pnpm exec ./scripts/_get-workflow-artefacts.sh
 
       - name: attach workflow artifacts
-        uses: actions/upload-artifact@v8
+        uses: actions/upload-artifact@v7
         if: steps.gather_workflow_artifacts.outcome == 'success' && steps.gather_workflow_artifacts.outputs.runCmdOutput != ''
         with:
           include-hidden-files: true
