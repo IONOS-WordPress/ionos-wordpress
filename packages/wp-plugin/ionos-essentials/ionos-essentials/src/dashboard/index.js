@@ -1,8 +1,8 @@
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 // tell eslint that the global variable exists when this file gets executed
 /* global wpData:true */
-/* global jQuery:true */
 document.addEventListener('DOMContentLoaded', function () {
   // Welcome dialog
   const parent = document.querySelector('.ionos-dashboard');
@@ -10,21 +10,28 @@ document.addEventListener('DOMContentLoaded', function () {
   if (parent) {
     const dashboard = parent.querySelector('#wpbody-content').shadowRoot;
 
-    dashboard.querySelector('#ionos-welcome-close')?.addEventListener('click', function () {
+    dashboard.querySelector('#ionos-welcome-close')?.addEventListener('click', async function () {
       dashboard.querySelector('#essentials-welcome_block').close();
-      fetch(wpData.restUrl + 'ionos/essentials/dashboard/welcome/v1/closer', {
+
+      await apiFetch({
+        url: '/wp-json/ionos/essentials/dashboard/welcome/v1/closer',
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wpData.nonce,
-        },
-        credentials: 'include',
       });
     });
 
     dashboard.querySelectorAll('.ionos-popup-dismiss')?.forEach((button) => {
-      button.addEventListener('click', function () {
-        jQuery.post(wpData.ajaxUrl, { action: 'ionos-popup-dismiss' });
+      button.addEventListener('click', async function () {
+        try {
+          await apiFetch({
+            url: window.ajaxurl || '/wp-admin/admin-ajax.php',
+            method: 'POST',
+            body: new URLSearchParams({
+              action: 'ionos-popup-dismiss',
+            }),
+          });
+        } catch (error) {
+          console.error('Failed to dismiss notice:', error);
+        }
         dashboard.querySelector('#ionos-essentials-popup').close();
       });
     });
@@ -92,12 +99,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     dashboard.querySelectorAll('.ionos_finish_setup')?.forEach((button) => {
-      button.addEventListener('click', function (event) {
-        jQuery.post(wpData.ajaxUrl, {
-          action: 'ionos-nba-setup-complete',
-          status: event.target.dataset.status,
-          _wpnonce: wpData.nonce,
-        });
+      button.addEventListener('click', async function (event) {
+        try {
+          await apiFetch({
+            url: window.ajaxurl || '/wp-admin/admin-ajax.php',
+            method: 'POST',
+            body: new URLSearchParams({
+              action: 'ionos-nba-setup-complete',
+              status: event.target.dataset.status,
+              _wpnonce: wpData.nonce,
+            }),
+          });
+        } catch (error) {
+          console.error('Failed to dismiss notice:', error);
+        }
 
         if (event.target.dataset.status === 'finished') {
           dashboard.querySelector('#ionos_nba_setup_container').remove();
@@ -121,18 +136,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const updateNbaItem = async (target, status) => {
-      fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/update', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wpData.nonce,
-        },
-        credentials: 'include',
-        body: JSON.stringify({ id: target.dataset.nbaId, status }),
-      }).then((response) => {
-        if (!response.ok) {
-          return;
-        }
+      try {
+        await apiFetch({
+          url: '/wp-json/ionos/essentials/dashboard/nba/v1/update',
+          method: 'POST',
+          data: {
+            id: target.dataset.nbaId,
+            status,
+          },
+        });
 
         dashboard.getElementById(target.dataset.nbaId).classList.add('ionos_nba_dismissed');
         setTimeout(() => {
@@ -146,27 +158,29 @@ document.addEventListener('DOMContentLoaded', function () {
             location.reload();
           }
         }, 800);
-      });
+      } catch (error) {
+        console.error('Failed to update NBA item:', error);
+      }
     };
 
-    dashboard.querySelector('#ionos_essentials_install_gml')?.addEventListener('click', function (event) {
+    dashboard.querySelector('#ionos_essentials_install_gml')?.addEventListener('click', async function (event) {
       event.target.disabled = true;
       event.target.innerText = __('Installing...', 'ionos-essentials');
 
-      fetch(wpData.restUrl + 'ionos/essentials/dashboard/nba/v1/install-gml', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wpData.nonce,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === 'success') {
-            location.reload();
-          }
+      try {
+        const response = await apiFetch({
+          url: '/wp-json/ionos/essentials/dashboard/nba/v1/install-gml',
+          method: 'GET',
         });
+
+        if (response.status === 'success') {
+          location.reload();
+        }
+      } catch (error) {
+        console.error('Failed to install GML:', error);
+        event.target.disabled = false;
+        event.target.innerText = __('Install', 'ionos-essentials');
+      }
     });
 
     dashboard.querySelectorAll('.ionos-essentials-mcp-activate').forEach((button) => {
@@ -180,33 +194,24 @@ document.addEventListener('DOMContentLoaded', function () {
         button_element.classList.add('hidden');
 
         try {
-          const response = await fetch(wpData.restUrl + 'ionos/essentials/mcp/action', {
+          const response = await apiFetch({
+            path: '/ionos/essentials/mcp/action',
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-WP-Nonce': wpData.nonce,
-            },
-            body: JSON.stringify({
+            data: {
               activate: dashboard.querySelector('#ionos-essentials-mcp').checked,
               revokeAppPassword: button.dataset.revokeAppPassword ?? 0,
-            }),
+            },
           });
 
           loading_element.classList.add('hidden');
-          if (!response.ok) {
-            window.EXOS.snackbar.warning(__('An error occured while enabling WordPress MCP.', 'ionos-essentials'));
-            return;
-          }
 
-          const data = await response.json();
-
-          if (data.active === '0') {
+          if (response.active === '0') {
             window.EXOS.snackbar.warning(__('WordPress MCP disabled', 'ionos-essentials'));
             return;
           }
 
-          if (data.snippet) {
-            code_element.querySelector('code').innerText = data.snippet;
+          if (response.snippet) {
+            code_element.querySelector('code').innerText = response.snippet;
             code_element.classList.remove('hidden');
           } else {
             button_element.classList.remove('hidden');
@@ -245,27 +250,22 @@ document.addEventListener('DOMContentLoaded', function () {
         const description = event.target.dataset.description ?? '';
 
         try {
-          const response = await fetch(wpData.restUrl + 'ionos/essentials/option/set', {
+          const response = await apiFetch({
+            path: '/ionos/essentials/option/set',
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-WP-Nonce': wpData.nonce,
-            },
-            body: JSON.stringify({
+            data: {
               option,
               key,
               value,
-            }),
+            },
           });
 
-          if (!response.ok) {
+          if (!response.status) {
             window.EXOS.snackbar.warning('Error updating option ' + key);
             return;
           }
 
-          const data = await response.json();
-
-          if (data.value) {
+          if (response.value) {
             window.EXOS.snackbar.success(description + ' ' + __('activated.', 'ionos-essentials'));
           } else {
             window.EXOS.snackbar.critical(description + ' ' + __('deactivated.', 'ionos-essentials'));
@@ -330,63 +330,50 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     dashboard.querySelectorAll('[data-wpscan]').forEach((element) => {
-      element.addEventListener('click', function (event) {
+      element.addEventListener('click', async function (event) {
+        event.preventDefault();
         element.disabled = true;
         const payload = JSON.parse(element.dataset.wpscan);
         element.innerText =
           payload.action === 'delete' ? __('deleting...', 'ionos-essentials') : __('updating...', 'ionos-essentials');
-        event.preventDefault();
-        fetch(wpData.restUrl + 'ionos/essentials/wpscan/recommended-action', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-WP-Nonce': wpData.nonce,
-          },
-          credentials: 'include',
-          body: JSON.stringify({
-            data: element.dataset.wpscan,
-          }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              window.EXOS.snackbar.critical(response.statusText);
-              return Promise.reject();
-            }
-            return response.json();
-          })
-          .then((data) => {
-            element.parentElement.parentElement.remove();
-            window.EXOS.snackbar.success(data.data);
 
-            window.setTimeout(() => {
-              window.location.reload();
-            }, 10000);
+        try {
+          const data = await apiFetch({
+            path: '/ionos/essentials/wpscan/recommended-action',
+            method: 'POST',
+            data: {
+              data: element.dataset.wpscan,
+            },
           });
+
+          element.parentElement.parentElement.remove();
+          window.EXOS.snackbar.success(data.data);
+
+          window.setTimeout(() => {
+            window.location.reload();
+          }, 10000);
+        } catch (error) {
+          window.EXOS.snackbar.critical(error.message || 'An error occurred');
+          element.disabled = false;
+          element.innerText =
+            payload.action === 'delete' ? __('Delete', 'ionos-essentials') : __('Update', 'ionos-essentials');
+        }
       });
     });
 
     (async () => {
       for (const test of wpData.siteHealthAsyncTests) {
         try {
-          let headers = {
-            'Content-Type': 'application/json',
-            'X-WP-Nonce': wpData.nonce,
-          };
-
-          if (test === 'authorization-header') {
-            // this test requires an additional nonce
-            headers['Authorization'] = 'Basic ' + btoa('user:pwd');
-          }
-
-          const response = await fetch(wpData.restUrl + 'wp-site-health/v1/tests/' + test, {
+          const data = await apiFetch({
+            path: '/wp-site-health/v1/tests/' + test,
             method: 'GET',
-            headers: headers,
-            credentials: 'include',
+            headers:
+              test === 'authorization-header'
+                ? {
+                    Authorization: 'Basic ' + btoa('user:pwd'),
+                  }
+                : {},
           });
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const data = await response.json();
           wpData.siteHealthIssueCount[data.status] = parseInt(wpData.siteHealthIssueCount[data.status] ?? 0) + 1;
         } catch (error) {
           // eslint-disable-next-line no-console
@@ -414,11 +401,19 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       // set the transient so we do not have to run the tests on every page load
-      jQuery.post(wpData.ajaxUrl, {
-        action: 'ionos-set-site-health-issues',
-        issues: JSON.stringify(wpData.siteHealthIssueCount),
-        _wpnonce: wpData.nonce,
-      });
+      try {
+        await apiFetch({
+          url: window.ajaxurl || '/wp-admin/admin-ajax.php',
+          method: 'POST',
+          body: new URLSearchParams({
+            action: 'ionos-set-site-health-issues',
+            issues: JSON.stringify(wpData.siteHealthIssueCount),
+            _wpnonce: wpData.nonce,
+          }),
+        });
+      } catch (error) {
+        console.error('Failed to dismiss notice:', error);
+      }
     })();
 
     dashboard.querySelectorAll('.expandable > .panel__item-header').forEach((header) => {
@@ -441,20 +436,16 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    function ionos_loop_track_click(anchor, href) {
-      fetch(wpData.restUrl + 'ionos/essentials/loop/v1/click', {
+    async function ionos_loop_track_click(anchor, href) {
+      await apiFetch({
+        url: '/wp-json/ionos/essentials/loop/v1/click',
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wpData.nonce,
-        },
-        body: JSON.stringify({ anchor }),
-        credentials: 'include',
-      }).then(() => {
-        if (href) {
-          window.location.href = href;
-        }
+        data: { anchor },
       });
+
+      if (href) {
+        window.location.href = href;
+      }
     }
   }
 });

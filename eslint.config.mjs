@@ -1,6 +1,6 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import { includeIgnoreFile } from '@eslint/compat';
+import { includeIgnoreFile, fixupConfigRules } from '@eslint/compat';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import pluginReact from 'eslint-plugin-react';
@@ -18,7 +18,7 @@ const configs = [
   includeIgnoreFile(gitIgnorePath),
   includeIgnoreFile(lintIgnorePath),
   eslintPluginImport.flatConfigs.recommended,
-  pluginReact.configs.flat.recommended,
+  ...fixupConfigRules([pluginReact.configs.flat.recommended]),
   reactHooks.configs.flat['recommended-latest'],
   eslintPluginPrettierRecommended,
   // {

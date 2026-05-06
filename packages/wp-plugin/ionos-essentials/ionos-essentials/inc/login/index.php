@@ -2,8 +2,9 @@
 
 namespace ionos\essentials\login;
 
-use ionos\essentials\Tenant;
+use const ionos\essentials\PLUGIN_DIR;
 use const ionos\essentials\PLUGIN_FILE;
+use ionos\essentials\Tenant;
 
 defined('ABSPATH') || exit();
 
@@ -15,11 +16,17 @@ defined('ABSPATH') || exit();
   \add_action(
     'login_enqueue_scripts',
     function () {
-      \wp_enqueue_style(
-        'ionos-login-redesign',
-        \plugin_dir_url(__FILE__) . 'style.css',
-        [],
-        filemtime(\plugin_dir_path(__FILE__) . 'style.css')
+      $assets  = require_once PLUGIN_DIR . '/ionos-essentials/build/login/index.asset.php';
+      $src_url = \plugins_url('ionos-essentials/build/login/', PLUGIN_FILE);
+
+      \wp_enqueue_style('ionos-login-redesign', $src_url . 'index.css', [], $assets['version']);
+
+      \wp_enqueue_script(
+        'ionos-login-tracking',
+        $src_url . 'index.js',
+        $assets['dependencies'],
+        $assets['version'],
+        true
       );
     }
   );

@@ -8,6 +8,7 @@ defined('ABSPATH') || exit();
 
 require_once PLUGIN_DIR . '/ionos-essentials/inc/class-tenant.php';
 
+use function ionos\essentials\_is_plugin_active;
 use ionos\essentials\Tenant;
 use function ionos\essentials\tenant\get_tenant_config;
 
@@ -30,7 +31,7 @@ NBA::register(
   categories: ['setup-ai']
 );
 
-if (is_plugin_active('extendify/extendify.php')) {
+if (_is_plugin_active('extendify/extendify.php')) {
   NBA::register(
     id: 'help-center',
     title: \__('Discover Help Center', 'ionos-essentials'),
@@ -45,7 +46,7 @@ if (is_plugin_active('extendify/extendify.php')) {
   );
 }
 
-if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
+if (_is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
   NBA::register(
     id: 'contact-form',
     title: \__('Set Up Contact Form', 'ionos-essentials'),
@@ -57,7 +58,7 @@ if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
   );
 }
 
-if (is_plugin_active('woocommerce/woocommerce.php')) {
+if (_is_plugin_active('woocommerce/woocommerce.php')) {
   $woo_onboarding_status = get_option('woocommerce_onboarding_profile');
 
   NBA::register(
@@ -133,7 +134,7 @@ if (null !== $data) {
 
 $tenant        = Tenant::get_slug();
 $market        = strtolower(\get_option($tenant . '_market', 'de'));
-if ('de' === $market && is_plugin_active('woocommerce/woocommerce.php') && ! is_plugin_active(
+if ('de' === $market && _is_plugin_active('woocommerce/woocommerce.php') && ! _is_plugin_active(
   'woocommerce-german-market-light/woocommerce-german-market-light.php'
 )) {
   NBA::register(
@@ -142,7 +143,7 @@ if ('de' === $market && is_plugin_active('woocommerce/woocommerce.php') && ! is_
     description: \__('Use the free extension for WooCommerce to operate your online store in Germany and Austria in a legally compliant manner.', 'ionos-essentials'),
     link: '#',
     anchor: \__('Install now', 'ionos-essentials'),
-    completed: is_plugin_active(
+    completed: _is_plugin_active(
       'woocommerce-german-market-light/WooCommerce-German-Market-Light.php'
     ), // when gml is installed and activate
     categories: ['after-setup']

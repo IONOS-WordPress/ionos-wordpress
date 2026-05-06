@@ -42,10 +42,10 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip release')"
     steps:
       - name: checkout branch from git
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -57,6 +57,7 @@ jobs:
           runCmd: |
             export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
             export GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK="${{ secrets.GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK }}"
+            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}"
 
             pnpm install --frozen-lockfile
             pnpm pre-release

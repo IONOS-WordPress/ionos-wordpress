@@ -48,7 +48,7 @@ function ionos.wordpress.log_warn() {
   # see https://unix.stackexchange.com/a/269085/564826
   # SOURCE will be the function-name-or-file and line number of the caller
   [[ "${#BASH_SOURCE[@]}" -eq 2 ]] && SOURCE="${BASH_SOURCE[1]}" || SOURCE="${FUNCNAME[1]}"
-  SOURCE="${SOURCE}:${BASH_LINENO[$i]}"
+  SOURCE="${SOURCE}:${BASH_LINENO[0]}"
 
   echo -e "\e[33m${SOURCE} : $1\e[0m"  >&2
 }
@@ -92,7 +92,7 @@ function ionos.wordpress.log_error() {
   # see https://unix.stackexchange.com/a/269085/564826
   # SOURCE will be the function-name-or-file and line number of the caller
   [[ "${#BASH_SOURCE[@]}" -eq 2 ]] && SOURCE="${BASH_SOURCE[1]}" || SOURCE="${FUNCNAME[1]}"
-  SOURCE="${SOURCE}:${BASH_LINENO[$i]}"
+  SOURCE="${SOURCE}:${BASH_LINENO[0]}"
 
   echo -e "\e[31m${SOURCE} : $1\e[0m$STACKTRACE" >&2
 }
@@ -129,6 +129,9 @@ export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)
 
 # docker flags to use if docker containers will be invoked
 export DOCKER_FLAGS='-q'
+
+# composer flags to use if composer will be invoked
+export COMPOSER_FLAGS='--quiet'
 
 # if docker container should be started with same uid:guid mapping as in host system apply this setting to docker run
 export DOCKER_USER="$(id -u $USER):$(id -g $USER)"

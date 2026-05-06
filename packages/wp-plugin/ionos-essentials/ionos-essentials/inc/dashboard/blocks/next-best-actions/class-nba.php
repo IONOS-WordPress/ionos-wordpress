@@ -22,7 +22,7 @@ class NBA
     public readonly string $description,
     public readonly string $link,
     public readonly string $anchor,
-    private readonly bool $completed,
+    public readonly bool $completed,
     public readonly bool $complete_on_click,
     public readonly array $categories,
     public readonly string $exos_icon,

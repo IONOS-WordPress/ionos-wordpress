@@ -7,7 +7,7 @@
 
 set -eo pipefail
 
-readonly WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env install-path))"
+readonly WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env status --json | jq -r .installPath))"
 
 readonly WP_ENV_HASH=$(basename "$WPENV_INSTALLPATH")
 
@@ -35,6 +35,16 @@ if [[ "${CI:-}" != "true" ]]; then
       cat <<EOF | docker exec --interactive -u root "${WP_ENV_HASH}-${suffix}" sh -
         grep -q 'xdebug.log_level=' /usr/local/etc/php/php.ini || \
           echo "xdebug.log_level=0" >> /usr/local/etc/php/php.ini
+
+      # enable apcu extension
+      echo 'n' | pecl install apcu
+      docker-php-ext-enable apcu
+
+      # configure APCu to be enabled
+      echo "apc.enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
+      echo "apc.enable_cli=1" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
+
+      apache2ctl graceful ||:
 EOF
     done
   )
@@ -83,6 +93,9 @@ EOF
 $(plugins)
 $(mu_plugins)
 $(themes)
+
+        "/var/www/html/wp-content/object-cache.php": "\${workspaceFolder}/packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/apcu/object-cache.php",
+        "/var/www/html/wp-content/maintenance.php": "\${workspaceFolder}/packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/maintenance/maintenance.php",
         "/var/www/html": "\${workspaceFolder}/${WPENV_INSTALLPATH}/WordPress",
         // phpunit test path mappings
         "/wordpress-phpunit/includes": "\${workspaceFolder}/${WPENV_INSTALLPATH}/tests-WordPress-PHPUnit/tests/phpunit/includes",
@@ -127,9 +140,6 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     # activate twentytwenty-five theme in all wp-env instances (test and development)
     wp --quiet theme activate twentytwentyfive
 
-    # activate all installed plugins in all wp-env instances (test and development)
-    wp --quiet plugin activate --all
-
     # emulate ionos brand by default
     wp --quiet option update ionos_group_brand ionos
     wp --quiet option update ionos_group_brand_menu IONOS
@@ -145,6 +155,15 @@ for prefix in 'cli-1' 'tests-cli-1' ; do
     wp --quiet user update admin --user_pass="${WP_PASSWORD}"
     # reset the user meta for compromised credentials check (in case of wp-env restart)
     wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2 &>/dev/null || true
+
+    # disable stretch-extra thirdparty plugin activation
+    # (=> this would result in activating both stretch-extra and real ionos-essentials for example)
+    wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
+    # @TODO: disable beyondseo until it's php 7.4 compatible to prevent wp-env errors in php 7.4 environments (e.g. CI)
+    wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '["plugins/ionos-essentials/ionos-essentials.php", "plugins/beyond-seo/beyond-seo.php"]' --format=json
+
+    # activate all installed plugins in all wp-env instances (test and development)
+    wp --quiet plugin activate --all
 
     # fix permissions for mu-plugins folder if any
     # (leaving the permisions as-is will result in an error on destroy restart wp-env)

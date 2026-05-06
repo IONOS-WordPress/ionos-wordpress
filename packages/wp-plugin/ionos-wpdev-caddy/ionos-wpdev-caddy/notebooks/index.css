@@ -20,6 +20,7 @@ BODY[class*="wpdev-caddy-notebook-"] {
         min-height: 4lh;
         max-height: 20lh;
         font-family: monospace;
+        line-height: 16px;
       }
 
       TEXTAREA.notebook-cell-output.progress {

@@ -88,12 +88,12 @@ done
 
 function ionos.wordpress.update_composer_dependencies() {
   # find all composer.json files and run "composer update" on them
-  for composer_json in $(find ./packages -name composer.json -not -path "*/node_modules/*"); do
+  for composer_json in $(find ./packages -name composer.json -not -path "*/node_modules/*" -and -not -path "*/vendor/*"); do
     ionos.wordpress.log_header "checking '$composer_json' for updates ..."
     (
       cd "$(dirname $composer_json)"
       docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest update --no-install --no-scripts
-      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest composer outdated --locked --direct
+      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest outdated --locked --direct
     )
   done
 }
@@ -112,6 +112,10 @@ for package_path in $(find packages -mindepth 2 -maxdepth 2 -type d); do
     pnpm -s --filter "$PACKAGE_NAME" run update-dependencies
   fi
 done
+
+# check for malicious packages using safedep vet
+# --pull=always is the cheapest way to ensure latest vet database is used
+docker run $DOCKER_FLAGS --pull=always --rm -v $(pwd):/workspace ghcr.io/safedep/vet:latest scan -D /workspace
 
 exit
 

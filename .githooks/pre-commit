@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# script implements the precommit hook for automatically check for leaked secrets on "git commit"
+#
+# this feature is a opt-out - it will be executed if the CHECK_LEAKED_SECRETS is set to true in the .env file
+#
+# If you want to disable git hooks for some reason you can disable it
+# by setting it to false (CHECK_LEAKED_SECRETS='false') in your local .env.local file.
+#
+
+# skip when running in CI environment
+if [[ "$CI" == "true" ]]; then
+  exit 0
+fi
+
+# bootstrap the environment
+source "./scripts/includes/bootstrap.sh"
+
+
+[[ "$CHECK_LEAKED_SECRETS" =~ true|yes ]] || exit 0
+
+# --pull=always is the cheapest way to ensure latest gitleaks database is used
+docker run $DOCKER_FLAGS --pull=always --rm -v "$(pwd):/path" zricethezav/gitleaks:latest protect --source="/path" --staged -v

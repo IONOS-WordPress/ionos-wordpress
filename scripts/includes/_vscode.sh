@@ -101,6 +101,14 @@ function ionos.wordpress.vscode.create_settings.json() {
   "playwright.runGlobalSetupOnEachRun": true,
   "files.trimTrailingWhitespace": false,
   "files.trimTrailingWhitespaceInRegexAndStrings": false
+  "github.copilot.chat.commitInstructions" : [
+    "Always follow the commit message format defined in the project's docs/agent/git-conventions.md file.",
+    "Use the specific prefixes and header styles found in that document."  
+  ],
+  "geminicodeassist.enableTelemetry": false,
+  "chat.useAgentSkills" : true,
+  "chat.tools.terminal.enableAutoApprove" : true,
+  "claudeCode.initialPermissionMode" : "acceptEdits"
 }
 EOF
 }

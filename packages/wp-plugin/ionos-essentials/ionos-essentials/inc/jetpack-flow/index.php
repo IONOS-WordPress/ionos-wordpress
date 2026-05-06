@@ -2,6 +2,8 @@
 
 namespace ionos\essentials\jetpack_flow;
 
+use function ionos\essentials\_is_plugin_active;
+
 defined('ABSPATH') || exit();
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -41,7 +43,7 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 });
 
 \add_action('init', function (): void {
-  if (str_contains(\wp_login_url(), $_SERVER['SCRIPT_NAME'])) {
+  if (isset($_SERVER['SCRIPT_NAME']) && str_contains(wp_login_url(), $_SERVER['SCRIPT_NAME'])) {
     \add_filter(
       'ionos_login_redirect_to',
       function ($redirect_to, $requested_redirect_to, $logged_user): string {
@@ -84,22 +86,8 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
     return;
   }
 
-  if (\is_plugin_active(JETPACK_PLUGIN_FILE)) {
-    if (str_contains(
-      $_SERVER['REQUEST_URI'],
-      'page=ionos-assistant&setup_action=partner&usecase=jetpack-backup&coupon='
-    )) {
-      $redirect_url = add_query_arg(
-        [
-          'page'                 => 'jetpack',
-          'showCouponRedemption' => '1',
-        ],
-        \admin_url('admin-php')
-      );
-      \wp_redirect($redirect_url);
-    } else {
-      \wp_redirect(add_query_arg('jetpack-partner-coupon', $_GET['coupon'], \admin_url('admin.php')));
-    }
+  if (_is_plugin_active(JETPACK_PLUGIN_FILE)) {
+    \wp_redirect(add_query_arg('jetpack-partner-coupon', $_GET['coupon'], \admin_url('admin.php')));
     exit;
   }
 

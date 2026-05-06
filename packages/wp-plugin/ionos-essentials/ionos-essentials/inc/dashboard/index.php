@@ -112,6 +112,14 @@ add_filter('admin_body_class', function ($classes) {
   return $classes;
 });
 
+function install_plugin_from_url($plugin_url)
+{
+  $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
+  $result   = $upgrader->install($plugin_url);
+
+  return ! \is_wp_error($result);
+}
+
 \add_action('rest_api_init', function () {
   \register_rest_route(
     'ionos/essentials/dashboard/welcome/v1',
@@ -136,18 +144,9 @@ add_filter('admin_body_class', function ($classes) {
     ]
   );
 
-  function install_plugin_from_url($plugin_url)
-  {
-    $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
-    $result   = $upgrader->install($plugin_url);
-
-    return ! \is_wp_error($result);
-  }
-
   \register_rest_route('ionos/essentials/dashboard/nba/v1', '/update', [
     'methods'  => 'POST',
     'callback' => function ($request) {
-      require_once __DIR__ . '/blocks/my-account/index.php';
       require_once __DIR__ . '/blocks/next-best-actions/class-nba.php';
       $params = $request->get_params();
       $nba_id = $params['id'];
@@ -224,11 +223,10 @@ add_filter('admin_body_class', function ($classes) {
       wp_send_json_error([
         'message' => 'Something went wrong.',
       ], 403);
-      wp_die();
     }
 
     \set_transient('ionos_site_health_issue_count', $issues, 5 * MINUTE_IN_SECONDS);
-    \wp_die();
+    \wp_send_json_success();
   }
 );
 
@@ -236,7 +234,7 @@ add_filter('admin_body_class', function ($classes) {
   $issue_counts = \get_transient('ionos_site_health_issue_count');
   if (is_string($issue_counts)) {
     $decoded = json_decode($issue_counts, true);
-    if (json_last_error() === JSON_ERROR_NONE) {
+    if (is_array($decoded)) {
       $issue_counts = $decoded;
     } else {
       $issue_counts = [];
@@ -275,9 +273,6 @@ add_filter('admin_body_class', function ($classes) {
 
   \wp_localize_script('ionos-essentials-dashboard', 'wpData', [
     'nonce'                  => \wp_create_nonce('wp_rest'),
-    'healthCheckNonce'       => \wp_create_nonce('health-check-site-status-result'),
-    'restUrl'                => \esc_url_raw(rest_url()),
-    'ajaxUrl'                => admin_url('admin-ajax.php'),
     'securityOptionName'     => IONOS_SECURITY_FEATURE_OPTION,
     'tenant'                 => Tenant::get_slug(),
     'siteHealthIssueCount'   => $issue_counts,
@@ -300,6 +295,13 @@ add_filter('admin_body_class', function ($classes) {
 
         if (empty($option)) {
           \update_option($key, $value);
+
+          if ($key === 'ionos_essentials_maintenance_mode' and class_exists(
+            \Ionos\Performance\Controllers\Cache\HDDCache::class
+          )) {
+            \Ionos\Performance\Controllers\Cache\HDDCache::flush_total_cache();
+          }
+
         } else {
           $options       = \get_option($option, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
           $options[$key] = $value;
@@ -327,10 +329,11 @@ add_action('admin_enqueue_scripts', function () {
 });
 
 require_once __DIR__ . '/blocks/quick-links/index.php';
+require_once __DIR__ . '/blocks/my-account/index.php';
 
 \add_action(
   'wp_ajax_ionos-popup-dismiss',
-  fn () => (\delete_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp') && \wp_die())
+  fn () => (\delete_user_meta(\get_current_user_id(), 'ionos_popup_after_timestamp') && \wp_send_json_success())
 );
 
 /* hide admin bar, when query param /?hidetoolbar=1 is set */

@@ -1,6 +1,6 @@
 {
   "require-dev": {
-    "symplify/easy-coding-standard": "13.0.0",
+    "symplify/easy-coding-standard": "13.0.4",
     "wp-coding-standards/wpcs": "3.3.0"
   },
   "config": {

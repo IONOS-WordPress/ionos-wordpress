@@ -6,7 +6,7 @@
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
- * Version:           1.4.3
+ * Version:           1.4.8
  * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials
  * License:           GPL-2.0-or-later
@@ -62,7 +62,7 @@ defined('ABSPATH') || exit();
 
   // enqueue wpscan scripts
   $token   = \get_option('ionos_security_wpscan_token', '');
-  $scripts = empty($token) ? [] : ['plugin-install', 'theme-install', 'theme-overview'];
+  $scripts = empty($token) ? [] : ['plugin-install', 'theme-install', 'theme-overview', 'plugin-delete'];
   foreach ($scripts as $name) {
 
     $asset_path = __DIR__ . "/ionos-essentials/build/wpscan/{$name}-index.asset.php";
@@ -147,13 +147,35 @@ require_once __DIR__ . '/ionos-essentials/inc/adminbar/index.php';
 
 require_once __DIR__ . '/ionos-essentials/inc/extendify/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/mcp/index.php';
+require_once __DIR__ . '/ionos-essentials/inc/automatic-core-updates/index.php';
 
 // soc plugin components
 require_once __DIR__ . '/ionos-essentials/inc/migration/index.php';
 
-function is_stretch(): bool
+if (! defined('IONOS_IS_STRETCH')) {
+  define('IONOS_IS_STRETCH', str_starts_with(getcwd(), '/home/www/public'));
+}
+
+/**
+ * Check if a plugin is active, including custom plugins loaded via ionos stretch extra
+ *
+ * This function should always be used in favor of WordPress function is_plugin_active
+ * to take custom loaded plugins from stretch-extra into account
+ */
+function _is_plugin_active(string $plugin): bool
 {
-  return str_starts_with(getcwd(), '/home/www/public');
+  if (function_exists('\ionos\stretch_extra\secondary_plugin_dir\is_custom_plugin_active')) {
+    $_plugin   = 'plugins/' . $plugin;
+    $is_active = \ionos\stretch_extra\secondary_plugin_dir\is_custom_plugin_active($_plugin);
+    if ($is_active) {
+      return $is_active;
+    }
+  }
+
+  if (! function_exists('is_plugin_active')) {
+    require_once ABSPATH . 'wp-admin/includes/plugin.php';
+  }
+  return is_plugin_active($plugin);
 }
 
 // TODO: evaluate for other tenants than IONOS

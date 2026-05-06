@@ -1,0 +1,6 @@
+# Ignore everything in custom-plugins
+stretch-extra/plugins/*
+stretch-extra/themes/*
+
+!stretch-extra/plugins/README.md
+!stretch-extra/themes/README.md

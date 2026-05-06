@@ -19,8 +19,12 @@ runs:
     - id: compute_image_name
       shell: bash
       run: |
+        # get last modified date of .devcontainer folder files
+        LAST_MODIFIED=$(git log -1 --format="%cd" --date=format:'%Y-%m-%d-%H-%M-%S' -- .devcontainer)
+        echo "Last modified date of .devcontainer files: $LAST_MODIFIED"
+        git log -1 -- .devcontainer
         # construct image_name from repo owner/name and branch
-        # example value : "ghcr.io/IONOS-Wordpress/ionos-wordpress-develop-devcontainer"
-        image_name="ghcr.io/${GITHUB_REPOSITORY}-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}-devcontainer"
+        # example value : "ghcr.io/IONOS-Wordpress/ionos-wordpress-2025-12-24-14-48-33-devcontainer"
+        image_name="ghcr.io/${GITHUB_REPOSITORY}-${LAST_MODIFIED}-devcontainer"
         # convert image_name to lowercase and provide it as step variable "image_name"
         echo "image_name=${image_name@L}" >> "$GITHUB_OUTPUT"

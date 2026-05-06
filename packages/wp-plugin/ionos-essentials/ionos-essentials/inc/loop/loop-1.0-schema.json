@@ -48,10 +48,43 @@
         },
         "htaccess_md5": {
           "type": "object",
-          "description": "List of all .htaccess files (key: file path relative to ABSPATH, value: MD5  checksum)",
+          "description": "List of all .htaccess files (key: file path relative to ABSPATH, value: analysis object)",
           "additionalProperties": {
-            "type": "string",
-            "description": "MD5 checksum of the .htaccess file"
+            "type": "object",
+            "description": "Analysis data for a .htaccess file",
+            "properties": {
+              "md5": {
+                "type": "string",
+                "description": "MD5 checksum of the .htaccess file"
+              },
+              "use_cases": {
+                "type": "array",
+                "description": "Detected use cases and patterns in the .htaccess file",
+                "items": {
+                  "type": "string",
+                  "description": "Use case identifier",
+                  "examples": [
+                    "htaccess_deny_from_all",
+                    "htaccess_require_all_denied",
+                    "htaccess_wordpress_permalinks",
+                    "htaccess_disable_directory_listing",
+                    "htaccess_redirect_rules",
+                    "htaccess_force_https",
+                    "htaccess_security_headers",
+                    "htaccess_file_protection",
+                    "htaccess_ip_filtering",
+                    "htaccess_custom_error_pages",
+                    "htaccess_caching_rules",
+                    "htaccess_php_settings_*",
+                    "htaccess_rewrite_engine_active",
+                    "htaccess_empty_file",
+                    "htaccess_woocommerce_protection",
+                    "htaccess_error_reading_file"
+                  ]
+                }
+              }
+            },
+            "required": ["md5", "use_cases"]
           }
         }
       },

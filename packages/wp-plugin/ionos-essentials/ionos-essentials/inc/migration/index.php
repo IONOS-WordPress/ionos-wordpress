@@ -12,7 +12,11 @@
 
 namespace ionos\essentials\migration;
 
+use function ionos\essentials\dashboard\install_plugin_from_url;
+
 defined('ABSPATH') || exit();
+
+define('IS_LOCAL', wp_get_environment_type() === 'local');
 
 use const ionos\essentials\PLUGIN_FILE;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
@@ -40,7 +44,7 @@ const WP_OPTION_LAST_INSTALL_DATA_KEY_PLUGIN_VERSION = 'plugin-version';
  * Attention: if our plugin once will take effect in published posts, we should hook into
  * 'init' instead of 'admin-init' to make sure the migration runs always.
  */
-\add_action('admin_init', __NAMESPACE__ . '\_install');
+\add_action('admin_init', __NAMESPACE__ . '\_install', 1);
 
 // can be left off if no uninstall logic is needed
 \register_uninstall_hook(__FILE__, __NAMESPACE__ . '\_uninstall');
@@ -86,6 +90,21 @@ function _install()
 
       // re add ionos loop consent data
       \add_option('ionos_loop_consent', $ionos_loop_consent_given);
+
+      // install the performance plugin for all non stretch spaces
+      if (! defined('IONOS_IS_STRETCH')                                              &&
+      ! is_plugin_active('ionos-performance/ionos-performance.php')                  &&
+      ! defined('IS_LOCAL')) {
+        install_plugin_from_url(
+          'https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-group/ionos-performance.latest.zip'
+        );
+        \activate_plugin('ionos-performance/ionos-performance.php');
+      }
+
+      // initialize wpscan results empty
+      \set_transient('ionos_wpscan_last_scan', time());
+      \set_transient('ionos_wpscan_issues', []);
+
       // no break because we want to run all migrations sequentially
     case version_compare($last_installed_version, '1.0.4', '<'):
       \update_option('ionos_migration_step', 1);
@@ -130,22 +149,8 @@ function _install()
 
       \add_option(IONOS_SECURITY_FEATURE_OPTION, $security_options, '', true);
       // no break
-    case version_compare($last_installed_version, '1.2.0', '<'):
-      $users = get_users([
-        'fields' => ['ID'],
-      ]);
-
-      foreach ($users as $user) {
-        \update_user_meta($user->ID, 'ionos_popup_after_timestamp', time()+60);
-      }
-
-      // TODO: Implement data collector registration version independently
-
-      // case version_compare($last_installed_version, '1.3.0', '<'):
-      //   // since we changed the data collector url we need to update tell that the datacollector once
-      //   if (function_exists('ionos\essentials\loop\_register_at_datacollector')) {
-      //     _register_at_datacollector();
-      //   }
+    case version_compare($last_installed_version, '1.4.6', '<='):
+      \update_option('ionos_wpscan_issues_sent_to_user', \get_transient('ionos_wpscan_issues_sent_to_user'), []);
   }
   \update_option(option: WP_OPTION_LAST_INSTALL_DATA, value: $current_install_data, autoload: true);
 }

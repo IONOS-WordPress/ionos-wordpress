@@ -1,5 +1,6 @@
 /* eslint-disable-next-line import/named */
 import { request } from '@playwright/test';
+import { existsSync } from 'fs';
 
 import { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
 
@@ -17,8 +18,10 @@ async function globalSetup(config) {
   // Reset the test environment before running the tests.
   await Promise.all([
     requestUtils.activateTheme('twentytwentyfive'),
-    // @FIXME: activate all plugins
-    requestUtils.activatePlugin('essentials'),
+    // hack: only activate the essentials plugin if it's not already part of the mu-plugins
+    existsSync('packages/wp-mu-plugin/stretch-extra/stretch-extra/plugins/ionos-essentials')
+      ? Promise.resolve()
+      : requestUtils.activatePlugin('essentials'),
     // // Disable this test plugin as it's conflicting with some of the tests.
     // // We already have reduced motion enabled and Playwright will wait for most of the animations anyway.
     // requestUtils.deactivatePlugin(
