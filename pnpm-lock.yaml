@@ -7,8 +7,8 @@ settings:
 catalogs:
   default:
     '@wordpress/components':
-      specifier: ^32.4.0
-      version: 32.4.0
+      specifier: ^32.5.0
+      version: 32.6.0
 
 importers:
 
@@ -76,7 +76,7 @@ importers:
         version: 25.6.0
       '@wordpress/components':
         specifier: 'catalog:'
-        version: 32.4.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 32.6.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@wordpress/e2e-test-utils-playwright':
         specifier: ^1.45.0
         version: 1.45.0(@playwright/test@1.59.1)(@types/node@25.6.0)
@@ -3688,8 +3688,8 @@ packages:
     resolution: {integrity: sha512-iSRD/0bxD9PUHWssZN1zZa+xZ2E9FtpgNYKeceTPLKV3rd+rRPqI1h2a2iHboLzex80c1vaxe6eQ9kyZQfGtiA==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
 
-  '@wordpress/components@32.4.0':
-    resolution: {integrity: sha512-aGXtHZbrvA2upy/Qwti1lFjt0BPqezoYx2Le5x/0P841Ss4O/9XtAvJGg99hityIugbzEdDzkWKcdoBRwa2FBQ==}
+  '@wordpress/components@32.6.0':
+    resolution: {integrity: sha512-MpOr0mGTkKDRjxK5LKm86Uoj9p9Z6KkrvhkNVi5zVKCftyHVMK+tun7wL2Qn/JZVLbxZpB1kW5sJ5aMf3T2ToA==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
     peerDependencies:
       react: ^18.0.0
@@ -13938,7 +13938,7 @@ snapshots:
 
   '@wordpress/browserslist-config@6.45.0': {}
 
-  '@wordpress/components@32.4.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@wordpress/components@32.6.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
       '@ariakit/react': 0.4.26(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@date-fns/utc': 2.1.1

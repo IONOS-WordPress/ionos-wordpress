@@ -15,8 +15,6 @@ test.describe(
         wp --quiet user meta update 1 ionos_essentials_welcome true
         # simulate extendify onboarding already done
         wp --quiet option update extendify_attempted_redirect_count 4
-        # simulate switch page decision
-        wp --quiet option update IONOS_ESSENTIALS_ONBOARDING diy
       `);
     });
 

@@ -1,5 +1,20 @@
 # @ionos-wordpress/essentials
 
+## 1.4.8
+
+### Patch Changes
+
+- 7d67d9b: hotfix for ai switch-page
+
+## 1.4.7
+
+### Patch Changes
+
+- 88c31fc: fix multiple wp scan emails
+  add account-links to admin menu
+  block specific plugin for sfs
+- f24fac6: fix wpscan upstream error retry storm by caching empty result with 5-minute backoff TTL
+
 ## 1.4.6
 
 ### Patch Changes

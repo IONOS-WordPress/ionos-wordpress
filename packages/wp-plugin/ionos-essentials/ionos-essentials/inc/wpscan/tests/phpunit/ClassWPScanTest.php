@@ -93,6 +93,85 @@ class ClassWPScanTest extends \WP_UnitTestCase {
     $this->assertEquals($expected, $converted_data);
   }
 
+  public function test_upstream_http_error_sets_backoff_transient(): void {
+    \delete_transient('ionos_wpscan_issues');
+    \update_option('ionos_security_wpscan_token', 'test-token');
+
+    \add_filter('pre_http_request', fn () => [
+      'headers'  => [],
+      'body'     => '',
+      'response' => ['code' => 500, 'message' => 'Internal Server Error'],
+      'cookies'  => [],
+      'filename' => null,
+    ], 10, 3);
+
+    new WPScan();
+
+    \remove_all_filters('pre_http_request');
+
+    $this->assertSame([], \get_transient('ionos_wpscan_issues'));
+    $this->assertEqualsWithDelta(
+      time() + 5 * MINUTE_IN_SECONDS,
+      \get_option('_transient_timeout_ionos_wpscan_issues'),
+      5
+    );
+  }
+
+  public function test_upstream_success_caches_issues_for_23_hours(): void {
+    \delete_transient('ionos_wpscan_issues');
+    \update_option('ionos_security_wpscan_token', 'test-token');
+
+    \add_filter('pre_http_request', fn () => [
+      'headers'  => [],
+      'cookies'  => [],
+      'filename' => null,
+      'response' => ['code' => 200, 'message' => 'OK'],
+      'body'     => json_encode([
+        'plugins' => [
+          [
+            'slug'            => 'test-plugin',
+            'vulnerabilities' => [
+              ['score' => 8.5, 'fixed_in' => '2.0.0'],
+            ],
+          ],
+        ],
+        'themes' => [],
+      ]),
+    ], 10, 3);
+
+    new WPScan();
+
+    \remove_all_filters('pre_http_request');
+
+    $issues = \get_transient('ionos_wpscan_issues');
+    $this->assertCount(1, $issues);
+    $this->assertSame('test-plugin', $issues[0]['slug']);
+    $this->assertSame(8.5, $issues[0]['score']);
+    $this->assertEqualsWithDelta(
+      time() + 23 * HOUR_IN_SECONDS,
+      \get_option('_transient_timeout_ionos_wpscan_issues'),
+      5
+    );
+  }
+
+  public function test_upstream_network_failure_sets_backoff_transient(): void {
+    \delete_transient('ionos_wpscan_issues');
+    \update_option('ionos_security_wpscan_token', 'test-token');
+
+    \add_filter('pre_http_request', fn () => new \WP_Error('http_request_failed', 'Connection timeout'), 10, 3);
+
+    new WPScan();
+
+    \remove_all_filters('pre_http_request');
+
+    $this->assertSame([], \get_transient('ionos_wpscan_issues'));
+    $this->assertEqualsWithDelta(
+      time() + 5 * MINUTE_IN_SECONDS,
+      \get_option('_transient_timeout_ionos_wpscan_issues'),
+      5
+    );
+  }
+
   public function test_sending_email() : void {
     update_option('IONOS_SECURITY_FEATURE_OPTION', ['IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY' => true]);
     set_transient('ionos_wpscan_issues', [
