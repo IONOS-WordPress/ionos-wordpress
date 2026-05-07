@@ -15,13 +15,15 @@ defined('ABSPATH') || exit();
 
     <div class="grid-col grid-col--8 grid-col--small-12">
       <?php
-        blocks\adserver\render();
-blocks\next_best_actions\render();
-?>
+        blocks\next_best_actions\render();
+      ?>
     </div>
     <div class="grid-col grid-col--4 grid-col--small-12">
-      <?php blocks\quick_links\render_callback(); ?>
-      <?php blocks\my_account\render_callback(); ?>
+      <?php
+        blocks\adserver\render();
+        blocks\quick_links\render_callback();
+        blocks\my_account\render_callback();
+      ?>
     </div>
   </div>
 </div>
