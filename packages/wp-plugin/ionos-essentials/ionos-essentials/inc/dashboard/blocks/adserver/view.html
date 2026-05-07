@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdServer</title>
+</head>
+<body>
+  <div class="ias-zone" data-ias-zoneid="developers_docs_example" style="width: 100%;height: 100px;"></div>
+
+  <script type="text/javascript">
+  var OAO = OAO || {}; // OAO refers to the global OAO variable.
+  OAO.q = OAO.q || {};
+  OAO.q.c = OAO.q.c || [];
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token') || 'adserver_default_token';
+  OAO.q.c.push(['setFrontendToken', token]);
+  OAO.q.c.push(['setPageName', 'Dashboard']); // please use: [a-zA-Z_]
+
+  </script>
+  <script id="oaotag" type="text/javascript" src="https://frontend-services.ionos.com/t/tag/IONOS/wp-admin.js" async="async" defer="defer"></script>
+
+ <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const adzone = document.querySelector('.ias-zone');
+        if (!adzone) {
+        return;
+        }
+        const observer = new MutationObserver(function(mutations) {
+          const childrenCount = adzone.children.length;
+          if(childrenCount > 0) {
+            observer.disconnect();
+            const shadowDom = window.parent.document.querySelector('#wpbody-content').shadowRoot;
+            const iframe = shadowDom.querySelector('iframe#adzone');
+            iframe.style.display = 'block';
+          }
+        });
+
+        observer.observe(adzone, {
+          childList: true,
+          subtree: true,
+          attributes: true
+        });
+
+    });
+  </script>
+</body>
+</html>
+
