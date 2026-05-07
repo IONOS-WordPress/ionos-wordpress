@@ -18,7 +18,6 @@ require_once __DIR__ . '/blocks/popup/index.php';
 require_once __DIR__ . '/blocks/site-health/index.php';
 require_once __DIR__ . '/blocks/adserver/index.php';
 
-
 // Fontface must be loaded before the template is rendered
 ?>
 <style>
