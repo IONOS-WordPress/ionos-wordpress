@@ -16,11 +16,9 @@ test.describe(
         # simulate extendify onboarding already done
         wp --quiet option update extendify_attempted_redirect_count 4
         
-        # simulate switch page decision
-        wp --quiet option update IONOS_ESSENTIALS_ONBOARDING diy
-        
         # test specific
-        wp --quiet option delete IONOS_SECURITY_FEATURE_OPTION`);
+        wp --quiet option delete IONOS_SECURITY_FEATURE_OPTION
+        `);
     });
 
     test('user can set option', async ({ admin, page }) => {

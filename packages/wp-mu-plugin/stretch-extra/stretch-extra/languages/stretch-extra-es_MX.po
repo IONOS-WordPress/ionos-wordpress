@@ -89,3 +89,8 @@ msgstr ""
 #, php-format
 msgid "The use of \"%s\" is not allowed and cannot be activated. Uninstall is recommended."
 msgstr ""
+
+#: stretch-extra/inc/plugin-block-list/plugin-block-list.php
+#, php-format
+msgid "The use of \"%s\" is not allowed and cannot be activated via install. Uninstall is recommended."
+msgstr ""

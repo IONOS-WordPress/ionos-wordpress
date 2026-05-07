@@ -57,6 +57,7 @@ jobs:
           runCmd: |
             export GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
             export GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK="${{ secrets.GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK }}"
+            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}"
 
             pnpm install --frozen-lockfile
             pnpm pre-release
