@@ -39,13 +39,11 @@
         const iframe = shadowDom.querySelector('iframe#adzone');
 
         const observer = new MutationObserver(function (mutations) {
-          const childrenCount = adzone.children.length;
-          if (childrenCount > 0) {
+          if (adzone.children.length > 0) {
             observer.disconnect();
 
             iframe.style.display = 'block';
-
-            setTimeout(resizeIframe, 500);
+            iframe.style.height =  document.querySelector('.ias-zone>div').offsetHeight + 'px';
 
             document.querySelectorAll('[target]').forEach(function (element) {
               element.setAttribute('target', '_blank');
@@ -53,7 +51,9 @@
           }
         });
 
-       window.addEventListener('resize', resizeIframe);
+       window.addEventListener('resize', function () {
+         iframe.style.height = document.querySelector('.ias-zone>div').offsetHeight + 'px';
+       });
 
         observer.observe(adzone, {
           childList: true,
@@ -61,9 +61,6 @@
           attributes: true,
         });
 
-        function resizeIframe() {
-          iframe.style.height = document.querySelector('.ias-zone>div').offsetHeight + 'px';
-        }
       });
     </script>
   </body>
