@@ -280,24 +280,25 @@ add_action('admin_notices', function () {
  */
 \add_filter('wp_admin_notice_markup', function ($markup, $message, array $args) {
   // Check if it's an error message
-  $is_error = ($args['type'] === 'error' || (isset($args['additional_classes']) && in_array(
+  $is_error = (isset($args['type']) && $args['type'] === 'error' || (isset($args['additional_classes']) && in_array(
     'error',
     $args['additional_classes']
   )));
 
-  if ($is_error && str_contains($message, 'has been deactivated due to an error')) {
+  // Surgical fix: Use strpos instead of str_contains for PHP < 8.0 compatibility
+  if ($is_error && strpos($message, 'has been deactivated due to an error') !== false) {
     // List of slugs to protect from showing deactivation errors
     $protected_slugs = ['extendify', 'ionos-essentials', '01-ext-'];
 
     foreach ($protected_slugs as $slug) {
-      if (str_contains($message, $slug)) {
+      if (strpos($message, $slug) !== false) {
         return ''; // Delete the markup, making the error invisible
       }
     }
   }
 
   // Also catch the direct "Plugin file does not exist" translation
-  if ($is_error && str_contains($message, __('Plugin file does not exist.'))) {
+  if ($is_error && strpos($message, __('Plugin file does not exist.')) !== false) {
     return '';
   }
 
