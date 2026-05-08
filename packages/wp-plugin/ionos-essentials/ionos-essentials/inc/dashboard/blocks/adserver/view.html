@@ -28,15 +28,7 @@
       document.querySelector('.ias-zone').setAttribute('data-ias-zoneid', zoneId);
       OAO.q.c.push(['setFrontendToken', token]);
       OAO.q.c.push(['setPageName', 'Dashboard']); // please use: [a-zA-Z_]
-    </script>
-    <script
-      id="oaotag"
-      type="text/javascript"
-      src="https://frontend-services.ionos.com/t/tag/IONOS/wp-admin.js"
-      async="async"
-      defer="defer"></script>
 
-    <script>
       document.addEventListener('DOMContentLoaded', function () {
         const adzone = document.querySelector('.ias-zone');
         const shadowDom = window.parent.document.querySelector('#wpbody-content').shadowRoot;
@@ -66,5 +58,11 @@
         });
       });
     </script>
+    <script
+      id="oaotag"
+      type="text/javascript"
+      src="https://frontend-services.ionos.com/t/tag/IONOS/wp-admin.js"
+      async="async"
+      defer="defer"></script>
   </body>
 </html>
