@@ -11,9 +11,7 @@
 
   </head>
   <body style="overflow: hidden; background: white">
-    <div
-      class="ias-zone"
-      data-ias-zoneid="developers_docs_example"></div>
+    <div class="ias-zone"></div>
 
     <script type="text/javascript">
       var OAO = OAO || {}; // OAO refers to the global OAO variable.
@@ -22,6 +20,8 @@
 
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get('token') || 'adserver_default_token';
+      const zoneId = urlParams.get('zoneid') || '';
+      document.querySelector('.ias-zone').setAttribute('data-ias-zoneid', zoneId);
       OAO.q.c.push(['setFrontendToken', token]);
       OAO.q.c.push(['setPageName', 'Dashboard']); // please use: [a-zA-Z_]
     </script>
