@@ -3,8 +3,8 @@
 namespace ionos\stretch_extra\secondary_plugin_dir;
 
 // 0. Prevent execution if not in WP-CLI
-if (!defined('WP_CLI') || !WP_CLI) {
-    return;
+if (! defined('WP_CLI') || ! WP_CLI) {
+  return;
 }
 
 /**
@@ -12,12 +12,15 @@ if (!defined('WP_CLI') || !WP_CLI) {
  * Prevents virtual path warnings from hitting the CLI output.
  */
 set_error_handler(function ($errno, $errstr) {
-    if ($errno === E_WARNING) {
-        if (strpos($errstr, '01-ext-') !== false || strpos($errstr, 'extendify') !== false || strpos($errstr, 'ionos-essentials') !== false) {
-            return true;
-        }
+  if ($errno === E_WARNING) {
+    if (strpos($errstr, '01-ext-') !== false || strpos($errstr, 'extendify') !== false || strpos(
+      $errstr,
+      'ionos-essentials'
+    ) !== false) {
+      return true;
     }
-    return false;
+  }
+  return false;
 });
 
 /**
@@ -26,14 +29,14 @@ set_error_handler(function ($errno, $errstr) {
  * so that internal file_exists() checks pass.
  */
 \add_filter('plugin_file_path', function ($path, $plugin) {
-    $all = get_all_custom_plugins();
-    foreach ($all as $entry) {
-        $slug = str_replace('plugins/', '', $entry['key']);
-        if ($slug === $plugin || $entry['key'] === $plugin) {
-            return $entry['file'];
-        }
+  $all = get_all_custom_plugins();
+  foreach ($all as $entry) {
+    $slug = str_replace('plugins/', '', $entry['key']);
+    if ($slug === $plugin || $entry['key'] === $plugin) {
+      return $entry['file'];
     }
-    return $path;
+  }
+  return $path;
 }, 1, 2);
 
 /**
@@ -41,26 +44,26 @@ set_error_handler(function ($errno, $errstr) {
  * Forces 'wp plugin list' to show only the slug and recognized metadata.
  */
 \add_filter('all_plugins', function ($plugins) {
-    $mounted = get_all_custom_plugins();
-    foreach ($mounted as $entry) {
-        if (is_custom_plugin_deleted($entry['key'])) {
-            continue;
-        }
-
-        $slug = str_replace('plugins/', '', $entry['key']);
-
-        // Remove standard path-based entries to avoid duplicates
-        unset($plugins[$entry['file']], $plugins[$entry['key']]);
-
-        $plugins[$slug] = [
-            'Name'        => $entry['data']['Name'] ?? $slug,
-            'Version'     => '1.0.0',
-            'Description' => 'IONOS Stretch Asset',
-            'Author'      => 'IONOS',
-            'Title'       => $entry['data']['Name'] ?? $slug,
-        ];
+  $mounted = get_all_custom_plugins();
+  foreach ($mounted as $entry) {
+    if (is_custom_plugin_deleted($entry['key'])) {
+      continue;
     }
-    return $plugins;
+
+    $slug = str_replace('plugins/', '', $entry['key']);
+
+    // Remove standard path-based entries to avoid duplicates
+    unset($plugins[$entry['file']], $plugins[$entry['key']]);
+
+    $plugins[$slug] = [
+      'Name'        => $entry['data']['Name'] ?? $slug,
+      'Version'     => '1.0.0',
+      'Description' => 'IONOS Stretch Asset',
+      'Author'      => 'IONOS',
+      'Title'       => $entry['data']['Name'] ?? $slug,
+    ];
+  }
+  return $plugins;
 }, 999);
 
 /**
@@ -68,17 +71,17 @@ set_error_handler(function ($errno, $errstr) {
  * Ensures 'Active' status is shown correctly in the CLI list.
  */
 \add_filter('option_active_plugins', function ($active_plugins) {
-    $custom_active = get_active_custom_plugins();
-    $all_custom    = get_all_custom_plugins();
-    $active_plugins = is_array($active_plugins) ? $active_plugins : [];
+  $custom_active  = get_active_custom_plugins();
+  $all_custom     = get_all_custom_plugins();
+  $active_plugins = is_array($active_plugins) ? $active_plugins : [];
 
-    foreach ($all_custom as $entry) {
-        $slug = str_replace('plugins/', '', $entry['key']);
-        if (in_array($entry['key'], $custom_active)) {
-            $active_plugins[] = $slug;
-        }
+  foreach ($all_custom as $entry) {
+    $slug = str_replace('plugins/', '', $entry['key']);
+    if (in_array($entry['key'], $custom_active)) {
+      $active_plugins[] = $slug;
     }
-    return array_values(array_unique($active_plugins));
+  }
+  return array_values(array_unique($active_plugins));
 }, 1);
 
 /**
@@ -86,53 +89,53 @@ set_error_handler(function ($errno, $errstr) {
  * Handles the logic for activate, deactivate, delete, and install.
  */
 \WP_CLI::add_hook('before_invoke:plugin', function () {
-    $runner     = \WP_CLI::get_runner();
-    $subcommand = $runner->arguments[1] ?? '';
-    $user_slug  = $runner->arguments[2] ?? '';
-    $assoc_args = $runner->assoc_args;
+  $runner     = \WP_CLI::get_runner();
+  $subcommand = $runner->arguments[1] ?? '';
+  $user_slug  = $runner->arguments[2] ?? '';
+  $assoc_args = $runner->assoc_args;
 
-    if (!in_array($subcommand, ['activate', 'deactivate', 'delete', 'install'])) {
-        return;
+  if (! in_array($subcommand, ['activate', 'deactivate', 'delete', 'install'])) {
+    return;
+  }
+
+  foreach (get_all_custom_plugins() as $entry) {
+    $full_key  = $entry['key'];
+    $slug      = str_replace('plugins/', '', $full_key);
+
+    // Match user input against slug or full key
+    if ($user_slug === $entry['slug'] || $user_slug === $slug || $user_slug === $full_key) {
+
+      switch ($subcommand) {
+        case 'activate':
+          activate_custom_plugin($full_key);
+          break;
+
+        case 'deactivate':
+          deactivate_custom_plugin($full_key);
+          break;
+
+        case 'delete':
+          mark_custom_plugin_as_deleted($full_key);
+          break;
+
+        case 'install':
+          unmark_custom_plugin_as_deleted($full_key);
+          if (isset($assoc_args['activate'])) {
+            activate_custom_plugin($full_key);
+          }
+          break;
+      }
+
+      // Clear caches so the next command sees the change immediately
+      wp_cache_delete('alloptions', 'options');
+      wp_cache_delete('active_plugins', 'options');
+
+      if (function_exists('apcu_clear_cache')) {
+        apcu_clear_cache();
+      }
+
+      \WP_CLI::success("Successfully handled {$user_slug}.");
+      exit;
     }
-
-    foreach (get_all_custom_plugins() as $entry) {
-        $full_key  = $entry['key'];
-        $slug      = str_replace('plugins/', '', $full_key);
-
-        // Match user input against slug or full key
-        if ($user_slug === $entry['slug'] || $user_slug === $slug || $user_slug === $full_key) {
-
-            switch ($subcommand) {
-                case 'activate':
-                    activate_custom_plugin($full_key);
-                    break;
-
-                case 'deactivate':
-                    deactivate_custom_plugin($full_key);
-                    break;
-
-                case 'delete':
-                    mark_custom_plugin_as_deleted($full_key);
-                    break;
-
-                case 'install':
-                    unmark_custom_plugin_as_deleted($full_key);
-                    if (isset($assoc_args['activate'])) {
-                        activate_custom_plugin($full_key);
-                    }
-                    break;
-            }
-
-            // Clear caches so the next command sees the change immediately
-            wp_cache_delete('alloptions', 'options');
-            wp_cache_delete('active_plugins', 'options');
-
-            if (function_exists('apcu_clear_cache')) {
-                apcu_clear_cache();
-            }
-
-            \WP_CLI::success("Successfully handled {$user_slug}.");
-            exit;
-        }
-    }
+  }
 });
