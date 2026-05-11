@@ -43,3 +43,4 @@ require_once __DIR__ . '/inc/apcu.php';
 require_once __DIR__ . '/inc/marketplace/marketplace.php';
 require_once __DIR__ . '/inc/plugin-block-list/plugin-block-list.php';
 require_once __DIR__ . '/inc/modify-commands/modify-commands-plugins.php';
+require_once __DIR__ . '/inc/modify-commands/modify-commands-themes.php';
