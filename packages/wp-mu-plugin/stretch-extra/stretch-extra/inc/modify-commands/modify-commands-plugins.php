@@ -25,8 +25,7 @@ set_error_handler(function ($errno, $errstr) {
 
 /**
  * 2. PATH CORRECTOR
- * This is the "Magic" — it tells WordPress where the files actually are
- * so that internal file_exists() checks pass.
+ * Tells WordPress where the files actually are so that internal file_exists() checks pass.
  */
 \add_filter('plugin_file_path', function ($path, $plugin) {
   $all = get_all_custom_plugins();
