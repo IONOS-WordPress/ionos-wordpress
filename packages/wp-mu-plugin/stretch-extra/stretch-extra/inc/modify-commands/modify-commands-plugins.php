@@ -85,7 +85,7 @@ set_error_handler(function ($errno, $errstr) {
 
 /**
  * 5. COMMAND HIJACK
- * Handles the logic for activate, deactivate, delete, uninstall, and install.
+ * Handles the logic for activate, deactivate, delete, uninstall, install, and toggle.
  */
 \WP_CLI::add_hook('before_invoke:plugin', function () {
   $runner     = \WP_CLI::get_runner();
@@ -93,8 +93,8 @@ set_error_handler(function ($errno, $errstr) {
   $user_slug  = $runner->arguments[2] ?? '';
   $assoc_args = $runner->assoc_args;
 
-  // Added 'uninstall' to this array
-  if (! in_array($subcommand, ['activate', 'deactivate', 'delete', 'uninstall', 'install'])) {
+  // 1. Add 'toggle' to the list of intercepted subcommands
+  if (! in_array($subcommand, ['activate', 'deactivate', 'delete', 'uninstall', 'install', 'toggle'])) {
     return;
   }
 
@@ -113,8 +113,18 @@ set_error_handler(function ($errno, $errstr) {
           deactivate_custom_plugin($full_key);
           break;
 
+        case 'toggle':
+          // 2. Logic for toggling
+          $active_custom = get_active_custom_plugins();
+          if (in_array($full_key, $active_custom)) {
+            deactivate_custom_plugin($full_key);
+          } else {
+            activate_custom_plugin($full_key);
+          }
+          break;
+
         case 'delete':
-        case 'uninstall': // Map uninstall to the same deletion logic
+        case 'uninstall':
           mark_custom_plugin_as_deleted($full_key);
           break;
 
@@ -126,7 +136,7 @@ set_error_handler(function ($errno, $errstr) {
           break;
       }
 
-      // Clear caches
+      // 3. Force clean the cache
       wp_cache_delete('alloptions', 'options');
       wp_cache_delete('active_plugins', 'options');
 
@@ -134,8 +144,8 @@ set_error_handler(function ($errno, $errstr) {
         apcu_clear_cache();
       }
 
-      \WP_CLI::success("Successfully handled {$user_slug} via {$subcommand}.");
-      exit;
+      \WP_CLI::success("Successfully toggled/handled {$user_slug}.");
+      exit; // 4. Critical: Stop WP-CLI from trying to run its own failing logic
     }
   }
 });
