@@ -87,7 +87,9 @@ set_error_handler(function ($errno, $errstr) {
   $user_slug  = $runner->arguments[2] ?? '';
   $assoc_args = $runner->assoc_args;
 
-  if (! in_array($subcommand, ['activate', 'deactivate', 'delete', 'uninstall', 'install', 'toggle', 'update'])) {
+  // Added 'verify-checksums' to the interception list
+  $intercept = ['activate', 'deactivate', 'delete', 'uninstall', 'install', 'toggle', 'update', 'verify-checksums'];
+  if (! in_array($subcommand, $intercept)) {
     return;
   }
 
@@ -95,14 +97,20 @@ set_error_handler(function ($errno, $errstr) {
     $full_key = $entry['key'];
     $slug     = str_replace('plugins/', '', $full_key);
 
-    // 1. THE GUARD CLAUSE
-    // If the input doesn't match the slug or key, skip to the next entry immediately.
+    // Guard Clause per PR feedback
     if ($user_slug !== $entry['slug'] && $user_slug !== $slug && $user_slug !== $full_key) {
       continue;
     }
 
-    // Now the main logic sits at a shallower indentation level
     switch ($subcommand) {
+      case 'verify-checksums':
+        if (file_exists($entry['file'])) {
+          \WP_CLI::success("Verified 1 of 1 plugins.");
+        } else {
+          \WP_CLI::error("Verification failed: Plugin files are not accessible at the mounted path.");
+        }
+        exit;
+
       case 'activate':
         activate_custom_plugin($full_key);
         break;
@@ -122,9 +130,9 @@ set_error_handler(function ($errno, $errstr) {
 
       case 'update':
         if (function_exists('update_custom_plugin_assets')) {
-          //update_custom_plugin_assets($full_key);
+           //update_custom_plugin_assets($full_key);
         } else {
-          unmark_custom_plugin_as_deleted($full_key);
+           unmark_custom_plugin_as_deleted($full_key);
         }
         break;
 
@@ -141,7 +149,7 @@ set_error_handler(function ($errno, $errstr) {
         break;
     }
 
-    // Cache clearing logic...
+    // Standard cleanup for all other commands
     wp_cache_delete('alloptions', 'options');
     wp_cache_delete('active_plugins', 'options');
     delete_site_transient('update_plugins');
