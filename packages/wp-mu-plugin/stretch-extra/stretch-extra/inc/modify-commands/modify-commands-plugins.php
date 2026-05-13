@@ -85,7 +85,7 @@ set_error_handler(function ($errno, $errstr) {
 
 /**
  * 5. COMMAND HIJACK
- * Handles the logic for activate, deactivate, delete, and install.
+ * Handles the logic for activate, deactivate, delete, uninstall, and install.
  */
 \WP_CLI::add_hook('before_invoke:plugin', function () {
   $runner     = \WP_CLI::get_runner();
@@ -93,7 +93,8 @@ set_error_handler(function ($errno, $errstr) {
   $user_slug  = $runner->arguments[2] ?? '';
   $assoc_args = $runner->assoc_args;
 
-  if (! in_array($subcommand, ['activate', 'deactivate', 'delete', 'install'])) {
+  // Added 'uninstall' to this array
+  if (! in_array($subcommand, ['activate', 'deactivate', 'delete', 'uninstall', 'install'])) {
     return;
   }
 
@@ -101,7 +102,6 @@ set_error_handler(function ($errno, $errstr) {
     $full_key  = $entry['key'];
     $slug      = str_replace('plugins/', '', $full_key);
 
-    // Match user input against slug or full key
     if ($user_slug === $entry['slug'] || $user_slug === $slug || $user_slug === $full_key) {
 
       switch ($subcommand) {
@@ -114,6 +114,7 @@ set_error_handler(function ($errno, $errstr) {
           break;
 
         case 'delete':
+        case 'uninstall': // Map uninstall to the same deletion logic
           mark_custom_plugin_as_deleted($full_key);
           break;
 
@@ -125,7 +126,7 @@ set_error_handler(function ($errno, $errstr) {
           break;
       }
 
-      // Clear caches so the next command sees the change immediately
+      // Clear caches
       wp_cache_delete('alloptions', 'options');
       wp_cache_delete('active_plugins', 'options');
 
@@ -133,7 +134,7 @@ set_error_handler(function ($errno, $errstr) {
         apcu_clear_cache();
       }
 
-      \WP_CLI::success("Successfully handled {$user_slug}.");
+      \WP_CLI::success("Successfully handled {$user_slug} via {$subcommand}.");
       exit;
     }
   }
