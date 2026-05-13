@@ -8,6 +8,7 @@ use const ionos\essentials\PLUGIN_FILE;
 
 function render(): void
 {
+  return; // enable this feature flag to show the adserver block in the dashboard, when the CORS issue is resolved and the block is working properly
   $token  = \get_transient('ionos_adserver_token') ?: 'adserver_default_token';
   $zoneid =  \wp_get_environment_type() !== 'local' ? 'wp_admin_overview_card_left' : 'developers_docs_example';
 
