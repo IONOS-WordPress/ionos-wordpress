@@ -92,63 +92,65 @@ set_error_handler(function ($errno, $errstr) {
   }
 
   foreach (get_all_custom_plugins() as $entry) {
-    $full_key  = $entry['key'];
-    $slug      = str_replace('plugins/', '', $full_key);
+    $full_key = $entry['key'];
+    $slug     = str_replace('plugins/', '', $full_key);
 
-    if ($user_slug === $entry['slug'] || $user_slug === $slug || $user_slug === $full_key) {
-
-      switch ($subcommand) {
-        case 'activate':
-          activate_custom_plugin($full_key);
-          break;
-
-        case 'deactivate':
-          deactivate_custom_plugin($full_key);
-          break;
-
-        case 'toggle':
-          $active_custom = get_active_custom_plugins();
-          if (in_array($full_key, $active_custom)) {
-            deactivate_custom_plugin($full_key);
-          } else {
-            activate_custom_plugin($full_key);
-          }
-          break;
-
-        case 'update':
-          if (function_exists('update_custom_plugin_assets')) {
-             //update_custom_plugin_assets($full_key);
-          } else {
-             unmark_custom_plugin_as_deleted($full_key);
-          }
-          break;
-
-        case 'delete':
-        case 'uninstall':
-          mark_custom_plugin_as_deleted($full_key);
-          break;
-
-        case 'install':
-          unmark_custom_plugin_as_deleted($full_key);
-          if (isset($assoc_args['activate'])) {
-            activate_custom_plugin($full_key);
-          }
-          break;
-      }
-
-      // Clear all related caches
-      wp_cache_delete('alloptions', 'options');
-      wp_cache_delete('active_plugins', 'options');
-
-      // Clear the plugin updates transient so the "Update Available" notice disappears
-      delete_site_transient('update_plugins');
-
-      if (function_exists('apcu_clear_cache')) {
-        apcu_clear_cache();
-      }
-
-      \WP_CLI::success("Successfully performed {$subcommand} on {$user_slug}.");
-      exit;
+    // 1. THE GUARD CLAUSE
+    // If the input doesn't match the slug or key, skip to the next entry immediately.
+    if ($user_slug !== $entry['slug'] && $user_slug !== $slug && $user_slug !== $full_key) {
+      continue;
     }
+
+    // Now the main logic sits at a shallower indentation level
+    switch ($subcommand) {
+      case 'activate':
+        activate_custom_plugin($full_key);
+        break;
+
+      case 'deactivate':
+        deactivate_custom_plugin($full_key);
+        break;
+
+      case 'toggle':
+        $active_custom = get_active_custom_plugins();
+        if (in_array($full_key, $active_custom)) {
+          deactivate_custom_plugin($full_key);
+        } else {
+          activate_custom_plugin($full_key);
+        }
+        break;
+
+      case 'update':
+        if (function_exists('update_custom_plugin_assets')) {
+           //update_custom_plugin_assets($full_key);
+        } else {
+           unmark_custom_plugin_as_deleted($full_key);
+        }
+        break;
+
+      case 'delete':
+      case 'uninstall':
+        mark_custom_plugin_as_deleted($full_key);
+        break;
+
+      case 'install':
+        unmark_custom_plugin_as_deleted($full_key);
+        if (isset($assoc_args['activate'])) {
+          activate_custom_plugin($full_key);
+        }
+        break;
+    }
+
+    // Cache clearing logic...
+    wp_cache_delete('alloptions', 'options');
+    wp_cache_delete('active_plugins', 'options');
+    delete_site_transient('update_plugins');
+
+    if (function_exists('apcu_clear_cache')) {
+      apcu_clear_cache();
+    }
+
+    \WP_CLI::success("Successfully performed {$subcommand} on {$user_slug}.");
+    exit;
   }
 });
