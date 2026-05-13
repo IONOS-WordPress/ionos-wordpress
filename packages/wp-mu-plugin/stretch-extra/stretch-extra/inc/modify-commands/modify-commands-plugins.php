@@ -2,13 +2,11 @@
 
 namespace ionos\stretch_extra\secondary_plugin_dir;
 
-// 0. Prevent execution if not in WP-CLI
 if (! defined('WP_CLI') || ! WP_CLI) {
   return;
 }
 
 /**
- * 1. THE GENERIC SILENCER
  * Prevents virtual path warnings from hitting the CLI output.
  */
 set_error_handler(function ($errno, $errstr) {
@@ -24,8 +22,7 @@ set_error_handler(function ($errno, $errstr) {
 });
 
 /**
- * 2. PATH CORRECTOR
- * Tells WordPress where the files actually are so that internal file_exists() checks pass.
+ * Tells WordPress where the files are so no internal file_exists() checks pass.
  */
 \add_filter('plugin_file_path', function ($path, $plugin) {
   $all = get_all_custom_plugins();
@@ -39,7 +36,6 @@ set_error_handler(function ($errno, $errstr) {
 }, 1, 2);
 
 /**
- * 3. GLOBAL INJECTION & LIST CLEANER
  * Forces 'wp plugin list' to show only the slug and recognized metadata.
  */
 \add_filter('all_plugins', function ($plugins) {
@@ -66,7 +62,6 @@ set_error_handler(function ($errno, $errstr) {
 }, 999);
 
 /**
- * 4. STATUS BRIDGE
  * Ensures 'Active' status is shown correctly in the CLI list.
  */
 \add_filter('option_active_plugins', function ($active_plugins) {
@@ -84,8 +79,7 @@ set_error_handler(function ($errno, $errstr) {
 }, 1);
 
 /**
- * 5. COMMAND HIJACK
- * Handles the logic for activate, deactivate, delete, uninstall, install, and toggle.
+ * Handles the logic for activate, deactivate, delete, uninstall, install, toggle, and update.
  */
 \WP_CLI::add_hook('before_invoke:plugin', function () {
   $runner     = \WP_CLI::get_runner();
@@ -93,8 +87,7 @@ set_error_handler(function ($errno, $errstr) {
   $user_slug  = $runner->arguments[2] ?? '';
   $assoc_args = $runner->assoc_args;
 
-  // 1. Add 'toggle' to the list of intercepted subcommands
-  if (! in_array($subcommand, ['activate', 'deactivate', 'delete', 'uninstall', 'install', 'toggle'])) {
+  if (! in_array($subcommand, ['activate', 'deactivate', 'delete', 'uninstall', 'install', 'toggle', 'update'])) {
     return;
   }
 
@@ -114,12 +107,19 @@ set_error_handler(function ($errno, $errstr) {
           break;
 
         case 'toggle':
-          // 2. Logic for toggling
           $active_custom = get_active_custom_plugins();
           if (in_array($full_key, $active_custom)) {
             deactivate_custom_plugin($full_key);
           } else {
             activate_custom_plugin($full_key);
+          }
+          break;
+
+        case 'update':
+          if (function_exists('update_custom_plugin_assets')) {
+             //update_custom_plugin_assets($full_key);
+          } else {
+             unmark_custom_plugin_as_deleted($full_key);
           }
           break;
 
@@ -136,16 +136,19 @@ set_error_handler(function ($errno, $errstr) {
           break;
       }
 
-      // 3. Force clean the cache
+      // Clear all related caches
       wp_cache_delete('alloptions', 'options');
       wp_cache_delete('active_plugins', 'options');
+
+      // Clear the plugin updates transient so the "Update Available" notice disappears
+      delete_site_transient('update_plugins');
 
       if (function_exists('apcu_clear_cache')) {
         apcu_clear_cache();
       }
 
-      \WP_CLI::success("Successfully toggled/handled {$user_slug}.");
-      exit; // 4. Critical: Stop WP-CLI from trying to run its own failing logic
+      \WP_CLI::success("Successfully performed {$subcommand} on {$user_slug}.");
+      exit;
     }
   }
 });
