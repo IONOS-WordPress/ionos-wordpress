@@ -122,9 +122,9 @@ set_error_handler(function ($errno, $errstr) {
 
       case 'update':
         if (function_exists('update_custom_plugin_assets')) {
-           //update_custom_plugin_assets($full_key);
+          //update_custom_plugin_assets($full_key);
         } else {
-           unmark_custom_plugin_as_deleted($full_key);
+          unmark_custom_plugin_as_deleted($full_key);
         }
         break;
 
