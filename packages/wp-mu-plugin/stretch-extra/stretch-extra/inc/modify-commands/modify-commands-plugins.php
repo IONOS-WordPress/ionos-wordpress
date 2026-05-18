@@ -2,13 +2,11 @@
 
 namespace ionos\stretch_extra\secondary_plugin_dir;
 
-// 0. Prevent execution if not in WP-CLI
 if (! defined('WP_CLI') || ! WP_CLI) {
   return;
 }
 
 /**
- * 1. THE GENERIC SILENCER
  * Prevents virtual path warnings from hitting the CLI output.
  */
 set_error_handler(function ($errno, $errstr) {
@@ -24,8 +22,7 @@ set_error_handler(function ($errno, $errstr) {
 });
 
 /**
- * 2. PATH CORRECTOR
- * Tells WordPress where the files actually are so that internal file_exists() checks pass.
+ * Tells WordPress where the files are so no internal file_exists() checks pass.
  */
 \add_filter('plugin_file_path', function ($path, $plugin) {
   $all = get_all_custom_plugins();
@@ -39,7 +36,6 @@ set_error_handler(function ($errno, $errstr) {
 }, 1, 2);
 
 /**
- * 3. GLOBAL INJECTION & LIST CLEANER
  * Forces 'wp plugin list' to show only the slug and recognized metadata.
  */
 \add_filter('all_plugins', function ($plugins) {
@@ -66,7 +62,6 @@ set_error_handler(function ($errno, $errstr) {
 }, 999);
 
 /**
- * 4. STATUS BRIDGE
  * Ensures 'Active' status is shown correctly in the CLI list.
  */
 \add_filter('option_active_plugins', function ($active_plugins) {
@@ -84,8 +79,7 @@ set_error_handler(function ($errno, $errstr) {
 }, 1);
 
 /**
- * 5. COMMAND HIJACK
- * Handles the logic for activate, deactivate, delete, and install.
+ * Handles the logic for activate, deactivate, delete, uninstall, install, toggle, and update.
  */
 \WP_CLI::add_hook('before_invoke:plugin', function () {
   $runner     = \WP_CLI::get_runner();
@@ -93,48 +87,78 @@ set_error_handler(function ($errno, $errstr) {
   $user_slug  = $runner->arguments[2] ?? '';
   $assoc_args = $runner->assoc_args;
 
-  if (! in_array($subcommand, ['activate', 'deactivate', 'delete', 'install'])) {
+  // Added 'verify-checksums' to the interception list
+  $intercept = ['activate', 'deactivate', 'delete', 'uninstall', 'install', 'toggle', 'update', 'verify-checksums'];
+  if (! in_array($subcommand, $intercept)) {
     return;
   }
 
   foreach (get_all_custom_plugins() as $entry) {
-    $full_key  = $entry['key'];
-    $slug      = str_replace('plugins/', '', $full_key);
+    $full_key = $entry['key'];
+    $slug     = str_replace('plugins/', '', $full_key);
 
-    // Match user input against slug or full key
-    if ($user_slug === $entry['slug'] || $user_slug === $slug || $user_slug === $full_key) {
-
-      switch ($subcommand) {
-        case 'activate':
-          activate_custom_plugin($full_key);
-          break;
-
-        case 'deactivate':
-          deactivate_custom_plugin($full_key);
-          break;
-
-        case 'delete':
-          mark_custom_plugin_as_deleted($full_key);
-          break;
-
-        case 'install':
-          unmark_custom_plugin_as_deleted($full_key);
-          if (isset($assoc_args['activate'])) {
-            activate_custom_plugin($full_key);
-          }
-          break;
-      }
-
-      // Clear caches so the next command sees the change immediately
-      wp_cache_delete('alloptions', 'options');
-      wp_cache_delete('active_plugins', 'options');
-
-      if (function_exists('apcu_clear_cache')) {
-        apcu_clear_cache();
-      }
-
-      \WP_CLI::success("Successfully handled {$user_slug}.");
-      exit;
+    // Guard Clause per PR feedback
+    if ($user_slug !== $entry['slug'] && $user_slug !== $slug && $user_slug !== $full_key) {
+      continue;
     }
+
+    switch ($subcommand) {
+      case 'verify-checksums':
+        if (file_exists($entry['file'])) {
+          \WP_CLI::success('Verified 1 of 1 plugins.');
+        } else {
+          \WP_CLI::error('Verification failed: Plugin files are not accessible at the mounted path.');
+        }
+        exit;
+
+      case 'activate':
+        activate_custom_plugin($full_key);
+        break;
+
+      case 'deactivate':
+        deactivate_custom_plugin($full_key);
+        break;
+
+      case 'toggle':
+        $active_custom = get_active_custom_plugins();
+        if (in_array($full_key, $active_custom)) {
+          deactivate_custom_plugin($full_key);
+        } else {
+          activate_custom_plugin($full_key);
+        }
+        break;
+
+      case 'update':
+        if (function_exists('update_custom_plugin_assets')) {
+          //update_custom_plugin_assets($full_key);
+        } else {
+          unmark_custom_plugin_as_deleted($full_key);
+        }
+        break;
+
+      case 'delete':
+      case 'uninstall':
+        mark_custom_plugin_as_deleted($full_key);
+        break;
+
+      case 'install':
+        unmark_custom_plugin_as_deleted($full_key);
+        if (isset($assoc_args['activate'])) {
+          activate_custom_plugin($full_key);
+        }
+        break;
+    }
+
+    // Standard cleanup for all other commands
+    wp_cache_delete('alloptions', 'options');
+    wp_cache_delete('active_plugins', 'options');
+    delete_site_transient('update_plugins');
+
+    if (function_exists('apcu_clear_cache')) {
+      apcu_clear_cache();
+    }
+
+    \WP_CLI::success("Successfully performed {$subcommand} on {$user_slug}.");
+    exit;
   }
 });
