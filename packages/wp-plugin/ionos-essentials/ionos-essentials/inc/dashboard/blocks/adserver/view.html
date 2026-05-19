@@ -17,6 +17,22 @@
   <body style="overflow: hidden; background: white">
     <div class="ias-zone"></div>
 
+    <script>
+      // Proxy fetch requests to the IONOS AdServer to avoid CORS issues
+      const originalFetch = window.fetch;
+
+      window.fetch = async (url, options) => {
+        if (typeof url === 'string' && url.includes('ias.ionos.de/ias/zones/json')) {
+          return originalFetch('./ias-proxy.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: options?.body,
+          });
+        }
+        return originalFetch(url, options);
+      };
+    </script>
+
     <script type="text/javascript">
       var OAO = OAO || {}; // OAO refers to the global OAO variable.
       OAO.q = OAO.q || {};
@@ -25,7 +41,7 @@
       const urlParams = new URLSearchParams(window.location.search);
       const params = JSON.parse(urlParams.get('params') || '{}');
       document.querySelector('.ias-zone').setAttribute('data-ias-zoneid', params.zoneid || '');
-      OAO.q.c.push(['setFrontendToken',  params.token || 'adserver_default_token']);
+      OAO.q.c.push(['setFrontendToken', params.token || 'adserver_default_token']);
       OAO.q.c.push(['setPageName', 'Dashboard']); // please use: [a-zA-Z_]
 
       Object.entries(params.visitorData).forEach(function ([key, value]) {
@@ -64,7 +80,7 @@
     <script
       id="oaotag"
       type="text/javascript"
-      src="./scriptproxy.php"
+      src="https://frontend-services.ionos.com/t/tag/IONOS/wp-admin.js"
       async="async"
       defer="defer"></script>
   </body>

@@ -9,14 +9,13 @@ use const ionos\essentials\PLUGIN_FILE;
 function render(): void
 {
   $params = [
-    'token' => \get_transient('ionos_adserver_token') ?: 'adserver_default_token',
-    'zoneid' => \wp_get_environment_type() !== 'local' ? 'wp_admin_overview_card_left' : 'developers_docs_example',
+    'token'       => \get_transient('ionos_adserver_token') ?: 'adserver_default_token',
+    'zoneid'      => \wp_get_environment_type() !== 'local' ? 'wp_admin_overview_card_left' : 'developers_docs_example',
     'visitorData' => [
-        'beyondseo' => is_plugin_active('ionos-essentials/ionos-essentials.php') ? true : false,
-        'language' => \get_bloginfo('language') ? substr(\get_bloginfo('language'), 0, 2) : 'en',
-        'market' => \get_option('ionos_market', 'not set'),
+      'beyondseo' => is_plugin_active('ionos-essentials/ionos-essentials.php') ? true : false,
+      'language'  => \get_bloginfo('language') ? substr(\get_bloginfo('language'), 0, 2) : 'en',
+      'market'    => \get_option('ionos_market', 'not set'),
     ],
-
   ];
 
   $url   = \plugins_url(sprintf(
@@ -24,6 +23,8 @@ function render(): void
     urlencode(json_encode($params))
   ), PLUGIN_FILE);
 
-
-  printf('<iframe src="%s" id="adzone" style="display: none; height: 0px; width: 100%%;margin-bottom: 32px;border-radius:var(--default-border-radius, 16px);" ></iframe>', esc_url($url));
+  printf(
+    '<iframe src="%s" id="adzone" style="display: none; height: 0px; width: 100%%;margin-bottom: 32px;border-radius:var(--default-border-radius, 16px);" ></iframe>',
+    esc_url($url)
+  );
 }
