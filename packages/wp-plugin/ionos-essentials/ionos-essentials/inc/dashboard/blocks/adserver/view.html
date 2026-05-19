@@ -23,11 +23,14 @@
       OAO.q.c = OAO.q.c || [];
 
       const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get('token') || 'adserver_default_token';
-      const zoneId = urlParams.get('zoneid') || '';
-      document.querySelector('.ias-zone').setAttribute('data-ias-zoneid', zoneId);
-      OAO.q.c.push(['setFrontendToken', token]);
+      const params = JSON.parse(urlParams.get('params') || '{}');
+      document.querySelector('.ias-zone').setAttribute('data-ias-zoneid', params.zoneid || '');
+      OAO.q.c.push(['setFrontendToken',  params.token || 'adserver_default_token']);
       OAO.q.c.push(['setPageName', 'Dashboard']); // please use: [a-zA-Z_]
+
+      Object.entries(params.visitorData).forEach(function ([key, value]) {
+        OAO.q.c.push(['addVisitorData', key, value]);
+      });
 
       document.addEventListener('DOMContentLoaded', function () {
         const adzone = document.querySelector('.ias-zone');
@@ -61,7 +64,7 @@
     <script
       id="oaotag"
       type="text/javascript"
-      src="https://frontend-services.ionos.com/t/tag/IONOS/wp-admin.js"
+      src="./scriptproxy.php"
       async="async"
       defer="defer"></script>
   </body>
