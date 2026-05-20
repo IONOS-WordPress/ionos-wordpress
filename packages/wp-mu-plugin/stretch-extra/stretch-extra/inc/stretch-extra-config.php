@@ -2,10 +2,6 @@
 
 namespace ionos\stretch_extra;
 
-/*
-  this file is used for both stretch-extra packaging (url property) and runtime (all other properties)
-*/
-
 return [
   'plugins' => [
     [
@@ -35,20 +31,11 @@ return [
         'Name' => 'Essentials',
       ],
     ],
-    // [
-    //   'url'  => 'https://wordpress.rankingcoach.com/update/archives/beyond-seo.zip',
-    //   'key'  => 'plugins/beyond-seo/beyond-seo.php',
-    //   'file' => IONOS_CUSTOM_DIR . '/plugins/beyond-seo/beyond-seo.php',
-    //   'slug' => 'beyond-seo',
-    //   'data' => [
-    //     'Name' => 'BeyondSEO',
-    //     'Update URI' => 'https://wordpress.rankingcoach.com/update/archives/beyond-seo.json'
-    //   ],
-    // ],
   ],
   'themes' => [
     [
-      'url' => 'https://downloads.wordpress.org/theme/extendable.2.1.3.zip',
+      'slug' => 'extendable',
+      'url'  => 'https://downloads.wordpress.org/theme/extendable.2.1.3.zip',
     ],
   ],
 ];
