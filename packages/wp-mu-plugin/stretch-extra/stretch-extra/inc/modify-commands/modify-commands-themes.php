@@ -57,7 +57,6 @@ WP_CLI::add_hook('before_invoke:theme', function () {
   WP_CLI::halt(0);
 });
 
-
 WP_CLI::add_hook('after_invoke:theme', function () {
   $runner     = \WP_CLI::get_runner();
   $subcommand = $runner->arguments[1] ?? '';
