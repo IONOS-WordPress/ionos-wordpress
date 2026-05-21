@@ -46,13 +46,18 @@ set_error_handler(function ($errno, $errstr) {
     }
 
     $slug = str_replace('plugins/', '', $entry['key']);
+    $version = $entry['data']['Version']
+      ?? $entry['version']
+      ?? $entry['data']['version']
+      ?? $entry['config']['version']
+      ?? '1.0.0';
 
     // Remove standard path-based entries to avoid duplicates
     unset($plugins[$entry['file']], $plugins[$entry['key']]);
 
     $plugins[$slug] = [
       'Name'        => $entry['data']['Name'] ?? $slug,
-      'Version'     => '1.0.0',
+      'Version'     => $version,
       'Description' => 'IONOS Stretch Asset',
       'Author'      => 'IONOS',
       'Title'       => $entry['data']['Name'] ?? $slug,
