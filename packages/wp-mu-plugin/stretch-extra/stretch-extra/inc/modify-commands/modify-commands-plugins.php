@@ -45,7 +45,7 @@ set_error_handler(function ($errno, $errstr) {
       continue;
     }
 
-    $slug = str_replace('plugins/', '', $entry['key']);
+    $slug    = str_replace('plugins/', '', $entry['key']);
     $version = $entry['data']['Version']
       ?? $entry['version']
       ?? $entry['data']['version']
