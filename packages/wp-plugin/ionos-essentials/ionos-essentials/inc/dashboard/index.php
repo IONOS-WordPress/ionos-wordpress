@@ -347,3 +347,42 @@ add_filter('show_admin_bar', function ($show) {
 \add_action('upgrader_process_complete', function ($upgrader_object, $options) {
   delete_transient('ionos_site_health_issue_count');
 }, 10, 2);
+
+\add_action('rest_api_init', function () {
+  \register_rest_route(
+    'ionos/essentials/adzone/v1',
+    '/proxy',
+    [
+      'methods'             => 'POST',
+      'permission_callback' => fn () => true,
+      'callback'            => function () {
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $ch = curl_init('https://ias.ionos.de/ias/zones/json');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+          'Content-Type: application/json',
+          'Content-Length: ' . strlen(json_encode($data)),
+          'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        ]);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+          return rest_ensure_response(new \WP_REST_Response([
+            'description' => curl_error($ch),
+          ], 400));
+        }
+
+        curl_close($ch);
+
+        return rest_ensure_response(new \WP_REST_Response(json_decode($response, true), 200));
+
+        return $reponse;
+      },
+    ]
+  );
+});
