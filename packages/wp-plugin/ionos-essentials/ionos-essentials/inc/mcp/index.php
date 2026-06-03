@@ -66,7 +66,6 @@ function is_wp7_mcp_active(): bool
             ], 200));
           }
 
-          /
           $dummy_snippet = [
             'wordpress' => [
               'command' => '',
