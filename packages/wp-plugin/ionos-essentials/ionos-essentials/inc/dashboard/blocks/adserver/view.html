@@ -22,8 +22,7 @@
       const originalFetch = window.fetch;
 
       window.fetch = async (url, options) => {
-        if (typeof url === 'string' && url.includes('ias.ionos.de/ias/zones/json')) {
-
+        if (typeof url === 'string' && url.includes('/ias/zones/json')) {
           return originalFetch('/wp-json/ionos/essentials/adzone/v1/proxy', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
