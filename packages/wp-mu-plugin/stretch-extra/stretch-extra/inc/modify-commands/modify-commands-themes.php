@@ -20,16 +20,16 @@ if (! defined('WP_CLI') || ! WP_CLI) {
 });
 
 WP_CLI::add_hook('before_invoke:theme', function () {
-  $runner     = \WP_CLI::get_runner();
-  $subcommand = $runner->arguments[1] ?? '';
-  $user_slug  = $runner->arguments[2] ?? '';
+  $runner      = \WP_CLI::get_runner();
+  $subcommand  = $runner->arguments[1] ?? '';
+  $theme_slug  = $runner->arguments[2] ?? '';
 
-  if ($subcommand !== 'delete' || empty($user_slug)) {
+  if ($subcommand !== 'delete' || empty($theme_slug)) {
     return;
   }
 
   $custom_themes_dir = dirname(__DIR__, 4) . '/themes';
-  $target_dir        = $custom_themes_dir . '/' . $user_slug;
+  $target_dir        = $custom_themes_dir . '/' . $theme_slug;
 
   if (! is_dir($target_dir)) {
     return;
@@ -38,12 +38,24 @@ WP_CLI::add_hook('before_invoke:theme', function () {
   $deleted_themes_option = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
 
   $deleted_themes   = \get_option($deleted_themes_option, []);
-  $deleted_themes[] = $user_slug;
+  $deleted_themes[] = $theme_slug;
   $deleted_themes   = array_unique($deleted_themes);
   \update_option($deleted_themes_option, $deleted_themes, true);
 
-  // Delete physical files
-  $escaped_path = escapeshellarg($target_dir);
+  $themes_dir = realpath(WP_CONTENT_DIR . '/themes/');
+
+  $target_dir_absolute = realpath($target_dir);
+
+  if (
+    $target_dir_absolute === false                  ||
+    $themes_dir          === false                  ||
+    strpos($target_dir_absolute, $themes_dir) !== 0 ||
+    $target_dir_absolute === $themes_dir
+  ) {
+    throw new Exception('Security violation: Attempted to delete an invalid or unauthorized directory.');
+  }
+
+  $escaped_path = escapeshellarg($target_dir_absolute);
   exec("rm -rf {$escaped_path} 2>&1");
 
   \wp_cache_delete('alloptions', 'options');
@@ -53,24 +65,24 @@ WP_CLI::add_hook('before_invoke:theme', function () {
     apcu_clear_cache();
   }
 
-  WP_CLI::success("Deleted '{$user_slug}' theme.");
+  WP_CLI::success("Deleted '{$theme_slug}' theme.");
   WP_CLI::halt(0);
 });
 
 WP_CLI::add_hook('after_invoke:theme', function () {
-  $runner     = \WP_CLI::get_runner();
-  $subcommand = $runner->arguments[1] ?? '';
-  $user_slug  = $runner->arguments[2] ?? '';
+  $runner      = \WP_CLI::get_runner();
+  $subcommand  = $runner->arguments[1] ?? '';
+  $theme_slug  = $runner->arguments[2] ?? '';
 
-  if ($subcommand !== 'install' || empty($user_slug)) {
+  if ($subcommand !== 'install' || empty($theme_slug)) {
     return;
   }
 
   $deleted_themes_option = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
   $deleted_themes        = \get_option($deleted_themes_option, []);
 
-  if (! empty($deleted_themes) && in_array($user_slug, $deleted_themes, true)) {
-    $updated_themes = array_filter($deleted_themes, fn ($theme) => $theme !== $user_slug);
+  if (! empty($deleted_themes) && in_array($theme_slug, $deleted_themes, true)) {
+    $updated_themes = array_filter($deleted_themes, fn ($theme) => $theme !== $theme_slug);
     \update_option($deleted_themes_option, array_values($updated_themes), true);
 
     wp_cache_delete('alloptions', 'options');
