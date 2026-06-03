@@ -8,11 +8,23 @@ defined('ABSPATH') || exit();
 
 const APPLICATION_NAME = 'Essentials MCP';
 
+/**
+ * Check if the WP7.0 environment handles the MCP feature natively.
+ */
+function is_wp7_mcp_active(): bool
+{
+  return true; // Temporary for testing
+}
+
 \add_action('init', function () {
   $mcp_settings = \get_option('wordpress_mcp_settings', [
     'enabled' => false,
   ]);
-  define('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE', (defined('WORDPRESS_MCP_PATH') && $mcp_settings['enabled']));
+
+  define(
+    'IONOS_ESSENTIALS_MCP_SERVER_ACTIVE',
+    (defined('WORDPRESS_MCP_PATH') && $mcp_settings['enabled']) || (is_wp7_mcp_active() && $mcp_settings['enabled'])
+  );
 });
 
 \add_action('rest_api_init', function () {
@@ -37,7 +49,6 @@ const APPLICATION_NAME = 'Essentials MCP';
           revoke_application_password();
         }
 
-        $mcp_settings = \get_option('wordpress_mcp_settings', []);
         $mcp_settings = [
           'enabled'             => $activate,
           'enable_create_tools' => true,
@@ -46,6 +57,29 @@ const APPLICATION_NAME = 'Essentials MCP';
         ];
 
         \update_option('wordpress_mcp_settings', $mcp_settings);
+
+        if (is_wp7_mcp_active()) {
+          // If turning OFF, your JS expects a simple string '0'
+          if (false === $activate) {
+            return rest_ensure_response(new \WP_REST_Response([
+              'active' => '0',
+            ], 200));
+          }
+
+          /
+          $dummy_snippet = [
+            'wordpress' => [
+              'command' => '',
+              'args'    => [],
+              'env'     => [],
+            ],
+          ];
+
+          return rest_ensure_response(new \WP_REST_Response([
+            'active'  => '1',
+            'snippet' => json_encode($dummy_snippet),
+          ], 200));
+        }
 
         if (false === $activate) {
           return rest_ensure_response(new \WP_REST_Response([
