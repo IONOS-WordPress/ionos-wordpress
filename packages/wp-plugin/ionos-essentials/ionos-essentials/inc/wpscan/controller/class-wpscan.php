@@ -272,11 +272,11 @@ class WPScan
   {
     $middleware   = new WPScanMiddleware();
     $data         = $middleware->download_wpscan_data();
+
     if (empty($data) || ! is_array($data)) {
-      error_log('WPScan middleware: No data received');
       $this->issues = [];
       $this->error  = $middleware->get_error_message();
-      \set_transient('ionos_wpscan_issues', [], 5 * MINUTE_IN_SECONDS);
+      \set_transient('ionos_wpscan_issues', [], 15 * MINUTE_IN_SECONDS);
       return;
     }
     $data         = $middleware->convert_middleware_data($data);

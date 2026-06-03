@@ -68,8 +68,17 @@ class WPScanMiddleware
     $url   = self::URL;
     $token = \get_option('ionos_security_wpscan_token', '');
 
+    if (get_option('ionos_security_wpscan_failed_requests', 0) >= 5) {
+      $this->error = __('Vulnerability scan not possible due to multiple failed attempts. Please contact Customer Care.', 'ionos-essentials');
+      error_log('WPScan middleware: Too many failed attempts, blocking further requests');
+      \update_option('ionos_security_wpscan_failed_requests', 0, false);
+      \delete_option('ionos_security_wpscan_token');
+      return false;
+    }
+
     if (empty($token)) {
       $this->error = __('Vulnerability scan not possible. Please contact Customer Care.', 'ionos-essentials');
+      error_log('WPScan middleware: No API token found');
       return false;
     }
     $response = \wp_remote_post(
@@ -87,25 +96,33 @@ class WPScanMiddleware
     );
 
     if (\is_wp_error($response)) {
-      error_log('WPScan middleware error: ' . $response->get_error_message());
+      error_log('WPScan middleware error (a): ' . $response->get_error_message());
+      $this->increment_failed_requests();
       return false;
     }
 
     $status_code = \wp_remote_retrieve_response_code($response);
     if (200 !== $status_code) {
-      error_log('WPScan middleware error: ' . \wp_remote_retrieve_response_message($response));
+      error_log('WPScan middleware error (b): ' . \wp_remote_retrieve_response_message($response));
+      $this->increment_failed_requests();
       return false;
     }
 
     $body = \wp_remote_retrieve_body($response);
     if (empty($body)) {
-      error_log('WPScan middleware error: Empty response');
+      error_log('WPScan middleware error (c): Empty response');
+      $this->increment_failed_requests();
       return false;
     }
 
     return \json_decode($body, true);
   }
 
+  private function increment_failed_requests(): void
+  {
+    $failed_requests = (int) \get_option('ionos_security_wpscan_failed_requests', 0);
+    \update_option('ionos_security_wpscan_failed_requests', $failed_requests + 1, false);
+  }
   public function convert_middleware_data(array $issues): array
   {
     // Delete items without issues
