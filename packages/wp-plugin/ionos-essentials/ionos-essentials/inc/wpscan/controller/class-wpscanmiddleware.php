@@ -118,11 +118,6 @@ class WPScanMiddleware
     return \json_decode($body, true);
   }
 
-  private function increment_failed_requests(): void
-  {
-    $failed_requests = (int) \get_option('ionos_security_wpscan_failed_requests', 0);
-    \update_option('ionos_security_wpscan_failed_requests', $failed_requests + 1, false);
-  }
   public function convert_middleware_data(array $issues): array
   {
     // Delete items without issues
@@ -162,6 +157,12 @@ class WPScanMiddleware
   public function get_error_message(): string
   {
     return $this->error ?? __('An error occurred while fetching the vulnerability data.', 'ionos-essentials');
+  }
+
+  private function increment_failed_requests(): void
+  {
+    $failed_requests = (int) \get_option('ionos_security_wpscan_failed_requests', 0);
+    \update_option('ionos_security_wpscan_failed_requests', $failed_requests + 1, false);
   }
 
   /**
