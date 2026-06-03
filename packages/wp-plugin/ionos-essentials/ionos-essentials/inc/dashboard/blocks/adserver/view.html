@@ -23,6 +23,7 @@
 
       window.fetch = async (url, options) => {
         if (typeof url === 'string' && url.includes('ias.ionos.de/ias/zones/json')) {
+
           return originalFetch('/wp-json/ionos/essentials/adzone/v1/proxy', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -37,6 +38,7 @@
       var OAO = OAO || {}; // OAO refers to the global OAO variable.
       OAO.q = OAO.q || {};
       OAO.q.c = OAO.q.c || [];
+      OAO.q.ias = OAO.q.ias || [];
 
       const urlParams = new URLSearchParams(window.location.search);
       const params = JSON.parse(urlParams.get('params') || '{}');
@@ -44,9 +46,7 @@
       OAO.q.c.push(['setFrontendToken', params.token || 'adserver_default_token']);
       OAO.q.c.push(['setPageName', 'Dashboard']); // please use: [a-zA-Z_]
 
-      Object.entries(params.visitorData).forEach(function ([key, value]) {
-        OAO.q.c.push(['addVisitorData', key, value]);
-      });
+      OAO.q.c.push(['setLanguage', params.c.language || 'de_DE']);
 
       document.addEventListener('DOMContentLoaded', function () {
         const adzone = document.querySelector('.ias-zone');

@@ -13,8 +13,9 @@ function render(): void
     'zoneid'      => \wp_get_environment_type() !== 'local' ? 'wp_admin_overview_card_left' : 'developers_docs_example',
     'visitorData' => [
       'beyondseo' => is_plugin_active('ionos-essentials/ionos-essentials.php') ? true : false,
-      'language'  => \get_bloginfo('language') ? substr(\get_bloginfo('language'), 0, 2) : 'en',
-      'market'    => \get_option('ionos_market', 'not set'),
+    ],
+    'c' => [
+      'language'  => \get_bloginfo('language') ? substr(\get_bloginfo('language'), 0, 2) : 'de_DE',
     ],
   ];
 

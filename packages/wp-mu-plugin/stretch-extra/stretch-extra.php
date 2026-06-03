@@ -47,11 +47,6 @@ $wp_debug_log_enabled && \add_action('admin_head', function () {
   HTML;
 });
 
-// If there was no error and WP_DEBUG_LOG is enabled, log successful inclusion
-if (! $_error) {
-  $wp_debug_log_enabled && error_log('Successfully included script: ' . EXTRA_ENTRYPOINT);
-}
-
 // Check if the last error was a "failed opening required" warning
 if (strpos($_error['message'] ?? '', 'failed opening required') !== false) {
   error_log(sprintf("Failed to include script '%s'. File not found or inaccessible.", EXTRA_ENTRYPOINT));

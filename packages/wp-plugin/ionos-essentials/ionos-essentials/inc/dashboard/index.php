@@ -359,7 +359,8 @@ add_filter('show_admin_bar', function ($show) {
 
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $ch = curl_init('https://ias.ionos.de/ias/zones/json');
+        $market = strtolower(\get_option('ionos_market', 'de'));
+        $ch = curl_init('https://ias.ionos.' . $market . '/ias/zones/json');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
