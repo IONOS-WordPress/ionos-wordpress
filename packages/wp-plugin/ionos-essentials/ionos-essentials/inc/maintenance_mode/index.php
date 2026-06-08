@@ -52,11 +52,17 @@ add_action('init', function () {
     $site_request_path = $request_path;
   }
 
-  $rest_route = isset($_GET['rest_route']) ? trim((string) \wp_unslash($_GET['rest_route']), '/\\') : '';
-  $rest_prefix = trim((string) \rest_get_url_prefix(), '/\\');
-  $is_rest_request = '' !== $rest_route || $site_request_path === $rest_prefix || str_starts_with($site_request_path, $rest_prefix . '/');
+  $rest_route      = isset($_GET['rest_route']) ? trim((string) \wp_unslash($_GET['rest_route']), '/\\') : '';
+  $rest_prefix     = trim((string) \rest_get_url_prefix(), '/\\');
+  $is_rest_request = '' !== $rest_route || $site_request_path === $rest_prefix || str_starts_with(
+    $site_request_path,
+    $rest_prefix . '/'
+  );
 
-  if ('wp-login.php' === $GLOBALS['pagenow'] || 'wp-admin' === $site_request_path || str_starts_with($site_request_path, 'wp-admin/')) {
+  if ('wp-login.php' === $GLOBALS['pagenow'] || 'wp-admin' === $site_request_path || str_starts_with(
+    $site_request_path,
+    'wp-admin/'
+  )) {
     return;
   }
 
@@ -68,7 +74,9 @@ add_action('init', function () {
     return;
   }
 
-  if (isset($_GET['ionos_maintenance_mode']) || get_query_var('ionos_maintenance_mode') || 'maintenance' === $site_request_path) {
+  if (isset($_GET['ionos_maintenance_mode']) || get_query_var(
+    'ionos_maintenance_mode'
+  ) || 'maintenance' === $site_request_path) {
     readfile(plugin_dir_path(__FILE__) . 'assets/maintenance.html');
     exit;
   }
