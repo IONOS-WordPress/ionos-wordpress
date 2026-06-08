@@ -158,7 +158,11 @@ class WPScanMiddleware
 
   public function get_error_message(): string
   {
-    return $this->error ?? __('An error occurred while fetching the vulnerability data.', 'ionos-essentials');
+    if (empty($this->error)) {
+      return __('An unknown error occurred while fetching the vulnerability data.', 'ionos-essentials');
+    }
+
+    return $this->error;
   }
 
   private function increment_failed_requests(): void
