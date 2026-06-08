@@ -354,7 +354,7 @@ add_filter('show_admin_bar', function ($show) {
     '/proxy',
     [
       'methods'             => 'POST',
-      'permission_callback' => fn () => true,
+      'permission_callback' => fn () => \is_user_logged_in(),
       'callback'            => function ($request) {
 
         $data = $request->get_json_params();

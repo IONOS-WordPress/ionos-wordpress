@@ -17,6 +17,7 @@ function render(): void
     'c' => [
       'language'  => \get_bloginfo('language') ? substr(\get_bloginfo('language'), 0, 2) : 'de_DE',
     ],
+    'nonce'       => \wp_create_nonce('wp_rest'),
   ];
 
   $url   = \plugins_url(sprintf(

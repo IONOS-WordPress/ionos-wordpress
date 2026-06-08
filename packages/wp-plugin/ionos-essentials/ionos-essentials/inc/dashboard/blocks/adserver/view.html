@@ -20,12 +20,14 @@
     <script>
       // Proxy fetch requests to the IONOS AdServer to avoid CORS issues
       const originalFetch = window.fetch;
+      const params = JSON.parse(new URLSearchParams(window.location.search).get('params') || '{}');
 
       window.fetch = async (url, options) => {
         if (typeof url === 'string' && url.includes('/ias/zones/json')) {
           return originalFetch('/wp-json/ionos/essentials/adzone/v1/proxy', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': params.nonce || '' },
             body: options?.body,
           });
         }
@@ -38,9 +40,6 @@
       OAO.q = OAO.q || {};
       OAO.q.c = OAO.q.c || [];
       OAO.q.ias = OAO.q.ias || [];
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const params = JSON.parse(urlParams.get('params') || '{}');
       document.querySelector('.ias-zone').setAttribute('data-ias-zoneid', params.zoneid || '');
       OAO.q.c.push(['setFrontendToken', params.token || 'adserver_default_token']);
       OAO.q.c.push(['setPageName', 'Dashboard']); // please use: [a-zA-Z_]
