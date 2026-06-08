@@ -48,7 +48,8 @@ add_action('init', function () {
 
   if (
     (defined('DOING_AJAX') && DOING_AJAX) ||
-    (defined('WP_CLI')     && WP_CLI)
+    (defined('WP_CLI')     && WP_CLI) ||
+    (str_starts_with($_SERVER['REQUEST_URI'] ?? '', '/wp-json/'))
   ) {
     return;
   }
