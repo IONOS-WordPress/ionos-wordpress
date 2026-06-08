@@ -24,7 +24,7 @@
 
       window.fetch = async (url, options) => {
         if (typeof url === 'string' && url.includes('/ias/zones/json')) {
-          return originalFetch('/wp-json/ionos/essentials/adzone/v1/proxy', {
+          return originalFetch(params.proxyUrl, {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': params.nonce || '' },

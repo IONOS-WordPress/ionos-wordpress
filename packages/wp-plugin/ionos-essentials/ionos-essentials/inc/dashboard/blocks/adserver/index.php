@@ -18,6 +18,7 @@ function render(): void
       'language'  => \get_bloginfo('language') ? str_replace('-', '_', \get_bloginfo('language')) : 'de_DE',
     ],
     'nonce'       => \wp_create_nonce('wp_rest'),
+    'proxyUrl'    => \rest_url('ionos/essentials/adzone/v1/proxy'),
   ];
 
   $url   = \plugins_url(sprintf(
