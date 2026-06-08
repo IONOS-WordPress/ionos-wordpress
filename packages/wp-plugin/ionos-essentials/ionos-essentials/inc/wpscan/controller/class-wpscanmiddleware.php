@@ -97,21 +97,21 @@ class WPScanMiddleware
 
     if (\is_wp_error($response)) {
       error_log('WPScan middleware error: Network error' . $response->get_error_message());
-      $this->increment_failed_requests();
       return false;
     }
 
     $status_code = \wp_remote_retrieve_response_code($response);
     if (200 !== $status_code) {
       error_log('WPScan middleware error: http status error' . \wp_remote_retrieve_response_message($response));
-      $this->increment_failed_requests();
+      if ($status_code >= 400 && $status_code < 500) {
+        $this->increment_failed_requests();
+      }
       return false;
     }
 
     $body = \wp_remote_retrieve_body($response);
     if (empty($body)) {
       error_log('WPScan middleware error: Empty response');
-      $this->increment_failed_requests();
       return false;
     }
 
