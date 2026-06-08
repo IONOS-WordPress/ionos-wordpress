@@ -15,7 +15,7 @@ function render(): void
       'beyondseo' => is_plugin_active('ionos-essentials/ionos-essentials.php') ? true : false,
     ],
     'c' => [
-      'language'  => \get_bloginfo('language') ? substr(\get_bloginfo('language'), 0, 2) : 'de_DE',
+      'language'  => \get_bloginfo('language') ? str_replace('-', '_', \get_bloginfo('language')) : 'de_DE',
     ],
     'nonce'       => \wp_create_nonce('wp_rest'),
   ];
