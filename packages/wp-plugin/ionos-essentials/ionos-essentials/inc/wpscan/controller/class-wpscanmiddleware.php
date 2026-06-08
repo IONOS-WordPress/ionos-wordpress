@@ -71,8 +71,6 @@ class WPScanMiddleware
     if (\get_option('ionos_security_wpscan_failed_requests', 0) >= 5) {
       $this->error = __('Vulnerability scan not possible due to multiple failed attempts. Please contact Customer Care.', 'ionos-essentials');
       error_log('WPScan middleware: Too many failed attempts, blocking further requests');
-      \update_option('ionos_security_wpscan_failed_requests', 0, false);
-      \delete_option('ionos_security_wpscan_token');
       return false;
     }
 
