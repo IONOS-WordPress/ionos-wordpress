@@ -172,6 +172,67 @@ class ClassWPScanTest extends \WP_UnitTestCase {
     );
   }
 
+  public function test_download_wpscan_data_increments_failed_counter_on_failure(): void {
+    \update_option('ionos_security_wpscan_token', 'test-token');
+    \update_option('ionos_security_wpscan_failed_requests', 0);
+
+    \add_filter('pre_http_request', fn () => new \WP_Error('http_request_failed', 'Connection timeout'), 10, 3);
+
+    $middleware = new WPScanMiddleware();
+    $result     = $middleware->download_wpscan_data();
+
+    \remove_all_filters('pre_http_request');
+
+    $this->assertFalse($result);
+    $this->assertSame(1, (int) \get_option('ionos_security_wpscan_failed_requests'));
+  }
+
+  public function test_download_wpscan_data_resets_failed_counter_on_success(): void {
+    \update_option('ionos_security_wpscan_token', 'test-token');
+    \update_option('ionos_security_wpscan_failed_requests', 3);
+
+    \add_filter('pre_http_request', fn () => [
+      'headers'  => [],
+      'cookies'  => [],
+      'filename' => null,
+      'response' => ['code' => 200, 'message' => 'OK'],
+      'body'     => json_encode(['plugins' => [], 'themes' => []]),
+    ], 10, 3);
+
+    $middleware = new WPScanMiddleware();
+    $result     = $middleware->download_wpscan_data();
+
+    \remove_all_filters('pre_http_request');
+
+    $this->assertSame(['plugins' => [], 'themes' => []], $result);
+    $this->assertSame(0, (int) \get_option('ionos_security_wpscan_failed_requests'));
+  }
+
+  public function test_download_wpscan_data_blocks_request_after_threshold_without_http_call(): void {
+    \update_option('ionos_security_wpscan_token', 'test-token');
+    \update_option('ionos_security_wpscan_failed_requests', 5);
+    $http_called = false;
+
+    \add_filter('pre_http_request', function () use (&$http_called) {
+      $http_called = true;
+      return [
+        'headers'  => [],
+        'cookies'  => [],
+        'filename' => null,
+        'response' => ['code' => 200, 'message' => 'OK'],
+        'body'     => json_encode(['plugins' => [], 'themes' => []]),
+      ];
+    }, 10, 3);
+
+    $middleware = new WPScanMiddleware();
+    $result     = $middleware->download_wpscan_data();
+
+    \remove_all_filters('pre_http_request');
+
+    $this->assertFalse($result);
+    $this->assertFalse($http_called);
+  }
+
   public function test_sending_email() : void {
     update_option('IONOS_SECURITY_FEATURE_OPTION', ['IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY' => true]);
     set_transient('ionos_wpscan_issues', [
