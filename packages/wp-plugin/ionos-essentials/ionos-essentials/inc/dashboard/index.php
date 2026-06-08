@@ -355,11 +355,12 @@ add_filter('show_admin_bar', function ($show) {
     [
       'methods'             => 'POST',
       'permission_callback' => fn () => true,
-      'callback'            => function () {
+      'callback'            => function ($request) {
 
-        $data = json_decode(file_get_contents('php://input'), true);
+        $data = $request->get_json_params();
 
         $market = strtolower(\get_option('ionos_market', 'de'));
+
         $ch     = curl_init('https://ias.ionos.' . $market . '/ias/zones/json');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
@@ -373,16 +374,17 @@ add_filter('show_admin_bar', function ($show) {
         $response = curl_exec($ch);
 
         if (curl_errno($ch)) {
+          $error = curl_error($ch);
+          curl_close($ch);
+
           return rest_ensure_response(new \WP_REST_Response([
-            'description' => curl_error($ch),
+            'description' => $error,
           ], 400));
         }
 
         curl_close($ch);
 
         return rest_ensure_response(new \WP_REST_Response(json_decode($response, true), 200));
-
-        return $reponse;
       },
     ]
   );
