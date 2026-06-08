@@ -57,6 +57,9 @@ class NBA
   public static function get_nba($id): self|null
   {
     require_once __DIR__ . '/config.php';
+    if (! isset(self::$actions[$id])) {
+      return null;
+    }
     return self::$actions[$id];
   }
 
