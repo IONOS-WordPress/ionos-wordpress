@@ -276,7 +276,7 @@ class WPScan
     if (empty($data) || ! is_array($data)) {
       $this->issues = [];
       $this->error  = $middleware->get_error_message();
-      \set_transient('ionos_wpscan_issues', [], 15 * MINUTE_IN_SECONDS);
+      \set_transient('ionos_wpscan_issues', [], 5 * MINUTE_IN_SECONDS);
       return;
     }
     $data         = $middleware->convert_middleware_data($data);
