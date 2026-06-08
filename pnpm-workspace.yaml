@@ -9,6 +9,16 @@ packages:
   - 'packages/wp-theme/*'
   - 'packages/generic/*'
 
+allowBuilds:
+  '@parcel/watcher': set this to true or false
+  '@playwright/browser-chromium': set this to true or false
+  '@swc/core': set this to true or false
+  core-js: set this to true or false
+  core-js-pure: set this to true or false
+  esbuild: set this to true or false
+  fs-ext-extra-prebuilt: set this to true or false
+  unrs-resolver: set this to true or false
+
 # catalogs can be used to maintain dependencies for a group of packages at a single place
 # see https://pnpm.io/catalogs
 catalog:
