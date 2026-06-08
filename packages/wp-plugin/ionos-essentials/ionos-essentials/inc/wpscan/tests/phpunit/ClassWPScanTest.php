@@ -176,7 +176,13 @@ class ClassWPScanTest extends \WP_UnitTestCase {
     \update_option('ionos_security_wpscan_token', 'test-token');
     \update_option('ionos_security_wpscan_failed_requests', 0);
 
-    \add_filter('pre_http_request', fn () => new \WP_Error('http_request_failed', 'Connection timeout'), 10, 3);
+    \add_filter('pre_http_request', fn () => [
+      'headers'  => [],
+      'cookies'  => [],
+      'filename' => null,
+      'response' => ['code' => 403, 'message' => 'Forbidden'],
+      'body'     => json_encode(['error' => 'Forbidden']),
+    ], 10, 3);
 
     $middleware = new WPScanMiddleware();
     $result     = $middleware->download_wpscan_data();
