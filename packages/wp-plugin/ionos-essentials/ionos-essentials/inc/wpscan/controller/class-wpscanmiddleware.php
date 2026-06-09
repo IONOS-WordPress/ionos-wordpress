@@ -70,6 +70,7 @@ class WPScanMiddleware
 
     if (empty($token)) {
       $this->error = __('Vulnerability scan not possible. Please contact Customer Care.', 'ionos-essentials');
+      error_log('WPScan middleware: No token');
       return false;
     }
     $response = \wp_remote_post(
