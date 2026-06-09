@@ -68,8 +68,15 @@ class WPScanMiddleware
     $url   = self::URL;
     $token = \get_option('ionos_security_wpscan_token', '');
 
+    if (\get_option('ionos_security_wpscan_failed_requests', 0) >= 5) {
+      $this->error = __('Vulnerability scan not possible due to multiple failed attempts. Please contact Customer Care.', 'ionos-essentials');
+      error_log('WPScan middleware: Too many failed attempts, blocking further requests');
+      return false;
+    }
+
     if (empty($token)) {
       $this->error = __('Vulnerability scan not possible. Please contact Customer Care.', 'ionos-essentials');
+      error_log('WPScan middleware: No API token found');
       return false;
     }
     $response = \wp_remote_post(
@@ -87,13 +94,16 @@ class WPScanMiddleware
     );
 
     if (\is_wp_error($response)) {
-      error_log('WPScan middleware error: ' . $response->get_error_message());
+      error_log('WPScan middleware error: Network error' . $response->get_error_message());
       return false;
     }
 
     $status_code = \wp_remote_retrieve_response_code($response);
     if (200 !== $status_code) {
-      error_log('WPScan middleware error: ' . \wp_remote_retrieve_response_message($response));
+      error_log('WPScan middleware error: http status error' . \wp_remote_retrieve_response_message($response));
+      if ($status_code >= 400 && $status_code < 500) {
+        $this->increment_failed_requests();
+      }
       return false;
     }
 
@@ -102,6 +112,8 @@ class WPScanMiddleware
       error_log('WPScan middleware error: Empty response');
       return false;
     }
+
+    \update_option('ionos_security_wpscan_failed_requests', 0, false);
 
     return \json_decode($body, true);
   }
@@ -144,7 +156,17 @@ class WPScanMiddleware
 
   public function get_error_message(): string
   {
-    return $this->error ?? __('An error occurred while fetching the vulnerability data.', 'ionos-essentials');
+    if (empty($this->error)) {
+      return __('An unknown error occurred while fetching the vulnerability data.', 'ionos-essentials');
+    }
+
+    return $this->error;
+  }
+
+  private function increment_failed_requests(): void
+  {
+    $failed_requests = (int) \get_option('ionos_security_wpscan_failed_requests', 0);
+    \update_option('ionos_security_wpscan_failed_requests', $failed_requests + 1, false);
   }
 
   /**
