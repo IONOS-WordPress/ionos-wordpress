@@ -272,6 +272,7 @@ class WPScan
   {
     $middleware   = new WPScanMiddleware();
     $data         = $middleware->download_wpscan_data();
+
     if (empty($data) || ! is_array($data)) {
       $this->issues = [];
       $this->error  = $middleware->get_error_message();
