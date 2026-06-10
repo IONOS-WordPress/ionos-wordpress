@@ -6,7 +6,7 @@
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
- * Version:           1.0.0
+ * Version:           1.0.1
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-mu-plugin/stretch-extra
  * License:           GPL-2.0-or-later
  * Author:            IONOS Group
@@ -46,11 +46,6 @@ $wp_debug_log_enabled && \add_action('admin_head', function () {
     </style>
   HTML;
 });
-
-// If there was no error and WP_DEBUG_LOG is enabled, log successful inclusion
-if (! $_error) {
-  $wp_debug_log_enabled && error_log('Successfully included script: ' . EXTRA_ENTRYPOINT);
-}
 
 // Check if the last error was a "failed opening required" warning
 if (strpos($_error['message'] ?? '', 'failed opening required') !== false) {

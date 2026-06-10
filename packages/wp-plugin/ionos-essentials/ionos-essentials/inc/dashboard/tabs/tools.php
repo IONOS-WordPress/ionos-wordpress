@@ -4,6 +4,7 @@ namespace ionos\essentials\dashboard;
 
 defined('ABSPATH') || exit();
 
+use ionos\essentials\Tenant;
 use function ionos\essentials\_is_plugin_active;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;
@@ -11,7 +12,6 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_PEL;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_XMLRPC;
-use ionos\essentials\Tenant;
 
 function render_section(array $args): void
 {
@@ -217,7 +217,7 @@ render_section([
           </section>
           <?php include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
-$_plugin = _is_plugin_active('01-ext-ion8dhas7/01-ext-ion8dhas7.php') || _is_plugin_active('01-ext-ion8dhas7-stretch/01-ext-ion8dhas7-stretch.php');
+$_plugin = _is_plugin_active('01-ext-ion8dhas7/01-ext-ion8dhas7.php');
 
 $match = array_filter(array_keys(get_plugins()), fn ($k) => str_starts_with($k, '01-ext-'));
 
