@@ -48,7 +48,8 @@ return [
   ],
   'themes' => [
     [
-      'url' => 'https://downloads.wordpress.org/theme/extendable.2.1.3.zip',
+      'slug' => 'extendable',
+      'url'  => 'https://downloads.wordpress.org/theme/extendable.2.1.3.zip',
     ],
   ],
 ];

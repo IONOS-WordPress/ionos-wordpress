@@ -213,3 +213,43 @@ function get_custom_themes()
     return str_contains($theme->get_stylesheet_directory(), IONOS_CUSTOM_THEMES_DIR);
   });
 }
+
+/**
+ * Intercepts the theme data array right before WordPress sends it to the
+ * Appearance -> Themes screen. If the theme was deleted via CLI (and its files are gone),
+ * we drop it here so the UI doesn't look for non-existent files.
+ */
+\add_filter('wp_prepare_themes_for_js', function ($prepared_themes) {
+  // Fetch the tracking option where deleted slugs are saved
+  $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
+
+  if (! empty($deleted_themes)) {
+    foreach ($deleted_themes as $deleted_slug) {
+      if (isset($prepared_themes[$deleted_slug])) {
+        // Remove it from the JavaScript payload so it completely vanishes from the Admin Dashboard
+        unset($prepared_themes[$deleted_slug]);
+      }
+    }
+  }
+
+  return $prepared_themes;
+}, 999);
+
+/**
+ * If any other part of the WordPress admin tries to query all installed themes,
+ * ensure the physically deleted ones are filtered out early.
+ */
+\add_filter('wp_get_themes', function ($themes) {
+  // Check if we are running in the admin dashboard screen context
+  if (is_admin()) {
+    $deleted_themes = \get_option(IONOS_CUSTOM_DELETED_THEMES_OPTION, []);
+
+    foreach ($deleted_themes as $deleted_slug) {
+      if (isset($themes[$deleted_slug])) {
+        unset($themes[$deleted_slug]);
+      }
+    }
+  }
+
+  return $themes;
+}, 999);

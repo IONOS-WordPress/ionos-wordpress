@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af069b377ed5b8fe233297afd7c66779",
+    "content-hash": "66a78ed5ef90fc47369bf66fbacb3059",
     "packages": [],
     "packages-dev": [
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/composer-installer.git",
-                "reference": "845eb62303d2ca9b289ef216356568ccc075ffd1"
+                "reference": "963f0c67bffde0eac41b56be71ac0e8ba132f0bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/845eb62303d2ca9b289ef216356568ccc075ffd1",
-                "reference": "845eb62303d2ca9b289ef216356568ccc075ffd1",
+                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/963f0c67bffde0eac41b56be71ac0e8ba132f0bd",
+                "reference": "963f0c67bffde0eac41b56be71ac0e8ba132f0bd",
                 "shasum": ""
             },
             "require": {
@@ -101,7 +101,7 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-11-11T04:32:07+00:00"
+            "time": "2026-05-06T08:26:05+00:00"
         },
         {
             "name": "phpcsstandards/phpcsextra",
@@ -359,16 +359,16 @@
         },
         {
             "name": "symplify/easy-coding-standard",
-            "version": "13.1.3",
+            "version": "13.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/easy-coding-standard/ecs.git",
-                "reference": "d894d088d7ebb9326f9eed28bf251481c813b89f"
+                "reference": "96294d652c17ccffabb7d36f9d116dd5f0e6b84e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easy-coding-standard/ecs/zipball/d894d088d7ebb9326f9eed28bf251481c813b89f",
-                "reference": "d894d088d7ebb9326f9eed28bf251481c813b89f",
+                "url": "https://api.github.com/repos/easy-coding-standard/ecs/zipball/96294d652c17ccffabb7d36f9d116dd5f0e6b84e",
+                "reference": "96294d652c17ccffabb7d36f9d116dd5f0e6b84e",
                 "shasum": ""
             },
             "require": {
@@ -403,9 +403,9 @@
                 "static analysis"
             ],
             "support": {
-                "source": "https://github.com/easy-coding-standard/ecs/tree/13.1.3"
+                "source": "https://github.com/easy-coding-standard/ecs/tree/13.1.5"
             },
-            "time": "2026-05-04T21:45:57+00:00"
+            "time": "2026-05-30T09:12:26+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",

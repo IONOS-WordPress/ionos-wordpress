@@ -17,17 +17,34 @@
   <body style="overflow: hidden; background: white">
     <div class="ias-zone"></div>
 
+    <script>
+      // Proxy fetch requests to the IONOS AdServer to avoid CORS issues
+      const originalFetch = window.fetch;
+      const params = JSON.parse(new URLSearchParams(window.location.search).get('params') || '{}');
+
+      window.fetch = async (url, options) => {
+        if (typeof url === 'string' && url.includes('/ias/zones/json')) {
+          return originalFetch(params.proxyUrl, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': params.nonce || '' },
+            body: options?.body,
+          });
+        }
+        return originalFetch(url, options);
+      };
+    </script>
+
     <script type="text/javascript">
       var OAO = OAO || {}; // OAO refers to the global OAO variable.
       OAO.q = OAO.q || {};
       OAO.q.c = OAO.q.c || [];
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get('token') || 'adserver_default_token';
-      const zoneId = urlParams.get('zoneid') || '';
-      document.querySelector('.ias-zone').setAttribute('data-ias-zoneid', zoneId);
-      OAO.q.c.push(['setFrontendToken', token]);
+      OAO.q.ias = OAO.q.ias || [];
+      document.querySelector('.ias-zone').setAttribute('data-ias-zoneid', params.zoneid || '');
+      OAO.q.c.push(['setFrontendToken', params.token || 'adserver_default_token']);
       OAO.q.c.push(['setPageName', 'Dashboard']); // please use: [a-zA-Z_]
+
+      OAO.q.c.push(['setLanguage', params.c.language || 'de_DE']);
 
       document.addEventListener('DOMContentLoaded', function () {
         const adzone = document.querySelector('.ias-zone');

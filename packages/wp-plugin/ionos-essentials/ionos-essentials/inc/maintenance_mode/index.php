@@ -42,27 +42,47 @@ add_action('init', function () {
     return;
   }
 
-  if ('wp-login.php' === $GLOBALS['pagenow'] || str_starts_with($_SERVER['REQUEST_URI'], '/wp-admin')) {
+  $request_uri  = $_SERVER['REQUEST_URI'] ?? '';
+  $request_path = trim((string) parse_url($request_uri, PHP_URL_PATH), '/\\');
+  $home_path    = trim((string) parse_url(home_url('/'), PHP_URL_PATH), '/\\');
+
+  if ('' !== $home_path && ($request_path === $home_path || str_starts_with($request_path, $home_path . '/'))) {
+    $site_request_path = ltrim(substr($request_path, strlen($home_path)), '/\\');
+  } else {
+    $site_request_path = $request_path;
+  }
+
+  $rest_route      = isset($_GET['rest_route']) ? trim((string) \wp_unslash($_GET['rest_route']), '/\\') : '';
+  $rest_prefix     = trim((string) \rest_get_url_prefix(), '/\\');
+  $is_rest_request = '' !== $rest_route || $site_request_path === $rest_prefix || str_starts_with(
+    $site_request_path,
+    $rest_prefix . '/'
+  );
+
+  if ('wp-login.php' === $GLOBALS['pagenow'] || 'wp-admin' === $site_request_path || str_starts_with(
+    $site_request_path,
+    'wp-admin/'
+  )) {
     return;
   }
 
   if (
     (defined('DOING_AJAX') && DOING_AJAX) ||
-    (defined('WP_CLI')     && WP_CLI)
+    (defined('WP_CLI')     && WP_CLI)     ||
+    $is_rest_request
   ) {
     return;
   }
 
-  if (isset($_GET['ionos_maintenance_mode']) || get_query_var('ionos_maintenance_mode') || 'maintenance' === trim(
-    parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH),
-    '/\\'
-  )) {
+  if (isset($_GET['ionos_maintenance_mode']) || get_query_var(
+    'ionos_maintenance_mode'
+  ) || 'maintenance' === $site_request_path) {
     readfile(plugin_dir_path(__FILE__) . 'assets/maintenance.html');
     exit;
   }
 
   \add_rewrite_rule('maintenance/?$', 'index.php?ionos_maintenance_mode=1', 'top');
-  if ('maintenance' === trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/\\')) {
+  if ('maintenance' === $site_request_path) {
     return;
   }
   global $wp_rewrite;
