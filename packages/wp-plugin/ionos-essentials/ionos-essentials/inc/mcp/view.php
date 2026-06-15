@@ -71,7 +71,8 @@ if (is_wp7_mcp_active()) : ?>
               $label         = \esc_html('Generate application password for user', 'ionos-essentials');
         $revoke_app_password = 0;
         if (\WP_Application_Passwords::application_name_exists_for_user(
-          wp_get_current_user()->ID,
+          wp_get_current_user()
+            ->ID,
           APPLICATION_NAME
         )) {
           $label               = \esc_html('Regenerate application password for user', 'ionos-essentials');
