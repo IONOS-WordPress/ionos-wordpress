@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66a78ed5ef90fc47369bf66fbacb3059",
+    "content-hash": "381dd1534fa90654cc0d1241791e1400",
     "packages": [],
     "packages-dev": [
         {
@@ -359,16 +359,16 @@
         },
         {
             "name": "symplify/easy-coding-standard",
-            "version": "13.1.5",
+            "version": "13.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/easy-coding-standard/ecs.git",
-                "reference": "96294d652c17ccffabb7d36f9d116dd5f0e6b84e"
+                "url": "https://github.com/ecsphp/ecs.git",
+                "reference": "3da31a9c267ead69664eb1258aaea62bf9b66f79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easy-coding-standard/ecs/zipball/96294d652c17ccffabb7d36f9d116dd5f0e6b84e",
-                "reference": "96294d652c17ccffabb7d36f9d116dd5f0e6b84e",
+                "url": "https://api.github.com/repos/ecsphp/ecs/zipball/3da31a9c267ead69664eb1258aaea62bf9b66f79",
+                "reference": "3da31a9c267ead69664eb1258aaea62bf9b66f79",
                 "shasum": ""
             },
             "require": {
@@ -403,9 +403,9 @@
                 "static analysis"
             ],
             "support": {
-                "source": "https://github.com/easy-coding-standard/ecs/tree/13.1.5"
+                "source": "https://github.com/ecsphp/ecs/tree/13.2.2"
             },
-            "time": "2026-05-30T09:12:26+00:00"
+            "time": "2026-06-13T19:45:53+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
