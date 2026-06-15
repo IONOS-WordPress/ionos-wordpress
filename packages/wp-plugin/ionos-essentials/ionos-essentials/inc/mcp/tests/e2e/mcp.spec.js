@@ -32,7 +32,7 @@ test.describe(
       if (isWP7Native) {
         // ---- WP 7.0+ Native Flow Expectations ----
         // Code snippet block is hidden, so we don't look for WP_API_PASSWORD
-        await expect(page.locator('#ionos-essentials-mcp-info')).getAttribute('style', /display:\s*none/);
+        await expect(page.locator('#ionos-essentials-mcp-info')).toBeHidden();
 
         // The plugin shouldn't be installed since WP7 handles it natively
         const pluginListOutput = execTestCLI('wp plugin list --format=json');

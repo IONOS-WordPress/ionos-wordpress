@@ -56,44 +56,41 @@ if (is_wp7_mcp_active()) : ?>
           </span>
       </div>
 
-      <?php if (is_legacy_plugin_installed()) : ?>
-          <div class="grid-col grid-col--12" id="ionos-essentials-mcp-info">
-              <div class="loading hidden"></div>
-              <div class="code snippet hidden">
-                  <p class="paragraph paragraph--bold"><?php \esc_html_e('Legacy Configuration Snippet:', 'ionos-essentials'); ?></p>
-                  <pre class="code mcp"><button class="copy-icon" title="<?php \esc_attr_e(
-                    'Copy to clipboard',
-                    'ionos-essentials'
-                  ); ?>"><i class="exos-icon exos-icon-clipboard-copy-14"></i></button><code></code></pre>
-              </div>
-
-              <?php
-              $label         = \esc_html('Generate application password for user', 'ionos-essentials');
-        $revoke_app_password = 0;
-        if (\WP_Application_Passwords::application_name_exists_for_user(
-          wp_get_current_user()
-            ->ID,
-          APPLICATION_NAME
-        )) {
-          $label               = \esc_html('Regenerate application password for user', 'ionos-essentials');
-          $revoke_app_password = 1;
-        }
-
-        printf(
-          '<button class="button button--primary ionos-essentials-mcp-activate %s" data-revoke-app-password="%s" style="margin-top: 15px;">%s</button>',
-          (IONOS_ESSENTIALS_MCP_SERVER_ACTIVE) ? '' : 'hidden',
-          $revoke_app_password,
-          $label
-        );
-        ?>
+      <div class="grid-col grid-col--12" id="ionos-essentials-mcp-info" <?php echo (! is_legacy_plugin_installed()) ? 'style="display: none !important;"' : ''; ?>>
+          <div class="loading hidden"></div>
+          <div class="code snippet hidden">
+              <p class="paragraph paragraph--bold"><?php \esc_html_e('Legacy Configuration Snippet:', 'ionos-essentials'); ?></p>
+              <pre class="code mcp"><button class="copy-icon" title="<?php \esc_attr_e(
+                'Copy to clipboard',
+                'ionos-essentials'
+              ); ?>"><i class="exos-icon exos-icon-clipboard-copy-14"></i></button><code></code></pre>
           </div>
-      <?php else : ?>
-          <div class="grid-col grid-col--12" id="ionos-essentials-mcp-info" style="display: none !important;">
-            <div class="loading hidden"></div>
-            <div class="code snippet hidden"><code></code></div>
-            <button class="ionos-essentials-mcp-activate hidden" data-revoke-app-password="0" style="display: none !important;"></button>
-          </div>
-      <?php endif; ?>
+
+          <?php
+          if (is_legacy_plugin_installed()) {
+            $label               = \esc_html('Generate application password for user', 'ionos-essentials');
+            $revoke_app_password = 0;
+            if (\WP_Application_Passwords::application_name_exists_for_user(
+              wp_get_current_user()
+                ->ID,
+              APPLICATION_NAME
+            )) {
+              $label               = \esc_html('Regenerate application password for user', 'ionos-essentials');
+              $revoke_app_password = 1;
+            }
+
+            printf(
+              '<button class="button button--primary ionos-essentials-mcp-activate %s" data-revoke-app-password="%s" style="margin-top: 15px;">%s</button>',
+              (IONOS_ESSENTIALS_MCP_SERVER_ACTIVE) ? '' : 'hidden',
+              $revoke_app_password,
+              $label
+            );
+          } else {
+            // Dummy element context to satisfy client-side JS expectations
+            echo '<button class="ionos-essentials-mcp-activate hidden" data-revoke-app-password="0" style="display: none !important;"></button>';
+          }
+?>
+      </div>
   </div>
 </section>
 
