@@ -206,7 +206,7 @@ function get_ssl_type(): string
     ],
   ]);
 
-  $client = @stream_socket_client("ssl://{$host}:443", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $context);
+  $client = @stream_socket_client("ssl://{$host}:443", $errno, $errstr, 5, STREAM_CLIENT_CONNECT, $context);
 
   if (! $client) {
     return 'no client';
