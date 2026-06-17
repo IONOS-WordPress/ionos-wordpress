@@ -206,15 +206,21 @@ function get_ssl_type(): string
     ],
   ]);
 
-  $client = @stream_socket_client("ssl://{$host}:443", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $context);
+  $client = @stream_socket_client("ssl://{$host}:443", $errno, $errstr, 5, STREAM_CLIENT_CONNECT, $context);
 
   if (! $client) {
     return 'no client';
   }
 
   $params = stream_context_get_params($client);
-  $cert   = openssl_x509_parse($params['options']['ssl']['peer_certificate']);
   fclose($client);
+
+  $peer_certificate = $params['options']['ssl']['peer_certificate'] ?? null;
+  $cert             = $peer_certificate ? openssl_x509_parse($peer_certificate) : false;
+
+  if (! is_array($cert)) {
+    return 'no cert';
+  }
 
   // EV certificates carry OID 2.23.140.1.1 in their Certificate Policies extension
   $policies = $cert['extensions']['certificatePolicies'] ?? '';

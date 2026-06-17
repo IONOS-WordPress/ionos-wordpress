@@ -267,8 +267,7 @@ function _get_hosting(): array
     'php_version'          => PHP_VERSION,
     'instance_created'     => _get_instance_creation_date(),
     'htaccess_md5'         => (object) _get_all_htaccess_md5(),
-    'ssl_type'             => get_ssl_type(),
-  ];
+    'ssl_type'             => \ionos\essentials\get_ssl_type(),
 }
 
 function _get_market(): string
