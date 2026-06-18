@@ -23,9 +23,9 @@ test.describe(
 
       await admin.visitAdminPage('?page=ionos#tools');
 
-      // Check if we are running in a Native WP7.0 environment based on the UI badge
-      const isWP7Native = await page.locator('text=Managed via WP7.0').isVisible();
-
+      // Check if we are running in a Native WP7.0 environment based on the WP major version
+      const wpVersion = execTestCLI('wp core version').trim();
+      const isWP7Native = Number.parseInt(wpVersion.split('.')[0], 10) >= 7;
       // Click the activation switch
       await page.locator('#ionos-essentials-mcp').click();
 
