@@ -36,7 +36,7 @@ if (is_wp7_mcp_active()) : ?>
                     admin_url('options-connectors.php')
                   ); ?>" class="link" style="display: inline-flex; align-items: center; gap: 5px; font-weight: bold;">
                       <i class="exos-icon exos-icon-external-link-14"></i>
-                      <?php \esc_html_e('Go check out the native Connectors dashboard for better usage of MCP', 'ionos-essentials'); ?>
+                      <?php \esc_html_e('Go to WP7.0 MCP feature page', 'ionos-essentials'); ?>
                   </a>
               </p>
           <?php endif; ?>
