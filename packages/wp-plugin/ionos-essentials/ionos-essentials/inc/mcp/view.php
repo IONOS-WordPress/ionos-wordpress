@@ -112,7 +112,7 @@ if (is_wp7_mcp_active()) : ?>
   ?>
           </p>
       </div>
-      <?php echo (IONOS_ESSENTIALS_MCP_SERVER_ACTIVE) ? 'checked' : ''; ?>
+      
       <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
           <span class="input-switch" >
               <input id="ionos-essentials-mcp" class="ionos-essentials-mcp-activate" type="checkbox" data-manual="true" data-description="<?php \esc_attr_e('Allow AI to control your WordPress via MCP', 'ionos-essentials'); ?>"
