@@ -13,7 +13,7 @@ const APPLICATION_NAME = 'Essentials MCP';
  */
 function is_wp7_mcp_active(): bool
 {
-  return version_compare(wp_get_wp_version(), '7.0', '>=');
+  return version_compare(\get_bloginfo('version'), '7.0', '>=');
 }
 
 /**
