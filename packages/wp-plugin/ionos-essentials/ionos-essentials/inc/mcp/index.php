@@ -32,13 +32,13 @@ function is_legacy_plugin_installed(): bool
   if (! function_exists('\is_plugin_active')) {
     require_once ABSPATH . 'wp-admin/includes/plugin.php';
   }
-  $is_legacy_active = defined('WORDPRESS_MCP_PATH') || (function_exists(
+  $is_legacy_mcp_plugin_active = defined('WORDPRESS_MCP_PATH') || (function_exists(
     'ionos\essentials\_is_plugin_active'
   ) && _is_plugin_active('wordpress-mcp/wordpress-mcp.php')) || \is_plugin_active(
     'wordpress-mcp/wordpress-mcp.php'
   );
 
-  if ((! is_wp7_mcp_active() || is_legacy_plugin_installed()) && ! $is_legacy_active && $mcp_settings['enabled']) {
+  if ((! is_wp7_mcp_active() || is_legacy_plugin_installed()) && ! $is_legacy_mcp_plugin_active && $mcp_settings['enabled']) {
     $mcp_settings['enabled'] = false;
     \update_option('wordpress_mcp_settings', $mcp_settings);
   }
@@ -46,7 +46,7 @@ function is_legacy_plugin_installed(): bool
   if (is_wp7_mcp_active() && ! is_legacy_plugin_installed()) {
     $server_active = $mcp_settings['enabled'];
   } else {
-    $server_active = $mcp_settings['enabled'] && $is_legacy_active;
+    $server_active = $mcp_settings['enabled'] && $is_legacy_mcp_plugin_active;
   }
 
   define('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE', $server_active);
@@ -122,8 +122,8 @@ function is_legacy_plugin_installed(): bool
 
           return rest_ensure_response(new \WP_REST_Response([
             'active' => '0',
-            'error'  => 'MCP server plugin could not be activated.',
-          ], 200));
+            'error'  => 'MCP server plugin is not active.',
+          ], 500));
         }
 
         $mcp_settings = [

@@ -27,7 +27,7 @@ if (is_wp7_mcp_active()) : ?>
                     admin_url('options-connectors.php')
                   ); ?>" class="link" style="display: inline-flex; align-items: center; gap: 5px;">
                       <i class="exos-icon exos-icon-external-link-14"></i>
-                      <?php \esc_html_e('Click here to use the native WP7.0 Connectors', 'ionos-essentials'); ?>
+                      <?php \esc_html_e('Go to WP7.0 MCP feature page', 'ionos-essentials'); ?>
                   </a>
               </p>
           <?php else : ?>
@@ -100,9 +100,7 @@ if (is_wp7_mcp_active()) : ?>
       <div class="grid-col grid-col--8 grid-col--small-12">
           <h2 class="headline headline--sub" style="display: flex; align-items: center;">
             <?php \esc_html_e('Allow AI to control your WordPress via MCP', 'ionos-essentials') ?>
-              <p class="paragraph" style="margin: 0 0 0 10px;">
-                <span class="badge badge--neutral-solid"><?php \esc_html_e('For developers', 'ionos-essentials'); ?></span>
-              </p>
+              <span class="badge badge--neutral-solid" style="margin-left: 10px;"><?php \esc_html_e('Managed via WP7.0', 'ionos-essentials'); ?></span>
           </h2>
 
           <p class="paragraph paragraph--neutral">
@@ -112,7 +110,7 @@ if (is_wp7_mcp_active()) : ?>
   ?>
           </p>
       </div>
-      
+
       <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
           <span class="input-switch" >
               <input id="ionos-essentials-mcp" class="ionos-essentials-mcp-activate" type="checkbox" data-manual="true" data-description="<?php \esc_attr_e('Allow AI to control your WordPress via MCP', 'ionos-essentials'); ?>"
