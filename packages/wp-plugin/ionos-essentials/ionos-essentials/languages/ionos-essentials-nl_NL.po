@@ -1129,3 +1129,15 @@ msgstr "Onveilig"
 #: ionos-essentials/build/dashboard/index.js
 msgid "Install"
 msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Managed via WP7.0"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Grant external AI Clients secure access to your content. This feature is now integrated natively into your WP7.0 Control Panel."
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Go to WP7.0 MCP feature page"
+msgstr ""
