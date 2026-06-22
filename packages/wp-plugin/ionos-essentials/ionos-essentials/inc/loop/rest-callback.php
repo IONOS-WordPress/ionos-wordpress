@@ -259,14 +259,15 @@ function _analyze_htaccess_file(SplFileInfo $file): array
 function _get_hosting(): array
 {
   return [
-    'locale'              => \get_locale(),
-    'blog_public'         => (bool) \get_option('blog_public'),
-    'market'              => _get_market(),
-    'tenant'              => Tenant::get_slug(),
-    'core_version'        => \get_bloginfo('version'),
-    'php_version'         => PHP_VERSION,
-    'instance_created'    => _get_instance_creation_date(),
-    'htaccess_md5'        => (object) _get_all_htaccess_md5(),
+    'locale'               => \get_locale(),
+    'blog_public'          => (bool) \get_option('blog_public'),
+    'market'               => _get_market(),
+    'tenant'               => Tenant::get_slug(),
+    'core_version'         => \get_bloginfo('version'),
+    'php_version'          => PHP_VERSION,
+    'instance_created'     => _get_instance_creation_date(),
+    'htaccess_md5'         => (object) _get_all_htaccess_md5(),
+    'ssl_type'             => \ionos\essentials\get_ssl_type(),
   ];
 }
 

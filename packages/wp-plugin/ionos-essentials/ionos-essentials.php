@@ -191,3 +191,47 @@ function _is_plugin_active(string $plugin): bool
 //     return str_replace('IONOS', $brand_name, $text);
 //   }
 // );
+
+function get_ssl_type(): string
+{
+  $host = \parse_url(\home_url(), PHP_URL_HOST);
+
+  if (! $host) {
+    return 'no host';
+  }
+
+  $context = stream_context_create([
+    'ssl' => [
+      'capture_peer_cert' => true,
+    ],
+  ]);
+
+  $client = @stream_socket_client("ssl://{$host}:443", $errno, $errstr, 5, STREAM_CLIENT_CONNECT, $context);
+
+  if (! $client) {
+    return 'no client';
+  }
+
+  $params = stream_context_get_params($client);
+  fclose($client);
+
+  $peer_certificate = $params['options']['ssl']['peer_certificate'] ?? null;
+  $cert             = $peer_certificate ? openssl_x509_parse($peer_certificate) : false;
+
+  if (! is_array($cert)) {
+    return 'no cert';
+  }
+
+  // EV certificates carry OID 2.23.140.1.1 in their Certificate Policies extension
+  $policies = $cert['extensions']['certificatePolicies'] ?? '';
+  if (str_contains($policies, '2.23.140.1.1')) {
+    return 'EV';
+  }
+
+  // OV certificates include the Organization field in the subject
+  if (! empty($cert['subject']['O'])) {
+    return 'OV';
+  }
+
+  return 'DV';
+}
