@@ -580,10 +580,6 @@ msgstr "Ihr %s-Plugin Team"
 msgid "More information"
 msgstr "Weitere Informationen"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "An error occurred while fetching the vulnerability data."
-msgstr "Beim Abrufen der Daten zu den Sicherheitslücken ist ein Fehler aufgetreten."
-
 #: ionos-essentials/build/dashboard/index.js
 msgid "Loading content ..."
 msgstr "Inhalte werden geladen..."
@@ -1126,13 +1122,21 @@ msgid "Install"
 msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "Managed via WP7.0"
+msgid "Generate application password for user"
 msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "Grant external AI Clients secure access to your content. This feature is now integrated natively into your WP7.0 Control Panel."
+msgid "Regenerate application password for user"
 msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "Go to WP7.0 MCP feature page"
+msgid "Configure Connectors Settings"
+msgstr ""
+
+#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability scan not possible due to multiple failed attempts. Please contact Customer Care."
+msgstr ""
+
+#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "An unknown error occurred while fetching the vulnerability data."
 msgstr ""

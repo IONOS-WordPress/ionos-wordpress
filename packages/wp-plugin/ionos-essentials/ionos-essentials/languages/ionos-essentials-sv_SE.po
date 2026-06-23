@@ -585,10 +585,6 @@ msgstr "Ditt %s plugin-team"
 msgid "More information"
 msgstr "Mer information"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "An error occurred while fetching the vulnerability data."
-msgstr "Ett fel inträffade när sårbarhetsdata hämtades."
-
 #: ionos-essentials/inc/dashboard/blocks/welcome/index.php
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Omfattande hjälpsektion – med AI-chatt, guidade turer och en gedigen kunskapsbank"
@@ -1131,13 +1127,21 @@ msgid "Install"
 msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "Managed via WP7.0"
+msgid "Generate application password for user"
 msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "Grant external AI Clients secure access to your content. This feature is now integrated natively into your WP7.0 Control Panel."
+msgid "Regenerate application password for user"
 msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "Go to WP7.0 MCP feature page"
+msgid "Configure Connectors Settings"
+msgstr ""
+
+#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability scan not possible due to multiple failed attempts. Please contact Customer Care."
+msgstr ""
+
+#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "An unknown error occurred while fetching the vulnerability data."
 msgstr ""

@@ -8,48 +8,11 @@ defined('ABSPATH') || exit();
 
 const APPLICATION_NAME = 'Essentials MCP';
 
-/**
- * Check if the WP7.0 environment handles the MCP feature natively.
- */
-function is_wp7_mcp_active(): bool
-{
-  return version_compare(\get_bloginfo('version'), '7.0', '>=');
-}
-
-/**
- * Check if the legacy Automattic MCP plugin file exists on the server.
- */
-function is_legacy_plugin_installed(): bool
-{
-  return file_exists(WP_PLUGIN_DIR . '/wordpress-mcp/wordpress-mcp.php');
-}
-
 \add_action('init', function () {
   $mcp_settings = \get_option('wordpress_mcp_settings', [
     'enabled' => false,
   ]);
-
-  if (! function_exists('\is_plugin_active')) {
-    require_once ABSPATH . 'wp-admin/includes/plugin.php';
-  }
-  $is_legacy_mcp_plugin_active = defined('WORDPRESS_MCP_PATH') || (function_exists(
-    'ionos\essentials\_is_plugin_active'
-  ) && _is_plugin_active('wordpress-mcp/wordpress-mcp.php')) || \is_plugin_active(
-    'wordpress-mcp/wordpress-mcp.php'
-  );
-
-  if ((! is_wp7_mcp_active() || is_legacy_plugin_installed()) && ! $is_legacy_mcp_plugin_active && $mcp_settings['enabled']) {
-    $mcp_settings['enabled'] = false;
-    \update_option('wordpress_mcp_settings', $mcp_settings);
-  }
-
-  if (is_wp7_mcp_active() && ! is_legacy_plugin_installed()) {
-    $server_active = $mcp_settings['enabled'];
-  } else {
-    $server_active = $mcp_settings['enabled'] && $is_legacy_mcp_plugin_active;
-  }
-
-  define('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE', $server_active);
+  define('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE', (defined('WORDPRESS_MCP_PATH') && $mcp_settings['enabled']));
 });
 
 \add_action('rest_api_init', function () {
@@ -74,65 +37,28 @@ function is_legacy_plugin_installed(): bool
           revoke_application_password();
         }
 
-        if (false === $activate) {
-          $mcp_settings = [
-            'enabled'             => false,
-            'enable_create_tools' => true,
-            'enable_update_tools' => true,
-            'enable_delete_tools' => true,
-          ];
-          \update_option('wordpress_mcp_settings', $mcp_settings);
+        $mcp_settings = \get_option('wordpress_mcp_settings', []);
+        $mcp_settings = [
+          'enabled'             => $activate,
+          'enable_create_tools' => true,
+          'enable_update_tools' => true,
+          'enable_delete_tools' => true,
+        ];
 
+        \update_option('wordpress_mcp_settings', $mcp_settings);
+
+        if (false === $activate) {
           return rest_ensure_response(new \WP_REST_Response([
             'active' => '0',
           ], 200));
         }
 
-        if (is_wp7_mcp_active() && ! is_legacy_plugin_installed()) {
-          $mcp_settings = [
-            'enabled'             => true,
-            'enable_create_tools' => true,
-            'enable_update_tools' => true,
-            'enable_delete_tools' => true,
-          ];
-          \update_option('wordpress_mcp_settings', $mcp_settings);
-
-          $dummy_snippet = [
-            'wordpress' => [
-              'command' => '',
-              'args'    => [],
-              'env'     => [],
-            ],
-          ];
-
-          return rest_ensure_response(new \WP_REST_Response([
-            'active'  => '1',
-            'snippet' => json_encode($dummy_snippet),
-          ], 200));
-        }
-
         if (! activate_mcp_server()) {
-          $mcp_settings = [
-            'enabled'             => false,
-            'enable_create_tools' => true,
-            'enable_update_tools' => true,
-            'enable_delete_tools' => true,
-          ];
-          \update_option('wordpress_mcp_settings', $mcp_settings);
-
           return rest_ensure_response(new \WP_REST_Response([
             'active' => '0',
             'error'  => 'MCP server plugin is not active.',
           ], 500));
         }
-
-        $mcp_settings = [
-          'enabled'             => true,
-          'enable_create_tools' => true,
-          'enable_update_tools' => true,
-          'enable_delete_tools' => true,
-        ];
-        \update_option('wordpress_mcp_settings', $mcp_settings);
 
         if (\WP_Application_Passwords::application_name_exists_for_user(wp_get_current_user()->ID, APPLICATION_NAME)) {
           return rest_ensure_response(new \WP_REST_Response([
@@ -167,8 +93,10 @@ add_action('application_password_did_authenticate', function ($user, $item) {
     return;
   }
 
-  $data                    = \get_option('ionos_loop_mcp_tracking', []);
+  $data = \get_option('ionos_loop_mcp_tracking', []);
+
   $data[$user->user_login] = ($data[$user->user_login] ?? 0) + 1;
+
   \update_option('ionos_loop_mcp_tracking', $data);
 }, 10, 2);
 
@@ -178,15 +106,7 @@ function activate_mcp_server(): bool
     return true;
   }
 
-  if (! function_exists('\activate_plugin') || ! function_exists('\is_plugin_active')) {
-    require_once ABSPATH . 'wp-admin/includes/plugin.php';
-  }
-
   if (! file_exists(WP_PLUGIN_DIR . '/wordpress-mcp/wordpress-mcp.php')) {
-    if (! class_exists('\Plugin_Upgrader')) {
-      require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-    }
-
     $upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
     $result   = $upgrader->install(
       'https://github.com/Automattic/wordpress-mcp/releases/download/v0.2.5/wordpress-mcp.zip'
@@ -197,12 +117,8 @@ function activate_mcp_server(): bool
     }
   }
 
-  if (! \is_plugin_active('wordpress-mcp/wordpress-mcp.php')) {
-    $activated = \activate_plugin('wordpress-mcp/wordpress-mcp.php');
-    if (\is_wp_error($activated)) {
-      error_log('Failed to activate MCP server plugin: ' . $activated->get_error_message());
-      return false;
-    }
+  if (! _is_plugin_active('wordpress-mcp/wordpress-mcp.php')) {
+    \activate_plugin('wordpress-mcp/wordpress-mcp.php');
   }
 
   return true;
@@ -238,4 +154,9 @@ function revoke_application_password(): void
       break;
     }
   }
+}
+
+function is_wp7_mcp_active(): bool
+{
+  return version_compare(\get_bloginfo('version'), '7.0', '>=');
 }

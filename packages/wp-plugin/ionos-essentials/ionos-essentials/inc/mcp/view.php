@@ -4,113 +4,26 @@ namespace ionos\essentials\mcp;
 
 defined('ABSPATH') || exit();
 
-if (is_wp7_mcp_active()) : ?>
-<section class="sheet__section">
-  <div class="grid">
-      <div class="grid-col grid-col--8 grid-col--small-12">
-          <h2 class="headline headline--sub" style="display: flex; align-items: center;">
-              <?php \esc_html_e('Allow AI to control your WordPress via MCP', 'ionos-essentials'); ?>
-              <p class="paragraph" style="margin: 0 0 0 10px;">
-                <span class="badge badge--neutral-solid"><?php \esc_html_e('Managed via WP7.0', 'ionos-essentials'); ?></span>
-              </p>
-          </h2>
-          <p class="paragraph paragraph--neutral">
-              <?php \esc_html_e(
-                'Grant external AI Clients secure access to your content. This feature is now integrated natively into your WP7.0 Control Panel.',
-                'ionos-essentials'
-              ); ?>
-          </p>
-
-          <?php if (! is_legacy_plugin_installed()) : ?>
-              <p class="paragraph" style="margin-top: 15px;">
-                  <a href="<?php echo esc_url(
-                    admin_url('options-connectors.php')
-                  ); ?>" class="link" style="display: inline-flex; align-items: center; gap: 5px;">
-                      <i class="exos-icon exos-icon-external-link-14"></i>
-                      <?php \esc_html_e('Go to WP7.0 MCP feature page', 'ionos-essentials'); ?>
-                  </a>
-              </p>
-          <?php else : ?>
-              <p class="paragraph" style="margin-top: 15px;">
-                  <a href="<?php echo esc_url(
-                    admin_url('options-connectors.php')
-                  ); ?>" class="link" style="display: inline-flex; align-items: center; gap: 5px; font-weight: bold;">
-                      <i class="exos-icon exos-icon-external-link-14"></i>
-                      <?php \esc_html_e('Go to WP7.0 MCP feature page', 'ionos-essentials'); ?>
-                  </a>
-              </p>
-          <?php endif; ?>
-      </div>
-
-      <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
-          <span class="input-switch">
-              <input id="ionos-essentials-mcp" class="ionos-essentials-mcp-activate" type="checkbox" data-manual="true" data-description="<?php \esc_attr_e('Allow AI to control your WordPress via MCP', 'ionos-essentials'); ?>"
-              <?php echo (IONOS_ESSENTIALS_MCP_SERVER_ACTIVE) ? 'checked' : ''; ?>
-              data-track-link="mcp-toggle"
-              >
-              <label>
-                  <span class="input-switch__on"></span>
-                  <span class="input-switch__toggle"></span>
-                  <span class="input-switch__off"></span>
-              </label>
-          </span>
-      </div>
-
-      <div class="grid-col grid-col--12" id="ionos-essentials-mcp-info" <?php echo (! is_legacy_plugin_installed()) ? 'style="display: none !important;"' : ''; ?>>
-          <div class="loading hidden"></div>
-          <div class="code snippet hidden">
-              <p class="paragraph paragraph--bold"><?php \esc_html_e('Legacy Configuration Snippet:', 'ionos-essentials'); ?></p>
-              <pre class="code mcp"><button class="copy-icon" title="<?php \esc_attr_e(
-                'Copy to clipboard',
-                'ionos-essentials'
-              ); ?>"><i class="exos-icon exos-icon-clipboard-copy-14"></i></button><code></code></pre>
-          </div>
-
-          <?php
-          if (is_legacy_plugin_installed()) {
-            $label               = \esc_html__('Generate application password for user', 'ionos-essentials');
-            $revoke_app_password = 0;
-            if (\WP_Application_Passwords::application_name_exists_for_user(
-              wp_get_current_user()
-                ->ID,
-              APPLICATION_NAME
-            )) {
-              $label               = \esc_html__('Regenerate application password for user', 'ionos-essentials');
-              $revoke_app_password = 1;
-            }
-
-            printf(
-              '<button class="button button--primary ionos-essentials-mcp-activate %s" data-revoke-app-password="%s" style="margin-top: 15px;">%s</button>',
-              (IONOS_ESSENTIALS_MCP_SERVER_ACTIVE) ? '' : 'hidden',
-              $revoke_app_password,
-              $label
-            );
-          } else {
-            // Dummy element context to satisfy client-side JS expectations
-            echo '<button class="ionos-essentials-mcp-activate hidden" data-revoke-app-password="0" style="display: none !important;"></button>';
-          }
 ?>
-      </div>
-  </div>
-</section>
-
-<?php else : ?>
 <section class="sheet__section">
   <div class="grid">
       <div class="grid-col grid-col--8 grid-col--small-12">
           <h2 class="headline headline--sub" style="display: flex; align-items: center;">
-            <?php \esc_html_e('Allow AI to control your WordPress via MCP', 'ionos-essentials') ?>
-              <span class="badge badge--neutral-solid" style="margin-left: 10px;"><?php \esc_html_e('Managed via WP7.0', 'ionos-essentials'); ?></span>
+            <?php
+                \esc_html_e('Allow AI to control your WordPress via MCP', 'ionos-essentials')
+?>
+              <p class="paragraph" style="margin: 0 0 0 10px;">
+                <span class="badge badge--neutral-solid"><?php \esc_html_e('For developers', 'ionos-essentials'); ?></span>
+              </p>
           </h2>
 
           <p class="paragraph paragraph--neutral">
               <?php \esc_html_e(
                 'Grant external AI Clients like Gemini & Claude secure access to your content, with the WordPress-MCP plugin.',
                 'ionos-essentials');
-  ?>
+?>
           </p>
       </div>
-
       <div class="grid-col grid-col--4 grid-col--small-12 grid-col--align-right">
           <span class="input-switch" >
               <input id="ionos-essentials-mcp" class="ionos-essentials-mcp-activate" type="checkbox" data-manual="true" data-description="<?php \esc_attr_e('Allow AI to control your WordPress via MCP', 'ionos-essentials'); ?>"
@@ -134,6 +47,7 @@ if (is_wp7_mcp_active()) : ?>
               <p class="paragraph paragraph--cropped paragraph--align-center"><?php \esc_html_e('Installing MCP capabilities', 'ionos-essentials'); ?></p>
             </li>
           </ul>
+
         </div>
 
         <div class="code snippet hidden">
@@ -154,21 +68,30 @@ if (is_wp7_mcp_active()) : ?>
         </div>
 
         <?php
-        $label        = \esc_html__('Generate application password for user', 'ionos-essentials');
-  $revoke_app_password= 0;
-  if (\WP_Application_Passwords::application_name_exists_for_user(wp_get_current_user()->ID, APPLICATION_NAME)) {
-    $label              = \esc_html__('Regenerate application password for user', 'ionos-essentials');
-    $revoke_app_password= 1;
-  }
+        $label = \esc_html__('Generate application password for user', 'ionos-essentials');
+        $revoke_app_password = 0;
 
-  printf(
-    '<button class="button button--primary ionos-essentials-mcp-activate %s" data-revoke-app-password="%s">%s</button>',
-    (IONOS_ESSENTIALS_MCP_SERVER_ACTIVE) ? '' : 'hidden',
-    $revoke_app_password,
-    $label
-  );
-  ?>
+        if (\WP_Application_Passwords::application_name_exists_for_user(wp_get_current_user()->ID, APPLICATION_NAME)) {
+            $label = \esc_html__('Regenerate application password for user', 'ionos-essentials');
+            $revoke_app_password = 1;
+        }
+
+        printf(
+          '<button class="button button--primary ionos-essentials-mcp-activate %s" data-revoke-app-password="%s">%s</button>',
+          (IONOS_ESSENTIALS_MCP_SERVER_ACTIVE) ? '' : 'hidden',
+          $revoke_app_password,
+          $label
+        );
+        ?>
+
+        <?php if (is_wp7_mcp_active()) : ?>
+          <p class="paragraph" style="margin-top: 15px;">
+              <a href="<?php echo \esc_url(\admin_url('options-connectors.php')); ?>">
+                  <?php \esc_html_e('Configure Connectors Settings', 'ionos-essentials'); ?>
+              </a>
+          </p>
+        <?php endif; ?>
+
       </div>
   </div>
 </section>
-<?php endif; ?>
