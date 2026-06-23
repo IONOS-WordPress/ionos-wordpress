@@ -94,3 +94,33 @@ msgstr ""
 #, php-format
 msgid "The use of \"%s\" is not allowed and cannot be activated via install. Uninstall is recommended."
 msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+msgid "IONOS Stretch Asset"
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+msgid "IONOS"
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+msgid "Verified 1 of 1 plugins."
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+msgid "Verification failed: Plugin files are not accessible at the mounted path."
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+msgid "Update not supported for mounted plugins."
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+#, php-format
+msgid "Plugin \"%s\" is already installed and active."
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+#, php-format
+msgid "Successfully performed %1$s on %2$s."
+msgstr ""

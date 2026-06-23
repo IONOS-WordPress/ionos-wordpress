@@ -68,21 +68,21 @@ defined('ABSPATH') || exit();
         </div>
 
         <?php
-        $label = \esc_html__('Generate application password for user', 'ionos-essentials');
-        $revoke_app_password = 0;
+        $label       = \esc_html__('Generate application password for user', 'ionos-essentials');
+$revoke_app_password = 0;
 
-        if (\WP_Application_Passwords::application_name_exists_for_user(wp_get_current_user()->ID, APPLICATION_NAME)) {
-            $label = \esc_html__('Regenerate application password for user', 'ionos-essentials');
-            $revoke_app_password = 1;
-        }
+if (\WP_Application_Passwords::application_name_exists_for_user(wp_get_current_user()->ID, APPLICATION_NAME)) {
+  $label               = \esc_html__('Regenerate application password for user', 'ionos-essentials');
+  $revoke_app_password = 1;
+}
 
-        printf(
-          '<button class="button button--primary ionos-essentials-mcp-activate %s" data-revoke-app-password="%s">%s</button>',
-          (IONOS_ESSENTIALS_MCP_SERVER_ACTIVE) ? '' : 'hidden',
-          $revoke_app_password,
-          $label
-        );
-        ?>
+printf(
+  '<button class="button button--primary ionos-essentials-mcp-activate %s" data-revoke-app-password="%s">%s</button>',
+  (IONOS_ESSENTIALS_MCP_SERVER_ACTIVE) ? '' : 'hidden',
+  $revoke_app_password,
+  $label
+);
+?>
 
         <?php if (is_wp7_mcp_active()) : ?>
           <p class="paragraph" style="margin-top: 15px;">
