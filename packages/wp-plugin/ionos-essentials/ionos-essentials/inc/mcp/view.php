@@ -85,11 +85,19 @@ printf(
 ?>
 
         <?php if (is_wp7_mcp_active()) : ?>
-          <p class="paragraph" style="margin-top: 15px;">
-              <a href="<?php echo \esc_url(\admin_url('options-connectors.php')); ?>">
-                  <?php \esc_html_e('Configure Connectors Settings', 'ionos-essentials'); ?>
-              </a>
-          </p>
+          <div style="margin-top: 20px;">
+              <p class="paragraph paragraph--neutral" style="margin-bottom: 5px;">
+                  <?php \esc_html_e(
+                    "Since you are running WordPress 7.0, you can also try the 'Connectors' feature to unlock the full integrated AI experience.",
+                    'ionos-essentials'
+                  ); ?>
+              </p>
+              <p class="paragraph">
+                  <a href="<?php echo \esc_url(\admin_url('options-connectors.php')); ?>">
+                      <?php \esc_html_e('Configure AI Connectors', 'ionos-essentials'); ?> &rarr;
+                  </a>
+              </p>
+          </div>
         <?php endif; ?>
 
       </div>
