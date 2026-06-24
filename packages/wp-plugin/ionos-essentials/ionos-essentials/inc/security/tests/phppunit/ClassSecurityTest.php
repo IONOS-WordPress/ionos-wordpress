@@ -1,7 +1,7 @@
 <?php
 
-use const ionos\essentials\PLUGIN_DIR;
 use function ionos\essentials\security\obfuscate_email;
+use const ionos\essentials\PLUGIN_DIR;
 
 /**
  * covers the tests for Security features

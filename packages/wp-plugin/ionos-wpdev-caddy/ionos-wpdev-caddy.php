@@ -18,8 +18,8 @@
 
 namespace ionos\wpdev\caddy;
 
-use function ionos\wpdev\caddy\notebook\get_notebooks;
 use WP_Admin_Bar;
+use function ionos\wpdev\caddy\notebook\get_notebooks;
 
 defined('ABSPATH') || exit();
 

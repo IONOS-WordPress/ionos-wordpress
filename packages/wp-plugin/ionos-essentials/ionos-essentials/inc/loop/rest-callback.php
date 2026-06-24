@@ -9,12 +9,12 @@ require_once __DIR__ . '/../dashboard/blocks/next-best-actions/class-nba.php';
 
 use FilterIterator;
 use ionos\essentials\dashboard\blocks\next_best_actions\NBA;
-use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN;
-use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 use ionos\essentials\Tenant;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
+use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN;
+use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 
 const IONOS_LOOP_EVENTS_OPTION = 'ionos-loop-events';
 const IONOS_LOOP_CLICKS_OPTION = 'ionos-loop-clicks';
@@ -259,14 +259,15 @@ function _analyze_htaccess_file(SplFileInfo $file): array
 function _get_hosting(): array
 {
   return [
-    'locale'              => \get_locale(),
-    'blog_public'         => (bool) \get_option('blog_public'),
-    'market'              => _get_market(),
-    'tenant'              => Tenant::get_slug(),
-    'core_version'        => \get_bloginfo('version'),
-    'php_version'         => PHP_VERSION,
-    'instance_created'    => _get_instance_creation_date(),
-    'htaccess_md5'        => (object) _get_all_htaccess_md5(),
+    'locale'               => \get_locale(),
+    'blog_public'          => (bool) \get_option('blog_public'),
+    'market'               => _get_market(),
+    'tenant'               => Tenant::get_slug(),
+    'core_version'         => \get_bloginfo('version'),
+    'php_version'          => PHP_VERSION,
+    'instance_created'     => _get_instance_creation_date(),
+    'htaccess_md5'         => (object) _get_all_htaccess_md5(),
+    'ssl_type'             => \ionos\essentials\get_ssl_type(),
   ];
 }
 

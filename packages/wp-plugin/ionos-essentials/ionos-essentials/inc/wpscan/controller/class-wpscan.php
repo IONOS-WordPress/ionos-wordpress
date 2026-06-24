@@ -4,10 +4,10 @@ namespace ionos\essentials\wpscan;
 
 defined('ABSPATH') || exit();
 
+use ionos\essentials\Tenant;
 use function ionos\essentials\_is_plugin_active;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_MAIL_NOTIFY;
-use ionos\essentials\Tenant;
 
 class WPScan
 {
@@ -272,8 +272,8 @@ class WPScan
   {
     $middleware   = new WPScanMiddleware();
     $data         = $middleware->download_wpscan_data();
+
     if (empty($data) || ! is_array($data)) {
-      error_log('WPScan middleware: No data received');
       $this->issues = [];
       $this->error  = $middleware->get_error_message();
       \set_transient('ionos_wpscan_issues', [], 5 * MINUTE_IN_SECONDS);

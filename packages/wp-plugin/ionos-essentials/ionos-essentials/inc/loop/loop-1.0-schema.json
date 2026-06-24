@@ -46,6 +46,11 @@
           "type": "integer",
           "description": "UTC Unix timestamp when the instance was created"
         },
+        "ssl_type": {
+          "type": "string",
+          "description": "Type of SSL certificate used on the site",
+          "examples": ["letsencrypt", "self_signed", "commercial", "none", "unknown"]
+        },
         "htaccess_md5": {
           "type": "object",
           "description": "List of all .htaccess files (key: file path relative to ABSPATH, value: analysis object)",
