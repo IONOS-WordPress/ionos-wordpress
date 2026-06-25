@@ -2,7 +2,7 @@
 
 namespace ionos\ionos_core;
 
-function check_for_updates()
+function check_for_updates(): void
 {
   $info = wp_remote_get(INFO_JSON_URL, [
     'timeout' => 5,
@@ -14,14 +14,9 @@ function check_for_updates()
   }
 
   $info_body = wp_remote_retrieve_body($info);
-  $info_data = json_decode($info_body, true);
+  $info_data = json_decode($info_body, true, 512, JSON_THROW_ON_ERROR);
 
-  if (json_last_error() !== JSON_ERROR_NONE) {
-    error_log('Error decoding update info JSON: ' . json_last_error_msg());
-    return;
-  }
-
-  $current_version = CURRENT_VERSION; // Current version of the plugin
+  $current_version = CURRENT_VERSION;
   $latest_version  = $info_data['version'] ?? null;
 
   if ($latest_version && version_compare($latest_version, $current_version, '>')) {
