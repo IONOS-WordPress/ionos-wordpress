@@ -42,6 +42,7 @@ fi
 
 # abort if the working directory is not clean
 if [[ -n "$(git status --porcelain)" ]]; then
+  git status
   ionos.wordpress.log_error "You have uncommitted changes. Please commit or stash them before releasing."
   exit 1
 fi
