@@ -74,7 +74,6 @@ function _install()
     case version_compare($last_installed_version, $current_version, '=='):
       // nothing to do
       return;
-
     case version_compare($last_installed_version, '1.0.0', '<'):
 
       // keep consent for ionos loop to use it later on in dashboard
