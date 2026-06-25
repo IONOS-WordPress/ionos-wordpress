@@ -37,7 +37,6 @@ const APPLICATION_NAME = 'Essentials MCP';
           revoke_application_password();
         }
 
-        $mcp_settings = \get_option('wordpress_mcp_settings', []);
         $mcp_settings = [
           'enabled'             => $activate,
           'enable_create_tools' => true,
