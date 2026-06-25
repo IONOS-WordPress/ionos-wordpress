@@ -9,9 +9,7 @@ defined('ABSPATH') || exit();
   <div class="grid">
       <div class="grid-col grid-col--8 grid-col--small-12">
           <h2 class="headline headline--sub" style="display: flex; align-items: center;">
-            <?php
-                \esc_html_e('Allow AI to control your WordPress via MCP', 'ionos-essentials')
-?>
+            <?php \esc_html_e('Allow AI to control your WordPress via MCP', 'ionos-essentials'); ?>
               <p class="paragraph" style="margin: 0 0 0 10px;">
                 <span class="badge badge--neutral-solid"><?php \esc_html_e('For developers', 'ionos-essentials'); ?></span>
               </p>
