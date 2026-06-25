@@ -1,0 +1,12 @@
+{
+  "name": "@ionos-wordpress/ionos-core",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "@ionos-wordpress/essentials": "workspace:*",
+    "@ionos-wordpress/rector-php": "workspace:*",
+    "@ionos-wordpress/ecs-php": "workspace:*",
+    "@ionos-wordpress/potrans": "workspace:*",
+    "@ionos-wordpress/dennis-i18n": "workspace:*"
+  }
+}
