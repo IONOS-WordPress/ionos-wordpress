@@ -1,5 +1,20 @@
 # @ionos-wordpress/essentials
 
+## 1.5.0
+
+### Minor Changes
+
+- ee9f244: add adzone to dashboard
+  refactor mcp toggle feature for WP7.0
+  add wpcli functionality for mounted themes and plugins in stretch-extra
+
+### Patch Changes
+
+- 7c468df: handle missing NBA actions gracefully in get_nba method
+- cd50701: Allow REST API call in maintenance mode
+- 9c170fd: Stop calling wpscan middleware in case of errors
+- c4590ac: Add SSL certificate type to loop data
+
 ## 1.4.8
 
 ### Patch Changes

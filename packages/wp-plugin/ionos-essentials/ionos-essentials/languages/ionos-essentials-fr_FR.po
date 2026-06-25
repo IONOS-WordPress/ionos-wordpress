@@ -580,10 +580,6 @@ msgstr "Votre équipe extension %s"
 msgid "More information"
 msgstr "En savoir plus"
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "An error occurred while fetching the vulnerability data."
-msgstr "Une erreur s'est produite lors de la récupération des données relatives à la vulnérabilité."
-
 #: ionos-essentials/inc/dashboard/blocks/welcome/index.php
 msgid "Comprehensive help section, including: AI chat support, Guided tours and an extensive knowledge database"
 msgstr "Section d'aide complète, comprenant : assistance par chat IA, visites guidées et base de connaissances exhaustive."
@@ -1056,10 +1052,6 @@ msgid "Allow AI to control your WordPress via MCP"
 msgstr "Autoriser l'IA à contrôler votre WordPress via MCP"
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "For developers"
-msgstr "Pour les développeurs"
-
-#: ionos-essentials/inc/mcp/view.php
 msgid "Installing MCP capabilities"
 msgstr "Installer MCP capabilities"
 
@@ -1138,4 +1130,24 @@ msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
 msgid "Go to WP7.0 MCP feature page"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Legacy Configuration Snippet:"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Generate application password for user"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Regenerate application password for user"
+msgstr ""
+
+#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability scan not possible due to multiple failed attempts. Please contact Customer Care."
+msgstr ""
+
+#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "An unknown error occurred while fetching the vulnerability data."
 msgstr ""

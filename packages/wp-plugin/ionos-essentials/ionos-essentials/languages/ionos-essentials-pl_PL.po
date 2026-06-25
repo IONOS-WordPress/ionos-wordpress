@@ -904,10 +904,6 @@ msgstr "Twój zespół wtyczki %s"
 msgid "Vulnerability scan not possible. Please contact Customer Care."
 msgstr "Skanowanie podatności niemożliwe. Skontaktuj się z obsługą klienta."
 
-#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "An error occurred while fetching the vulnerability data."
-msgstr "Wystąpił błąd podczas pobierania danych o podatnościach."
-
 #: ionos-essentials/inc/wpscan/index.php
 msgid "Active theme cannot be deleted"
 msgstr "Aktywny motyw nie może zostać usunięty"
@@ -1054,10 +1050,6 @@ msgid "Allow AI to control your WordPress via MCP"
 msgstr "Pozwól sztucznej inteligencji kontrolować WordPress za pośrednictwem MCP"
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "For developers"
-msgstr "Dla deweloperów"
-
-#: ionos-essentials/inc/mcp/view.php
 msgid "Installing MCP capabilities"
 msgstr "Instalowanie funkcji MCP"
 
@@ -1135,4 +1127,24 @@ msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
 msgid "Go to WP7.0 MCP feature page"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Legacy Configuration Snippet:"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Generate application password for user"
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Regenerate application password for user"
+msgstr ""
+
+#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "Vulnerability scan not possible due to multiple failed attempts. Please contact Customer Care."
+msgstr ""
+
+#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
+msgid "An unknown error occurred while fetching the vulnerability data."
 msgstr ""
