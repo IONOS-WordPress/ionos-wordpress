@@ -117,7 +117,11 @@ function activate_mcp_server(): bool
   }
 
   if (! _is_plugin_active('wordpress-mcp/wordpress-mcp.php')) {
-    \activate_plugin('wordpress-mcp/wordpress-mcp.php');
+    $activated = \activate_plugin('wordpress-mcp/wordpress-mcp.php');
+    if (\is_wp_error($activated)) {
+      error_log('Failed to activate MCP server plugin: ' . $activated->get_error_message());
+      return false;
+    }
   }
 
   return true;

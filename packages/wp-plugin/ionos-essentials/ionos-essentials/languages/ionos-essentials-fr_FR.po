@@ -1132,14 +1132,18 @@ msgstr ""
 msgid "Regenerate application password for user"
 msgstr ""
 
-#: ionos-essentials/inc/mcp/view.php
-msgid "Configure Connectors Settings"
-msgstr ""
-
 #: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "Vulnerability scan not possible due to multiple failed attempts. Please contact Customer Care."
 msgstr ""
 
 #: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
 msgid "An unknown error occurred while fetching the vulnerability data."
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Since you are running WordPress 7.0, you can also try the 'Connectors' feature to unlock the full integrated AI experience."
+msgstr ""
+
+#: ionos-essentials/inc/mcp/view.php
+msgid "Configure AI Connectors"
 msgstr ""
