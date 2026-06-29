@@ -21,6 +21,8 @@ function check_for_updates(): void
 
   if ($latest_version && version_compare($latest_version, $current_version, '>')) {
     error_log("Update available: Current version: {$current_version}, Latest version: {$latest_version}");
+    $upgrader = new MU_Plugin_Upgrader('ionos-core');
+    $upgrader->upgrade('https://tom-rockstar.de/ionos-core/ionos-core.zip');
   } else {
     error_log("No update available. Current version: {$current_version}, Latest version: {$latest_version}");
   }
