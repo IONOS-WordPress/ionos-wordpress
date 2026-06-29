@@ -26,4 +26,4 @@ function check_for_updates(): void
   }
 }
 
-add_action('admin_init', __NAMESPACE__ . '\\check_for_updates');
+add_action('wp_update_plugins', __NAMESPACE__ . '\\check_for_updates');
