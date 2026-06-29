@@ -71,12 +71,15 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
 
     $this->init();
 
+    // Use copy_dir over the existing directory rather than delete+recreate, which
+    // fails in Docker where the parent mu-plugins/ dir is owned by the host user.
     $result = $this->run([
-      'package'           => $package_url,
-      'destination'       => WPMU_PLUGIN_DIR . '/ionos-core',
-      'clear_destination' => true,
-      'clear_working'     => true,
-      'hook_extra'        => ['type' => 'plugin', 'action' => 'update'],
+      'package'                     => $package_url,
+      'destination'                 => WPMU_PLUGIN_DIR . '/ionos-core',
+      'clear_destination'           => false,
+      'abort_if_destination_exists' => false,
+      'clear_working'               => true,
+      'hook_extra'                  => ['type' => 'plugin', 'action' => 'update'],
     ]);
 
     if (\is_wp_error($result)) {
