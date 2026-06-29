@@ -44,9 +44,8 @@ const APPLICATION_NAME = 'Essentials MCP';
           'enable_delete_tools' => true,
         ];
 
-        \update_option('wordpress_mcp_settings', $mcp_settings);
-
         if (false === $activate) {
+          \update_option('wordpress_mcp_settings', $mcp_settings);
           return rest_ensure_response(new \WP_REST_Response([
             'active' => '0',
           ], 200));
@@ -58,6 +57,8 @@ const APPLICATION_NAME = 'Essentials MCP';
             'error'  => 'MCP server plugin is not active.',
           ], 500));
         }
+
+        \update_option('wordpress_mcp_settings', $mcp_settings);
 
         if (\WP_Application_Passwords::application_name_exists_for_user(wp_get_current_user()->ID, APPLICATION_NAME)) {
           return rest_ensure_response(new \WP_REST_Response([
