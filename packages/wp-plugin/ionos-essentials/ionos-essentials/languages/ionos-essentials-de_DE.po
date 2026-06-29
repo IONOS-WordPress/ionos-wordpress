@@ -1050,10 +1050,6 @@ msgid "Allow AI to control your WordPress via MCP"
 msgstr "Erlauben Sie KI, Ihr WordPress über MCP zu steuern"
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "For developers"
-msgstr "Für Entwickler"
-
-#: ionos-essentials/inc/mcp/view.php
 msgid "Installing MCP capabilities"
 msgstr "Installation der MCP-Funktionen"
 
