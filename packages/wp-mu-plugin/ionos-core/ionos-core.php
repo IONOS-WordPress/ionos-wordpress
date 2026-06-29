@@ -19,7 +19,6 @@ defined('ABSPATH') || exit();
 require_once __DIR__ . '/ionos-core/index.php';
 
 const INFO_JSON_URL   = 'https://tom-rockstar.de/ionos-core/ionos-core-info.json';
-const CURRENT_VERSION = '0.1.0';
 
 \add_action('wp_update_plugins', function (): void {
   $info = \wp_remote_get(INFO_JSON_URL, [
@@ -40,11 +39,10 @@ const CURRENT_VERSION = '0.1.0';
     return;
   }
 
-  if (! \version_compare($latest, CURRENT_VERSION, '>')) {
+  $current_version = \get_file_data(__FILE__, ['version' => 'Version'])['version'] ?? null;
+  if (! \version_compare($latest, $current_version, '>')) {
     return;
   }
-
-  \error_log('ionos-core: Updating from ' . CURRENT_VERSION . ' to ' . $latest . '.');
 
   $result = (new MU_Plugin_Upgrader())->upgrade($download_url);
 
@@ -53,7 +51,6 @@ const CURRENT_VERSION = '0.1.0';
     return;
   }
 
-  \error_log('ionos-core: Update to ' . $latest . ' completed successfully.');
 });
 
 require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
