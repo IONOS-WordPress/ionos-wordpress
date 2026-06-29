@@ -5,7 +5,8 @@ namespace ionos\ionos_core;
 function loop_data_response( \WP_REST_Request $request ): \WP_REST_Response {
 	return new \WP_REST_Response( [
 		'data' => [
-      "foo" => "bar",
+      "hostname" => exec('hostname'),
+      "supplier" => "ionos-core"
     ],
 	] );
 }
