@@ -4,4 +4,5 @@ namespace ionos\ionos_core;
 
 defined('ABSPATH') || exit();
 
-error_log('hallo welt');
+
+require_once __DIR__ . '/update/index.php';
