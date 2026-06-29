@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Version: 2.0.0
+ */
+
 namespace ionos\ionos_core;
 
 defined('ABSPATH') || exit();

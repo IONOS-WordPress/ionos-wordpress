@@ -4,32 +4,35 @@ namespace ionos\ionos_core;
 
 defined('ABSPATH') || exit();
 
-const INFO_JSON_URL   = 'https://tom-rockstar.de/ionos-core/ionos-core-info.json';
+const INFO_JSON_URL = 'https://tom-rockstar.de/ionos-core/ionos-core-info.json';
 
 require_once __DIR__ . '/class-mu-plugin-upgrader.php';
 
 \add_action('wp_update_plugins', function (): void {
-  $info = \wp_remote_get(INFO_JSON_URL, [
-    'timeout' => 5,
-  ]);
+  $response = \wp_remote_get(INFO_JSON_URL, ['timeout' => 5]);
 
-  if (\is_wp_error($info)) {
-    \error_log('ionos-core: Error fetching update info: ' . $info->get_error_message());
+  if (\is_wp_error($response)) {
+    \error_log('ionos-core: Error fetching update info: ' . $response->get_error_message());
     return;
   }
 
-  $info_data    = json_decode(\wp_remote_retrieve_body($info), true, 512, JSON_THROW_ON_ERROR);
-  $latest       = $info_data['version']      ?? null;
-  $download_url = $info_data['download_url'] ?? null;
+  try {
+    $info = json_decode(\wp_remote_retrieve_body($response), true, 512, JSON_THROW_ON_ERROR);
+  } catch (\JsonException $e) {
+    \error_log('ionos-core: Failed to parse update info: ' . $e->getMessage());
+    return;
+  }
+
+  $latest       = $info['version']      ?? null;
+  $download_url = $info['download_url'] ?? null;
 
   if (! $latest || ! $download_url) {
     \error_log('ionos-core: Update info response is missing version or download_url.');
     return;
   }
 
-  $current_version = \get_file_data(__FILE__, [
-    'version' => 'Version',
-  ])['version'] ?? null;
+  $current_version = \get_file_data(__DIR__ . '/../index.php', ['version' => 'Version'])['version'] ?? null;
+
   if (! \version_compare($latest, $current_version, '>')) {
     return;
   }
@@ -38,6 +41,5 @@ require_once __DIR__ . '/class-mu-plugin-upgrader.php';
 
   if (\is_wp_error($result)) {
     \error_log('ionos-core: Update failed: ' . $result->get_error_message());
-    return;
   }
 });
