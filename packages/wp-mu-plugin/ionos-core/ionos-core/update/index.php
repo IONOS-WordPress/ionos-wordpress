@@ -2,6 +2,8 @@
 
 namespace ionos\ionos_core;
 
+require_once __DIR__ . '/class-mu-plugin-upgrader.php';
+
 function check_for_updates(): void
 {
   $info = wp_remote_get(INFO_JSON_URL, [
