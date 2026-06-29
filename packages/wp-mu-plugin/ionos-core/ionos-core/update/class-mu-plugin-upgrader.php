@@ -14,7 +14,7 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     parent::__construct(new \Automatic_Upgrader_Skin());
   }
 
-  public function upgrade(string $package_url): true|\WP_Error
+  public function upgrade(string $package_url)
   {
     \WP_Filesystem();
 
