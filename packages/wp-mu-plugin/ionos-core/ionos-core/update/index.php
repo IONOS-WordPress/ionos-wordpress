@@ -27,7 +27,9 @@ require_once __DIR__ . '/class-mu-plugin-upgrader.php';
     return;
   }
 
-  $current_version = \get_file_data(__FILE__, ['version' => 'Version'])['version'] ?? null;
+  $current_version = \get_file_data(__FILE__, [
+    'version' => 'Version',
+  ])['version'] ?? null;
   if (! \version_compare($latest, $current_version, '>')) {
     return;
   }
@@ -38,5 +40,4 @@ require_once __DIR__ . '/class-mu-plugin-upgrader.php';
     \error_log('ionos-core: Update failed: ' . $result->get_error_message());
     return;
   }
-
 });

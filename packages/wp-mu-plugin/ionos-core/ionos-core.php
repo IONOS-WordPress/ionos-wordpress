@@ -17,4 +17,3 @@ namespace ionos\ionos_core;
 defined('ABSPATH') || exit();
 
 require_once __DIR__ . '/ionos-core/index.php';
-
