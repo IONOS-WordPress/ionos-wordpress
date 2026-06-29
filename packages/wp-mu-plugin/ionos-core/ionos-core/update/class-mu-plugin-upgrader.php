@@ -25,7 +25,7 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     $result = $this->run([
       'package'           => $package_url,
       'destination'       => WPMU_PLUGIN_DIR . '/ionos-core',
-      'clear_destination' => false,
+      'clear_destination' => true,
       'clear_working'     => true,
       'hook_extra'        => ['type' => 'plugin', 'action' => 'update'],
     ]);
