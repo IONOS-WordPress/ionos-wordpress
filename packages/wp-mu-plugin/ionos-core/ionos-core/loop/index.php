@@ -13,8 +13,9 @@ function loop_data_response(\WP_REST_Request $request): \WP_REST_Response
 }
 
 add_action('admin_notices', function () {
+  $my_version = \get_file_data(__DIR__ . '/../../ionos-core.php', ['version' => 'Version'])['version'] ?? null;
   echo '<div class="notice notice-info is-dismissible"><p>' . esc_html__(
-    'Welcome to IONOS Core. I was updated recently.',
+    'Welcome to IONOS Core. This is version ' . $my_version . '.',
     'ionos-core'
   ) . '</p></div>';
 });
