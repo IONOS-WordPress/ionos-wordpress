@@ -9,7 +9,9 @@ const INFO_JSON_URL = 'https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-
 require_once __DIR__ . '/class-mu-plugin-upgrader.php';
 
 \add_action('wp_update_plugins', function (): void {
-  $response = \wp_remote_get(INFO_JSON_URL, ['timeout' => 5]);
+  $response = \wp_remote_get(INFO_JSON_URL, [
+    'timeout' => 5,
+  ]);
 
   if (\is_wp_error($response)) {
     \error_log('ionos-core: Error fetching update info: ' . $response->get_error_message());
@@ -31,7 +33,9 @@ require_once __DIR__ . '/class-mu-plugin-upgrader.php';
     return;
   }
 
-  $current_version = \get_file_data(__DIR__ . '/../ionos-core.php', ['version' => 'Version'])['version'] ?? null;
+  $current_version = \get_file_data(__DIR__ . '/../../ionos-core.php', [
+    'version' => 'Version',
+  ])['version'] ?? null;
 
   if (! \version_compare($latest, $current_version, '>')) {
     return;
