@@ -4,8 +4,12 @@
 - loop functions
 - marketplace funtions
 
-## Installation, (while in development only)
+## Installation
+Run theses commands on the remote server.
 ```
-rsync ionos-core -av ionos-core.php  USER@HOST:wp-content/mu-plugins/
+cd wp-content/mu-plugins
+curl -O https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-group/ionos-core/ionos-core.zip
+unzip ionos-core.zip
+rm ionos-core.zip
 ```
 replace USER and HOST with the data from __waas-create__-output.

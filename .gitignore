@@ -8,7 +8,7 @@ node_modules
 /packages/*/*/*/languages/*.php
 /.vscode/settings.json
 /.vscode/launch.json
-/.secrets
+.secrets
 .env.local
 /bin/act
 /.wp-env.json
