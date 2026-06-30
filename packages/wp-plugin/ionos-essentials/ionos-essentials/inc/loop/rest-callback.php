@@ -28,6 +28,7 @@ function _rest_loop_callback(): \WP_REST_Response
   $core_data = [
     'version'       => '1.0',
     'hosting'       => _get_hosting(),
+    'supplier'      => 'ionos-essentials',
     'wordpress'     => [
       'user_data'           => \count_users('memory'),
       'active_theme'        => _get_active_theme(),
@@ -268,6 +269,7 @@ function _get_hosting(): array
     'instance_created'     => _get_instance_creation_date(),
     'htaccess_md5'         => (object) _get_all_htaccess_md5(),
     'ssl_type'             => \ionos\essentials\get_ssl_type(),
+    'hostname'             => \gethostname(),
   ];
 }
 
