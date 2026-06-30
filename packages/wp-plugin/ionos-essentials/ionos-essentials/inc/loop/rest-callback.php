@@ -269,7 +269,7 @@ function _get_hosting(): array
     'instance_created'     => _get_instance_creation_date(),
     'htaccess_md5'         => (object) _get_all_htaccess_md5(),
     'ssl_type'             => \ionos\essentials\get_ssl_type(),
-    'hostname'             => \gethostname(),
+    'hostname'             => \gethostname() ?: '',
   ];
 }
 
