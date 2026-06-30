@@ -16,30 +16,28 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
 
   public function upgrade(string $package_url)
   {
-    \WP_Filesystem();
+    global $wp_filesystem;
 
+    \WP_Filesystem();
     $this->init();
 
-    // Use copy_dir over the existing directory rather than delete+recreate, which
-    // fails in Docker where the parent mu-plugins/ dir is owned by the host user.
-    $result = $this->run([
-      'package'                     => $package_url,
-      'destination'                 => WPMU_PLUGIN_DIR . '/ionos-core',
-      'clear_destination'           => false,
-      'abort_if_destination_exists' => false,
-      'clear_working'               => true,
-      'hook_extra'                  => [
-        'type'   => 'plugin',
-        'action' => 'update',
-      ],
-    ]);
+    $package = $this->download_package($package_url);
+    if (\is_wp_error($package)) {
+      return $package;
+    }
+
+    $working_dir = $this->unpack_package($package, true);
+    if (\is_wp_error($working_dir)) {
+      return $working_dir;
+    }
+
+    // copy_dir copies the *contents* of $working_dir into WPMU_PLUGIN_DIR,
+    // preserving the top-level folder from the zip (e.g. ionos-core/).
+    $result = \copy_dir($working_dir, WPMU_PLUGIN_DIR);
+    $wp_filesystem->delete($working_dir, true);
 
     if (\is_wp_error($result)) {
       return $result;
-    }
-
-    if (! $result) {
-      return new \WP_Error('mu_plugin_upgrade_failed', 'MU plugin upgrade failed with no result.');
     }
 
     return true;
