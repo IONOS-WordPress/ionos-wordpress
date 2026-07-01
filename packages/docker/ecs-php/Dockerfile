@@ -2,7 +2,7 @@
 
 ARG PHP_VERSION
 
-FROM php:${PHP_VERSION}-cli-alpine
+FROM alpine:3.24
 
 ARG PHP_VERSION
 
@@ -13,18 +13,21 @@ COPY packages/docker/ecs-php/composer.json /composer/
 COPY packages/docker/ecs-php/composer.lock /composer/
 
 RUN <<EOF
-  # install apk packages to create a user
-  # install i18n support into php
   apk add --update \
-    icu-dev \
-    shadow \
+    php${PHP_VERSION//./} \
+    php${PHP_VERSION//./}-ctype \
+    php${PHP_VERSION//./}-fileinfo \
     php${PHP_VERSION//./}-intl \
+    php${PHP_VERSION//./}-pcntl \
+    php${PHP_VERSION//./}-posix \
     php${PHP_VERSION//./}-simplexml \
+    php${PHP_VERSION//./}-sodium \
     php${PHP_VERSION//./}-tokenizer \
     php${PHP_VERSION//./}-xmlreader \
     php${PHP_VERSION//./}-xmlwriter \
+    shadow \
     composer
-  
+
   rm -rf /var/cache/apk/*
 
   composer global install

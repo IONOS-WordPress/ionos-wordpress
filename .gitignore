@@ -33,3 +33,4 @@ mcp.log
 .gemini/skills
 packages/docker/*/vendor
 scripts/_stretch.sh
+.devcontainer/devcontainer-lock.json
