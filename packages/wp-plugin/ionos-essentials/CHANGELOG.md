@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.5.2
+
+### Patch Changes
+
+- a1a694e: dummy change to test the multi-package prerelease pipeline
+
 ## 1.5.1
 
 ### Patch Changes
