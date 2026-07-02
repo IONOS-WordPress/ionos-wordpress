@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.5.4
+
+### Patch Changes
+
+- 7424eda: dummy change to test the multi-package prerelease pipeline (round 3, after fixing the 'latest' flag handling in release.sh)
+
 ## 1.5.3
 
 ### Patch Changes

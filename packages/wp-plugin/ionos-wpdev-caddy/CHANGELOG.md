@@ -1,5 +1,11 @@
 # @ionos-wordpress/wpdev-caddy
 
+## 1.1.2
+
+### Patch Changes
+
+- 7424eda: dummy change to test the multi-package prerelease pipeline (round 3, after fixing the 'latest' flag handling in release.sh)
+
 ## 1.1.1
 
 ### Patch Changes
