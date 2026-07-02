@@ -5,7 +5,7 @@
  * Description:       Core functionality for IONOS WordPress projects.
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-mu-plugin/ionos-core
  * Requires at least: 6.0
- * Version:           2.1.0
+ * Version:           1.0.0
  * Author:            IONOS Group
  * Author URI:        https://www.ionos-group.com/brands.html
  * Domain Path:       /ionos-core/languages
