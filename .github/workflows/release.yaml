@@ -9,6 +9,11 @@ on:
   # this workflow needs to be triggered manually
   workflow_dispatch:
 
+permissions:
+  # release.sh creates/deletes tags and creates/edits releases and their assets via 'gh' - all of
+  # that falls under the 'contents' permission scope for the GITHUB_TOKEN
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
