@@ -149,6 +149,10 @@ for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'packag
   # PACKAGE_FLAVOUR is the name of the parent directory of the package (i.e. wp-plugin|npm|docker|...)
   PACKAGE_FLAVOUR=$(basename $(dirname $PACKAGE_PATH))
 
+  # reset per package - otherwise artifacts from a previously processed package in this loop
+  # would leak into this package's release (ARTIFACTS is appended to via += below)
+  ARTIFACTS=()
+
   if [[ "$PACKAGE_FLAVOUR" == "." ]]; then
     # if root package is being released, collect all artifacts
     ARTIFACTS=($(find ./packages -mindepth 4 -maxdepth 4 -type f -name '*.zip ' -or -name "*.tgz"))
@@ -160,7 +164,7 @@ for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'packag
       npm)
         ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.tgz')")
         ;;
-      wp-plugin|wp-theme)
+      wp-plugin|wp-theme|wp-mu-plugin)
         ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip')")
         ;;
       *)
