@@ -14,7 +14,11 @@
 #
 name: 'pre-release'
 
-# execute this workflow only on the main branch and wait until the integration workflow is completed
+# execute this workflow only on push to the main branch.
+# NOTE: this does NOT wait for/depend on the 'integration' workflow - integration.yaml explicitly
+# excludes 'main' from its own trigger (branches-ignore) and there is no needs:/workflow_run: gate
+# between the two workflows. Building/testing here is done by this workflow's own steps
+# (pre-release.sh runs 'pnpm test'), not by relying on a prior 'integration' run having succeeded.
 on:
   push:
     branches:
