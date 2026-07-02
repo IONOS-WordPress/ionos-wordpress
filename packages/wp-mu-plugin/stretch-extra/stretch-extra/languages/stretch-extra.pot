@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-06T08:46:32+00:00\n"
+"POT-Creation-Date: 2026-06-23T09:39:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stretch-extra\n"
@@ -61,6 +61,36 @@ msgstr ""
 
 #: stretch-extra/inc/marketplace/marketplace.php
 msgid "recommends"
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+msgid "IONOS Stretch Asset"
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+msgid "IONOS"
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+msgid "Verified 1 of 1 plugins."
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+msgid "Verification failed: Plugin files are not accessible at the mounted path."
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+msgid "Update not supported for mounted plugins."
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+#, php-format
+msgid "Plugin \"%s\" is already installed and active."
+msgstr ""
+
+#: stretch-extra/inc/modify-commands/modify-commands-plugins.php
+#, php-format
+msgid "Successfully performed %1$s on %2$s."
 msgstr ""
 
 #: stretch-extra/inc/plugin-block-list/plugin-block-list.php
