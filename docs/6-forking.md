@@ -44,4 +44,3 @@ There are a few manual steps to be done to have a complete setup copy of the ori
   # GitHub CLI (called 'gh') expects the token to be in the GH_TOKEN
   GH_TOKEN="$GITHUB_TOKEN"
   ```
-
