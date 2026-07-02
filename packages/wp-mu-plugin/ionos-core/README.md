@@ -2,7 +2,7 @@
 
 - updates itself
 - loop functions
-- marketplace funtions
+- marketplace functions
 
 ## Installation
 
