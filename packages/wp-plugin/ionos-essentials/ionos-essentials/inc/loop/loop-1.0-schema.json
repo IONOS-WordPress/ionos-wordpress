@@ -9,6 +9,11 @@
       "description": "semantic version of the loop telemetry data format",
       "examples": ["1.0"]
     },
+    "supplier": {
+      "type": "string",
+      "description": "Identifier of the plugin supplying the telemetry data",
+      "examples": ["ionos-essentials"]
+    },
     "hosting": {
       "type": "object",
       "description": "Hosting site configuration and metadata",
@@ -50,6 +55,10 @@
           "type": "string",
           "description": "Type of SSL certificate used on the site",
           "examples": ["letsencrypt", "self_signed", "commercial", "none", "unknown"]
+        },
+        "hostname": {
+          "type": "string",
+          "description": "Server hostname"
         },
         "htaccess_md5": {
           "type": "object",
@@ -282,5 +291,5 @@
       "additionalProperties": true
     }
   },
-  "required": ["hosting", "wordpress", "events", "clicks", "plugin_data"]
+  "required": ["version", "supplier", "hosting", "wordpress", "events", "clicks", "plugin_data"]
 }
