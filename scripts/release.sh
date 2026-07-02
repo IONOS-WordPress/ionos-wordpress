@@ -179,8 +179,11 @@ EOF
   done
 
   # remove the 'pre-release' flag from this PRE_RELEASE - each processed release is individually
-  # flipped to non-prerelease
-  gh release edit "$PRE_RELEASE" --prerelease=false --draft=false --latest=true
+  # flipped to non-prerelease. --latest=false: GitHub's 'latest' flag is a repo-wide singleton, so
+  # with N packages promoted in one run only the floating $LATEST_RELEASE_TAG release below should
+  # carry it - flagging a per-package release here would arbitrarily pick whichever package
+  # happens to be processed last in this loop
+  gh release edit "$PRE_RELEASE" --prerelease=false --draft=false --latest=false
 
   ionos.wordpress.log_info "Removed 'pre-release' flag from release '$PRE_RELEASE'"
 done
@@ -193,7 +196,7 @@ gh release edit "$LATEST_RELEASE_TAG" \
   --notes "latest release contains:
 $RELEASE_NOTES" \
   --tag $LATEST_RELEASE_TAG \
-  --latest=false \
+  --latest=true \
   --draft=false \
   --prerelease=false
 
