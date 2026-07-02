@@ -4,20 +4,26 @@
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
 # the workflow in detail:
-# - check if a release with flag "pre-release" exists
+# - discover ALL releases flagged "pre-release" (any number of non-private packages can have one
+#   at once) and sanity-check they all point at the same commit, i.e. came from one
+#   pre-release.sh run - abort with a clear error otherwise
 # - check if a 'latest' release exists
 #   - if not, create a 'latest' release
-# - take over commit hash, and assets from the 'pre-release' to the 'latest' release
+# - loop over every discovered 'pre-release' and, for each one, take over its assets into the
+#   'latest' release
 #   - semantic versions in assets will be renamed to 'latest'
 #       (example: ionos-essentials-0.1.1-php7.4.zip => ionos-essentials-latest-php7.4.zip)
-#   - release note will be set to the 'pre-release' release url and title to make it easier to find the origin release
 #   - a info.json file will be created/updated for each plugin asset (ionos-essentials-0.1.1-php7.4.zip => ionos-essentials-info.json)
 #       containing { version, slug, package, sections: { changelog } }, where package points to the download url
 #       of the 'latest' flagged release (example: https://.../ionos-essentials-0.1.1-php7.4.zip)
-# - remove the 'pre-release' flag from the release used to populate the 'latest' release and flag it 'latest'
+#   - remove the 'pre-release' flag from that release, individually, once its assets are processed
+# - after the loop, update the 'latest' release's notes once with a combined list of every
+#   package promoted this run
 #
-# afterwards the 'latest' release will contain the same assets as the 'pre-release' release
-# except that semantic version numbers in asstes filenames are replaced with 'latest'
+# afterwards the 'latest' release will contain the same assets as every processed 'pre-release'
+# except that semantic version numbers in asset filenames are replaced with 'latest'; assets of
+# packages not part of this run are left untouched (the 'latest' release accumulates assets from
+# every package ever published, keyed by filename)
 #
 
 # bootstrap the environment
