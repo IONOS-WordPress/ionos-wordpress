@@ -1,6 +1,5 @@
 {
   "name": "@ionos-wordpress/test-mu-plugin",
-  "private": true,
   "version": "0.0.1",
   "dependencies": {
     "@ionos-wordpress/test-lib": "workspace:*"
