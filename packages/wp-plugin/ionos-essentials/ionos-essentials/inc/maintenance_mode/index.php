@@ -107,3 +107,81 @@ add_filter('body_class', function ($classes) {
   }
   return $classes;
 });
+
+\add_action('update_option_ionos_essentials_maintenance_mode', __NAMESPACE__ . '\manage_maintenance_mode_timer', 10, 2);
+
+function manage_maintenance_mode_timer($old_value, $new_value) {
+  if (empty($old_value) && !empty($new_value)) {
+      \update_option('ionos_maintenance_mode_activated_at', time());
+  }
+  elseif (!empty($old_value) && empty($new_value)) {
+      \delete_option('ionos_maintenance_mode_activated_at');
+      \delete_option('ionos_maintenance_mode_email_sent');
+  }
+}
+
+\add_action('init', function () {
+  if (!\wp_next_scheduled('ionos_maintenance_reminder_cron')) {
+      \wp_schedule_event(time(), 'daily', 'ionos_maintenance_reminder_cron');
+  }
+});
+
+\add_action('ionos_maintenance_reminder_cron', __NAMESPACE__ . '\check_maintenance_mode_duration');
+
+function check_maintenance_mode_duration() {
+  if (!is_maintenance_mode()) {
+    return;
+  }
+
+  if (\get_option('ionos_maintenance_mode_email_sent', false)) {
+    return;
+  }
+
+  $activated_at = \get_option('ionos_maintenance_mode_activated_at');
+  if (!$activated_at) {
+    return;
+  }
+
+  $seven_days_in_seconds = 7 * DAY_IN_SECONDS;
+  if ((time() - $activated_at) >= $seven_days_in_seconds) {
+
+    $email_sent = send_maintenance_reminder_email();
+
+    if ($email_sent) {
+        \update_option('ionos_maintenance_mode_email_sent', true);
+    }
+  }
+}
+
+function send_maintenance_reminder_email() {
+  $to      = \get_option('admin_email');
+  $subject = __('Reminder: Your website is still in maintenance mode', 'ionos-essentials');
+
+  $message = get_maintenance_reminder_mail_content();
+
+  $headers = array('Content-Type: text/html; charset=UTF-8');
+
+  return \wp_mail($to, $subject, $message, $headers);
+}
+
+function get_maintenance_reminder_mail_content(): string
+{
+  $tenant_label = Tenant::get_label();
+  $login_url    = \wp_login_url();
+
+  $mail  = '<p>' . __('Hello WordPress Admin,', 'ionos-essentials') . '</p>';
+
+  $mail .= '<p>' . __('We noticed that you put your WordPress site into maintenance mode about 7 days ago.', 'ionos-essentials') . '</p>';
+  $mail .= '<p>' . __('We just wanted to check in and see how your changes are coming along! Taking time to update your site is great, but leaving it in maintenance mode for too long might mean your visitors are missing out on your awesome content.', 'ionos-essentials') . '</p>';
+
+  $mail .= '<p>' . __('Best regards,', 'ionos-essentials') . '<br>';
+  $mail .= \sprintf(
+      __('%s WordPress Team', 'ionos-essentials'),
+      $tenant_label
+  ) . '</p>';
+
+  $mail .= '<p>' . __('PS: log in ', 'ionos-essentials');
+  $mail .= '<a href="' . \esc_url($login_url) . '">' . __('HERE', 'ionos-essentials') . '</a></p>';
+
+  return $mail;
+}
