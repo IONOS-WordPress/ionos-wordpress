@@ -13,7 +13,7 @@ Investigation of `scripts/pre-release.sh`, `scripts/release.sh`, the two GitHub 
 (`.github/workflows/pre-release.yml`, `.github/workflows/release.yaml`), `scripts/build.sh`, and
 the changeset config shows the system is **already mostly generic**:
 
-- `pre-release.sh` already loops over *every* `package.json` changed by `changeset version`,
+- `pre-release.sh` already loops over _every_ `package.json` changed by `changeset version`,
   skips `"private": true` packages, and creates one GitHub release per package
   (tag `<package-name>@<version>`, flagged `--prerelease`). Multiple non-private packages
   changing in one release cycle already each get their own prerelease today.
@@ -33,10 +33,11 @@ if [[ -z "$PRE_RELEASE" || $(echo "$PRE_RELEASE" | wc -l) -ne 1 ]]; then
 As soon as a second non-private package is added and both change in the same release cycle,
 `pre-release.sh` will correctly create two prerelease-flagged releases, but `release.sh` will
 hard-fail with this exact error — this is "the tag can't be reused" problem described by the
-user: it's not really about GitHub tags being single-use, it's that the *promotion* step
+user: it's not really about GitHub tags being single-use, it's that the _promotion_ step
 (`release.sh`) can't cope with more than one prerelease existing at once.
 
 Per user decisions during planning:
+
 - Keep the **single shared** `@ionos-wordpress/latest` release/tag — every package's `-latest-`
   assets and `<plugin>-info.json` continue to live side-by-side in it as distinct filenames. No
   change to the `Update URI` header scheme, no migration needed.
@@ -58,12 +59,12 @@ Replace the single-`$PRE_RELEASE` logic with a loop, while preserving the existi
 an aborted `pre-release.sh` run — see `docs/7-release.md` FAQ).
 
 - Fetch **all** `isPrerelease == true` releases (`gh release list --json name,isPrerelease
-  --limit 1000` — add an explicit `--limit` since `gh release list` defaults to 30 and the repo
+--limit 1000` — add an explicit `--limit` since `gh release list` defaults to 30 and the repo
   will accumulate more releases over time).
 - If none found: warn and exit 0 (nothing to release), same pattern `pre-release.sh` uses for "no
   changesets".
 - **Sanity check (new, keeps today's safety net):** resolve the commit hash of each candidate
-  prerelease tag (`git rev-list -n1 <tag>`). All of them must point at the *same* commit — they
+  prerelease tag (`git rev-list -n1 <tag>`). All of them must point at the _same_ commit — they
   were all produced by one `pre-release.sh` run. If they don't, abort with a clear error listing
   the offending releases and point at the existing manual-fixup instructions in
   `docs/7-release.md` (mirrors today's exactly-one-prerelease error, just re-scoped to
@@ -104,7 +105,7 @@ release/artifacts are gone for good) before creating pkgB's release. pkgA's chan
 `@ionos-wordpress/latest` without a rebuild.
 
 **Fix:** remove the blanket delete, and instead delete only the stale prerelease(s) for the
-*specific package* about to be (re)created, right before its `gh release create` call inside the
+_specific package_ about to be (re)created, right before its `gh release create` call inside the
 per-package loop:
 
 ```bash
@@ -121,7 +122,7 @@ packages in one cycle, each with independently-scoped stale-prerelease cleanup.
 ### 3. `.github/workflows/pre-release.yml` and `.github/workflows/release.yaml` — close the cross-workflow race
 
 Each workflow's `concurrency: group: ${{ github.workflow }}-${{ github.ref }}` only guards
-against overlapping runs of *itself* — nothing stops `pre-release` (triggered by push to `main`)
+against overlapping runs of _itself_ — nothing stops `pre-release` (triggered by push to `main`)
 and `release` (manual `workflow_dispatch`) from running at the same time. With the new loop in
 `release.sh`, a run that starts while `pre-release.sh` is mid-way through its
 delete-then-recreate sequence could read a partial (but same-commit) subset of prereleases and
@@ -181,7 +182,7 @@ required for the initial generalization.
       plugin's `Update URI` header to
       `https://github.com/<org>/<repo>/releases/download/%40ionos-wordpress%2Flatest/<plugin>-info.json`.
   - Update the explanation of what `@ionos-wordpress/latest` contains: assets/info.json files
-    from *every* published package accumulate there over time, keyed by filename; a release cycle
+    from _every_ published package accumulate there over time, keyed by filename; a release cycle
     only touches the assets for packages that had a fresh prerelease in that cycle.
 - Update the header comment in `scripts/release.sh` (currently describes a single
   pre-release → latest handoff) to describe the multi-package loop.
@@ -209,7 +210,7 @@ approach is needed.
   `docs/7-release.md` already documents for `wp_update_plugins()`). That event is a normal action
   hook — any code can attach to it with `add_action('wp_update_plugins', ...)`. Since mu-plugins
   have no activation hook to bootstrap a custom `wp_schedule_event()` call from (mu-plugins are
-  never "activated"), hooking the action WP already fires is simpler *and* avoids writing/testing
+  never "activated"), hooking the action WP already fires is simpler _and_ avoids writing/testing
   our own scheduling code entirely.
 - **Version source — reuse the exact `<plugin>-info.json` convention `release.sh` already
   produces for every non-private package** (section 1-5 work makes this automatic for
@@ -234,7 +235,7 @@ approach is needed.
     `$wp_filesystem->move($from, $to, true)` calls (overwrite) instead of a generic recursive
     `copy_dir()` — on the common 'direct' filesystem method this is a `rename()` per item, which
     is both less code and far closer to atomic than a multi-file recursive copy.
-  - **Stability safety net (still small):** rename the *current* file/folder to a `.bak` suffix
+  - **Stability safety net (still small):** rename the _current_ file/folder to a `.bak` suffix
     before moving the new ones in; only delete the backup after confirming
     `get_plugin_data(PLUGIN_FILE)['Version']` now reads the expected new version; restore from
     `.bak` automatically if it doesn't. This bounds the worst case (a bad build breaking the
@@ -298,13 +299,13 @@ Since this touches real GitHub Releases/S3 via `gh`/`aws` CLI, verify without to
    - `./scripts/release.sh` → confirm:
      - both prereleases are found and processed (no "expected exactly one" error),
      - the shared `@ionos-wordpress/latest` release ends up with fresh `-latest-` assets and
-       `-info.json` for *both* packages,
+       `-info.json` for _both_ packages,
      - both source prereleases are unflagged and now show as the `latest`-titled originals,
      - the `@ionos-wordpress/latest` release notes list both promoted packages,
      - S3 (`s3://web-hosting/ionos-group/`) received both packages' `.latest.zip` uploads.
    - Re-run `./scripts/release.sh` with no pending prerelease → confirm graceful "nothing to
      release" exit, not an error.
-   - Temporarily leave two *stale* prereleases at different commits (simulate a broken run) →
+   - Temporarily leave two _stale_ prereleases at different commits (simulate a broken run) →
      confirm the new same-commit sanity check aborts with a clear message instead of silently
      mis-promoting them.
    - Revert the temporary `private: false` flip and test changeset before finishing.
@@ -319,7 +320,7 @@ Since this touches real GitHub Releases/S3 via `gh`/`aws` CLI, verify without to
    - Publish an initial version through the (by-then generalized) pipeline, install it, confirm
      `get_plugin_data()` reports the installed version.
    - Publish a bumped version, manually fire the `wp_update_plugins` cron hook (`wp cron event run
-     wp_update_plugins` via WP-CLI, or trigger `wp-cron.php` directly) and confirm the mu-plugin's
+wp_update_plugins` via WP-CLI, or trigger `wp-cron.php` directly) and confirm the mu-plugin's
      files are replaced and the new version is live.
    - Simulate a broken build (e.g. corrupt the published zip or introduce a fatal-error version)
      and confirm the `.bak` restore path kicks in and the site keeps working on the old version
