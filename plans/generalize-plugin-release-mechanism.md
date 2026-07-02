@@ -186,10 +186,88 @@ required for the initial generalization.
 - Update the header comment in `scripts/release.sh` (currently describes a single
   pre-release → latest handoff) to describe the multi-package loop.
 
+### 6. `packages/wp-mu-plugin/test-mu-plugin` — mu-plugin self-update pilot
+
+New feature, layered on top of sections 1-5: give `test-mu-plugin` (the monorepo's existing
+mu-plugin test fixture — already `"private"` is unset in its `package.json`, i.e. already
+non-private under `pre-release.sh`'s `.private // false` check, so it's already positioned to
+flow through the generalized release pipeline once it is) working self-update capability,
+**without** walking back the earlier "mu-plugins are download-only" decision for mu-plugins in
+general — `stretch-extra` and future mu-plugins stay download-only by default. `test-mu-plugin`
+becomes a deliberate, small, self-contained pilot for what a mu-plugin self-update mechanism can
+look like, since WordPress core provides no equivalent for mu-plugins out of the box.
+
+**Why the essentials pattern (`update_plugins_github.com` filter) can't be reused as-is:** that
+filter is invoked from inside `wp_update_plugins()` while iterating `get_plugins()` — mu-plugins
+are never part of that list, so the filter simply never fires for them. A different, lower-level
+approach is needed.
+
+**Design — reuse WordPress core primitives, keep custom code to the update logic itself:**
+
+- **Trigger — piggyback on WP's own existing cron hook, add no new scheduling code.** WordPress
+  core already schedules a recurring `wp_update_plugins` cron event (twice daily, the same cadence
+  `docs/7-release.md` already documents for `wp_update_plugins()`). That event is a normal action
+  hook — any code can attach to it with `add_action('wp_update_plugins', ...)`. Since mu-plugins
+  have no activation hook to bootstrap a custom `wp_schedule_event()` call from (mu-plugins are
+  never "activated"), hooking the action WP already fires is simpler *and* avoids writing/testing
+  our own scheduling code entirely.
+- **Version source — reuse the exact `<plugin>-info.json` convention `release.sh` already
+  produces for every non-private package** (section 1-5 work makes this automatic for
+  `test-mu-plugin` too, no extra release-script change needed). Fetch it with `wp_remote_get()`,
+  same as `inc/update/index.php` does for essentials.
+- **Locate the info.json URL — reuse `get_plugin_data()`'s generic header parser.** Add an
+  `Update URI` header to `test-mu-plugin.php` (same convention as essentials/wpdev-caddy) purely
+  as the one source of truth for the URL; read it back with
+  `\get_plugin_data(PLUGIN_FILE)['UpdateURI']` — `get_plugin_data()` just parses file headers, it
+  works identically regardless of plugin type.
+- **Compare versions** with `\get_plugin_data(PLUGIN_FILE)['Version']` vs. the info.json's
+  `version`, using PHP's `version_compare()`.
+- **Download + install — reuse the same low-level file/upgrade primitives `Plugin_Upgrader` is
+  built on, without pulling in `Plugin_Upgrader` itself** (it assumes a `wp-content/plugins/<slug>/`
+  layout and fires activate/deactivate hooks that don't apply to mu-plugins):
+  - `require_once ABSPATH . 'wp-admin/includes/file.php';` for `download_url()`, `unzip_file()`,
+    `WP_Filesystem()`.
+  - `download_url($info_json['package'])` → temp zip file (built-in error handling).
+  - `WP_Filesystem()` + `unzip_file($tmp_zip, $tmp_dir)` → extract to a temp directory.
+  - Since the mu-plugin's on-disk shape is exactly one top-level file (`test-mu-plugin.php`) plus
+    one same-named companion folder (`test-mu-plugin/`), swap both in with two
+    `$wp_filesystem->move($from, $to, true)` calls (overwrite) instead of a generic recursive
+    `copy_dir()` — on the common 'direct' filesystem method this is a `rename()` per item, which
+    is both less code and far closer to atomic than a multi-file recursive copy.
+  - **Stability safety net (still small):** rename the *current* file/folder to a `.bak` suffix
+    before moving the new ones in; only delete the backup after confirming
+    `get_plugin_data(PLUGIN_FILE)['Version']` now reads the expected new version; restore from
+    `.bak` automatically if it doesn't. This bounds the worst case (a bad build breaking the
+    mu-plugin, which — unlike a regular plugin — can't be "deactivated" from wp-admin) to an
+    auto-detected, auto-reverted failure instead of a silently broken site.
+  - Clean up the temp zip/dir either way.
+- **Observability, kept minimal:** store the last check's outcome (timestamp, previous/new
+  version, success/failure) in a single `update_option('test_mu_plugin_last_update_check', [...])`
+  call — enough to debug without building an admin UI.
+
+**Known limitation to document, not solve in v1:** `WP_Filesystem()` may fall back to asking for
+FTP/SSH credentials on hosts where the PHP process doesn't own the files directly, which has no
+UI to answer in a cron context — on such hosts the update silently no-ops and logs an error,
+requiring a manual update. Acceptable for a pilot on a test fixture; worth a callout if this
+pattern is ever promoted beyond `test-mu-plugin`.
+
+**Sequencing:** this depends on sections 1-2 landing first — `test-mu-plugin`'s `-info.json` only
+gets produced/kept correctly once `release.sh`/`pre-release.sh` can handle it as a second
+concurrently-releasable package alongside essentials.
+
+**Files to add:**
+
+- `packages/wp-mu-plugin/test-mu-plugin/test-mu-plugin/inc/update/index.php` — the mechanism
+  described above, `require_once`'d from `test-mu-plugin.php` (mirrors how essentials wires up
+  `inc/update/index.php`).
+- `packages/wp-mu-plugin/test-mu-plugin/test-mu-plugin.php` — add the `Update URI` header.
+
 ### Out of scope (per explicit user decisions)
 
 - No per-package `@latest` tags — staying with the single shared `@ionos-wordpress/latest`.
-- No new self-update mechanism for mu-plugins.
+- No self-update mechanism for mu-plugins **in general** — `stretch-extra` and future mu-plugins
+  stay download-only by default. `test-mu-plugin` (section 6) is a deliberate, scoped pilot
+  exception, not a change to the default policy.
 - No extraction of `inc/update/index.php` into a shared/parameterized package.
 
 ## Files to change
@@ -201,6 +279,9 @@ required for the initial generalization.
 - `.github/workflows/pre-release.yml` and `.github/workflows/release.yaml` — shared concurrency
   group to close the cross-workflow race.
 - `docs/7-release.md` — caveat rewrite + new "publishing a new plugin" checklist.
+- `packages/wp-mu-plugin/test-mu-plugin/test-mu-plugin/inc/update/index.php` (new) and
+  `packages/wp-mu-plugin/test-mu-plugin/test-mu-plugin.php` — mu-plugin self-update pilot
+  (section 6).
 
 ## Verification
 
@@ -234,3 +315,13 @@ Since this touches real GitHub Releases/S3 via `gh`/`aws` CLI, verify without to
 4. Verify the concurrency fix: confirm both `pre-release.yml` and `release.yaml` show the same
    `ionos-wordpress-release-pipeline` group in the Actions UI, and that triggering one while the
    other is running queues rather than runs concurrently or cancels the other.
+5. Verify the `test-mu-plugin` self-update pilot against a local `wp-env` instance:
+   - Publish an initial version through the (by-then generalized) pipeline, install it, confirm
+     `get_plugin_data()` reports the installed version.
+   - Publish a bumped version, manually fire the `wp_update_plugins` cron hook (`wp cron event run
+     wp_update_plugins` via WP-CLI, or trigger `wp-cron.php` directly) and confirm the mu-plugin's
+     files are replaced and the new version is live.
+   - Simulate a broken build (e.g. corrupt the published zip or introduce a fatal-error version)
+     and confirm the `.bak` restore path kicks in and the site keeps working on the old version
+     instead of fataling.
+   - Confirm `test_mu_plugin_last_update_check` reflects each check's outcome.
