@@ -1,5 +1,7 @@
 # Generalize release/pre-release mechanism to any non-private plugin/mu-plugin
 
+Jira: [GPHWPP-4402](https://hosting-jira.1and1.org/browse/GPHWPP-4402)
+
 ## Context
 
 Today only `@ionos-wordpress/essentials` (`packages/wp-plugin/ionos-essentials`) ever gets
