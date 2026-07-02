@@ -1,5 +1,15 @@
 # ionos-wordpress
 
+## 1.0.4
+
+### Patch Changes
+
+- 6dbfb9c: generalize the release mechanism to support multiple concurrently-releasable non-private packages
+
+  - fix release.sh/pre-release.sh to support multiple concurrently-releasable non-private packages
+  - close race between pre-release and release workflows by sharing one concurrency group
+  - update release docs and script header comments for multi-package support
+
 ## 0.0.6
 
 ### Patch Changes

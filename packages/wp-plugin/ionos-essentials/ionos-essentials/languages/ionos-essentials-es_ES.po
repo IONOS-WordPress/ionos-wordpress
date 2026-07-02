@@ -1149,21 +1149,5 @@ msgid "Configure AI Connectors"
 msgstr ""
 
 #: ionos-essentials/inc/mcp/view.php
-msgid "Legacy Configuration Snippet:"
-msgstr ""
-
-#: ionos-essentials/inc/mcp/view.php
-msgid "Generate application password for user"
-msgstr ""
-
-#: ionos-essentials/inc/mcp/view.php
-msgid "Regenerate application password for user"
-msgstr ""
-
-#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "Vulnerability scan not possible due to multiple failed attempts. Please contact Customer Care."
-msgstr ""
-
-#: ionos-essentials/inc/wpscan/controller/class-wpscanmiddleware.php
-msgid "An unknown error occurred while fetching the vulnerability data."
+msgid "For developers"
 msgstr ""
