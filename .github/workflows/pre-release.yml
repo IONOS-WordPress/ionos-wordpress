@@ -37,8 +37,11 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - devcontainer
+    # share one concurrency group with the 'release' workflow so pre-release and release never
+    # run at the same time - the later trigger queues instead of racing/cancelling the other
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ionos-wordpress-release-pipeline
+      cancel-in-progress: false
     if: "!contains(github.event.head_commit.message, 'skip release')"
     steps:
       - name: checkout branch from git

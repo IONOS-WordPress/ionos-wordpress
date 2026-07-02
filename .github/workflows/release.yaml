@@ -12,9 +12,11 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    # ensure only one pipeline is running this workflow at a time
+    # share one concurrency group with the 'pre-release' workflow so pre-release and release never
+    # run at the same time - the later trigger queues instead of racing/cancelling the other
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ionos-wordpress-release-pipeline
+      cancel-in-progress: false
     steps:
       # only run on main branch
       - name: Check branch
