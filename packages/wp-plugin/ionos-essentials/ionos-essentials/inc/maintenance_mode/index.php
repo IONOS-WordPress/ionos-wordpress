@@ -8,7 +8,7 @@ use ionos\essentials\Tenant;
 
 function is_maintenance_mode()
 {
-  return \get_option('ionos_essentials_maintenance_mode', false);
+  return \get_option('ionos_essentials_maintenance_mode', 'never' );
 }
 
 \add_action('admin_bar_menu', function ($wp_admin_bar) {
