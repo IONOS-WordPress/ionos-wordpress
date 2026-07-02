@@ -7,12 +7,8 @@ defined('ABSPATH') || exit();
 require_once __DIR__ . '/../dashboard/blocks/next-best-actions/index.php';
 require_once __DIR__ . '/../dashboard/blocks/next-best-actions/class-nba.php';
 
-use FilterIterator;
 use ionos\essentials\dashboard\blocks\next_best_actions\NBA;
 use ionos\essentials\Tenant;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use SplFileInfo;
 use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN;
 use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 
