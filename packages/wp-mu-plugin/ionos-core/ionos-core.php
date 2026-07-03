@@ -4,8 +4,10 @@
  * Plugin Name:       Ionos Core
  * Description:       Core functionality for IONOS WordPress projects.
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-mu-plugin/ionos-core
- * Requires at least: 6.0
+ * Requires at least: 6.6
+ * Requires PHP:      8.3
  * Version:           1.0.0
+ * License:           GPL-2.0-or-later
  * Author:            IONOS Group
  * Author URI:        https://www.ionos-group.com/brands.html
  * Domain Path:       /ionos-core/languages
