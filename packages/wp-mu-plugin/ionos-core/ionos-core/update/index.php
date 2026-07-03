@@ -37,6 +37,11 @@ const INFO_JSON_URL = 'https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-
     'version' => 'Version',
   ])['version'] ?? null;
 
+  if (! $current_version) {
+    \error_log('ionos-core: Failed to read current plugin version from ionos-core.php.');
+    return;
+  }
+
   if (! \version_compare($latest, $current_version, '>')) {
     return;
   }
