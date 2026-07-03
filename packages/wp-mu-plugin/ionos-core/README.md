@@ -14,5 +14,3 @@ curl -O https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-group/ionos-cor
 unzip ionos-core.zip
 rm ionos-core.zip
 ```
-
-replace USER and HOST with the data from **waas-create**-output.
