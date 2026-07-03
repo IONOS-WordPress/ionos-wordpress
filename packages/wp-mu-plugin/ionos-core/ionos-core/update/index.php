@@ -6,9 +6,9 @@ defined('ABSPATH') || exit();
 
 const INFO_JSON_URL = 'https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-group/ionos-core/ionos-core-info.json';
 
-\add_action('wp_update_plugins', function (): void {
-  require_once __DIR__ . '/class-mu-plugin-upgrader.php';
+require_once __DIR__ . '/class-mu-plugin-upgrader.php';
 
+\add_action('wp_update_plugins', function (): void {
   $response = \wp_remote_get(INFO_JSON_URL, [
     'timeout' => 5,
   ]);
@@ -36,11 +36,6 @@ const INFO_JSON_URL = 'https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-
   $current_version = \get_file_data(__DIR__ . '/../../ionos-core.php', [
     'version' => 'Version',
   ])['version'] ?? null;
-
-  if (! $current_version) {
-    \error_log('ionos-core: Failed to read current plugin version from ionos-core.php.');
-    return;
-  }
 
   if (! \version_compare($latest, $current_version, '>')) {
     return;

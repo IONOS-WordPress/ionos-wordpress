@@ -18,10 +18,7 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
   {
     global $wp_filesystem;
 
-    if (! \WP_Filesystem() || ! $wp_filesystem) {
-      return new \WP_Error('ionos_core_filesystem_unavailable', 'ionos-core: Filesystem API is not available.');
-    }
-
+    \WP_Filesystem();
     $this->init();
 
     $package = $this->download_package($package_url);
@@ -37,9 +34,8 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     // copy_dir copies the *contents* of $working_dir into WPMU_PLUGIN_DIR,
     // preserving the top-level folder from the zip (e.g. ionos-core/).
     $result = \copy_dir($working_dir, WPMU_PLUGIN_DIR);
-
-    // Best-effort cleanup of the temporary unpacked directory.
     $wp_filesystem->delete($working_dir, true);
+
     if (\is_wp_error($result)) {
       return $result;
     }
