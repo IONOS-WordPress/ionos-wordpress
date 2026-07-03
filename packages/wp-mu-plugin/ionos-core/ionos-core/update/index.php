@@ -6,9 +6,9 @@ defined('ABSPATH') || exit();
 
 const INFO_JSON_URL = 'https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-group/ionos-core/ionos-core-info.json';
 
-require_once __DIR__ . '/class-mu-plugin-upgrader.php';
-
 \add_action('wp_update_plugins', function (): void {
+  require_once __DIR__ . '/class-mu-plugin-upgrader.php';
+
   $response = \wp_remote_get(INFO_JSON_URL, [
     'timeout' => 5,
   ]);
