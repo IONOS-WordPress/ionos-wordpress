@@ -190,6 +190,13 @@ done
 
 # update 'latest' release data with the combined notes for every package processed this run
 RELEASE_NOTES=$(printf '%s\n' "${RELEASE_NOTES_LINES[@]}")
+
+# $LATEST_RELEASE_TAG is a floating release that gets edited on every run, but GitHub only shows
+# the timestamp of when a release was first published ('x days/months ago') and there's no API
+# field to set it directly - flipping draft=true then draft=false forces GitHub to re-stamp
+# published_at to now, so the displayed date reflects the latest promotion instead of the
+# release's original creation
+gh release edit "$LATEST_RELEASE_TAG" --draft=true
 gh release edit "$LATEST_RELEASE_TAG" \
   --title "$LATEST_RELEASE_TAG" \
   --target $PRE_RELEASE_COMMIT_HASH \
