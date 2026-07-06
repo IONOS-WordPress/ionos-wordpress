@@ -103,7 +103,7 @@ RELEASE_NOTES_LINES=()
 for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
   ionos.wordpress.log_header "Processing pre-release '$PRE_RELEASE'"
 
-  PRE_RELEASE_URL="https://github.com/$GITHUB_OWNER_REPO/releases/tag/$(printf $PRE_RELEASE | jq -Rrs '@uri')"
+  PRE_RELEASE_URL="https://github.com/$GITHUB_OWNER_REPO/releases/tag/$(printf '%s' "$PRE_RELEASE" | jq -Rrs '@uri')"
   RELEASE_NOTES_LINES+=("* [$PRE_RELEASE]($PRE_RELEASE_URL)")
 
   # $PRE_RELEASE is always "<package-name>@<version>" (see pre-release.sh) - strip the trailing
