@@ -61,15 +61,20 @@ ionos.wordpress.log_header "Releasing ${#PRE_RELEASES[@]} package(s): ${PRE_RELE
 # sanity check: all discovered prereleases must point at the same commit, i.e. come from one
 # `pre-release.sh` run. if they don't, abort instead of silently mis-promoting a partial/stale mix.
 readonly PRE_RELEASE_COMMIT_HASH=$(git rev-list -n 1 "${PRE_RELEASES[0]}")
+STALE_PRE_RELEASES=()
 for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
   COMMIT_HASH=$(git rev-list -n 1 "$PRE_RELEASE")
-  if [[ "$COMMIT_HASH" != "$PRE_RELEASE_COMMIT_HASH" ]]; then
-    error_message="skip releasing - discovered prereleases don't share one commit (expected all at $PRE_RELEASE_COMMIT_HASH, but '$PRE_RELEASE' is at $COMMIT_HASH). See docs/7-release.md for manual fixup instructions.\n${PRE_RELEASES[*]}"
-    [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
-    ionos.wordpress.log_error "$error_message"
-    exit 1
-  fi
+  [[ "$COMMIT_HASH" != "$PRE_RELEASE_COMMIT_HASH" ]] && STALE_PRE_RELEASES+=("$PRE_RELEASE")
 done
+
+if [[ ${#STALE_PRE_RELEASES[@]} -gt 0 ]]; then
+  DELETE_COMMANDS=$(printf 'gh release delete "%s" --yes\n' "${STALE_PRE_RELEASES[@]}")
+  error_message="skip releasing - discovered prereleases don't share one commit (expected all at $PRE_RELEASE_COMMIT_HASH). Stale release(s): ${STALE_PRE_RELEASES[*]}. See docs/7-release.md for manual fixup instructions. Run the following to remove the stale release(s), then re-run this script:
+$DELETE_COMMANDS"
+  [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+  ionos.wordpress.log_error "$error_message"
+  exit 1
+fi
 
 # ensure release titled $LATEST_RELEASE_TAG exists
 if ! gh release view "$LATEST_RELEASE_TAG"; then
