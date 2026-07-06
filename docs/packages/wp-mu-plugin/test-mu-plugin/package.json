@@ -1,6 +1,6 @@
 {
   "name": "@ionos-wordpress/test-mu-plugin",
-  "version": "3.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "@ionos-wordpress/test-lib": "workspace:*"
   },
