@@ -106,6 +106,13 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
   PRE_RELEASE_URL="https://github.com/$GITHUB_OWNER_REPO/releases/tag/$(printf $PRE_RELEASE | jq -Rrs '@uri')"
   RELEASE_NOTES_LINES+=("* [$PRE_RELEASE]($PRE_RELEASE_URL)")
 
+  # $PRE_RELEASE is always "<package-name>@<version>" (see pre-release.sh) - strip the trailing
+  # "@<version>" to recover the package name, then resolve it to its workspace folder name via
+  # pnpm instead of guessing from asset filenames (which could be confused by a plugin name that
+  # itself contains a version-like substring)
+  PACKAGE_NAME="${PRE_RELEASE%@*}"
+  PLUGIN=$(pnpm ls --filter "$PACKAGE_NAME" --json --depth -1 | jq -r '.[0].path' | xargs basename)
+
   # update latest release assets
   ASSETS=$(gh release view $PRE_RELEASE --json assets --jq '.assets[] | .name')
   for ASSET in $ASSETS; do
@@ -150,8 +157,6 @@ EOF
     {
       # example: 1.2.3
       VERSION=$(echo $ASSET | sed -E 's/.*-([0-9]+\.[0-9]+\.[0-9]+)-.*/\1/')
-      # example: ionos-essentials
-      PLUGIN=$(echo $ASSET | sed -E 's/^(.*)-[0-9]+\.[0-9]+\.[0-9]+.*/\1/')
       # example : ionos-essentials/ionos-essentials.php
       SLUG="${PLUGIN}/${PLUGIN}.php"
       # example: https://github.com/lgersman/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.1.3/ionos-essentials-0.1.3-php7.4.zip
