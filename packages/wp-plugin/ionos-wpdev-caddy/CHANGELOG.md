@@ -1,5 +1,11 @@
 # @ionos-wordpress/wpdev-caddy
 
+## 2.0.0
+
+### Major Changes
+
+- 077b110: bump all plugins to next major version
+
 ## 1.1.2
 
 ### Patch Changes

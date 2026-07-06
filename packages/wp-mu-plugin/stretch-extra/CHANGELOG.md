@@ -1,5 +1,11 @@
 # @ionos-wordpress/stretch-extra
 
+## 2.0.0
+
+### Major Changes
+
+- 077b110: bump all plugins to next major version
+
 ## 1.0.4
 
 ### Patch Changes

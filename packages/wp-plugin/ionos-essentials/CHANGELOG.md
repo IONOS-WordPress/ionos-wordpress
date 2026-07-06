@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 2.0.0
+
+### Major Changes
+
+- 077b110: bump all plugins to next major version
+
 ## 1.5.4
 
 ### Patch Changes
