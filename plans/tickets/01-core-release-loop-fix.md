@@ -1,6 +1,6 @@
 # Ticket 1 — Core release-loop fix: support N concurrent prereleases
 
-Status: TODO
+Status: DONE
 Depends on: none
 Parent plan: [../generalize-plugin-release-mechanism.md](../generalize-plugin-release-mechanism.md) (sections 1-2)
 Jira: sub-task of [GPHWPP-4402](https://hosting-jira.1and1.org/browse/GPHWPP-4402)

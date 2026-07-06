@@ -1,6 +1,6 @@
 # Ticket 2 — Close the cross-workflow race between pre-release and release
 
-Status: TODO
+Status: DONE
 Depends on: none (can land independently, even before Ticket 1)
 Parent plan: [../generalize-plugin-release-mechanism.md](../generalize-plugin-release-mechanism.md) (section 3)
 Jira: sub-task of [GPHWPP-4402](https://hosting-jira.1and1.org/browse/GPHWPP-4402)

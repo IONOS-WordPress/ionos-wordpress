@@ -1,6 +1,10 @@
 # Ticket 4 — `test-mu-plugin` self-update pilot
 
-Status: TODO
+Status: DONE - code complete (inc/update/index.php + Update URI header), lint-clean, smoke-tested
+live (hook fires, header parsing and HTTP-failure path confirmed via wp-env with zero fatals). Note:
+the download/swap-on-update and `.bak` auto-restore-on-failure paths were not exercised live (would
+require an isolated-copy test setup to avoid touching wp-env's bind-mounted source files) - see the
+two unchecked acceptance criteria below if that verification is picked up later.
 Depends on: Ticket 1 (needs the generalized release pipeline to produce `test-mu-plugin`'s
 `-info.json` reliably alongside essentials)
 Parent plan: [../generalize-plugin-release-mechanism.md](../generalize-plugin-release-mechanism.md) (section 6)
@@ -54,14 +58,20 @@ error on such hosts. Acceptable for a pilot; flag before promoting this pattern 
 
 ## Acceptance criteria
 
-- [ ] `test-mu-plugin.php` has an `Update URI` header pointing at its `-info.json`.
+- [x] `test-mu-plugin.php` has an `Update URI` header pointing at its `-info.json`.
 - [ ] Publishing a bumped version and firing `wp_update_plugins` (e.g. via
       `wp cron event run wp_update_plugins`) replaces the mu-plugin's files and the new version is
-      live, confirmed via `get_plugin_data()`.
+      live, confirmed via `get_plugin_data()`. NOT YET VERIFIED - the default wp-env setup
+      bind-mounts mu-plugin source files directly into the container, so exercising the real
+      download/swap would rename/overwrite the repo's actual source files. Needs an isolated
+      (non-bind-mounted) copy of the plugin inside the container to test safely.
 - [ ] A simulated broken build triggers the `.bak` auto-restore path instead of leaving the site
-      fataling on every page load.
-- [ ] `test_mu_plugin_last_update_check` reflects each check's outcome.
-- [ ] `stretch-extra` and the general mu-plugin docs are untouched — this stays a scoped
+      fataling on every page load. NOT YET VERIFIED - same bind-mount caveat as above.
+- [x] `test_mu_plugin_last_update_check` reflects each check's outcome. Verified live: firing
+      `wp cron event run wp_update_plugins` against wp-env recorded a correct `failure` entry with
+      a clear diagnostic message when the configured Update URI 404'd (expected, since it points at
+      the canonical upstream repo, not the fork used for testing).
+- [x] `stretch-extra` and the general mu-plugin docs are untouched — this stays a scoped
       exception, not a new default policy.
 
 ## Notes

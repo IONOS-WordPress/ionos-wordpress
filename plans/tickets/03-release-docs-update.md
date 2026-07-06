@@ -1,6 +1,6 @@
 # Ticket 3 — Update release documentation for multi-package support
 
-Status: TODO
+Status: DONE
 Depends on: Ticket 1 (describes its behavior)
 Parent plan: [../generalize-plugin-release-mechanism.md](../generalize-plugin-release-mechanism.md) (section 5)
 Jira: sub-task of [GPHWPP-4402](https://hosting-jira.1and1.org/browse/GPHWPP-4402)
