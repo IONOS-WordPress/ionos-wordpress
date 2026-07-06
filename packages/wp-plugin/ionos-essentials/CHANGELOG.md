@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 3.0.0
+
+### Major Changes
+
+- 5df657d: bump all plugins to next major version
+
 ## 2.0.0
 
 ### Major Changes
