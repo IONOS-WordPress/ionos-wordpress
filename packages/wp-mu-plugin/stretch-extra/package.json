@@ -1,6 +1,6 @@
 {
   "name": "@ionos-wordpress/stretch-extra",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
   "scripts": {
     "postpack": "./scripts/postpack.sh"

@@ -1,5 +1,11 @@
 # @ionos-wordpress/test-mu-plugin
 
+## 3.0.0
+
+### Major Changes
+
+- 9f80762: bump all plugins to next major version
+
 ## 2.0.0
 
 ### Major Changes
