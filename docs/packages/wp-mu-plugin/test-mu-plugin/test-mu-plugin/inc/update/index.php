@@ -42,6 +42,16 @@ function check_for_update(): void
     ],
   ]);
 
+  if (\is_wp_error($response)) {
+    record_check_result(
+      status: 'failure',
+      previous_version: $plugin_data['Version'],
+      message: sprintf('failed to fetch "%s" (%s)', $update_uri, $response->get_error_message())
+    );
+
+    return;
+  }
+
   if (200 !== \wp_remote_retrieve_response_code($response)) {
     record_check_result(
       status: 'failure',
