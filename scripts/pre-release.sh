@@ -183,7 +183,9 @@ for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'packag
 
   # delete any stale prerelease(s) for THIS package only (handles canceled/broken previous runs
   # for the same package) - leaves other packages' pending prereleases untouched
-  gh release list --json name,isPrerelease \
+  # explicit --limit since `gh release list` defaults to 30, which could miss an older stale
+  # prerelease of this package
+  gh release list --json name,isPrerelease --limit 1000 \
     | jq -r --arg pkg "$PACKAGE_NAME@" '.[] | select(.isPrerelease == true and (.name | startswith($pkg))) | .name' \
     | xargs -r -I {} gh release delete --yes {}
 
