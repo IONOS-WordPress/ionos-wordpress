@@ -155,7 +155,7 @@ for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'packag
 
   if [[ "$PACKAGE_FLAVOUR" == "." ]]; then
     # if root package is being released, collect all artifacts
-    ARTIFACTS=($(find ./packages -mindepth 4 -maxdepth 4 -type f -name '*.zip ' -or -name "*.tgz"))
+    ARTIFACTS=($(find ./packages -mindepth 4 -maxdepth 4 -type f -name '*.zip' -or -name "*.tgz"))
   else
     case "$PACKAGE_FLAVOUR" in
       docker)
