@@ -49,7 +49,9 @@ if [[ "${CI}" == '' ]]; then
 fi
 
 # get all pre-release flagged releases (explicit --limit since `gh release list` defaults to 30)
-mapfile -t PRE_RELEASES < <(gh release list --json name,isPrerelease --limit 1000 | jq -r '.[] | select(.isPrerelease == true) | .name')
+# use `tagName`, not `name` - `name` is the release title, which can differ from the tag (e.g. for
+# the root package, see pre-release.sh) and is what git/gh identify releases by everywhere below
+mapfile -t PRE_RELEASES < <(gh release list --json tagName,isPrerelease --limit 1000 | jq -r '.[] | select(.isPrerelease == true) | .tagName')
 
 if [[ ${#PRE_RELEASES[@]} -eq 0 ]]; then
   ionos.wordpress.log_warn "Nothing to release - no release flagged as 'pre-release' found."
