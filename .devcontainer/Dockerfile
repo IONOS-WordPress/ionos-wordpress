@@ -81,6 +81,7 @@ ENV PATH $PNPM_HOME:$PNPM_HOME/bin:$PATH
 # npm's own bin dir, so global npm installs (e.g. the claude-code devcontainer
 # feature) land outside PATH unless npm's global prefix is pointed at $PNPM_HOME
 RUN pnpm env use --global $PNPM_NODEJS_VERSION \
-  && npm config set prefix "$PNPM_HOME" --location=global
+  && npm config set prefix "$PNPM_HOME" --location=global \
+  && mkdir -p "$HOME/.claude"
 RUN pnpm config set store-dir home/$USERNAME/.pnpm-store
 RUN bash -c "pnpx playwright install-deps"
