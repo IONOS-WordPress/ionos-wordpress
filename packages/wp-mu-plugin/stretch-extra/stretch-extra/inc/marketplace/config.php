@@ -43,7 +43,7 @@ return [
     'beyond-seo' => [
       'info_url'          => 'https://wordpress.rankingcoach.com/update/archives/beyond-seo.json',
       'name'              => 'BeyondSEO',
-      'short_description' => __('BeyondSEO is a comprehensive WordPress SEO plugin designed to enhance Google search rankings and online visibility.<br><br>It provides advanced SEO analysis, content optimization, keyword research with competition metrics, automated meta tag management, AI-powered content suggestions, local SEO tools, and seamless integrations with external services. <br><br>The plugin features a robust onboarding system, multi-language support, and deep WordPress integration for effective online marketing and SEO management.', 'stretch-extra'),
+      'short_description' => __('BeyondSEO is a comprehensive WordPress SEO plugin designed to enhance Google search rankings and online visibility.<br /><br />It provides advanced SEO analysis, content optimization, keyword research with competition metrics, automated meta tag management, AI-powered content suggestions, local SEO tools, and seamless integrations with external services. <br /><br />The plugin features a robust onboarding system, multi-language support, and deep WordPress integration for effective online marketing and SEO management.', 'stretch-extra'),
       'version'           => 'latest',
       'author'            => 'BeyondSEO Team',
       'slug'              => 'beyond-seo',
