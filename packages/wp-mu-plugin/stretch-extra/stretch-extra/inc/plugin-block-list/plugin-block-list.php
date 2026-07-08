@@ -132,7 +132,7 @@ function block_disallowed_post_install($true, $hook_extra, $result)
   ');
 
   echo '<p class="zip-upload-text">' . esc_html__(
-    'Validating against blocked plugins...',
+    'Validating against blocked plugins…',
     'stretch-extra'
   ) . '</p>';
 
