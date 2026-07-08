@@ -6,6 +6,10 @@ defined('ABSPATH') || exit();
 
 use ionos\essentials\Tenant;
 
+const OPTION_ACTIVATED_AT = 'ionos_maintenance_mode_activated_at';
+const OPTION_EMAIL_SENT   = 'ionos_maintenance_mode_email_sent';
+const CRON_HOOK           = 'ionos_maintenance_reminder_cron';
+
 function is_maintenance_mode()
 {
   return \get_option('ionos_essentials_maintenance_mode', false);
@@ -108,42 +112,39 @@ add_filter('body_class', function ($classes) {
   return $classes;
 });
 
-\add_action('update_option_ionos_essentials_maintenance_mode', __NAMESPACE__ . '\manage_maintenance_mode_timer', 10, 2);
-
-function manage_maintenance_mode_timer($old_value, $new_value)
-{
+\add_action('update_option_ionos_essentials_maintenance_mode', function ($old_value, $new_value) {
   if (empty($old_value) && ! empty($new_value)) {
-    \update_option('ionos_maintenance_mode_activated_at', time());
+    \update_option(OPTION_ACTIVATED_AT, time());
   } elseif (! empty($old_value) && empty($new_value)) {
-    \delete_option('ionos_maintenance_mode_activated_at');
-    \delete_option('ionos_maintenance_mode_email_sent');
+    \delete_option(OPTION_ACTIVATED_AT);
+    \delete_option(OPTION_EMAIL_SENT);
   }
-}
+}, 10, 2);
 
 \add_action('admin_init', function () {
-  if (! \wp_next_scheduled('ionos_maintenance_reminder_cron')) {
-    \wp_schedule_event(time(), 'daily', 'ionos_maintenance_reminder_cron');
+  if (! \wp_next_scheduled(CRON_HOOK)) {
+    \wp_schedule_event(time(), 'daily', CRON_HOOK);
   }
 });
 
 \add_action('init', function () {
-  \add_action('ionos_maintenance_reminder_cron', function () {
+  \add_action(CRON_HOOK, function () {
     if (! is_maintenance_mode()) {
       return;
     }
 
-    if (\get_option('ionos_maintenance_mode_email_sent', false)) {
+    if (\get_option(OPTION_EMAIL_SENT, false)) {
       return;
     }
 
-    $activated_at = \get_option('ionos_maintenance_mode_activated_at');
+    $activated_at = \get_option(OPTION_ACTIVATED_AT);
     if (! $activated_at) {
       return;
     }
 
     $seven_days_in_seconds = 7 * DAY_IN_SECONDS;
     if ((time() - $activated_at) >= $seven_days_in_seconds) {
-      \update_option('ionos_maintenance_mode_email_sent', true);
+      \update_option(OPTION_EMAIL_SENT, true);
 
       send_maintenance_reminder_email();
     }
@@ -179,8 +180,8 @@ function get_maintenance_reminder_mail_content(): string
 }
 
 \register_deactivation_hook(__FILE__, function () {
-  $timestamp = \wp_next_scheduled('ionos_maintenance_reminder_cron');
+  $timestamp = \wp_next_scheduled(CRON_HOOK);
   if ($timestamp) {
-    \wp_unschedule_event($timestamp, 'ionos_maintenance_reminder_cron');
+    \wp_unschedule_event($timestamp, CRON_HOOK);
   }
 });
