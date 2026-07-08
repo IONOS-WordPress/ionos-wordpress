@@ -36,7 +36,7 @@
     "vscode": {
       "settings": {
         "workbench.colorCustomizations": {
-          // highlight title bar to make developer sensuible that he is in a devcontainer
+          // highlight title bar to make developer sensible that he is in a devcontainer
           "titleBar.activeBackground": "#002b44"
         },
         "claude-code.environmentVariables": [
