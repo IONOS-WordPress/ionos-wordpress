@@ -5,6 +5,9 @@
 #
 # this script is used to create a github release marked as pre-release.
 # only packages not marked as private will be released
+# multiple non-private packages can be pre-released in one cycle; each package's stale
+# prerelease cleanup is scoped to that package only, so other packages' pending prereleases
+# are left untouched
 #
 # workflow:
 # - features (including changesets) will be developed on feature branches and merged into the develop branch
@@ -124,10 +127,6 @@ if [[ "${CI}" == '' ]]; then
   pnpm gh repo set-default $(git remote get-url origin | sed -E 's/.*[:\/]([^\/]+\/[^\/]+)\.git/\1/')
 fi
 
-# workaround : delete all existing prereleases (multiple releases can have the prerelease tag through canceled/broken releases)
-# this is for the case that existing releases are marked as prerelease - we want to ensure that only one release has the prerelease tag
-gh release list --json name,isPrerelease | jq -r '.[] | select(.isPrerelease == true) | .name' | xargs -I {} gh release delete --yes {}
-
 # loop over all package.json files changed by changeset version command
 for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'package.json'); do
   PACKAGE_VERSION=$(jq -r '.version' $PACKAGE_JSON)
@@ -147,13 +146,16 @@ for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'packag
   # and write it to a file
   git --no-pager diff --unified=0 HEAD~1 HEAD $PACKAGE_PATH/CHANGELOG.md | grep --color=never -P '(?<=^\+)(?!\+\+).*' | sed 's/^+//' > "$PACKAGE_RELEASENOTES_FILE"
 
-  PACKAGE_ARTIFACTS=()
   # PACKAGE_FLAVOUR is the name of the parent directory of the package (i.e. wp-plugin|npm|docker|...)
   PACKAGE_FLAVOUR=$(basename $(dirname $PACKAGE_PATH))
 
+  # reset per package - otherwise artifacts from a previously processed package in this loop
+  # would leak into this package's release (ARTIFACTS is appended to via += below)
+  ARTIFACTS=()
+
   if [[ "$PACKAGE_FLAVOUR" == "." ]]; then
     # if root package is being released, collect all artifacts
-    ARTIFACTS=($(find ./packages -mindepth 4 -maxdepth 4 -type f -name '*.zip ' -or -name "*.tgz"))
+    ARTIFACTS=($(find ./packages -mindepth 4 -maxdepth 4 -type f -name '*.zip' -or -name "*.tgz"))
   else
     case "$PACKAGE_FLAVOUR" in
       docker)
@@ -162,7 +164,7 @@ for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'packag
       npm)
         ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.tgz')")
         ;;
-      wp-plugin|wp-theme)
+      wp-plugin|wp-theme|wp-mu-plugin)
         ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip')")
         ;;
       *)
@@ -178,6 +180,15 @@ for PACKAGE_JSON in $(git --no-pager diff --name-only HEAD HEAD~1 | grep 'packag
     ionos.wordpress.log_warn "no artifacts found for package $PACKAGE_NAME"
     continue
   fi
+
+  # delete any stale prerelease(s) for THIS package only (handles canceled/broken previous runs
+  # for the same package) - leaves other packages' pending prereleases untouched
+  # explicit --limit since `gh release list` defaults to 30, which could miss an older stale
+  # prerelease of this package
+  gh release list --json name,isPrerelease --limit 1000 \
+    | jq -r --arg pkg "$PACKAGE_NAME@" '.[] | select(.isPrerelease == true and (.name | startswith($pkg))) | .name' \
+    | xargs -r -I {} gh release delete --yes {}
+
   pnpm gh release create "$PACKAGE_NAME@$PACKAGE_VERSION" "${ARTIFACTS[@]}" --prerelease --title "$RELEASE_TITLE" --notes-file "$PACKAGE_RELEASENOTES_FILE"
 done
 
