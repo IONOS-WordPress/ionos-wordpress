@@ -27,8 +27,8 @@ require_once __DIR__ . '/class-mu-plugin-upgrader.php';
   }
 
   $latest       = $info['version']      ?? null;
-  $package      = $info['download_url']      ?? null;
-  //$package      = $info['package']      ?? null;
+  //$package      = $info['download_url']      ?? null;
+  $package      = $info['package']      ?? null;
 
 
   if (! $latest || ! $package) {
