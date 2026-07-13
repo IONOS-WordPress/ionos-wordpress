@@ -1,5 +1,5 @@
 ---
-'@ionos-wordpress/ionos-core': major
+'@ionos-wordpress/ionos-core': minor
 ---
 
 Inital version with self-updatable function
