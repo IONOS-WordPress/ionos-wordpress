@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ionos Core 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-25T09:39:21+00:00\n"
+"PO-Revision-Date: 2026-06-25T09:39:21+00:00\n"
+"Language: sv\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: ionos-core\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Plugin Name of the plugin
+#: ionos-core.php
+msgid "Ionos Core"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: ionos-core.php
+msgid "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-mu-plugin/ionos-core"
+msgstr ""
+
+#. Description of the plugin
+#: ionos-core.php
+msgid "Core functionality for IONOS WordPress projects."
+msgstr ""
+
+#. Author of the plugin
+#: ionos-core.php
+msgid "IONOS Group"
+msgstr ""
+
+#. Author URI of the plugin
+#: ionos-core.php
+msgid "https://www.ionos-group.com/brands.html"
+msgstr ""
+
+#: ionos-core/loop/index.php
+#, php-format
+msgid "Welcome to IONOS Core. This is version %s."
+msgstr ""

@@ -6,6 +6,10 @@ defined('ABSPATH') || exit();
 
 use ionos\essentials\Tenant;
 
+const OPTION_ACTIVATED_AT = 'ionos_maintenance_mode_activated_at';
+const OPTION_EMAIL_SENT   = 'ionos_maintenance_mode_email_sent';
+const CRON_HOOK           = 'ionos_maintenance_reminder_cron';
+
 function is_maintenance_mode()
 {
   return \get_option('ionos_essentials_maintenance_mode', false);
@@ -106,4 +110,91 @@ add_filter('body_class', function ($classes) {
     $classes[] = 'ionos-maintenance-mode';
   }
   return $classes;
+});
+
+\add_action('update_option_ionos_essentials_maintenance_mode', function ($old_value, $new_value) {
+  if (empty($old_value) && ! empty($new_value)) {
+    \update_option(OPTION_ACTIVATED_AT, time());
+  } elseif (! empty($old_value) && empty($new_value)) {
+    \delete_option(OPTION_ACTIVATED_AT);
+    \delete_option(OPTION_EMAIL_SENT);
+  }
+}, 10, 2);
+
+\add_action('admin_init', function () {
+  if (! \wp_next_scheduled(CRON_HOOK)) {
+    \wp_schedule_event(time(), 'daily', CRON_HOOK);
+  }
+});
+
+\add_action('init', function () {
+  \add_action(CRON_HOOK, function () {
+    if (! is_maintenance_mode()) {
+      return;
+    }
+
+    if (\get_option(OPTION_EMAIL_SENT, false)) {
+      return;
+    }
+
+    $activated_at = \get_option(OPTION_ACTIVATED_AT);
+    if (! $activated_at) {
+      return;
+    }
+
+    $seven_days_in_seconds = 7 * DAY_IN_SECONDS;
+    if ((time() - $activated_at) >= $seven_days_in_seconds) {
+      \update_option(OPTION_EMAIL_SENT, true);
+
+      send_maintenance_reminder_email();
+    }
+  });
+});
+
+function send_maintenance_reminder_email()
+{
+  $to      = \get_option('admin_email');
+  $subject = __('Your Website is Currently in Maintenance Mode', 'ionos-essentials');
+  $message = get_maintenance_reminder_mail_content();
+  $headers = ['Content-Type: text/html; charset=UTF-8'];
+
+  return \wp_mail($to, $subject, $message, $headers);
+}
+
+function get_maintenance_reminder_mail_content(): string
+{
+  $user          = \wp_get_current_user();
+  $customer_name = ! empty($user->display_name) ? $user->display_name : __('Admin', 'ionos-essentials');
+  $site_name     = \get_bloginfo('name');
+  $brand         = Tenant::get_slug();
+  $tenant_label  = Tenant::get_label();
+  $settings_url  = \admin_url('admin.php?page=' . $brand . '#tools');
+
+  $mail  = '<p>' . \sprintf(__('Hi %s,', 'ionos-essentials'), \esc_html($customer_name)) . '</p>';
+  $mail .= '<p>' . \sprintf(
+    __('Just a check-in regarding your website, %s. It has now been in Maintenance Mode for over a week.', 'ionos-essentials'),
+    '<strong>' . \esc_html($site_name) . '</strong>'
+  ) . '</p>';
+  $mail .= '<p>' . __('While this mode is active, visitors see a maintenance page and cannot access your content. Only you, as a logged-in administrator, can continue to view and edit the site.', 'ionos-essentials') . '</p>';
+  $mail .= '<p>' . __('If you\'re still busy with updates, you can safely disregard this email. However, if your work is now complete and you\'d like to make your site public again, simply click the button below to update your settings. Alternatively, you can manage these settings at any time directly within your WP Admin dashboard.', 'ionos-essentials') . '</p>';
+
+  $mail .= '<p style="margin: 24px 0;">';
+  $mail .= '<a href="' . \esc_url(
+    $settings_url
+  ) . '" style="background-color: #0066cc; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block;">';
+  $mail .= \esc_html__('Configure Maintenance Mode', 'ionos-essentials');
+  $mail .= '</a>';
+  $mail .= '</p>';
+
+  $mail .= '<p>' . __('Best regards,', 'ionos-essentials') . '<br>';
+  $mail .= \sprintf(__('%s WordPress Team', 'ionos-essentials'), \esc_html($tenant_label)) . '</p>';
+
+  return $mail;
+}
+
+\register_deactivation_hook(__FILE__, function () {
+  $timestamp = \wp_next_scheduled(CRON_HOOK);
+  if ($timestamp) {
+    \wp_unschedule_event($timestamp, CRON_HOOK);
+  }
 });
