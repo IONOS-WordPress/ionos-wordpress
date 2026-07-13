@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.5.1
+
+### Patch Changes
+
+- 984dfa8: Add more data to telemetry of loop
+
 ## 1.5.0
 
 ### Minor Changes

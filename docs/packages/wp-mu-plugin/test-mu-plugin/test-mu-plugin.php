@@ -7,6 +7,8 @@
  * Requires Plugins:
  * Requires PHP:      8.3
  * Version:           0.0.1
+ * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/test-mu-plugin-info.json
+ * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-mu-plugin/test-mu-plugin
  * License:           GPL-2.0-or-later
  * Author:            IONOS Group
  * Author URI:        https://www.ionos-group.com/brands.html
@@ -49,3 +51,4 @@ const PLUGIN_FILE = __FILE__;
 
 require_once __DIR__ . '/test-mu-plugin/inc/feature-1.php';
 require_once __DIR__ . '/test-mu-plugin/build/feature-2/index.php';
+require_once __DIR__ . '/test-mu-plugin/inc/update/index.php';

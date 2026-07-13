@@ -7,11 +7,7 @@ Especially when working on GitHub pipelines, it is useful to fork the repository
 
 A working fork can be created by following these steps:
 
-- go to https://github.com/<your-github-name>/ionos-wordpress
-
-- press the "Fork" button
-
-- at the "Create a new fork page" uncheck the "Copy the develop branch only" option - we need also branches `main` and `gh-pages` to be copied
+- go to https://github.com/IONOS-WordPress/ionos-wordpress/fork and uncheck the "Copy the `develop` branch only"
 
 - and create a fork in your individual GitHub account
 
