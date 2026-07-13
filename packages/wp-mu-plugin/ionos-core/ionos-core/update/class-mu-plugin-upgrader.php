@@ -34,8 +34,7 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     // copy_dir copies the *contents* of $working_dir into WPMU_PLUGIN_DIR,
     // preserving the top-level folder from the zip (e.g. ionos-core/).
     $result = \copy_dir($working_dir, WPMU_PLUGIN_DIR);
-    $wp_filesystem->delete($working_dir, true);
-
+  
     if (\is_wp_error($result)) {
       return $result;
     }
