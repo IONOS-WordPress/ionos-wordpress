@@ -4,7 +4,6 @@ namespace ionos\ionos_core;
 
 defined('ABSPATH') || exit();
 
-//const INFO_JSON_URL = 'https://s3-eu-central-1.ionoscloud.com/web-hosting/ionos-group/ionos-core/ionos-core-info.json';
 const INFO_JSON_URL = 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-core-info.json';
 
 require_once __DIR__ . '/class-mu-plugin-upgrader.php';
@@ -27,7 +26,6 @@ require_once __DIR__ . '/class-mu-plugin-upgrader.php';
   }
 
   $latest       = $info['version']      ?? null;
-  //$package      = $info['download_url']      ?? null;
   $package      = $info['package']      ?? null;
 
 
