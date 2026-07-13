@@ -28,7 +28,6 @@ require_once __DIR__ . '/class-mu-plugin-upgrader.php';
   $latest       = $info['version']      ?? null;
   $package      = $info['package']      ?? null;
 
-
   if (! $latest || ! $package) {
     \error_log('ionos-core: Update info response is missing version or package.');
     return;
