@@ -154,7 +154,7 @@ add_filter('body_class', function ($classes) {
 function send_maintenance_reminder_email()
 {
   $to      = \get_option('admin_email');
-  $subject = __('Reminder: Your website is still in maintenance mode', 'ionos-essentials');
+  $subject = __('Your Website is Currently in Maintenance Mode', 'ionos-essentials');
   $message = get_maintenance_reminder_mail_content();
   $headers = ['Content-Type: text/html; charset=UTF-8'];
 
@@ -163,18 +163,31 @@ function send_maintenance_reminder_email()
 
 function get_maintenance_reminder_mail_content(): string
 {
-  $tenant_label = Tenant::get_label();
-  $login_url    = \wp_login_url();
+  $user          = \wp_get_current_user();
+  $customer_name = ! empty($user->display_name) ? $user->display_name : __('Admin', 'ionos-essentials');
+  $site_name     = \get_bloginfo('name');
+  $brand         = Tenant::get_slug();
+  $tenant_label  = Tenant::get_label();
+  $settings_url  = \admin_url('admin.php?page=' . $brand . '#tools');
 
-  $mail  = '<p>' . __('Hello WordPress Admin,', 'ionos-essentials') . '</p>';
-  $mail .= '<p>' . __('We noticed that you put your WordPress site into maintenance mode about 7 days ago.', 'ionos-essentials') . '</p>';
-  $mail .= '<p>' . __('We just wanted to check in and see how your changes are coming along! Taking time to update your site is great, but leaving it in maintenance mode for too long might mean your visitors are missing out on your awesome content.', 'ionos-essentials') . '</p>';
+  $mail  = '<p>' . \sprintf(__('Hi %s,', 'ionos-essentials'), \esc_html($customer_name)) . '</p>';
+  $mail .= '<p>' . \sprintf(
+    __('Just a check-in regarding your website, %s. It has now been in Maintenance Mode for over a week.', 'ionos-essentials'),
+    '<strong>' . \esc_html($site_name) . '</strong>'
+  ) . '</p>';
+  $mail .= '<p>' . __('While this mode is active, visitors see a maintenance page and cannot access your content. Only you, as a logged-in administrator, can continue to view and edit the site.', 'ionos-essentials') . '</p>';
+  $mail .= '<p>' . __('If you\'re still busy with updates, you can safely disregard this email. However, if your work is now complete and you\'d like to make your site public again, simply click the button below to update your settings. Alternatively, you can manage these settings at any time directly within your WP Admin dashboard.', 'ionos-essentials') . '</p>';
+
+  $mail .= '<p style="margin: 24px 0;">';
+  $mail .= '<a href="' . \esc_url(
+    $settings_url
+  ) . '" style="background-color: #0066cc; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block;">';
+  $mail .= \esc_html__('Configure Maintenance Mode', 'ionos-essentials');
+  $mail .= '</a>';
+  $mail .= '</p>';
 
   $mail .= '<p>' . __('Best regards,', 'ionos-essentials') . '<br>';
-  $mail .= \sprintf(__('%s WordPress Team', 'ionos-essentials'), $tenant_label) . '</p>';
-
-  $mail .= '<p>' . __('PS: log in ', 'ionos-essentials');
-  $mail .= '<a href="' . \esc_url($login_url) . '">' . __('HERE', 'ionos-essentials') . '</a></p>';
+  $mail .= \sprintf(__('%s WordPress Team', 'ionos-essentials'), \esc_html($tenant_label)) . '</p>';
 
   return $mail;
 }
