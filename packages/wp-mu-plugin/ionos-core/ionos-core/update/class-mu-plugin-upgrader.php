@@ -31,7 +31,7 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
       return $working_dir;
     }
 
-    $result = \copy_dir($working_dir . '/ionos-core/', WPMU_PLUGIN_DIR, ['README.md','CHANGELOG.md']);
+    $result = \copy_dir($working_dir . '/ionos-core/', WPMU_PLUGIN_DIR, ['README.md', 'CHANGELOG.md']);
     $wp_filesystem->delete($working_dir, true);
 
     if (\is_wp_error($result)) {
