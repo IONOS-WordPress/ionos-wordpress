@@ -14,7 +14,7 @@ return [
       'icons'             => [
         '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg',
       ],
-      'last_updated' => '2024-05-15 12:00:00',
+      'last_updated' => '',
     ],
     'ionos-sso' => [
       'info_url'          => 'https://s3-de-central.profitbricks.com/web-hosting/ionos-group/ionos-sso.info.json',
@@ -26,7 +26,7 @@ return [
       'icons'             => [
         '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-sso-48px.svg',
       ],
-      'last_updated' => '2024-05-15 12:00:00',
+      'last_updated' => '',
     ],
     'woocommerce-german-market-light' => [
       'info_url'          => 'https://s3-de-central.profitbricks.com/web-hosting/ionos-group/woocommerce-german-market-light.info.json',
@@ -38,7 +38,7 @@ return [
       'icons'             => [
         '1x' => 'https://web-hosting.s3-eu-central-1.ionoscloud.com/ionos/live/assets/german_market_logo.png',
       ],
-      'last_updated' => '2024-05-15 12:00:00',
+      'last_updated' => '',
     ],
     'beyond-seo' => [
       'info_url'          => 'https://wordpress.rankingcoach.com/update/archives/beyond-seo.json',
@@ -50,7 +50,7 @@ return [
       'icons'             => [
         '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg',
       ],
-      'last_updated' => '2024-05-15 12:00:00',
+      'last_updated' => '',
     ],
     '01-ext-ion8dhas7-stretch' => [
       'name'              => 'Site Assistant',
@@ -62,7 +62,7 @@ return [
       'icons'             => [
         '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg',
       ],
-      'last_updated' => '2024-05-15 12:00:00',
+      'last_updated' => '',
     ],
   ],
   'wordpress_org_plugins' =>
