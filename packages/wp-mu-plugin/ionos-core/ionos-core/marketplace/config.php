@@ -40,18 +40,6 @@ return [
       ],
       'last_updated' => '',
     ],
-    'beyond-seo' => [
-      'info_url'          => 'https://wordpress.rankingcoach.com/update/archives/beyond-seo.json',
-      'name'              => 'BeyondSEO',
-      'short_description' => __('BeyondSEO is a comprehensive WordPress SEO plugin designed to enhance Google search rankings and online visibility.', 'ionos-core'),
-      'version'           => 'latest',
-      'author'            => 'BeyondSEO Team',
-      'slug'              => 'beyond-seo',
-      'icons'             => [
-        '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg',
-      ],
-      'last_updated' => '',
-    ],
   ],
   'wordpress_org_plugins' => [
     'extendify',
