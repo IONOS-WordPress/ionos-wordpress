@@ -17,6 +17,8 @@ test.describe(
         wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '[]' --format=json
         # marketplace is only be active on group brand ionons
         wp --quiet option set ionos_group_brand 'ionos'
+        # disable ionos-core marketplace to avoid duplicate marketplace implementation
+        wp --quiet option set ionos_core_disable_marketplace '1'
       `);
     });
 

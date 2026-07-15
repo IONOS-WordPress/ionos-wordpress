@@ -14,6 +14,11 @@ use WpOrg\Requests\Response;
 
 defined('ABSPATH') || exit();
 
+// Allow disabling marketplace for testing or migration purposes
+if (\get_option('ionos_core_disable_marketplace')) {
+  return;
+}
+
 // DEBUG NOTICE: Confirms file has been loaded
 \add_action('admin_notices', function (): void {
   \printf(
