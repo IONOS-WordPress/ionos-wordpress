@@ -1,5 +1,11 @@
 # @ionos-wordpress/ionos-core
 
+## 0.3.2
+
+### Patch Changes
+
+- 96033ff: Test autoupdate to 0.3.2
+
 ## 0.3.1
 
 ### Patch Changes
