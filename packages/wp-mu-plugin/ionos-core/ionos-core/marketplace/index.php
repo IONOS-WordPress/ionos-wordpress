@@ -36,12 +36,10 @@ if (! \is_blog_installed()) {
 // Uninstall legacy ionos-marketplace plugin when ionos-core marketplace is active
 \add_action('admin_init', function (): void {
   // Check if legacy ionos-marketplace plugin is installed
-  $legacy_marketplace_plugins = [
-    'ionos-marketplace/marketplace.php',
-  ];
+  $legacy_marketplace_plugins = ['ionos-marketplace/marketplace.php'];
 
   // Get list of all plugins (both active and inactive)
-  $all_plugins = \get_plugins();
+  $all_plugins    = \get_plugins();
   $active_plugins = \get_option('active_plugins', []);
 
   // Check which legacy plugins are installed
@@ -86,17 +84,17 @@ function get_config()
 
   if ($config === null) {
     $base_config = require_once __DIR__ . '/config.php';
-    $tenant = strtolower(\get_option('ionos_group_brand', 'ionos'));
+    $tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
 
     $tenant_additions = $base_config['tenant_additions'][$tenant] ?? null;
 
     $config = [
-      'ionos_plugins'       => $base_config['ionos_plugins'] ?? [],
+      'ionos_plugins'         => $base_config['ionos_plugins']         ?? [],
       'wordpress_org_plugins' => $base_config['wordpress_org_plugins'] ?? [],
     ];
 
     if ($tenant_additions) {
-      $add_ionos = $tenant_additions['ionos_plugins'] ?? [];
+      $add_ionos    = $tenant_additions['ionos_plugins']        ?? [];
       $remove_ionos = $tenant_additions['remove_ionos_plugins'] ?? [];
 
       foreach ($add_ionos as $slug) {
@@ -110,7 +108,7 @@ function get_config()
       }
 
       foreach ($tenant_additions['wordpress_org_plugins'] as $slug) {
-        if (!\in_array($slug, $config['wordpress_org_plugins'], true)) {
+        if (! \in_array($slug, $config['wordpress_org_plugins'], true)) {
           $config['wordpress_org_plugins'][] = $slug;
         }
       }

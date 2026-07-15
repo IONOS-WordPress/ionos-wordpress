@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Ionos Core plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Ionos Core 1.0.0\n"
+"Project-Id-Version: Ionos Core 0.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/html\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-03T07:53:01+00:00\n"
+"POT-Creation-Date: 2026-07-15T13:51:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: ionos-core\n"
@@ -42,4 +42,29 @@ msgstr ""
 #: ionos-core/loop/index.php
 #, php-format
 msgid "Welcome to IONOS Core. This is version %s."
+msgstr ""
+
+#: ionos-core/marketplace/config.php
+msgid "The essentials plugin provides IONOS hosting specific functionality."
+msgstr ""
+
+#: ionos-core/marketplace/config.php
+msgid "IONOS Login allows you to log in with your IONOS customer ID and password through the IONOS Control Panel login page."
+msgstr ""
+
+#: ionos-core/marketplace/config.php
+msgid "Extension for WooCommerce providing features for legal compliance when your e-commerce business is based in Germany or Austria."
+msgstr ""
+
+#: ionos-core/marketplace/config.php
+msgid "BeyondSEO is a comprehensive WordPress SEO plugin designed to enhance Google search rankings and online visibility."
+msgstr ""
+
+#: ionos-core/marketplace/index.php
+#, php-format
+msgid "The legacy ionos-marketplace plugin (%s) has been automatically uninstalled. Marketplace functionality is now provided by IONOS Core."
+msgstr ""
+
+#: ionos-core/marketplace/index.php
+msgid "recommends"
 msgstr ""
