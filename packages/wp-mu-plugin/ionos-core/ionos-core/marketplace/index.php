@@ -16,16 +16,16 @@ defined('ABSPATH') || exit();
 
 // DEBUG NOTICE: Confirms file has been loaded
 \add_action('admin_notices', function (): void {
-    \printf(
-        '<div class="notice notice-info is-dismissible"><p><strong>[DEBUG]:</strong> Marketplace file was successfully loaded!</p></div>'
-    );
+  \printf(
+    '<div class="notice notice-info is-dismissible"><p><strong>[DEBUG]:</strong> Marketplace file was successfully loaded!</p></div>'
+  );
 });
 
 if (\get_option('ionos_group_brand', 'ionos') !== 'ionos') {
   return;
 }
 
-if (!\is_blog_installed()) {
+if (! \is_blog_installed()) {
   return;
 }
 
@@ -43,9 +43,9 @@ function get_config()
 function get_localized_config(string $key): mixed
 {
   $language = \strtolower(\explode('_', \get_locale())[0]);
-  $config = \get_option($key . '.' . $language);
+  $config   = \get_option($key . '.' . $language);
 
-  if (!$config) {
+  if (! $config) {
     $config = \get_option($key . '.en');
   }
 
@@ -71,7 +71,7 @@ function filter_plugins_by_migration_step(array $plugins): array
     $to_remove = [...$to_remove, 'ionos-security'];
   }
 
-  return \array_filter($plugins, fn ($p) => !\in_array($p->slug ?? '', $to_remove, true));
+  return \array_filter($plugins, fn ($p) => ! \in_array($p->slug ?? '', $to_remove, true));
 }
 
 \add_filter(
@@ -91,7 +91,7 @@ function filter_plugins_by_migration_step(array $plugins): array
   callback: function (): void {
     global $wp_list_table;
 
-    $config = get_config();
+    $config        = get_config();
     $ionos_plugins = $config['ionos_plugins'] ?? [];
 
     // Filter plugins by migration step
