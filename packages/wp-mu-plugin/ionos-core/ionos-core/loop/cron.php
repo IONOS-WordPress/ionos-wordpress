@@ -25,9 +25,3 @@ use const ionos\ionos_core\loop\IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS;
   }
 });
 
-\register_deactivation_hook(__FILE__, function () {
-  $timestamp = \wp_next_scheduled(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS);
-  if ($timestamp) {
-    \wp_unschedule_event($timestamp, IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS);
-  }
-});
