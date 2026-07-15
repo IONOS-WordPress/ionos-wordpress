@@ -7,19 +7,13 @@
   this case may happen if the domain or endpoint url of our plugin was changed
  */
 
-use function ionos\essentials\loop\_register_at_datacollector;
-use const ionos\essentials\loop\IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS;
+use function ionos\ionos_core\loop\_register_at_datacollector;
+use const ionos\ionos_core\loop\IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS;
 
 \add_action('init', function () {
   if (\wp_next_scheduled(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS)) {
     return;
   }
-  // @toDo: Remove after Nikolaus
-  $delay = 0;
-  if (time() < strtotime('2025-12-06')) {
-    $delay += rand(0, WEEK_IN_SECONDS);
-  }
-  \wp_schedule_event(time() + $delay, 'weekly', IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS);
 });
 
 \add_action(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, function () {

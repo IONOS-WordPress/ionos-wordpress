@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos\essentials\loop;
+namespace ionos\ionos_core\loop;
 
 use WP_REST_Request;
 use WP_REST_Server;
@@ -115,34 +115,35 @@ function log_loop_event(string $name, array $payload = []): void
   }
 }, 90); // before legacy loop init at 99
 
-\add_action('rest_api_init', function () {
-  \register_rest_route(
-    IONOS_LOOP_REST_NAMESPACE,
-    IONOS_LOOP_REST_ENDPOINT,
+add_filter('rest_endpoints', function (array $endpoints): array {
+  $endpoints['/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_ENDPOINT] = [
     [
       'methods'             => WP_REST_Server::READABLE,
-      'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
       'callback'            => __NAMESPACE__ . '\_rest_loop_callback',
-    ]
-  );
-  \register_rest_route(
-    IONOS_LOOP_REST_NAMESPACE,
-    IONOS_LOOP_REST_CLICK_ENDPOINT,
+      'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
+      'args'                => [],
+    ],
+  ];
+
+  $endpoints['/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_CLICK_ENDPOINT] = [
     [
       'methods'             => 'POST',
-      'permission_callback' => fn () => 0 !== \get_current_user_id(),
       'callback'            => __NAMESPACE__ . '\_rest_loop_click_callback',
-    ]
-  );
-  \register_rest_route(
-    IONOS_LOOP_REST_NAMESPACE,
-    IONOS_LOOP_REST_SSO_CLICK_ENDPOINT,
+      'permission_callback' => fn () => 0 !== \get_current_user_id(),
+      'args'                => [],
+    ],
+  ];
+
+  $endpoints['/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_SSO_CLICK_ENDPOINT] = [
     [
       'methods'             => 'POST',
-      'permission_callback' => __NAMESPACE__ . '\_rest_sso_click_permissions_check',
       'callback'            => __NAMESPACE__ . '\_rest_sso_click_callback',
-    ]
-  );
+      'permission_callback' => __NAMESPACE__ . '\_rest_sso_click_permissions_check',
+      'args'                => [],
+    ],
+  ];
+
+  return $endpoints;
 });
 
 // log loop endpoint errors to error log
@@ -163,3 +164,47 @@ function log_loop_event(string $name, array $payload = []): void
   },
   accepted_args: 3
 );
+
+function get_ssl_type(): string
+{
+  $host = \parse_url(\home_url(), PHP_URL_HOST);
+
+  if (! $host) {
+    return 'no host';
+  }
+
+  $context = stream_context_create([
+    'ssl' => [
+      'capture_peer_cert' => true,
+    ],
+  ]);
+
+  $client = @stream_socket_client("ssl://{$host}:443", $errno, $errstr, 5, STREAM_CLIENT_CONNECT, $context);
+
+  if (! $client) {
+    return 'no client';
+  }
+
+  $params = stream_context_get_params($client);
+  fclose($client);
+
+  $peer_certificate = $params['options']['ssl']['peer_certificate'] ?? null;
+  $cert             = $peer_certificate ? openssl_x509_parse($peer_certificate) : false;
+
+  if (! is_array($cert)) {
+    return 'no cert';
+  }
+
+  // EV certificates carry OID 2.23.140.1.1 in their Certificate Policies extension
+  $policies = $cert['extensions']['certificatePolicies'] ?? '';
+  if (str_contains($policies, '2.23.140.1.1')) {
+    return 'EV';
+  }
+
+  // OV certificates include the Organization field in the subject
+  if (! empty($cert['subject']['O'])) {
+    return 'OV';
+  }
+
+  return 'DV';
+}

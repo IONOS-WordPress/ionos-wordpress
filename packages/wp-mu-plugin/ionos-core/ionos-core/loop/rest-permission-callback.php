@@ -1,6 +1,6 @@
 <?php
 
-namespace ionos\essentials\loop;
+namespace ionos\ionos_core\loop;
 
 use WP_Error;
 use WP_REST_Request;

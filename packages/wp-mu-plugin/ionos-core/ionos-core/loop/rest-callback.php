@@ -1,16 +1,8 @@
 <?php
 
-namespace ionos\essentials\loop;
+namespace ionos\ionos_core\loop;
 
 defined('ABSPATH') || exit();
-
-require_once __DIR__ . '/../dashboard/blocks/next-best-actions/index.php';
-require_once __DIR__ . '/../dashboard/blocks/next-best-actions/class-nba.php';
-
-use ionos\essentials\dashboard\blocks\next_best_actions\NBA;
-use ionos\essentials\Tenant;
-use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN;
-use const ionos\essentials\dashboard\blocks\next_best_actions\OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED;
 
 const IONOS_LOOP_EVENTS_OPTION = 'ionos-loop-events';
 const IONOS_LOOP_CLICKS_OPTION = 'ionos-loop-clicks';
@@ -21,10 +13,21 @@ function _rest_loop_callback(): \WP_REST_Response
 
   \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
+  $essentials_data = [];
+  try {
+    $essentials_data = [
+      'dashboard'   => \ionos\essentials\loop\_get_dashbord_data(),
+      'security'    => \get_option(\ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION, []),
+      'maintenance' => \ionos\essentials\maintenance_mode\is_maintenance_mode(),
+    ];
+  } catch (\Throwable $e) {
+    $essentials_data = [];
+  }
+
   $core_data = [
     'version'       => '1.0',
     'hosting'       => _get_hosting(),
-    'supplier'      => 'ionos-essentials',
+    'supplier'      => 'ionos-core',
     'wordpress'     => [
       'user_data'           => \count_users('memory'),
       'active_theme'        => _get_active_theme(),
@@ -42,12 +45,8 @@ function _rest_loop_callback(): \WP_REST_Response
     'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
 
     'plugin_data' => [
-      'ionos-essentials'    => [
-        'dashboard'   => _get_dashbord_data(),
-        'security'    => \get_option(\ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION, []),
-        'maintenance' => \ionos\essentials\maintenance_mode\is_maintenance_mode(),
-      ],
-      'extendify' => [
+      'ionos-essentials'    => $essentials_data,
+      'extendify'           => [
         'extendify_onboarding_completed' => (bool) \get_option('extendify_onboarding_completed', null),
       ],
       'mcp' => [
@@ -97,46 +96,25 @@ function _rest_sso_click_callback(\WP_REST_Request $request): \WP_REST_Response
   ]);
 }
 
-function _get_dashbord_data(): array
-{
-  $data = [
-    'nba_status'                                => [],
-    OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED => \get_option(OPTION_IONOS_ESSENTIALS_NBA_SETUP_COMPLETED, null),
-  ];
-
-  $nba_status = \get_option(NBA::OPTION_STATUS_NAME, []);
-  foreach ($nba_status as $key => $value) {
-    $data['nba_status'][$key] = join(',', array_keys($value));
-  }
-
-  $actions_shown = \get_option(OPTION_IONOS_ESSENTIALS_NBA_ACTIONS_SHOWN, []);
-  foreach ($actions_shown as $value) {
-    if (! array_key_exists($value, $data['nba_status'])) {
-      $data['nba_status'][$value] = null;
-    }
-  }
-
-  return $data;
-}
-
 function _get_hosting(): array
 {
   return [
     'locale'               => \get_locale(),
     'blog_public'          => (bool) \get_option('blog_public'),
     'market'               => _get_market(),
-    'tenant'               => Tenant::get_slug(),
+    'tenant'               => \get_option('ionos_group_brand', 'ionos'),
     'core_version'         => \get_bloginfo('version'),
     'php_version'          => PHP_VERSION,
     'instance_created'     => _get_instance_creation_date(),
-    'ssl_type'             => \ionos\essentials\get_ssl_type(),
+    'ssl_type'             => get_ssl_type(),
     'hostname'             => \gethostname() ?: '',
   ];
 }
 
 function _get_market(): string
 {
-  return strtolower(\get_option(Tenant::get_slug() . '_market', 'de'));
+  $tenant = \get_option('ionos_group_brand', 'ionos');
+  return strtolower(\get_option($tenant . '_market', 'de'));
 }
 
 function _get_instance_creation_date(): ?int
