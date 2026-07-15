@@ -14,6 +14,8 @@ use const ionos\ionos_core\loop\IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS;
   if (\wp_next_scheduled(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS)) {
     return;
   }
+
+  \wp_schedule_event(time(), 'weekly', IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS);
 });
 
 \add_action(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, function () {
