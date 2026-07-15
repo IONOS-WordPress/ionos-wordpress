@@ -36,6 +36,7 @@ function _register_at_datacollector(): bool
   $response = \wp_remote_post(
     IONOS_LOOP_DATACOLLECTOR_REGISTRATION_URL,
     [
+      'timeout' => 5,
       'body'    => \wp_json_encode([
         'url' => \get_home_url() . '/index.php?rest_route=/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_ENDPOINT,
       ]),
