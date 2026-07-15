@@ -14,6 +14,9 @@ use WpOrg\Requests\Response;
 
 defined('ABSPATH') || exit();
 
+// Set flag indicating ionos-core marketplace is active before any hooks
+\define('IONOS_CORE_MARKETPLACE_ACTIVE', true);
+
 // Allow disabling marketplace for testing or migration purposes
 if (\get_option('ionos_core_disable_marketplace')) {
   return;
@@ -33,6 +36,53 @@ if (\get_option('ionos_group_brand', 'ionos') !== 'ionos') {
 if (! \is_blog_installed()) {
   return;
 }
+
+// Uninstall legacy ionos-marketplace plugin when ionos-core marketplace is active
+\add_action('admin_init', function (): void {
+  // Check if legacy ionos-marketplace plugin is installed
+  $legacy_marketplace_plugins = [
+    'ionos-marketplace/marketplace.php',
+  ];
+
+  // Get list of all plugins (both active and inactive)
+  $all_plugins = \get_plugins();
+  $active_plugins = \get_option('active_plugins', []);
+
+  // Check which legacy plugins are installed
+  $installed_legacy = [];
+  foreach ($legacy_marketplace_plugins as $plugin_path) {
+    if (\array_key_exists($plugin_path, $all_plugins)) {
+      $installed_legacy[] = $plugin_path;
+    }
+  }
+
+  if (! empty($installed_legacy)) {
+    // First, deactivate if active
+    foreach ($installed_legacy as $plugin) {
+      if (\in_array($plugin, $active_plugins, true)) {
+        \deactivate_plugins($plugin, false, false);
+      }
+    }
+
+    // Then delete the plugin files
+    foreach ($installed_legacy as $plugin) {
+      \delete_plugins([$plugin]);
+    }
+
+    // Show admin notice about uninstallation
+    \add_action('admin_notices', function () use ($installed_legacy): void {
+      \printf(
+        '<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+        \esc_html(
+          \sprintf(
+            \__('The legacy ionos-marketplace plugin (%s) has been automatically uninstalled. Marketplace functionality is now provided by IONOS Core.', 'ionos-core'),
+            \implode(', ', $installed_legacy)
+          )
+        )
+      );
+    });
+  }
+});
 
 function get_config()
 {
