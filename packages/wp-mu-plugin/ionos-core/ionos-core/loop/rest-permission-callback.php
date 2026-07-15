@@ -49,10 +49,10 @@ function _rest_permissions_check(WP_REST_Request $request): bool|WP_Error
     ]);
   }
 
-  $remote_ip = $_SERVER['REMOTE_ADDR'];
+  $remote_ip = $_SERVER['REMOTE_ADDR'] ?? '';
 
   // Checks if it is a valid IP address.
-  if (! filter_var($remote_ip, FILTER_VALIDATE_IP)) {
+  if ($remote_ip === '' || ! filter_var($remote_ip, FILTER_VALIDATE_IP)) {
     return new \WP_Error('rest_forbidden', 'Access forbidden.', [
       'status' => 403,
     ]);
