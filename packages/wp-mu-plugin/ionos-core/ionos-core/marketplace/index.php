@@ -29,10 +29,6 @@ if (\get_option('ionos_core_disable_marketplace')) {
   );
 });
 
-if (\get_option('ionos_group_brand', 'ionos') !== 'ionos') {
-  return;
-}
-
 if (! \is_blog_installed()) {
   return;
 }
@@ -89,7 +85,36 @@ function get_config()
   static $config = null;
 
   if ($config === null) {
-    $config = require_once __DIR__ . '/config.php';
+    $base_config = require_once __DIR__ . '/config.php';
+    $tenant = strtolower(\get_option('ionos_group_brand', 'ionos'));
+
+    $tenant_additions = $base_config['tenant_additions'][$tenant] ?? null;
+
+    $config = [
+      'ionos_plugins'       => $base_config['ionos_plugins'] ?? [],
+      'wordpress_org_plugins' => $base_config['wordpress_org_plugins'] ?? [],
+    ];
+
+    if ($tenant_additions) {
+      $add_ionos = $tenant_additions['ionos_plugins'] ?? [];
+      $remove_ionos = $tenant_additions['remove_ionos_plugins'] ?? [];
+
+      foreach ($add_ionos as $slug) {
+        if (isset($base_config['ionos_plugins'][$slug])) {
+          $config['ionos_plugins'][$slug] = $base_config['ionos_plugins'][$slug];
+        }
+      }
+
+      foreach ($remove_ionos as $slug) {
+        unset($config['ionos_plugins'][$slug]);
+      }
+
+      foreach ($tenant_additions['wordpress_org_plugins'] as $slug) {
+        if (!\in_array($slug, $config['wordpress_org_plugins'], true)) {
+          $config['wordpress_org_plugins'][] = $slug;
+        }
+      }
+    }
   }
 
   return $config;
@@ -105,28 +130,6 @@ function get_localized_config(string $key): mixed
   }
 
   return $config ? \json_decode($config) : null;
-}
-
-function filter_plugins_by_migration_step(array $plugins): array
-{
-  $migration_step = (int) \get_option('ionos_migration_step', 0);
-
-  if ($migration_step < 1) {
-    return $plugins;
-  }
-
-  $to_remove = [];
-  if ($migration_step >= 1) {
-    $to_remove = [...$to_remove, 'ionos-navigation', 'ionos-loop', 'ionos-journey'];
-  }
-  if ($migration_step >= 2) {
-    $to_remove = [...$to_remove, 'ionos-assistant'];
-  }
-  if ($migration_step >= 3) {
-    $to_remove = [...$to_remove, 'ionos-security'];
-  }
-
-  return \array_filter($plugins, fn ($p) => ! \in_array($p->slug ?? '', $to_remove, true));
 }
 
 \add_filter(
@@ -146,11 +149,7 @@ function filter_plugins_by_migration_step(array $plugins): array
   callback: function (): void {
     global $wp_list_table;
 
-    $config        = get_config();
-    $ionos_plugins = $config['ionos_plugins'] ?? [];
-
-    // Filter plugins by migration step
-    $ionos_plugins = \array_values(filter_plugins_by_migration_step(\array_values($ionos_plugins)));
+    $config = get_config();
 
     $slugs = $config['wordpress_org_plugins'] ?? [];
     if (empty($slugs)) {
@@ -176,7 +175,8 @@ function filter_plugins_by_migration_step(array $plugins): array
 
     $plugins                = [];
     $admin_notice_displayed = false;
-    foreach ($responses as $slug => $response) {
+    foreach ($responses as $index => $response) {
+      $slug = $slugs[$index] ?? 'unknown';
       if ($response instanceof Response && $response->success) {
         $decoded_data = json_decode($response->body, true);
         if (isset($decoded_data['slug'])) {
@@ -187,10 +187,16 @@ function filter_plugins_by_migration_step(array $plugins): array
           add_action(
             hook_name: 'admin_notices',
             callback: function () use ($slug, $response): void {
+              $error_message = 'Unknown error';
+              if ($response instanceof Response && isset($response->status_code)) {
+                $error_message = sprintf('HTTP %d', $response->status_code);
+              } elseif (\is_wp_error($response)) {
+                $error_message = $response->get_error_message();
+              }
 
               \printf(
                 '<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
-                esc_html(sprintf('Failed to fetch data in marketplace: %s', $response->getReason()))
+                \esc_html(\sprintf('Failed to fetch data in marketplace for plugin "%s": %s', $slug, $error_message))
               );
             }
           );
@@ -212,7 +218,7 @@ function filter_plugins_by_migration_step(array $plugins): array
       )
     );
 
-    $ionos_plugins_list = gather_infos_for_ionos_plugins($ionos_plugins);
+    $ionos_plugins_list = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
 
     $wp_list_table->items = [...$ionos_plugins_list, ...$wp_list_table->items];
   }
