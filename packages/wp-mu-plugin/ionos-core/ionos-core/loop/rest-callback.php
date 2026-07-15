@@ -172,6 +172,7 @@ function _get_plugins(): array
         'plugin_slug' => $plugin_slug,
         'version'     => $plugin_data['Version'],
         'auto_update' => in_array($plugin_slug, $auto_updates, true),
+      ];
     }
   }
 
