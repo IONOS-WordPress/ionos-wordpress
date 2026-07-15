@@ -51,19 +51,7 @@ return [
         '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg',
       ],
       'last_updated' => '',
-    ],
-    '01-ext-ion8dhas7-stretch' => [
-      'name'              => 'Site Assistant',
-      'short_description' => __('Provides guided onboarding and a Site Assistant in the WordPress admin.', 'ionos-core'),
-      'version'           => 'latest',
-      'download_link'     => 'https://s3-eu-central-1.ionoscloud.com/web-hosting/extendify/01-ext-ion8dhas7.zip',
-      'author'            => '<a href="https://profiles.wordpress.org/extendify/">Extendify</a>',
-      'slug'              => '01-ext-ion8dhas7-stretch',
-      'icons'             => [
-        '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg',
-      ],
-      'last_updated' => '',
-    ],
+    ]
   ],
   'wordpress_org_plugins' =>
     [
