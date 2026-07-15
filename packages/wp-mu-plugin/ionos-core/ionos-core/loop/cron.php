@@ -24,4 +24,3 @@ use const ionos\ionos_core\loop\IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS;
     _register_at_datacollector();
   }
 });
-

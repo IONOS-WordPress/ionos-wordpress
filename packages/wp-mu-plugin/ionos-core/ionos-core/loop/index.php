@@ -117,7 +117,8 @@ function log_loop_event(string $name, array $payload = []): void
 }, 90); // before legacy loop init at 99
 
 add_filter('rest_endpoints', function (array $endpoints): array {
-  $endpoints['/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_ENDPOINT] = [
+  // do not use the const, but the endpoint from essentials/loop
+  $endpoints['/ionos/essentials/loop/v1/loop-data'] = [
     [
       'methods'             => WP_REST_Server::READABLE,
       'callback'            => __NAMESPACE__ . '\_rest_loop_callback',
