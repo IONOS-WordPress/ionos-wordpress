@@ -204,7 +204,7 @@ function _get_comments(): array
 
   $comments_data['total'] = array_sum((array) \wp_count_comments());
 
-  $comments_data['comments_active'] = \get_option('default_comment_status') ? true : false;
+  $comments_data['comments_active'] = \get_option('default_comment_status', 'open') === 'open';
 
   return $comments_data;
 }
