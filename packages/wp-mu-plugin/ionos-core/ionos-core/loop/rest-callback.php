@@ -171,8 +171,7 @@ function _get_plugins(): array
       $active_plugins_data[] = [
         'plugin_slug' => $plugin_slug,
         'version'     => $plugin_data['Version'],
-        'auto_update' => in_array($plugin_slug, $auto_updates),
-      ];
+        'auto_update' => in_array($plugin_slug, $auto_updates, true),
     }
   }
 
