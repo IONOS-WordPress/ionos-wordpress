@@ -25,6 +25,10 @@ if (\get_option('ionos_group_brand', 'ionos') !== 'ionos') {
   return;
 }
 
+if (!\is_blog_installed()) {
+  return;
+}
+
 function get_config()
 {
   static $config = null;
@@ -34,6 +38,40 @@ function get_config()
   }
 
   return $config;
+}
+
+function get_localized_config(string $key): mixed
+{
+  $language = \strtolower(\explode('_', \get_locale())[0]);
+  $config = \get_option($key . '.' . $language);
+
+  if (!$config) {
+    $config = \get_option($key . '.en');
+  }
+
+  return $config ? \json_decode($config) : null;
+}
+
+function filter_plugins_by_migration_step(array $plugins): array
+{
+  $migration_step = (int) \get_option('ionos_migration_step', 0);
+
+  if ($migration_step < 1) {
+    return $plugins;
+  }
+
+  $to_remove = [];
+  if ($migration_step >= 1) {
+    $to_remove = [...$to_remove, 'ionos-navigation', 'ionos-loop', 'ionos-journey'];
+  }
+  if ($migration_step >= 2) {
+    $to_remove = [...$to_remove, 'ionos-assistant'];
+  }
+  if ($migration_step >= 3) {
+    $to_remove = [...$to_remove, 'ionos-security'];
+  }
+
+  return \array_filter($plugins, fn ($p) => !\in_array($p->slug ?? '', $to_remove, true));
 }
 
 \add_filter(
@@ -54,13 +92,15 @@ function get_config()
     global $wp_list_table;
 
     $config = get_config();
+    $ionos_plugins = $config['ionos_plugins'] ?? [];
 
-    // 1. Define the plugin slugs you want
+    // Filter plugins by migration step
+    $ionos_plugins = \array_values(filter_plugins_by_migration_step(\array_values($ionos_plugins)));
+
     $slugs = $config['wordpress_org_plugins'] ?? [];
     if (empty($slugs)) {
       return;
     }
-    // 2. Build an array of request definitions
     $field_query_string = \http_build_query([
       'fields[short_description]' => 'short_description',
       'fields[icons]'             => 'icons',
@@ -77,10 +117,8 @@ function get_config()
       ];
     }
 
-    // 3. Execute all requests simultaneously
     $responses = Requests::request_multiple($requests);
 
-    // 4. Process the data
     $plugins                = [];
     $admin_notice_displayed = false;
     foreach ($responses as $slug => $response) {
@@ -110,7 +148,6 @@ function get_config()
       $wp_list_table->items = [];
     }
 
-    // 5. Sort items by original slug order
     \usort(
       $wp_list_table->items,
       fn (array $a, array $b): int => array_search($a['slug'], $slugs, true) <=> array_search(
@@ -120,10 +157,9 @@ function get_config()
       )
     );
 
-    // 6. Prepend IONOS Plugins
-    $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
+    $ionos_plugins_list = gather_infos_for_ionos_plugins($ionos_plugins);
 
-    $wp_list_table->items = [...$ionos_plugins, ...$wp_list_table->items];
+    $wp_list_table->items = [...$ionos_plugins_list, ...$wp_list_table->items];
   }
 );
 
