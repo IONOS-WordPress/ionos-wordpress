@@ -11,7 +11,7 @@ const IONOS_LOOP_MAX_EVENTS    = 200;
 function _rest_loop_callback(): \WP_REST_Response
 {
 
-  \add_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
+  \update_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $essentials_data = [];
   try {
