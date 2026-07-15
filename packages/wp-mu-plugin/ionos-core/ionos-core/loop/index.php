@@ -108,14 +108,6 @@ function log_loop_event(string $name, array $payload = []): void
   log_loop_event('login', $payload);
 }, 10, 2);
 
-// revoke consent for legacy loop plugin
-\add_action('init', function () {
-  if (class_exists('\Ionos\Loop\Plugin')) {
-    \add_option('ionos_loop_consent_LEGACY', \get_option('ionos_loop_consent', false), null, false);
-    \Ionos\Loop\Plugin::revoke_consent();
-  }
-}, 90); // before legacy loop init at 99
-
 add_filter('rest_endpoints', function (array $endpoints): array {
   // do not use the const, but the endpoint from essentials/loop
   $endpoints['/ionos/essentials/loop/v1/loop-data'] = [
@@ -123,24 +115,6 @@ add_filter('rest_endpoints', function (array $endpoints): array {
       'methods'             => WP_REST_Server::READABLE,
       'callback'            => __NAMESPACE__ . '\_rest_loop_callback',
       'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
-      'args'                => [],
-    ],
-  ];
-
-  $endpoints['/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_CLICK_ENDPOINT] = [
-    [
-      'methods'             => 'POST',
-      'callback'            => __NAMESPACE__ . '\_rest_loop_click_callback',
-      'permission_callback' => fn () => 0 !== \get_current_user_id(),
-      'args'                => [],
-    ],
-  ];
-
-  $endpoints['/' . IONOS_LOOP_REST_NAMESPACE . IONOS_LOOP_REST_SSO_CLICK_ENDPOINT] = [
-    [
-      'methods'             => 'POST',
-      'callback'            => __NAMESPACE__ . '\_rest_sso_click_callback',
-      'permission_callback' => __NAMESPACE__ . '\_rest_sso_click_permissions_check',
       'args'                => [],
     ],
   ];
