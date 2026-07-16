@@ -153,7 +153,7 @@ require_once __DIR__ . '/ionos-essentials/inc/automatic-core-updates/index.php';
 require_once __DIR__ . '/ionos-essentials/inc/migration/index.php';
 
 if (! defined('IONOS_IS_STRETCH')) {
-  define('IONOS_IS_STRETCH', str_starts_with(getcwd(), '/home/www/public'));
+  define('IONOS_IS_STRETCH', strncmp(getcwd(), '/home/www/public', strlen('/home/www/public')) === 0);
 }
 
 /**
