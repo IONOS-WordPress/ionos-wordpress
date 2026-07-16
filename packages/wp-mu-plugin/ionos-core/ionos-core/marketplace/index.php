@@ -14,15 +14,6 @@ use WpOrg\Requests\Response;
 
 defined('ABSPATH') || exit();
 
-if (! \is_blog_installed()) {
-  return;
-}
-
-// Skip marketplace if stretch-extra will manage it (only one should be active at a time)
-if (\file_exists(WP_CONTENT_DIR . '/mu-plugins/stretch-extra/stretch-extra/inc/marketplace/marketplace.php')) {
-  return;
-}
-
 // Uninstall legacy ionos-marketplace plugin when ionos-core marketplace is active
 \add_action('admin_init', function (): void {
   $legacy_plugin = 'ionos-marketplace/marketplace.php';

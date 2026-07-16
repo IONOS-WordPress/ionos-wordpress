@@ -23,7 +23,7 @@ test.describe(
     test('ionos tab is present', async ({ admin, page }) => {
       await admin.visitAdminPage('/plugin-install.php');
       await expect(page.locator('.plugin-install-ionos')).toHaveCount(1);
-      await expect(page.locator('.plugin-card-01-ext-ion8dhas7-stretch')).toHaveCount(1);
+      await expect(page.locator('.plugin-card-ionos-essentials')).toHaveCount(1);
     });
   }
 );
