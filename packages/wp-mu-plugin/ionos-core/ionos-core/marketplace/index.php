@@ -245,10 +245,10 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
   callback: function (): void {
     global $wp_list_table;
 
-    $pagination = $GLOBALS['ionos_marketplace_pagination'] ?? [];
-    $total_items = $pagination['total_items'] ?? count($wp_list_table->items ?? []);
-    $total_pages = $pagination['total_pages'] ?? 0;
-    $per_page    = $pagination['per_page'] ?? MAX_ITEMS_PER_PAGE;
+    $pagination  = $GLOBALS['ionos_marketplace_pagination'] ?? [];
+    $total_items = $pagination['total_items']               ?? count($wp_list_table->items ?? []);
+    $total_pages = $pagination['total_pages']               ?? 0;
+    $per_page    = $pagination['per_page']                  ?? MAX_ITEMS_PER_PAGE;
 
     $wp_list_table->set_pagination_args([
       'total_items' => $total_items,
