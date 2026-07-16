@@ -14,68 +14,30 @@ use WpOrg\Requests\Response;
 
 defined('ABSPATH') || exit();
 
-// Set flag indicating ionos-core marketplace is active before any hooks
-\define('IONOS_CORE_MARKETPLACE_ACTIVE', true);
-
-// Allow disabling marketplace for testing or migration purposes
-if (\get_option('ionos_core_disable_marketplace')) {
+if (! \is_blog_installed()) {
   return;
 }
 
-// DEBUG NOTICE: Confirms file has been loaded
-\add_action('admin_notices', function (): void {
-  \printf(
-    '<div class="notice notice-info is-dismissible"><p><strong>[DEBUG]:</strong> Marketplace file was successfully loaded!</p></div>'
-  );
-});
-
-if (! \is_blog_installed()) {
+// Skip marketplace if stretch-extra will manage it (only one should be active at a time)
+if (\file_exists(WP_CONTENT_DIR . '/mu-plugins/stretch-extra/stretch-extra/inc/marketplace/marketplace.php')) {
   return;
 }
 
 // Uninstall legacy ionos-marketplace plugin when ionos-core marketplace is active
 \add_action('admin_init', function (): void {
-  // Check if legacy ionos-marketplace plugin is installed
-  $legacy_marketplace_plugins = ['ionos-marketplace/marketplace.php'];
+  $legacy_plugin = 'ionos-marketplace/marketplace.php';
+  $all_plugins   = \get_plugins();
 
-  // Get list of all plugins (both active and inactive)
-  $all_plugins    = \get_plugins();
+  if (! \array_key_exists($legacy_plugin, $all_plugins)) {
+    return;
+  }
+
   $active_plugins = \get_option('active_plugins', []);
-
-  // Check which legacy plugins are installed
-  $installed_legacy = [];
-  foreach ($legacy_marketplace_plugins as $plugin_path) {
-    if (\array_key_exists($plugin_path, $all_plugins)) {
-      $installed_legacy[] = $plugin_path;
-    }
+  if (\in_array($legacy_plugin, $active_plugins, true)) {
+    \deactivate_plugins($legacy_plugin, false, false);
   }
 
-  if (! empty($installed_legacy)) {
-    // First, deactivate if active
-    foreach ($installed_legacy as $plugin) {
-      if (\in_array($plugin, $active_plugins, true)) {
-        \deactivate_plugins($plugin, false, false);
-      }
-    }
-
-    // Then delete the plugin files
-    foreach ($installed_legacy as $plugin) {
-      \delete_plugins([$plugin]);
-    }
-
-    // Show admin notice about uninstallation
-    \add_action('admin_notices', function () use ($installed_legacy): void {
-      \printf(
-        '<div class="notice notice-success is-dismissible"><p>%s</p></div>',
-        \esc_html(
-          \sprintf(
-            \__('The legacy ionos-marketplace plugin (%s) has been automatically uninstalled. Marketplace functionality is now provided by IONOS Core.', 'ionos-core'),
-            \implode(', ', $installed_legacy)
-          )
-        )
-      );
-    });
-  }
+  \delete_plugins([$legacy_plugin]);
 });
 
 function get_config()
@@ -94,8 +56,8 @@ function get_config()
     ];
 
     if ($tenant_additions) {
-      $add_ionos    = $tenant_additions['ionos_plugins']        ?? [];
-      $remove_ionos = $tenant_additions['remove_ionos_plugins'] ?? [];
+      $add_ionos    = $tenant_additions['additional_ionos_plugins']        ?? [];
+      $remove_ionos = $tenant_additions['remove_ionos_plugins']            ?? [];
 
       foreach ($add_ionos as $slug) {
         if (isset($base_config['ionos_plugins'][$slug])) {
@@ -107,7 +69,7 @@ function get_config()
         unset($config['ionos_plugins'][$slug]);
       }
 
-      foreach ($tenant_additions['wordpress_org_plugins'] as $slug) {
+      foreach ($tenant_additions['additional_wordpress_org_plugins'] as $slug) {
         if (! \in_array($slug, $config['wordpress_org_plugins'], true)) {
           $config['wordpress_org_plugins'][] = $slug;
         }
@@ -135,8 +97,10 @@ function get_localized_config(string $key): mixed
   callback: function (array $tabs): array {
     unset($tabs['featured']);
 
+    $tenant = strtolower(\get_option('ionos_group_brand', 'ionos'));
+
     return [
-      'ionos' => 'IONOS ' . \__('recommends', 'ionos-core'),
+      $tenant => 'IONOS ' . \__('recommends', 'ionos-core'),
       ...$tabs,
     ];
   }
@@ -171,8 +135,6 @@ function get_localized_config(string $key): mixed
 
     $responses = Requests::request_multiple($requests);
 
-    $plugins                = [];
-    $admin_notice_displayed = false;
     foreach ($responses as $index => $response) {
       $slug = $slugs[$index] ?? 'unknown';
       if ($response instanceof Response && $response->success) {
@@ -181,25 +143,16 @@ function get_localized_config(string $key): mixed
           $wp_list_table->items[] = $decoded_data;
         }
       } else {
-        if (! $admin_notice_displayed) {
-          add_action(
-            hook_name: 'admin_notices',
-            callback: function () use ($slug, $response): void {
-              $error_message = 'Unknown error';
-              if ($response instanceof Response && isset($response->status_code)) {
-                $error_message = sprintf('HTTP %d', $response->status_code);
-              } elseif (\is_wp_error($response)) {
-                $error_message = $response->get_error_message();
-              }
-
-              \printf(
-                '<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
-                \esc_html(\sprintf('Failed to fetch data in marketplace for plugin "%s": %s', $slug, $error_message))
-              );
-            }
-          );
-          $admin_notice_displayed = true;
+        $error_message = 'Unknown error';
+        if ($response instanceof Response && isset($response->status_code)) {
+          $error_message = sprintf('HTTP %d', $response->status_code);
+        } elseif (\is_wp_error($response)) {
+          $error_message = $response->get_error_message();
         }
+
+        \error_log(
+          \sprintf('[ionos-core] Failed to fetch data in marketplace for plugin "%s": %s', $slug, $error_message)
+        );
       }
     }
 

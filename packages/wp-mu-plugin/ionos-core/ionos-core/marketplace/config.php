@@ -64,35 +64,35 @@ return [
   ],
   'tenant_additions' => [
     'ionos'     => [
-      'ionos_plugins'         => ['ionos-sso'],
-      'wordpress_org_plugins' => [],
+      'additional_ionos_plugins'         => ['ionos-sso'],
+      'additional_wordpress_org_plugins' => [],
     ],
     'arsys'     => [
-      'ionos_plugins'         => [],
-      'wordpress_org_plugins' => [],
+      'additional_ionos_plugins'         => [],
+      'additional_wordpress_org_plugins' => [],
     ],
     'fasthosts' => [
-      'ionos_plugins'         => [],
-      'remove_ionos_plugins'  => ['woocommerce-german-market-light'],
-      'wordpress_org_plugins' => [],
+      'additional_ionos_plugins'         => [],
+      'remove_ionos_plugins'             => ['woocommerce-german-market-light'],
+      'additional_wordpress_org_plugins' => [],
     ],
     'homepl'    => [
-      'ionos_plugins'         => [],
-      'remove_ionos_plugins'  => ['woocommerce-german-market-light'],
-      'wordpress_org_plugins' => [],
+      'additional_ionos_plugins'         => [],
+      'remove_ionos_plugins'             => ['woocommerce-german-market-light'],
+      'additional_wordpress_org_plugins' => [],
     ],
     'piensa'    => [
-      'ionos_plugins'         => [],
-      'wordpress_org_plugins' => [],
+      'additional_ionos_plugins'         => [],
+      'additional_wordpress_org_plugins' => [],
     ],
     'strato'    => [
-      'ionos_plugins'         => [],
-      'wordpress_org_plugins' => [],
+      'additional_ionos_plugins'         => [],
+      'additional_wordpress_org_plugins' => [],
     ],
     'udag'      => [
-      'ionos_plugins'         => [],
-      'remove_ionos_plugins'  => ['woocommerce-german-market-light'],
-      'wordpress_org_plugins' => [],
+      'additional_ionos_plugins'         => [],
+      'remove_ionos_plugins'             => ['woocommerce-german-market-light'],
+      'additional_wordpress_org_plugins' => [],
     ],
   ],
 ];
