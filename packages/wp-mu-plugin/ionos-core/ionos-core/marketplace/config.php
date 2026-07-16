@@ -9,7 +9,7 @@ return [
       'name'              => 'Essentials',
       'short_description' => __('The essentials plugin provides IONOS hosting specific functionality.', 'ionos-core'),
       'version'           => 'latest',
-      'author'            => '<a href="https://www.ionos-group.com/brands.html">IONOS</a>',
+      'author'            => '<a href="https://www.ionos-group.com/brands.html">IONOS Group</a>',
       'slug'              => 'ionos-essentials',
       'icons'             => [
         '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg',
@@ -21,7 +21,7 @@ return [
       'name'              => 'IONOS Login',
       'short_description' => __('IONOS Login allows you to log in with your IONOS customer ID and password through the IONOS Control Panel login page.', 'ionos-core'),
       'version'           => 'latest',
-      'author'            => '<a href="https://www.ionos-group.com/brands.html">IONOS</a>',
+      'author'            => '<a href="https://www.ionos-group.com/brands.html">IONOS Group</a>',
       'slug'              => 'ionos-sso',
       'icons'             => [
         '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-sso-48px.svg',
