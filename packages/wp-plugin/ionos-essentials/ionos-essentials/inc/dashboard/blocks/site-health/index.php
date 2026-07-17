@@ -64,11 +64,11 @@ function render_callback(): void
               <h2 class="headline headline--sub">
                 <?php
                   $parts        = \wp_parse_url(\get_option('siteurl', '')) ?: [];
-                  $host         = $parts['host'] ?? '';
-                  $scheme       = $parts['scheme'] ?? '';
-                  $unicode_host = \wp_idn_to_utf8($host);
+  $host                         = $parts['host']   ?? '';
+  $scheme                       = $parts['scheme'] ?? '';
+  $unicode_host                 = \wp_idn_to_utf8($host);
 
-                  echo \esc_html(($scheme ? $scheme . '://' : '') . ($unicode_host ?: $host));
+  echo \esc_html(($scheme ? $scheme . '://' : '') . ($unicode_host ?: $host));
   ?>
               </h2>
             </div>
