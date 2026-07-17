@@ -63,12 +63,12 @@ function render_callback(): void
   ?>
               <h2 class="headline headline--sub">
                 <?php
-                  $parts = parse_url(\get_option('siteurl', ''));
-  $host                  = $parts['host']   ?? '';
-  $protocol              = $parts['scheme'] ?? '';
-  $unicode               = idn_to_utf8($host, IDNA_DEFAULT, INTL_IDNA_VARIANT_UTS46);
+                  $parts        = \wp_parse_url(\get_option('siteurl', '')) ?: [];
+                  $host         = $parts['host'] ?? '';
+                  $scheme       = $parts['scheme'] ?? '';
+                  $unicode_host = \wp_idn_to_utf8($host);
 
-  echo \esc_html(($protocol ? $protocol . '://' : '') . ($unicode ? $unicode : $host));
+                  echo \esc_html(($scheme ? $scheme . '://' : '') . ($unicode_host ?: $host));
   ?>
               </h2>
             </div>
