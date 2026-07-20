@@ -38,8 +38,3 @@ msgstr ""
 #: ionos-core.php
 msgid "https://www.ionos-group.com/brands.html"
 msgstr ""
-
-#: ionos-core/loop/index.php
-#, php-format
-msgid "Welcome to IONOS Core. This is version %s."
-msgstr ""
