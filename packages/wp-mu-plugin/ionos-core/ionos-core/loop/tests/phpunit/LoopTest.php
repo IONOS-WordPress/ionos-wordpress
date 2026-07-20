@@ -1,12 +1,11 @@
 <?php
 
-namespace ionos\essentials\loop;
+namespace ionos\ionos_core\loop;
 
 use WP_REST_Server;
 
-use const ionos\essentials\loop\IONOS_LOOP_REST_ENDPOINT;
-use const ionos\essentials\loop\IONOS_LOOP_REST_NAMESPACE;
-use const ionos\essentials\loop\IONOS_LOOP_REST_SSO_CLICK_ENDPOINT;
+use const ionos\ionos_core\loop\IONOS_LOOP_REST_ENDPOINT;
+use const ionos\ionos_core\loop\IONOS_LOOP_REST_NAMESPACE;
 
 /**
  * run only this test using 'pnpm test:php --php-opts "--filter LoopTest"'
@@ -35,8 +34,6 @@ class LoopTest extends \WP_UnitTestCase  {
     // Initiating the REST API.
     global $wp_rest_server;
     $this->server = $wp_rest_server = new \WP_REST_Server;
-
-    \activate_plugin('ionos-essentials/ionos-essentials.php');
 
     // @TODO: for some reason the once required rest_api_init hooks are cleaned up at this point when all phpunit tests are runned.
     \add_action('rest_api_init', function () {
