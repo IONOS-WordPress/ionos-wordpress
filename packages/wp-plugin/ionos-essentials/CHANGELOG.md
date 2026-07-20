@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.6.0
+
+### Minor Changes
+
+- 7ac4035: reminder email when page left in maintenance mode
+
 ## 1.5.1
 
 ### Patch Changes
