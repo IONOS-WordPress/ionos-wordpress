@@ -4,11 +4,6 @@ namespace ionos\ionos_core;
 
 defined('ABSPATH') || exit();
 
-// toDo: delete this code at release of 1.0
-if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true)) {
-  return;
-}
-
 const INFO_JSON_URL = 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-core-info.json';
 
 require_once __DIR__ . '/class-mu-plugin-upgrader.php';
