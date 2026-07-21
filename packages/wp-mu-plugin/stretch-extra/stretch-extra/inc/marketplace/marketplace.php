@@ -86,7 +86,7 @@ function get_config()
         if (! $admin_notice_displayed) {
           add_action(
             hook_name: 'admin_notices',
-            callback: function () use ($slug, $response): void {
+            callback: function () use ($response): void {
 
               \printf(
                 '<div class="notice notice-warning is-dismissible"><p>%s</p></div>',

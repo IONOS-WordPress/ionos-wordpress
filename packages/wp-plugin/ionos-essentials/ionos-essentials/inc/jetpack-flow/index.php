@@ -15,16 +15,14 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 
 \add_filter(
   'login_redirect',
-  fn ($redirect_to, $requested_redirect_to, $user) =>
-    _redirect_after_login($user, $redirect_to, $requested_redirect_to),
+  fn ($redirect_to, $requested_redirect_to, $user) => _redirect_after_login($user, $redirect_to, $requested_redirect_to),
   90,
   3
 );
 
 \add_action(
   'one_time_login_after_auth_cookie_set',
-  fn ($user) =>
-    \wp_safe_redirect(_redirect_after_login($user, \admin_url())) && exit,
+  fn ($user) => \wp_safe_redirect(_redirect_after_login($user, \admin_url())) && exit,
   10,
   1
 );

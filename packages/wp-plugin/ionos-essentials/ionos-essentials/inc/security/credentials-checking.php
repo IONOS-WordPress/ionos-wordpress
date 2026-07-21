@@ -130,7 +130,7 @@ if (is_login()) {
 
 function obfuscate_email($email): string
 {
-  list($user, $domain) = explode('@', $email);
+  [$user, $domain]     = explode('@', $email);
   $domain_parts        = explode('.', $domain);
   $tld                 = array_pop($domain_parts);
   $domain_name         = implode('.', $domain_parts);

@@ -95,7 +95,7 @@ function recommended_action(\WP_REST_Request $request)
     case 'theme-delete':
       $theme = \wp_get_theme();
 
-      if (strToLower($theme->get('Name')) === strToLower($slug)) {
+      if (strtolower($theme->get('Name')) === strtolower($slug)) {
         \wp_send_json_success(__('Active theme cannot be deleted', 'ionos-essentials'), 200);
       }
 
@@ -120,7 +120,7 @@ function recommended_action(\WP_REST_Request $request)
     \wp_send_json_error(null, 500);
   }
 
-  $message  = ucFirst($type) . ' ';
+  $message  = ucfirst($type) . ' ';
   $message .= ('delete' === $action) ? __('was deleted', 'ionos-essentials') : __('was updated', 'ionos-essentials');
   \wp_send_json_success($message, 200);
 }

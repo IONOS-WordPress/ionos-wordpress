@@ -17,7 +17,7 @@ const IONOS_SECURITY_ALLOW_LIST_IP6 = [];
 
 function _ipv4_in_cidr($ipv4, $cidr): bool
 {
-  list($subnet, $mask)    = explode('/', $cidr);
+  [$subnet, $mask]        = explode('/', $cidr);
   $subnet_addr            = ip2long($subnet);
   $ip_addr                = ip2long($ipv4);
   $mask_addr              = -1 << (32 - $mask);
@@ -26,7 +26,7 @@ function _ipv4_in_cidr($ipv4, $cidr): bool
 
 function _ipv6_in_cidr($ipv6, $cidr): bool
 {
-  list($subnet, $mask)    = explode('/', $cidr);
+  [$subnet, $mask]        = explode('/', $cidr);
   $subnet_addr            = inet_pton($subnet);
   $ip_addr                = inet_pton($ipv6);
   $mask_addr              = inet_pton(

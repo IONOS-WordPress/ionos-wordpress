@@ -6,7 +6,6 @@
  * Quick test to verify object cache functionality.
  * Run via WP-CLI: wp eval-file test-cache.php
  */
-
 defined('ABSPATH') || exit();
 
 // Test configuration

@@ -215,7 +215,7 @@ render_section([
               </div>
             </div>
           </section>
-          <?php include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+          <?php include_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 $_plugin = _is_plugin_active('01-ext-ion8dhas7/01-ext-ion8dhas7.php');
 
@@ -254,7 +254,7 @@ if ($_plugin && \get_option('extendify_onboarding_completed')) { ?>
 
           <?php
             if (defined('IONOS_ESSENTIALS_MCP_SERVER_ACTIVE')) {
-              require_once(__DIR__ . '/../../mcp/view.php');
+              require_once __DIR__ . '/../../mcp/view.php';
             }
 ?>
         </div>

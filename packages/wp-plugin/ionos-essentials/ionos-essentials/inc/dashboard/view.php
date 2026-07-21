@@ -181,7 +181,7 @@ blocks\popup\render_callback();
       ) ?></p>
 
       <?php
-      include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+      include_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 // Check theme and plugins
 $theme     = (get_stylesheet() === 'extendable');
@@ -221,18 +221,18 @@ if (! $ext01) {
 }
 
 // Display output
-if ($missing_items) : ?>
+if ($missing_items) { ?>
       <ul class="bullet-list">
-        <?php foreach ($missing_items as $item) : ?>
+        <?php foreach ($missing_items as $item) { ?>
             <li>
                 <p><strong><?php echo \esc_html($item['title']); ?></strong></p>
                 <a href="<?php echo \esc_url($item['url']); ?>" class="link">
                     <?php echo \esc_html($item['link_text']); ?>
                 </a>
             </li>
-        <?php endforeach; ?>
+        <?php } ?>
           </ul>
-      <?php else : ?>
+      <?php } else { ?>
         <div>
           <a href="<?php echo \admin_url(
             'admin.php?page=extendify-launch'
@@ -242,7 +242,7 @@ if ($missing_items) : ?>
           ); ?>"><?php \esc_html_e('Restart AI Sitebuilder', 'ionos-essentials'); ?></a>
           <button class="button button--secondary dialog-closer" title="<?php \esc_html_e('Cancel', 'ionos-essentials'); ?>"><?php \esc_html_e('Cancel', 'ionos-essentials'); ?></button>
         </div>
-      <?php endif; ?>
+      <?php } ?>
     </section>
   </div>
 </div>
