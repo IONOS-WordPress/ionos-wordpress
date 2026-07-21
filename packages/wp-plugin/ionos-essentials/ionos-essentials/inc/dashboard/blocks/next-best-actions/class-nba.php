@@ -119,7 +119,7 @@ class NBA
 }
 
 if (! function_exists('is_plugin_active')) {
-  include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+  include_once ABSPATH . 'wp-admin/includes/plugin.php';
 }
 
 function get_survey_url(): string

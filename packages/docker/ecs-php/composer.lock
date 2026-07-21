@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a857558cae2d945c3de60a02ca180859",
+    "content-hash": "5453231a27bf907de7da45b0b5baac15",
     "packages": [],
     "packages-dev": [
         {
@@ -359,16 +359,16 @@
         },
         {
             "name": "symplify/easy-coding-standard",
-            "version": "13.2.3",
+            "version": "13.2.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ecsphp/ecs.git",
-                "reference": "94f56bce0420d4e837a85c4b2c6501293a5974eb"
+                "reference": "6d28a6dfef3e18ddc013ba68b121487cad2cf14c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ecsphp/ecs/zipball/94f56bce0420d4e837a85c4b2c6501293a5974eb",
-                "reference": "94f56bce0420d4e837a85c4b2c6501293a5974eb",
+                "url": "https://api.github.com/repos/ecsphp/ecs/zipball/6d28a6dfef3e18ddc013ba68b121487cad2cf14c",
+                "reference": "6d28a6dfef3e18ddc013ba68b121487cad2cf14c",
                 "shasum": ""
             },
             "require": {
@@ -403,22 +403,22 @@
                 "static analysis"
             ],
             "support": {
-                "source": "https://github.com/ecsphp/ecs/tree/13.2.3"
+                "source": "https://github.com/ecsphp/ecs/tree/13.2.13"
             },
-            "time": "2026-06-15T22:08:41+00:00"
+            "time": "2026-07-20T11:00:52+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
-            "version": "3.3.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "7795ec6fa05663d716a549d0b44e47ffc8b0d4a6"
+                "reference": "469c18ceab4d642b15bad4c65ebf3b307bfd55ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/7795ec6fa05663d716a549d0b44e47ffc8b0d4a6",
-                "reference": "7795ec6fa05663d716a549d0b44e47ffc8b0d4a6",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/469c18ceab4d642b15bad4c65ebf3b307bfd55ab",
+                "reference": "469c18ceab4d642b15bad4c65ebf3b307bfd55ab",
                 "shasum": ""
             },
             "require": {
@@ -428,8 +428,8 @@
                 "ext-xmlreader": "*",
                 "php": ">=7.2",
                 "phpcsstandards/phpcsextra": "^1.5.0",
-                "phpcsstandards/phpcsutils": "^1.1.0",
-                "squizlabs/php_codesniffer": "^3.13.4"
+                "phpcsstandards/phpcsutils": "^1.2.2",
+                "squizlabs/php_codesniffer": "^3.13.5"
             },
             "require-dev": {
                 "php-parallel-lint/php-console-highlighter": "^1.0.0",
@@ -471,7 +471,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-11-25T12:08:04+00:00"
+            "time": "2026-07-16T13:05:29+00:00"
         }
     ],
     "aliases": [],

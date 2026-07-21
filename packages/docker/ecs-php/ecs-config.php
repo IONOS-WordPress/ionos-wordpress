@@ -58,7 +58,6 @@ return $configure->withRules([
     ]
   )
   ->withPreparedSets(
-    symplify: true,
     psr12: true,
     // arrays: true,
     common: true, // (arrays | spaces | namespaces | docblocks | controlStructures | phpunit | comments)
