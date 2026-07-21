@@ -17,6 +17,24 @@
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
 #
+# mu-plugins are loaded directly from wp-content/mu-plugins/ - they must not be nested in a
+# plugin-named subfolder like regular wp-plugin/wp-theme zips are. this re-packages a zip file
+# in place, stripping its single top-level directory so its contents become the zip root.
+#
+# @param $1 path to the zip file to fix up
+#
+function ionos.wordpress.strip_zip_toplevel_dir() {
+  local ZIP_FILE="$1"
+  local STAGING_DIR=$(mktemp -d)
+
+  unzip -q "$ZIP_FILE" -d "$STAGING_DIR"
+  (cd "$STAGING_DIR"/*/ && zip -9 -r -q - .) >"$ZIP_FILE.tmp"
+  mv "$ZIP_FILE.tmp" "$ZIP_FILE"
+
+  rm -rf "$STAGING_DIR"
+}
+
+#
 # outputs the workflow distributable artifacts of all workspace packages
 # the workspace needs to be built to get correct results
 #
@@ -54,6 +72,14 @@ function ionos.wordpress.get_workflow_artifacts() {
       wp-plugin|wp-theme)
         ARTIFACTS+=("$(find $PACKAGE_PATH/dist -type f -name '*.zip'  || \
           ionos.wordpress.log_warn "skip collecting build artifacts in $PACKAGE_PATH/dist : directory does not exist" >&2)")
+        ;;
+      wp-mu-plugin)
+        for ZIP_FILE in $(find $PACKAGE_PATH/dist -type f -name '*.zip' 2>/dev/null); do
+          ionos.wordpress.strip_zip_toplevel_dir "$ZIP_FILE"
+          ARTIFACTS+=("$ZIP_FILE")
+        done
+        [[ -d "$PACKAGE_PATH/dist" ]] || \
+          ionos.wordpress.log_warn "skip collecting build artifacts in $PACKAGE_PATH/dist : directory does not exist" >&2
         ;;
       *)
         ionos.wordpress.log_error "don't know how to handle workspace package flavor '$FLAVOUR' (extracted from path=$PACKAGE_PATH)"
