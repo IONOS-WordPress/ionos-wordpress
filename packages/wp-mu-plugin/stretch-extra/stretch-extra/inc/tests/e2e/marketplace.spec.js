@@ -15,7 +15,7 @@ test.describe(
         wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
         # reset deleted custom plugins
         wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '[]' --format=json
-        # marketplace is only be active on group brand ionons
+        # marketplace is only be active on group brand ionos
         wp --quiet option set ionos_group_brand 'ionos'
       `);
     });
@@ -23,7 +23,7 @@ test.describe(
     test('ionos tab is present', async ({ admin, page }) => {
       await admin.visitAdminPage('/plugin-install.php');
       await expect(page.locator('.plugin-install-ionos')).toHaveCount(1);
-      await expect(page.locator('.plugin-card-01-ext-ion8dhas7-stretch')).toHaveCount(1);
+      await expect(page.locator('.plugin-card-ionos-essentials')).toHaveCount(1);
     });
   }
 );
