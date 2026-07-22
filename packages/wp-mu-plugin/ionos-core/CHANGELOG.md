@@ -1,5 +1,11 @@
 # @ionos-wordpress/ionos-core
 
+## 0.4.0
+
+### Minor Changes
+
+- 404b0b5: Add marketplace and loop
+
 ## 0.3.2
 
 ### Patch Changes
