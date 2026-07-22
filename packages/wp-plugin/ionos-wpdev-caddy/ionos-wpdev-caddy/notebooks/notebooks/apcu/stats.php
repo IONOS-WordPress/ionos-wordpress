@@ -5,7 +5,6 @@
  *
  * Formats and displays APCu cache statistics in a pretty ASCII table format.
  */
-
 $info = apcu_cache_info();
 $mem  = apcu_sma_info();
 
@@ -62,8 +61,7 @@ $bottom_border = '└' . str_repeat('─', $box_width - 2) . '┘';
  * @param string $text Header text
  * @return string Formatted header
  */
-$format_header = fn (string $text): string =>
-  '│ ' . str_pad($text, $box_width - 4, ' ', STR_PAD_BOTH) . ' │';
+$format_header = fn (string $text): string => '│ ' . str_pad($text, $box_width - 4, ' ', STR_PAD_BOTH) . ' │';
 
 // Build output
 $output = implode("\n", [

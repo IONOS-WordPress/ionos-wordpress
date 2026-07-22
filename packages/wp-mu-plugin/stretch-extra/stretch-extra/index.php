@@ -14,7 +14,7 @@ const IONOS_CUSTOM_DIR  = __DIR__;
 const MAINTENANCE_HANDLER_LINK_PATH = WP_CONTENT_DIR . '/maintenance.php';
 
 if (! defined('IONOS_IS_STRETCH')) {
-  define('IONOS_IS_STRETCH', strncmp(getcwd(), '/home/www/public', strlen('/home/www/public')) === 0);
+  define('IONOS_IS_STRETCH', str_starts_with(getcwd(), '/home/www/public'));
 }
 
 // Set SFS server variable to fake stretch-extra context
@@ -40,7 +40,8 @@ require_once __DIR__ . '/inc/migration.php';
 require_once __DIR__ . '/inc/secondary-plugin-dir.php';
 require_once __DIR__ . '/inc/secondary-theme-dir.php';
 require_once __DIR__ . '/inc/apcu.php';
-require_once __DIR__ . '/inc/marketplace/marketplace.php';
+// TODO: make mu-plugins work in parallel (in development)
+// require_once __DIR__ . '/inc/marketplace/marketplace.php';
 require_once __DIR__ . '/inc/plugin-block-list/plugin-block-list.php';
 require_once __DIR__ . '/inc/modify-commands/modify-commands-plugins.php';
 require_once __DIR__ . '/inc/modify-commands/modify-commands-themes.php';

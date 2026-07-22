@@ -82,7 +82,7 @@ printf(
 );
 ?>
 
-        <?php if (is_wp7_mcp_active()) : ?>
+        <?php if (is_wp7_mcp_active()) { ?>
           <div style="margin-top: 20px;">
               <p class="paragraph paragraph--neutral" style="margin-bottom: 5px;">
                   <?php \esc_html_e(
@@ -96,7 +96,7 @@ printf(
                   </a>
               </p>
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
       </div>
   </div>

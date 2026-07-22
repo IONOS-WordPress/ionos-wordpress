@@ -71,7 +71,7 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
     $plugin_data = \get_plugin_data(ABSPATH . 'wp-content/plugins/' . $args->slug, false, false);
 
     // fetch changelog from github
-    list(, , , $github_user, $github_repo) = explode('/', $plugin_data['UpdateURI']);
+    [, , , $github_user, $github_repo]     = explode('/', $plugin_data['UpdateURI']);
     $changelog_url                         = sprintf(
       'https://raw.githubusercontent.com/%s/%s/refs/heads/main/packages/wp-plugin/ionos-essentials/CHANGELOG.md',
       $github_user,

@@ -14,7 +14,7 @@ defined('ABSPATH') || exit();
   function () {
     // submenu_page parent dashboard.
     \add_submenu_page(
-      false, //for test 'ionos-essentials-dashboard',
+      false, // for test 'ionos-essentials-dashboard',
       'Assistant',
       'Assistant',
       'manage_options',

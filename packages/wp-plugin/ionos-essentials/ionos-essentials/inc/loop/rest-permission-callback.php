@@ -125,7 +125,7 @@ function _ipv6_in_allowlist(string $ipv6, array $allow_list): bool
 // @TODO: function is same same as ionos\essentials\security\_ipv4_in_cidr
 function _ipv4_in_cidr(string $ipv4, string $cidr): bool
 {
-  list($subnet, $mask)    = explode('/', $cidr);
+  [$subnet, $mask]        = explode('/', $cidr);
   $subnet_addr            = ip2long($subnet);
   $ip_addr                = ip2long($ipv4);
   $mask_addr              = -1 << (32 - $mask);
@@ -136,7 +136,7 @@ function _ipv4_in_cidr(string $ipv4, string $cidr): bool
 // which one is the truth ?
 function _ipv6_in_cidr(string $ipv6, string $cidr): bool
 {
-  list($subnet_address, $subnet_mask) = explode('/', $cidr, 2);
+  [$subnet_address, $subnet_mask] = explode('/', $cidr, 2);
 
   if (filter_var(
     $subnet_address,

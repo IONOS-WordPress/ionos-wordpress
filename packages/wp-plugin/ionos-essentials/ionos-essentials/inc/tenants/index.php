@@ -36,8 +36,8 @@ function get_tenant_config()
     $webmail_links = $webmailloginlinks['pl'];
   }
 
-  $nba_links    = $nba_links    ?? '';
-  $banner_links = $banner_links ?? '';
+  $nba_links    ??= '';
+  $banner_links ??= '';
 
   $domain   = ($market_domains[$market] ?? reset($market_domains));
 

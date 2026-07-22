@@ -61,7 +61,16 @@ function render_callback(): void
 
   printf('<i class="%s" style="%s" title="%s: %s"></i>', $icon, $style, $title, $status);
   ?>
-              <h2 class="headline headline--sub"><?php echo \esc_url(parse_url(\get_option('siteurl', ''), PHP_URL_HOST)); ?></h2>
+              <h2 class="headline headline--sub">
+                <?php
+                  $parts        = \wp_parse_url(\get_option('siteurl', '')) ?: [];
+  $host                         = $parts['host']   ?? '';
+  $scheme                       = $parts['scheme'] ?? '';
+  $unicode_host                 = idn_to_utf8($host);
+
+  echo \esc_html(($scheme ? $scheme . '://' : '') . ($unicode_host ?: $host));
+  ?>
+              </h2>
             </div>
             <div class="ionos-site-health-overview__info-items">
               <a href="<?php echo \esc_attr(\admin_url(

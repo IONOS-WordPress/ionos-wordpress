@@ -7,26 +7,82 @@
  * recommended plugins and integrates with the WordPress.org plugin API.
  */
 
-namespace ionos\stretch_extra\marketplace;
+namespace ionos\ionos_core\marketplace;
 
 use WpOrg\Requests\Requests;
 use WpOrg\Requests\Response;
 
 defined('ABSPATH') || exit();
 
-if (\get_option('ionos_group_brand', 'ionos') !== 'ionos') {
-  return;
-}
+const MAX_ITEMS_PER_PAGE = 12;
+
+// Uninstall legacy ionos-marketplace plugin when ionos-core marketplace is active
+\add_action('admin_init', function (): void {
+  $legacy_plugin = 'ionos-marketplace/marketplace.php';
+  $all_plugins   = \get_plugins();
+
+  if (! \array_key_exists($legacy_plugin, $all_plugins)) {
+    return;
+  }
+
+  $active_plugins = \get_option('active_plugins', []);
+  if (\in_array($legacy_plugin, $active_plugins, true)) {
+    \deactivate_plugins($legacy_plugin, false, false);
+  }
+
+  \delete_plugins([$legacy_plugin]);
+});
 
 function get_config()
 {
   static $config = null;
 
   if ($config === null) {
-    $config = require_once __DIR__ . '/config.php';
+    $base_config = require_once __DIR__ . '/config.php';
+    $tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
+
+    $tenant_additions = $base_config['tenant_additions'][$tenant] ?? null;
+
+    $config = [
+      'ionos_plugins'         => $base_config['ionos_plugins']         ?? [],
+      'wordpress_org_plugins' => $base_config['wordpress_org_plugins'] ?? [],
+    ];
+
+    if ($tenant_additions) {
+      $add_ionos    = $tenant_additions['additional_ionos_plugins']        ?? [];
+      $remove_ionos = $tenant_additions['remove_ionos_plugins']            ?? [];
+
+      foreach ($add_ionos as $slug) {
+        if (isset($base_config['ionos_plugins'][$slug])) {
+          $config['ionos_plugins'][$slug] = $base_config['ionos_plugins'][$slug];
+        }
+      }
+
+      foreach ($remove_ionos as $slug) {
+        unset($config['ionos_plugins'][$slug]);
+      }
+
+      foreach ($tenant_additions['additional_wordpress_org_plugins'] as $slug) {
+        if (! \in_array($slug, $config['wordpress_org_plugins'], true)) {
+          $config['wordpress_org_plugins'][] = $slug;
+        }
+      }
+    }
   }
 
   return $config;
+}
+
+function get_localized_config(string $key): mixed
+{
+  $language = \strtolower(\explode('_', \get_locale())[0]);
+  $config   = \get_option($key . '.' . $language);
+
+  if (! $config) {
+    $config = \get_option($key . '.en');
+  }
+
+  return $config ? \json_decode($config) : null;
 }
 
 \add_filter(
@@ -34,8 +90,10 @@ function get_config()
   callback: function (array $tabs): array {
     unset($tabs['featured']);
 
+    $tenant = strtolower(\get_option('ionos_group_brand', 'ionos'));
+
     return [
-      'ionos' => 'IONOS ' . \__('recommends', 'stretch-extra'),
+      $tenant => 'IONOS ' . \__('recommends', 'ionos-core'),
       ...$tabs,
     ];
   }
@@ -48,75 +106,80 @@ function get_config()
 
     $config = get_config();
 
-    // 1. Define the plugin slugs you want
+    $ionos_plugins_list = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
+    $wordpress_plugins  = [];
+
     $slugs = $config['wordpress_org_plugins'] ?? [];
-    if (empty($slugs)) {
-      return;
-    }
-    // 2. Build an array of request definitions
-    $field_query_string = \http_build_query([
-      'fields[short_description]' => 'short_description',
-      'fields[icons]'             => 'icons',
-    ]);
+    if (! empty($slugs)) {
+      $field_query_string = \http_build_query([
+        'fields[short_description]' => 'short_description',
+        'fields[icons]'             => 'icons',
+      ]);
 
-    $requests = [];
-    foreach ($slugs as $slug) {
-      $requests[] = [
-        'url'  => "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug={$slug}&{$field_query_string}",
-        'type' => Requests::GET,
-        'data' => [
-          'locale' => \get_user_locale(),
-        ],
-      ];
-    }
+      $requests = [];
+      foreach ($slugs as $slug) {
+        $requests[] = [
+          'url'  => "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug={$slug}&{$field_query_string}",
+          'type' => Requests::GET,
+          'data' => [
+            'locale' => \get_user_locale(),
+          ],
+        ];
+      }
 
-    // 3. Execute all requests simultaneously
-    $responses = Requests::request_multiple($requests);
+      $responses = Requests::request_multiple($requests);
 
-    // 4. Process the data
-    $plugins                = [];
-    $admin_notice_displayed = false;
-    foreach ($responses as $slug => $response) {
-      if ($response instanceof Response && $response->success) {
-        $decoded_data = json_decode($response->body, true);
-        if (isset($decoded_data['slug'])) {
-          $wp_list_table->items[] = $decoded_data;
-        }
-      } else {
-        if (! $admin_notice_displayed) {
-          add_action(
-            hook_name: 'admin_notices',
-            callback: function () use ($response): void {
+      foreach ($responses as $index => $response) {
+        $slug = $slugs[$index] ?? 'unknown';
+        if ($response instanceof Response && $response->success) {
+          $decoded_data = json_decode($response->body, true);
+          if (isset($decoded_data['slug'])) {
+            $wordpress_plugins[] = $decoded_data;
+          }
+        } else {
+          $error_message = 'Unknown error';
+          if ($response instanceof Response && isset($response->status_code)) {
+            $error_message = sprintf('HTTP %d', $response->status_code);
+          } elseif (\is_wp_error($response)) {
+            $error_message = $response->get_error_message();
+          }
 
-              \printf(
-                '<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
-                esc_html(sprintf('Failed to fetch data in marketplace: %s', $response->getReason()))
-              );
-            }
+          \error_log(
+            \sprintf('[ionos-core] Failed to fetch data in marketplace for plugin "%s": %s', $slug, $error_message)
           );
-          $admin_notice_displayed = true;
         }
       }
+
+      \usort(
+        $wordpress_plugins,
+        function (array $a, array $b) use ($slugs): int {
+          $a_index = array_search($a['slug'], $slugs, true);
+          $b_index = array_search($b['slug'], $slugs, true);
+
+          return ($a_index === false ? PHP_INT_MAX : $a_index) <=> ($b_index === false ? PHP_INT_MAX : $b_index);
+        }
+      );
     }
 
-    if (empty($wp_list_table->items)) {
-      $wp_list_table->items = [];
-    }
+    $all_items = [...$ionos_plugins_list, ...$wordpress_plugins];
 
-    // 5. Sort items by original slug order
-    \usort(
-      $wp_list_table->items,
-      fn (array $a, array $b): int => array_search($a['slug'], $slugs, true) <=> array_search(
-        $b['slug'],
-        $slugs,
-        true
-      )
-    );
+    $per_page = MAX_ITEMS_PER_PAGE;
+    $paged    = isset($_GET['paged']) ? \absint($_GET['paged']) : 1;
+    $paged    = max($paged, 1);
 
-    // 6. Prepend IONOS Plugins
-    $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
+    $total_items = count($all_items);
+    $total_pages = (int) ceil($total_items / $per_page);
+    $paged       = min($paged, max($total_pages, 1));
 
-    $wp_list_table->items = [...$ionos_plugins, ...$wp_list_table->items];
+    $offset               = ($paged - 1) * $per_page;
+    $wp_list_table->items = array_slice($all_items, $offset, $per_page);
+
+    // Store pagination info in a global variable for use in install_plugins_ionos hook
+    $GLOBALS['ionos_marketplace_pagination'] = [
+      'total_items' => $total_items,
+      'total_pages' => $total_pages,
+      'per_page'    => $per_page,
+    ];
   }
 );
 
@@ -182,12 +245,14 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
   callback: function (): void {
     global $wp_list_table;
 
-    $total_items = count($wp_list_table->items ?? []);
-    $per_page    = 10;
+    $pagination  = $GLOBALS['ionos_marketplace_pagination'] ?? [];
+    $total_items = $pagination['total_items']               ?? count($wp_list_table->items ?? []);
+    $total_pages = $pagination['total_pages']               ?? 0;
+    $per_page    = $pagination['per_page']                  ?? MAX_ITEMS_PER_PAGE;
 
     $wp_list_table->set_pagination_args([
       'total_items' => $total_items,
-      'total_pages' => (int) ceil($total_items / $per_page),
+      'total_pages' => $total_pages,
       'per_page'    => $per_page,
     ]);
 
@@ -256,6 +321,11 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       return $result;
     }
 
+    // Ensure latest_version is set for consistent version handling
+    if (! isset($pi->latest_version) && isset($pi->version)) {
+      $pi->latest_version = $pi->version;
+    }
+
     if ($args->slug === 'beyond-seo') {
       return render_beyond_seo_info($plugin_info, $pi, $args);
     }
@@ -275,7 +345,7 @@ function render_essentials(array $plugin_info, object $pi, object $args): object
   $pi->name          = $plugin_info['name'];
   $pi->slug          = $args->slug;
   $pi->download_link = $pi->download_url   ?? '';
-  $pi->version       = $pi->latest_version ?? '';
+  $pi->version       = $pi->latest_version ?? $plugin_info['version'] ?? '';
   $pi->requires      = '6.0';
   $pi->sections      = [
     \_x('Description', 'Plugin installer section title') => $plugin_info['short_description'],
@@ -290,7 +360,7 @@ function render_legacy_ionos_plugins(array $plugin_info, object $pi, object $arg
   $pi->name          = $plugin_info['name'];
   $pi->slug          = $args->slug;
   $pi->download_link = $pi->download_url   ?? '';
-  $pi->version       = $pi->latest_version ?? '';
+  $pi->version       = $pi->latest_version ?? $plugin_info['version'] ?? '';
   $pi->requires      = '6.0';
   $pi->sections      = [
     \_x('Description', 'Plugin installer section title') => $plugin_info['short_description'],
