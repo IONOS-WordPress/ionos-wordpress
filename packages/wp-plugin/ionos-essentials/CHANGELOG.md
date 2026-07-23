@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.6.1
+
+### Patch Changes
+
+- 3671a43: Display Umlauts in URL correctly
+
 ## 1.6.0
 
 ### Minor Changes
