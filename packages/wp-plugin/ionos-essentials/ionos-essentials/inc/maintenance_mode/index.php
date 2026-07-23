@@ -115,40 +115,37 @@ add_filter('body_class', function ($classes) {
 \add_action('update_option_ionos_essentials_maintenance_mode', function ($old_value, $new_value) {
   if (empty($old_value) && ! empty($new_value)) {
     \update_option(OPTION_ACTIVATED_AT, time());
+    if (! \wp_next_scheduled(CRON_HOOK)) {
+      \wp_schedule_single_event(time() + 7 * DAY_IN_SECONDS, CRON_HOOK);
+    }
   } elseif (! empty($old_value) && empty($new_value)) {
     \delete_option(OPTION_ACTIVATED_AT);
     \delete_option(OPTION_EMAIL_SENT);
+    $timestamp = \wp_next_scheduled(CRON_HOOK);
+    if ($timestamp) {
+      \wp_unschedule_event($timestamp, CRON_HOOK);
+    }
   }
 }, 10, 2);
 
-\add_action('admin_init', function () {
-  if (! \wp_next_scheduled(CRON_HOOK)) {
-    \wp_schedule_event(time(), 'daily', CRON_HOOK);
+\add_action(CRON_HOOK, function () {
+  if (! is_maintenance_mode()) {
+    return;
   }
-});
 
-\add_action('init', function () {
-  \add_action(CRON_HOOK, function () {
-    if (! is_maintenance_mode()) {
-      return;
-    }
+  if (\get_option(OPTION_EMAIL_SENT, false)) {
+    return;
+  }
 
-    if (\get_option(OPTION_EMAIL_SENT, false)) {
-      return;
-    }
+  \update_option(OPTION_EMAIL_SENT, true);
 
-    $activated_at = \get_option(OPTION_ACTIVATED_AT);
-    if (! $activated_at) {
-      return;
-    }
+  $activated_at = \get_option(OPTION_ACTIVATED_AT);
+  \ionos\essentials\loop\log_loop_event('maintenance_reminder_email_sent', [
+    'activated_at' => $activated_at,
+    'days_active'  => $activated_at ? (int) floor((time() - $activated_at) / DAY_IN_SECONDS) : null,
+  ]);
 
-    $seven_days_in_seconds = 7 * DAY_IN_SECONDS;
-    if ((time() - $activated_at) >= $seven_days_in_seconds) {
-      \update_option(OPTION_EMAIL_SENT, true);
-
-      send_maintenance_reminder_email();
-    }
-  });
+  send_maintenance_reminder_email();
 });
 
 function send_maintenance_reminder_email()
