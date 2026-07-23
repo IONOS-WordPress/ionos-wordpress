@@ -142,13 +142,14 @@ add_filter('body_class', function ($classes) {
     return;
   }
 
-  \ionos\essentials\loop\log_loop_event('maintenance_reminder_email_sent', [
-    'activated_at' => $activated_at,
-    'days_active'  => (int) floor((time() - $activated_at) / DAY_IN_SECONDS),
-  ]);
-
   if (send_maintenance_reminder_email()) {
     \update_option(OPTION_EMAIL_SENT, true);
+
+    \ionos\essentials\loop\log_loop_event('maintenance_reminder_email_sent', [
+      'activated_at' => $activated_at,
+      'days_active'  => (int) floor((time() - $activated_at) / DAY_IN_SECONDS),
+    ]);
+
     return;
   }
 
