@@ -112,43 +112,53 @@ add_filter('body_class', function ($classes) {
   return $classes;
 });
 
-\add_action('update_option_ionos_essentials_maintenance_mode', function ($old_value, $new_value) {
+function handle_maintenance_mode_change($old_value, $new_value): void
+{
   if (empty($old_value) && ! empty($new_value)) {
-    \update_option(OPTION_ACTIVATED_AT, time());
+    $activated_at = time();
+    \update_option(OPTION_ACTIVATED_AT, $activated_at);
+    \wp_clear_scheduled_hook(CRON_HOOK);
+    \wp_schedule_single_event($activated_at + 7 * DAY_IN_SECONDS, CRON_HOOK);
   } elseif (! empty($old_value) && empty($new_value)) {
     \delete_option(OPTION_ACTIVATED_AT);
     \delete_option(OPTION_EMAIL_SENT);
+    \wp_clear_scheduled_hook(CRON_HOOK);
   }
-}, 10, 2);
+}
 
-\add_action('admin_init', function () {
-  if (! \wp_next_scheduled(CRON_HOOK)) {
-    \wp_schedule_event(time(), 'daily', CRON_HOOK);
+// update_option_* fires only when the option already exists; the first activation
+// creates the option and fires add_option_* instead, so both are handled.
+\add_action('update_option_ionos_essentials_maintenance_mode', __NAMESPACE__ . '\handle_maintenance_mode_change', 10, 2);
+\add_action('add_option_ionos_essentials_maintenance_mode', fn ($option, $value) => handle_maintenance_mode_change('', $value), 10, 2);
+\add_action(CRON_HOOK, function () {
+  if (! is_maintenance_mode()) {
+    return;
   }
-});
 
-\add_action('init', function () {
-  \add_action(CRON_HOOK, function () {
-    if (! is_maintenance_mode()) {
-      return;
-    }
+  // Only remind customers who connected a custom domain, not those still on a
+  // temporary live-website.com hosting domain.
+  if (false !== strpos(\home_url(), 'live-website.com')) {
+    return;
+  }
 
-    if (\get_option(OPTION_EMAIL_SENT, false)) {
-      return;
-    }
+  if (\get_option(OPTION_EMAIL_SENT, false)) {
+    return;
+  }
 
-    $activated_at = \get_option(OPTION_ACTIVATED_AT);
-    if (! $activated_at) {
-      return;
-    }
+  $activated_at = \get_option(OPTION_ACTIVATED_AT);
+  if (! $activated_at) {
+    return;
+  }
 
-    $seven_days_in_seconds = 7 * DAY_IN_SECONDS;
-    if ((time() - $activated_at) >= $seven_days_in_seconds) {
-      \update_option(OPTION_EMAIL_SENT, true);
+  $sent = send_maintenance_reminder_email();
 
-      send_maintenance_reminder_email();
-    }
-  });
+  \update_option(OPTION_EMAIL_SENT, true);
+
+  \ionos\essentials\loop\log_loop_event('maintenance_reminder_email_sent', [
+    'activated_at' => $activated_at,
+    'days_active'  => (int) floor((time() - $activated_at) / DAY_IN_SECONDS),
+    'success'      => $sent,
+  ]);
 });
 
 function send_maintenance_reminder_email()
@@ -193,8 +203,5 @@ function get_maintenance_reminder_mail_content(): string
 }
 
 \register_deactivation_hook(__FILE__, function () {
-  $timestamp = \wp_next_scheduled(CRON_HOOK);
-  if ($timestamp) {
-    \wp_unschedule_event($timestamp, CRON_HOOK);
-  }
+  \wp_clear_scheduled_hook(CRON_HOOK);
 });
