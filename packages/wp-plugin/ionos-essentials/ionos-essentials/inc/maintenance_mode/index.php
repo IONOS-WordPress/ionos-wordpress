@@ -137,15 +137,24 @@ add_filter('body_class', function ($classes) {
     return;
   }
 
-  \update_option(OPTION_EMAIL_SENT, true);
+  $activated_at = \absint(\get_option(OPTION_ACTIVATED_AT, 0));
+  if ($activated_at <= 0) {
+    return;
+  }
 
-  $activated_at = \get_option(OPTION_ACTIVATED_AT);
   \ionos\essentials\loop\log_loop_event('maintenance_reminder_email_sent', [
     'activated_at' => $activated_at,
-    'days_active'  => $activated_at ? (int) floor((time() - $activated_at) / DAY_IN_SECONDS) : null,
+    'days_active'  => (int) floor((time() - $activated_at) / DAY_IN_SECONDS),
   ]);
 
-  send_maintenance_reminder_email();
+  if (send_maintenance_reminder_email()) {
+    \update_option(OPTION_EMAIL_SENT, true);
+    return;
+  }
+
+  if (! \wp_next_scheduled(CRON_HOOK)) {
+    \wp_schedule_single_event(time() + HOUR_IN_SECONDS, CRON_HOOK);
+  }
 });
 
 function send_maintenance_reminder_email()
