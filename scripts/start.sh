@@ -145,6 +145,25 @@ EOF
       rsync -rav "$phpunit_dir" "$production_plugin/$(dirname $relative_phpunit_dir)"
     done
   done
+
+  # copy php testcases over to the transpiled production mu-plugin directory
+  # (mu-plugins are mapped via directory entries of the "mappings" key; unlike a regular plugin
+  # mapping, that directory value mirrors the package's inner "$PLUGIN/$PLUGIN" source folder,
+  # not the package root - so the search root needs that same extra "$PLUGIN" segment appended)
+  for production_mu_plugin in $(jq -r '.mappings | to_entries[] | select(.key | endswith(".php") | not) | .value' .wp-env.override.json); do
+    package_path="${production_mu_plugin%%/dist*}"
+    search_root="$package_path/$(basename $package_path)"
+
+    for phpunit_dir in $(find "$search_root" -type d -name 'phpunit'); do
+      if [[ "$phpunit_dir" == *"/dist/"* ]]; then
+        continue
+      fi
+
+      relative_phpunit_dir="${phpunit_dir#$search_root/}"
+
+      rsync -rav "$phpunit_dir" "$production_mu_plugin/$(dirname $relative_phpunit_dir)"
+    done
+  done
 fi
 
 # workaround for workaround: rm doesnt work after shutdown without "wp-env stop"
