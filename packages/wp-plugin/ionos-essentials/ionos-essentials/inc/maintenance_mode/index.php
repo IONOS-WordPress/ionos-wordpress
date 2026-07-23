@@ -114,10 +114,10 @@ add_filter('body_class', function ($classes) {
 
 \add_action('update_option_ionos_essentials_maintenance_mode', function ($old_value, $new_value) {
   if (empty($old_value) && ! empty($new_value)) {
-    \update_option(OPTION_ACTIVATED_AT, time());
-    if (! \wp_next_scheduled(CRON_HOOK)) {
-      \wp_schedule_single_event(time() + 7 * DAY_IN_SECONDS, CRON_HOOK);
-    }
+    $activated_at = time();
+    \update_option(OPTION_ACTIVATED_AT, $activated_at);
+    \wp_clear_scheduled_hook(CRON_HOOK);
+    \wp_schedule_single_event($activated_at + 7 * DAY_IN_SECONDS, CRON_HOOK);
   } elseif (! empty($old_value) && empty($new_value)) {
     \delete_option(OPTION_ACTIVATED_AT);
     \delete_option(OPTION_EMAIL_SENT);
