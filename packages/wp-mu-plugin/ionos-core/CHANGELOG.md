@@ -1,5 +1,11 @@
 # @ionos-wordpress/ionos-core
 
+## 0.4.1
+
+### Patch Changes
+
+- f4cf1c5: new release format
+
 ## 0.4.0
 
 ### Minor Changes
