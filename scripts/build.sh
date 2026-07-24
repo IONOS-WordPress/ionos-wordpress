@@ -502,7 +502,14 @@ EOF
   if [[ "${USE[@]}" =~ all|wp-plugin:bundle ]]; then
     # create zip file for each dist/[plugin]-[version]-[php-version] directory
     for DIR in $(find $path/dist/ -type d -name '*-*-php*'); do
-      (cd $DIR && zip -9 -r -q - . >../$(basename $DIR).zip)
+      if [[ "$1" == wp-mu-plugin/* ]]; then
+        # mu-plugins are loaded directly from wp-content/mu-plugins/ - they must not be nested in a
+        # plugin-named subfolder inside the zip like regular wp-plugin/wp-theme zips are, so zip the
+        # plugin subfolder's contents directly instead of $DIR itself
+        (cd $DIR/$PLUGIN_NAME && zip -9 -r -q - . >../../$(basename $DIR).zip)
+      else
+        (cd $DIR && zip -9 -r -q - . >../$(basename $DIR).zip)
+      fi
     done
     cat << EOF | tee $path/build-info
 $(cd $path/dist && ls -1shS *.zip 2>/dev/null || echo "no zip archives found")
