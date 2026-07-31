@@ -43,11 +43,29 @@ function ionos.wordpress.check_nodejs_updates() {
   fi
 }
 
+# fetch a GitHub API endpoint, printing nothing and returning non-zero if the response isn't a JSON array
+# (e.g. a rate-limit error object) so callers can skip gracefully instead of feeding jq bad input
+function ionos.wordpress.fetch_github_tags() {
+  local response
+  if command -v gh >/dev/null 2>&1 && gh auth status >/dev/null 2>&1; then
+    # use gh's auth token to avoid the unauthenticated 60 req/hour rate limit
+    response=$(gh api "$(sed -e 's#https://api.github.com/##' <<<"$1")" 2>/dev/null)
+  else
+    response=$(curl -Ls "$1")
+  fi
+  if ! jq -e 'type == "array"' >/dev/null 2>&1 <<<"$response"; then
+    ionos.wordpress.log_warn "GitHub API request to '$1' did not return a tag list (rate limited?) - skipping version check."
+    return 1
+  fi
+  echo "$response"
+}
+
 # check pnpm is up to date
 function ionos.wordpress.check_pnpm_version() {
   CURRENT_PNPM_VERSION=$(pnpm --version)
-  LATEST_PNPM_VERSION=$(curl -Ls https://api.github.com/repos/pnpm/pnpm/tags | \jq -r '.[] | .name
-| select(test("^v([0-9]+\\.){2}[0-9]+$"))' | head -n 1 | tr -d 'v')
+  local tags
+  tags=$(ionos.wordpress.fetch_github_tags https://api.github.com/repos/pnpm/pnpm/tags) || return 0
+  LATEST_PNPM_VERSION=$(jq -r '.[] | .name | select(test("^v([0-9]+\\.){2}[0-9]+$"))' <<<"$tags" | head -n 1 | tr -d 'v')
 
   if [[ "$CURRENT_PNPM_VERSION" != "$LATEST_PNPM_VERSION" ]]; then
     ionos.wordpress.log_warn "pnpm version can be updated ($CURRENT_PNPM_VERSION => $LATEST_PNPM_VERSION) manually."
@@ -59,7 +77,9 @@ function ionos.wordpress.check_pnpm_version() {
 # check docker is up to date
 function ionos.wordpress.check_docker_version() {
   CURRENT_DOCKER_VERSION=$(docker version --format '{{.Client.Version}}')
-  LATEST_DOCKER_VERSION=$(curl -Ls https://api.github.com/repos/docker/cli/tags | \jq -r '.[] | .name | select(test("^v([0-9]+\\.){2}[0-9]+$"))' | head -n 1 | tr -d 'v')
+  local tags
+  tags=$(ionos.wordpress.fetch_github_tags https://api.github.com/repos/docker/cli/tags) || return 0
+  LATEST_DOCKER_VERSION=$(jq -r '.[] | .name | select(test("^v([0-9]+\\.){2}[0-9]+$"))' <<<"$tags" | head -n 1 | tr -d 'v')
 
   if [[ "$CURRENT_DOCKER_VERSION" != "$LATEST_DOCKER_VERSION" ]]; then
     ionos.wordpress.log_warn "docker version can be updated ($CURRENT_DOCKER_VERSION => $LATEST_DOCKER_VERSION) manually."
