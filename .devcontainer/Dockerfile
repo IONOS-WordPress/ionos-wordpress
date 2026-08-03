@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.4
 
 # FROM mcr.microsoft.com/devcontainers/base:ubuntu
-FROM mcr.microsoft.com/devcontainers/php:8.3-bullseye
+FROM mcr.microsoft.com/devcontainers/php:8.3-bookworm
 
 # always use bash as default shell for the docker file
 SHELL ["/bin/bash", "-c"]
