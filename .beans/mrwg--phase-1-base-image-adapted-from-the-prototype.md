@@ -3,9 +3,10 @@
 title: Phase 1 — Base image, adapted from the prototype
 status: todo
 type: task
+priority: normal
 created_at: 2026-08-03T10:59:14Z
-updated_at: 2026-08-03T10:59:14Z
-parent: 4tjo
+updated_at: 2026-08-03T11:07:20Z
+parent: vjbx
 ---
 
 Goal: an ionos-wordpress-specific Alpine image building on /opt/dev/wordpress-docker-image's

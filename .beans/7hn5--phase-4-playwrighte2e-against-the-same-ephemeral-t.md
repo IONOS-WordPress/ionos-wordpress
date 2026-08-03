@@ -3,9 +3,10 @@
 title: Phase 4 — Playwright/E2E against the same ephemeral test stack
 status: todo
 type: task
+priority: normal
 created_at: 2026-08-03T10:59:25Z
-updated_at: 2026-08-03T10:59:25Z
-parent: 4tjo
+updated_at: 2026-08-03T11:07:20Z
+parent: b55y
 blocked_by:
     - g4m1
 ---

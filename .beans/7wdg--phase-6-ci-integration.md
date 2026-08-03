@@ -3,9 +3,10 @@
 title: Phase 6 — CI integration
 status: todo
 type: task
+priority: normal
 created_at: 2026-08-03T10:59:36Z
-updated_at: 2026-08-03T10:59:36Z
-parent: 4tjo
+updated_at: 2026-08-03T11:07:20Z
+parent: dav1
 blocked_by:
     - gjbp
 ---
