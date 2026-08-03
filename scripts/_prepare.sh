@@ -26,3 +26,7 @@ git config core.hookspath "./.githooks"
 
 # link skills to gemini cli
 rm -rf ./.gemini/skills && ln -s $(pwd)/docs/skills $(pwd)/.gemini/skills
+
+# pre-download the beans issue tracker CLI so it's ready before it's first invoked
+ionos.wordpress.log_info "Ensuring beans issue tracker CLI is installed"
+./scripts/beans.sh version > /dev/null

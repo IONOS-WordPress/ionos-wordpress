@@ -121,6 +121,12 @@ All coding standards are organized in `/docs/agent/`:
 
 ## Development Workflow
 
+### Task Tracking (Beans)
+
+**IMPORTANT**: before you do anything else, run `pnpm beans prime` and heed its output.
+
+This project tracks tasks, bugs, and features using [Beans](https://github.com/hmans/beans), a flat-file issue tracker stored in `.beans/`. Beans is installed locally per-project (not globally) — always invoke it via `pnpm beans <command>`, never a bare `beans` command.
+
 ### Changeset (required for features and fixes)
 
 When implementing a new feature, bug fix, or breaking change, **always create a changeset file**:

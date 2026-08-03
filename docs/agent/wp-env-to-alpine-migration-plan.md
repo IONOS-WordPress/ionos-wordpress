@@ -17,8 +17,8 @@ start`/`stop`/`test`/`destroy` interface developers and CI already use.
 | Xdebug | Always-on (baked in, no toggle) |
 | Mount generation | Dynamic auto-discovery of `packages/wp-plugin/*`, `wp-theme/*`, `wp-mu-plugin/*`, ported from current `start.sh` logic |
 | Prod-build testing | `TEST_PRODUCTION=true`-equivalent preserved, unchanged, as a boolean dist-vs-source mount switch |
-| PHP/WP version | Single fixed version, driven by `.env`, same as today — image build-arg matrix dropped per Phase 1 |
-| CI custom-PHP-version testing | `PHP_VERSION_OVERRIDE=<php-version>`: distinct from `TEST_PRODUCTION`, lets CI (or a developer) run the test container against a non-default PHP version without reintroducing a build-arg matrix for routine use — see Phase 5 |
+| PHP/WP version | Default version (PHP 8.4) driven by `.env` — a deliberate bump from current `.wp-env.json`'s `8.3`; a small prebuilt matrix — `{8.4, 7.4}` — is published by the Phase 1 image workflow so the legacy-PHP test path never pays a local build |
+| CI custom-PHP-version testing | `PHP_VERSION_OVERRIDE=<php-version>`: distinct from `TEST_PRODUCTION`, lets CI (or a developer) run the test container against PHP 7.4 (the one legacy version worth testing) by pulling its prebuilt tag — no local image build, since this path runs on every PR update and locally, not just occasionally — see Phase 5 |
 | phpMyAdmin | Dropped |
 | CLI convention | Keep `pnpm start/stop/test/destroy` interface; rewrite `scripts/*.sh` internals to drive Docker instead of wp-env |
 | Image distribution | Published to a container registry, rebuilt/published by a path-filtered workflow on Dockerfile/entrypoint changes. Registry/repo is configurable, not hardcoded (see below) |
@@ -93,8 +93,12 @@ start`/`stop`/`test`/`destroy` interface developers and CI already use.
 `/opt/dev/wordpress-docker-image`'s Dockerfile, published to GHCR.
 
 - Fork the Dockerfile into this repo (e.g. `packages/docker/wp-alpine/Dockerfile`),
-  pinned to PHP 8.3 (matching current `.wp-env.json`), drop the multi-PHP-version
-  build-arg matrix since only one version is needed.
+  default `ARG_PHP_VERSION` to PHP 8.4 (a deliberate bump from current
+  `.wp-env.json`'s `8.3`). Keep the build-arg, but shrink the *published* matrix from
+  "every version" down to exactly two tags — `8.4` (default) and `7.4` (the one legacy
+  version worth testing,
+  see `PHP_VERSION_OVERRIDE` below) — since the override path runs on every PR and
+  locally, not occasionally, so it must never fall back to a local build.
 - Bake into entrypoint/image (replacing `wp-env-after-start.sh`):
   - `yoast/phpunit-polyfills` composer install
   - xdebug + APCu ini patch (log-level suppression etc.)
@@ -109,13 +113,16 @@ start`/`stop`/`test`/`destroy` interface developers and CI already use.
   `keepenv`s), giving root access on request without needing a separate hook mechanism.
 - Set up the image publish workflow (`.github/workflows/build-wp-alpine-image.yaml`):
   triggered on changes to the Dockerfile/entrypoint/related build context, tags by
-  content hash, pushes to `${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}` (defaulting to GHCR,
+  content hash, builds/pushes **both** `ARG_PHP_VERSION` variants (`8.4` default,
+  `7.4` legacy, per `PHP_VERSION_OVERRIDE` in Phase 5) as `:<hash>-php8.4` and
+  `:<hash>-php7.4` to `${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}` (defaulting to GHCR,
   e.g. `ghcr.io/ionos-wordpress/wp-alpine-dev`, if the repo vars aren't overridden).
   Registry/repo come from repo-level Actions variables (mirroring the local `.env`
   keys); registry auth uses repo secrets (mirroring the local `.secrets` keys) — never
   hardcode `ghcr.io` or the repo path in the workflow YAML.
-- **Exit criteria**: `docker run` the built image manually, confirm WP installs,
-  wp-cli/Apache/MariaDB/xdebug all work — equivalent to the prototype's `task verify`.
+- **Exit criteria**: `docker run` each of the two built image variants manually,
+  confirm WP installs, wp-cli/Apache/MariaDB/xdebug all work — equivalent to the
+  prototype's `task verify`.
 
 ## Phase 2 — Dev stack + dynamic mount generation
 
@@ -162,8 +169,11 @@ instead of wp-env, with dev-only single persistent stack.
   skip login for public/anonymous pulls when they're not.
 - Drop the `library/bash chmod -R a+w` and not-owned-by-user cleanup hacks (validate
   they're no longer needed per risk #3).
-- `scripts/wp-env.sh` removed or repurposed as a thin `docker exec`/wp-cli passthrough
-  if still useful.
+- Replace `scripts/wp-env.sh` with explicit per-purpose scripts/targets against the new
+  container (no more generic wp-env passthrough): `logs` (tail container logs), `enter`
+  (`docker exec` a shell into the container), `ssh` (SSH into the container, per the
+  always-on SSH server from the locked-in container topology), and `cli` (execute
+  wp-cli commands).
 - **Exit criteria**: `pnpm start` brings up a working dev site at a fixed port with all
   current plugins/themes/mu-plugins mounted and active, matching today's dev
   experience; `pnpm stop`/`pnpm destroy` behave as expected.
@@ -199,10 +209,10 @@ and tears it down unconditionally afterward.
   activation) — should need no changes beyond the base URL/port.
 - Ensure `scripts/test.sh`'s pre-e2e admin-password-reset step still works against the
   new container.
-- Tie into the same ephemeral start→run→teardown wrapper from Phase 3 so PHPUnit and
-  E2E share one lifecycle pattern (whether they get one shared ephemeral container per
-  `pnpm test` invocation, or one each, is an implementation detail to settle when
-  writing `test.sh`).
+- Tie into the same ephemeral start→run→teardown wrapper from Phase 3: a single
+  `pnpm test` invocation brings up **one** shared ephemeral test-stack container and
+  runs both PHPUnit and Playwright against it, tearing it down once at the end
+  (pass or fail), rather than each spinning up its own.
 - **Exit criteria**: `pnpm test:e2e` passes against the current Playwright suite;
   container is torn down after.
 
@@ -218,15 +228,16 @@ reintroducing a maintained multi-version image matrix.
   dirs into the dist folders as today. Purely a source-vs-dist mount switch — unrelated
   to PHP version.
 - Add `PHP_VERSION_OVERRIDE=<php-version>` as a separate mechanism: the Dockerfile
-  keeps its `ARG_PHP_VERSION` build-arg (Phase 1 only stops the *publish workflow* from
-  matrixing/publishing multiple tags for it — the arg itself stays). When
-  `PHP_VERSION_OVERRIDE` is set, `scripts/test.sh` builds a throwaway local image with
-  `--build-arg ARG_PHP_VERSION=$PHP_VERSION_OVERRIDE` instead of pulling the published
-  tag, runs the ephemeral test stack against that one-off image, and discards it
-  afterward — the published image/registry are untouched.
+  keeps its `ARG_PHP_VERSION` build-arg, and the Phase 1 publish workflow builds/pushes
+  it as a small prebuilt matrix — `8.4` (default) and `7.4` (legacy) — rather than a
+  single tag. When `PHP_VERSION_OVERRIDE=7.4` is set, `scripts/test.sh` pulls the
+  matching prebuilt tag (`${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:<hash>-php7.4`) instead
+  of building a local image, and runs the ephemeral test stack against it — no build
+  step on the hot path, since this runs on every PR update and locally, not
+  occasionally. Values outside the prebuilt matrix aren't supported by this mechanism.
 - **Exit criteria**: `TEST_PRODUCTION=true pnpm test` passes, matching current CI
-  behavior; `PHP_VERSION_OVERRIDE=8.4 pnpm test` runs the suite against PHP 8.4 without
-  publishing or caching a PHP-8.4 image tag.
+  behavior; `PHP_VERSION_OVERRIDE=7.4 pnpm test` runs the suite against the prebuilt
+  PHP 7.4 image with no local build step, locally and in CI.
 
 ## Phase 6 — CI integration
 
@@ -234,17 +245,16 @@ reintroducing a maintained multi-version image matrix.
 inside a docker-in-docker devcontainer.
 
 - Update `.github/workflows/integration.yaml`: the `build` job pulls
-  `${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:<tag>` (same repo vars/secrets as the Phase 1
-  publish workflow — no hardcoded `ghcr.io` path) and runs `pnpm run build` +
+  `${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:<hash>-php8.4` (same repo vars/secrets as the
+  Phase 1 publish workflow — no hardcoded `ghcr.io` path) and runs `pnpm run build` +
   `TEST_PRODUCTION=true pnpm run test` against it; a separate CI job (or matrix leg)
-  sets `PHP_VERSION_OVERRIDE=<php-version>` to cover non-default PHP versions per
-  Phase 5, without changing what the default `build` job pulls/publishes.
-- Evaluate whether the docker-in-docker devcontainer feature is still needed at all
-  (pulling/running a prebuilt image needs Docker, but not necessarily the full
-  devcontainer machinery) — likely simplifiable, but keep devcontainer for local
-  dev-container users unless that's also being retired.
-- Update port labels/exposed ports in `.devcontainer/devcontainer.json` to match the
-  new container's ports (drop 9000/9001 phpmyadmin, adjust 8888/8889 if renumbered).
+  sets `PHP_VERSION_OVERRIDE=7.4` to pull the prebuilt `:<hash>-php7.4` tag from the
+  same Phase 1/5 matrix and run the suite against it on every PR update, without
+  changing what the default `build` job pulls/publishes.
+- Keep the docker-in-docker devcontainer feature as-is — out of scope for this
+  migration. Only update port labels/exposed ports in `.devcontainer/devcontainer.json`
+  to match the new container's ports (drop 9000/9001 phpmyadmin, adjust 8888/8889 if
+  renumbered).
 - **Exit criteria**: CI green on a branch, full parity with current `integration.yaml`
   results.
 

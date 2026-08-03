@@ -41,6 +41,7 @@
     "test:e2e": "./scripts/test.sh --use e2e",
     "gh-cli": "./scripts/gh-cli.sh",
     "go-waas": "./scripts/go-waas.sh",
+    "beans": "./scripts/beans.sh",
     "playground": "./scripts/playground.sh",
     "prepare": "./scripts/_prepare.sh",
     "stretch-extra": "./scripts/stretch-extra.sh",
