@@ -49,9 +49,9 @@ function ionos.wordpress.fetch_github_tags() {
   local response
   if command -v gh >/dev/null 2>&1 && gh auth status >/dev/null 2>&1; then
     # use gh's auth token to avoid the unauthenticated 60 req/hour rate limit
-    response=$(gh api "$(sed -e 's#https://api.github.com/##' <<<"$1")" 2>/dev/null)
+    response=$(gh api "$(sed -e 's#https://api.github.com/##' <<<"$1")" 2>/dev/null || true)
   else
-    response=$(curl -Ls "$1")
+    response=$(curl -Ls "$1" 2>/dev/null || true)
   fi
   if ! jq -e 'type == "array"' >/dev/null 2>&1 <<<"$response"; then
     ionos.wordpress.log_warn "GitHub API request to '$1' did not return a tag list (rate limited?) - skipping version check."
