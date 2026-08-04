@@ -152,6 +152,8 @@ importers:
 
   packages/docker/rector-php: {}
 
+  packages/docker/wp-alpine: {}
+
   packages/wp-mu-plugin/ionos-core:
     devDependencies:
       '@ionos-wordpress/dennis-i18n':

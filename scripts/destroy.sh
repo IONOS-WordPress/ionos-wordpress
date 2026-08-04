@@ -3,20 +3,16 @@
 #
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
-# this script is used to build all packages of the monorepo
+# this script removes the persistent wp-alpine development container and its
+# per-stack overlay data. the shared, version-keyed wordpress-core cache
+# (${MNT_HOME}/wordpress-core) survives, since other stacks may still be using it.
 #
 
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-if [[ -d "$WP_ENV_HOME" ]]; then
-  docker run --rm -v $WP_ENV_HOME:/wp-env-home library/bash chmod -R a+w /wp-env-home
-  docker run --rm -v $WP_ENV_HOME:/wp-env-home library/bash chmod -R a+w /wp-env-home
+if docker ps -a --filter "name=${CONTAINER_NAME}" --format '{{.Names}}' | grep -qx "$CONTAINER_NAME"; then
+  docker rm -f "$CONTAINER_NAME" >/dev/null
 fi
 
-if docker ps --filter "name=tests-wordpress" --format '{{.Names}}' | grep -q 'tests-wordpress'; then
-  echo 'y' | pnpm exec wp-env destroy
-fi
-
-# ensure wp-env-home is also removed, even in case wp-env was unable to remove it
-rm -rf "$WP_ENV_HOME"
+rm -rf "${MNT_HOME:?MNT_HOME must be set}/dev"

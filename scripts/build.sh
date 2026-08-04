@@ -180,6 +180,8 @@ function ionos.wordpress.build_workspace_package_docker() {
   # image labels : see https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys
   docker build \
     $(test -f $path/.env && cat $path/.env | sed 's/^/--build-arg /' ||:) \
+    --build-arg HOST_UID=$(id -u) \
+    --build-arg HOST_GID=$(id -g) \
     --progress=$DOCKER_BUILD_VERBOSE \
     -t $DOCKER_IMAGE_NAME:latest \
     -t $DOCKER_IMAGE_NAME:$PACKAGE_VERSION \

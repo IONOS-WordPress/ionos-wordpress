@@ -3,12 +3,12 @@
 #
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
-# this script is used to stop the persistent wp-alpine development container
+# runs a wp-cli command inside the dev container, as the `php` user
+#
+# example usage: `pnpm cli plugin list`
 #
 
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-if docker ps --filter "name=${CONTAINER_NAME}" --format '{{.Names}}' | grep -qx "$CONTAINER_NAME"; then
-  docker stop "$CONTAINER_NAME" >/dev/null
-fi
+docker exec -i --user php --workdir /htdocs "$CONTAINER_NAME" wp "$@"

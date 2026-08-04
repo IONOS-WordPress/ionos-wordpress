@@ -3,12 +3,13 @@
 #
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
-# this script is used to stop the persistent wp-alpine development container
+# tails the dev container's logs (Apache/MariaDB/debug.log, all forwarded to stdout
+# by packages/docker/wp-alpine/docker-entrypoint.sh)
+#
+# example usage: `pnpm logs`
 #
 
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-if docker ps --filter "name=${CONTAINER_NAME}" --format '{{.Names}}' | grep -qx "$CONTAINER_NAME"; then
-  docker stop "$CONTAINER_NAME" >/dev/null
-fi
+docker logs -f "$CONTAINER_NAME"
