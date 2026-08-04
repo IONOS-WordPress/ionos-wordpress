@@ -16,6 +16,9 @@ defined('ABSPATH') || exit();
 
 const MAX_ITEMS_PER_PAGE = 12;
 
+// Load Extendify license management
+require_once __DIR__ . '/extendify.php';
+
 // Uninstall legacy ionos-marketplace plugin when ionos-core marketplace is active
 \add_action('admin_init', function (): void {
   $legacy_plugin = 'ionos-marketplace/marketplace.php';
@@ -294,6 +297,19 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
   callback: function (mixed $result, string $action, object $args): mixed {
     if ($action !== 'plugin_information' || ! isset($args->slug)) {
       return $result;
+    }
+
+    // Handle Extendify plugin: override download URL with tenant-specific license
+    if ($args->slug === 'extendify') {
+      $license = extendify\get_extendify_license();
+
+      // If result already has info, just override download_link
+      if (is_object($result) && isset($result->download_link)) {
+        $result->download_link = sprintf(extendify\EXTENDIFY_URL_TEMPLATE, $license);
+        return $result;
+      }
+
+      // Otherwise let the request continue to fetch from WordPress.org
     }
 
     $config = get_config();
