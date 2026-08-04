@@ -253,6 +253,7 @@ domReady(() => {
 - **Main Branch**: `develop`
 - **Commit Format**: [Commitizen](https://github.com/commitizen/cz-cli) standard (Conventional Commits)
 - **Commit Scope**: Include plugin/feature name for plugin changes (e.g., `feat(essentials): description`)
+- **Bean IDs**: Include the relevant bean ID(s) in the commit message when the work is tracked in Beans
 - **Pull Requests**: Reference related issues, provide clear description
 
 See [Git Conventions](docs/agent/git-conventions.md) for detailed commit message format and examples.
