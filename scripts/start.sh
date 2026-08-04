@@ -8,6 +8,7 @@
 
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_docker-mounts.sh"
 
 # (re)build the project (this also (re)builds the wp-alpine image locally whenever its
 # Dockerfile/entrypoint changed, via scripts/build.sh's docker-package build dispatch)
@@ -18,69 +19,14 @@ else
   pnpm build
 fi
 
-# WORDPRESS_VERSION accepts a release version or an "owner/repo#ref" git ref (see
-# packages/docker/wp-alpine/docker-entrypoint.sh) - sanitize it into a filesystem-safe
-# directory name for the shared, version-keyed core cache below.
-readonly VERSION_DIR="${WORDPRESS_VERSION//[\/#]/-}"
+readonly VERSION_DIR="$(ionos.wordpress.wordpress_version_dir "$WORDPRESS_VERSION")"
 readonly CORE_DIR="${MNT_HOME}/wordpress-core/${VERSION_DIR}"
 readonly STACK_DIR="${MNT_HOME}/dev"
 
-# create the shared, version-keyed core dir and this stack's per-container overlay
-# dirs/files. Docker auto-creates missing bind-mount *directories* on `docker run`,
-# but not missing bind-mounted *files* (wp-config.php/.htaccess) - a missing file
-# source would otherwise turn into an empty directory inside the container.
-mkdir -p "$CORE_DIR"
-mkdir -p "$STACK_DIR/wp-content/plugins" "$STACK_DIR/wp-content/themes" "$STACK_DIR/wp-content/mu-plugins" "$STACK_DIR/wp-content/uploads"
-touch -a "$STACK_DIR/wp-config.php" "$STACK_DIR/.htaccess"
-
 # build the --volume argument list for `docker run`, dynamically discovering the
-# monorepo's wp-plugin/wp-theme/wp-mu-plugin packages - one bind-mount per package,
-# matching wp-env's previous per-item `mappings`/`plugins`/`themes` granularity.
-VOLUME_ARGS=(
-  --volume "$(pwd)/${CORE_DIR}:/htdocs"
-  --volume "$(pwd)/${STACK_DIR}/wp-content/plugins:/htdocs/wp-content/plugins"
-  --volume "$(pwd)/${STACK_DIR}/wp-content/themes:/htdocs/wp-content/themes"
-  --volume "$(pwd)/${STACK_DIR}/wp-content/mu-plugins:/htdocs/wp-content/mu-plugins"
-  --volume "$(pwd)/${STACK_DIR}/wp-content/uploads:/htdocs/wp-content/uploads"
-  --volume "$(pwd)/${STACK_DIR}/wp-config.php:/htdocs/wp-config.php"
-  --volume "$(pwd)/${STACK_DIR}/.htaccess:/htdocs/.htaccess"
-)
-
-if [[ "${TEST_PRODUCTION:-}" == 'true' ]]; then
-  # mount the transpiled dist/ output instead of source
-  for PLUGIN in $(find packages/wp-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-    zip_archive=$(find packages/wp-plugin/${PLUGIN} -regex ".*\.zip" -printf '%f\n' 2>/dev/null || echo '')
-    VOLUME_ARGS+=(--volume "$(pwd)/packages/wp-plugin/${PLUGIN}/dist/${zip_archive%.zip}/${PLUGIN}:/htdocs/wp-content/plugins/${PLUGIN}")
-  done
-
-  for THEME in $(find packages/wp-theme -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-    zip_archive=$(find packages/wp-theme/${THEME} -regex ".*\.zip" -printf '%f\n' 2>/dev/null || echo '')
-    VOLUME_ARGS+=(--volume "$(pwd)/packages/wp-theme/${THEME}/dist/${zip_archive%.zip}/${THEME}:/htdocs/wp-content/themes/${THEME}")
-  done
-
-  for PLUGIN in $(find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-    if [[ -d "./packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}" ]]; then
-      zip_archive=$(find packages/wp-mu-plugin/${PLUGIN} -regex ".*\.zip" -printf '%f\n' 2>/dev/null || echo '')
-      VOLUME_ARGS+=(--volume "$(pwd)/packages/wp-mu-plugin/${PLUGIN}/dist/${zip_archive%.zip}/${PLUGIN}/${PLUGIN}.php:/htdocs/wp-content/mu-plugins/${PLUGIN}.php")
-      VOLUME_ARGS+=(--volume "$(pwd)/packages/wp-mu-plugin/${PLUGIN}/dist/${zip_archive%.zip}/${PLUGIN}/${PLUGIN}:/htdocs/wp-content/mu-plugins/${PLUGIN}")
-    fi
-  done
-else
-  for PLUGIN in $(find packages/wp-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-    VOLUME_ARGS+=(--volume "$(pwd)/packages/wp-plugin/${PLUGIN}:/htdocs/wp-content/plugins/${PLUGIN}")
-  done
-
-  for THEME in $(find packages/wp-theme -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-    VOLUME_ARGS+=(--volume "$(pwd)/packages/wp-theme/${THEME}:/htdocs/wp-content/themes/${THEME}")
-  done
-
-  for PLUGIN in $(find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-    VOLUME_ARGS+=(--volume "$(pwd)/packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}.php:/htdocs/wp-content/mu-plugins/${PLUGIN}.php")
-    if [[ -d "./packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}" ]]; then
-      VOLUME_ARGS+=(--volume "$(pwd)/packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}:/htdocs/wp-content/mu-plugins/${PLUGIN}")
-    fi
-  done
-fi
+# monorepo's wp-plugin/wp-theme/wp-mu-plugin packages (shared with scripts/test.sh).
+VOLUME_ARGS=()
+ionos.wordpress.build_wp_volume_args "$STACK_DIR" "$CORE_DIR"
 
 if [[ -n "${AFTER_START:-}" ]]; then
   VOLUME_ARGS+=(--volume "$(realpath "$AFTER_START"):/after-start.sh")

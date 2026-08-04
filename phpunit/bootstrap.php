@@ -7,7 +7,9 @@ if (false !== $_phpunit_polyfills_path) {
   define('WP_TESTS_PHPUNIT_POLYFILLS_PATH', $_phpunit_polyfills_path);
 }
 
-require_once getenv('HOME') . '/.composer/vendor/autoload.php';
+// composer deps (phpunit/phpunit, yoast/phpunit-polyfills) are baked into the
+// wp-alpine image at /opt/wp-tests (see packages/docker/wp-alpine/Dockerfile)
+require_once '/opt/wp-tests/vendor/autoload.php';
 
 // Give access to tests_add_filter() function.
 require_once $WP_TESTS_DIR . '/includes/functions.php';

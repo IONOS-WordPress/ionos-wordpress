@@ -25,6 +25,7 @@ packages/*/*/webpack.config.js
 /playwright/storybook/.*
 /playwright/e2e/.*
 /phpunit/vendor/
+/phpunit/.phpunit.result.cache
 /tmp
 /wp-playground-blueprint.json
 /wp-playground-blueprint.local.json
@@ -35,3 +36,4 @@ mcp.log
 packages/docker/*/vendor
 scripts/_stretch.sh
 .devcontainer/devcontainer-lock.json
+/mnt

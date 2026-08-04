@@ -123,24 +123,21 @@ EOF
 
 # Bake yoast/phpunit-polyfills (matching wp-env-after-start.sh's existing
 # ^3.0 pin) so containers no longer need the runtime `composer global
-# require` workaround. yoast/phpunit-polyfills ^3.0 only supports
-# phpunit/phpunit ^9.0 or ^11.0 (no 10.x releases), and phpunit/phpunit 11
-# itself requires PHP >=8.2 - so PHP 7.4 needs the ^9.0 line while 8.x gets
-# ^11.0. Reconciling this repo's phpunit.xml (10.5 schema) with PHPUnit
-# 9/11 is a later phase's job, this only provides the composer toolchain.
-# Baked into /opt/wp-tests, not /htdocs, since /htdocs is a runtime bind
-# mount docker-entrypoint.sh repopulates on every container start and this
-# needs to survive independent of that.
+# require` workaround. Pinned to phpunit/phpunit ^9.0 uniformly (not ^11,
+# despite yoast/phpunit-polyfills ^3.0 also supporting it) - confirmed by
+# actually running the suite that WordPress core's own test harness
+# (wordpress-develop's includes/abstract-testcase.php) still calls
+# PHPUnit\Util\Test::parseTestMethodAnnotations(), removed in PHPUnit 10+
+# (WP Trac #59486/#62004, same constraint the prototype's Dockerfile
+# documents). Baked into /opt/wp-tests, not /htdocs, since /htdocs is a
+# runtime bind mount docker-entrypoint.sh repopulates on every container
+# start and this needs to survive independent of that.
 RUN <<EOF
-  case "$ARG_PHP_VERSION" in \
-    7.*) PHPUNIT_CONSTRAINT='^9.0' ;; \
-    *) PHPUNIT_CONSTRAINT='^11.0' ;; \
-  esac
   mkdir -p /opt/wp-tests
   cat <<JSON > /opt/wp-tests/composer.json
 {
   "require-dev": {
-    "phpunit/phpunit": "$PHPUNIT_CONSTRAINT",
+    "phpunit/phpunit": "^9.0",
     "yoast/phpunit-polyfills": "^3.0"
   }
 }

@@ -4,13 +4,15 @@
   bootstrap="bootstrap.php"
   backupGlobals="false"
   colors="true"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd">
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd">
   <php>
     <env name="WORDPRESS_TABLE_PREFIX" value="wp_"/>
   </php>
   <testsuites>
     <testsuite name="default">
-      <directory suffix="Test.php">./</directory>
+      <directory suffix="Test.php">../</directory>
+      <exclude>../wp-content/mu-plugins/stretch-extra</exclude>
+      <exclude>vendor</exclude>
     </testsuite>
   </testsuites>
 </phpunit>

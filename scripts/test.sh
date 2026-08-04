@@ -10,6 +10,7 @@
 
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_docker-mounts.sh"
 
 # test file arguments
 POSITIONAL_ARGS=()
@@ -83,18 +84,6 @@ if [[ "${USE[@]}" =~ all|react ]]; then
   )
 fi
 
-if [[ "${USE[@]}" =~ all|php|e2e ]]; then
-  # MARK: ensure wp-env started
-  # ensure wp-env is running
-  # - if the install path does not exist
-  # - or if the containers are not running
-  WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env status --json | jq -r .installPath))"
-  if [[ ! -d "$WPENV_INSTALLPATH/WordPress" ]] || [[ "$(docker ps -q --filter "name=$(basename $WPENV_INSTALLPATH)" | wc -l)" -lt '6' ]]; then
-    pnpm start
-  fi
-  # ENDMARK
-fi
-
 if [[ "${USE[@]}" =~ all|php ]]; then
   # test distributable plugin code is correctly transformed by rector
   # by testing its syntax againts the transpiler target language
@@ -119,11 +108,89 @@ EOL
     ionos.wordpress.log_info "skipped target php version syntax checks since individual PHPUnit test files are provided as commandline arguments"
   fi
 
-  # start wp-env unit tests. provide part specific options and all positional arguments that are php files
-  # (files will be converted to '--filter *TestCase' arguments to match PHPUNit expectations)
-  pnpm -s run wp-env run tests-wordpress phpunit -- \
-    "--exclude /var/www/html/wp-content/mu-plugins/stretch-extra ${USE_OPTIONS[php]}" \
-    $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.php ]] && printf -- "--filter '%s'" $(basename $file .php); done)
+  # MARK: run phpunit in a throwaway wp-alpine container, always destroyed afterwards
+  # (own name/mnt dir so it never collides with the persistent dev stack from
+  # scripts/start.sh - see scripts/includes/_docker-mounts.sh for the shared
+  # mount-discovery logic)
+  readonly TEST_CONTAINER_NAME='ionos-wordpress-test'
+  readonly VERSION_DIR="$(ionos.wordpress.wordpress_version_dir "$WORDPRESS_VERSION")"
+  readonly CORE_DIR="${MNT_HOME}/wordpress-core/${VERSION_DIR}"
+  readonly TEST_STACK_DIR="${MNT_HOME}/test"
+  # WordPress/WordPress (the release-build mirror used for WORDPRESS_VERSION) has no
+  # tests/ directory at all - the test suite (WP_UnitTestCase and friends) only lives
+  # in WordPress/wordpress-develop, always on `trunk` regardless of the core version
+  # being tested (confirmed against a real wp-env cache's tests-WordPress-PHPUnit/.git
+  # remote - wp-env clones this same fixed repo/branch, decoupled from WP_ENV_CORE).
+  readonly TESTS_DIR="${MNT_HOME}/wordpress-tests/trunk"
+
+  if [[ ! -d "$TESTS_DIR/tests/phpunit/includes" ]]; then
+    ionos.wordpress.log_info "cloning WordPress/wordpress-develop#trunk test suite into ${TESTS_DIR} ..."
+    rm -rf "$TESTS_DIR"
+    git clone --quiet --depth 1 --branch trunk https://github.com/WordPress/wordpress-develop.git "$TESTS_DIR"
+  fi
+
+  VOLUME_ARGS=()
+  ionos.wordpress.build_wp_volume_args "$TEST_STACK_DIR" "$CORE_DIR"
+  VOLUME_ARGS+=(
+    --volume "$(pwd)/${TESTS_DIR}/tests/phpunit:/wordpress-phpunit"
+    --volume "$(pwd)/phpunit:/htdocs/phpunit"
+    --volume "$(pwd)/phpunit/wp-tests-config.php:/wordpress-phpunit/wp-tests-config.php:ro"
+  )
+
+  # guard against a stale leftover container from a previous crashed run
+  docker rm -f "$TEST_CONTAINER_NAME" &>/dev/null || true
+
+  function ionos.wordpress.cleanup_test_container {
+    docker rm -f "$TEST_CONTAINER_NAME" &>/dev/null || true
+    rm -rf "$TEST_STACK_DIR"
+  }
+  trap ionos.wordpress.cleanup_test_container EXIT
+
+  docker run \
+    --detach \
+    --tty \
+    --interactive \
+    --name "$TEST_CONTAINER_NAME" \
+    --hostname "$TEST_CONTAINER_NAME" \
+    --env WORDPRESS_VERSION="$WORDPRESS_VERSION" \
+    --env WP_PASSWORD="$WP_PASSWORD" \
+    --env HTTP_PORT=80 \
+    --env WORDPRESS_DB_HOST=localhost \
+    --env WORDPRESS_DB_NAME=wordpress \
+    --env WORDPRESS_DB_USER=wordpress \
+    --env WORDPRESS_DB_PASSWORD=password \
+    --env WORDPRESS_CONFIG_EXTRA="define('ABSPATH','/htdocs/');" \
+    --env WP_TESTS_DIR=/wordpress-phpunit \
+    "${VOLUME_ARGS[@]}" \
+    ionos-wordpress/wp-alpine:latest >/dev/null
+
+  # readiness: phpunit talks to the DB directly, never over HTTP, so "wp core
+  # is-installed" (WP core downloaded + wp-config.php + database ready) is the
+  # right check here - not an HTTP request (which would hit WordPress's canonical
+  # redirect on port 80, since HTTP clients omit the default port from the Host
+  # header while wp-config's siteurl keeps it explicit, looping forever).
+  ionos.wordpress.log_info "waiting for the test container to come up ..."
+  READY=
+  for i in $(seq 1 60); do
+    if docker exec --user php "$TEST_CONTAINER_NAME" wp core is-installed --path=/htdocs 2>/dev/null; then
+      READY=1
+      break
+    fi
+    sleep 1
+  done
+  if [[ -z "$READY" ]]; then
+    ionos.wordpress.log_error "test container did not become ready within the timeout"
+    exit 1
+  fi
+
+  # provide part specific options and all positional arguments that are php files
+  # (files will be converted to '--filter *TestCase' arguments to match PHPUnit expectations).
+  # run via `sh -c` (not separate argv entries) so USE_OPTIONS[php] can itself contain
+  # multiple space-separated phpunit options, matching the previous wp-env behavior.
+  docker exec --user php "$TEST_CONTAINER_NAME" sh -c \
+    "phpunit -c /htdocs/phpunit/phpunit.xml ${USE_OPTIONS[php]} \
+    $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.php ]] && printf -- "--filter '%s' " $(basename $file .php); done)"
+  # ENDMARK
 fi
 
 if [[ "${USE[@]}" =~ all|e2e ]]; then
