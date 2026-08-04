@@ -20,3 +20,7 @@ fi
 
 # ensure wp-env-home is also removed, even in case wp-env was unable to remove it
 rm -rf "$WP_ENV_HOME"
+
+# clean up composer cache
+rm -rf ~/.cache/composer
+
