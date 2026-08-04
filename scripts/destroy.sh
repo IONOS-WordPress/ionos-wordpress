@@ -22,5 +22,6 @@ fi
 rm -rf "$WP_ENV_HOME"
 
 # clean up composer cache
-rm -rf ~/.cache/composer
+COMPOSER_CACHE_DIR="${XDG_CACHE_HOME:-${HOME:?}/.cache}/composer"
+rm -rf -- "$COMPOSER_CACHE_DIR"
 
