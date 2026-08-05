@@ -22,7 +22,7 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
  */
 \add_filter('theme_file_uri', function ($url, $file) {
   // if its not one of our themes just return the original url
-  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in local wp-env
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in the local dev environment
   if (! str_contains($url, '/extra/themes/') && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $url;
   }
@@ -33,7 +33,7 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
 
 \add_filter('stylesheet_directory_uri', function ($stylesheet_dir_uri, $stylesheet, $theme_root_uri) {
   // if its not one of our themes just return the original url
-  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in local wp-env
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in the local dev environment
   if (! str_ends_with($theme_root_uri, '/extra/themes') && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $stylesheet_dir_uri;
   }
@@ -44,7 +44,7 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
 
 \add_filter('template_directory_uri', function ($template_dir_uri, $template, $theme_root_uri) {
   // if its not one of our themes just return the original url
-  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in local wp-env
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in the local dev environment
   if (! str_ends_with($theme_root_uri, '/extra/themes') && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $template_dir_uri;
   }
@@ -54,7 +54,7 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
 }, 10, 3);
 
 \add_filter('theme_root_uri', function ($theme_root_uri, $siteurl) {
-  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in local wp-env
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in the local dev environment
   if (! str_ends_with($theme_root_uri, '/extra/themes') && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $theme_root_uri;
   }
@@ -79,7 +79,7 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
   @TODO: the theme can be preset in the database template
   Alternative workaround : Alex can set the theme to extendable when provisioning the account
   if this is the case the code below can be removed
-  dont initialize in wp-cli calls to prevent issues with command line scripts in wp-env
+  dont initialize in wp-cli calls to prevent issues with command line scripts in the local dev environment
 */
 defined('WP_CLI') || \add_action('muplugins_loaded', function () {
   $is_initialized = \get_option('stretch_extra_extendable_theme_dir_initialized', false) || \get_option(
@@ -89,7 +89,7 @@ defined('WP_CLI') || \add_action('muplugins_loaded', function () {
     return;
   }
 
-  // fixes wp-env local development where the theme may not available in the themes directory
+  // fixes local development where the theme may not available in the themes directory
   // depending on latest pnpm stretch-extra --install||clean call
   if (is_dir(IONOS_CUSTOM_THEMES_DIR . '/extendable')) {
     \switch_theme('extendable');

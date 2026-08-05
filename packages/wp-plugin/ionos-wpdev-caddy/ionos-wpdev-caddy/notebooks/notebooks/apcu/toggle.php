@@ -21,4 +21,4 @@ switch ($value) {
 
 printf("%s(=%s)\n\n", $option, print_r(get_option($option, null), true));
 
-printf("[wp-env] CAVEAT: object-cache.php is only %s on next request !\n", ($value === '1' ? 'enabled' : 'disabled'));
+printf("CAVEAT: object-cache.php is only %s on next request !\n", ($value === '1' ? 'enabled' : 'disabled'));

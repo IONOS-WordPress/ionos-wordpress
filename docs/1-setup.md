@@ -47,7 +47,7 @@ This can be achied by enabling SSH agent forwarding : See https://www.romanboehm
 
 - `pnpm start` will start the development server
 
-  Will generate required config files (including vscode launch configuration for debugging and so on) and start `wp-env`.
+  Will start the `wp-alpine` dev container (see `packages/docker/wp-alpine/`), building its Docker image first if needed.
 
 - `pnpm stop` will stop the development server
 
@@ -64,10 +64,6 @@ This can be achied by enabling SSH agent forwarding : See https://www.romanboehm
   Will not be commited.
 
 - `.secrets` can be used for secrets
-
-  Will not be commited.
-
-- [`.wp-env.override.json`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/#wp-env-override-json) can be used to override the default configuration of `wp-env`.
 
   Will not be commited.
 
@@ -108,8 +104,8 @@ An Example :
 The `pnpm test` command will do heayvy lifting :
 
 - build all WordPress plugins etc.
-- spin up `wp-env`
-- Execute PHPUnit tests againt the `wp-env` instance
+- spin up the ephemeral test container
+- Execute PHPUnit tests against the test container
 - builds `Playground` and `Playwright` tests
 - executes Playwright tests
 

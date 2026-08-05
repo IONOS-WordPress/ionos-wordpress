@@ -103,7 +103,7 @@
 
   - That's it !
 
-    Start the development server by excuting `pnpm start`. This will not only start `wp-env` but also trigger the build process (aka `pnpm build`) for the plugin.
+    Start the development server by excuting `pnpm start`. This will not only start the `wp-alpine` dev container but also trigger the build process (aka `pnpm build`) for the plugin.
 
 # The build workflow
 

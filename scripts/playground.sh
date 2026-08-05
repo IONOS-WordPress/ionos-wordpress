@@ -12,13 +12,11 @@ source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 # (re)build the project
 # pnpm build
 
-# @FIXME: we should also take .wp-env.override.json into account
+# WORDPRESS_VERSION is already exported by bootstrap.sh's ionos.wordpress.load_env (root .env)
 
-# take WORDPRESS_VERSION from .wp-env.json or use LATEST_WORDPRESS_VERSION as fallback
-WORDPRESS_VERSION=$(jq -r ".core // \"latest\"" .wp-env.json)
-
-# Get PHP version from .wp-env.json or use latest stable PHP version as fallback
-PHP_VERSION=$(jq -r '.phpVersion // "latest"' .wp-env.json)
+# get the PHP version from the wp-alpine image's own .env (its ARG_PHP_VERSION build arg)
+ionos.wordpress.load_env "$GIT_ROOT_PATH/packages/docker/wp-alpine"
+PHP_VERSION="$ARG_PHP_VERSION"
 
 cat << EOF | jq > './wp-playground-blueprint.json'
 {

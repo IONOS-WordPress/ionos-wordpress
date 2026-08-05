@@ -2,9 +2,7 @@
 
 run all tests (e2e, react/storybook, phpunit) : `pnpm test`
 
-- in case `wp-env` is not running, it will be started automatically.
-
-  `pnpm test` will rebuild the project and start wp-env if it is not already running.
+- `pnpm test` spins up its own ephemeral test container (independent of the persistent dev container started by `pnpm start`) and rebuilds the project first.
 
   You can skip rebuilding by setting the environment variable `BUILD_UP_TO_DATE=1` : `BUILD_UP_TO_DATE=1 pnpm test`
 
@@ -52,7 +50,7 @@ Example: `packages/wp-plugin/ionos-essentials/inc/dashboard/tests/phpunit/Accept
 - run when ever you changed a file : `pnpm watch -- pnpm test:php`
 
 - debug phpunit tests :
-  - start `wp-env` launch configuration in vscode
+  - start `pnpm start` to have the dev container up (Xdebug is enabled by default)
 
   - start phpunit tests `pnpm test:php`
 
@@ -71,7 +69,7 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
   or even simpler `pnpm run test:e2e example.spec.js` (paths can be skipped ion Playwright)
 
 - run whenever you changed a file : `pnpm watch -- pnpm test:e2e`
-  - run a single e2e test without rebuilding and checking wp-env is alive in playwright debug mode : `pnpm run test:e2e --e2e-opts '--debug' ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js` (see `pnpm run test --help` for more)
+  - run a single e2e test without rebuilding, in playwright debug mode : `pnpm run test:e2e --e2e-opts '--debug' ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js` (see `pnpm run test --help` for more)
 
 - vscode supports running e2e tests by clicking on the play button in the test file.
   - same same for debugging tests.
@@ -100,17 +98,13 @@ Everything works exactly as in DevContainer, but you need to have the requiremen
 
 to test the production build :
 
-- configure environment `TEST_PRODUCTION=true` before starting `wp-env`.
+- configure environment `TEST_PRODUCTION=true` before running `pnpm test`.
 
-  This can be done locally by adding the environment to your `.env.local` file.
+  This can be done locally by adding the environment to your `.env.local` file, or inline : `TEST_PRODUCTION=true pnpm run test`.
 
-  > `wp-env` must be restarted to be properly configured. You can ensure this by executing `pnpm destroy` before.
+  `scripts/test.sh` bind-mounts each package's transpiled `dist/` output (instead of its source) into the ephemeral test container for the run - no persistent state to clean up afterwards.
 
 - run the test command (excluding editor tests which are not available in the production build) : `pnpm run test`
-
-Alternatively you can destroy wp-env and start the everything at once by doing `TEST_PRODUCTION=true pnpm run test`.
-
-> When starting wp-env with `TEST_PRODUCTION=true` a `.wp-env.json.override` will be created to mount the transpiled php files into `wp-env`. **This file will not automatically be removed on `pnpm destroy` by intention - you have to do it manually.**
 
 # links
 

@@ -80,7 +80,21 @@ Will cleanup any build artifacts (`dist`/`build` folder for example) and tempora
 
 # destroy
 
-Will destroy the started `wp-env` instance : `pnpm destroy`
+Will remove the persistent `wp-alpine` dev container and its per-stack overlay data (the shared, version-keyed WordPress core cache survives) : `pnpm destroy`
+
+# cli
+
+`pnpm cli` runs a `wp-cli` command inside the dev container, as the `php` user.
+
+Example usage : `pnpm cli plugin list`
+
+# enter
+
+`pnpm enter` opens an interactive shell in the dev container, as the `php` user.
+
+# logs
+
+`pnpm logs` tails the dev container's logs (Apache/MariaDB/debug.log, all forwarded to stdout).
 
 # gh-cli (advanced)
 
@@ -138,15 +152,13 @@ It will run a bunch of commands like `pnpm changeset version`, `pnpm build`, cre
 
 # start
 
-`pnpm start` will start `wp-env`.
+`pnpm start` will start the persistent `wp-alpine` dev container, building its Docker image first if needed.
 
-The command will create the matching configuration file for `wp-env` and `vscode` to allow debugging PHP.
-
-> The command can be individually tuned using environment variable `WP_ENV_START_OPTS` (see .env.local.example).
+Xdebug is baked into the `wp-alpine` image and enabled by default.
 
 # stop
 
-`pnpm stop` will stop `wp-env`.
+`pnpm stop` will stop the `wp-alpine` dev container.
 
 # storybook
 
@@ -162,7 +174,7 @@ Storybook can be used to create stories and tests for React components. It is al
 
 will run tests for all packages.
 
-> This action will start wp-env if it is not already running.
+> This action will spin up its own ephemeral test container, independent of the persistent dev container started by `pnpm start`.
 
 ## Options
 
@@ -223,21 +235,3 @@ Check for updates of
 Example usage:
 
 `pnpm watch -- pnpm build --use wp-plugin:wp-scripts --filter 'essentials'`
-
-# wp-env
-
-This command is a wrapper around the `wp-env` command.
-
-It allows you to call any `wp-env` sub command.
-
-Examples:
-
-- show all commands: `pnpm wp-env run --help`
-
-- open bash in wordpress container: `pnpm wp-env run wordpress bash`
-
-- open bash in wp-cli container: `pnpm wp-env run cli bash`
-
-- execute wp-cli command directly: `pnpm wp-env run cli wp post list`
-
-- enter mysql shell : `pnpm wp-env run mysql mariadb --user=root --password=password wordpress`

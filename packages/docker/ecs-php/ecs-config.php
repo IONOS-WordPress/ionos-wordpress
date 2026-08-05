@@ -44,7 +44,6 @@ return $configure->withRules([
       '*/node_modules/*',
       '*/languages/*',
       '/phpunit/*',
-      '*/wp-env-home/*',
       '*/mnt/*',
       '*/.git/*',
       '/tmp/*',

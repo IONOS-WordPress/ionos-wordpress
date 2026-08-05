@@ -18,7 +18,7 @@ const IONOS_CUSTOM_DELETED_PLUGINS_OPTION = 'IONOS_CUSTOM_DELETED_PLUGINS_OPTION
 
 // @TODO: hack just for beta : on first run activate all custom plugins
 // will be done in "spaceman" via sql: https://github.com/IONOS-Hosting/spaceman
-// dont initialize in wp-cli calls to prevent issues with command line scripts in wp-env
+// dont initialize in wp-cli calls to prevent issues with command line scripts in the local dev environment
 defined('WP_CLI') || \add_action('plugins_loaded', function () {
   $is_initialized = \get_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION);
   if ($is_initialized !== false) {
@@ -182,7 +182,7 @@ defined('WP_CLI') || \add_action('muplugins_loaded', function () {
  */
 \add_filter('plugins_url', function ($url, $path, $plugin) {
   // if its not one of our plugins just return the original url
-  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required to work in local wp-env
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required to work in the local dev environment
   if (! str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR) && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $url;
   }

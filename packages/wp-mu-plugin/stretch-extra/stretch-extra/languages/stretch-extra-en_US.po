@@ -26,8 +26,8 @@ msgstr "https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp
 
 #. Description of the plugin
 #: stretch-extra.php
-msgid "stretch-extra acts as a wp-env shim to include the php code targeting /opt/WordPress/extra/index.php"
-msgstr "stretch-extra acts as a wp-env shim to include the php code targeting /opt/WordPress/extra/index.php"
+msgid "stretch-extra acts as a shim to include the php code targeting /opt/WordPress/extra/index.php"
+msgstr "stretch-extra acts as a shim to include the php code targeting /opt/WordPress/extra/index.php"
 
 #. Author of the plugin
 #: stretch-extra.php

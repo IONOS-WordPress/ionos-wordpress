@@ -38,7 +38,7 @@ The `chrome-devtools` mcp server id defined in @/.mcp.json and to be started
 - **URL:** http://localhost:8888
 - **Admin Username:** `admin`
 - **Admin Password:** Read from ./.env file in project root (`WP_PASSWORD` variable)
-- **WP-CLI Access:** `pnpm wp-env run cli wp ...`
+- **WP-CLI Access:** `pnpm cli ...`
 
 ## Test Recipes
 
@@ -116,7 +116,7 @@ Parse filenames List to recipes extract recipe names (e.g., `login-flow.md` → 
   - **Test steps:** E2E actions to perform
   - **Expected outcomes:** What to verify
 
-- Execute setup commands using `pnpm wp-env run cli wp ...`
+- Execute setup commands using `pnpm cli ...`
 - Use Chrome DevTools MCP to:
   - Navigate to URLs
   - Find and interact with elements

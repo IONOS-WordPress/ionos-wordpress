@@ -1,5 +1,5 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { execTestCLI } from '../../../../../../../playwright/wp-env';
+import { execTestCLI } from '../../../../../../../playwright/exec-test-cli';
 
 const RESET_IONOS_STRETCH_OPTIONS_CLI_COMMANDS = `
   # reset stretch-extra theme option

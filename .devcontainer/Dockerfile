@@ -33,17 +33,12 @@ RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhisto
 # expose PHP xdebug port 9003
 EXPOSE 9003
 
-# expose wp-env ports
+# expose wp-alpine dev/test container ports
 EXPOSE 8888
 EXPOSE 8889
 
 # expose storybook port
 EXPOSE 6006
-
-# expose wp-env phpmyadmin port
-EXPOSE 9000
-# expose wp-env phpmyadmin test port
-EXPOSE 9001
 
 
 # create message to show at first vscode run
@@ -64,9 +59,6 @@ Have fun !
 EOF
 
 USER $USERNAME
-
-# # when running in a container, the default WP_ENV_HOME should be used
-# ENV WP_ENV_HOME /home/$USERNAME/.wp-env
 
 ENV PNPM_VERSION 9.15.9
 ENV PNPM_NODEJS_VERSION 24.18.0

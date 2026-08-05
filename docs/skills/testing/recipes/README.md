@@ -30,9 +30,9 @@ Brief description of what this recipe tests.
 Optional WP-CLI commands to prepare WordPress before testing:
 
 \`\`\`bash
-pnpm wp-env run cli wp plugin activate my-plugin
-pnpm wp-env run cli wp option update some_setting "value"
-pnpm wp-env run cli wp user create testuser test@example.com --role=subscriber
+pnpm cli plugin activate my-plugin
+pnpm cli option update some_setting "value"
+pnpm cli user create testuser test@example.com --role=subscriber
 \`\`\`
 
 ## Test Steps
@@ -59,7 +59,7 @@ Specific checks to verify the test passed:
 2. Verify element with text [text] exists
 3. Confirm [state] using WP-CLI:
    \`\`\`bash
-   pnpm wp-env run cli wp [command to verify]
+   pnpm cli [command to verify]
    \`\`\`
 
 ## Cleanup (Optional)
@@ -67,8 +67,8 @@ Specific checks to verify the test passed:
 WP-CLI commands to reset WordPress to original state:
 
 \`\`\`bash
-pnpm wp-env run cli wp post delete [ID] --force
-pnpm wp-env run cli wp user delete testuser --yes
+pnpm cli post delete [ID] --force
+pnpm cli user delete testuser --yes
 \`\`\`
 ```
 
@@ -102,7 +102,7 @@ pnpm wp-env run cli wp user delete testuser --yes
 - **Admin:** http://localhost:8888/wp-admin/
 - **Username:** admin
 - **Password:** From `.env` file `WP_PASSWORD` variable
-- **WP-CLI:** `pnpm wp-env run cli wp [command]`
+- **WP-CLI:** `pnpm cli [command]`
 
 ## Chrome DevTools MCP
 
@@ -127,7 +127,7 @@ Tests activating a plugin through WordPress admin.
 Ensure plugin is present but deactivated:
 
 \`\`\`bash
-pnpm wp-env run cli wp plugin deactivate my-plugin
+pnpm cli plugin deactivate my-plugin
 \`\`\`
 
 ## Test Steps
@@ -150,7 +150,7 @@ pnpm wp-env run cli wp plugin deactivate my-plugin
 2. Verify plugin row has "Deactivate" link (not "Activate")
 3. Confirm with WP-CLI:
    \`\`\`bash
-   pnpm wp-env run cli wp plugin list --name=my-plugin --field=status
+   pnpm cli plugin list --name=my-plugin --field=status
    # Should output: active
    \`\`\`
 ```

@@ -7,9 +7,9 @@ Tests enabling the MCP (Model Context Protocol) feature through the IONOS Dashbo
 Clean up any existing MCP configuration and plugin:
 
 ```bash
-pnpm wp-env run cli wp plugin delete wordpress-mcp --deactivate
-pnpm wp-env run cli wp option delete wordpress_mcp_settings
-pnpm wp-env run cli wp user application-password delete 1 --all
+pnpm cli plugin delete wordpress-mcp --deactivate
+pnpm cli option delete wordpress_mcp_settings
+pnpm cli user application-password delete 1 --all
 ```
 
 ## Test Steps
@@ -57,7 +57,7 @@ pnpm wp-env run cli wp user application-password delete 1 --all
 Check that the wordpress-mcp plugin was installed and activated:
 
 ```bash
-pnpm wp-env run cli wp plugin list --name=wordpress-mcp --fields=name,status
+pnpm cli plugin list --name=wordpress-mcp --fields=name,status
 ```
 
 Expected output:
@@ -68,7 +68,7 @@ Expected output:
 Alternative verification:
 
 ```bash
-pnpm wp-env run cli wp plugin is-active wordpress-mcp && echo "Plugin is active" || echo "Plugin is NOT active"
+pnpm cli plugin is-active wordpress-mcp && echo "Plugin is active" || echo "Plugin is NOT active"
 ```
 
 ### 2. Verify MCP Settings Saved
@@ -76,7 +76,7 @@ pnpm wp-env run cli wp plugin is-active wordpress-mcp && echo "Plugin is active"
 Check that MCP settings were saved to options table:
 
 ```bash
-pnpm wp-env run cli wp option get wordpress_mcp_settings
+pnpm cli option get wordpress_mcp_settings
 ```
 
 Should return MCP configuration data (not empty).
@@ -86,7 +86,7 @@ Should return MCP configuration data (not empty).
 Check that an application password was generated for user ID 1 (admin):
 
 ```bash
-pnpm wp-env run cli wp user application-password list 1 --format=count
+pnpm cli user application-password list 1 --format=count
 ```
 
 Expected output: At least `1` (one or more application passwords exist)
@@ -94,7 +94,7 @@ Expected output: At least `1` (one or more application passwords exist)
 Get details of the application password:
 
 ```bash
-pnpm wp-env run cli wp user application-password list 1 --fields=name,created
+pnpm cli user application-password list 1 --fields=name,created
 ```
 
 Should show an application password (likely named related to MCP or wordpress-mcp).
@@ -104,7 +104,7 @@ Should show an application password (likely named related to MCP or wordpress-mc
 ### Check Plugin Files Exist
 
 ```bash
-pnpm wp-env run cli wp plugin path wordpress-mcp --dir
+pnpm cli plugin path wordpress-mcp --dir
 ```
 
 Should return a valid plugin directory path.
@@ -112,7 +112,7 @@ Should return a valid plugin directory path.
 ### Verify Plugin Metadata
 
 ```bash
-pnpm wp-env run cli wp plugin get wordpress-mcp --fields=name,version,status
+pnpm cli plugin get wordpress-mcp --fields=name,version,status
 ```
 
 Should show plugin details with status `active`.
@@ -147,9 +147,9 @@ If verification fails:
 To reset MCP configuration for next test run:
 
 ```bash
-pnpm wp-env run cli wp plugin delete wordpress-mcp --deactivate
-pnpm wp-env run cli wp option delete wordpress_mcp_settings
-pnpm wp-env run cli wp user application-password delete 1 --all
+pnpm cli plugin delete wordpress-mcp --deactivate
+pnpm cli option delete wordpress_mcp_settings
+pnpm cli user application-password delete 1 --all
 ```
 
 ## Notes

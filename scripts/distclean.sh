@@ -5,19 +5,16 @@
 #
 # this script cleans up the environment as if it was never started
 #
-# ATTENTION: Please ensure that wp-env is stopped before cleaning up wp-env-home
+# ATTENTION: Please ensure that the dev container is stopped before cleaning up
 #
 
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
-# MARK: test wp-env not running
-# ensure wp-env is not running
-# - if the install path does not exist
-# - and the wp-env containers are not running
-WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env status --json | jq -r .installPath))"
-if [[ -d "$WPENV_INSTALLPATH/WordPress" ]] && [[ "$(docker ps -q --filter "name=$(basename $WPENV_INSTALLPATH)" | wc -l)" == '6' ]]; then
-  ionos.wordpress.log_warn "wp-env is already running. Excecute 'pnpm stop' or 'pnpm destroy' to stop it before cleaning up."
+# MARK: test dev container not running
+# ensure the dev container is not running before cleaning up
+if docker ps --filter "name=${CONTAINER_NAME}" --format '{{.Names}}' | grep -qx "$CONTAINER_NAME"; then
+  ionos.wordpress.log_warn "dev container '$CONTAINER_NAME' is already running. Excecute 'pnpm stop' or 'pnpm destroy' to stop it before cleaning up."
   exit 1
 fi
 # ENDMARK
@@ -56,6 +53,5 @@ git clean $GIT_CLEAN_OPTS \
   -ff \
   -e '!/*.code-workspace' \
   -e '!/*.secrets' \
-  -e '!/*.env.local' \
-  -e '!/.wp-env.override.json'
+  -e '!/*.env.local'
 

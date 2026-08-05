@@ -231,8 +231,9 @@ function ionos.wordpress.get_plugin_textdomains() {
 }
 
 # invoke dockerized wp-cli with current directory mounted at /var/www/html
-# the used docker image is the docker image wordpress:cli is independant from wp-env free us from starting up wp-env when building.
-# image to will be downloaded on demand.
+# the used docker image is the docker image wordpress:cli which is independent from the
+# dev/test containers, freeing us from starting either up when building. image will be
+# downloaded on demand.
 #
 # all params will be delegated to the dockerized wp-cli command
 #

@@ -96,8 +96,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # WordPress/WordPress (the release-build mirror used for WORDPRESS_VERSION) has no
   # tests/ directory at all - the test suite (WP_UnitTestCase and friends) only lives
   # in WordPress/wordpress-develop, always on `trunk` regardless of the core version
-  # being tested (confirmed against a real wp-env cache's tests-WordPress-PHPUnit/.git
-  # remote - wp-env clones this same fixed repo/branch, decoupled from WP_ENV_CORE).
+  # being tested.
   readonly TESTS_DIR="${MNT_HOME}/wordpress-tests/trunk"
 
   # PHP_VERSION_OVERRIDE runs the test stack against a prebuilt minimum-supported-
@@ -224,7 +223,7 @@ EOL
   # provide part specific options and all positional arguments that are php files
   # (files will be converted to '--filter *TestCase' arguments to match PHPUnit expectations).
   # run via `sh -c` (not separate argv entries) so USE_OPTIONS[php] can itself contain
-  # multiple space-separated phpunit options, matching the previous wp-env behavior.
+  # multiple space-separated phpunit options.
   docker exec --user php "$TEST_CONTAINER_NAME" sh -c \
     "phpunit -c /htdocs/phpunit/phpunit.xml ${USE_OPTIONS[php]} \
     $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.php ]] && printf -- "--filter '%s' " $(basename $file .php); done)"

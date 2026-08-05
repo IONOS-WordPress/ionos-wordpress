@@ -7,7 +7,7 @@ shows instead of extendify-launch page
 to recreate extendify setup run:
 
 ```
-pnpm wp-env run cli wp plugin install https://web-hosting.s3-eu-central-1.ionoscloud.com/extendify/01-ext-ion2hs971.zip --force --activate
-pnpm wp-env run cli wp plugin install extendify --activate
-pnpm wp-env run cli wp theme install extendable --activate
+pnpm cli plugin install https://web-hosting.s3-eu-central-1.ionoscloud.com/extendify/01-ext-ion2hs971.zip --force --activate
+pnpm cli plugin install extendify --activate
+pnpm cli theme install extendable --activate
 ```

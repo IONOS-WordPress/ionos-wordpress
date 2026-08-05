@@ -71,7 +71,7 @@ The MCP integration is particularly valuable for testing skills (see [Testing sk
 Example usage:
 
 ```
-install and activate the plugins 'akisment' and 'woocommerce' in the wp-env development instance using `pnpm wp-env run cli wp ...`
+install and activate the plugins 'akisment' and 'woocommerce' in the dev container using `pnpm cli ...`
 
 use mcp server chrome-devtools to login to http://localhost:8888 using user `admin`and the password declared in WP_PASSWORD in the project .env file and go to the woocommerce plugin settings file.
 ```
