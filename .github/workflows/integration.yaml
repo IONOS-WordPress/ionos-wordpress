@@ -116,8 +116,8 @@ jobs:
           path: |-
             ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
 
-  test-php74:
-    name: test against legacy PHP 7.4
+  test-php83:
+    name: test against minimum supported PHP 8.3
     runs-on: ubuntu-latest
     needs:
       - devcontainer
@@ -145,24 +145,20 @@ jobs:
           runCmd: |
             pnpm run build
       - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: test project against prebuilt PHP 7.4 image
+        name: test project against prebuilt PHP 8.3 image
         with:
           env: |
             IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
             IMAGE_REPOSITORY=${{ env.IMAGE_REPOSITORY }}
             IMAGE_REGISTRY_USERNAME=${{ github.repository_owner }}
             IMAGE_REGISTRY_PASSWORD=${{ secrets.GITHUB_TOKEN }}
-          # scripts/test.sh pulls the prebuilt :<hash>-php7.4 tag itself when
+          # scripts/test.sh pulls the prebuilt :<hash>-php8.3 tag itself when
           # PHP_VERSION_OVERRIDE is set - no local image build on this leg.
-          # TEST_PRODUCTION=true is required alongside it: source is written
-          # against PHP 8+ syntax, only rector's transpiled dist/ output is
-          # meant to run under PHP 7.4. @mcp is excluded: it depends on a
-          # third-party plugin (Automattic/wordpress-mcp) downloaded fresh at
-          # test time, outside our own rector transpile pipeline entirely, and
-          # not PHP 7.4-compatible - unrelated to our own code's PHP 7.4
-          # compatibility, which is what this leg exists to validate
+          # Source is written against PHP 8.3+ syntax (see AGENTS.md), so this
+          # runs in source mode as-is - no TEST_PRODUCTION=true requirement,
+          # and no need to exclude @mcp (PHP 8.3 fully supports it)
           runCmd: |
-            TEST_PRODUCTION=true PHP_VERSION_OVERRIDE=7.4 pnpm run test --e2e-opts "--grep-invert @mcp"
+            PHP_VERSION_OVERRIDE=8.3 pnpm run test
 
   lint:
     runs-on: ubuntu-latest

@@ -100,21 +100,15 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # remote - wp-env clones this same fixed repo/branch, decoupled from WP_ENV_CORE).
   readonly TESTS_DIR="${MNT_HOME}/wordpress-tests/trunk"
 
-  # PHP_VERSION_OVERRIDE runs the test stack against a prebuilt legacy-PHP image
-  # from the registry instead of the local PHP 8.4 build (see .github/workflows/
-  # build-wp-alpine-image.yaml's published matrix) - no local image build, since
-  # this path runs on every PR update and locally, not just occasionally.
+  # PHP_VERSION_OVERRIDE runs the test stack against a prebuilt minimum-supported-
+  # PHP-version image from the registry instead of the local PHP 8.4 build (see
+  # .github/workflows/build-wp-alpine-image.yaml's published matrix) - no local
+  # image build, since this path runs on every PR update and locally, not just
+  # occasionally. Source is written against PHP 8.3+ syntax (see AGENTS.md), so
+  # this works in source mode as-is - no TEST_PRODUCTION=true requirement.
   if [[ -n "${PHP_VERSION_OVERRIDE:-}" ]]; then
-    if [[ "$PHP_VERSION_OVERRIDE" != '7.4' ]]; then
-      ionos.wordpress.log_error "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE is not part of the prebuilt wp-alpine image matrix (7.4)"
-      exit 1
-    fi
-
-    # source is written against PHP 8+ syntax - only rector's transpiled dist/
-    # output (TEST_PRODUCTION=true) is meant to run under PHP 7.4, so running
-    # source directly against a real PHP 7.4 interpreter always fatals
-    if [[ "${TEST_PRODUCTION:-}" != 'true' ]]; then
-      ionos.wordpress.log_error "PHP_VERSION_OVERRIDE requires TEST_PRODUCTION=true alongside it"
+    if [[ "$PHP_VERSION_OVERRIDE" != '8.3' ]]; then
+      ionos.wordpress.log_error "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE is not part of the prebuilt wp-alpine image matrix (8.3)"
       exit 1
     fi
 

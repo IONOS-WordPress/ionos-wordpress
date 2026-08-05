@@ -33,11 +33,14 @@ class ClassNBATest extends \WP_UnitTestCase {
 
     $ID = 'my-test-action';
 
-    // positional, not named, arguments: phpunit/ test files are bind-mounted
-    // from source (never rector-transpiled) even under PHP_VERSION_OVERRIDE,
-    // and named arguments are a PHP 8.0+ syntax feature - a parse error under
-    // PHP_VERSION_OVERRIDE=7.4's real PHP 7.4 interpreter
-    NBA::register($ID, 'Test title', 'Test description', 'https://example.com', 'Test CTA', false);
+    NBA::register(
+      id: $ID,
+      title: 'Test title',
+      description: 'Test description',
+      link: 'https://example.com',
+      anchor: 'Test CTA',
+      completed: false,
+    );
 
     $new_nba_count = count(NBA::get_actions());
     $this->assertEquals($nba_count + 1, $new_nba_count, 'registered nbas should contain our newly added nba');
@@ -52,8 +55,14 @@ class ClassNBATest extends \WP_UnitTestCase {
   public function test_nba_status() : void {
     $ID = 'my-test-action-2';
 
-    // positional, not named, arguments - see test_nba_action() above
-    NBA::register($ID, 'Test title 2', 'Test description 2', 'https://example.com', 'Test CTA 2', false);
+    NBA::register(
+      id: $ID,
+      title: 'Test title 2',
+      description: 'Test description 2',
+      link: 'https://example.com',
+      anchor: 'Test CTA 2',
+      completed: false,
+    );
 
     $nba = NBA::get_nba($ID);
     $this->assertTrue($nba->active);
@@ -64,8 +73,14 @@ class ClassNBATest extends \WP_UnitTestCase {
   public function test_nba_not_active_by_registration() : void {
     $ID = 'my-test-action-3';
 
-    // positional, not named, arguments - see test_nba_action() above
-    NBA::register($ID, 'Test title 3', 'Test description 3', 'https://example.com', 'Test CTA 3', true);
+    NBA::register(
+      id: $ID,
+      title: 'Test title 3',
+      description: 'Test description 3',
+      link: 'https://example.com',
+      anchor: 'Test CTA 3',
+      completed: true,
+    );
 
     $nba = NBA::get_nba($ID);
     $this->assertFalse($nba->active);
