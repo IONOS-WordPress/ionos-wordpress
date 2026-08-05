@@ -99,15 +99,17 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # being tested.
   readonly TESTS_DIR="${MNT_HOME}/wordpress-tests/trunk"
 
-  # PHP_VERSION_OVERRIDE runs the test stack against a prebuilt minimum-supported-
-  # PHP-version image from the registry instead of the local PHP 8.4 build (see
-  # .github/workflows/build-wp-alpine-image.yaml's published matrix) - no local
-  # image build, since this path runs on every PR update and locally, not just
-  # occasionally. Source is written against PHP 8.3+ syntax (see AGENTS.md), so
-  # this works in source mode as-is - no TEST_PRODUCTION=true requirement.
+  # PHP_VERSION_OVERRIDE runs the test stack against the minimum-supported-PHP-
+  # version image, preferring the prebuilt image from the registry (see
+  # .github/workflows/build-wp-alpine-image.yaml's matrix) to avoid a local build
+  # on every PR update - but falling back to building it locally (matching
+  # packages/docker/wp-alpine/Dockerfile's documented php/alpine pairs) if the
+  # registry doesn't have it, e.g. the matrix leg is disabled or offline dev use.
+  # Source is written against PHP 8.3+ syntax (see AGENTS.md), so this works in
+  # source mode as-is - no TEST_PRODUCTION=true requirement.
   if [[ -n "${PHP_VERSION_OVERRIDE:-}" ]]; then
     if [[ "$PHP_VERSION_OVERRIDE" != '8.3' ]]; then
-      ionos.wordpress.log_error "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE is not part of the prebuilt wp-alpine image matrix (8.3)"
+      ionos.wordpress.log_error "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE is not part of the wp-alpine image matrix (8.3)"
       exit 1
     fi
 
@@ -118,15 +120,28 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
       echo "$IMAGE_REGISTRY_PASSWORD" | docker login "$IMAGE_REGISTRY" --username "$IMAGE_REGISTRY_USERNAME" --password-stdin
     fi
 
-    ionos.wordpress.log_info "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE set - pulling prebuilt test image $WP_ALPINE_IMAGE (no local build) ..."
+    ionos.wordpress.log_info "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE set - pulling prebuilt test image $WP_ALPINE_IMAGE ..."
     # retry: a push that touches both packages/docker/wp-alpine/** and CI can race
     # the separate build-wp-alpine-image.yaml publish job that tags this same commit
+    PULLED=no
     for i in $(seq 1 5); do
-      docker pull "$WP_ALPINE_IMAGE" && break
-      [[ $i -eq 5 ]] && exit 1
+      docker pull "$WP_ALPINE_IMAGE" && { PULLED=yes; break; }
+      [[ $i -eq 5 ]] && break
       ionos.wordpress.log_warn "pull failed, image may still be publishing - retrying in 30s ($i/5) ..."
       sleep 30
     done
+
+    if [[ "$PULLED" != 'yes' ]]; then
+      ionos.wordpress.log_warn "could not pull $WP_ALPINE_IMAGE from the registry - building it locally instead"
+      docker build \
+        --build-arg ARG_PHP_VERSION=8.3 \
+        --build-arg ARG_ALPINE_VERSION=3.20 \
+        --build-arg HOST_UID="$(id -u)" \
+        --build-arg HOST_GID="$(id -g)" \
+        -t "$WP_ALPINE_IMAGE" \
+        -f packages/docker/wp-alpine/Dockerfile \
+        .
+    fi
   else
     readonly WP_ALPINE_IMAGE='ionos-wordpress/wp-alpine:latest'
   fi
