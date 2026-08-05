@@ -31,7 +31,7 @@ function _rest_loop_callback(): \WP_REST_Response
     'wordpress'     => [
       'user_data'           => \count_users('memory'),
       'active_theme'        => _get_active_theme(),
-      'active_plugins'      => _get_plugins(),
+      'plugins'             => _get_plugins(),
       'posts'               => _get_posts_and_pages(),
       'comments'            => _get_comments(),
       'uploads'             => _get_uploads(),
@@ -157,21 +157,20 @@ function _get_plugins(): array
   if (! function_exists('get_plugins')) {
     require_once ABSPATH . 'wp-admin/includes/plugin.php';
   }
-
   $all_plugins    = \get_plugins();
   $active_plugins = \get_option('active_plugins', []);
   $auto_updates   = \get_site_option('auto_update_plugins', []);
 
   $active_plugins_data = [];
 
-  foreach ($active_plugins as $plugin_slug) {
-    if (isset($all_plugins[$plugin_slug])) {
-      $plugin_data = $all_plugins[$plugin_slug];
+  foreach ($all_plugins as $plugin_slug => $plugin_data) {
+    if (true) {
 
       $active_plugins_data[] = [
         'plugin_slug' => $plugin_slug,
         'version'     => $plugin_data['Version'],
-        'auto_update' => in_array($plugin_slug, $auto_updates, true),
+        'auto_update' => in_array($plugin_slug, $auto_updates),
+        'active'      => in_array($plugin_slug, $active_plugins, true),
       ];
     }
   }
