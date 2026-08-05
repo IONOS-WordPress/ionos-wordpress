@@ -28,6 +28,33 @@ case "$PHP_VERSION" in
   *) PHP_ETC_DIR="/etc/php${PHP_VERSION//./}" ;;
 esac
 
+# The Dockerfile's HOST_UID/HOST_GID build-args only match the uid/gid of
+# whoever happened to build the image - fine for a local build (always the
+# current developer), but a *published/pulled* image (see PHP_VERSION_OVERRIDE
+# and CI's prebuilt-image reuse, both deliberately never rebuild locally)
+# bakes in whatever uid built it in the publish workflow, independent of
+# whoever actually runs the container. Remap the php user at container start
+# instead, from a runtime env var of the same name, so one published image
+# works correctly no matter which host uid consumes it - otherwise files the
+# container writes into host bind mounts (e.g. the shared core/theme cache)
+# come back owned by a uid the host user can't clean up.
+PHP_UID_REMAPPED=
+if [[ -n "${HOST_UID:-}" ]] && [[ "$HOST_UID" != "$(id -u php)" ]]; then
+  usermod -u "$HOST_UID" php
+  PHP_UID_REMAPPED=1
+fi
+if [[ -n "${HOST_GID:-}" ]] && [[ "$HOST_GID" != "$(id -g php)" ]]; then
+  groupmod -g "$HOST_GID" php
+  PHP_UID_REMAPPED=1
+fi
+# only the (potentially large, shared) /htdocs tree needs the recursive
+# chown skipped when nothing actually changed - the common case, since
+# scripts/start.sh|test.sh always pass the current host's uid/gid and a
+# locally-built image already matches it
+if [[ -n "$PHP_UID_REMAPPED" ]]; then
+  chown -R php:php /htdocs /home/php /opt/wp-tests
+fi
+
 echo 'Updating configurations'
 
 sed -i \

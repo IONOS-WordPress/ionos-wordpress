@@ -169,6 +169,8 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
     --env WORDPRESS_DB_PASSWORD=password \
     --env WORDPRESS_CONFIG_EXTRA="define('ABSPATH','/htdocs/');" \
     --env WP_TESTS_DIR=/wordpress-phpunit \
+    --env HOST_UID="$(id -u)" \
+    --env HOST_GID="$(id -g)" \
     "${VOLUME_ARGS[@]}" \
     "$WP_ALPINE_IMAGE" >/dev/null
 

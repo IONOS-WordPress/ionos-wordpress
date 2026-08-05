@@ -50,6 +50,8 @@ else
     --env WP_PASSWORD="$WP_PASSWORD" \
     --env HTTP_PORT="$HTTP_PORT" \
     --env AFTER_START="${AFTER_START:-}" \
+    --env HOST_UID="$(id -u)" \
+    --env HOST_GID="$(id -g)" \
     "${VOLUME_ARGS[@]}" \
     ionos-wordpress/wp-alpine:latest >/dev/null
 fi
