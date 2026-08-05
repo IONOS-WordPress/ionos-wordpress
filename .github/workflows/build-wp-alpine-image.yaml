@@ -34,8 +34,8 @@ jobs:
         include:
           - php: '8.4'
             alpine: '3.24'
-          - php: '8.3'
-            alpine: '3.20'
+          # - php: '8.3'
+          #   alpine: '3.20'
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v6

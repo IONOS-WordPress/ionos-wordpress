@@ -8,7 +8,7 @@ created_at: 2026-08-03T10:59:47Z
 updated_at: 2026-08-05T14:38:23Z
 parent: dav1
 blocked_by:
-    - 7wdg
+  - 7wdg
 ---
 
 Goal: remove wp-env entirely.
@@ -66,7 +66,7 @@ See docs/agent/wp-env-to-alpine-migration-plan.md for full context.
   migration), `mnt/` (gitignored WordPress-core test fixture with its own unrelated `.wp-env.sample.json`), the
   generated/untracked `ionos-wordpress.sbom.syft.json`, and a handful of comparative/historical comments in
   `.env`, `scripts/includes/_docker-mounts.sh`, `playwright.config.js`, `playwright/exec-test-cli.js` and
-  `packages/docker/wp-alpine/*` that explain *why* something changed relative to the old wp-env setup (legitimate
+  `packages/docker/wp-alpine/*` that explain _why_ something changed relative to the old wp-env setup (legitimate
   historical context, not stale fact).
 
 ## Verification performed locally
