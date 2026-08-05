@@ -111,8 +111,17 @@ function get_localized_config(string $key): mixed
     $ionos_plugins_list = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
     $wordpress_plugins  = [];
 
-    $ionos_plugins_list[] = extendify\get_site_assistant_info();
-
+    $site_assistant = extendify\get_site_assistant_info();
+    $site_assistant += [
+      'rating'          => 0,
+      'ratings'         => ['5' => 0, '4' => 0, '3' => 0, '2' => 0, '1' => 0],
+      'num_ratings'     => 0,
+      'active_installs' => 0,
+      'last_updated'    => \date('Y-m-d', \strtotime('-2 years')),
+      'version'         => 'latest',
+      'author'          => '<a href="https://www.ionos-group.com/brands.html">IONOS Group</a>',
+    ];
+    $ionos_plugins_list[] = $site_assistant;
     $slugs = $config['wordpress_org_plugins'] ?? [];
     if (! empty($slugs)) {
       $field_query_string = \http_build_query([
