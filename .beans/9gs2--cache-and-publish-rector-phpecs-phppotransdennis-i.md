@@ -12,7 +12,7 @@ The lint and integration workflows currently rebuild the rector-php, ecs-php,
 potrans, and dennis-i18n docker images (packages/docker/*) from scratch on
 every run, since scripts/build.sh's docker-image build step
 (ionos.wordpress.build_workspace_package_docker) only skips a rebuild when a
-matching image+build-info already exists *locally* - there's no
+matching image+build-info already exists _locally_ - there's no
 registry-backed cache like wp-alpine has via build-wp-alpine-image.yaml.
 
 ## Goal
@@ -23,7 +23,7 @@ as wp-alpine) so the next workflow run can pull it instead of rebuilding.
 
 ## Tagging
 
-Reuse the *devcontainer* image's tagging mechanism, not wp-alpine's:
+Reuse the _devcontainer_ image's tagging mechanism, not wp-alpine's:
 .github/shared/actions/devcontainer-image-name/action.yaml derives the tag
 from the git last-modified date of the relevant files
 (\`git log -1 --format=\"%cd\" --date=format:'%Y-%m-%d-%H-%M-%S' -- <path>\`),
