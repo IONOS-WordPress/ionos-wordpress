@@ -308,7 +308,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       return $result;
     }
 
-    if ($args->slug === 'site-assistant') {
+    if ($args->slug === 'site-assistant' || \str_starts_with($args->slug, '01-ext-')) {
       $info = extendify\get_site_assistant_info();
       return (object) $info;
     }
