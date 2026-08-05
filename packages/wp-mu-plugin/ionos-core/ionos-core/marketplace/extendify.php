@@ -15,9 +15,8 @@ function get_site_assistant_license(): string
   }
 
   if (\defined('EXTENDIFY_PARTNER_ID')) {
-    $license = constant('EXTENDIFY_PARTNER_ID');
-    \update_option(SITE_ASSISTANT_OPTION_KEY, $license);
-    return $license;
+    \update_option(SITE_ASSISTANT_OPTION_KEY, EXTENDIFY_PARTNER_ID);
+    return EXTENDIFY_PARTNER_ID;
   }
 
   $default = '01-ext-ion8dhas7';
