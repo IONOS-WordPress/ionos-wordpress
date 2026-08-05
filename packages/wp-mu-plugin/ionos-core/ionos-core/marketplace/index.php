@@ -318,8 +318,16 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
     }
 
     if ($args->slug === 'site-assistant' || \str_starts_with($args->slug, '01-ext-')) {
-      $info = extendify\get_site_assistant_info();
-      return (object) $info;
+      $info = (object) extendify\get_site_assistant_info();
+
+      $info->version  ??= 'latest';
+      $info->author   ??= '<a href="https://www.ionos-group.com/brands.html">IONOS Group</a>';
+      $info->requires ??= '6.0';
+      $info->sections ??= [
+        \_x('Description', 'Plugin installer section title') => $info->short_description ?? '',
+      ];
+
+      return $info;
     }
 
     $config = get_config();
