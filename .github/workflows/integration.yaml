@@ -156,9 +156,13 @@ jobs:
           # PHP_VERSION_OVERRIDE is set - no local image build on this leg.
           # TEST_PRODUCTION=true is required alongside it: source is written
           # against PHP 8+ syntax, only rector's transpiled dist/ output is
-          # meant to run under PHP 7.4
+          # meant to run under PHP 7.4. @mcp is excluded: it depends on a
+          # third-party plugin (Automattic/wordpress-mcp) downloaded fresh at
+          # test time, outside our own rector transpile pipeline entirely, and
+          # not PHP 7.4-compatible - unrelated to our own code's PHP 7.4
+          # compatibility, which is what this leg exists to validate
           runCmd: |
-            TEST_PRODUCTION=true PHP_VERSION_OVERRIDE=7.4 pnpm run test
+            TEST_PRODUCTION=true PHP_VERSION_OVERRIDE=7.4 pnpm run test --e2e-opts "--grep-invert @mcp"
 
   lint:
     runs-on: ubuntu-latest
