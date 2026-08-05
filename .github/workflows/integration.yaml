@@ -31,6 +31,13 @@ env:
   # build-wp-alpine-image.yaml) - same repo vars/defaults, never hardcoded
   IMAGE_REGISTRY: ${{ vars.IMAGE_REGISTRY || 'ghcr.io' }}
   IMAGE_REPOSITORY: ${{ vars.IMAGE_REPOSITORY || 'ionos-wordpress/wp-alpine-dev' }}
+  # registry repository prefix the rector-php/ecs-php/potrans/dennis-i18n
+  # docker sub-project images (packages/docker/*) are cached under, one
+  # repository per sub-project (e.g. ionos-wordpress/rector-php) - same
+  # registry as wp-alpine, same vars/defaults convention, never hardcoded
+  DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX: ${{ vars.IMAGE_REPOSITORY_PREFIX || 'ionos-wordpress' }}
+  DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME: ${{ secrets.IMAGE_REGISTRY_USERNAME || github.actor }}
+  DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD: ${{ secrets.IMAGE_REGISTRY_PASSWORD || secrets.GITHUB_TOKEN }}
 
 jobs:
   devcontainer:
@@ -87,6 +94,16 @@ jobs:
               echo "::warning::could not pull prebuilt wp-alpine image $IMAGE - falling back to a local build"
             fi
 
+      - uses: './.github/shared/actions/docker-subproject-cache-pull'
+        id: pull_rector_php_image
+        name: pull prebuilt rector-php image
+        with:
+          path: packages/docker/rector-php
+          registry: ${{ env.IMAGE_REGISTRY }}
+          repository: ${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/rector-php
+          registry-username: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
+          registry-password: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
+
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: build project
         with:
@@ -97,6 +114,17 @@ jobs:
             # are declared workspace deps too, but only used by scripts/lint.sh - building
             # them here would be wasted work. wp-alpine is already pulled/tagged above.
             pnpm run build --filter './packages/wp-plugin/*' --filter './packages/wp-mu-plugin/*' --filter '@ionos-wordpress/rector-php'
+
+      - uses: './.github/shared/actions/docker-subproject-cache-push'
+        name: publish rector-php image
+        with:
+          path: packages/docker/rector-php
+          registry: ${{ env.IMAGE_REGISTRY }}
+          repository: ${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/rector-php
+          registry-username: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
+          registry-password: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
+          skip: ${{ steps.pull_rector_php_image.outputs.pulled }}
+
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: test project
         with:
@@ -141,6 +169,36 @@ jobs:
         with:
           runCmd: |
             pnpm install --frozen-lockfile
+      - uses: './.github/shared/actions/docker-subproject-cache-pull'
+        id: pull_ecs_php_image
+        name: pull prebuilt ecs-php image
+        with:
+          path: packages/docker/ecs-php
+          registry: ${{ env.IMAGE_REGISTRY }}
+          repository: ${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/ecs-php
+          registry-username: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
+          registry-password: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
+
+      - uses: './.github/shared/actions/docker-subproject-cache-pull'
+        id: pull_potrans_image
+        name: pull prebuilt potrans image
+        with:
+          path: packages/docker/potrans
+          registry: ${{ env.IMAGE_REGISTRY }}
+          repository: ${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/potrans
+          registry-username: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
+          registry-password: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
+
+      - uses: './.github/shared/actions/docker-subproject-cache-pull'
+        id: pull_dennis_i18n_image
+        name: pull prebuilt dennis-i18n image
+        with:
+          path: packages/docker/dennis-i18n
+          registry: ${{ env.IMAGE_REGISTRY }}
+          repository: ${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/dennis-i18n
+          registry-username: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
+          registry-password: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
+
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: build necessary dockers
         with:
@@ -151,6 +209,36 @@ jobs:
         with:
           runCmd: |
             pnpm run lint
+
+      - uses: './.github/shared/actions/docker-subproject-cache-push'
+        name: publish ecs-php image
+        with:
+          path: packages/docker/ecs-php
+          registry: ${{ env.IMAGE_REGISTRY }}
+          repository: ${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/ecs-php
+          registry-username: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
+          registry-password: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
+          skip: ${{ steps.pull_ecs_php_image.outputs.pulled }}
+
+      - uses: './.github/shared/actions/docker-subproject-cache-push'
+        name: publish potrans image
+        with:
+          path: packages/docker/potrans
+          registry: ${{ env.IMAGE_REGISTRY }}
+          repository: ${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/potrans
+          registry-username: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
+          registry-password: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
+          skip: ${{ steps.pull_potrans_image.outputs.pulled }}
+
+      - uses: './.github/shared/actions/docker-subproject-cache-push'
+        name: publish dennis-i18n image
+        with:
+          path: packages/docker/dennis-i18n
+          registry: ${{ env.IMAGE_REGISTRY }}
+          repository: ${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/dennis-i18n
+          registry-username: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
+          registry-password: ${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
+          skip: ${{ steps.pull_dennis_i18n_image.outputs.pulled }}
 
       # # automatically approve and merge dependabot PRs
       # dependabot:

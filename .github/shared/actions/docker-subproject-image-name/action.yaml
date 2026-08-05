@@ -1,0 +1,28 @@
+name: 'docker subproject image tag'
+description: |
+  compute a date-based tag for a packages/docker/* sub-project, derived from
+  the git last-modified date of files under the given path - generalizes
+  devcontainer-image-name's tagging scheme (which hardcodes .devcontainer) to
+  an arbitrary docker sub-project directory (e.g. packages/docker/rector-php).
+
+inputs:
+  path:
+    description: 'path to the docker sub-project directory (e.g. packages/docker/rector-php)'
+    required: true
+
+outputs:
+  tag:
+    description: 'the computed date-based tag'
+    value: ${{ steps.compute_tag.outputs.tag }}
+
+runs:
+  using: 'composite'
+  steps:
+    - id: compute_tag
+      shell: bash
+      run: |
+        # get last modified date of the given path's files
+        LAST_MODIFIED=$(git log -1 --format="%cd" --date=format:'%Y-%m-%d-%H-%M-%S' -- "${{ inputs.path }}")
+        echo "Last modified date of ${{ inputs.path }} files: $LAST_MODIFIED"
+        git log -1 -- "${{ inputs.path }}"
+        echo "tag=${LAST_MODIFIED}" >> "$GITHUB_OUTPUT"

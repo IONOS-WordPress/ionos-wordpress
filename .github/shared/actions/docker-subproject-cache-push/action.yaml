@@ -1,0 +1,49 @@
+name: 'docker subproject cache push'
+description: |
+  push a freshly (re)built packages/docker/* sub-project image to the
+  registry, tagged with the same date-based tag docker-subproject-cache-pull
+  looks for, so the next workflow run can pull it instead of rebuilding.
+  no-op when `skip` is "true" (e.g. because docker-subproject-cache-pull
+  already found a cached image, so nothing new was built).
+
+inputs:
+  path:
+    description: 'path to the docker sub-project directory (e.g. packages/docker/rector-php)'
+    required: true
+  registry:
+    description: 'container registry to push the image to'
+    required: true
+  repository:
+    description: 'registry repository to push the image to (e.g. ionos-wordpress/rector-php)'
+    required: true
+  registry-username:
+    description: 'username used to authenticate against the registry'
+    required: true
+  registry-password:
+    description: 'password/token used to authenticate against the registry'
+    required: true
+  skip:
+    description: 'skip pushing, e.g. because docker-subproject-cache-pull already found a cached image'
+    required: false
+    default: 'false'
+
+runs:
+  using: 'composite'
+  steps:
+    - if: inputs.skip != 'true'
+      uses: './.github/shared/actions/docker-subproject-image-name'
+      id: image_tag
+      with:
+        path: ${{ inputs.path }}
+
+    - if: inputs.skip != 'true'
+      shell: bash
+      run: |
+        LOCAL_IMAGE_NAME="$(jq -r '.name' "${{ inputs.path }}/package.json" | sed -r 's/@//g')"
+        PACKAGE_VERSION="$(jq -r '.version' "${{ inputs.path }}/package.json")"
+        IMAGE="${{ inputs.registry }}/${{ inputs.repository }}:${{ steps.image_tag.outputs.tag }}"
+
+        echo "${{ inputs.registry-password }}" | docker login "${{ inputs.registry }}" --username "${{ inputs.registry-username }}" --password-stdin
+
+        docker tag "${LOCAL_IMAGE_NAME}:${PACKAGE_VERSION}" "$IMAGE"
+        docker push "$IMAGE"

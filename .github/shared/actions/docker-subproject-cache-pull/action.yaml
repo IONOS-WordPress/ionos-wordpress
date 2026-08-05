@@ -1,0 +1,61 @@
+name: 'docker subproject cache pull'
+description: |
+  attempt to pull a previously published image for a packages/docker/*
+  sub-project (rector-php, ecs-php, potrans, dennis-i18n, ...) from the
+  registry and tag it locally as <docker-image-name>:<package-version> and
+  :latest, plus touch <path>/build-info - so scripts/build.sh's existing
+  local-cache check (ionos.wordpress.build_workspace_package_docker) skips
+  rebuilding it. falls back silently to a local build if the tag isn't
+  published yet or the pull fails - no hard dependency on the image having
+  been published before.
+
+inputs:
+  path:
+    description: 'path to the docker sub-project directory (e.g. packages/docker/rector-php)'
+    required: true
+  registry:
+    description: 'container registry to pull the cached image from'
+    required: true
+  repository:
+    description: 'registry repository to pull the cached image from (e.g. ionos-wordpress/rector-php)'
+    required: true
+  registry-username:
+    description: 'username used to authenticate against the registry'
+    required: true
+  registry-password:
+    description: 'password/token used to authenticate against the registry'
+    required: true
+
+outputs:
+  pulled:
+    description: '"true" if a cached image was pulled and tagged locally, "false" if a local build is still needed'
+    value: ${{ steps.pull.outputs.pulled }}
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: './.github/shared/actions/docker-subproject-image-name'
+      id: image_tag
+      with:
+        path: ${{ inputs.path }}
+
+    - id: pull
+      shell: bash
+      run: |
+        IMAGE="${{ inputs.registry }}/${{ inputs.repository }}:${{ steps.image_tag.outputs.tag }}"
+        # derive the local image name the same way scripts/build.sh does
+        # (docker-image-name from the package.json name, stripped of '@')
+        LOCAL_IMAGE_NAME="$(jq -r '.name' "${{ inputs.path }}/package.json" | sed -r 's/@//g')"
+        PACKAGE_VERSION="$(jq -r '.version' "${{ inputs.path }}/package.json")"
+
+        echo "${{ inputs.registry-password }}" | docker login "${{ inputs.registry }}" --username "${{ inputs.registry-username }}" --password-stdin
+
+        if docker pull "$IMAGE"; then
+          docker tag "$IMAGE" "${LOCAL_IMAGE_NAME}:${PACKAGE_VERSION}"
+          docker tag "$IMAGE" "${LOCAL_IMAGE_NAME}:latest"
+          touch "${{ inputs.path }}/build-info"
+          echo "pulled=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "::warning::could not pull prebuilt image $IMAGE - falling back to a local build"
+          echo "pulled=false" >> "$GITHUB_OUTPUT"
+        fi
