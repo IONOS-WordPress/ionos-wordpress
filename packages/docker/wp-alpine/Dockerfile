@@ -132,18 +132,35 @@ EOF
 # documents). Baked into /opt/wp-tests, not /htdocs, since /htdocs is a
 # runtime bind mount docker-entrypoint.sh repopulates on every container
 # start and this needs to survive independent of that.
+#
+# symfony/polyfill-php80 additionally covers PHP_VERSION_OVERRIDE=7.4: the
+# wordpress-develop trunk test-suite bootstrap itself calls str_starts_with()
+# (a PHP 8.0+ builtin) before WordPress core's own compat.php polyfills ever
+# load - a no-op on PHP 8+, where the function already exists natively.
 RUN <<EOF
   mkdir -p /opt/wp-tests
   cat <<JSON > /opt/wp-tests/composer.json
 {
   "require-dev": {
     "phpunit/phpunit": "^9.0",
-    "yoast/phpunit-polyfills": "^3.0"
+    "yoast/phpunit-polyfills": "^3.0",
+    "symfony/polyfill-php80": "^1.0"
   }
 }
 JSON
   cd /opt/wp-tests
   composer install --no-interaction --no-progress
+
+  # auto_prepend_file, not a require in phpunit/bootstrap.php: WP-CLI's own
+  # bootstrap (e.g. `wp core install`, run by docker-entrypoint.sh before any
+  # test ever runs) needs str_starts_with() too, and never goes through our
+  # bootstrap file at all - only a global ini directive covers every PHP
+  # entrypoint (wp-cli, PHPUnit, Apache/mod_php) uniformly. Only needed/applied
+  # on the PHP 7.x variant - PHP 8+ already has these builtins natively, no
+  # need to pay for loading the composer autoloader on every request there.
+  case "$PHP_VERSION" in
+    7.*) echo "auto_prepend_file=/opt/wp-tests/vendor/autoload.php" >>/etc/php7/conf.d/polyfills.ini ;;
+  esac
 EOF
 
 # add composer bin to path
