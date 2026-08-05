@@ -26,6 +26,12 @@ permissions:
   attestations: write
   id-token: write
 
+env:
+  # registry/repository the wp-alpine image is published to (see
+  # build-wp-alpine-image.yaml) - same repo vars/defaults, never hardcoded
+  IMAGE_REGISTRY: ${{ vars.IMAGE_REGISTRY || 'ghcr.io' }}
+  IMAGE_REPOSITORY: ${{ vars.IMAGE_REPOSITORY || 'ionos-wordpress/wp-alpine-dev' }}
+
 jobs:
   devcontainer:
     uses: ./.github/workflows/build-devcontainer-image.yaml
@@ -54,6 +60,33 @@ jobs:
         with:
           runCmd: |
             pnpm install --frozen-lockfile
+
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: pull prebuilt wp-alpine image
+        with:
+          env: |
+            IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
+            IMAGE_REPOSITORY=${{ env.IMAGE_REPOSITORY }}
+            IMAGE_REGISTRY_USERNAME=${{ github.repository_owner }}
+            IMAGE_REGISTRY_PASSWORD=${{ secrets.GITHUB_TOKEN }}
+          # tags a local ionos-wordpress/wp-alpine:<version> from the image built/
+          # published by build-wp-alpine-image.yaml (Phase 1), so scripts/build.sh's
+          # existing "already exists locally" check skips rebuilding it below - no
+          # hard dependency on that workflow finishing first: falls back to a local
+          # build (today's behavior) if the tag isn't published yet/pull fails
+          runCmd: |
+            HASH="$(git rev-parse HEAD:packages/docker/wp-alpine)"
+            IMAGE="${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:${HASH}-php8.4"
+            echo "$IMAGE_REGISTRY_PASSWORD" | docker login "$IMAGE_REGISTRY" --username "$IMAGE_REGISTRY_USERNAME" --password-stdin
+            if docker pull "$IMAGE"; then
+              PACKAGE_VERSION="$(jq -r '.version' packages/docker/wp-alpine/package.json)"
+              docker tag "$IMAGE" "ionos-wordpress/wp-alpine:${PACKAGE_VERSION}"
+              docker tag "$IMAGE" ionos-wordpress/wp-alpine:latest
+              touch packages/docker/wp-alpine/build-info
+            else
+              echo "::warning::could not pull prebuilt wp-alpine image $IMAGE - falling back to a local build"
+            fi
+
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: build project
         with:
@@ -82,6 +115,47 @@ jobs:
           # see https://github.com/actions/upload-artifact/issues/424
           path: |-
             ${{ steps.gather_workflow_artifacts.outputs.runCmdOutput }}
+
+  test-php74:
+    name: test against legacy PHP 7.4
+    runs-on: ubuntu-latest
+    needs:
+      - devcontainer
+    steps:
+      - name: checkout branch from git
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: install project
+        with:
+          runCmd: |
+            pnpm install --frozen-lockfile
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: build project
+        with:
+          runCmd: |
+            pnpm run build
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: test project against prebuilt PHP 7.4 image
+        with:
+          env: |
+            IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
+            IMAGE_REPOSITORY=${{ env.IMAGE_REPOSITORY }}
+            IMAGE_REGISTRY_USERNAME=${{ github.repository_owner }}
+            IMAGE_REGISTRY_PASSWORD=${{ secrets.GITHUB_TOKEN }}
+          # scripts/test.sh pulls the prebuilt :<hash>-php7.4 tag itself when
+          # PHP_VERSION_OVERRIDE is set - no local image build on this leg
+          runCmd: |
+            PHP_VERSION_OVERRIDE=7.4 pnpm run test
 
   lint:
     runs-on: ubuntu-latest

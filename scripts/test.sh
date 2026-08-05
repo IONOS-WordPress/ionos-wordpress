@@ -118,7 +118,14 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
     fi
 
     ionos.wordpress.log_info "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE set - pulling prebuilt test image $WP_ALPINE_IMAGE (no local build) ..."
-    docker pull "$WP_ALPINE_IMAGE"
+    # retry: a push that touches both packages/docker/wp-alpine/** and CI can race
+    # the separate build-wp-alpine-image.yaml publish job that tags this same commit
+    for i in $(seq 1 5); do
+      docker pull "$WP_ALPINE_IMAGE" && break
+      [[ $i -eq 5 ]] && exit 1
+      ionos.wordpress.log_warn "pull failed, image may still be publishing - retrying in 30s ($i/5) ..."
+      sleep 30
+    done
   else
     readonly WP_ALPINE_IMAGE='ionos-wordpress/wp-alpine:latest'
   fi
