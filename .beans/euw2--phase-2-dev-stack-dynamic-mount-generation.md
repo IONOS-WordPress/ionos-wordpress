@@ -8,15 +8,16 @@ created_at: 2026-08-03T10:59:14Z
 updated_at: 2026-08-04T12:52:43Z
 parent: hr03
 blocked_by:
-    - mrwg
+  - mrwg
 ---
 
 Goal: pnpm start/pnpm stop/pnpm destroy work against the new container instead of wp-env,
 with dev-only single persistent stack.
 
 ## Tasks
+
 - [x] Rewrite scripts/start.sh: drop .wp-env.json generation; generate docker-compose.dev.yml
-      (or docker run -v arg list) by scanning packages/wp-plugin/*, wp-theme/*, wp-mu-plugin/*,
+      (or docker run -v arg list) by scanning packages/wp-plugin/_, wp-theme/_, wp-mu-plugin/*,
       reusing existing discovery logic. Preserve mu-plugin loader+dir dual-mount pattern (risk #2)
 - [x] Rewrite scripts/stop.sh → docker stop/docker compose stop on the dev container
 - [x] Rewrite scripts/destroy.sh → remove dev container + its mnt/ data (keep shared
@@ -38,6 +39,7 @@ with dev-only single persistent stack.
 - [x] Replace scripts/wp-env.sh with explicit per-purpose scripts/targets: logs, enter, ssh, cli
 
 ## Exit criteria
+
 pnpm start brings up a working dev site at a fixed port with all current plugins/themes/
 mu-plugins mounted and active, matching today's dev experience; pnpm stop/pnpm destroy behave
 as expected.
@@ -59,14 +61,14 @@ Rewrote `pnpm start`/`stop`/`destroy`/`wp-env` to drive the `wp-alpine` image (P
   `HTTP_PORT=8888` (unchanged from wp-env), `SSH_PORT=2222` (new). Same in
   `.env.local.example`. **Scope narrowed from the literal task wording** (confirmed
   with user during planning): `IMAGE_REGISTRY`/`IMAGE_REPOSITORY`/`docker login` are
-  *not* wired into `start.sh` — the existing `pnpm build` step already rebuilds
+  _not_ wired into `start.sh` — the existing `pnpm build` step already rebuilds
   `wp-alpine` locally via `scripts/build.sh`'s docker-package dispatch, so the dev
   inner loop never needs a registry pull. GHCR stays a CI-only concern for a later
   phase (`PHP_VERSION_OVERRIDE` fast path).
 - `scripts/start.sh`: dropped `.wp-env.json`/`.wp-env.override.json` generation.
   Now: prepares `${MNT_HOME}/wordpress-core/<sanitized-version>` (shared core cache)
   and `${MNT_HOME}/dev/` (per-stack overlay: `wp-content/{plugins,themes,mu-plugins,
-  uploads}`, `wp-config.php`, `.htaccess`); builds a `--volume` list with one bind
+uploads}`, `wp-config.php`, `.htaccess`); builds a `--volume` list with one bind
   mount per discovered `wp-plugin`/`wp-theme`/`wp-mu-plugin` package (**simplified
   from the migration doc's symlink-flatten proposal for risk #2** — Docker natively
   supports many individual bind mounts into one container directory, so mu-plugins
@@ -81,7 +83,7 @@ Rewrote `pnpm start`/`stop`/`destroy`/`wp-env` to drive the `wp-alpine` image (P
   `destroy`).
 - `scripts/wp-env.sh` deleted; added `scripts/logs.sh` (`pnpm logs`), `scripts/enter.sh`
   (`pnpm enter`), `scripts/cli.sh` (`pnpm cli`) — SSH needs no wrapper (`ssh -p 2222
-  php@localhost`, always-on per the image).
+php@localhost`, always-on per the image).
 - `package.json`: removed `"wp-env"` script, added `"logs"`/`"enter"`/`"cli"`. Kept
   `@wordpress/env` devDependency and `scripts/wp-env-after-start.sh`/
   `wp-env-after-destroy.sh` — `scripts/test.sh` still depends on them for PHPUnit/e2e,

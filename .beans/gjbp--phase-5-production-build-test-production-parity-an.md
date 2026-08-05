@@ -8,7 +8,7 @@ created_at: 2026-08-03T10:59:36Z
 updated_at: 2026-08-05T08:32:58Z
 parent: b55y
 blocked_by:
-    - 7hn5
+  - 7hn5
 ---
 
 Goal: preserve the ability to run the full test suite against transpiled dist/ output, and add
@@ -16,6 +16,7 @@ a way to run tests against a non-default PHP version without reintroducing a mai
 multi-version image matrix.
 
 ## Tasks
+
 - [x] Port the current .wp-env.override.json mapping-rewrite logic into the Phase 2/3 mount
       generator: when TEST_PRODUCTION=true is set, point generated bind mounts at
       packages/wp-plugin/<name>/dist/... instead of source, and rsync phpunit/ test dirs into
@@ -27,6 +28,7 @@ multi-version image matrix.
       against it — no build step on the hot path since this runs on every PR update and locally
 
 ## Exit criteria
+
 TEST_PRODUCTION=true pnpm test passes, matching current CI behavior;
 PHP_VERSION_OVERRIDE=7.4 pnpm test runs the suite against the prebuilt PHP 7.4 image with no
 local build step, locally and in CI.

@@ -12,6 +12,7 @@ for production-build (TEST_PRODUCTION) testing and CI custom-PHP-version testing
 wp-env's current test-loop behavior.
 
 Groups:
+
 - Test infrastructure (PHPUnit, E2E, prod-build & PHP-version parity)
 
 See docs/agent/wp-env-to-alpine-migration-plan.md for full context.

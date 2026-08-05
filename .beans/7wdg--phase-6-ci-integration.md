@@ -8,13 +8,14 @@ created_at: 2026-08-03T10:59:36Z
 updated_at: 2026-08-05T09:07:08Z
 parent: dav1
 blocked_by:
-    - gjbp
+  - gjbp
 ---
 
 Goal: GitHub Actions pulls the prebuilt GHCR image instead of running wp-env inside a
 docker-in-docker devcontainer.
 
 ## Tasks
+
 - [x] Update .github/workflows/integration.yaml: the build job pulls
       ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:<hash>-php8.4 (same repo vars/secrets as the Phase 1
       publish workflow — no hardcoded ghcr.io path) and runs `pnpm run build` +
@@ -26,6 +27,7 @@ docker-in-docker devcontainer.
       phpmyadmin, adjust 8888/8889 if renumbered)
 
 ## Exit criteria
+
 CI green on a branch, full parity with current integration.yaml results.
 
 See docs/agent/wp-env-to-alpine-migration-plan.md for full context.

@@ -8,24 +8,24 @@ start`/`stop`/`test`/`destroy` interface developers and CI already use.
 
 ## Locked-in decisions
 
-| Area | Decision |
-|---|---|
-| Container topology | Single all-in-one container per stack (Apache+PHP+MariaDB+SSH+xdebug), like the prototype |
-| Dev/test isolation | Separate stacks — persistent **dev** stack, ephemeral **test** stack |
-| Dev/test lifecycle | `pnpm start` only starts the dev container. `pnpm test:*` spins up a fresh test container on demand and **always** tears it down afterward, pass or fail |
-| E2E target | Playwright runs against the same ephemeral test-stack container used for PHPUnit |
-| Xdebug | Always-on (baked in, no toggle) |
-| Mount generation | Dynamic auto-discovery of `packages/wp-plugin/*`, `wp-theme/*`, `wp-mu-plugin/*`, ported from current `start.sh` logic |
-| Prod-build testing | `TEST_PRODUCTION=true`-equivalent preserved, unchanged, as a boolean dist-vs-source mount switch |
-| PHP/WP version | Default version (PHP 8.4) driven by `.env` — a deliberate bump from current `.wp-env.json`'s `8.3`; a small prebuilt matrix — `{8.4, 7.4}` — is published by the Phase 1 image workflow so the legacy-PHP test path never pays a local build |
-| CI custom-PHP-version testing | `PHP_VERSION_OVERRIDE=<php-version>`: distinct from `TEST_PRODUCTION`, lets CI (or a developer) run the test container against PHP 7.4 (the one legacy version worth testing) by pulling its prebuilt tag — no local image build, since this path runs on every PR update and locally, not just occasionally — see Phase 5 |
-| phpMyAdmin | Dropped |
-| CLI convention | Keep `pnpm start/stop/test/destroy` interface; rewrite `scripts/*.sh` internals to drive Docker instead of wp-env |
-| Image distribution | Published to a container registry, rebuilt/published by a path-filtered workflow on Dockerfile/entrypoint changes. Registry/repo is configurable, not hardcoded (see below) |
-| Registry configuration | `IMAGE_REGISTRY` (e.g. `ghcr.io`) and `IMAGE_REPOSITORY` (e.g. `ionos-wordpress/wp-alpine-dev`) read from `.env`, defaulting to GHCR/`ionos-wordpress` if unset; registry auth credentials (e.g. `IMAGE_REGISTRY_USERNAME`/`IMAGE_REGISTRY_PASSWORD` or a token) read from `.secrets`, never committed, following the existing `scripts/includes/bootstrap.sh` `.env`/`.secrets` loading convention |
-| Bootstrapping | Baked into image/entrypoint (composer polyfills, xdebug/APCu config, wp-cli bootstrap, `.vscode/launch.json` generation) instead of a lifecycle script |
-| Custom hook | Support a user-supplied `AFTER_START` script via `.env`, executed as `php` user, with `doas` available for root-level actions |
-| Rollout | Hard cutover — remove wp-env once the new setup passes validation |
+| Area                          | Decision                                                                                                                                                                                                                                                                                                                                                                                            |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Container topology            | Single all-in-one container per stack (Apache+PHP+MariaDB+SSH+xdebug), like the prototype                                                                                                                                                                                                                                                                                                           |
+| Dev/test isolation            | Separate stacks — persistent **dev** stack, ephemeral **test** stack                                                                                                                                                                                                                                                                                                                                |
+| Dev/test lifecycle            | `pnpm start` only starts the dev container. `pnpm test:*` spins up a fresh test container on demand and **always** tears it down afterward, pass or fail                                                                                                                                                                                                                                            |
+| E2E target                    | Playwright runs against the same ephemeral test-stack container used for PHPUnit                                                                                                                                                                                                                                                                                                                    |
+| Xdebug                        | Always-on (baked in, no toggle)                                                                                                                                                                                                                                                                                                                                                                     |
+| Mount generation              | Dynamic auto-discovery of `packages/wp-plugin/*`, `wp-theme/*`, `wp-mu-plugin/*`, ported from current `start.sh` logic                                                                                                                                                                                                                                                                              |
+| Prod-build testing            | `TEST_PRODUCTION=true`-equivalent preserved, unchanged, as a boolean dist-vs-source mount switch                                                                                                                                                                                                                                                                                                    |
+| PHP/WP version                | Default version (PHP 8.4) driven by `.env` — a deliberate bump from current `.wp-env.json`'s `8.3`; a small prebuilt matrix — `{8.4, 7.4}` — is published by the Phase 1 image workflow so the legacy-PHP test path never pays a local build                                                                                                                                                        |
+| CI custom-PHP-version testing | `PHP_VERSION_OVERRIDE=<php-version>`: distinct from `TEST_PRODUCTION`, lets CI (or a developer) run the test container against PHP 7.4 (the one legacy version worth testing) by pulling its prebuilt tag — no local image build, since this path runs on every PR update and locally, not just occasionally — see Phase 5                                                                          |
+| phpMyAdmin                    | Dropped                                                                                                                                                                                                                                                                                                                                                                                             |
+| CLI convention                | Keep `pnpm start/stop/test/destroy` interface; rewrite `scripts/*.sh` internals to drive Docker instead of wp-env                                                                                                                                                                                                                                                                                   |
+| Image distribution            | Published to a container registry, rebuilt/published by a path-filtered workflow on Dockerfile/entrypoint changes. Registry/repo is configurable, not hardcoded (see below)                                                                                                                                                                                                                         |
+| Registry configuration        | `IMAGE_REGISTRY` (e.g. `ghcr.io`) and `IMAGE_REPOSITORY` (e.g. `ionos-wordpress/wp-alpine-dev`) read from `.env`, defaulting to GHCR/`ionos-wordpress` if unset; registry auth credentials (e.g. `IMAGE_REGISTRY_USERNAME`/`IMAGE_REGISTRY_PASSWORD` or a token) read from `.secrets`, never committed, following the existing `scripts/includes/bootstrap.sh` `.env`/`.secrets` loading convention |
+| Bootstrapping                 | Baked into image/entrypoint (composer polyfills, xdebug/APCu config, wp-cli bootstrap, `.vscode/launch.json` generation) instead of a lifecycle script                                                                                                                                                                                                                                              |
+| Custom hook                   | Support a user-supplied `AFTER_START` script via `.env`, executed as `php` user, with `doas` available for root-level actions                                                                                                                                                                                                                                                                       |
+| Rollout                       | Hard cutover — remove wp-env once the new setup passes validation                                                                                                                                                                                                                                                                                                                                   |
 
 ## Open risks and their resolutions
 
@@ -44,7 +44,7 @@ start`/`stop`/`test`/`destroy` interface developers and CI already use.
    `wp core install`/db-update flow. Keep this inside the existing shared
    version-keyed core-cache locking logic so repeat starts don't re-clone.
 2. **mu-plugins dual-mapping**. Current `.wp-env.json` (generated by `start.sh`'s
-   `mu_plugins()`) maps each mu-plugin as a top-level loader `.php` file *and* its
+   `mu_plugins()`) maps each mu-plugin as a top-level loader `.php` file _and_ its
    subdirectory separately — required because WordPress's mu-plugin auto-loader only
    executes top-level `.php` files in `wp-content/mu-plugins/`. wp-env supports this via
    per-file JSON mappings; Docker bind-mounts operate on whole directories, and the
@@ -69,14 +69,14 @@ start`/`stop`/`test`/`destroy` interface developers and CI already use.
    files come back owned by the actual host user.
    **Resolution**: adopt the `HOST_UID`/`HOST_GID` build-arg pattern as-is; have
    `scripts/start.sh`/the image build step pass `--build-arg HOST_UID=$(id -u)
-   --build-arg HOST_GID=$(id -g)` automatically so no manual step is needed, and drop
+--build-arg HOST_GID=$(id -g)` automatically so no manual step is needed, and drop
    all four permission-hack blocks once Phase 2 confirms files come back correctly
    owned. Note this requires an image rebuild if the host UID/GID ever changes (e.g.
    switching machines/users) — acceptable since the image is cheap to rebuild locally
    and CI always builds fresh.
 4. **Hardcoded DB credentials**. `Dockerfile:94-103` bakes `mariadb-install-db` and
    `GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY
-   'password'` into a build-time `RUN` step, so the credential ends up in the image's
+'password'` into a build-time `RUN` step, so the credential ends up in the image's
    filesystem layers rather than only in a script. wp-env hardcodes `root`/`password`
    too (`db-env.js`), as a runtime env var rather than image content — not a perfect
    match, but MariaDB is never bound to a host-reachable port in either setup (only
@@ -94,7 +94,7 @@ start`/`stop`/`test`/`destroy` interface developers and CI already use.
 
 - Fork the Dockerfile into this repo (e.g. `packages/docker/wp-alpine/Dockerfile`),
   default `ARG_PHP_VERSION` to PHP 8.4 (a deliberate bump from current
-  `.wp-env.json`'s `8.3`). Keep the build-arg, but shrink the *published* matrix from
+  `.wp-env.json`'s `8.3`). Keep the build-arg, but shrink the _published_ matrix from
   "every version" down to exactly two tags — `8.4` (default) and `7.4` (the one legacy
   version worth testing,
   see `PHP_VERSION_OVERRIDE` below) — since the override path runs on every PR and
@@ -140,7 +140,7 @@ instead of wp-env, with dev-only single persistent stack.
   shared version-keyed WP-core cache, matching the prototype's `destroy` task
   behavior).
 - **Replace `WP_ENV_HOME`**: today it's a single flat dir (`./wp-env-home`) holding
-  wp-env's per-version WordPress install *and* all container state, which is what
+  wp-env's per-version WordPress install _and_ all container state, which is what
   makes the chmod/not-owned-by-user hacks (risk #3) and the `wp-env status --json`
   readiness probe in `start.sh` necessary. Adopt the prototype's split layout instead
   of a single new "home" var: `./mnt/wordpress-core/<version>` (shared, version-keyed
@@ -154,7 +154,7 @@ instead of wp-env, with dev-only single persistent stack.
   (`.env:28`), consumed only by `start.sh:49`'s `.wp-env.json` generation
   (`"core": "${WP_ENV_CORE:-latest}"`) and overridable per-developer in
   `.env.local.example` (`WP_ENV_CORE='WordPress/WordPress#6.9.4'`) — it's wp-env's own
-  source-string format (release version *or* `owner/repo#ref` git ref, risk #1). Rename
+  source-string format (release version _or_ `owner/repo#ref` git ref, risk #1). Rename
   to `WORDPRESS_VERSION` to match the prototype's `docker-entrypoint.sh` env var name
   directly (no more `.wp-env.json` indirection), keep the same default value and the
   same `owner/repo#ref`-or-version format, and keep it overridable via `.env.local` —
@@ -165,7 +165,7 @@ instead of wp-env, with dev-only single persistent stack.
   fresh clone works without edits). Document `IMAGE_REGISTRY_USERNAME`/
   `IMAGE_REGISTRY_PASSWORD` (or token) as `.secrets`-only keys in `.env.dist`/docs —
   never given defaults, never committed. `scripts/start.sh`/`test.sh` run `docker login
-  "$IMAGE_REGISTRY"` with those credentials before pulling when they're present, and
+"$IMAGE_REGISTRY"` with those credentials before pulling when they're present, and
   skip login for public/anonymous pulls when they're not.
 - Drop the `library/bash chmod -R a+w` and not-owned-by-user cleanup hacks (validate
   they're no longer needed per risk #3).

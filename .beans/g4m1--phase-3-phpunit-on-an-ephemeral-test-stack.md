@@ -8,13 +8,14 @@ created_at: 2026-08-03T10:59:25Z
 updated_at: 2026-08-04T13:38:00Z
 parent: b55y
 blocked_by:
-    - euw2
+  - euw2
 ---
 
 Goal: pnpm test:php starts a throwaway test container, runs PHPUnit inside it, and tears it
 down unconditionally afterward.
 
 ## Tasks
+
 - [x] Rewrite the PHPUnit path in scripts/test.sh: start a fresh test-stack container (own
       compose project/name so it can't collide with the dev stack), wrap the run in a
       trap/finally so the container is destroyed on success and failure
@@ -25,6 +26,7 @@ down unconditionally afterward.
       behavior from current scripts/test.sh (moved into phpunit.xml's <exclude>, see summary)
 
 ## Exit criteria
+
 pnpm test:php passes against current test suite, and confirms the container is gone
 afterward regardless of pass/fail.
 
@@ -41,7 +43,7 @@ comments where they land, not just here):
 
 - **Test-suite source**: traced from a real `wp-env` cache on disk (not just source
   reading) that wp-env clones `WordPress/wordpress-develop#trunk` for the test suite -
-  a *different* repo from `WORDPRESS_VERSION`'s `WordPress/WordPress` core source, and
+  a _different_ repo from `WORDPRESS_VERSION`'s `WordPress/WordPress` core source, and
   always `trunk` regardless of the core version being tested. `WordPress/WordPress`
   itself has no `tests/` directory at all (verified via a pristine clone) - my first
   attempt assumed the same-source-cloned-twice model docs suggested and it doesn't
@@ -72,7 +74,7 @@ comments where they land, not just here):
   `wp-env-after-start.sh`'s `docker cp` destination) - single-file bind-mounted there.
   Its `ABSPATH`/`DB_HOST`/`DB_NAME`/`DB_USER`/`DB_PASSWORD` fallbacks (wp-env's
   `/var/www/html`/`mysql`/placeholder creds) are overridden via `--env
-  WORDPRESS_CONFIG_EXTRA`/`WORDPRESS_DB_*` (the file's existing `getenv_docker()`
+WORDPRESS_CONFIG_EXTRA`/`WORDPRESS_DB_*` (the file's existing `getenv_docker()`
   hooks - no need to edit the file itself for these).
 - **Readiness check**: HTTP-polling (like `start.sh`'s dev-container check) hit an
   infinite redirect loop on port 80 specifically (HTTP clients omit the default port

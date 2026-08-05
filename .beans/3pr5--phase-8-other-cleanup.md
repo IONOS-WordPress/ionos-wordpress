@@ -8,13 +8,14 @@ created_at: 2026-08-03T10:59:47Z
 updated_at: 2026-08-03T11:07:20Z
 parent: dav1
 blocked_by:
-    - zr06
+  - zr06
 ---
 
 Goal: opportunistic tooling cleanup, bundled here since Phases 1-7 already touch most of
 scripts/*.sh and the pnpm toolchain.
 
 ## Tasks
+
 - [ ] Where rewriting scripts/*.sh (Phases 2-4) makes a bash block noticeably shorter or more
       readable by dropping in inline Node.js instead — especially JSON reading/writing, which
       bash/jq makes awkward — use `node -e '...'` (or a short co-located .mjs helper) rather than
@@ -27,6 +28,7 @@ scripts/*.sh and the pnpm toolchain.
       support covers the repo's current bump-type/package-name/multi-package needs
 
 ## Exit criteria
+
 No behavior change — existing pnpm scripts and the changeset workflow continue to work
 identically from a developer's perspective.
 

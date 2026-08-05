@@ -13,6 +13,7 @@ Goal: an ionos-wordpress-specific Alpine image building on /opt/dev/wordpress-do
 Dockerfile, published to GHCR.
 
 ## Tasks
+
 - [x] Fork the Dockerfile into this repo (e.g. packages/docker/wp-alpine/Dockerfile), default
       ARG_PHP_VERSION to PHP 8.4. Keep the build-arg, but shrink the published matrix to exactly
       two tags — 8.4 (default) and 7.4 (legacy, for PHP_VERSION_OVERRIDE)
@@ -30,6 +31,7 @@ Dockerfile, published to GHCR.
       Registry/repo from repo Actions variables; auth from repo secrets — never hardcode ghcr.io.
 
 ## Exit criteria
+
 docker run each of the two built image variants manually, confirm WP installs, wp-cli/Apache/
 MariaDB/xdebug all work — equivalent to the prototype's `task verify`.
 

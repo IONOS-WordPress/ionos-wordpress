@@ -11,6 +11,7 @@ Wire the new image into CI, cut over from wp-env entirely, and pick up opportuni
 cleanup along the way.
 
 Groups:
+
 - CI integration, cutover & cleanup
 
 See docs/agent/wp-env-to-alpine-migration-plan.md for full context.

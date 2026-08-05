@@ -7,7 +7,7 @@ created_at: 2026-08-03T11:07:14Z
 updated_at: 2026-08-03T11:07:14Z
 parent: p8wo
 blocked_by:
-    - hr03
+  - hr03
 ---
 
 Ephemeral test-stack container for PHPUnit and Playwright, always torn down pass or fail, plus

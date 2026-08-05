@@ -7,7 +7,7 @@ created_at: 2026-08-03T11:07:14Z
 updated_at: 2026-08-03T11:07:14Z
 parent: zmd6
 blocked_by:
-    - b55y
+  - b55y
 ---
 
 CI pulls the prebuilt GHCR image instead of running wp-env in a docker-in-docker devcontainer,

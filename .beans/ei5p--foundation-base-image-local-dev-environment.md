@@ -11,6 +11,7 @@ Stand up the Alpine-based Docker image and get the local dev workflow (pnpm star
 working against it, replacing wp-env's dev-loop responsibilities.
 
 Groups:
+
 - Base image & registry publishing
 - Local dev environment
 

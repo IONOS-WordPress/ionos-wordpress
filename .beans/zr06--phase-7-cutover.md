@@ -8,12 +8,13 @@ created_at: 2026-08-03T10:59:47Z
 updated_at: 2026-08-03T11:07:20Z
 parent: dav1
 blocked_by:
-    - 7wdg
+  - 7wdg
 ---
 
 Goal: remove wp-env entirely.
 
 ## Tasks
+
 - [ ] Delete .wp-env.json, .wp-env.override.json generation code, @wordpress/env dependency,
       scripts/wp-env-after-start.sh, scripts/wp-env-after-destroy.sh, scripts/wp-env.sh
 - [ ] Update docs: docs/1-setup.md, docs/5-test.md, docs/agent/e2e-testing.md, and any
@@ -24,6 +25,7 @@ Goal: remove wp-env entirely.
       plus a full CI run
 
 ## Exit criteria
+
 No wp-env references remain in the repo (grep-clean), CI green, docs updated.
 
 See docs/agent/wp-env-to-alpine-migration-plan.md for full context.

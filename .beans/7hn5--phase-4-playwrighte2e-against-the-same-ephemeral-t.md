@@ -8,12 +8,13 @@ created_at: 2026-08-03T10:59:25Z
 updated_at: 2026-08-04T14:33:57Z
 parent: b55y
 blocked_by:
-    - g4m1
+  - g4m1
 ---
 
 Goal: pnpm test:e2e reuses the Phase 3 ephemeral test container.
 
 ## Tasks
+
 - [x] Update playwright.config.js: baseURL points at the ephemeral test stack's dynamically
       assigned (or fixed) port instead of wp-env's hardcoded localhost:8889
 - [x] Rewrite playwright/wp-env.js's execTestCLI to docker exec into the new test container
@@ -28,6 +29,7 @@ Goal: pnpm test:e2e reuses the Phase 3 ephemeral test container.
       PHPUnit and Playwright against it, tearing it down once at the end (pass or fail)
 
 ## Exit criteria
+
 pnpm test:e2e passes against the current Playwright suite; container is torn down after.
 
 See docs/agent/wp-env-to-alpine-migration-plan.md for full context.
@@ -59,7 +61,7 @@ the removed `wp-env`.
   Exported function name/signature unchanged - none of the ~13 `*.spec.js` files
   importing it needed changes.
 - `playwright.config.js`: replaced the inherited, dead `webServer.command: 'npm run
-  wp-env start'` with an explicit no-op (`'true'`) since `reuseExistingServer: true`
+wp-env start'` with an explicit no-op (`'true'`) since `reuseExistingServer: true`
   means it's never actually invoked (test.sh starts the container first) but a stale
   wp-env reference sitting there was misleading.
 

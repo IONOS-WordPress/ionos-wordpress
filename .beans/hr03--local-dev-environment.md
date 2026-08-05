@@ -7,7 +7,7 @@ created_at: 2026-08-03T11:07:14Z
 updated_at: 2026-08-03T11:07:14Z
 parent: ei5p
 blocked_by:
-    - vjbx
+  - vjbx
 ---
 
 pnpm start/stop/destroy work against the new container, with dynamic mount generation and a
