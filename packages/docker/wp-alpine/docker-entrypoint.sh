@@ -125,6 +125,8 @@ doas -u php wp config create --dbname=wordpress --skip-check --dbuser=wordpress 
   define( 'WP_DEBUG', true );
   define( 'WP_DEBUG_LOG', true );
   define( 'WP_DEBUG_DISPLAY', true );
+  define( 'WP_HOME', 'http://localhost:${HTTP_PORT}' );
+  define( 'WP_SITEURL', 'http://localhost:${HTTP_PORT}' );
 EOF
 
 if mariadb -u root -p'password' -e "USE wordpress;" 2>/dev/null; then

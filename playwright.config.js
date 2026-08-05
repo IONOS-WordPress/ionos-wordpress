@@ -1,4 +1,4 @@
-// playwright config for wp-env based e2e tests
+// playwright config for e2e tests against the ephemeral wp-alpine test container
 /* eslint-disable-next-line import/named */
 import { defineConfig, devices } from '@playwright/test';
 
@@ -22,7 +22,11 @@ const config = defineConfig({
   workers: 1,
   webServer: {
     ...baseConfig.webServer,
-    // command: 'pnpm start',
+    // scripts/test.sh already starts the ephemeral test container before invoking
+    // playwright and sets WP_BASE_URL to its published port; reuseExistingServer
+    // (inherited from baseConfig) means this command should never actually run - kept
+    // as a harmless no-op rather than the inherited wp-env command.
+    command: 'true',
   },
   outputDir: './playwright/e2e/.test-results',
   use: {

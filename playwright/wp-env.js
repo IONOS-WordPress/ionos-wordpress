@@ -1,10 +1,12 @@
 import { execSync } from 'child_process';
 
-// find the name of the wp-env container
-const prefix = execSync('bash -c "basename $(pnpm exec wp-env status --json | jq -r .installPath)"').toString().trim();
+// the ephemeral test container started by scripts/test.sh (see
+// scripts/includes/_docker-mounts.sh) - a single fixed name now, no more per-run
+// wp-env container discovery.
+const CONTAINER_NAME = 'ionos-wordpress-test';
 
 export function execTestCLI(command) {
-  return execSync(`cat <<EOF | docker exec --interactive ${prefix}-tests-cli-1 sh -
+  return execSync(`cat <<EOF | docker exec --interactive --user php ${CONTAINER_NAME} sh -
     set -x
     ${command}
 EOF`)

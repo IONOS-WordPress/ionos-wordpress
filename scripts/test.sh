@@ -84,34 +84,11 @@ if [[ "${USE[@]}" =~ all|react ]]; then
   )
 fi
 
-if [[ "${USE[@]}" =~ all|php ]]; then
-  # test distributable plugin code is correctly transformed by rector
-  # by testing its syntax againts the transpiler target language
-  if [[ ${#POSITIONAL_ARGS[@]} -eq 0 ]]; then
-    # for each wp-plugin and wp-mu-plugin in the packages directory
-    for transpiled_plugin_dir in $(find packages -path '*/wp-plugin/*/dist/*-?.?.?-php?.?' -o -path '*/wp-mu-plugin/*/dist/*-?.?.?-php?.?' -type d -name '*-?.?.?-php?.?'); do
-      # get the target php version from the directory name
-      TARGET_PHP_VERSION=$(echo "${transpiled_plugin_dir#*php}" | grep -oE '^[0-9.]+')
-
-      ionos.wordpress.log_header "checking compatibility for target php version $TARGET_PHP_VERSION in plugin $transpiled_plugin_dir"
-      # check if the transpiled plugin code (except for phpunit test files ) is valid for the desired php version
-      ! cat <<EOL | docker run -i --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:${TARGET_PHP_VERSION}-cli /bin/bash - | grep -v '^No syntax errors'
-find "$transpiled_plugin_dir" -name "*.php" -not -name "*Test.php" -not -path "*/stretch-extra/stretch-extra/*" -print0 | xargs -0L1 php -l
-exit $?
-EOL
-
-      if [[ $? -ne 0 ]]; then
-        exit 1
-      fi
-    done
-  else
-    ionos.wordpress.log_info "skipped target php version syntax checks since individual PHPUnit test files are provided as commandline arguments"
-  fi
-
-  # MARK: run phpunit in a throwaway wp-alpine container, always destroyed afterwards
-  # (own name/mnt dir so it never collides with the persistent dev stack from
-  # scripts/start.sh - see scripts/includes/_docker-mounts.sh for the shared
-  # mount-discovery logic)
+if [[ "${USE[@]}" =~ all|php|e2e ]]; then
+  # MARK: run a throwaway wp-alpine container, always destroyed afterwards, shared by
+  # both PHPUnit and Playwright below (own name/mnt dir so it never collides with the
+  # persistent dev stack from scripts/start.sh - see scripts/includes/_docker-mounts.sh
+  # for the shared mount-discovery logic)
   readonly TEST_CONTAINER_NAME='ionos-wordpress-test'
   readonly VERSION_DIR="$(ionos.wordpress.wordpress_version_dir "$WORDPRESS_VERSION")"
   readonly CORE_DIR="${MNT_HOME}/wordpress-core/${VERSION_DIR}"
@@ -152,9 +129,10 @@ EOL
     --interactive \
     --name "$TEST_CONTAINER_NAME" \
     --hostname "$TEST_CONTAINER_NAME" \
+    --publish "${TEST_HTTP_PORT}:80" \
     --env WORDPRESS_VERSION="$WORDPRESS_VERSION" \
     --env WP_PASSWORD="$WP_PASSWORD" \
-    --env HTTP_PORT=80 \
+    --env HTTP_PORT="$TEST_HTTP_PORT" \
     --env WORDPRESS_DB_HOST=localhost \
     --env WORDPRESS_DB_NAME=wordpress \
     --env WORDPRESS_DB_USER=wordpress \
@@ -165,10 +143,8 @@ EOL
     ionos-wordpress/wp-alpine:latest >/dev/null
 
   # readiness: phpunit talks to the DB directly, never over HTTP, so "wp core
-  # is-installed" (WP core downloaded + wp-config.php + database ready) is the
-  # right check here - not an HTTP request (which would hit WordPress's canonical
-  # redirect on port 80, since HTTP clients omit the default port from the Host
-  # header while wp-config's siteurl keeps it explicit, looping forever).
+  # is-installed" (WP core downloaded + wp-config.php + database ready) is the right
+  # check here rather than an HTTP request.
   ionos.wordpress.log_info "waiting for the test container to come up ..."
   READY=
   for i in $(seq 1 60); do
@@ -182,6 +158,31 @@ EOL
     ionos.wordpress.log_error "test container did not become ready within the timeout"
     exit 1
   fi
+fi
+
+if [[ "${USE[@]}" =~ all|php ]]; then
+  # test distributable plugin code is correctly transformed by rector
+  # by testing its syntax againts the transpiler target language
+  if [[ ${#POSITIONAL_ARGS[@]} -eq 0 ]]; then
+    # for each wp-plugin and wp-mu-plugin in the packages directory
+    for transpiled_plugin_dir in $(find packages -path '*/wp-plugin/*/dist/*-?.?.?-php?.?' -o -path '*/wp-mu-plugin/*/dist/*-?.?.?-php?.?' -type d -name '*-?.?.?-php?.?'); do
+      # get the target php version from the directory name
+      TARGET_PHP_VERSION=$(echo "${transpiled_plugin_dir#*php}" | grep -oE '^[0-9.]+')
+
+      ionos.wordpress.log_header "checking compatibility for target php version $TARGET_PHP_VERSION in plugin $transpiled_plugin_dir"
+      # check if the transpiled plugin code (except for phpunit test files ) is valid for the desired php version
+      ! cat <<EOL | docker run -i --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:${TARGET_PHP_VERSION}-cli /bin/bash - | grep -v '^No syntax errors'
+find "$transpiled_plugin_dir" -name "*.php" -not -name "*Test.php" -not -path "*/stretch-extra/stretch-extra/*" -print0 | xargs -0L1 php -l
+exit $?
+EOL
+
+      if [[ $? -ne 0 ]]; then
+        exit 1
+      fi
+    done
+  else
+    ionos.wordpress.log_info "skipped target php version syntax checks since individual PHPUnit test files are provided as commandline arguments"
+  fi
 
   # provide part specific options and all positional arguments that are php files
   # (files will be converted to '--filter *TestCase' arguments to match PHPUnit expectations).
@@ -190,19 +191,20 @@ EOL
   docker exec --user php "$TEST_CONTAINER_NAME" sh -c \
     "phpunit -c /htdocs/phpunit/phpunit.xml ${USE_OPTIONS[php]} \
     $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.php ]] && printf -- "--filter '%s' " $(basename $file .php); done)"
-  # ENDMARK
 fi
 
 if [[ "${USE[@]}" =~ all|e2e ]]; then
-  # next 2 steps are required since potential runned phpunit tests rest the database to a state that is not suitable for e2e tests
+  # next 2 steps are required since a preceding phpunit run resets the database to a
+  # state that is not suitable for e2e tests
   # set the default admin password to the password defined in .env file
-  pnpm -s wp-env run tests-cli wp --quiet user update admin --user_pass="${WP_PASSWORD}"
+  docker exec --user php "$TEST_CONTAINER_NAME" wp --quiet user update admin --user_pass="${WP_PASSWORD}" --path=/htdocs
   # reset the user meta for compromised credentials check
-  pnpm -s wp-env run tests-cli wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2 &>/dev/null || true
+  docker exec --user php "$TEST_CONTAINER_NAME" wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2 --path=/htdocs &>/dev/null || true
 
-  # start wp-env e2e tests. provide part specific options and all positional arguments that are php files
+  # run e2e tests against the ephemeral test container's published port. provide part
+  # specific options and all positional arguments that are php files
   (
-    # pnpm exec wp-scripts test-playwright --pass-with-no-tests -c ./playwright.config.js \
+    export WP_BASE_URL="http://localhost:${TEST_HTTP_PORT}"
     pnpm exec playwright test --pass-with-no-tests -c ./playwright.config.js \
       ${USE_OPTIONS[e2e]:---quiet} \
       $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.js ]] && printf "$file "; done)
@@ -216,7 +218,8 @@ Syntax: 'pnpm run test [options] [additional-args]'
 
 Executes tests.
 
-if PHPUnit or e2e tests will be runned, it will start wp-env if not already running.
+If PHPUnit or e2e tests will be run, a throwaway wp-alpine test container is started
+and torn down again afterwards (pass or fail).
 
 Options:
 

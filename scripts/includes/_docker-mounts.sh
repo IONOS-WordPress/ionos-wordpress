@@ -26,6 +26,17 @@ function ionos.wordpress.build_wp_volume_args() {
   mkdir -p "$stack_dir/wp-content/plugins" "$stack_dir/wp-content/themes" "$stack_dir/wp-content/mu-plugins" "$stack_dir/wp-content/uploads"
   touch -a "$stack_dir/wp-config.php" "$stack_dir/.htaccess"
 
+  # wp-content/themes is a per-stack overlay, so only the very first container to
+  # ever download a given WORDPRESS_VERSION gets bundled themes for free (extracted
+  # directly into its own overlay by docker-entrypoint.sh). Every other/later
+  # stack (e.g. the ephemeral test container, once the dev container has already
+  # claimed that first download) needs seeding from the shared
+  # .default-themes-cache docker-entrypoint.sh stashes outside the overlaid
+  # subtrees - mirrors the prototype's prepare-mounts.sh.
+  if [[ -d "$core_dir/.default-themes-cache" ]] && [[ -z "$(ls -A "$stack_dir/wp-content/themes" 2>/dev/null)" ]]; then
+    cp -r "$core_dir/.default-themes-cache/." "$stack_dir/wp-content/themes/"
+  fi
+
   VOLUME_ARGS+=(
     --volume "$(pwd)/${core_dir}:/htdocs"
     --volume "$(pwd)/${stack_dir}/wp-content/plugins:/htdocs/wp-content/plugins"
