@@ -10,19 +10,16 @@ const SITE_ASSISTANT_OPTION_KEY   = 'ionos_site_assistant_license_id';
 function get_site_assistant_license(): string
 {
   $cached = \get_option(SITE_ASSISTANT_OPTION_KEY, false);
-  if ($cached !== false && $cached !== '') {
-    return $cached;
+  if (\is_string($cached) && $cached !== '') {
+    return \sanitize_key($cached);
   }
 
-  if (\defined('EXTENDIFY_PARTNER_ID')) {
-    \update_option(SITE_ASSISTANT_OPTION_KEY, EXTENDIFY_PARTNER_ID);
-    return EXTENDIFY_PARTNER_ID;
-  }
+  $license = \defined('EXTENDIFY_PARTNER_ID') ? (string) EXTENDIFY_PARTNER_ID : '01-ext-ion8dhas7';
+  $license = \sanitize_key($license);
 
-  $default = '01-ext-ion8dhas7';
-  \update_option(SITE_ASSISTANT_OPTION_KEY, $default);
+  \update_option(SITE_ASSISTANT_OPTION_KEY, $license);
 
-  return $default;
+  return $license;
 }
 
 \add_action('wp_loaded', function (): void {
