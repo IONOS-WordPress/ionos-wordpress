@@ -91,7 +91,12 @@ jobs:
         name: build project
         with:
           runCmd: |
-            pnpm run build
+            # only build what the test suite actually consumes: the plugins/mu-plugins
+            # themselves (bundled JS/CSS, i18n) plus rector-php, which their build step
+            # shells out to for PHP-version transpilation. ecs-php/potrans/dennis-i18n
+            # are declared workspace deps too, but only used by scripts/lint.sh - building
+            # them here would be wasted work. wp-alpine is already pulled/tagged above.
+            pnpm run build --filter './packages/wp-plugin/*' --filter './packages/wp-mu-plugin/*' --filter '@ionos-wordpress/rector-php'
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: test project
         with:
