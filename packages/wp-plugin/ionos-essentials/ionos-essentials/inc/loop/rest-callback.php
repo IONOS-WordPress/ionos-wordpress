@@ -190,7 +190,7 @@ function _get_plugins(): array
       'plugin_slug' => $plugin_slug,
       'version'     => $plugin_data['Version'],
       'auto_update' => in_array($plugin_slug, $auto_updates),
-      'active'      => in_array($plugin_slug, $active_plugins, true),
+      'active'      => in_array($plugin_slug, $active_plugins),
     ];
   }
 
