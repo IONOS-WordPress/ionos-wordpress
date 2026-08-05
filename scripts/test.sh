@@ -179,7 +179,9 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # check here rather than an HTTP request.
   ionos.wordpress.log_info "waiting for the test container to come up ..."
   READY=
-  for i in $(seq 1 60); do
+  # generous budget: a cold run (fresh core download/install, no shared cache
+  # yet) is slower in CI's nested docker-in-docker devcontainer than locally
+  for i in $(seq 1 180); do
     if docker exec --user php "$TEST_CONTAINER_NAME" wp core is-installed --path=/htdocs 2>/dev/null; then
       READY=1
       break
@@ -188,6 +190,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   done
   if [[ -z "$READY" ]]; then
     ionos.wordpress.log_error "test container did not become ready within the timeout"
+    docker logs "$TEST_CONTAINER_NAME" || true
     exit 1
   fi
 fi
