@@ -64,7 +64,7 @@ function get_config()
         unset($config['ionos_plugins'][$slug]);
       }
 
-      foreach ($tenant_additions['additional_wordpress_org_plugins'] as $slug) {
+      foreach ($tenant_additions['additional_wordpress_org_plugins'] ?? [] as $slug) {
         if (! \in_array($slug, $config['wordpress_org_plugins'], true)) {
           $config['wordpress_org_plugins'][] = $slug;
         }
@@ -112,15 +112,6 @@ function get_localized_config(string $key): mixed
     $wordpress_plugins  = [];
 
     $site_assistant = extendify\get_site_assistant_info();
-    $site_assistant += [
-      'rating'          => 0,
-      'ratings'         => ['5' => 0, '4' => 0, '3' => 0, '2' => 0, '1' => 0],
-      'num_ratings'     => 0,
-      'active_installs' => 0,
-      'last_updated'    => \date('Y-m-d', \strtotime('-2 years')),
-      'version'         => 'latest',
-      'author'          => '<a href="https://www.ionos-group.com/brands.html">IONOS Group</a>',
-    ];
     $ionos_plugins_list[] = $site_assistant;
     $slugs = $config['wordpress_org_plugins'] ?? [];
     if (! empty($slugs)) {
@@ -221,7 +212,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
     }
 
     $decoded_data = json_decode($response->body, true);
-    if ($decoded_data===null) {
+    if ($decoded_data === null) {
       continue;
     }
 
@@ -230,17 +221,13 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
   }
 
   \array_walk($ionos_plugins, function (array &$plugin) use ($remote_data): void {
-    $slug                      = $plugin['slug'] ?? '';
-    $plugin['rating']          = 0;
-    $plugin['ratings']         = [
-      '5' => 0,
-      '4' => 0,
-      '3' => 0,
-      '2' => 0,
-      '1' => 0,
+    $slug   = $plugin['slug'] ?? '';
+    $plugin += [
+      'rating'          => 0,
+      'ratings'         => ['5' => 0, '4' => 0, '3' => 0, '2' => 0, '1' => 0],
+      'num_ratings'     => 0,
+      'active_installs' => 0,
     ];
-    $plugin['num_ratings']     = 0;
-    $plugin['active_installs'] = 0;
 
     $plugin['last_updated'] = $remote_data[$slug]['last_updated'] ?? \date('Y-m-d', \strtotime('-2 years'));
     $plugin['version']      = $remote_data[$slug]['version']      ?? '';
@@ -317,19 +304,6 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       return $result;
     }
 
-    if ($args->slug === 'site-assistant' || \str_starts_with($args->slug, '01-ext-')) {
-      $info = (object) extendify\get_site_assistant_info();
-
-      $info->version  ??= 'latest';
-      $info->author   ??= '<a href="https://www.ionos-group.com/brands.html">IONOS Group</a>';
-      $info->requires ??= '6.0';
-      $info->sections ??= [
-        \_x('Description', 'Plugin installer section title') => $info->short_description ?? '',
-      ];
-
-      return $info;
-    }
-
     $config = get_config();
 
     $ionos_plugins = $config['ionos_plugins'] ?? [];
@@ -337,7 +311,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       return $result;
     }
 
-    // No info_url means that there is no additional info to fetch, so we can return the basic info from config.php. Site Assistant uses this.
+    // No info_url means that there is no additional info to fetch, so we can return the basic info from config.php.
     $plugin_info = $ionos_plugins[$args->slug];
     if (! isset($plugin_info['info_url'])) {
       return (object) $ionos_plugins[$args->slug];
@@ -452,8 +426,14 @@ function render_changelog(array $changelog): string
       return $result;
     }
 
-    $config        = get_config();
-    $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
+    static $ionos_plugins_cache = null;
+
+    if ($ionos_plugins_cache === null) {
+      $config                = get_config();
+      $ionos_plugins_cache   = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
+    }
+
+    $ionos_plugins = $ionos_plugins_cache;
 
     if ($args->search !== 'ionos') {
       $ionos_plugins = array_filter(
