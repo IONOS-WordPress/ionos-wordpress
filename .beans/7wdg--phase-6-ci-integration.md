@@ -1,14 +1,14 @@
 ---
 # 7wdg
 title: Phase 6 — CI integration
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-03T10:59:36Z
-updated_at: 2026-08-05T09:07:08Z
+updated_at: 2026-08-05T12:36:51Z
 parent: dav1
 blocked_by:
-  - gjbp
+    - gjbp
 ---
 
 Goal: GitHub Actions pulls the prebuilt GHCR image instead of running wp-env inside a
@@ -62,3 +62,59 @@ real registry/GITHUB_TOKEN and the nested docker-in-docker devcontainer, none of
 which can be reproduced in this sandbox. Pushed `feat/replace-wpenv` (first push of
 this entire migration branch) and opened a PR to validate; see PR discussion for
 the outcome and any follow-up fixes.
+
+## CI validation
+
+Pushed feat/replace-wpenv (first push of the whole wp-env→wp-alpine migration
+branch) and opened PR #910 as a draft to validate against real GitHub Actions,
+since "CI green on a branch" can't be reproduced in the local sandbox. Took
+several iterations to get there - each surfaced a real, previously-undetected
+bug rather than a CI-workflow-only issue:
+
+1. **UID mismatch** (`fix: remap php user to the runtime host uid/gid`): a
+   pulled/prebuilt image bakes in whatever uid built it in the publish
+   workflow, unrelated to whoever runs it - files written into host bind
+   mounts came back owned by a uid the consuming host couldn't clean up. This
+   was a latent bug in gjbp's PHP_VERSION_OVERRIDE too, undetected there only
+   because the local dev machine's uid happened to match the image default.
+   Fixed by remapping the php user to a HOST_UID/HOST_GID runtime env var in
+   docker-entrypoint.sh (skipped if already matching), with start.sh/test.sh
+   always passing the current host's uid/gid.
+2. **Stale ecs-php lint exclusion**: ECS's skip list only ever excluded the
+   old wp-env-home/ directory, never updated for mnt/ (introduced in Phase 2)
+   - recursively linted a populated mnt/ as project source, timing out
+     against WordPress core itself. Added `*/mnt/*` to the skip list, plus
+     applied unrelated pre-existing repo-wide Prettier drift pnpm lint-fix
+     picked up along the way (CI's lint job checks the whole repo
+     unconditionally).
+3. **Readiness timeout too tight**: a cold run (fresh core download, no
+   shared cache yet) inside CI's nested docker-in-docker devcontainer is
+   slower than local - widened scripts/test.sh's wait budget from 60s to
+   180s and added a docker logs dump on failure for future diagnosability.
+4. **PHP_VERSION_OVERRIDE without TEST_PRODUCTION**: source is written
+   against PHP 8+ syntax; only rector's transpiled dist/ output is meant to
+   run under PHP 7.4. My own local verification of PHP_VERSION_OVERRIDE in
+   gjbp never caught this because it unwittingly retagged a local PHP 8.4
+   build as `-php7.4` on a scratch registry, never exercising a real PHP 7.4
+   interpreter. Added a hard guard in scripts/test.sh (fails fast with a
+   clear message) and fixed the CI job to always pass both flags together.
+5. **Real PHP 7.4 incompatibilities**, only surfaced once tests actually ran
+   against a genuine PHP 7.4 interpreter (not a mislabeled 8.4 image):
+   - `wordpress-develop` trunk's own PHPUnit bootstrap and
+     `wp-tests-config.php` call `str_starts_with()` (PHP 8.0+) before
+     WordPress core's own polyfills ever load - fixed by adding
+     `symfony/polyfill-php80` and loading it via `auto_prepend_file` on the
+     PHP 7.x image variant only.
+   - `ClassNBATest.php` used PHP 8.0+ named-argument syntax - a hard parse
+     error, since phpunit/ test dirs are bind-mounted from source and never
+     rector-transpiled even under PHP_VERSION_OVERRIDE (only the actual
+     plugin code is). Switched to positional arguments.
+   - The `@mcp` e2e test depends on a third-party plugin
+     (Automattic/wordpress-mcp) downloaded fresh at test time, entirely
+     outside our own transpile pipeline and not PHP 7.4-compatible -
+     excluded on the PHP 7.4 CI leg specifically, since validating
+     third-party plugins isn't this leg's purpose.
+
+Final result: PR #910's `integration` workflow green across all 4 jobs
+(`devcontainer`, `lint`, `build and test`, `test against legacy PHP 7.4`) -
+https://github.com/IONOS-WordPress/ionos-wordpress/actions/runs/31005797267
