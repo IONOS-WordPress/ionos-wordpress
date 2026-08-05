@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-08-03T10:59:36Z
-updated_at: 2026-08-05T12:36:51Z
+updated_at: 2026-08-05T13:42:25Z
 parent: dav1
 blocked_by:
   - gjbp
@@ -118,3 +118,17 @@ bug rather than a CI-workflow-only issue:
 Final result: PR #910's `integration` workflow green across all 4 jobs
 (`devcontainer`, `lint`, `build and test`, `test against legacy PHP 7.4`) -
 https://github.com/IONOS-WordPress/ionos-wordpress/actions/runs/31005797267
+
+## Revision: PHP 7.4 → PHP 8.3
+
+Switched the legacy-PHP CI leg (and PHP_VERSION_OVERRIDE, see [[gjbp]]) from
+7.4 to 8.3 - the project's actual stated minimum supported PHP version
+(AGENTS.md), not 7.4. Real PHP 7.4 required workarounds source code was never
+meant to need (a str_starts_with() polyfill for wordpress-develop's own test
+bootstrap, rewriting ClassNBATest.php's named arguments to positional since
+phpunit/ test dirs are never rector-transpiled) and broke the third-party
+Automattic/wordpress-mcp plugin the @mcp e2e test depends on. 8.3 needs none
+of that: runs in source mode directly, no TEST_PRODUCTION requirement, @mcp
+included normally. Verified end-to-end again with a real PHP 8.3 image built
+locally and pushed to a scratch registry: PHPUnit 15/15, e2e 28/28 including
+the MCP snippet test.

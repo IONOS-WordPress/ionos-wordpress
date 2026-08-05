@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-08-03T10:59:36Z
-updated_at: 2026-08-05T08:32:58Z
+updated_at: 2026-08-05T13:42:17Z
 parent: b55y
 blocked_by:
   - 7hn5
@@ -80,3 +80,13 @@ pnpm test:php` pulling from a local registry pushed under the exact
 `TEST_PRODUCTION=true PHP_VERSION_OVERRIDE=7.4 pnpm test:php` (14/14) - and
 confirmed running source-mode `pnpm test:php` again immediately after a
 `TEST_PRODUCTION=true` run still passes (no dist/ pollution regression).
+
+## Revision: PHP 7.4 → PHP 8.3
+
+The PHP_VERSION_OVERRIDE target described above was changed from 7.4 to 8.3
+after real CI runs (see [[7wdg]]) showed 7.4 required workarounds the source
+was never meant to need (named-argument rewrites, a str_starts_with()
+polyfill) and broke third-party plugin compatibility (Automattic/wordpress-mcp).
+8.3 is the project's actual stated minimum supported PHP version (AGENTS.md)
+and runs source mode directly with no workarounds - see the
+`refactor: use PHP 8.3 instead of 7.4 for the legacy-PHP CI leg` commit.
