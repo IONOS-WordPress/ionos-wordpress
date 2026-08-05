@@ -209,7 +209,7 @@
       "required": [
         "user_data",
         "active_theme",
-        "active_plugins",
+        "plugins",
         "posts",
         "comments",
         "uploads",

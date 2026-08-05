@@ -164,15 +164,12 @@ function _get_plugins(): array
   $active_plugins_data = [];
 
   foreach ($all_plugins as $plugin_slug => $plugin_data) {
-    if (true) {
-
-      $active_plugins_data[] = [
-        'plugin_slug' => $plugin_slug,
-        'version'     => $plugin_data['Version'],
-        'auto_update' => in_array($plugin_slug, $auto_updates),
-        'active'      => in_array($plugin_slug, $active_plugins, true),
-      ];
-    }
+    $active_plugins_data[] = [
+      'plugin_slug' => $plugin_slug,
+      'version'     => $plugin_data['Version'],
+      'auto_update' => in_array($plugin_slug, $auto_updates),
+      'active'      => in_array($plugin_slug, $active_plugins, true),
+    ];
   }
 
   return $active_plugins_data;
