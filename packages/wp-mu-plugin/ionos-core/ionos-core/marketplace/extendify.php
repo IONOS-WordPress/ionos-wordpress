@@ -34,7 +34,7 @@ function get_site_assistant_info(): array
     'name'              => 'Site Assistant',
     'slug'              => $license,
     'plugin'            => "{$license}/{$license}.php",
-    'short_description' => __('Provides guided onboarding and a Site Assistant in the WordPress admin.', 'ionos-core'),
+    'short_description' => \__('Provides guided onboarding and a Site Assistant in the WordPress admin.', 'ionos-core'),
     'download_link'     => sprintf(SITE_ASSISTANT_URL_TEMPLATE, $license),
     'icons'             => [
       '1x' => 'https://s3-de-central.profitbricks.com/web-hosting/ionos/live/assets/icon-essentials-48px.svg',
