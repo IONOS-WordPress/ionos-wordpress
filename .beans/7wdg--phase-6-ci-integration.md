@@ -8,7 +8,7 @@ created_at: 2026-08-03T10:59:36Z
 updated_at: 2026-08-05T12:36:51Z
 parent: dav1
 blocked_by:
-    - gjbp
+  - gjbp
 ---
 
 Goal: GitHub Actions pulls the prebuilt GHCR image instead of running wp-env inside a
