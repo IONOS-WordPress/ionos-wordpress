@@ -153,9 +153,12 @@ jobs:
             IMAGE_REGISTRY_USERNAME=${{ github.repository_owner }}
             IMAGE_REGISTRY_PASSWORD=${{ secrets.GITHUB_TOKEN }}
           # scripts/test.sh pulls the prebuilt :<hash>-php7.4 tag itself when
-          # PHP_VERSION_OVERRIDE is set - no local image build on this leg
+          # PHP_VERSION_OVERRIDE is set - no local image build on this leg.
+          # TEST_PRODUCTION=true is required alongside it: source is written
+          # against PHP 8+ syntax, only rector's transpiled dist/ output is
+          # meant to run under PHP 7.4
           runCmd: |
-            PHP_VERSION_OVERRIDE=7.4 pnpm run test
+            TEST_PRODUCTION=true PHP_VERSION_OVERRIDE=7.4 pnpm run test
 
   lint:
     runs-on: ubuntu-latest

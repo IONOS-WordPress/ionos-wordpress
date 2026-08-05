@@ -110,6 +110,14 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
       exit 1
     fi
 
+    # source is written against PHP 8+ syntax - only rector's transpiled dist/
+    # output (TEST_PRODUCTION=true) is meant to run under PHP 7.4, so running
+    # source directly against a real PHP 7.4 interpreter always fatals
+    if [[ "${TEST_PRODUCTION:-}" != 'true' ]]; then
+      ionos.wordpress.log_error "PHP_VERSION_OVERRIDE requires TEST_PRODUCTION=true alongside it"
+      exit 1
+    fi
+
     readonly IMAGE_CONTENT_HASH="$(git rev-parse HEAD:packages/docker/wp-alpine)"
     readonly WP_ALPINE_IMAGE="${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:${IMAGE_CONTENT_HASH}-php${PHP_VERSION_OVERRIDE}"
 
