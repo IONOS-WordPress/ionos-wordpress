@@ -16,6 +16,8 @@ defined('ABSPATH') || exit();
 
 const MAX_ITEMS_PER_PAGE = 12;
 
+require_once __DIR__ . '/extendify.php';
+
 // Uninstall legacy ionos-marketplace plugin when ionos-core marketplace is active
 \add_action('admin_init', function (): void {
   $legacy_plugin = 'ionos-marketplace/marketplace.php';
@@ -108,6 +110,8 @@ function get_localized_config(string $key): mixed
 
     $ionos_plugins_list = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
     $wordpress_plugins  = [];
+
+    $ionos_plugins_list[] = extendify\get_site_assistant_info();
 
     $slugs = $config['wordpress_org_plugins'] ?? [];
     if (! empty($slugs)) {
@@ -269,6 +273,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
         div[class*="plugin-card-ionos-"],
         div.plugin-card-beyond-seo,
         div.plugin-card-01-ext-ion8dhas7-stretch,
+        div[class*="plugin-card-01-ext-"],
         div.plugin-card-woocommerce-german-market-light {
           .column-downloaded,
           .column-rating {
@@ -276,11 +281,18 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
           }
         }
 
-        div.plugin-card-01-ext-ion8dhas7-stretch{
+        div.plugin-card-01-ext-ion8dhas7-stretch,
+        div[class*="plugin-card-01-ext-"]{
           .plugin-action-buttons{
             .open-plugin-details-modal{
               display: none;
             }
+          }
+        }
+
+        div[class*="plugin-card-01-ext-"] {
+          .column-updated {
+            display: none;
           }
         }
       </style>
@@ -294,6 +306,11 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
   callback: function (mixed $result, string $action, object $args): mixed {
     if ($action !== 'plugin_information' || ! isset($args->slug)) {
       return $result;
+    }
+
+    if ($args->slug === 'site-assistant') {
+      $info = extendify\get_site_assistant_info();
+      return (object) $info;
     }
 
     $config = get_config();
