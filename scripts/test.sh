@@ -100,6 +100,29 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # remote - wp-env clones this same fixed repo/branch, decoupled from WP_ENV_CORE).
   readonly TESTS_DIR="${MNT_HOME}/wordpress-tests/trunk"
 
+  # PHP_VERSION_OVERRIDE runs the test stack against a prebuilt legacy-PHP image
+  # from the registry instead of the local PHP 8.4 build (see .github/workflows/
+  # build-wp-alpine-image.yaml's published matrix) - no local image build, since
+  # this path runs on every PR update and locally, not just occasionally.
+  if [[ -n "${PHP_VERSION_OVERRIDE:-}" ]]; then
+    if [[ "$PHP_VERSION_OVERRIDE" != '7.4' ]]; then
+      ionos.wordpress.log_error "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE is not part of the prebuilt wp-alpine image matrix (7.4)"
+      exit 1
+    fi
+
+    readonly IMAGE_CONTENT_HASH="$(git rev-parse HEAD:packages/docker/wp-alpine)"
+    readonly WP_ALPINE_IMAGE="${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:${IMAGE_CONTENT_HASH}-php${PHP_VERSION_OVERRIDE}"
+
+    if [[ -n "${IMAGE_REGISTRY_USERNAME:-}" ]] && [[ -n "${IMAGE_REGISTRY_PASSWORD:-}" ]]; then
+      echo "$IMAGE_REGISTRY_PASSWORD" | docker login "$IMAGE_REGISTRY" --username "$IMAGE_REGISTRY_USERNAME" --password-stdin
+    fi
+
+    ionos.wordpress.log_info "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE set - pulling prebuilt test image $WP_ALPINE_IMAGE (no local build) ..."
+    docker pull "$WP_ALPINE_IMAGE"
+  else
+    readonly WP_ALPINE_IMAGE='ionos-wordpress/wp-alpine:latest'
+  fi
+
   if [[ ! -d "$TESTS_DIR/tests/phpunit/includes" ]]; then
     ionos.wordpress.log_info "cloning WordPress/wordpress-develop#trunk test suite into ${TESTS_DIR} ..."
     rm -rf "$TESTS_DIR"
@@ -140,7 +163,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
     --env WORDPRESS_CONFIG_EXTRA="define('ABSPATH','/htdocs/');" \
     --env WP_TESTS_DIR=/wordpress-phpunit \
     "${VOLUME_ARGS[@]}" \
-    ionos-wordpress/wp-alpine:latest >/dev/null
+    "$WP_ALPINE_IMAGE" >/dev/null
 
   # readiness: phpunit talks to the DB directly, never over HTTP, so "wp core
   # is-installed" (WP core downloaded + wp-config.php + database ready) is the right
