@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.7.0
+
+### Minor Changes
+
+- 43c4952: Enhance telemetry data with wpscan data, etc.
+
 ## 1.6.1
 
 ### Patch Changes
