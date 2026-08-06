@@ -38,8 +38,9 @@ function _rest_loop_callback(): \WP_REST_Response
       'siteurl'             => \get_option('siteurl', ''),
       'home'                => \get_option('home', ''),
     ],
-    'events'        => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
-    'clicks'        => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
+    'vulnerabilities' => \get_transient('ionos_wpscan_issues'),
+    'events'          => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
+    'clicks'          => \get_option(IONOS_LOOP_CLICKS_OPTION, []),
 
     'plugin_data' => [
       'ionos-essentials'    => [

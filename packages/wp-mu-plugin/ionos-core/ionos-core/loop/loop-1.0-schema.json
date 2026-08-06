@@ -254,5 +254,6 @@
       "additionalProperties": true
     }
   },
+  "additionalProperties": true,
   "required": ["version", "supplier", "hosting", "wordpress", "events", "clicks", "plugin_data"]
 }
