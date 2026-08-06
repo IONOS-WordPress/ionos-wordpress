@@ -24,7 +24,12 @@ test.describe(
 
       let dismissAnchor = body.locator('.ionos_finish_setup');
       await expect(dismissAnchor).toHaveCount(1);
-      await dismissAnchor.click();
+
+      // dismissing persists the state and then reloads the dashboard itself, on an 800ms
+      // timer (see src/dashboard/index.js). wait for that reload to land instead of
+      // racing it - navigating below while it is still pending aborts our navigation
+      // with net::ERR_ABORTED, which is exactly what this test did under CI load.
+      await Promise.all([page.waitForEvent('load'), dismissAnchor.click()]);
 
       // show dashboard and ensure "create-page" action is not more available
       await admin.visitAdminPage('/');
