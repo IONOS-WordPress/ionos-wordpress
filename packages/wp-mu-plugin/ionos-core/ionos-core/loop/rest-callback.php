@@ -25,7 +25,7 @@ function _rest_loop_callback(): \WP_REST_Response
   }
 
   $core_data = [
-    'version'       => '1.0',
+    'version'       => '2.0',
     'hosting'       => _get_hosting(),
     'supplier'      => 'ionos-core',
     'wordpress'     => [
