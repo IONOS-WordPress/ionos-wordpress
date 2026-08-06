@@ -18,9 +18,9 @@
       workspace package directories into wp-content, so node_modules/vendor got walked
       too and any *Test.php shipped by a dependency would be collected and run.
 
-      test files do NOT follow a single directory convention (there is at least one
-      'tests/phppunit' typo in the tree), so discovery stays suffix-based per plugin
-      rather than globbing for 'tests/phpunit'.
+      tests live in 'tests/phpunit' directories by convention, but discovery is left
+      suffix-based rather than globbing for that path: a test that lands somewhere else
+      (or in a misspelled directory) then still runs instead of being silently dropped.
     -->
     <testsuite name="default">
       <directory suffix="Test.php">../wp-content/plugins</directory>

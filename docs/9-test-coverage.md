@@ -113,7 +113,7 @@ The following features (user faced and internal) are implemented:
 
   set password to "admin" and assert to be detected
   - implemented in
-    - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/security/tests/phppunit/ClassSecurityTest.php
+    - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/security/tests/phpunit/ClassSecurityTest.php
 
 - **[#security]** ensure user enables/disables security option and will be persisted
   - implemented in

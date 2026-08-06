@@ -5,6 +5,12 @@
 - **Framework**: PHPUnit with WordPress Test Library
 - **Base Class**: `\WP_UnitTestCase`
 - **Config**: `/phpunit/phpunit.xml`
+- **Location**: `*Test.php` inside a `tests/phpunit/` directory, co-located with the feature it
+  covers (e.g. `ionos-essentials/inc/security/tests/phpunit/ClassSecurityTest.php`).
+
+  The directory must be spelled `phpunit`. Discovery is suffix-based (any `*Test.php` under
+  `wp-content/{plugins,mu-plugins}`), so a misspelled directory still runs and the mistake is
+  easy to miss - keep the name uniform so the tree stays greppable.
 
 ## Running Tests
 
