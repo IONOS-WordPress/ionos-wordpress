@@ -37,8 +37,8 @@ require_once __DIR__ . '/extendify.php';
 
 function get_config()
 {
-  static $config = null;
-  if ($config === null) {
+  static $config;
+  if (!isset($config)) {
     $base_config = require_once __DIR__ . '/config.php';
     $tenant = strtolower(\get_option('ionos_group_brand', 'ionos'));
 
