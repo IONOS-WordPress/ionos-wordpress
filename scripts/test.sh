@@ -249,7 +249,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
       "$WP_ALPINE_IMAGE" >/dev/null
   }
 
-  # blocks until a shard's container is usable.
+  # blocks until a shard's container is usable, then makes it safe to test against.
   #
   # readiness: phpunit talks to the DB directly, never over HTTP, so "wp core
   # is-installed" (WP core downloaded + wp-config.php + database ready) is the right
@@ -266,6 +266,20 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
     # yet) is slower in CI's nested docker-in-docker devcontainer than locally
     for _ in $(seq 1 180); do
       if docker exec --user php "$name" wp core is-installed --path=/htdocs 2>/dev/null; then
+        # WordPress' background auto-updater takes the whole site down behind core's
+        # .maintenance file while it runs (WP_Automatic_Updater -> WP_Upgrader::
+        # maintenance_mode), so any request that races it comes back 503 "Briefly
+        # unavailable for scheduled maintenance". that is what made mcp.spec.js flaky:
+        # it is the one spec asserting the console error list is empty, so it is the one
+        # that notices. nothing in the suite wants core/plugin/theme auto-updates.
+        #
+        # setting it here rather than in the image keeps packages/docker/wp-alpine's
+        # content hash (and therefore the prebuilt-image cache) untouched. the window is
+        # not raced: readiness above is checked over wp-cli, so the site has served no
+        # HTTP request yet - no request means no wp-cron, which means the updater cannot
+        # have started.
+        docker exec --user php "$name" \
+          wp --quiet config set AUTOMATIC_UPDATER_DISABLED true --raw --type=constant --path=/htdocs
         return 0
       fi
       sleep 1

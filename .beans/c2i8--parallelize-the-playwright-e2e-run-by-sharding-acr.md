@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-08-06T11:29:35Z
-updated_at: 2026-08-06T12:28:26Z
+updated_at: 2026-08-06T12:47:48Z
 ---
 
 Split out of [[t48h]], which measured the integration workflow's `build and test` job. After
@@ -169,3 +169,44 @@ tightened. It is only green because CI retries twice.
 
 Options: make maintenance.spec.js's teardown deterministic (wait for the mode to actually be
 off), or pin maintenance.spec.js to its own shard.
+
+## Flake resolution
+
+Two wrong diagnoses before the right one, recorded so nobody repeats them:
+
+1. _"maintenance mode leaking out of maintenance.spec.js"_ - wrong. The ionos maintenance
+   mode feature emits no 503 at all; it has no wp_die/status_header anywhere.
+2. _"Plugin_Upgrader::install() puts the site in maintenance mode while installing
+   wordpress-mcp"_ - wrong. `install()` contains zero references to `maintenance_mode`;
+   only `bulk_upgrade()`, the theme upgrader and `WP_Automatic_Updater` call it.
+
+The actual defect is the assertion itself. `mcp.spec.js` did
+
+    await expect(errors).toEqual([]);
+
+over **every** console error the page produced, from any origin. That couples the test to
+third-party uptime and to any transient server state. Confirmed from the playwright trace of a
+local failure: the dashboard pulls `http://frontend-services.ionos.com/t/inpagelayer/
+inpagelayer.css`, and when that host is unreachable the resulting
+`net::ERR_CONNECTION_REFUSED` console error fails the assertion. Same assertion, different
+trigger, as the CI 503.
+
+Fix: scope the collected errors to the site under test via `msg.location().url`, so external
+asset failures no longer count. Verified with 5 repeats under CPU saturation (previously
+flaky, now 5/5) plus two clean full sharded runs (28/28, no flaky).
+
+Additionally hardened the test containers with `AUTOMATIC_UPDATER_DISABLED` - WordPress'
+background auto-updater is the one remaining thing that can take the site down behind core's
+`.maintenance` file mid-run, which is the most plausible source of the CI 503. Verified
+`WP_Automatic_Updater::is_disabled()` returns true. Being honest: this is hardening, I could
+not reproduce the CI 503 to prove it was the cause.
+
+Set from scripts/test.sh rather than the wp-alpine image so `packages/docker/wp-alpine`'s
+content hash - and therefore the prebuilt-image cache - stays untouched.
+
+### Incidental finding
+
+`--env WORDPRESS_CONFIG_EXTRA=...` in scripts/test.sh is dead: packages/docker/wp-alpine/
+docker-entrypoint.sh builds wp-config.php from a fixed `wp config create --extra-php` heredoc
+and never reads that variable. Left in place (removing it invalidates the image hash for no
+gain) but it is misleading and worth cleaning up next time the image changes.
