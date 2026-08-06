@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-08-05T15:20:37Z
-updated_at: 2026-08-06T08:09:24Z
+updated_at: 2026-08-06T08:25:27Z
 ---
 
 The lint and integration workflows currently rebuild the rector-php, ecs-php,
@@ -113,3 +113,18 @@ Verified locally end-to-end against a throwaway registry container with
 the real ecs-php image: pull-miss falls back, push succeeds, and a
 subsequent pull is a cache hit that restores build-info exactly as
 scripts/build.sh's skip check expects.
+
+## Verified on real CI
+
+Run https://github.com/IONOS-WordPress/ionos-wordpress/actions/runs/31084271555
+(after the fix commit) passed both the `build and test` and `lint` jobs.
+All four images correctly missed the cold cache (expected, first publish)
+and were then successfully pushed:
+
+- rector-php: sha256:c5429b8b08bf1f5af9d52694dfe81be743f9c004b71020f8270c379ada2bc55f
+- ecs-php: sha256:884436234a0b2bf19e8b762a14d920efdc895eb94d5397c7a3d0cac8be7318b4
+- potrans: sha256:27cea023c95ccaa81a7d9464f651d437df994bb38a14dc8db43b7bdbbe310f82
+- dennis-i18n: sha256:d5deca12701096ce33111ce6a75560bfb169f5ef1e6a58fb47d239d6bea48586
+
+A follow-up push on the same commit should now hit the cache and skip
+rebuilding all four images.

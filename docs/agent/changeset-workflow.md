@@ -65,15 +65,17 @@ add shared maintenance mode API
 
 Packages in this monorepo and their names as used in changesets:
 
-| Package directory                      | Changeset name                   |
-| -------------------------------------- | -------------------------------- |
-| `packages/wp-plugin/essentials/`       | `@ionos-wordpress/essentials`    |
-| `packages/wp-mu-plugin/stretch-extra/` | `@ionos-wordpress/stretch-extra` |
-| `packages/npm/ecs-php/`                | `@ionos-wordpress/ecs-php`       |
-| `packages/npm/dennis-i18n/`            | `@ionos-wordpress/dennis-i18n`   |
-| `packages/npm/potrans/`                | `@ionos-wordpress/potrans`       |
-| `packages/npm/rector-php/`             | `@ionos-wordpress/rector-php`    |
-| `packages/docker/wpdev-caddy/`         | `@ionos-wordpress/wpdev-caddy`   |
+| Package directory                       | Changeset name                   |
+| --------------------------------------- | -------------------------------- |
+| `packages/wp-plugin/ionos-essentials/`  | `@ionos-wordpress/essentials`    |
+| `packages/wp-plugin/ionos-wpdev-caddy/` | `@ionos-wordpress/wpdev-caddy`   |
+| `packages/wp-mu-plugin/ionos-core/`     | `@ionos-wordpress/ionos-core`    |
+| `packages/wp-mu-plugin/stretch-extra/`  | `@ionos-wordpress/stretch-extra` |
+| `packages/docker/ecs-php/`              | `@ionos-wordpress/ecs-php`       |
+| `packages/docker/dennis-i18n/`          | `@ionos-wordpress/dennis-i18n`   |
+| `packages/docker/potrans/`              | `@ionos-wordpress/potrans`       |
+| `packages/docker/rector-php/`           | `@ionos-wordpress/rector-php`    |
+| `packages/docker/wp-alpine/`            | `@ionos-wordpress/wp-alpine`     |
 
 When in doubt, check the `name` field in the relevant `package.json`.
 

@@ -13,7 +13,7 @@ Both linting commands are implemented in `./scripts/lint.sh`.
 - PHP is linted with a combination of [WordPress Coding Standard rules](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/) and [easy-coding-standard](https://github.com/easy-coding-standard/easy-coding-standard)
 
   [easy-coding-standard](https://github.com/easy-coding-standard/easy-coding-standard) is a linter capable if reusing `PHPCS` and `PHPCF` rules making it easier to configure and use. Most importantly, it allows to fix _almost any formatting errors_ automatically saving us a lot of time.
-  - WordPress specific [WordPress Coding Standard rules](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/) rules are not yet integrated in the `easy-coding-standard` configuration but it's planned for the future. That's why the `./scripts/lint.sh` script also runs `phpcs` directly.
+  - WordPress specific [WordPress Coding Standard rules](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/) rules are not yet integrated in the `easy-coding-standard` configuration but it's planned for the future.
 
   - Plugin entry files (like `./packages/wp-plugin/ionos-essentials/ionos-essentials.php`) are also linted to contain the required WordPress plugin metadata using `./scripts/lint.sh`.
 
@@ -35,7 +35,7 @@ Both linting commands are implemented in `./scripts/lint.sh`.
 
   > Files matched by `.gitignore` will be automatically ignored by the linters. They don't need to be additionally added to `./.lintignore`
 
-- `./ecs-config.php` contains the configuration for PHP linting using `easy-coding-standard`.
+- `./packages/docker/ecs-php/ecs-config.php` contains the configuration for PHP linting using `easy-coding-standard`.
   - Right now it's configured to use the `PSR12` (this is the latest official PHP Coding standard), `symplify` (https://github.com/easy-coding-standard/easy-coding-standard/blob/main/config/set/symplify.php) and a few further settings for dead code detection etc.
 
   - `PHPCS` is - as of now - also used for executing WordPress specific `PHPCS` rules detecting misuse of WordPress functions and paradigms. The configuration is done in `./packages/docker/ecs-php/ruleset.xml`.
@@ -75,6 +75,7 @@ Options:
               - all      operate on all files
               - php      operate on php files
               - prettier operate html/yml/md/etc. files
+              - wp       operate on wordpress plugin/theme entry files
               - js       operate on js/jsx files
               - css      operate on css/scss files
               - pnpm     operate on pnpm lock file
@@ -84,3 +85,20 @@ Options:
 
     pnpm lint --use prettier -use i18n
 ```
+
+Run `pnpm lint --help` for the authoritative, always up to date option list.
+
+# docker images
+
+Some linters run inside docker images built from `./packages/docker/*` :
+
+| image                         | needed by                                              |
+| ----------------------------- | ------------------------------------------------------ |
+| `ionos-wordpress/ecs-php`     | `--use php` (and therefore `--use all`)                |
+| `ionos-wordpress/dennis-i18n` | `--use i18n` (and therefore `--use all`)               |
+| `ionos-wordpress/potrans`     | **only** `pnpm lint-fix:i18n` (deepl auto-translation) |
+
+`./scripts/lint.sh` builds exactly the images the selected linters need before
+running them - so `pnpm lint` never builds `potrans`. In CI these images are not
+built from scratch but pulled from the registry, see the `lint` job in
+`./.github/workflows/integration.yaml`.

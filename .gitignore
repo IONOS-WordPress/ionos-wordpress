@@ -13,7 +13,8 @@ node_modules
 /bin/act
 /bin/
 build-info
-build-info
+# marker written by .github/shared/scripts/docker-subproject-image-pull.sh
+image-pull-hit
 packages/*/*/webpack.config.js
 /build
 /build

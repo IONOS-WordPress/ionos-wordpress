@@ -375,8 +375,23 @@ function ionos.wordpress.wordpress_plugin() {
   return $exit_code
 }
 
-# ensure required docker images are built
-pnpm build --filter dennis-i18n --filter potrans --filter ecs-php > /dev/null
+# ensure required docker images are built - but only those the selected linters
+# actually use. building all of them unconditionally was wasted work (and in CI
+# forced a pull/push of images that are never invoked).
+# note: potrans is only used by the deepl auto-translation in 'lint-fix --use i18n'
+DOCKER_BUILD_FILTERS=()
+if [[ "${USE[@]}" =~ all|php ]]; then
+  DOCKER_BUILD_FILTERS+=(--filter ecs-php)
+fi
+if [[ "${USE[@]}" =~ all|i18n ]]; then
+  DOCKER_BUILD_FILTERS+=(--filter dennis-i18n)
+fi
+if [[ "$FIX" == 'yes' ]] && [[ "${USE[@]}" =~ i18n ]]; then
+  DOCKER_BUILD_FILTERS+=(--filter potrans)
+fi
+if [[ ${#DOCKER_BUILD_FILTERS[@]} -gt 0 ]]; then
+  pnpm build "${DOCKER_BUILD_FILTERS[@]}" > /dev/null
+fi
 
 declare -A summaries=()
 

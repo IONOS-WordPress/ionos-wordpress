@@ -2,11 +2,14 @@
 
 #
 # pushes a packages/docker/* sub-project image (freshly built by
-# scripts/build.sh, or already restored by docker-subproject-image-pull.sh)
-# to the registry, tagged with the same date-based tag
+# scripts/build.sh) to the registry, tagged with the same date-based tag
 # docker-subproject-image-pull.sh looks for - so the next workflow run can
-# pull it instead of rebuilding. a no-op push (no new layers to upload) when
-# the pull step already found and restored a cached image.
+# pull it instead of rebuilding.
+#
+# skipped entirely when docker-subproject-image-pull.sh already restored the
+# image from the registry (it leaves a <path>/image-pull-hit marker behind):
+# the push would upload no new layers, but a login + registry round trip per
+# image still costs seconds of CI wall clock.
 #
 # must run inside the same docker daemon scripts/build.sh's docker build
 # step ran in (the devcontainer's docker-in-docker daemon in CI, see
@@ -22,6 +25,11 @@ SUBPROJECT_PATH="$1"
 REGISTRY="$2"
 REPOSITORY="$3"
 TAG="$4"
+
+if [[ -f "$SUBPROJECT_PATH/image-pull-hit" ]]; then
+  echo "skip pushing $SUBPROJECT_PATH image - registry already has it (restored by docker-subproject-image-pull.sh)"
+  exit 0
+fi
 
 LOCAL_IMAGE_NAME="$(jq -r '.name' "$SUBPROJECT_PATH/package.json" | sed -r 's/@//g')"
 PACKAGE_VERSION="$(jq -r '.version' "$SUBPROJECT_PATH/package.json")"

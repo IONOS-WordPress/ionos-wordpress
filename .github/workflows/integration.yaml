@@ -31,7 +31,7 @@ env:
   # build-wp-alpine-image.yaml) - same repo vars/defaults, never hardcoded
   IMAGE_REGISTRY: ${{ vars.IMAGE_REGISTRY || 'ghcr.io' }}
   IMAGE_REPOSITORY: ${{ vars.IMAGE_REPOSITORY || 'ionos-wordpress/wp-alpine-dev' }}
-  # registry repository prefix the rector-php/ecs-php/potrans/dennis-i18n
+  # registry repository prefix the rector-php/ecs-php/dennis-i18n
   # docker sub-project images (packages/docker/*) are cached under, one
   # repository per sub-project (e.g. ionos-wordpress/rector-php) - same
   # registry as wp-alpine, same vars/defaults convention, never hardcoded
@@ -177,106 +177,60 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: install
-        with:
-          runCmd: |
-            pnpm install --frozen-lockfile
       - uses: './.github/shared/actions/docker-subproject-image-name'
         id: ecs_php_image_tag
         with:
           path: packages/docker/ecs-php
       - uses: './.github/shared/actions/docker-subproject-image-name'
-        id: potrans_image_tag
-        with:
-          path: packages/docker/potrans
-      - uses: './.github/shared/actions/docker-subproject-image-name'
         id: dennis_i18n_image_tag
         with:
           path: packages/docker/dennis-i18n
 
+      # every 'devcontainer-shell-run' re-runs 'devcontainer build' + 'docker run'
+      # and costs ~6s of wall clock even on a full cache hit - so install and the
+      # image pulls share one step instead of getting one each.
+      # note: potrans is deliberately absent. 'pnpm run lint' never invokes it -
+      # only 'pnpm run lint-fix:i18n' (deepl auto-translation) does, and that is
+      # never run in CI. see scripts/lint.sh.
       - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: pull prebuilt ecs-php image
+        name: install and pull prebuilt lint images
         with:
           env: |
             IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/ecs-php
-            IMAGE_TAG=${{ steps.ecs_php_image_tag.outputs.tag }}
+            IMAGE_REPOSITORY_PREFIX=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}
+            ECS_PHP_IMAGE_TAG=${{ steps.ecs_php_image_tag.outputs.tag }}
+            DENNIS_I18N_IMAGE_TAG=${{ steps.dennis_i18n_image_tag.outputs.tag }}
             IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
             IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
           runCmd: |
-            .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/ecs-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY" "$IMAGE_TAG"
+            pnpm install --frozen-lockfile
+            .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/ecs-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/ecs-php" "$ECS_PHP_IMAGE_TAG"
+            .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/dennis-i18n "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/dennis-i18n" "$DENNIS_I18N_IMAGE_TAG"
 
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: pull prebuilt potrans image
-        with:
-          env: |
-            IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/potrans
-            IMAGE_TAG=${{ steps.potrans_image_tag.outputs.tag }}
-            IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
-            IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
-          runCmd: |
-            .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/potrans "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY" "$IMAGE_TAG"
-
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: pull prebuilt dennis-i18n image
-        with:
-          env: |
-            IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/dennis-i18n
-            IMAGE_TAG=${{ steps.dennis_i18n_image_tag.outputs.tag }}
-            IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
-            IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
-          runCmd: |
-            .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/dennis-i18n "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY" "$IMAGE_TAG"
-
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: build necessary dockers
-        with:
-          runCmd: |
-            pnpm run build --filter ecs-php --filter dennis-i18n
+      # no separate 'build necessary dockers' step: scripts/lint.sh builds the
+      # images the selected linters need itself, and skips the ones the pull
+      # above already restored
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: lint_project
         with:
           runCmd: |
             pnpm run lint
 
+      # a no-op when both pulls hit above - docker-subproject-image-push.sh then
+      # skips the login + registry round trip per image
       - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: publish ecs-php image
+        name: publish lint images
         with:
           env: |
             IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/ecs-php
-            IMAGE_TAG=${{ steps.ecs_php_image_tag.outputs.tag }}
+            IMAGE_REPOSITORY_PREFIX=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}
+            ECS_PHP_IMAGE_TAG=${{ steps.ecs_php_image_tag.outputs.tag }}
+            DENNIS_I18N_IMAGE_TAG=${{ steps.dennis_i18n_image_tag.outputs.tag }}
             IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
             IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
           runCmd: |
-            .github/shared/scripts/docker-subproject-image-push.sh packages/docker/ecs-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY" "$IMAGE_TAG"
-
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: publish potrans image
-        with:
-          env: |
-            IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/potrans
-            IMAGE_TAG=${{ steps.potrans_image_tag.outputs.tag }}
-            IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
-            IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
-          runCmd: |
-            .github/shared/scripts/docker-subproject-image-push.sh packages/docker/potrans "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY" "$IMAGE_TAG"
-
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: publish dennis-i18n image
-        with:
-          env: |
-            IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/dennis-i18n
-            IMAGE_TAG=${{ steps.dennis_i18n_image_tag.outputs.tag }}
-            IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
-            IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
-          runCmd: |
-            .github/shared/scripts/docker-subproject-image-push.sh packages/docker/dennis-i18n "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY" "$IMAGE_TAG"
+            .github/shared/scripts/docker-subproject-image-push.sh packages/docker/ecs-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/ecs-php" "$ECS_PHP_IMAGE_TAG"
+            .github/shared/scripts/docker-subproject-image-push.sh packages/docker/dennis-i18n "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/dennis-i18n" "$DENNIS_I18N_IMAGE_TAG"
 
       # # automatically approve and merge dependabot PRs
       # dependabot:
