@@ -95,7 +95,7 @@ running docker commands on the **host** runner's docker daemon, but
 scripts/build.sh's actual docker build (and thus the locally-tagged image)
 happens **inside the devcontainer's docker-in-docker daemon** (via
 devcontainer-shell-run/devcontainers/ci) - two separate daemons. The
-wp-alpine pull step works because it's inline bash run *inside* the
+wp-alpine pull step works because it's inline bash run _inside_ the
 devcontainer via devcontainer-shell-run, not a separate host-side action.
 
 Fix: replaced the two composite actions with plain shell scripts
