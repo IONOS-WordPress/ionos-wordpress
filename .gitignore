@@ -1,5 +1,7 @@
 node_modules
 /.pnpm-store
+# CI-only playwright browser download location (see scripts/test.sh)
+/.playwright-browsers
 /packages/*/*/*/build
 /packages/*/*/dist
 /packages/*/*/*/languages/*.json

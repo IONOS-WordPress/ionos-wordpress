@@ -86,6 +86,39 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 If you logout within a test, please re-login afterwards with `await requestUtils.setupRest();`.
 See the the _maintenance_-test for real life example.
 
+## Running e2e tests in parallel
+
+The e2e specs are **not** isolated from each other: they set up global WordPress state in
+`beforeAll` via wp-cli, and several of them contradict each other (`welcome.spec.js` deletes
+the `ionos_essentials_welcome` user meta that `tabs`/`maintenance`/`security-options` set,
+and `secondary-plugin-dir.spec.js` deactivates the _ionos-essentials_ plugin for its whole
+duration). Raising playwright's own `workers` setting would therefore break them.
+
+Instead, set `E2E_SHARDS` to run the suite across several **independent** test containers:
+
+```sh
+E2E_SHARDS=3 pnpm run test --use e2e
+```
+
+Each shard gets its own throwaway wp-alpine container - own name (`ionos-wordpress-test`,
+`ionos-wordpress-test-2`, ...), own published port (`TEST_HTTP_PORT`, +1, ...) and own
+`wp-content` overlay - and playwright splits the spec files across them with `--shard`. Because
+every shard browses its own WordPress, the existing `beforeAll` setup stays valid unchanged.
+
+Per-shard state is kept apart on disk too (storage states, `.test-results-<n>`,
+`.playwright-report-<n>`), and `scripts/_get-workflow-artefacts.sh` collects all of them.
+
+Notes:
+
+- Defaults to `1`, i.e. the original single-container behaviour.
+- Forced to `1` when you pass individual test files, since there would be nothing to spread.
+- Each shard costs a container (mariadb + php-fpm + caddy) plus a chromium, so more shards
+  trade parallelism against CPU contention. CI currently uses 3 - see
+  `.github/workflows/integration.yaml`.
+- Specs that call `requestUtils.setupRest()` rely on the storage state file being the same one
+  the browser context reads; `scripts/test.sh` exports `STORAGE_STATE_PATH` per shard to keep
+  that true, so never point the two at different files.
+
 # Linux bare metal testing (without being in devcontainer)
 
 Everything works exactly as in DevContainer, but you need to have the requirements installed globall :

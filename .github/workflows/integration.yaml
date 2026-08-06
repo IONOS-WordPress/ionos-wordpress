@@ -64,28 +64,52 @@ jobs:
 
       - uses: './.github/shared/actions/pnpm-store-cache'
 
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: install project
+      # scripts/test.sh points PLAYWRIGHT_BROWSERS_PATH at this workspace-relative
+      # directory when CI=true, instead of the dev container's ~/.cache/ms-playwright -
+      # which is discarded together with the container after every step, so the default
+      # location meant re-downloading ~300MB of chromium on every run. same reasoning
+      # (and same host-side-cache-of-a-bind-mounted-dir trick) as pnpm-store-cache above.
+      - uses: actions/cache@v4
         with:
-          runCmd: |
-            pnpm install --frozen-lockfile
+          path: .playwright-browsers
+          # the lockfile pins the playwright version, which is what decides the
+          # browser build that gets downloaded
+          key: ${{ runner.os }}-playwright-browsers-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-browsers-
 
+      - uses: './.github/shared/actions/docker-subproject-image-name'
+        id: rector_php_image_tag
+        with:
+          path: packages/docker/rector-php
+
+      # every 'devcontainer-shell-run' re-runs 'devcontainer build' + 'docker run' and
+      # costs ~4s of wall clock even on a full cache hit, so install and both image pulls
+      # share one step instead of getting one each (the lint job below does the same).
+      # both pulls run inside the devcontainer's docker-in-docker daemon - the same one
+      # scripts/build.sh's docker build step runs in - so the pulled/tagged images are
+      # actually visible to it (a host-side docker pull/tag would land in a different
+      # daemon and be invisible to the build step).
       - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: pull prebuilt wp-alpine image
+        name: install and pull prebuilt images
         with:
           env: |
             IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY=${{ env.IMAGE_REPOSITORY }}
-            IMAGE_REGISTRY_USERNAME=${{ github.repository_owner }}
-            IMAGE_REGISTRY_PASSWORD=${{ secrets.GITHUB_TOKEN }}
-          # tags a local ionos-wordpress/wp-alpine:<version> from the image built/
-          # published by build-wp-alpine-image.yaml (Phase 1), so scripts/build.sh's
-          # existing "already exists locally" check skips rebuilding it below - no
-          # hard dependency on that workflow finishing first: falls back to a local
-          # build (today's behavior) if the tag isn't published yet/pull fails
+            WP_ALPINE_IMAGE_REPOSITORY=${{ env.IMAGE_REPOSITORY }}
+            IMAGE_REPOSITORY_PREFIX=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}
+            RECTOR_PHP_IMAGE_TAG=${{ steps.rector_php_image_tag.outputs.tag }}
+            IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
+            IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
+          # the wp-alpine block tags a local ionos-wordpress/wp-alpine:<version> from the
+          # image built/published by build-wp-alpine-image.yaml (Phase 1), so
+          # scripts/build.sh's existing "already exists locally" check skips rebuilding it
+          # below - no hard dependency on that workflow finishing first: falls back to a
+          # local build (today's behavior) if the tag isn't published yet/pull fails
           runCmd: |
+            pnpm install --frozen-lockfile
+
             HASH="$(git rev-parse HEAD:packages/docker/wp-alpine)"
-            IMAGE="${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:${HASH}-php8.4"
+            IMAGE="${IMAGE_REGISTRY}/${WP_ALPINE_IMAGE_REPOSITORY}:${HASH}-php8.4"
             echo "$IMAGE_REGISTRY_PASSWORD" | docker login "$IMAGE_REGISTRY" --username "$IMAGE_REGISTRY_USERNAME" --password-stdin
             if docker pull "$IMAGE"; then
               PACKAGE_VERSION="$(jq -r '.version' packages/docker/wp-alpine/package.json)"
@@ -96,31 +120,31 @@ jobs:
               echo "::warning::could not pull prebuilt wp-alpine image $IMAGE - falling back to a local build"
             fi
 
-      - uses: './.github/shared/actions/docker-subproject-image-name'
-        id: rector_php_image_tag
-        with:
-          path: packages/docker/rector-php
+            .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/rector-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/rector-php" "$RECTOR_PHP_IMAGE_TAG"
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: pull prebuilt rector-php image
+        name: build project and publish rector-php image
         with:
           env: |
             IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/rector-php
-            IMAGE_TAG=${{ steps.rector_php_image_tag.outputs.tag }}
+            IMAGE_REPOSITORY_PREFIX=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}
+            RECTOR_PHP_IMAGE_TAG=${{ steps.rector_php_image_tag.outputs.tag }}
             IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
             IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
-          # runs inside the devcontainer's docker-in-docker daemon - the same one
-          # scripts/build.sh's docker build step below runs in - so the pulled/
-          # tagged image is actually visible to it (a host-side docker pull/tag
-          # would land in a different daemon and be invisible to the build step)
+          # the push is a no-op when the pull above hit - docker-subproject-image-push.sh
+          # then skips the login + registry round trip
           runCmd: |
-            .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/rector-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY" "$IMAGE_TAG"
+            # the 'php:<target>-cli' images scripts/test.sh shells out to for its
+            # transpilation-target syntax checks are only needed once the test step runs,
+            # but pulling them there puts ~5s on the critical path. fetch them here
+            # instead, concurrently with the build, into the same docker-in-docker daemon
+            # the test step reuses. failures are ignored - test.sh pulls on demand anyway.
+            for RECTOR_CONFIG in packages/docker/rector-php/rector-config-php*.php; do
+              TARGET_PHP_VERSION="$(basename "$RECTOR_CONFIG" .php)"
+              docker pull --quiet "php:${TARGET_PHP_VERSION#*rector-config-php}-cli" >/dev/null 2>&1 || true
+            done &
+            PHP_IMAGE_PULL_PID=$!
 
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: build project
-        with:
-          runCmd: |
             # only build what the test suite actually consumes: the plugins/mu-plugins
             # themselves (bundled JS/CSS, i18n) plus rector-php, which their build step
             # shells out to for PHP-version transpilation. ecs-php/potrans/dennis-i18n
@@ -128,23 +152,22 @@ jobs:
             # them here would be wasted work. wp-alpine is already pulled/tagged above.
             pnpm run build --filter './packages/wp-plugin/*' --filter './packages/wp-mu-plugin/*' --filter '@ionos-wordpress/rector-php'
 
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: publish rector-php image
-        with:
-          env: |
-            IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}/rector-php
-            IMAGE_TAG=${{ steps.rector_php_image_tag.outputs.tag }}
-            IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
-            IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
-          runCmd: |
-            .github/shared/scripts/docker-subproject-image-push.sh packages/docker/rector-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY" "$IMAGE_TAG"
+            wait "$PHP_IMAGE_PULL_PID" || true
+
+            .github/shared/scripts/docker-subproject-image-push.sh packages/docker/rector-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/rector-php" "$RECTOR_PHP_IMAGE_TAG"
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: test project
         with:
+          # E2E_SHARDS splits the playwright e2e run across N throwaway WordPress
+          # containers running concurrently (see scripts/test.sh). the specs mutate global
+          # WordPress state and contradict each other, so they cannot share one instance -
+          # a container per shard is what makes the parallelism safe.
+          # 3 is a starting point for the 4-vCPU runner: each shard costs a container
+          # (mariadb + php-fpm + caddy) plus a chromium, so pushing this higher trades
+          # parallelism against CPU contention. re-measure before changing it.
           runCmd: |
-            TEST_PRODUCTION=true pnpm run test
+            TEST_PRODUCTION=true E2E_SHARDS=3 pnpm run test
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts
