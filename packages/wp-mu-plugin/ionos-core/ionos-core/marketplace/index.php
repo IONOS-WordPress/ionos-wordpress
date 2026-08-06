@@ -220,19 +220,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
   }
 
   \array_walk($ionos_plugins, function (array &$plugin) use ($remote_data): void {
-    $slug   = $plugin['slug'] ?? '';
-    $plugin += [
-      'rating'  => 0,
-      'ratings' => [
-        '5' => 0,
-        '4' => 0,
-        '3' => 0,
-        '2' => 0,
-        '1' => 0,
-      ],
-      'num_ratings'     => 0,
-      'active_installs' => 0,
-    ];
+    $slug = $plugin['slug'] ?? '';
 
     $plugin['last_updated'] = $remote_data[$slug]['last_updated'] ?? \date('Y-m-d', \strtotime('-2 years'));
     $plugin['version']      = $remote_data[$slug]['version']      ?? '';
