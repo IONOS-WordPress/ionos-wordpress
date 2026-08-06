@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-08-06T08:40:03Z
-updated_at: 2026-08-06T08:45:57Z
+updated_at: 2026-08-06T08:51:32Z
 ---
 
 The `lint` job of `.github/workflows/integration.yaml` takes ~3 minutes
@@ -119,3 +119,27 @@ No changeset: CI/tooling + docs only.
 
 Expected CI effect: ~181s -> ~135s. The remaining deferred items (pnpm
 store cache ~20s, parallel linters ~10s) would take it to ~105s.
+
+## Measured after the change
+
+Run 31086386050 (job 92566753896), commit e4a4bc99: **181s -> 145s (-36s, -20%)**.
+
+| step                                | before    | after |
+| ----------------------------------- | --------- | ----- |
+| checkout + ghcr login               | 8s        | 7s    |
+| install (+ image pulls, now merged) | 82s + 31s | 97s   |
+| `build necessary dockers`           | 7s        | gone  |
+| `lint_project`                      | 29s       | 31s   |
+| publish images                      | 18s       | 5s    |
+| setup/teardown                      | 6s        | 5s    |
+
+Both pulls hit and both pushes correctly logged
+"skip pushing ... registry already has it", so the marker mechanism works
+end to end in CI.
+
+Slightly less than the ~46s estimate: the merged install+pull step saved
+16s rather than 23s (the two pulls still take ~12s of actual download).
+
+What is left is dominated by the 82s install: ~50s devcontainer boot
+(unavoidable first `devcontainer up` in the job) + ~30s `pnpm install`.
+See the deferred items above.

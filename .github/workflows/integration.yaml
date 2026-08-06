@@ -62,6 +62,8 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - uses: './.github/shared/actions/pnpm-store-cache'
+
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: install project
         with:
@@ -185,6 +187,7 @@ jobs:
         id: dennis_i18n_image_tag
         with:
           path: packages/docker/dennis-i18n
+      - uses: './.github/shared/actions/pnpm-store-cache'
 
       # every 'devcontainer-shell-run' re-runs 'devcontainer build' + 'docker run'
       # and costs ~6s of wall clock even on a full cache hit - so install and the
