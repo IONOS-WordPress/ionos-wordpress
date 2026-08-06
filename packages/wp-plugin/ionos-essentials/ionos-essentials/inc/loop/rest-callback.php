@@ -186,7 +186,7 @@ function _get_plugins(): array
   $plugins_data = [];
 
   foreach ($all_plugins as $plugin_slug => $plugin_data) {
-      $plugins_data[] = [
+    $plugins_data[] = [
       'plugin_slug' => $plugin_slug,
       'version'     => $plugin_data['Version'],
       'auto_update' => in_array($plugin_slug, $auto_updates),
