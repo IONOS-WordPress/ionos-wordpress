@@ -9,10 +9,27 @@
     <env name="WORDPRESS_TABLE_PREFIX" value="wp_"/>
   </php>
   <testsuites>
+    <!--
+      paths are resolved relative to this file's directory (/htdocs/phpunit in the test
+      container), so '../' is the wordpress root.
+
+      only wp-content/{plugins,mu-plugins} are scanned - scanning '../' walked all of
+      wordpress core as well, and in source mode _docker-mounts.sh bind-mounts whole
+      workspace package directories into wp-content, so node_modules/vendor got walked
+      too and any *Test.php shipped by a dependency would be collected and run.
+
+      test files do NOT follow a single directory convention (there is at least one
+      'tests/phppunit' typo in the tree), so discovery stays suffix-based per plugin
+      rather than globbing for 'tests/phpunit'.
+    -->
     <testsuite name="default">
-      <directory suffix="Test.php">../</directory>
+      <directory suffix="Test.php">../wp-content/plugins</directory>
+      <directory suffix="Test.php">../wp-content/mu-plugins</directory>
       <exclude>../wp-content/mu-plugins/stretch-extra</exclude>
-      <exclude>vendor</exclude>
+      <exclude>../wp-content/plugins/*/node_modules</exclude>
+      <exclude>../wp-content/plugins/*/vendor</exclude>
+      <exclude>../wp-content/mu-plugins/*/node_modules</exclude>
+      <exclude>../wp-content/mu-plugins/*/vendor</exclude>
     </testsuite>
   </testsuites>
 </phpunit>

@@ -1,6 +1,11 @@
 # Migration Plan: wp-env → Custom Alpine Containers
 
-Status: planned, not started.
+Status: implemented. Phases 1-7 landed on `feat/replace-wpenv` (see PR #910); wp-env is
+gone and `pnpm start`/`stop`/`test`/`destroy` run against the wp-alpine containers.
+Phase 8 (opportunistic tooling cleanup) is not done and is tracked separately.
+
+This document is kept as the design record for that migration - it describes the intended
+end state and the reasoning behind it, not remaining work.
 
 Goal: replace `@wordpress/env` (wp-env) with custom Alpine-based Docker containers,
 prototyped at `/opt/dev/wordpress-docker-image`, while preserving the `pnpm
