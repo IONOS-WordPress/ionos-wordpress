@@ -58,6 +58,11 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # this workflow runs on 'main', integration.yaml runs on every other branch -
+      # a run can restore caches from its own ref or from the default branch, so the
+      # store saved by an integration run on 'develop' is reused here
+      - uses: './.github/shared/actions/pnpm-store-cache'
+
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: prerelease
         with:
