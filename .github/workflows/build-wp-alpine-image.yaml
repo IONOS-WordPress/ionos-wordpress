@@ -1,9 +1,13 @@
 #
 # builds and publishes the ionos-wordpress Alpine dev/test image
-# (packages/docker/wp-alpine) as two PHP variants (8.4 default, 8.3 - the
-# project's stated minimum supported version, see AGENTS.md) to a container
-# registry, tagged by content hash so identical Dockerfile/entrypoint content
-# never rebuilds.
+# (packages/docker/wp-alpine) as one PHP variant per entry in that package's
+# image-matrix.json (8.4 default, 8.3 - the project's stated minimum supported
+# version, see AGENTS.md) to a container registry, tagged by content hash so
+# identical Dockerfile/entrypoint content never rebuilds.
+#
+# the variants are NOT listed here: scripts/test.sh (PHP_VERSION_OVERRIDE) has
+# to agree with them, so image-matrix.json is the single source of truth and
+# this workflow just reads it.
 #
 # registry/repository are configurable via repo-level Actions variables
 # (IMAGE_REGISTRY/IMAGE_REPOSITORY), defaulting to GHCR - never hardcoded.
@@ -26,16 +30,51 @@ env:
   IMAGE_REPOSITORY: ${{ vars.IMAGE_REPOSITORY || 'ionos-wordpress/wp-alpine-dev' }}
 
 jobs:
+  # 'strategy.matrix' cannot read a file itself, so resolve it in a preceding job
+  # and hand it over as JSON
+  matrix:
+    name: resolve image matrix
+    runs-on: ubuntu-latest
+    outputs:
+      variants: ${{ steps.resolve.outputs.variants }}
+    steps:
+      - name: checkout branch from git
+        uses: actions/checkout@v6
+
+      - name: resolve image matrix
+        id: resolve
+        run: |
+          MATRIX_FILE='packages/docker/wp-alpine/image-matrix.json'
+
+          # packages/docker/wp-alpine/.env repeats the default php/alpine pair because
+          # scripts/build.sh feeds it to 'docker build --build-arg' verbatim and cannot
+          # read JSON. guard the duplication here instead of letting it rot: silently
+          # publishing a default tag built from different versions than a local
+          # 'pnpm build' produces would be near-impossible to spot from a test failure.
+          DEFAULT_COUNT="$(jq '[.[] | select(.default)] | length' "$MATRIX_FILE")"
+          if [[ "$DEFAULT_COUNT" -ne 1 ]]; then
+            echo "::error::$MATRIX_FILE must mark exactly one variant as the default, found $DEFAULT_COUNT"
+            exit 1
+          fi
+
+          for ARG in PHP ALPINE; do
+            EXPECTED="$(jq -r --arg key "${ARG,,}" '.[] | select(.default) | .[$key]' "$MATRIX_FILE")"
+            ACTUAL="$(grep -E "^ARG_${ARG}_VERSION=" packages/docker/wp-alpine/.env | cut -d= -f2-)"
+            if [[ "$EXPECTED" != "$ACTUAL" ]]; then
+              echo "::error::packages/docker/wp-alpine/.env has ARG_${ARG}_VERSION=$ACTUAL but $MATRIX_FILE's default variant says $EXPECTED"
+              exit 1
+            fi
+          done
+
+          # 'default' is metadata for the check above - the build job only needs the pair
+          echo "variants=$(jq -c '{ include: [.[] | { php, alpine }] }' "$MATRIX_FILE")" >> "$GITHUB_OUTPUT"
+
   build:
     name: build (php ${{ matrix.php }})
     runs-on: ubuntu-latest
+    needs: matrix
     strategy:
-      matrix:
-        include:
-          - php: '8.4'
-            alpine: '3.24'
-          # - php: '8.3'
-          #   alpine: '3.20'
+      matrix: ${{ fromJSON(needs.matrix.outputs.variants) }}
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v6

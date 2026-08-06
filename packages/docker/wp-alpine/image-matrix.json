@@ -1,0 +1,4 @@
+[
+  { "php": "8.4", "alpine": "3.24", "default": true },
+  { "php": "8.3", "alpine": "3.20", "default": false }
+]

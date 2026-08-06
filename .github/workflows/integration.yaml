@@ -103,15 +103,38 @@ jobs:
           # the wp-alpine block tags a local ionos-wordpress/wp-alpine:<version> from the
           # image built/published by build-wp-alpine-image.yaml (Phase 1), so
           # scripts/build.sh's existing "already exists locally" check skips rebuilding it
-          # below - no hard dependency on that workflow finishing first: falls back to a
-          # local build (today's behavior) if the tag isn't published yet/pull fails
+          # below - no hard dependency on that workflow finishing first: the build step
+          # below builds the image locally if the tag isn't published yet/the pull fails
+          # (it detects that by the absence of ionos-wordpress/wp-alpine:latest, which is
+          # only tagged here on a successful pull)
           runCmd: |
             pnpm install --frozen-lockfile
 
             HASH="$(git rev-parse HEAD:packages/docker/wp-alpine)"
-            IMAGE="${IMAGE_REGISTRY}/${WP_ALPINE_IMAGE_REPOSITORY}:${HASH}-php8.4"
+            # the default php variant is taken from the same .env that scripts/build.sh
+            # passes to 'docker build' for the local fallback below, so the tag pulled
+            # here and the image built when the pull fails can never disagree
+            DEFAULT_PHP_VERSION="$(grep -E '^ARG_PHP_VERSION=' packages/docker/wp-alpine/.env | cut -d= -f2-)"
+            IMAGE="${IMAGE_REGISTRY}/${WP_ALPINE_IMAGE_REPOSITORY}:${HASH}-php${DEFAULT_PHP_VERSION}"
             echo "$IMAGE_REGISTRY_PASSWORD" | docker login "$IMAGE_REGISTRY" --username "$IMAGE_REGISTRY_USERNAME" --password-stdin
-            if docker pull "$IMAGE"; then
+
+            # retry: ghcr.io answers a burst of pulls (devcontainer image, wp-alpine,
+            # rector-php, the php:*-cli images) with a secondary rate limit that aborts
+            # the transfer mid-layer with a 403 - transient, and a plain local build
+            # instead of a ~1s pull costs minutes. only worth retrying while the tag
+            # actually exists though: a not-yet-published one never appears by waiting
+            # (and if the manifest check is rate-limited too we just fall through to the
+            # local build, which is the correct outcome anyway)
+            PULLED=no
+            for ATTEMPT in 1 2 3; do
+              docker pull "$IMAGE" && { PULLED=yes; break; }
+              [[ $ATTEMPT -eq 3 ]] && break
+              docker manifest inspect "$IMAGE" >/dev/null 2>&1 || break
+              echo "pull of $IMAGE failed although the tag exists - retrying in 20s ($ATTEMPT/3) ..."
+              sleep 20
+            done
+
+            if [[ "$PULLED" == 'yes' ]]; then
               PACKAGE_VERSION="$(jq -r '.version' packages/docker/wp-alpine/package.json)"
               docker tag "$IMAGE" "ionos-wordpress/wp-alpine:${PACKAGE_VERSION}"
               docker tag "$IMAGE" ionos-wordpress/wp-alpine:latest
@@ -145,12 +168,23 @@ jobs:
             done &
             PHP_IMAGE_PULL_PID=$!
 
+            # wp-alpine is normally pulled/tagged by the step above and needs no build.
+            # when that pull did not happen (tag not published yet, or a transient
+            # registry failure that outlived the retries there) nothing else would ever
+            # create the image and scripts/test.sh below dies with "pull access denied
+            # for ionos-wordpress/wp-alpine" - so build it here instead.
+            WP_ALPINE_FILTER=()
+            if ! docker image inspect ionos-wordpress/wp-alpine:latest >/dev/null 2>&1; then
+              echo "::warning::no prebuilt ionos-wordpress/wp-alpine:latest available - building it locally"
+              WP_ALPINE_FILTER=(--filter '@ionos-wordpress/wp-alpine')
+            fi
+
             # only build what the test suite actually consumes: the plugins/mu-plugins
             # themselves (bundled JS/CSS, i18n) plus rector-php, which their build step
             # shells out to for PHP-version transpilation. ecs-php/potrans/dennis-i18n
             # are declared workspace deps too, but only used by scripts/lint.sh - building
-            # them here would be wasted work. wp-alpine is already pulled/tagged above.
-            pnpm run build --filter './packages/wp-plugin/*' --filter './packages/wp-mu-plugin/*' --filter '@ionos-wordpress/rector-php'
+            # them here would be wasted work.
+            pnpm run build --filter './packages/wp-plugin/*' --filter './packages/wp-mu-plugin/*' --filter '@ionos-wordpress/rector-php' "${WP_ALPINE_FILTER[@]}"
 
             wait "$PHP_IMAGE_PULL_PID" || true
 

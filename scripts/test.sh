@@ -145,17 +145,24 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # being tested.
   readonly TESTS_DIR="${MNT_HOME}/wordpress-tests/trunk"
 
-  # PHP_VERSION_OVERRIDE runs the test stack against the minimum-supported-PHP-
-  # version image, preferring the prebuilt image from the registry (see
-  # .github/workflows/build-wp-alpine-image.yaml's matrix) to avoid a local build
-  # on every PR update - but falling back to building it locally (matching
-  # packages/docker/wp-alpine/Dockerfile's documented php/alpine pairs) if the
-  # registry doesn't have it, e.g. the matrix leg is disabled or offline dev use.
-  # Source is written against PHP 8.3+ syntax (see AGENTS.md), so this works in
-  # source mode as-is - no TEST_PRODUCTION=true requirement.
+  # PHP_VERSION_OVERRIDE runs the test stack against a non-default PHP version -
+  # 8.3, the project's stated minimum (see AGENTS.md), is what this exists for. It
+  # prefers the prebuilt image from the registry to avoid a local build on every PR
+  # update, falling back to building it locally if the registry doesn't have it
+  # (not published yet, or offline dev use). Both the accepted versions and the
+  # Alpine branch each is paired with come from packages/docker/wp-alpine/
+  # image-matrix.json, the same file .github/workflows/build-wp-alpine-image.yaml
+  # builds its matrix from - so anything accepted here is something that actually
+  # gets published. Source is written against PHP 8.3+ syntax (see AGENTS.md), so
+  # this works in source mode as-is - no TEST_PRODUCTION=true requirement.
   if [[ -n "${PHP_VERSION_OVERRIDE:-}" ]]; then
-    if [[ "$PHP_VERSION_OVERRIDE" != '8.3' ]]; then
-      ionos.wordpress.log_error "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE is not part of the wp-alpine image matrix (8.3)"
+    readonly WP_ALPINE_IMAGE_MATRIX='packages/docker/wp-alpine/image-matrix.json'
+    readonly WP_ALPINE_ALPINE_VERSION="$(
+      jq -r --arg php "$PHP_VERSION_OVERRIDE" '.[] | select(.php == $php) | .alpine' "$WP_ALPINE_IMAGE_MATRIX"
+    )"
+    if [[ -z "$WP_ALPINE_ALPINE_VERSION" ]]; then
+      ionos.wordpress.log_error \
+        "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE is not one of the published wp-alpine image variants ($(jq -r '[.[].php] | join(", ")' "$WP_ALPINE_IMAGE_MATRIX"))"
       exit 1
     fi
 
@@ -180,8 +187,8 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
     if [[ "$PULLED" != 'yes' ]]; then
       ionos.wordpress.log_warn "could not pull $WP_ALPINE_IMAGE from the registry - building it locally instead"
       docker build \
-        --build-arg ARG_PHP_VERSION=8.3 \
-        --build-arg ARG_ALPINE_VERSION=3.20 \
+        --build-arg ARG_PHP_VERSION="$PHP_VERSION_OVERRIDE" \
+        --build-arg ARG_ALPINE_VERSION="$WP_ALPINE_ALPINE_VERSION" \
         --build-arg HOST_UID="$(id -u)" \
         --build-arg HOST_GID="$(id -g)" \
         -t "$WP_ALPINE_IMAGE" \
@@ -190,6 +197,16 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
     fi
   else
     readonly WP_ALPINE_IMAGE='ionos-wordpress/wp-alpine:latest'
+
+    # 'pnpm test' is run standalone in places that never ran a build first (scripts/
+    # pre-release.sh, a fresh clone) and this script itself never builds - without this
+    # guard the throwaway container below dies with a bare "pull access denied for
+    # ionos-wordpress/wp-alpine" from the docker daemon. building just that one workspace
+    # package is a no-op whenever the image is already there.
+    if ! docker image inspect "$WP_ALPINE_IMAGE" &>/dev/null; then
+      ionos.wordpress.log_info "$WP_ALPINE_IMAGE not available locally - building it ..."
+      pnpm run build --filter '@ionos-wordpress/wp-alpine'
+    fi
   fi
 
   if [[ ! -d "$TESTS_DIR/tests/phpunit/includes" ]]; then

@@ -9,8 +9,15 @@
 # ships as "php<major><minor>-*" (php81-apache2, php83-apache2, ...).
 # Alpine's PHP packages are also a rolling window, so ARG_ALPINE_VERSION must
 # be picked to match a branch that actually carries the requested PHP
-# version — the two published pairs are 8.4/3.24 (default) and 8.3/3.20 (the
-# project's stated minimum supported PHP version, see AGENTS.md).
+# version. The pairs that are actually published live in ./image-matrix.json
+# (currently 8.4/3.24 as the default and 8.3/3.20, the project's stated
+# minimum supported PHP version, see AGENTS.md) - that file is the single
+# source of truth for .github/workflows/build-wp-alpine-image.yaml's build
+# matrix and for scripts/test.sh's PHP_VERSION_OVERRIDE, so add a variant
+# there rather than hardcoding a pair anywhere else. The ARG defaults below
+# and ./.env (which scripts/build.sh feeds to 'docker build' verbatim, so it
+# cannot read JSON) repeat the default pair; the publish workflow fails if
+# they ever drift apart.
 #
 # Alpine's php-pecl-xdebug package ships with the extension present but
 # disabled (a commented-out zend_extension line in its own conf.d snippet,
