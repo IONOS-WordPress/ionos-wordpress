@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-08-06T11:29:35Z
-updated_at: 2026-08-06T11:49:26Z
+updated_at: 2026-08-06T12:28:26Z
 ---
 
 Split out of [[t48h]], which measured the integration workflow's `build and test` job. After
@@ -120,3 +120,52 @@ duration - shard 2 is the ceiling. Rebalancing would buy another ~15s.
 - Re-measure on the CI runner and tune E2E_SHARDS - 3 containers plus 3 chromiums on 4 vCPUs
   may not be the optimum, and the local numbers do not predict it.
 - Rebalance the shards (slowest shard currently ~1.8x the fastest).
+
+## Actual CI results
+
+Baseline 31088625951 (before) / 31099477759 (red, race) / 31101003561 (green, after fix):
+
+| step                   | before          | red run     | green run       |
+| ---------------------- | --------------- | ----------- | --------------- |
+| pnpm store cache       | 12s             | 14s         | 9s              |
+| install + image pulls  | 87s (3 steps)   | 101s        | 68s             |
+| build + publish rector | 100s            | 91s         | 96s             |
+| test                   | 174s            | 135s        | 140s            |
+| **job total**          | **394s (6:34)** | 363s (6:03) | **330s (5:30)** |
+
+**6:34 -> 5:30, ~16%.** Caveats on that number:
+
+- The install step swings hugely with the cold ghcr devcontainer layer pull (36s / 53s / ~20s
+  across the three runs). 5:30 is a good-case run; typical is probably ~5:45.
+- The playwright browser cache was still a MISS on the green run - the red run's failure
+  skipped `actions/cache`'s save step (`post-if: success()`). It saved for the first time on
+  the green run, so ~11s more should come off the test step from now on.
+- The sparse wordpress-develop clone earned nothing: 6.8s vs 6.0s for the full clone. CI's
+  network already made the 229MB clone cheap and partial clone adds round trips. Harmless,
+  but it was not worth doing - consider reverting it for simplicity.
+- The php:*-cli prefetch worked: syntax checks 11s -> 4s.
+- Step consolidation worked: devcontainer scaffolding 7 steps -> 4.
+
+### e2e sharding is weaker than hoped, and variable
+
+Slowest shard: 84s (red run: 84/78/53) and 96s (green run: 90/96/84) against 122s serial.
+So between **1.27x and 1.45x**, not the 2-3x local numbers suggested. CPU contention on the
+4-vCPU runner is the binding constraint, exactly as the container benchmark predicted, and
+run-to-run variance is large.
+
+## KNOWN FLAKE - needs a decision
+
+The green run had **1 flaky test**: `mcp.spec.js:16 MCP > Get MCP snippet` failed once and
+passed on retry with
+
+    Failed to load resource: the server responded with a status of 503 (Service Unavailable)
+    Briefly unavailable for scheduled maintenance. Check back in a minute.
+
+That is WordPress maintenance mode leaking out of `maintenance.spec.js`, which sits directly
+before mcp.spec.js on shard 3 and clears the mode in `afterAll`. The same test also failed in
+the first local sharded run (different symptom: 'Not logged in'). Two different failures, same
+test, same shard - the maintenance/mcp adjacency is a genuine isolation weakness that sharding
+tightened. It is only green because CI retries twice.
+
+Options: make maintenance.spec.js's teardown deterministic (wait for the mode to actually be
+off), or pin maintenance.spec.js to its own shard.
