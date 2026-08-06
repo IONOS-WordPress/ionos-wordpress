@@ -125,6 +125,82 @@ $(tar -ztf $path/dist/*.tgz | sort)
 EOF
 }
 
+declare -gA WP_PATH_BY_NAME
+declare -gA WP_NAME_BY_PATH
+declare -gA WP_DEPENDENCIES_BY_NAME
+
+#
+# indexes all given workspace packages by name/path and their workspace:* dependencies
+# into the global WP_PATH_BY_NAME / WP_NAME_BY_PATH / WP_DEPENDENCIES_BY_NAME associative arrays.
+#
+# must be called directly (not via command substitution) so the populated
+# globals survive for later use by ionos.wordpress.is_workspace_package_up_to_date
+#
+# @param $@ list of workspace package directories (example : 'wp-plugin/essentials')
+#
+function ionos.wordpress.index_workspace_packages() {
+  local PACKAGE_PATH PACKAGE_JSON PACKAGE_NAME
+
+  for PACKAGE_PATH in "$@"; do
+    PACKAGE_JSON="./packages/$PACKAGE_PATH/package.json"
+    PACKAGE_NAME="$(jq -r '.name' "$PACKAGE_JSON")"
+    WP_NAME_BY_PATH["$PACKAGE_PATH"]="$PACKAGE_NAME"
+    WP_PATH_BY_NAME["$PACKAGE_NAME"]="$PACKAGE_PATH"
+    WP_DEPENDENCIES_BY_NAME["$PACKAGE_NAME"]=$(
+      jq -r \
+      '[.dependencies // {}, .devDependencies // {} | to_entries[] | select(.value == "workspace:*") | .key]|join(" ")' \
+      "$PACKAGE_JSON"
+    )
+  done
+}
+
+#
+# checks whether a workspace package is up to date, i.e. doesn't need to be rebuilt.
+#
+# a workspace package is considered outdated (=> needs rebuild) if any of the following is true :
+#   - cli option --force is set
+#   - no build-info file exists yet (never built)
+#   - a file in the package directory is newer than its build-info file (excluding generated
+#     artifacts : dist/, build-info, node_modules/, .git/, languages/*.po, languages/*.pot)
+#   - the package's own package.json or the root pnpm-lock.yaml is newer than its build-info file
+#   - one of its workspace:* dependencies has a build-info file newer than its own
+#
+# @param $1 path to workspace package directory (example : 'wp-plugin/essentials')
+#
+function ionos.wordpress.is_workspace_package_up_to_date() {
+  local path="$1"
+  local package_path="./packages/$path"
+  local build_info="$package_path/build-info"
+
+  [[ "$FORCE" == 'no' ]] || return 1
+  [[ -f "$build_info" ]] || return 1
+
+  # a source file (excluding generated artifacts) changed since the last build
+  if [[ -n "$(
+    find "$package_path" \
+      \( -path "$package_path/dist" -o -path "$build_info" -o -path "$package_path/node_modules" -o -path "$package_path/.git" \) -prune \
+      -o \( -name '*.po' -o -name '*.pot' \) -prune \
+      -o -type f -newer "$build_info" -print -quit
+  )" ]]; then
+    return 1
+  fi
+
+  # dependencies changed (proxy via package.json / lockfile mtime instead of scanning node_modules)
+  [[ "$package_path/package.json" -nt "$build_info" ]] && return 1
+  [[ "./pnpm-lock.yaml" -nt "$build_info" ]] && return 1
+
+  # a workspace:* dependency was rebuilt (its build-info is newer than ours)
+  local PACKAGE_NAME="${WP_NAME_BY_PATH[$path]}"
+  local DEPENDENCY_NAME DEPENDENCY_PATH
+  for DEPENDENCY_NAME in ${WP_DEPENDENCIES_BY_NAME[$PACKAGE_NAME]:-}; do
+    DEPENDENCY_PATH="${WP_PATH_BY_NAME[$DEPENDENCY_NAME]:-}"
+    [[ -n "$DEPENDENCY_PATH" ]] || continue
+    [[ "./packages/$DEPENDENCY_PATH/build-info" -nt "$build_info" ]] && return 1
+  done
+
+  return 0
+}
+
 # build a monorepo workspace package of type npm
 #
 # @param $1 path to workspace package directory
@@ -539,6 +615,12 @@ function ionos.wordpress.build_workspace_package() {
   # (example : [curent-dir]/packages/wp-plugin/ionos-essentials)
   local package_path="$(pwd)/packages/$path"
 
+  # docker packages keep their own pre-existing skip check (see ionos.wordpress.build_workspace_package_docker)
+  if [[ "$type" != "docker" ]] && ionos.wordpress.is_workspace_package_up_to_date "$path"; then
+    ionos.wordpress.log_warn "skip building workspace package ./packages/$path : already up to date"
+    return
+  fi
+
   ionos.wordpress.log_header "building workspace package ./packages/$path"
   echo
 
@@ -628,6 +710,10 @@ if [[ "$WORKSPACE_PACKAGES" == '' ]]; then
   exit 1
 fi
 
+# populate the WP_* indexes used by ionos.wordpress.is_workspace_package_up_to_date
+# (called directly, not via command substitution, so the populated globals aren't lost in a subshell)
+ionos.wordpress.index_workspace_packages $WORKSPACE_PACKAGES
+
 WORKSPACE_PACKAGES=$(ionos.wordpress.get_workspace_package_dependency_order $WORKSPACE_PACKAGES)
 
 # call build function for each workspace package
@@ -648,8 +734,11 @@ Syntax: 'pnpm run build [options] [additional-args]'
 
 Options:
   --help      Show this help message and exit
-  --force     will also build all packages/{docker} workspace packages
-              even if a matching (name,version) docker image exists locally
+  --force     rebuild every matched workspace package, ignoring the
+              up-to-date checks. by default a workspace package is skipped if
+              nothing changed since its last build (tracked via its build-info
+              file), and packages/{docker} images are skipped if a matching
+              (name,version) docker image exists locally already
   --verbose   Show verbose output
   --filter    Filter packages to build by package name.
               Wildcards allowed

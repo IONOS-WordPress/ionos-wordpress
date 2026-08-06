@@ -52,9 +52,26 @@
 
   **If a package is dependent on another package, the dependent package will be built first.**
 
-- Caveat : `docker` images are only rebuilt if the package version was changed for performance reasons.
+- Builds are incremental : a workspace package is only rebuilt if it is actually outdated.
 
-  **To force rebuilding everything you can use the `--force` flage to rebuild everything**
+  A `build-info` file is written after every successful build (its file modification time marks
+  _"last built at"_). A workspace package is considered outdated, and therefore rebuilt, if any of
+  the following is true :
+
+  - it has no `build-info` file yet (never built)
+  - any file in the package directory is newer than its `build-info` file (source changed).
+
+    Generated artifacts are excluded from this check : `dist/`, `build-info` itself, `node_modules/`,
+    `.git/`, and generated localization files (`languages/*.po`, `languages/*.pot`).
+
+  - one of its `workspace:*` dependencies has a newer `build-info` file (a dependency was rebuilt)
+  - the root `pnpm-lock.yaml` or the package's own `package.json` is newer than its `build-info` file
+    (dependencies changed)
+
+  > `docker` packages keep their own, pre-existing skip check : they are only rebuilt if the package
+  > version changed and no matching image exists locally already.
+
+  **To force rebuilding everything regardless of the checks above, use the `--force` flag.**
 
   > After `git pull` or `git checkout` it is always a good idea to rebuild the whole workspace using `pnpm build --force`.
 
