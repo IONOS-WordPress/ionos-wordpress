@@ -21,7 +21,7 @@ require_once __DIR__ . '/extendify.php';
 // Uninstall legacy ionos-marketplace plugin when ionos-core marketplace is active
 \add_action('admin_init', function (): void {
   $legacy_plugin = 'ionos-marketplace/marketplace.php';
-  $all_plugins = \get_plugins();
+  $all_plugins   = \get_plugins();
 
   if (! \array_key_exists($legacy_plugin, $all_plugins)) {
     return;
@@ -38,15 +38,15 @@ require_once __DIR__ . '/extendify.php';
 function get_config()
 {
   static $config;
-  if (!isset($config)) {
+  if (! isset($config)) {
     $base_config = require_once __DIR__ . '/config.php';
-    $tenant = strtolower(\get_option('ionos_group_brand', 'ionos'));
+    $tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
 
     $tenant_additions = $base_config['tenant_additions'][$tenant] ?? null;
 
     $config = [
-      'ionos_plugins' => $base_config['ionos_plugins'] ?? [],
-      'wordpress_org_plugins' => $base_config['wordpress_org_plugins'] ?? [],
+      'ionos_plugins'         => $base_config['ionos_plugins']                 ?? [],
+      'wordpress_org_plugins' => $base_config['wordpress_org_plugins']         ?? [],
     ];
 
     if ($tenant_additions) {
@@ -77,7 +77,7 @@ function get_config()
 function get_localized_config(string $key): mixed
 {
   $language = \strtolower(\explode('_', \get_locale())[0]);
-  $config = \get_option($key . '.' . $language);
+  $config   = \get_option($key . '.' . $language);
 
   if (! $config) {
     $config = \get_option($key . '.en');
@@ -108,21 +108,21 @@ function get_localized_config(string $key): mixed
     $config = get_config();
 
     $ionos_plugins_list = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
-    $wordpress_plugins = [];
+    $wordpress_plugins  = [];
 
-    $site_assistant = extendify\get_site_assistant_info();
+    $site_assistant       = extendify\get_site_assistant_info();
     $ionos_plugins_list[] = $site_assistant;
-    $slugs = $config['wordpress_org_plugins'] ?? [];
+    $slugs                = $config['wordpress_org_plugins'] ?? [];
     if (! empty($slugs)) {
       $field_query_string = \http_build_query([
         'fields[short_description]' => 'short_description',
-        'fields[icons]' => 'icons',
+        'fields[icons]'             => 'icons',
       ]);
 
       $requests = [];
       foreach ($slugs as $slug) {
         $requests[] = [
-          'url' => "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug={$slug}&{$field_query_string}",
+          'url'  => "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&slug={$slug}&{$field_query_string}",
           'type' => Requests::GET,
           'data' => [
             'locale' => \get_user_locale(),
@@ -167,21 +167,21 @@ function get_localized_config(string $key): mixed
     $all_items = [...$ionos_plugins_list, ...$wordpress_plugins];
 
     $per_page = MAX_ITEMS_PER_PAGE;
-    $paged = isset($_GET['paged']) ? \absint($_GET['paged']) : 1;
-    $paged = max($paged, 1);
+    $paged    = isset($_GET['paged']) ? \absint($_GET['paged']) : 1;
+    $paged    = max($paged, 1);
 
     $total_items = count($all_items);
     $total_pages = (int) ceil($total_items / $per_page);
-    $paged = min($paged, max($total_pages, 1));
+    $paged       = min($paged, max($total_pages, 1));
 
-    $offset = ($paged - 1) * $per_page;
+    $offset               = ($paged - 1) * $per_page;
     $wp_list_table->items = array_slice($all_items, $offset, $per_page);
 
     // Store pagination info in a global variable for use in install_plugins_ionos hook
     $GLOBALS['ionos_marketplace_pagination'] = [
       'total_items' => $total_items,
       'total_pages' => $total_pages,
-      'per_page' => $per_page,
+      'per_page'    => $per_page,
     ];
   }
 );
@@ -194,7 +194,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       continue;
     }
     $requests[] = [
-      'url' => $plugin['info_url'],
+      'url'  => $plugin['info_url'],
       'type' => Requests::GET,
       'slug' => $plugin['slug'] ?? '',
     ];
@@ -215,21 +215,27 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       continue;
     }
 
-    $slug = $requests[$i]['slug'] ?? '';
+    $slug               = $requests[$i]['slug'] ?? '';
     $remote_data[$slug] = $decoded_data;
   }
 
   \array_walk($ionos_plugins, function (array &$plugin) use ($remote_data): void {
     $slug   = $plugin['slug'] ?? '';
     $plugin += [
-      'rating' => 0,
-      'ratings' => ['5' => 0, '4' => 0, '3' => 0, '2' => 0, '1' => 0],
-      'num_ratings' => 0,
+      'rating'  => 0,
+      'ratings' => [
+        '5' => 0,
+        '4' => 0,
+        '3' => 0,
+        '2' => 0,
+        '1' => 0,
+      ],
+      'num_ratings'     => 0,
       'active_installs' => 0,
     ];
 
     $plugin['last_updated'] = $remote_data[$slug]['last_updated'] ?? \date('Y-m-d', \strtotime('-2 years'));
-    $plugin['version'] = $remote_data[$slug]['version'] ?? '';
+    $plugin['version']      = $remote_data[$slug]['version']      ?? '';
 
     if (isset($remote_data[$slug]['download_url'])) {
       $plugin['download_link'] = $remote_data[$slug]['download_url'];
@@ -244,10 +250,10 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
   callback: function (): void {
     global $wp_list_table;
 
-    $pagination = $GLOBALS['ionos_marketplace_pagination'] ?? [];
-    $total_items = $pagination['total_items'] ?? count($wp_list_table->items ?? []);
-    $total_pages = $pagination['total_pages'] ?? 0;
-    $per_page = $pagination['per_page'] ?? MAX_ITEMS_PER_PAGE;
+    $pagination  = $GLOBALS['ionos_marketplace_pagination'] ?? [];
+    $total_items = $pagination['total_items']               ?? count($wp_list_table->items ?? []);
+    $total_pages = $pagination['total_pages']               ?? 0;
+    $per_page    = $pagination['per_page']                  ?? MAX_ITEMS_PER_PAGE;
 
     $wp_list_table->set_pagination_args([
       'total_items' => $total_items,
