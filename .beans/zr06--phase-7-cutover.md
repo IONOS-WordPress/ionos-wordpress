@@ -8,7 +8,7 @@ created_at: 2026-08-03T10:59:47Z
 updated_at: 2026-08-06T12:59:57Z
 parent: dav1
 blocked_by:
-    - 7wdg
+  - 7wdg
 ---
 
 Goal: remove wp-env entirely.
