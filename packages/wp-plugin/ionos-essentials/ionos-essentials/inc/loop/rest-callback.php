@@ -183,10 +183,10 @@ function _get_plugins(): array
   $active_plugins = \get_option('active_plugins', []);
   $auto_updates   = \get_site_option('auto_update_plugins', []);
 
-  $active_plugins_data = [];
+  $plugins_data = [];
 
   foreach ($all_plugins as $plugin_slug => $plugin_data) {
-    $active_plugins_data[] = [
+      $plugins_data[] = [
       'plugin_slug' => $plugin_slug,
       'version'     => $plugin_data['Version'],
       'auto_update' => in_array($plugin_slug, $auto_updates),
@@ -194,7 +194,7 @@ function _get_plugins(): array
     ];
   }
 
-  return $active_plugins_data;
+  return $plugins_data;
 }
 
 function _get_posts_and_pages(): array
