@@ -1,14 +1,14 @@
 ---
 # zr06
 title: Phase 7 — Cutover
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-08-03T10:59:47Z
-updated_at: 2026-08-05T14:38:23Z
+updated_at: 2026-08-06T12:59:57Z
 parent: dav1
 blocked_by:
-  - 7wdg
+    - 7wdg
 ---
 
 Goal: remove wp-env entirely.
@@ -87,3 +87,7 @@ See docs/agent/wp-env-to-alpine-migration-plan.md for full context.
 criteria ("CI green on a branch") a real GitHub Actions run is still needed - same caveat as Phase 6, this can't be
 reproduced in the sandbox. Recommend pushing this branch and validating via the open PR #910 (or a new PR) before
 marking this bean `completed`.
+
+## CI validation (final)
+
+PR #910's `integration` workflow is green on `feat/replace-wpenv`: `devcontainer / build` (9s), `lint` (2m2s), `build and test` (5m16s) all passed — https://github.com/IONOS-WordPress/ionos-wordpress/actions/runs/31103406283. Exit criteria met; marking Phase 7 complete.
