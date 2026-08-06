@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-08-06T11:29:35Z
-updated_at: 2026-08-06T12:47:48Z
+updated_at: 2026-08-06T13:00:25Z
 ---
 
 Split out of [[t48h]], which measured the integration workflow's `build and test` job. After
@@ -210,3 +210,39 @@ content hash - and therefore the prebuilt-image cache - stays untouched.
 docker-entrypoint.sh builds wp-config.php from a fixed `wp config create --extra-php` heredoc
 and never reads that variable. Left in place (removing it invalidates the image hash for no
 gain) but it is misleading and worth cleaning up next time the image changes.
+
+## Final result - run 31103406283 (green, flake fix + warm browser cache)
+
+| step                      | baseline 31088625951 | final 31103406283 |
+| ------------------------- | -------------------- | ----------------- |
+| checkout + ghcr login     | 7s                   | 5s                |
+| pnpm store cache          | 12s                  | 9s                |
+| playwright browser cache  | -                    | 2s (**hit**)      |
+| install + image pulls     | 87s (3 steps)        | 70s (1 step)      |
+| build + publish rector    | 100s                 | 92s               |
+| test                      | 174s                 | 127s              |
+| gather + attach artifacts | 9s                   | 6s                |
+| **job total**             | **394s (6:34)**      | **316s (5:16)**   |
+
+**6:34 -> 5:16, ~20%.** 28 e2e + 14 PHPUnit passed, **no flaky**.
+
+The playwright browser cache hit its primary key for the first time - zero chromium download
+progress lines in the log, confirming the ~12s per-run download is gone for good.
+
+e2e shards: 84s / 96s / 66s. The slowest shard remains the ceiling and is still badly
+unbalanced, because `--shard` splits by test count rather than duration.
+
+### Remaining opportunities, in order of value
+
+1. **Shard balancing** (~15-25s). The slowest shard is ~1.5x the fastest. `--shard` cannot fix
+   this; binding containers to playwright _workers_ in a single process would, since
+   playwright then hands files to whichever worker is free. Blocked on
+   @wordpress/e2e-test-utils-playwright's module-level STORAGE_STATE_PATH, which workers in
+   one process cannot vary - needs overriding its `requestUtils` and `baseURL` fixtures.
+   This is also the simpler design overall: one process, one report, no per-shard artifact
+   dirs, no merging.
+2. **Revert the sparse wordpress-develop clone.** Measured at 6.8s vs 6.0s for the full clone
+   - it earned nothing and is extra complexity in scripts/test.sh.
+3. **Re-tune E2E_SHARDS.** 3 was a guess for the 4-vCPU runner and was never A/B'd against 2.
+4. The ghcr devcontainer layer pull (20-53s across runs) is the largest single remaining
+   variable and is untouched by any of this.
