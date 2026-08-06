@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-08-05T15:20:37Z
-updated_at: 2026-08-05T15:28:33Z
+updated_at: 2026-08-06T08:09:24Z
 ---
 
 The lint and integration workflows currently rebuild the rector-php, ecs-php,
@@ -84,3 +84,32 @@ wp-alpine is out of scope - it already has its own registry-caching workflow
   correctly, push succeeds and re-tags, and a subsequent pull hits the cache
   and produces the same local image/build-info state scripts/build.sh's skip
   check expects (confirmed the skip check actually fires).
+
+## Fix: CI run failure (build did not see pulled/built images)
+
+The first real CI run (https://github.com/IONOS-WordPress/ionos-wordpress/actions/runs/31020708323)
+failed both publish steps with `Error response from daemon: No such image`.
+
+Root cause: docker-subproject-cache-pull/-push were plain composite actions
+running docker commands on the **host** runner's docker daemon, but
+scripts/build.sh's actual docker build (and thus the locally-tagged image)
+happens **inside the devcontainer's docker-in-docker daemon** (via
+devcontainer-shell-run/devcontainers/ci) - two separate daemons. The
+wp-alpine pull step works because it's inline bash run *inside* the
+devcontainer via devcontainer-shell-run, not a separate host-side action.
+
+Fix: replaced the two composite actions with plain shell scripts
+(`.github/shared/scripts/docker-subproject-image-pull.sh` /
+`-push.sh`), invoked from `runCmd` inside devcontainer-shell-run steps
+(same pattern/daemon as the wp-alpine step and the build step itself).
+Tag computation stays a host-side composite action call
+(`docker-subproject-image-name`, git-only, no docker involved) and is
+passed into the runCmd via `env`. Also dropped the pulled/skip output
+plumbing (composite action outputs can't cross the devcontainer-shell-run
+boundary anyway) - push now always runs; pushing an image whose content
+already matches the registry is a fast no-op.
+
+Verified locally end-to-end against a throwaway registry container with
+the real ecs-php image: pull-miss falls back, push succeeds, and a
+subsequent pull is a cache hit that restores build-info exactly as
+scripts/build.sh's skip check expects.
