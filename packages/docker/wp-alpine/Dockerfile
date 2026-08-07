@@ -22,6 +22,19 @@
 # Alpine's php-pecl-xdebug package ships with the extension present but
 # disabled (a commented-out zend_extension line in its own conf.d snippet,
 # mode "off") - the `sed` below uncomments it and sets a usable default mode.
+#
+# It also pins three settings without which breakpoints never get hit:
+#
+#   client_host          xdebug connects *out* of the container to the IDE's
+#                        listener, so the packaged default (localhost) would
+#                        point at the container itself. host.docker.internal is
+#                        mapped to the host gateway by the `--add-host` flag in
+#                        scripts/start.sh and scripts/test.sh.
+#   client_port          9003, matching the generated .vscode/launch.json.
+#   start_with_request   the packaged `default` only starts a debug session when
+#                        an XDEBUG_TRIGGER/XDEBUG_SESSION cookie or query
+#                        parameter is present; `yes` attaches on every request,
+#                        which is what the wp-env setup this image replaced did.
 
 ARG ARG_ALPINE_VERSION=3.24
 FROM alpine:${ARG_ALPINE_VERSION}
@@ -91,6 +104,9 @@ RUN case "$ARG_PHP_VERSION" in \
          -e 's/^;zend_extension=xdebug.so/zend_extension=xdebug.so/' \
          -e 's/^;xdebug.mode=off/xdebug.mode=debug,develop/' \
          -e '$a xdebug.log_level=0' \
+         -e '$a xdebug.client_host=host.docker.internal' \
+         -e '$a xdebug.client_port=9003' \
+         -e '$a xdebug.start_with_request=yes' \
          /etc/$PHP_PKG/conf.d/50_xdebug.ini \
     && printf 'apc.enable=1\napc.enable_cli=1\n' >> /etc/$PHP_PKG/conf.d/apcu.ini \
     && sed -i 's#/usr/bin/php[0-9]*#/usr/bin/php#' /usr/bin/composer

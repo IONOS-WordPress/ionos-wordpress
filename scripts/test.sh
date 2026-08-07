@@ -251,6 +251,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
       --name "$name" \
       --hostname "$name" \
       --publish "${port}:80" \
+      --add-host "host.docker.internal:host-gateway" \
       --env WORDPRESS_VERSION="$WORDPRESS_VERSION" \
       --env WP_PASSWORD="$WP_PASSWORD" \
       --env HTTP_PORT="$port" \
