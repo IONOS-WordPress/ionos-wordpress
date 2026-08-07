@@ -2,8 +2,9 @@
 # builds and publishes the ionos-wordpress Alpine dev/test image
 # (packages/docker/wordpress-alpine) as one PHP variant per entry in that package's
 # image-matrix.json (8.4 default, 8.3 - the project's stated minimum supported
-# version, see AGENTS.md) to a container registry, tagged by content hash so
-# identical Dockerfile/entrypoint content never rebuilds.
+# version, see AGENTS.md) to a container registry, tagged with the repository-wide
+# '<image>:<tag>' scheme (see .github/shared/scripts/docker-subproject-image-tag.sh)
+# plus a '-php<version>' suffix per variant.
 #
 # the variants are NOT listed here: scripts/test.sh (PHP_VERSION_OVERRIDE) has
 # to agree with them, so image-matrix.json is the single source of truth and
@@ -78,12 +79,14 @@ jobs:
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v6
+        with:
+          # the shared image tag is derived from the git history of the sub-project
+          fetch-depth: 0
 
-      - name: compute content-hash image tag
+      - uses: './.github/shared/actions/docker-subproject-image-name'
         id: image_tag
-        run: |
-          HASH="$(git rev-parse HEAD:packages/docker/wordpress-alpine)"
-          echo "tag=${HASH}-php${{ matrix.php }}" >> "$GITHUB_OUTPUT"
+        with:
+          path: packages/docker/wordpress-alpine
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -104,4 +107,6 @@ jobs:
           build-args: |
             ARG_PHP_VERSION=${{ matrix.php }}
             ARG_ALPINE_VERSION=${{ matrix.alpine }}
-          tags: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:${{ steps.image_tag.outputs.tag }}
+          # the '-php<version>' suffix on top of the shared tag: one commit publishes
+          # several PHP variants of the same sub-project content
+          tags: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:${{ steps.image_tag.outputs.tag }}-php${{ matrix.php }}

@@ -166,8 +166,10 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
       exit 1
     fi
 
-    readonly IMAGE_CONTENT_HASH="$(git rev-parse HEAD:packages/docker/wordpress-alpine)"
-    readonly WORDPRESS_ALPINE_IMAGE="${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:${IMAGE_CONTENT_HASH}-php${PHP_VERSION_OVERRIDE}"
+    # same tag the publish workflow assigns - resolved through the one script that owns
+    # the repository-wide '<image>:<tag>' scheme, so the two can never drift apart
+    readonly IMAGE_TAG="$(.github/shared/scripts/docker-subproject-image-tag.sh packages/docker/wordpress-alpine)"
+    readonly WORDPRESS_ALPINE_IMAGE="${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:${IMAGE_TAG}-php${PHP_VERSION_OVERRIDE}"
 
     if [[ -n "${IMAGE_REGISTRY_USERNAME:-}" ]] && [[ -n "${IMAGE_REGISTRY_PASSWORD:-}" ]]; then
       echo "$IMAGE_REGISTRY_PASSWORD" | docker login "$IMAGE_REGISTRY" --username "$IMAGE_REGISTRY_USERNAME" --password-stdin
@@ -291,8 +293,9 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
         # it is the one spec asserting the console error list is empty, so it is the one
         # that notices. nothing in the suite wants core/plugin/theme auto-updates.
         #
-        # setting it here rather than in the image keeps packages/docker/wordpress-alpine's
-        # content hash (and therefore the prebuilt-image cache) untouched. the window is
+        # setting it here rather than in the image leaves packages/docker/wordpress-alpine
+        # uncommitted-to and therefore its image tag (and the prebuilt-image cache behind
+        # it) untouched. the window is
         # not raced: readiness above is checked over wp-cli, so the site has served no
         # HTTP request yet - no request means no wp-cron, which means the updater cannot
         # have started.

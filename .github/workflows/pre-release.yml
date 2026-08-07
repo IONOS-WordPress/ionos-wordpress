@@ -50,6 +50,11 @@ jobs:
     steps:
       - name: checkout branch from git
         uses: actions/checkout@v6
+        with:
+          # the devcontainer image tag below is derived from the git history of
+          # .devcontainer - a depth-1 checkout has none, and the cacheFrom reference
+          # would silently degrade into a full devcontainer rebuild on every run
+          fetch-depth: 0
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4

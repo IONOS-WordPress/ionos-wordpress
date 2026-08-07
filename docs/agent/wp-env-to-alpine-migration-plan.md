@@ -117,10 +117,12 @@ start`/`stop`/`test`/`destroy` interface developers and CI already use.
   `.env`, bind-mounted, executed as `php` user via the built-in `doas` (which already
   `keepenv`s), giving root access on request without needing a separate hook mechanism.
 - Set up the image publish workflow (`.github/workflows/build-wordpress-alpine-image.yaml`):
-  triggered on changes to the Dockerfile/entrypoint/related build context, tags by
-  content hash, builds/pushes **both** `ARG_PHP_VERSION` variants (`8.4` default,
-  `8.3` legacy, per `PHP_VERSION_OVERRIDE` in Phase 5) as `:<hash>-php8.4` and
-  `:<hash>-php8.3` to `${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}` (defaulting to GHCR,
+  triggered on changes to the Dockerfile/entrypoint/related build context, tags with the
+  repository-wide date-based scheme (see
+  `.github/shared/scripts/docker-subproject-image-tag.sh`), builds/pushes **both**
+  `ARG_PHP_VERSION` variants (`8.4` default, `8.3` legacy, per `PHP_VERSION_OVERRIDE` in
+  Phase 5) as `:<tag>-php8.4` and
+  `:<tag>-php8.3` to `${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}` (defaulting to GHCR,
   e.g. `ghcr.io/ionos-wordpress/wordpress-alpine-dev`, if the repo vars aren't overridden).
   Registry/repo come from repo-level Actions variables (mirroring the local `.env`
   keys); registry auth uses repo secrets (mirroring the local `.secrets` keys) — never
