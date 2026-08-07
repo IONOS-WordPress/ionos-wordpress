@@ -7,13 +7,6 @@
 # touches <path>/build-info - so scripts/build.sh's existing local-cache
 # check (ionos.wordpress.build_workspace_package_docker) skips rebuilding it.
 #
-# on a cache hit it also writes <path>/image-pull-hit (gitignored). that used to let a
-# matching push script skip re-pushing an image the registry already had; nothing consumes
-# the marker any more - wordpress-alpine, the only remaining pulled sub-project image, is
-# published by build-wordpress-alpine-image.yaml via docker/build-push-action, and the
-# ecs-php/rector-php/dennis-i18n images left CI entirely when the dev container started
-# installing those tools natively (see scripts/includes/_native-tools.sh).
-#
 # must run inside the same docker daemon scripts/build.sh's docker build
 # step runs in (the devcontainer's docker-in-docker daemon in CI, see
 # devcontainer-shell-run) - falls back silently to a local build if the tag
@@ -33,8 +26,6 @@ TAG="$4"
 IMAGE="${REGISTRY}/${REPOSITORY}:${TAG}"
 LOCAL_IMAGE_NAME="$(jq -r '.name' "$SUBPROJECT_PATH/package.json" | sed -r 's/@//g')"
 PACKAGE_VERSION="$(jq -r '.version' "$SUBPROJECT_PATH/package.json")"
-
-rm -f "$SUBPROJECT_PATH/image-pull-hit"
 
 echo "$IMAGE_REGISTRY_PASSWORD" | docker login "$REGISTRY" --username "$IMAGE_REGISTRY_USERNAME" --password-stdin
 
@@ -58,7 +49,6 @@ if [[ "$PULLED" == 'yes' ]]; then
   docker tag "$IMAGE" "${LOCAL_IMAGE_NAME}:${PACKAGE_VERSION}"
   docker tag "$IMAGE" "${LOCAL_IMAGE_NAME}:latest"
   touch "$SUBPROJECT_PATH/build-info"
-  touch "$SUBPROJECT_PATH/image-pull-hit"
 else
   echo "::warning::could not pull prebuilt image $IMAGE - falling back to a local build"
 fi

@@ -16,7 +16,6 @@ node_modules
 /bin/
 build-info
 # marker written by .github/shared/scripts/_docker-subproject-image-pull.sh
-image-pull-hit
 packages/*/*/webpack.config.js
 /build
 /build
