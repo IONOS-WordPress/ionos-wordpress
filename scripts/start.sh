@@ -23,6 +23,17 @@ readonly VERSION_DIR="$(ionos.wordpress.wordpress_version_dir "$WORDPRESS_VERSIO
 readonly CORE_DIR="${MNT_HOME}/wordpress-core/${VERSION_DIR}"
 readonly STACK_DIR="${MNT_HOME}/dev"
 
+# env vars and bind mounts are baked into a container at `docker run` time and this
+# script otherwise just `docker start`s an already existing container - so a changed
+# WORDPRESS_VERSION would be silently ignored, leaving the container serving the core
+# dir it was originally created for. recreate it instead (must happen before the
+# overlay dirs below are (re)created, since destroy.sh removes them).
+CONTAINER_WORDPRESS_VERSION="$(docker inspect "$CONTAINER_NAME" --format '{{range .Config.Env}}{{println .}}{{end}}' 2>/dev/null | sed -n 's/^WORDPRESS_VERSION=//p' || true)"
+if [[ -n "$CONTAINER_WORDPRESS_VERSION" ]] && [[ "$CONTAINER_WORDPRESS_VERSION" != "$WORDPRESS_VERSION" ]]; then
+  ionos.wordpress.log_warn "container '${CONTAINER_NAME}' was created for WORDPRESS_VERSION='${CONTAINER_WORDPRESS_VERSION}' but is now configured as '${WORDPRESS_VERSION}' - recreating it (this wipes ${MNT_HOME}/dev : database, uploads and wp-config.php)"
+  "$(realpath $0 | xargs dirname)/destroy.sh"
+fi
+
 # build the --volume argument list for `docker run`, dynamically discovering the
 # monorepo's wp-plugin/wp-theme/wp-mu-plugin packages (shared with scripts/test.sh).
 VOLUME_ARGS=()
@@ -38,6 +49,9 @@ if docker ps -a --filter "name=${CONTAINER_NAME}" --format '{{.Names}}' | grep -
   # after `pnpm destroy` recreates the container.
   docker start "$CONTAINER_NAME" >/dev/null
 else
+  # --add-host host.docker.internal:host-gateway resolves the image's
+  # xdebug.client_host to the docker host, so xdebug can reach the IDE's
+  # listener on port 9003 (see packages/docker/wp-alpine/Dockerfile).
   docker run \
     --detach \
     --tty \
@@ -46,6 +60,7 @@ else
     --hostname "$CONTAINER_NAME" \
     --publish "${HTTP_PORT}:80" \
     --publish "${SSH_PORT}:22" \
+    --add-host "host.docker.internal:host-gateway" \
     --env WORDPRESS_VERSION="$WORDPRESS_VERSION" \
     --env WP_PASSWORD="$WP_PASSWORD" \
     --env HTTP_PORT="$HTTP_PORT" \
@@ -55,6 +70,10 @@ else
     "${VOLUME_ARGS[@]}" \
     ionos-wordpress/wp-alpine:latest >/dev/null
 fi
+
+# (re)generate .vscode/launch.json so the xdebug pathMappings match the packages
+# currently bind-mounted into the container
+./packages/docker/wp-alpine/scripts/generate-vscode-launch.sh
 
 ionos.wordpress.log_info "waiting for http://localhost:${HTTP_PORT}/ to come up ..."
 HTTP_CODE=000

@@ -8,33 +8,44 @@
 # This is intentionally a HOST-side script, not baked into the image/
 # entrypoint: VS Code reads launch.json from the host repo, and the mappings
 # depend on which plugins/themes/mu-plugins are bind-mounted for a given
-# stack — information that only exists once the dev/test mount generator
-# (a later migration phase) has run. Not wired into any pnpm command yet.
+# stack - the same discovery scripts/includes/_docker-mounts.sh performs.
+#
+# Invoked by scripts/start.sh on every `pnpm start`, but also runnable
+# standalone.
 #
 # usage: ./generate-vscode-launch.sh
 #
 
-set -eo pipefail
+# bootstrap the environment (provides MNT_HOME, WORDPRESS_VERSION, GIT_ROOT_PATH, ...)
+readonly SCRIPTS_HOME="$(realpath "$0" | xargs dirname)/../../../../scripts"
+source "${SCRIPTS_HOME}/includes/bootstrap.sh"
+# provides ionos.wordpress.wordpress_version_dir
+source "${SCRIPTS_HOME}/includes/_docker-mounts.sh"
 
-readonly GIT_ROOT_PATH="$(git rev-parse --show-toplevel)"
 cd "$GIT_ROOT_PATH"
+
+readonly VERSION_DIR="$(ionos.wordpress.wordpress_version_dir "$WORDPRESS_VERSION")"
+readonly CORE_DIR="${MNT_HOME#./}/wordpress-core/${VERSION_DIR}"
+readonly TESTS_DIR="${MNT_HOME#./}/wordpress-tests/trunk"
 
 function plugins {
   for PLUGIN in $(find packages/wp-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-    echo "        \"/htdocs/wp-content/plugins/${PLUGIN}\":\"\${workspaceFolder}/packages/wp-plugin/${PLUGIN}\","
+    echo "        \"/htdocs/wp-content/plugins/${PLUGIN}\": \"\${workspaceFolder}/packages/wp-plugin/${PLUGIN}\","
   done
 }
 
 function mu_plugins {
   for PLUGIN in $(find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-    echo "        \"/htdocs/wp-content/mu-plugins/${PLUGIN}.php\":\"\${workspaceFolder}/packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}.php\","
-    echo "        \"/htdocs/wp-content/mu-plugins/${PLUGIN}\":\"\${workspaceFolder}/packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}\","
+    echo "        \"/htdocs/wp-content/mu-plugins/${PLUGIN}.php\": \"\${workspaceFolder}/packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}.php\","
+    if [[ -d "packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}" ]]; then
+      echo "        \"/htdocs/wp-content/mu-plugins/${PLUGIN}\": \"\${workspaceFolder}/packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}\","
+    fi
   done
 }
 
 function themes {
   for THEME in $(find packages/wp-theme -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-    echo "        \"/htdocs/wp-content/themes/${THEME}\":\"\${workspaceFolder}/packages/wp-theme/${THEME}\","
+    echo "        \"/htdocs/wp-content/themes/${THEME}\": \"\${workspaceFolder}/packages/wp-theme/${THEME}\","
   done
 }
 
@@ -46,17 +57,21 @@ cat <<EOF > .vscode/launch.json
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "wp-alpine",
+      "name": "ionos-wordpress",
       "type": "php",
       "request": "launch",
       "port": 9003,
-      "stopOnEntry": false,
-      "log": false,
+      "stopOnEntry": false, // set to true for debugging this launch configuration
+      "log": false,         // set to true to get extensive xdebug logs
       "pathMappings": {
 $(plugins)
 $(mu_plugins)
 $(themes)
-        "/htdocs": "\${workspaceFolder}/mnt/wordpress-core"
+        // phpunit path mappings (\`pnpm test:php\`, mounted by scripts/test.sh)
+        "/wordpress-phpunit": "\${workspaceFolder}/${TESTS_DIR}/tests/phpunit",
+        "/htdocs/phpunit": "\${workspaceFolder}/phpunit",
+
+        "/htdocs": "\${workspaceFolder}/${CORE_DIR}"
       }
     }
   ]
