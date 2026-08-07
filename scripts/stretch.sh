@@ -16,7 +16,7 @@
 set -euo pipefail
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 readonly STRETCH_IMPL="$(realpath $0 | xargs dirname)/_stretch.sh"
 

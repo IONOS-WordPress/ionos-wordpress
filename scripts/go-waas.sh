@@ -12,7 +12,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 if [[ ! -f ./bin/go-waas ]]; then
   if ! ping -c 1 gitlab.git-wp.server.lan &> /dev/null; then

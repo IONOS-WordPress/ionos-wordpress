@@ -4,7 +4,7 @@ description: |
   repository owner/name (lowercased, ghcr.io rejects uppercase) and the tag is the
   shared date-based tag of .devcontainer - the same '<image>:<tag>' scheme every other
   image published from this repository uses (see
-  .github/shared/scripts/docker-subproject-image-tag.sh).
+  .github/shared/scripts/_docker-subproject-image-tag.sh).
 
   example : ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer:2025-12-24-14-48-33
 

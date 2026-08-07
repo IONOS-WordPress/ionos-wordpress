@@ -8,7 +8,7 @@
 # check (ionos.wordpress.build_workspace_package_docker) skips rebuilding it.
 #
 # on a cache hit it also writes <path>/image-pull-hit (gitignored) so the
-# matching docker-subproject-image-push.sh can skip re-pushing an image the
+# matching _docker-subproject-image-push.sh can skip re-pushing an image the
 # registry already has.
 #
 # must run inside the same docker daemon scripts/build.sh's docker build
@@ -16,7 +16,7 @@
 # devcontainer-shell-run) - falls back silently to a local build if the tag
 # isn't published yet/pull fails.
 #
-# usage: docker-subproject-image-pull.sh <path> <registry> <repository> <tag>
+# usage: _docker-subproject-image-pull.sh <path> <registry> <repository> <tag>
 # requires IMAGE_REGISTRY_USERNAME / IMAGE_REGISTRY_PASSWORD in the environment
 #
 

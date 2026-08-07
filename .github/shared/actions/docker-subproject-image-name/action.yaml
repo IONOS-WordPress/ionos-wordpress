@@ -2,7 +2,7 @@ name: 'docker subproject image tag'
 description: |
   compute the registry tag for a docker sub-project directory (e.g.
   packages/docker/rector-php, or .devcontainer) - a thin workflow-side wrapper around
-  .github/shared/scripts/docker-subproject-image-tag.sh, which holds the actual scheme
+  .github/shared/scripts/_docker-subproject-image-tag.sh, which holds the actual scheme
   and is also called directly from scripts/ (see scripts/test.sh).
 
   requires the caller to check out with 'fetch-depth: 0' - the tag is derived from the
@@ -24,7 +24,7 @@ runs:
     - id: compute_tag
       shell: bash
       run: |
-        TAG="$(.github/shared/scripts/docker-subproject-image-tag.sh '${{ inputs.path }}')"
+        TAG="$(.github/shared/scripts/_docker-subproject-image-tag.sh '${{ inputs.path }}')"
         echo "image tag for '${{ inputs.path }}': $TAG"
         git log -1 -- '${{ inputs.path }}'
         echo "tag=$TAG" >> "$GITHUB_OUTPUT"

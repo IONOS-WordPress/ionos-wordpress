@@ -7,7 +7,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 source "$(realpath $0 | xargs dirname)/includes/_docker-mounts.sh"
 
 # (re)build the project (this also (re)builds the wordpress-alpine image locally whenever its
@@ -73,7 +73,7 @@ fi
 
 # (re)generate .vscode/launch.json so the xdebug pathMappings match the packages
 # currently bind-mounted into the container
-./packages/docker/wordpress-alpine/scripts/generate-vscode-launch.sh
+./packages/docker/wordpress-alpine/scripts/_generate-vscode-launch.sh
 
 ionos.wordpress.log_info "waiting for http://localhost:${HTTP_PORT}/ to come up ..."
 HTTP_CODE=000

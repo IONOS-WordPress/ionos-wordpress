@@ -19,12 +19,12 @@
 # needs the git history, so callers must check out with 'fetch-depth: 0' - a depth-1
 # checkout is rejected below instead of silently yielding an image ref ending in ':'.
 #
-# usage: docker-subproject-image-tag.sh <path>
+# usage: _docker-subproject-image-tag.sh <path>
 #
 
 set -euo pipefail
 
-SUBPROJECT_PATH="${1:?usage: docker-subproject-image-tag.sh <path>}"
+SUBPROJECT_PATH="${1:?usage: _docker-subproject-image-tag.sh <path>}"
 
 TAG="$(git log -1 --format='%cd' --date=format:'%Y-%m-%d-%H-%M-%S' -- "$SUBPROJECT_PATH")"
 

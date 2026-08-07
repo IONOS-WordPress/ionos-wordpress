@@ -9,7 +9,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 source "$(realpath $0 | xargs dirname)/includes/_docker-mounts.sh"
 
 # test file arguments
@@ -168,7 +168,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
 
     # same tag the publish workflow assigns - resolved through the one script that owns
     # the repository-wide '<image>:<tag>' scheme, so the two can never drift apart
-    readonly IMAGE_TAG="$(.github/shared/scripts/docker-subproject-image-tag.sh packages/docker/wordpress-alpine)"
+    readonly IMAGE_TAG="$(.github/shared/scripts/_docker-subproject-image-tag.sh packages/docker/wordpress-alpine)"
     readonly WORDPRESS_ALPINE_IMAGE="${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:${IMAGE_TAG}-php${PHP_VERSION_OVERRIDE}"
 
     if [[ -n "${IMAGE_REGISTRY_USERNAME:-}" ]] && [[ -n "${IMAGE_REGISTRY_PASSWORD:-}" ]]; then

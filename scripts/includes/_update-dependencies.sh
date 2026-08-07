@@ -2,7 +2,7 @@
 # this file will be sourced into "update-dependencies" workspace packages scripts
 #
 
-source "$(git rev-parse --show-toplevel)/scripts/includes/bootstrap.sh"
+source "$(git rev-parse --show-toplevel)/scripts/includes/_bootstrap.sh"
 
 # #
 # # output a message if a newer version of a composer package is available

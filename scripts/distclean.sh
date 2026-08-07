@@ -9,7 +9,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 # MARK: test dev container not running
 # ensure the dev container is not running before cleaning up

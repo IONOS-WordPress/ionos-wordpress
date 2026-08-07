@@ -120,8 +120,8 @@ jobs:
             # here and the image built when the pull fails can never disagree
             DEFAULT_PHP_VERSION="$(grep -E '^ARG_PHP_VERSION=' packages/docker/wordpress-alpine/.env | cut -d= -f2-)"
 
-            .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/wordpress-alpine "$IMAGE_REGISTRY" "$WORDPRESS_ALPINE_IMAGE_REPOSITORY" "${WORDPRESS_ALPINE_IMAGE_TAG}-php${DEFAULT_PHP_VERSION}"
-            .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/rector-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/rector-php" "$RECTOR_PHP_IMAGE_TAG"
+            .github/shared/scripts/_docker-subproject-image-pull.sh packages/docker/wordpress-alpine "$IMAGE_REGISTRY" "$WORDPRESS_ALPINE_IMAGE_REPOSITORY" "${WORDPRESS_ALPINE_IMAGE_TAG}-php${DEFAULT_PHP_VERSION}"
+            .github/shared/scripts/_docker-subproject-image-pull.sh packages/docker/rector-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/rector-php" "$RECTOR_PHP_IMAGE_TAG"
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: build project and publish rector-php image
@@ -132,7 +132,7 @@ jobs:
             RECTOR_PHP_IMAGE_TAG=${{ steps.rector_php_image_tag.outputs.tag }}
             IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
             IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
-          # the push is a no-op when the pull above hit - docker-subproject-image-push.sh
+          # the push is a no-op when the pull above hit - _docker-subproject-image-push.sh
           # then skips the login + registry round trip
           runCmd: |
             # the 'php:<target>-cli' images scripts/test.sh shells out to for its
@@ -166,7 +166,7 @@ jobs:
 
             wait "$PHP_IMAGE_PULL_PID" || true
 
-            .github/shared/scripts/docker-subproject-image-push.sh packages/docker/rector-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/rector-php" "$RECTOR_PHP_IMAGE_TAG"
+            .github/shared/scripts/_docker-subproject-image-push.sh packages/docker/rector-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/rector-php" "$RECTOR_PHP_IMAGE_TAG"
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: test project
@@ -242,8 +242,8 @@ jobs:
             IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
           runCmd: |
             pnpm install --frozen-lockfile
-            .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/ecs-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/ecs-php" "$ECS_PHP_IMAGE_TAG"
-            .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/dennis-i18n "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/dennis-i18n" "$DENNIS_I18N_IMAGE_TAG"
+            .github/shared/scripts/_docker-subproject-image-pull.sh packages/docker/ecs-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/ecs-php" "$ECS_PHP_IMAGE_TAG"
+            .github/shared/scripts/_docker-subproject-image-pull.sh packages/docker/dennis-i18n "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/dennis-i18n" "$DENNIS_I18N_IMAGE_TAG"
 
       # no separate 'build necessary dockers' step: scripts/lint.sh builds the
       # images the selected linters need itself, and skips the ones the pull
@@ -254,7 +254,7 @@ jobs:
           runCmd: |
             pnpm run lint
 
-      # a no-op when both pulls hit above - docker-subproject-image-push.sh then
+      # a no-op when both pulls hit above - _docker-subproject-image-push.sh then
       # skips the login + registry round trip per image
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: publish lint images
@@ -267,8 +267,8 @@ jobs:
             IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
             IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
           runCmd: |
-            .github/shared/scripts/docker-subproject-image-push.sh packages/docker/ecs-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/ecs-php" "$ECS_PHP_IMAGE_TAG"
-            .github/shared/scripts/docker-subproject-image-push.sh packages/docker/dennis-i18n "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/dennis-i18n" "$DENNIS_I18N_IMAGE_TAG"
+            .github/shared/scripts/_docker-subproject-image-push.sh packages/docker/ecs-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/ecs-php" "$ECS_PHP_IMAGE_TAG"
+            .github/shared/scripts/_docker-subproject-image-push.sh packages/docker/dennis-i18n "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/dennis-i18n" "$DENNIS_I18N_IMAGE_TAG"
 
       # # automatically approve and merge dependabot PRs
       # dependabot:

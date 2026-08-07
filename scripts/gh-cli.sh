@@ -7,7 +7,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 if [[ -z "$GH_TOKEN" ]]; then
   ionos.wordpress.log_error 'Error: GH_TOKEN is not set.'
