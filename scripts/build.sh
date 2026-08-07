@@ -224,11 +224,15 @@ function ionos.wordpress.build_workspace_package_docker() {
   DOCKER_IMAGE_NAME="$DOCKER_USERNAME/$DOCKER_REPOSITORY"
 
   # abort building image if
-  # - cli option --force is not set
-  # - workspace package build-info file exists
-  # - image with same name and version already exists locally
-  if [[ "$FORCE" == 'no' ]] && [[ -f "$path/build-info" ]] && docker image inspect $DOCKER_IMAGE_NAME:$PACKAGE_VERSION &>/dev/null; then
-    ionos.wordpress.log_warn "skip building docker image $DOCKER_IMAGE_NAME:$PACKAGE_VERSION : image already exists locally"
+  # - the workspace package is up to date (--force not set, build-info file exists and no
+  #   source file - Dockerfile, entrypoint, scripts/, .env, ... - is newer than it)
+  # - an image with same name and version already exists locally
+  #
+  # the package content check matters : the image version is only bumped on release, so a
+  # (name,version) check alone would keep serving a stale image after every Dockerfile or
+  # entrypoint change.
+  if ionos.wordpress.is_workspace_package_up_to_date "$1" && docker image inspect $DOCKER_IMAGE_NAME:$PACKAGE_VERSION &>/dev/null; then
+    ionos.wordpress.log_warn "skip building docker image $DOCKER_IMAGE_NAME:$PACKAGE_VERSION : image already exists locally and is up to date"
     return
   fi
 
@@ -615,7 +619,8 @@ function ionos.wordpress.build_workspace_package() {
   # (example : [curent-dir]/packages/wp-plugin/ionos-essentials)
   local package_path="$(pwd)/packages/$path"
 
-  # docker packages keep their own pre-existing skip check (see ionos.wordpress.build_workspace_package_docker)
+  # docker packages run the same check themselves, additionally requiring the image to still
+  # exist locally (see ionos.wordpress.build_workspace_package_docker)
   if [[ "$type" != "docker" ]] && ionos.wordpress.is_workspace_package_up_to_date "$path"; then
     ionos.wordpress.log_warn "skip building workspace package ./packages/$path : already up to date"
     return
