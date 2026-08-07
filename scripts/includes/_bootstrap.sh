@@ -136,4 +136,8 @@ export COMPOSER_FLAGS='--quiet'
 # if docker container should be started with same uid:guid mapping as in host system apply this setting to docker run
 export DOCKER_USER="$(id -u $USER):$(id -g $USER)"
 
+# dual-mode dispatch for the packages/docker/* CLI tools (native in the dev container,
+# docker image outside it)
+source "$(realpath "${BASH_SOURCE[0]}" | xargs dirname)/_native-tools.sh"
+
 ionos.wordpress.load_env "$GIT_ROOT_PATH"

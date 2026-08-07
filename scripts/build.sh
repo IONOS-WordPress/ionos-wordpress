@@ -553,20 +553,37 @@ EOF
         TARGET_DIR="dist/${plugin_name}-${PACKAGE_VERSION}-php${TARGET_PHP_VERSION}/${plugin_name}"
         mkdir -p $path/$TARGET_DIR
         rsync -a --quiet $path/dist/${plugin_name}-$PACKAGE_VERSION/ $path/$TARGET_DIR
-        # call dockerized rector
-        docker run \
-          $DOCKER_FLAGS \
-          --rm \
-          --user "$DOCKER_USER" \
-          -v $path/$TARGET_DIR:/project/dist \
-          -v $(pwd)/packages/docker/rector-php/${RECTOR_CONFIG}.php:/project/${RECTOR_CONFIG}.php \
-          ionos-wordpress/rector-php \
-          --clear-cache \
-          --config "${RECTOR_CONFIG}.php" \
-          --no-progress-bar \
-          ${RECTOR_VERBOSE} \
-          process \
-          dist
+        # unlike the linters, rector's paths cannot be shared verbatim between both modes:
+        # the image bind-mounts the plugin at /project/dist and the config at
+        # /project/<config>.php, so '/project' is a synthetic root that has no counterpart
+        # on disk. natively the same two inputs are simply addressed by their real paths.
+        # (the configs no longer derive anything from __DIR__ for exactly this reason -
+        # see packages/docker/rector-php/rector-config-php7.4.php)
+        if rector="$(ionos.wordpress.native_tool rector-php)"; then
+          # the configs resolve the wordpress stubs through $COMPOSER_HOME
+          COMPOSER_HOME="$(ionos.wordpress.native_tool_composer_home rector-php)" \
+            "$rector" \
+              --clear-cache \
+              --config "packages/docker/rector-php/${RECTOR_CONFIG}.php" \
+              --no-progress-bar \
+              ${RECTOR_VERBOSE} \
+              process \
+              "$path/$TARGET_DIR"
+        else
+          docker run \
+            $DOCKER_FLAGS \
+            --rm \
+            --user "$DOCKER_USER" \
+            -v $path/$TARGET_DIR:/project/dist \
+            -v $(pwd)/packages/docker/rector-php/${RECTOR_CONFIG}.php:/project/${RECTOR_CONFIG}.php \
+            ionos-wordpress/rector-php \
+            --clear-cache \
+            --config "${RECTOR_CONFIG}.php" \
+            --no-progress-bar \
+            ${RECTOR_VERBOSE} \
+            process \
+            dist
+        fi
 
         # update version information in plugin filenames
         plugin_filenames=$(ionos.wordpress.get_plugin_filenames "$path/$TARGET_DIR")

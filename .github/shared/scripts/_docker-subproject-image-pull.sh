@@ -7,9 +7,12 @@
 # touches <path>/build-info - so scripts/build.sh's existing local-cache
 # check (ionos.wordpress.build_workspace_package_docker) skips rebuilding it.
 #
-# on a cache hit it also writes <path>/image-pull-hit (gitignored) so the
-# matching _docker-subproject-image-push.sh can skip re-pushing an image the
-# registry already has.
+# on a cache hit it also writes <path>/image-pull-hit (gitignored). that used to let a
+# matching push script skip re-pushing an image the registry already had; nothing consumes
+# the marker any more - wordpress-alpine, the only remaining pulled sub-project image, is
+# published by build-wordpress-alpine-image.yaml via docker/build-push-action, and the
+# ecs-php/rector-php/dennis-i18n images left CI entirely when the dev container started
+# installing those tools natively (see scripts/includes/_native-tools.sh).
 #
 # must run inside the same docker daemon scripts/build.sh's docker build
 # step runs in (the devcontainer's docker-in-docker daemon in CI, see

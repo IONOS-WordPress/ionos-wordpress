@@ -6,9 +6,17 @@ use PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer;
 use WordPressCS\WordPress\Sniffs\Security\EscapeOutputSniff;
 
 $codeSnifferConfig = new PHP_CodeSniffer\Config(["--standard=./packages/docker/ecs-php/ruleset.xml"]);
-PHP_CodeSniffer\Autoload::addSearchPath('/composer/vendor/wp-coding-standards/wpcs/WordPress', "WordPressCS\WordPress");
-PHP_CodeSniffer\Autoload::addSearchPath('/composer/vendor/wp-coding-standards/wpcs/WordPress-Extra', "WordPressCS\WordPress-Extra");
-PHP_CodeSniffer\Autoload::addSearchPath('/composer/vendor/wp-coding-standards/wpcs/WordPress-Core', "WordPressCS\WordPress-Core");
+
+// ecs runs either from the ionos-wordpress/ecs-php docker image (COMPOSER_HOME=/composer,
+// see packages/docker/ecs-php/Dockerfile) or natively inside the dev container, which
+// installs it under its own COMPOSER_HOME (see .devcontainer/Dockerfile). both layouts put
+// the dependencies at "$COMPOSER_HOME/vendor", so resolving the wpcs standards through the
+// environment keeps this config identical for both - hardcoding /composer would break the
+// native path. the fallback keeps older image tags that predate the env var working.
+$vendorDir = (getenv('COMPOSER_HOME') ?: '/composer') . '/vendor';
+PHP_CodeSniffer\Autoload::addSearchPath("$vendorDir/wp-coding-standards/wpcs/WordPress", "WordPressCS\WordPress");
+PHP_CodeSniffer\Autoload::addSearchPath("$vendorDir/wp-coding-standards/wpcs/WordPress-Extra", "WordPressCS\WordPress-Extra");
+PHP_CodeSniffer\Autoload::addSearchPath("$vendorDir/wp-coding-standards/wpcs/WordPress-Core", "WordPressCS\WordPress-Core");
 
 $configure = ECSConfig::configure();
 

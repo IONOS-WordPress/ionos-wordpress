@@ -20,6 +20,32 @@ Docker in Docker works smoothly in the Dev Container (the `wordpress-alpine` dev
 
 Additional Software can easily be installed/configured into the Dev Container by editing `./.devcontainer/Dockerfile` and or `./.devcontainer/devcontainer.json`.
 
+## CLI tools: native inside the Dev Container, Docker image outside
+
+The four CLI tools under `packages/docker/` — `ecs-php`, `rector-php`, `potrans` and `dennis-i18n` — exist in two forms, and the scripts pick one automatically:
+
+| where you work                      | which form runs                                            |
+| ----------------------------------- | ---------------------------------------------------------- |
+| inside the Dev Container, and in CI | natively, from `/opt/ionos-wordpress/tools/<tool>`         |
+| outside the Dev Container           | the `ionos-wordpress/<tool>` Docker image, built on demand |
+
+The native form exists because every dockerized invocation costs a Docker-in-Docker round trip, and because a fresh checkout otherwise has to build several Docker images before `pnpm lint` does anything.
+
+Both forms install from the same committed `composer.lock` (and the same pinned `dennis` version), so **they run identical tool versions** — that is what makes the two paths interchangeable. The dispatch lives in `scripts/includes/_native-tools.sh`; it probes for the native executable rather than trying to detect the environment, because `$REMOTE_CONTAINERS`/`$CODESPACES` are not reliably set by `devcontainers/ci`.
+
+> [!IMPORTANT]
+> **CI only ever exercises the native path**, so the Docker image path is not covered by automation. This is a deliberate trade, not an oversight. If one of those images breaks — a base image change, a package that disappears from Alpine — nothing will go red; the first person to notice will be a developer working outside the Dev Container.
+>
+> To verify the Docker path by hand, force it:
+>
+> ```bash
+> IONOS_WP_FORCE_DOCKER=1 pnpm lint
+> ```
+>
+> Please run that before changing anything under `packages/docker/`.
+
+Because the Dev Container image bakes those tools in, its image tag is derived from the tool directories as well as from `./.devcontainer` (see `.github/shared/actions/devcontainer-image-name/action.yaml`). A tool version bump therefore rebuilds the Dev Container image — otherwise CI would keep running the previous tool versions.
+
 ## GitHub actions
 
 GitHub action `./.github/workflows/build-devcontainer.yml` is used to build the Dev Container image and push it to the GitHub Container Registry.

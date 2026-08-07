@@ -31,7 +31,17 @@ runs:
     - uses: './.github/shared/actions/docker-subproject-image-name'
       id: image_tag
       with:
-        path: .devcontainer
+        # the tool directories are part of the tag input because .devcontainer/Dockerfile
+        # installs their CLIs natively from their committed composer.lock files. without
+        # them a tool version bump would leave the dev container tag unchanged and CI would
+        # keep running the previous tool versions - see
+        # .github/shared/scripts/_docker-subproject-image-tag.sh
+        path: >-
+          .devcontainer
+          packages/docker/ecs-php
+          packages/docker/rector-php
+          packages/docker/potrans
+          packages/docker/dennis-i18n
 
     - id: compute_image_name
       shell: bash

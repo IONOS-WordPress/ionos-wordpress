@@ -6,11 +6,14 @@ description: |
   and is also called directly from scripts/ (see scripts/test.sh).
 
   requires the caller to check out with 'fetch-depth: 0' - the tag is derived from the
-  git history of the given path.
+  git history of the given path(s).
 
 inputs:
   path:
-    description: 'path to the docker sub-project directory (e.g. packages/docker/rector-php)'
+    description: |
+      space-separated path(s) to the docker sub-project directory (e.g.
+      packages/docker/rector-php). when more than one is given the tag is the last commit
+      touching any of them - see the script for why the dev container needs that.
     required: true
 
 outputs:
@@ -24,7 +27,8 @@ runs:
     - id: compute_tag
       shell: bash
       run: |
-        TAG="$(.github/shared/scripts/_docker-subproject-image-tag.sh '${{ inputs.path }}')"
+        # unquoted on purpose - 'path' may carry several space-separated paths
+        TAG="$(.github/shared/scripts/_docker-subproject-image-tag.sh ${{ inputs.path }})"
         echo "image tag for '${{ inputs.path }}': $TAG"
-        git log -1 -- '${{ inputs.path }}'
+        git log -1 -- ${{ inputs.path }}
         echo "tag=$TAG" >> "$GITHUB_OUTPUT"

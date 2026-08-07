@@ -95,7 +95,14 @@ fi
 # keep in sync with the workflows that publish them:
 #   .github/shared/actions/devcontainer-image-name/action.yaml (dev container)
 #   .github/workflows/build-wordpress-alpine-image.yaml        (IMAGE_REPOSITORY)
-#   .github/workflows/integration.yaml                         (one per packages/docker/*)
+#
+# note the packages/docker/* loop below is now wider than what is actually published: only
+# wordpress-alpine still gets pushed from there. ecs-php/rector-php/potrans/dennis-i18n
+# stopped being published when the dev container started installing those tools natively
+# (see scripts/includes/_native-tools.sh), so their existing registry packages are frozen
+# rather than updated. they are deliberately still treated as expected, so this script
+# leaves those historical images alone instead of proposing to delete them - purging them is
+# a separate, deliberate decision.
 declare -A EXPECTED_PACKAGES=()
 
 EXPECTED_PACKAGES["${REPOSITORY_NAME}-devcontainer"]=1

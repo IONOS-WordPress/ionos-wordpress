@@ -31,11 +31,10 @@ env:
   # build-wordpress-alpine-image.yaml) - same repo vars/defaults, never hardcoded
   IMAGE_REGISTRY: ${{ vars.IMAGE_REGISTRY || 'ghcr.io' }}
   IMAGE_REPOSITORY: ${{ vars.IMAGE_REPOSITORY || 'ionos-wordpress/wordpress-alpine-dev' }}
-  # registry repository prefix the rector-php/ecs-php/dennis-i18n
-  # docker sub-project images (packages/docker/*) are cached under, one
-  # repository per sub-project (e.g. ionos-wordpress/rector-php) - same
-  # registry as wordpress-alpine, same vars/defaults convention, never hardcoded
-  DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX: ${{ vars.IMAGE_REPOSITORY_PREFIX || 'ionos-wordpress' }}
+  # no IMAGE_REPOSITORY_PREFIX any more: it existed to address the per-sub-project
+  # rector-php/ecs-php/dennis-i18n repositories, and none of those images are pulled or
+  # pushed by this workflow now that the dev container installs those tools natively (see
+  # scripts/includes/_native-tools.sh). wordpress-alpine has its own IMAGE_REPOSITORY above.
   DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME: ${{ secrets.IMAGE_REGISTRY_USERNAME || github.actor }}
   DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD: ${{ secrets.IMAGE_REGISTRY_PASSWORD || secrets.GITHUB_TOKEN }}
 
@@ -79,20 +78,17 @@ jobs:
             ${{ runner.os }}-playwright-browsers-
 
       - uses: './.github/shared/actions/docker-subproject-image-name'
-        id: rector_php_image_tag
-        with:
-          path: packages/docker/rector-php
-
-      - uses: './.github/shared/actions/docker-subproject-image-name'
         id: wordpress_alpine_image_tag
         with:
           path: packages/docker/wordpress-alpine
 
-      # every 'devcontainer-shell-run' re-runs 'devcontainer build' + 'docker run' and
-      # costs ~4s of wall clock even on a full cache hit, so install and both image pulls
-      # share one step instead of getting one each (the lint job below does the same).
-      # both pulls run inside the devcontainer's docker-in-docker daemon - the same one
-      # scripts/build.sh's docker build step runs in - so the pulled/tagged images are
+      # no rector-php pull/push or image tag step anymore: the dev container installs rector
+      # natively and scripts/build.sh dispatches to it (see
+      # scripts/includes/_native-tools.sh). wordpress-alpine stays a pull - it is the
+      # WordPress runtime under test, not a CLI, so it genuinely has to be a container.
+      #
+      # the pull runs inside the devcontainer's docker-in-docker daemon - the same one
+      # scripts/build.sh's docker build step runs in - so the pulled/tagged image is
       # actually visible to it (a host-side docker pull/tag would land in a different
       # daemon and be invisible to the build step).
       - uses: './.github/shared/actions/devcontainer-shell-run'
@@ -101,17 +97,16 @@ jobs:
           env: |
             IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
             WORDPRESS_ALPINE_IMAGE_REPOSITORY=${{ env.IMAGE_REPOSITORY }}
-            IMAGE_REPOSITORY_PREFIX=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}
-            RECTOR_PHP_IMAGE_TAG=${{ steps.rector_php_image_tag.outputs.tag }}
             WORDPRESS_ALPINE_IMAGE_TAG=${{ steps.wordpress_alpine_image_tag.outputs.tag }}
             IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
             IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
-          # both pulls tag a local ionos-wordpress/<name>:<version> from the published
-          # image, so scripts/build.sh's existing "already exists locally" check skips
-          # rebuilding it below. no hard dependency on build-wordpress-alpine-image.yaml
-          # finishing first: the build step below builds wordpress-alpine locally if the
-          # tag isn't published yet/the pull fails (it detects that by the absence of
-          # ionos-wordpress/wordpress-alpine:latest, which is only tagged on a successful pull)
+          # the pull tags a local ionos-wordpress/wordpress-alpine:<version> from the
+          # published image, so scripts/build.sh's existing "already exists locally" check
+          # skips rebuilding it below. no hard dependency on
+          # build-wordpress-alpine-image.yaml finishing first: the build step below builds
+          # wordpress-alpine locally if the tag isn't published yet/the pull fails (it
+          # detects that by the absence of ionos-wordpress/wordpress-alpine:latest, which is
+          # only tagged on a successful pull)
           runCmd: |
             pnpm install --frozen-lockfile
 
@@ -121,19 +116,10 @@ jobs:
             DEFAULT_PHP_VERSION="$(grep -E '^ARG_PHP_VERSION=' packages/docker/wordpress-alpine/.env | cut -d= -f2-)"
 
             .github/shared/scripts/_docker-subproject-image-pull.sh packages/docker/wordpress-alpine "$IMAGE_REGISTRY" "$WORDPRESS_ALPINE_IMAGE_REPOSITORY" "${WORDPRESS_ALPINE_IMAGE_TAG}-php${DEFAULT_PHP_VERSION}"
-            .github/shared/scripts/_docker-subproject-image-pull.sh packages/docker/rector-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/rector-php" "$RECTOR_PHP_IMAGE_TAG"
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: build project and publish rector-php image
+        name: build project
         with:
-          env: |
-            IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY_PREFIX=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}
-            RECTOR_PHP_IMAGE_TAG=${{ steps.rector_php_image_tag.outputs.tag }}
-            IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
-            IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
-          # the push is a no-op when the pull above hit - _docker-subproject-image-push.sh
-          # then skips the login + registry round trip
           runCmd: |
             # the 'php:<target>-cli' images scripts/test.sh shells out to for its
             # transpilation-target syntax checks are only needed once the test step runs,
@@ -158,15 +144,13 @@ jobs:
             fi
 
             # only build what the test suite actually consumes: the plugins/mu-plugins
-            # themselves (bundled JS/CSS, i18n) plus rector-php, which their build step
-            # shells out to for PHP-version transpilation. ecs-php/potrans/dennis-i18n
-            # are declared workspace deps too, but only used by scripts/lint.sh - building
-            # them here would be wasted work.
-            pnpm run build --filter './packages/wp-plugin/*' --filter './packages/wp-mu-plugin/*' --filter '@ionos-wordpress/rector-php' "${WORDPRESS_ALPINE_FILTER[@]}"
+            # themselves (bundled JS/CSS, i18n). rector-php is no longer in this list -
+            # their build step now shells out to the natively installed rector instead of
+            # its docker image. ecs-php/potrans/dennis-i18n are declared workspace deps too,
+            # but only used by scripts/lint.sh - building them here would be wasted work.
+            pnpm run build --filter './packages/wp-plugin/*' --filter './packages/wp-mu-plugin/*' "${WORDPRESS_ALPINE_FILTER[@]}"
 
             wait "$PHP_IMAGE_PULL_PID" || true
-
-            .github/shared/scripts/_docker-subproject-image-push.sh packages/docker/rector-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/rector-php" "$RECTOR_PHP_IMAGE_TAG"
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: test project
@@ -214,61 +198,26 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: './.github/shared/actions/docker-subproject-image-name'
-        id: ecs_php_image_tag
-        with:
-          path: packages/docker/ecs-php
-      - uses: './.github/shared/actions/docker-subproject-image-name'
-        id: dennis_i18n_image_tag
-        with:
-          path: packages/docker/dennis-i18n
       - uses: './.github/shared/actions/pnpm-store-cache'
 
-      # every 'devcontainer-shell-run' re-runs 'devcontainer build' + 'docker run'
-      # and costs ~6s of wall clock even on a full cache hit - so install and the
-      # image pulls share one step instead of getting one each.
-      # note: potrans is deliberately absent. 'pnpm run lint' never invokes it -
-      # only 'pnpm run lint-fix:i18n' (deepl auto-translation) does, and that is
-      # never run in CI. see scripts/lint.sh.
+      # no ecs-php/dennis-i18n image pull or push here anymore, and no image tag steps to
+      # feed them: the dev container installs both tools natively, and scripts/lint.sh
+      # dispatches to the native binary whenever it is present (see
+      # scripts/includes/_native-tools.sh). the docker images still exist for developers
+      # working outside the dev container - they are simply not on any CI path, which also
+      # means CI no longer verifies them. IONOS_WP_FORCE_DOCKER=1 reproduces that path by
+      # hand.
       - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: install and pull prebuilt lint images
+        name: install
         with:
-          env: |
-            IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY_PREFIX=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}
-            ECS_PHP_IMAGE_TAG=${{ steps.ecs_php_image_tag.outputs.tag }}
-            DENNIS_I18N_IMAGE_TAG=${{ steps.dennis_i18n_image_tag.outputs.tag }}
-            IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
-            IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
           runCmd: |
             pnpm install --frozen-lockfile
-            .github/shared/scripts/_docker-subproject-image-pull.sh packages/docker/ecs-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/ecs-php" "$ECS_PHP_IMAGE_TAG"
-            .github/shared/scripts/_docker-subproject-image-pull.sh packages/docker/dennis-i18n "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/dennis-i18n" "$DENNIS_I18N_IMAGE_TAG"
 
-      # no separate 'build necessary dockers' step: scripts/lint.sh builds the
-      # images the selected linters need itself, and skips the ones the pull
-      # above already restored
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: lint_project
         with:
           runCmd: |
             pnpm run lint
-
-      # a no-op when both pulls hit above - _docker-subproject-image-push.sh then
-      # skips the login + registry round trip per image
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: publish lint images
-        with:
-          env: |
-            IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            IMAGE_REPOSITORY_PREFIX=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}
-            ECS_PHP_IMAGE_TAG=${{ steps.ecs_php_image_tag.outputs.tag }}
-            DENNIS_I18N_IMAGE_TAG=${{ steps.dennis_i18n_image_tag.outputs.tag }}
-            IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
-            IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
-          runCmd: |
-            .github/shared/scripts/_docker-subproject-image-push.sh packages/docker/ecs-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/ecs-php" "$ECS_PHP_IMAGE_TAG"
-            .github/shared/scripts/_docker-subproject-image-push.sh packages/docker/dennis-i18n "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/dennis-i18n" "$DENNIS_I18N_IMAGE_TAG"
 
       # # automatically approve and merge dependabot PRs
       # dependabot:
