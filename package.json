@@ -14,6 +14,7 @@
     "cli": "./scripts/cli.sh",
     "clean": "./scripts/clean.sh",
     "distclean": "./scripts/distclean.sh",
+    "purge-registry": "./scripts/purge-registry.sh",
     "changeset": "./scripts/changeset.sh",
     "pre-release": "./scripts/pre-release.sh",
     "release": "./scripts/release.sh",

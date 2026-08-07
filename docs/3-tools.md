@@ -78,6 +78,17 @@ Will cleanup any build artifacts (`dist`/`build` folder for example) and tempora
 
 > You can control the cleanup process by configuring the `GIT_CLEAN_OPTS` environment variable (see `.env`).
 
+# purge-registry
+
+Deletes the container packages this repository publishes to `ghcr.io` — the dev container image plus one image per `packages/docker/*` workspace package — including every version they hold : `pnpm purge-registry`
+
+Whole packages are deleted rather than individual versions, because that is the only way to clear the legacy dev container packages that carried their timestamp in the package _name_ instead of the tag (one package per change). Packages published by other repositories in the organization are never touched; they are listed as `skip`.
+
+> [!CAUTION]
+> This is irreversible — GitHub cannot restore a deleted package version. `pnpm purge-registry` therefore only _reports_ what it would delete; add `--yes` to actually delete. The next CI run rebuilds and republishes whatever it needs, so the cost is build time — but never run it while a release is in flight.
+
+Requires `GH_TOKEN` in `.secrets` (see `.secrets.example`) — a classic personal access token carrying the `read:packages` and `delete:packages` scopes. Fine-grained tokens cannot delete container packages.
+
 # destroy
 
 Will remove the persistent `wordpress-alpine` dev container and its per-stack overlay data (the shared, version-keyed WordPress core cache survives) : `pnpm destroy`
