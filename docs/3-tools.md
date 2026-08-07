@@ -82,6 +82,8 @@ Will cleanup any build artifacts (`dist`/`build` folder for example) and tempora
 
 Will remove the persistent `wp-alpine` dev container and its per-stack overlay data (the shared, version-keyed WordPress core cache survives) : `pnpm destroy`
 
+> A container's env vars and bind mounts are fixed when it is created, so changes to them only take effect after a `pnpm destroy`. `WORDPRESS_VERSION` is the exception : `pnpm start` compares it against the existing container and recreates the container itself when they differ.
+
 # cli
 
 `pnpm cli` runs a `wp-cli` command inside the dev container, as the `php` user.
@@ -154,7 +156,7 @@ It will run a bunch of commands like `pnpm changeset version`, `pnpm build`, cre
 
 `pnpm start` will start the persistent `wp-alpine` dev container, building its Docker image first if needed.
 
-Xdebug is baked into the `wp-alpine` image and enabled by default.
+Xdebug is baked into the `wp-alpine` image and enabled by default. It attaches on _every_ request (`xdebug.start_with_request=yes`) and connects back to the IDE on `host.docker.internal:9003`, so starting the generated `ionos-wordpress` launch configuration in vscode is all that is needed to hit breakpoints.
 
 # stop
 
