@@ -8,9 +8,12 @@ description: |
 
   example : ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer:2025-12-24-14-48-33
 
-  repository and tag are exposed separately because devcontainers/ci takes them as two
-  inputs (imageName/imageTag) and appends ':latest' to an imageName that already carries
-  a tag; image_name is the joined reference for 'docker manifest inspect'/cacheFrom.
+  repository and tag are exposed separately because devcontainers/ci - still used by
+  build-devcontainer-image.yaml, which is the one place that genuinely has to *build* the
+  image - takes them as two inputs (imageName/imageTag) and appends ':latest' to an
+  imageName that already carries a tag. image_name is the joined reference, used for
+  'docker manifest inspect' and for the image the consuming jobs pull (see
+  ../devcontainer-shell-run).
 
   requires the caller to check out with 'fetch-depth: 0'.
 

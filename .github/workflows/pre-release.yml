@@ -52,8 +52,8 @@ jobs:
         uses: actions/checkout@v6
         with:
           # the devcontainer image tag below is derived from the git history of
-          # .devcontainer - a depth-1 checkout has none, and the cacheFrom reference
-          # would silently degrade into a full devcontainer rebuild on every run
+          # .devcontainer and the packages/docker/* tool directories - a depth-1 checkout
+          # has none, so the computed tag would be wrong and the image pull would fail
           fetch-depth: 0
 
       - name: Login to GitHub Container Registry
