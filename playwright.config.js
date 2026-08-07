@@ -1,4 +1,4 @@
-// playwright config for e2e tests against the ephemeral wp-alpine test container
+// playwright config for e2e tests against the ephemeral wordpress-alpine test container
 /* eslint-disable-next-line import/named */
 import { defineConfig, devices } from '@playwright/test';
 

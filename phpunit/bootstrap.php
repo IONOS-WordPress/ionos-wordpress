@@ -8,7 +8,7 @@ if (false !== $_phpunit_polyfills_path) {
 }
 
 // composer deps (phpunit/phpunit, yoast/phpunit-polyfills) are baked into the
-// wp-alpine image at /opt/wp-tests (see packages/docker/wp-alpine/Dockerfile)
+// wordpress-alpine image at /opt/wp-tests (see packages/docker/wordpress-alpine/Dockerfile)
 require_once '/opt/wp-tests/vendor/autoload.php';
 
 // Give access to tests_add_filter() function.

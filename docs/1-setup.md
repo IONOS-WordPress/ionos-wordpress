@@ -47,7 +47,7 @@ This can be achied by enabling SSH agent forwarding : See https://www.romanboehm
 
 - `pnpm start` will start the development server
 
-  Will start the `wp-alpine` dev container (see `packages/docker/wp-alpine/`), building its Docker image first if needed.
+  Will start the `wordpress-alpine` dev container (see `packages/docker/wordpress-alpine/`), building its Docker image first if needed.
 
 - `pnpm stop` will stop the development server
 

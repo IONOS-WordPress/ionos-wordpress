@@ -12,7 +12,7 @@
 # version. The pairs that are actually published live in ./image-matrix.json
 # (currently 8.4/3.24 as the default and 8.3/3.20, the project's stated
 # minimum supported PHP version, see AGENTS.md) - that file is the single
-# source of truth for .github/workflows/build-wp-alpine-image.yaml's build
+# source of truth for .github/workflows/build-wordpress-alpine-image.yaml's build
 # matrix and for scripts/test.sh's PHP_VERSION_OVERRIDE, so add a variant
 # there rather than hardcoding a pair anywhere else. The ARG defaults below
 # and ./.env (which scripts/build.sh feeds to 'docker build' verbatim, so it
@@ -173,7 +173,7 @@ EOF
 # add composer bin to path
 ENV PATH="$PATH:/opt/wp-tests/vendor/bin"
 
-ADD packages/docker/wp-alpine/docker-entrypoint.sh /
+ADD packages/docker/wordpress-alpine/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 
 ARG HOST_UID=1000
@@ -207,5 +207,5 @@ WORKDIR /htdocs
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-# docker build --build-arg ARG_PHP_VERSION=8.4 --build-arg ARG_ALPINE_VERSION=3.24 -t wp-alpine:8.4 -f packages/docker/wp-alpine/Dockerfile .
-# docker run -d -p 8080:80 -e WORDPRESS_VERSION=6.9.4 --name wp-alpine-test wp-alpine:8.4
+# docker build --build-arg ARG_PHP_VERSION=8.4 --build-arg ARG_ALPINE_VERSION=3.24 -t wordpress-alpine:8.4 -f packages/docker/wordpress-alpine/Dockerfile .
+# docker run -d -p 8080:80 -e WORDPRESS_VERSION=6.9.4 --name wordpress-alpine-test wordpress-alpine:8.4

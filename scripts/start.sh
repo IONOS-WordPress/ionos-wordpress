@@ -3,14 +3,14 @@
 #
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
-# this script is used to start the persistent wp-alpine development container
+# this script is used to start the persistent wordpress-alpine development container
 #
 
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 source "$(realpath $0 | xargs dirname)/includes/_docker-mounts.sh"
 
-# (re)build the project (this also (re)builds the wp-alpine image locally whenever its
+# (re)build the project (this also (re)builds the wordpress-alpine image locally whenever its
 # Dockerfile/entrypoint changed, via scripts/build.sh's docker-package build dispatch)
 if [[ "${BUILD_UP_TO_DATE:-}" == '1' ]]; then
   # skip building if BUILD_UP_TO_DATE is set to 1
@@ -51,7 +51,7 @@ if docker ps -a --filter "name=${CONTAINER_NAME}" --format '{{.Names}}' | grep -
 else
   # --add-host host.docker.internal:host-gateway resolves the image's
   # xdebug.client_host to the docker host, so xdebug can reach the IDE's
-  # listener on port 9003 (see packages/docker/wp-alpine/Dockerfile).
+  # listener on port 9003 (see packages/docker/wordpress-alpine/Dockerfile).
   docker run \
     --detach \
     --tty \
@@ -68,12 +68,12 @@ else
     --env HOST_UID="$(id -u)" \
     --env HOST_GID="$(id -g)" \
     "${VOLUME_ARGS[@]}" \
-    ionos-wordpress/wp-alpine:latest >/dev/null
+    ionos-wordpress/wordpress-alpine:latest >/dev/null
 fi
 
 # (re)generate .vscode/launch.json so the xdebug pathMappings match the packages
 # currently bind-mounted into the container
-./packages/docker/wp-alpine/scripts/generate-vscode-launch.sh
+./packages/docker/wordpress-alpine/scripts/generate-vscode-launch.sh
 
 ionos.wordpress.log_info "waiting for http://localhost:${HTTP_PORT}/ to come up ..."
 HTTP_CODE=000

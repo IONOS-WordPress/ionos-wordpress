@@ -16,7 +16,7 @@ _The WordPress plugin in this project is a very rudimentary plugin stub only for
   - [x] including caching of the Dev Container image
 - [x] VSCode Dev Container integration
 
-Docker in Docker works smoothly in the Dev Container (the `wp-alpine` dev/test containers make usage of this feature).
+Docker in Docker works smoothly in the Dev Container (the `wordpress-alpine` dev/test containers make usage of this feature).
 
 Additional Software can easily be installed/configured into the Dev Container by editing `./.devcontainer/Dockerfile` and or `./.devcontainer/devcontainer.json`.
 

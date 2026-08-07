@@ -27,14 +27,14 @@ permissions:
   id-token: write
 
 env:
-  # registry/repository the wp-alpine image is published to (see
-  # build-wp-alpine-image.yaml) - same repo vars/defaults, never hardcoded
+  # registry/repository the wordpress-alpine image is published to (see
+  # build-wordpress-alpine-image.yaml) - same repo vars/defaults, never hardcoded
   IMAGE_REGISTRY: ${{ vars.IMAGE_REGISTRY || 'ghcr.io' }}
-  IMAGE_REPOSITORY: ${{ vars.IMAGE_REPOSITORY || 'ionos-wordpress/wp-alpine-dev' }}
+  IMAGE_REPOSITORY: ${{ vars.IMAGE_REPOSITORY || 'ionos-wordpress/wordpress-alpine-dev' }}
   # registry repository prefix the rector-php/ecs-php/dennis-i18n
   # docker sub-project images (packages/docker/*) are cached under, one
   # repository per sub-project (e.g. ionos-wordpress/rector-php) - same
-  # registry as wp-alpine, same vars/defaults convention, never hardcoded
+  # registry as wordpress-alpine, same vars/defaults convention, never hardcoded
   DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX: ${{ vars.IMAGE_REPOSITORY_PREFIX || 'ionos-wordpress' }}
   DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME: ${{ secrets.IMAGE_REGISTRY_USERNAME || github.actor }}
   DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD: ${{ secrets.IMAGE_REGISTRY_PASSWORD || secrets.GITHUB_TOKEN }}
@@ -95,30 +95,30 @@ jobs:
         with:
           env: |
             IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
-            WP_ALPINE_IMAGE_REPOSITORY=${{ env.IMAGE_REPOSITORY }}
+            WORDPRESS_ALPINE_IMAGE_REPOSITORY=${{ env.IMAGE_REPOSITORY }}
             IMAGE_REPOSITORY_PREFIX=${{ env.DOCKER_SUBPROJECT_IMAGE_REPOSITORY_PREFIX }}
             RECTOR_PHP_IMAGE_TAG=${{ steps.rector_php_image_tag.outputs.tag }}
             IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
             IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
-          # the wp-alpine block tags a local ionos-wordpress/wp-alpine:<version> from the
-          # image built/published by build-wp-alpine-image.yaml (Phase 1), so
+          # the wordpress-alpine block tags a local ionos-wordpress/wordpress-alpine:<version> from the
+          # image built/published by build-wordpress-alpine-image.yaml (Phase 1), so
           # scripts/build.sh's existing "already exists locally" check skips rebuilding it
           # below - no hard dependency on that workflow finishing first: the build step
           # below builds the image locally if the tag isn't published yet/the pull fails
-          # (it detects that by the absence of ionos-wordpress/wp-alpine:latest, which is
+          # (it detects that by the absence of ionos-wordpress/wordpress-alpine:latest, which is
           # only tagged here on a successful pull)
           runCmd: |
             pnpm install --frozen-lockfile
 
-            HASH="$(git rev-parse HEAD:packages/docker/wp-alpine)"
+            HASH="$(git rev-parse HEAD:packages/docker/wordpress-alpine)"
             # the default php variant is taken from the same .env that scripts/build.sh
             # passes to 'docker build' for the local fallback below, so the tag pulled
             # here and the image built when the pull fails can never disagree
-            DEFAULT_PHP_VERSION="$(grep -E '^ARG_PHP_VERSION=' packages/docker/wp-alpine/.env | cut -d= -f2-)"
-            IMAGE="${IMAGE_REGISTRY}/${WP_ALPINE_IMAGE_REPOSITORY}:${HASH}-php${DEFAULT_PHP_VERSION}"
+            DEFAULT_PHP_VERSION="$(grep -E '^ARG_PHP_VERSION=' packages/docker/wordpress-alpine/.env | cut -d= -f2-)"
+            IMAGE="${IMAGE_REGISTRY}/${WORDPRESS_ALPINE_IMAGE_REPOSITORY}:${HASH}-php${DEFAULT_PHP_VERSION}"
             echo "$IMAGE_REGISTRY_PASSWORD" | docker login "$IMAGE_REGISTRY" --username "$IMAGE_REGISTRY_USERNAME" --password-stdin
 
-            # retry: ghcr.io answers a burst of pulls (devcontainer image, wp-alpine,
+            # retry: ghcr.io answers a burst of pulls (devcontainer image, wordpress-alpine,
             # rector-php, the php:*-cli images) with a secondary rate limit that aborts
             # the transfer mid-layer with a 403 - transient, and a plain local build
             # instead of a ~1s pull costs minutes. only worth retrying while the tag
@@ -135,12 +135,12 @@ jobs:
             done
 
             if [[ "$PULLED" == 'yes' ]]; then
-              PACKAGE_VERSION="$(jq -r '.version' packages/docker/wp-alpine/package.json)"
-              docker tag "$IMAGE" "ionos-wordpress/wp-alpine:${PACKAGE_VERSION}"
-              docker tag "$IMAGE" ionos-wordpress/wp-alpine:latest
-              touch packages/docker/wp-alpine/build-info
+              PACKAGE_VERSION="$(jq -r '.version' packages/docker/wordpress-alpine/package.json)"
+              docker tag "$IMAGE" "ionos-wordpress/wordpress-alpine:${PACKAGE_VERSION}"
+              docker tag "$IMAGE" ionos-wordpress/wordpress-alpine:latest
+              touch packages/docker/wordpress-alpine/build-info
             else
-              echo "::warning::could not pull prebuilt wp-alpine image $IMAGE - falling back to a local build"
+              echo "::warning::could not pull prebuilt wordpress-alpine image $IMAGE - falling back to a local build"
             fi
 
             .github/shared/scripts/docker-subproject-image-pull.sh packages/docker/rector-php "$IMAGE_REGISTRY" "$IMAGE_REPOSITORY_PREFIX/rector-php" "$RECTOR_PHP_IMAGE_TAG"
@@ -168,15 +168,15 @@ jobs:
             done &
             PHP_IMAGE_PULL_PID=$!
 
-            # wp-alpine is normally pulled/tagged by the step above and needs no build.
+            # wordpress-alpine is normally pulled/tagged by the step above and needs no build.
             # when that pull did not happen (tag not published yet, or a transient
             # registry failure that outlived the retries there) nothing else would ever
             # create the image and scripts/test.sh below dies with "pull access denied
-            # for ionos-wordpress/wp-alpine" - so build it here instead.
-            WP_ALPINE_FILTER=()
-            if ! docker image inspect ionos-wordpress/wp-alpine:latest >/dev/null 2>&1; then
-              echo "::warning::no prebuilt ionos-wordpress/wp-alpine:latest available - building it locally"
-              WP_ALPINE_FILTER=(--filter '@ionos-wordpress/wp-alpine')
+            # for ionos-wordpress/wordpress-alpine" - so build it here instead.
+            WORDPRESS_ALPINE_FILTER=()
+            if ! docker image inspect ionos-wordpress/wordpress-alpine:latest >/dev/null 2>&1; then
+              echo "::warning::no prebuilt ionos-wordpress/wordpress-alpine:latest available - building it locally"
+              WORDPRESS_ALPINE_FILTER=(--filter '@ionos-wordpress/wordpress-alpine')
             fi
 
             # only build what the test suite actually consumes: the plugins/mu-plugins
@@ -184,7 +184,7 @@ jobs:
             # shells out to for PHP-version transpilation. ecs-php/potrans/dennis-i18n
             # are declared workspace deps too, but only used by scripts/lint.sh - building
             # them here would be wasted work.
-            pnpm run build --filter './packages/wp-plugin/*' --filter './packages/wp-mu-plugin/*' --filter '@ionos-wordpress/rector-php' "${WP_ALPINE_FILTER[@]}"
+            pnpm run build --filter './packages/wp-plugin/*' --filter './packages/wp-mu-plugin/*' --filter '@ionos-wordpress/rector-php' "${WORDPRESS_ALPINE_FILTER[@]}"
 
             wait "$PHP_IMAGE_PULL_PID" || true
 

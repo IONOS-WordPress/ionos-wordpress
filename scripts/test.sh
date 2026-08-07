@@ -130,7 +130,7 @@ function ionos.wordpress.test_stack_dir() {
 }
 
 if [[ "${USE[@]}" =~ all|php|e2e ]]; then
-  # MARK: run throwaway wp-alpine containers, always destroyed afterwards. shard 1 is
+  # MARK: run throwaway wordpress-alpine containers, always destroyed afterwards. shard 1 is
   # shared by both PHPUnit and Playwright below (own name/mnt dir so it never collides
   # with the persistent dev stack from scripts/start.sh - see
   # scripts/includes/_docker-mounts.sh for the shared mount-discovery logic)
@@ -150,62 +150,62 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # prefers the prebuilt image from the registry to avoid a local build on every PR
   # update, falling back to building it locally if the registry doesn't have it
   # (not published yet, or offline dev use). Both the accepted versions and the
-  # Alpine branch each is paired with come from packages/docker/wp-alpine/
-  # image-matrix.json, the same file .github/workflows/build-wp-alpine-image.yaml
+  # Alpine branch each is paired with come from packages/docker/wordpress-alpine/
+  # image-matrix.json, the same file .github/workflows/build-wordpress-alpine-image.yaml
   # builds its matrix from - so anything accepted here is something that actually
   # gets published. Source is written against PHP 8.3+ syntax (see AGENTS.md), so
   # this works in source mode as-is - no TEST_PRODUCTION=true requirement.
   if [[ -n "${PHP_VERSION_OVERRIDE:-}" ]]; then
-    readonly WP_ALPINE_IMAGE_MATRIX='packages/docker/wp-alpine/image-matrix.json'
-    readonly WP_ALPINE_ALPINE_VERSION="$(
-      jq -r --arg php "$PHP_VERSION_OVERRIDE" '.[] | select(.php == $php) | .alpine' "$WP_ALPINE_IMAGE_MATRIX"
+    readonly WORDPRESS_ALPINE_IMAGE_MATRIX='packages/docker/wordpress-alpine/image-matrix.json'
+    readonly WORDPRESS_ALPINE_ALPINE_VERSION="$(
+      jq -r --arg php "$PHP_VERSION_OVERRIDE" '.[] | select(.php == $php) | .alpine' "$WORDPRESS_ALPINE_IMAGE_MATRIX"
     )"
-    if [[ -z "$WP_ALPINE_ALPINE_VERSION" ]]; then
+    if [[ -z "$WORDPRESS_ALPINE_ALPINE_VERSION" ]]; then
       ionos.wordpress.log_error \
-        "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE is not one of the published wp-alpine image variants ($(jq -r '[.[].php] | join(", ")' "$WP_ALPINE_IMAGE_MATRIX"))"
+        "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE is not one of the published wordpress-alpine image variants ($(jq -r '[.[].php] | join(", ")' "$WORDPRESS_ALPINE_IMAGE_MATRIX"))"
       exit 1
     fi
 
-    readonly IMAGE_CONTENT_HASH="$(git rev-parse HEAD:packages/docker/wp-alpine)"
-    readonly WP_ALPINE_IMAGE="${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:${IMAGE_CONTENT_HASH}-php${PHP_VERSION_OVERRIDE}"
+    readonly IMAGE_CONTENT_HASH="$(git rev-parse HEAD:packages/docker/wordpress-alpine)"
+    readonly WORDPRESS_ALPINE_IMAGE="${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}:${IMAGE_CONTENT_HASH}-php${PHP_VERSION_OVERRIDE}"
 
     if [[ -n "${IMAGE_REGISTRY_USERNAME:-}" ]] && [[ -n "${IMAGE_REGISTRY_PASSWORD:-}" ]]; then
       echo "$IMAGE_REGISTRY_PASSWORD" | docker login "$IMAGE_REGISTRY" --username "$IMAGE_REGISTRY_USERNAME" --password-stdin
     fi
 
-    ionos.wordpress.log_info "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE set - pulling prebuilt test image $WP_ALPINE_IMAGE ..."
-    # retry: a push that touches both packages/docker/wp-alpine/** and CI can race
-    # the separate build-wp-alpine-image.yaml publish job that tags this same commit
+    ionos.wordpress.log_info "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE set - pulling prebuilt test image $WORDPRESS_ALPINE_IMAGE ..."
+    # retry: a push that touches both packages/docker/wordpress-alpine/** and CI can race
+    # the separate build-wordpress-alpine-image.yaml publish job that tags this same commit
     PULLED=no
     for i in $(seq 1 5); do
-      docker pull "$WP_ALPINE_IMAGE" && { PULLED=yes; break; }
+      docker pull "$WORDPRESS_ALPINE_IMAGE" && { PULLED=yes; break; }
       [[ $i -eq 5 ]] && break
       ionos.wordpress.log_warn "pull failed, image may still be publishing - retrying in 30s ($i/5) ..."
       sleep 30
     done
 
     if [[ "$PULLED" != 'yes' ]]; then
-      ionos.wordpress.log_warn "could not pull $WP_ALPINE_IMAGE from the registry - building it locally instead"
+      ionos.wordpress.log_warn "could not pull $WORDPRESS_ALPINE_IMAGE from the registry - building it locally instead"
       docker build \
         --build-arg ARG_PHP_VERSION="$PHP_VERSION_OVERRIDE" \
-        --build-arg ARG_ALPINE_VERSION="$WP_ALPINE_ALPINE_VERSION" \
+        --build-arg ARG_ALPINE_VERSION="$WORDPRESS_ALPINE_ALPINE_VERSION" \
         --build-arg HOST_UID="$(id -u)" \
         --build-arg HOST_GID="$(id -g)" \
-        -t "$WP_ALPINE_IMAGE" \
-        -f packages/docker/wp-alpine/Dockerfile \
+        -t "$WORDPRESS_ALPINE_IMAGE" \
+        -f packages/docker/wordpress-alpine/Dockerfile \
         .
     fi
   else
-    readonly WP_ALPINE_IMAGE='ionos-wordpress/wp-alpine:latest'
+    readonly WORDPRESS_ALPINE_IMAGE='ionos-wordpress/wordpress-alpine:latest'
 
     # 'pnpm test' is run standalone in places that never ran a build first (scripts/
     # pre-release.sh, a fresh clone) and this script itself never builds - without this
     # guard the throwaway container below dies with a bare "pull access denied for
-    # ionos-wordpress/wp-alpine" from the docker daemon. building just that one workspace
+    # ionos-wordpress/wordpress-alpine" from the docker daemon. building just that one workspace
     # package is a no-op whenever the image is already there.
-    if ! docker image inspect "$WP_ALPINE_IMAGE" &>/dev/null; then
-      ionos.wordpress.log_info "$WP_ALPINE_IMAGE not available locally - building it ..."
-      pnpm run build --filter '@ionos-wordpress/wp-alpine'
+    if ! docker image inspect "$WORDPRESS_ALPINE_IMAGE" &>/dev/null; then
+      ionos.wordpress.log_info "$WORDPRESS_ALPINE_IMAGE not available locally - building it ..."
+      pnpm run build --filter '@ionos-wordpress/wordpress-alpine'
     fi
   fi
 
@@ -264,7 +264,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
       --env HOST_UID="$(id -u)" \
       --env HOST_GID="$(id -g)" \
       "${VOLUME_ARGS[@]}" \
-      "$WP_ALPINE_IMAGE" >/dev/null
+      "$WORDPRESS_ALPINE_IMAGE" >/dev/null
   }
 
   # blocks until a shard's container is usable, then makes it safe to test against.
@@ -291,7 +291,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
         # it is the one spec asserting the console error list is empty, so it is the one
         # that notices. nothing in the suite wants core/plugin/theme auto-updates.
         #
-        # setting it here rather than in the image keeps packages/docker/wp-alpine's
+        # setting it here rather than in the image keeps packages/docker/wordpress-alpine's
         # content hash (and therefore the prebuilt-image cache) untouched. the window is
         # not raced: readiness above is checked over wp-cli, so the site has served no
         # HTTP request yet - no request means no wp-cron, which means the updater cannot
@@ -434,7 +434,7 @@ Syntax: 'pnpm run test [options] [additional-args]'
 
 Executes tests.
 
-If PHPUnit or e2e tests will be run, a throwaway wp-alpine test container is started
+If PHPUnit or e2e tests will be run, a throwaway wordpress-alpine test container is started
 and torn down again afterwards (pass or fail).
 
 Environment variables:

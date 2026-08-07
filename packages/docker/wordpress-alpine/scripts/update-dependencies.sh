@@ -5,7 +5,7 @@
 #
 # script is not intended to be executed directly. use `pnpm --filter exec ...` instead or call it as package script.
 #
-# run this script exclusively : `pnpm --filter '@ionos-wordpress/wp-alpine' run update-dependencies`
+# run this script exclusively : `pnpm --filter '@ionos-wordpress/wordpress-alpine' run update-dependencies`
 #
 
 # load bootstrap script

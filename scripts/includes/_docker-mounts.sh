@@ -1,6 +1,6 @@
 #
 # this file is sourced by scripts/start.sh and scripts/test.sh to build the
-# `docker run` --volume argument list for a wp-alpine stack.
+# `docker run` --volume argument list for a wordpress-alpine stack.
 #
 
 #
@@ -9,7 +9,7 @@
 # dist/ (see scripts/build.sh's --exclude=tests/) - bind-mount each source
 # phpunit/ dir directly at its equivalent path under the dist mount so
 # `pnpm test:php` still finds and runs them when testing against the
-# production build (mirrors the pre-wp-alpine .wp-env.override.json-era rsync
+# production build (mirrors the pre-wordpress-alpine .wp-env.override.json-era rsync
 # step in start.sh, but as a bind mount rather than a filesystem copy - dist/
 # is also bind-mounted wholesale in source mode, so writing actual test files
 # into it would leak stale copies into non-TEST_PRODUCTION runs. Docker still
@@ -132,7 +132,7 @@ export -f ionos.wordpress.build_wp_volume_args
 
 #
 # sanitizes WORDPRESS_VERSION (a release version or an "owner/repo#ref" git ref, see
-# packages/docker/wp-alpine/docker-entrypoint.sh) into a filesystem-safe directory
+# packages/docker/wordpress-alpine/docker-entrypoint.sh) into a filesystem-safe directory
 # name for the shared, version-keyed caches under ${MNT_HOME}.
 #
 function ionos.wordpress.wordpress_version_dir() {

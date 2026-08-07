@@ -3,7 +3,7 @@
 #
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
-# this script is used to stop the persistent wp-alpine development container
+# this script is used to stop the persistent wordpress-alpine development container
 #
 
 # bootstrap the environment

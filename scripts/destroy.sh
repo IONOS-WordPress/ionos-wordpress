@@ -3,7 +3,7 @@
 #
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
-# this script removes the persistent wp-alpine development container and its
+# this script removes the persistent wordpress-alpine development container and its
 # per-stack overlay data. the shared, version-keyed wordpress-core cache
 # (${MNT_HOME}/wordpress-core) survives, since other stacks may still be using it.
 #

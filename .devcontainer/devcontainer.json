@@ -54,10 +54,10 @@
       "label": "PHP xdebug port"
     },
     "8888": {
-      "label": "wp-alpine dev instance"
+      "label": "wordpress-alpine dev instance"
     },
     "8889": {
-      "label": "wp-alpine test instance"
+      "label": "wordpress-alpine test instance"
     },
     "6006": {
       "label": "storybook dev server"

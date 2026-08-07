@@ -1,5 +1,5 @@
 {
-  "name": "@ionos-wordpress/wp-alpine",
+  "name": "@ionos-wordpress/wordpress-alpine",
   "version": "0.1.0",
   "description": "Alpine-based WordPress dev/test image (Apache + mod_php + MariaDB + wp-cli + sshd + Xdebug + APCu) replacing @wordpress/env.",
   "private": true,

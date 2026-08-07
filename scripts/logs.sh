@@ -4,7 +4,7 @@
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
 # tails the dev container's logs (Apache/MariaDB/debug.log, all forwarded to stdout
-# by packages/docker/wp-alpine/docker-entrypoint.sh)
+# by packages/docker/wordpress-alpine/docker-entrypoint.sh)
 #
 # example usage: `pnpm logs`
 #

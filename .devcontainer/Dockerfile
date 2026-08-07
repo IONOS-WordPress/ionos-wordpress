@@ -33,7 +33,7 @@ RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhisto
 # expose PHP xdebug port 9003
 EXPOSE 9003
 
-# expose wp-alpine dev/test container ports
+# expose wordpress-alpine dev/test container ports
 EXPOSE 8888
 EXPOSE 8889
 

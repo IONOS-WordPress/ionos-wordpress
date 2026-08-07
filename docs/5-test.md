@@ -100,7 +100,7 @@ Instead, set `E2E_SHARDS` to run the suite across several **independent** test c
 E2E_SHARDS=3 pnpm run test --use e2e
 ```
 
-Each shard gets its own throwaway wp-alpine container - own name (`ionos-wordpress-test`,
+Each shard gets its own throwaway wordpress-alpine container - own name (`ionos-wordpress-test`,
 `ionos-wordpress-test-2`, ...), own published port (`TEST_HTTP_PORT`, +1, ...) and own
 `wp-content` overlay - and playwright splits the spec files across them with `--shard`. Because
 every shard browses its own WordPress, the existing `beforeAll` setup stays valid unchanged.

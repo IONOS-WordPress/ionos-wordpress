@@ -1,7 +1,7 @@
 # Migration Plan: wp-env → Custom Alpine Containers
 
 Status: implemented. Phases 1-7 landed on `feat/replace-wpenv` (see PR #910); wp-env is
-gone and `pnpm start`/`stop`/`test`/`destroy` run against the wp-alpine containers.
+gone and `pnpm start`/`stop`/`test`/`destroy` run against the wordpress-alpine containers.
 Phase 8 (opportunistic tooling cleanup) is not done and is tracked separately.
 
 This document is kept as the design record for that migration - it describes the intended
@@ -27,7 +27,7 @@ start`/`stop`/`test`/`destroy` interface developers and CI already use.
 | phpMyAdmin                    | Dropped                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | CLI convention                | Keep `pnpm start/stop/test/destroy` interface; rewrite `scripts/*.sh` internals to drive Docker instead of wp-env                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | Image distribution            | Published to a container registry, rebuilt/published by a path-filtered workflow on Dockerfile/entrypoint changes. Registry/repo is configurable, not hardcoded (see below)                                                                                                                                                                                                                                                                                                                                                                                   |
-| Registry configuration        | `IMAGE_REGISTRY` (e.g. `ghcr.io`) and `IMAGE_REPOSITORY` (e.g. `ionos-wordpress/wp-alpine-dev`) read from `.env`, defaulting to GHCR/`ionos-wordpress` if unset; registry auth credentials (e.g. `IMAGE_REGISTRY_USERNAME`/`IMAGE_REGISTRY_PASSWORD` or a token) read from `.secrets`, never committed, following the existing `scripts/includes/bootstrap.sh` `.env`/`.secrets` loading convention                                                                                                                                                           |
+| Registry configuration        | `IMAGE_REGISTRY` (e.g. `ghcr.io`) and `IMAGE_REPOSITORY` (e.g. `ionos-wordpress/wordpress-alpine-dev`) read from `.env`, defaulting to GHCR/`ionos-wordpress` if unset; registry auth credentials (e.g. `IMAGE_REGISTRY_USERNAME`/`IMAGE_REGISTRY_PASSWORD` or a token) read from `.secrets`, never committed, following the existing `scripts/includes/bootstrap.sh` `.env`/`.secrets` loading convention                                                                                                                                                    |
 | Bootstrapping                 | Baked into image/entrypoint (composer polyfills, xdebug/APCu config, wp-cli bootstrap, `.vscode/launch.json` generation) instead of a lifecycle script                                                                                                                                                                                                                                                                                                                                                                                                        |
 | Custom hook                   | Support a user-supplied `AFTER_START` script via `.env`, executed as `php` user, with `doas` available for root-level actions                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | Rollout                       | Hard cutover — remove wp-env once the new setup passes validation                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -97,7 +97,7 @@ start`/`stop`/`test`/`destroy` interface developers and CI already use.
 **Goal**: an ionos-wordpress-specific Alpine image building on
 `/opt/dev/wordpress-docker-image`'s Dockerfile, published to GHCR.
 
-- Fork the Dockerfile into this repo (e.g. `packages/docker/wp-alpine/Dockerfile`),
+- Fork the Dockerfile into this repo (e.g. `packages/docker/wordpress-alpine/Dockerfile`),
   default `ARG_PHP_VERSION` to PHP 8.4 (a deliberate bump from current
   `.wp-env.json`'s `8.3`). Keep the build-arg, but shrink the _published_ matrix from
   "every version" down to exactly two tags — `8.4` (default) and `8.3` (the project's
@@ -116,12 +116,12 @@ start`/`stop`/`test`/`destroy` interface developers and CI already use.
 - Add `AFTER_START` support exactly like the prototype: optional host script path from
   `.env`, bind-mounted, executed as `php` user via the built-in `doas` (which already
   `keepenv`s), giving root access on request without needing a separate hook mechanism.
-- Set up the image publish workflow (`.github/workflows/build-wp-alpine-image.yaml`):
+- Set up the image publish workflow (`.github/workflows/build-wordpress-alpine-image.yaml`):
   triggered on changes to the Dockerfile/entrypoint/related build context, tags by
   content hash, builds/pushes **both** `ARG_PHP_VERSION` variants (`8.4` default,
   `8.3` legacy, per `PHP_VERSION_OVERRIDE` in Phase 5) as `:<hash>-php8.4` and
   `:<hash>-php8.3` to `${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}` (defaulting to GHCR,
-  e.g. `ghcr.io/ionos-wordpress/wp-alpine-dev`, if the repo vars aren't overridden).
+  e.g. `ghcr.io/ionos-wordpress/wordpress-alpine-dev`, if the repo vars aren't overridden).
   Registry/repo come from repo-level Actions variables (mirroring the local `.env`
   keys); registry auth uses repo secrets (mirroring the local `.secrets` keys) — never
   hardcode `ghcr.io` or the repo path in the workflow YAML.

@@ -14,8 +14,8 @@ source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
 
 # WORDPRESS_VERSION is already exported by bootstrap.sh's ionos.wordpress.load_env (root .env)
 
-# get the PHP version from the wp-alpine image's own .env (its ARG_PHP_VERSION build arg)
-ionos.wordpress.load_env "$GIT_ROOT_PATH/packages/docker/wp-alpine"
+# get the PHP version from the wordpress-alpine image's own .env (its ARG_PHP_VERSION build arg)
+ionos.wordpress.load_env "$GIT_ROOT_PATH/packages/docker/wordpress-alpine"
 PHP_VERSION="$ARG_PHP_VERSION"
 
 cat << EOF | jq > './wp-playground-blueprint.json'
