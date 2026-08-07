@@ -136,3 +136,59 @@ Caveat on the numbers: run 31171188972 also paid a one-off 272s dev container re
 98s push) because that commit touched `.devcontainer` and the tool directories, so its 591s wall
 clock is not the steady state. The steady state should be ~10s + 303s. Confirm against the next run
 that does not touch those paths before quoting a total.
+
+## Outcome: measured in CI, and it did NOT deliver
+
+Run 31172912156 (this change) against run 31171188972 (previous, buildx path). Like for like -
+both had to fetch the image, neither rebuilt the dev container:
+
+| step                          | buildx path | pull path | delta |
+| ----------------------------- | ----------- | --------- | ----- |
+| lint job, `install`           | 61s         | **59s**   | -2s   |
+| build job, `install and pull` | 68s         | **69s**   | +1s   |
+| lint (job)                    | 111s        | **112s**  | +1s   |
+| build and test (job)          | 303s        | **310s**  | +7s   |
+
+**Net zero.** The predicted ~75s/run saving did not materialise.
+
+### Why the estimate was wrong
+
+The original profiling attributed a ~30s stall on buildx stage `#27` to "buildx pulling the image
+through cache resolution, which is slower than a plain pull". That was the wrong conclusion: the 30s
+was the **layer transfer itself**, which is identical whichever mechanism fetches it. The dev
+container image is **2.83GB uncompressed** (838MB base + ~2GB of our layers), and it is fetched once
+per job, twice per run. That cost is irreducible without making the image smaller.
+
+Decomposition, before and after - they come to the same total:
+
+| buildx path                      |      | pull path                   |          |
+| -------------------------------- | ---- | --------------------------- | -------- |
+| feature resolution x2 + manifest | ~7s  | `npm install -g` CLI + pull | 39s      |
+| layer fetch                      | ~30s | (included above)            |          |
+| second build (`build` then `up`) | ~3s  | -                           |          |
+| container start + dind init      | ~12s | `devcontainer up`           | 12.6s    |
+| **total**                        | ~52s | **total**                   | **~52s** |
+
+So this removed ~10s of genuine buildx overhead (double feature resolution + the redundant second
+build) and gave it straight back as `npm install -g @devcontainers/cli` on the host. The npm install
+and the pull are not separated in the log - that is a gap in this change's own instrumentation.
+
+### What is still true
+
+- Container reuse across steps works in CI (only the first step starts a container), so the
+  build job still pulls wordpress-alpine in one step and consumes it two steps later.
+- Both jobs are green; nothing regressed functionally.
+- The mechanism is now explicit - a pull is a pull - rather than a third-party action performing a
+  hidden buildx build.
+
+### Where the time actually is
+
+The 2.83GB image, fetched twice per run. Candidate: `.devcontainer/Dockerfile` runs
+`pnpx playwright install-deps` with no browser argument, which installs the system dependencies for
+firefox and webkit as well, though only chromium is ever used. `install-deps chromium` is strictly
+smaller - unquantified on bookworm, and deliberately not promised as a number after this bean's
+estimate went wrong once already. Measure it in CI before believing it.
+
+Cheaper, smaller follow-up: the `npm install -g` is paid per job and could be cached or avoided
+
+- but instrument the pull/npm split first rather than guessing again.

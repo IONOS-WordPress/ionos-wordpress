@@ -69,11 +69,16 @@ runs:
         # the CLI is not on the runner: 'pnpm install' only ever runs *inside* the container,
         # so there is no host node_modules to 'pnpm exec' from. the version comes from
         # package.json so the host CLI and the workspace's own dependency cannot drift.
+        # the two setup costs below are timed separately on purpose. they used to sit in one
+        # opaque block, which is how an earlier round of tuning ended up optimising the wrong
+        # one - know which is which before touching either.
         if ! command -v devcontainer >/dev/null 2>&1; then
           DEVCONTAINER_CLI_VERSION="$(jq -r '.devDependencies["@devcontainers/cli"]' package.json)"
           echo "::group::install @devcontainers/cli@${DEVCONTAINER_CLI_VERSION}"
+          SECONDS=0
           npm install --silent --global "@devcontainers/cli@${DEVCONTAINER_CLI_VERSION}"
           echo "::endgroup::"
+          echo "timing: devcontainer CLI install took ${SECONDS}s"
         fi
 
         # generated once per job; later steps reuse it and the container it started
@@ -86,11 +91,15 @@ runs:
           # pulled explicitly rather than letting 'docker run' do it implicitly, so that a
           # missing image fails here with an obvious message instead of surfacing as a
           # confusing container start error
+          SECONDS=0
           if ! docker pull --quiet "$IMAGE_NAME"; then
             echo "::error::could not pull '$IMAGE_NAME'. the 'devcontainer' job publishes it and this job declares 'needs: devcontainer', so this usually means that job failed or was skipped."
             exit 1
           fi
           echo "::endgroup::"
+          # the dominant fixed cost of a job, and proportional to the image size - which is
+          # why shrinking the image is tracked separately (.beans uizd)
+          echo "timing: image pull took ${SECONDS}s ($(docker image inspect "$IMAGE_NAME" --format '{{.Size}}' | numfmt --to=iec) on disk)"
         fi
 
         # newline-separated KEY=VALUE -> repeated --remote-env. blank lines are skipped so a

@@ -84,7 +84,19 @@ RUN pnpm env use --global $PNPM_NODEJS_VERSION \
   && npm config set prefix "$PNPM_HOME" --location=global \
   && mkdir -p "$HOME/.claude"
 RUN pnpm config set store-dir home/$USERNAME/.pnpm-store
-RUN bash -c "pnpx playwright install-deps"
+
+# 'chromium' is not a decoration: without it playwright installs the system dependencies for
+# firefox and webkit too (libavcodec, libavif, libgav1, libyuv and friends), and nothing in
+# this repository uses those browsers - playwright.config.js and playwright-ct.config.js
+# both declare a single 'chromium' project, and scripts/test.sh installs only chromium.
+# this image is pulled once per CI job, twice per run, so its size is the largest fixed cost
+# in the pipeline (see .beans uizd).
+# note this installs the *system dependencies* only, not the browser. baking the browser in
+# too (see .beans xla3) is deliberately NOT done here: it would add ~300MB to an image that
+# is pulled twice per run, and CI would not even use it, because scripts/test.sh points
+# PLAYWRIGHT_BROWSERS_PATH at a workspace-relative directory when CI=true so that the host
+# side actions/cache can carry it between runs - a restore that already costs only ~7s.
+RUN bash -c "pnpx playwright install-deps chromium"
 
 # ---------------------------------------------------------------------------------------
 # native CLI tools (ecs-php, rector-php, potrans, dennis-i18n)
@@ -147,6 +159,10 @@ RUN <<EOF
   "$ECS_HOME/vendor/symplify/easy-coding-standard/vendor/squizlabs/php_codesniffer/bin/phpcs" \
     --config-set installed_paths \
     "$ECS_HOME/vendor/phpcsstandards/phpcsextra,$ECS_HOME/vendor/phpcsstandards/phpcsutils,$ECS_HOME/vendor/wp-coding-standards/wpcs"
+
+  # each COMPOSER_HOME keeps a download cache that has no value at runtime (~27MB across the
+  # three). small next to the image as a whole, but this image is pulled twice per CI run
+  rm -rf "$IONOS_NATIVE_TOOLS_PREFIX"/*/cache
 EOF
 
 # dennis is a python package. pinned exactly, matching
