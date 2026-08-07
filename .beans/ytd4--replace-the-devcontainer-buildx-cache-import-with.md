@@ -1,11 +1,11 @@
 ---
 # ytd4
 title: Replace the devcontainer buildx cache-import with a prebuilt-image pull (~75s/run)
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-08-07T08:56:08Z
-updated_at: 2026-08-07T10:57:54Z
+updated_at: 2026-08-07T11:56:32Z
 parent: 1qc9
 ---
 
@@ -192,3 +192,33 @@ estimate went wrong once already. Measure it in CI before believing it.
 Cheaper, smaller follow-up: the `npm install -g` is paid per job and could be cached or avoided
 
 - but instrument the pull/npm split first rather than guessing again.
+
+## Verdict: kept, but it did not pay for itself
+
+[[uizd]] settled the open question by measuring the two setup costs separately (instrumentation this
+bean should have had from the start):
+
+```
+image pull                 31-32s   <- the real cost, proportional to image size
+devcontainer CLI install   1-12s    <- introduced by THIS bean
+devcontainer up            ~12s     <- unchanged either way
+```
+
+So the pull path costs ~44-55s against the buildx path's ~52s. Still a wash. What this change
+removed (double feature resolution and a redundant second build, ~10s) it gave back as
+`npm install -g @devcontainers/cli`, which devcontainers/ci did not need because it bundles the CLI.
+
+**Kept rather than reverted**, on two grounds that are about clarity, not speed:
+
+- the mechanism is now honest - a pull is a pull, rather than a third-party action performing a
+  hidden buildx build whose cost is easy to misattribute (which is exactly what happened here)
+- it is what made the pull cost measurable at all, and therefore what made [[uizd]] possible
+
+If the `npm install -g` is eliminated the balance tips to a genuine ~9s/job win. Until then this is
+neutral, and it should not be cited as a performance improvement.
+
+### Lesson
+
+The local benchmark that justified this bean (`devcontainer up` in 2.1s) measured an image that was
+**already present locally**, i.e. everything except the bottleneck. A local measurement of a
+CI-network-bound cost is worthless. Measure the thing that actually varies.

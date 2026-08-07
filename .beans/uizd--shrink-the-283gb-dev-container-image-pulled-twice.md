@@ -1,11 +1,11 @@
 ---
 # uizd
 title: Shrink the 2.83GB dev container image (pulled twice per CI run)
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-08-07T11:22:03Z
-updated_at: 2026-08-07T11:22:03Z
+updated_at: 2026-08-07T11:56:08Z
 parent: 1qc9
 ---
 
@@ -40,13 +40,13 @@ is separately fixable (cache it), and without the split we would be guessing aga
       each on its own
 - [x] `pnpx playwright install-deps` -> `pnpx playwright install-deps chromium`
 - [x] Also drop the three composer download caches (~27MB) - no runtime value
-- [ ] Measure in CI: per-job pull time before/after
+- [x] Measure in CI: per-job pull time before/after
 - [x] ~~Fold in [[xla3]]~~ - **rejected, it works against this bean**. Baking the browser would add
       ~300MB to an image pulled twice per run, and CI would not even use it: `scripts/test.sh` points
       `PLAYWRIGHT_BROWSERS_PATH` at a workspace-relative directory when `CI=true` so the host-side
       `actions/cache` can carry it between runs, and that restore already costs only ~7s. Noted in
       the Dockerfile so nobody "fixes" it later.
-- [ ] Decide [[ytd4]]'s fate on the result
+- [x] Decide [[ytd4]]'s fate on the result
 
 ## Measured locally (deterministic - image size does not need CI)
 
@@ -74,3 +74,37 @@ not break it.
 - the three composer tool installs added by [[e6mc]] (~100-200MB) - the cost of the native tools,
   and worth knowing precisely
 - apt lists / caches not cleaned in the `gh`/`entr` layer
+
+## Measured in CI (run 31175438431)
+
+The instrumentation added with this change now separates the two setup costs:
+
+```
+timing: devcontainer CLI install took 1s      (lint)   / 12s (build and test)
+timing: image pull took 31s (2.3G on disk)    (lint)   / 32s (build and test)
+```
+
+The image is **2.3G in CI**, down from ~2.83G - the predicted ~2.44G, slightly beaten.
+
+| job            | before (31172912156) | after (31175438431) |
+| -------------- | -------------------- | ------------------- |
+| lint           | 112s                 | **93s**             |
+| build and test | 310s                 | **283s**            |
+| lint `install` | 59s                  | **53s**             |
+
+### How much of that is really this change
+
+Attributable: the pull, ~39s (pull+npm, unseparated) -> ~32s, so **~6s per job, ~12s per run**.
+
+The rest of the job-level delta is run-to-run variance, not this change. Across the three runs
+since e6mc: `build project` 70s / 73s / 66s, `test project` 138s / 129s / 123s - a +-5-6% spread
+that swamps a 6s effect. Saying "lint got 19s faster" would be reading noise as signal.
+
+The real, durable win is the 390MB every developer no longer pulls.
+
+### Newly visible: the CLI install is worth removing
+
+`npm install -g @devcontainers/cli` measured **1s in one job and 12s in another** in the same run.
+That variance is now the largest uncontrolled cost in the setup path, and it exists only because
+[[ytd4]] moved off devcontainers/ci. Worth eliminating - but with two samples one second apart in
+one job and twelve in another, gather more data before picking a fix.
