@@ -1,15 +1,10 @@
 <?php
 
-namespace ionos\essentials\jetpack_flow;
+namespace ionos\ionos_core\jetpack_flow;
 
-use function ionos\essentials\_is_plugin_active;
+use function ionos\ionos_core\_is_plugin_active;
 
 defined('ABSPATH') || exit();
-
-// Skip loading if ionos-core's jetpack-flow has already loaded
-if (defined('IONOS_JETPACK_FLOW_LOADED')) {
-  return;
-}
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
@@ -94,7 +89,7 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
     exit;
   }
 
-  $menu_page_title = __('Assistant', 'ionos-essentials');
+  $menu_page_title = __('Assistant', 'ionos-core');
   \add_menu_page(
     page_title: $menu_page_title,
     menu_title: $menu_page_title,
@@ -232,11 +227,11 @@ function _render_confirm(): void
 {
   $coupon                      = \esc_attr($_GET['coupon']);
   $hidden_page_slug_attr       = \esc_attr(HIDDEN_PAGE_SLUG);
-  $title                       = \esc_html__('Installing Jetpack Backup', 'ionos-essentials');
+  $title                       = \esc_html__('Installing Jetpack Backup', 'ionos-core');
   $jetpack_logo_src_attr       = \esc_attr(\plugins_url('assets/jetpack-logo.svg', __FILE__));
-  $jetpack_install_message     = \esc_html__('We are going to install Jetpack Backup now.', 'ionos-essentials');
-  $jetpack_install_button_text = \esc_html__('Ok', 'ionos-essentials');
-  $jetpack_no_thanks_text      = \esc_html__('No thanks', 'ionos-essentials');
+  $jetpack_install_message     = \esc_html__('We are going to install Jetpack Backup now.', 'ionos-core');
+  $jetpack_install_button_text = \esc_html__('Ok', 'ionos-core');
+  $jetpack_no_thanks_text      = \esc_html__('No thanks', 'ionos-core');
   $admin_url_attr              = \esc_attr(\admin_url());
   printf(<<<EOF
   <div class="wrapper">
@@ -261,11 +256,11 @@ function _render_confirm(): void
 
 function _render_install(): void
 {
-  $title                   = \esc_html__('Installing Jetpack Backup', 'ionos-essentials');
+  $title                   = \esc_html__('Installing Jetpack Backup', 'ionos-core');
   $jetpack_logo_src_attr   = \esc_attr(\plugins_url('assets/jetpack-logo.svg', __FILE__));
   $jetpack_install_message = \esc_html__(
     'Please wait a moment while we are installing Jetpack Backup for you.',
-    'ionos-essentials'
+    'ionos-core'
   );
   printf(<<<EOF
   <div class="wrapper">
@@ -277,3 +272,5 @@ function _render_install(): void
   </div>
   EOF);
 }
+
+define('IONOS_JETPACK_FLOW_LOADED', true);
