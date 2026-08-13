@@ -1,10 +1,10 @@
 <?php
 
-namespace ionos\essentials\login;
+namespace ionos\ionos_core\login;
 
 use ionos\essentials\Tenant;
-use const ionos\essentials\PLUGIN_DIR;
-use const ionos\essentials\PLUGIN_FILE;
+use const ionos\ionos_core\PLUGIN_DIR;
+use const ionos\ionos_core\PLUGIN_FILE;
 
 defined('ABSPATH') || exit();
 
@@ -21,8 +21,14 @@ if (defined('IONOS_LOGIN_LOADED')) {
   \add_action(
     'login_enqueue_scripts',
     function () {
-      $assets  = require_once PLUGIN_DIR . '/ionos-essentials/build/login/index.asset.php';
-      $src_url = \plugins_url('ionos-essentials/build/login/', PLUGIN_FILE);
+      $assets_file = PLUGIN_DIR . '/ionos-core/build/login/index.asset.php';
+
+      if (! file_exists($assets_file)) {
+        return;
+      }
+
+      $assets  = require_once $assets_file;
+      $src_url = \plugins_url('ionos-core/build/login/', PLUGIN_FILE);
 
       \wp_enqueue_style('ionos-login-redesign', $src_url . 'index.css', [], $assets['version']);
 
@@ -50,6 +56,11 @@ if (defined('IONOS_LOGIN_LOADED')) {
         return;
       }
 
+      $essentials_file = WP_PLUGIN_DIR . '/ionos-essentials/ionos-essentials.php';
+      if (! file_exists($essentials_file)) {
+        return;
+      }
+
       printf(
         <<<EOF
         <section class="header">
@@ -62,10 +73,12 @@ if (defined('IONOS_LOGIN_LOADED')) {
 EOF
         ,
         \esc_attr(
-          \plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_slug() . '.svg', PLUGIN_FILE)
+          \plugins_url('ionos-essentials/ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_slug() . '.svg', $essentials_file)
         ),
         \esc_attr(Tenant::get_label())
       );
     }
   );
 });
+
+define('IONOS_LOGIN_LOADED', true);

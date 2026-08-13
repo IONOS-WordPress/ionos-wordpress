@@ -14,6 +14,9 @@
 
 namespace ionos\ionos_core;
 
+const PLUGIN_FILE = __FILE__;
+const PLUGIN_DIR  = __DIR__;
+
 defined('ABSPATH') || exit();
 
 /**
@@ -42,3 +45,4 @@ require_once __DIR__ . '/ionos-core/update/index.php';
 require_once __DIR__ . '/ionos-core/marketplace/index.php';
 require_once __DIR__ . '/ionos-core/loop/index.php';
 require_once __DIR__ . '/ionos-core/jetpack-flow/index.php';
+require_once __DIR__ . '/ionos-core/login/index.php';
