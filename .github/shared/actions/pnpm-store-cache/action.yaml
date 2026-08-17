@@ -3,7 +3,7 @@ description: |
   restore/save the pnpm content-addressable store across workflow runs so
   'pnpm install --frozen-lockfile' does not re-download every package.
 
-  ./.npmrc sets 'store-dir=.pnpm-store', so the store lives inside the
+  pnpm-workspace.yaml sets 'storeDir: .pnpm-store', so the store lives inside the
   workspace - which devcontainers/ci bind-mounts into the dev container.
   that means this plain host-side cache step is enough, no dev container
   changes needed: whatever the container writes to the store shows up here

@@ -2,10 +2,10 @@
 # 3pr5
 title: Phase 8 — Other cleanup
 status: todo
-type: task
+type: epic
 priority: normal
 created_at: 2026-08-03T10:59:47Z
-updated_at: 2026-08-03T11:07:20Z
+updated_at: 2026-08-17T10:25:02Z
 parent: dav1
 blocked_by:
   - zr06
@@ -16,16 +16,12 @@ scripts/*.sh and the pnpm toolchain.
 
 ## Tasks
 
-- [ ] Where rewriting scripts/*.sh (Phases 2-4) makes a bash block noticeably shorter or more
-      readable by dropping in inline Node.js instead — especially JSON reading/writing, which
-      bash/jq makes awkward — use `node -e '...'` (or a short co-located .mjs helper) rather than
-      continuing to shell out to jq. Not a wholesale rewrite of every script into Node: apply
-      this opportunistically, only where it actually shortens or clarifies the logic already
-      being touched by this migration
-- [ ] Migrate to the latest pnpm release; while doing so, evaluate replacing @changesets/cli
-      (currently invoked via scripts/changeset.sh, see package.json:15,67) with pnpm's own
-      built-in changeset/publish workflow, to drop an external dependency if pnpm's native
-      support covers the repo's current bump-type/package-name/multi-package needs
+Split into child beans (scope was fuzzy enough to warrant separating the jq/Node cleanup, the pnpm
+major-version upgrade, and the changesets research into independently-completable units):
+
+- jq → inline Node.js opportunistic cleanup (child bean)
+- pnpm major-version upgrade (child bean)
+- Evaluate replacing @changesets/cli with pnpm's native workflow (child bean)
 
 ## Exit criteria
 

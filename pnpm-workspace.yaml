@@ -1,4 +1,27 @@
 # see https://pnpm.io/pnpm-workspace_yaml
+# pnpm 11 only reads auth/registry settings from .npmrc - everything else (formerly kebab-case
+# .npmrc keys) lives here as camelCase. see https://pnpm.io/migration
+saveExact: true
+# to enable pre/post-[mypackage-script] hooks
+enablePrePostScripts: true
+# >=20.6.0 supports --env option (we prefer > 20.17.0)
+useNodeVersion: 24.18.0
+# disable PNPM update notification
+updateNotifier: false
+preferWorkspacePackages: true
+# disable echoing npm script commands
+loglevel: warn
+# dont use global pnpm-store to prevent bloating your hard disk
+# bonus : the local store is reused by the gitlog-per-package docker image
+storeDir: .pnpm-store
+# always use bash shell
+scriptShell: /bin/bash
+# if this is enabled, locally available packages are linked to node_modules instead of being downloaded from the registry.
+linkWorkspacePackages: true
+# dictates how pnpm add decides whether or not to include the workspace: prefix and whether or not the version will be specified.
+# Always include the workspace: prefix but not the specific version.
+saveWorkspaceProtocol: rolling
+
 packages:
   - '.'
   - 'packages/npm/*'
@@ -8,6 +31,16 @@ packages:
   - 'packages/wp-mu-plugin/*'
   - 'packages/wp-theme/*'
   - 'packages/generic/*'
+
+allowBuilds:
+  '@parcel/watcher': true
+  '@playwright/browser-chromium': true
+  '@swc/core': true
+  core-js: true
+  core-js-pure: true
+  esbuild: true
+  fs-ext-extra-prebuilt: true
+  unrs-resolver: true
 
 # catalogs can be used to maintain dependencies for a group of packages at a single place
 # see https://pnpm.io/catalogs
