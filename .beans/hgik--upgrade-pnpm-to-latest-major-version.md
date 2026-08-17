@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-08-17T10:25:11Z
-updated_at: 2026-08-17T11:06:05Z
+updated_at: 2026-08-17T11:21:43Z
 parent: 3pr5
 ---
 
@@ -134,3 +134,35 @@ Without this, a native install running the old pnpm 9.x against the migrated `pn
 install scripts (eg. Playwright's browser download) will silently run unrestricted again instead of
 going through the intended allowlist - not a hard failure, but a behavior drift from what CI and the
 dev container now do.
+
+## CI run #1 failed - fixed
+
+First real CI run (https://github.com/IONOS-WordPress/ionos-wordpress/actions/runs/32023821365)
+failed at the `devcontainer / build` job, before `lint`/`build and test` even started: the sandbox
+verification above ran everything through `corepack`/a manual pnpm 11 binary directly, which never
+exercised `.devcontainer/Dockerfile`'s own `RUN pnpm env use --global ... && npm config set prefix
+...` step - that gap is exactly what CI caught.
+
+Root cause: since pnpm 11, `pnpm env use --global <version>` (deprecated in favor of `pnpm runtime
+set node <version> -g`, same underlying behavior) fetches the `node` npm package, which - unlike the
+official Node.js distribution pnpm 9's version of this command used to fetch - contains only the
+`node` binary itself, no bundled `npm`/`npx`. Confirmed via a clean, isolated `PNPM_HOME` test:
+`pnpm env use --global 24.18.0` populates `bin/node` only. The base image
+(`mcr.microsoft.com/devcontainers/php:8.4-bookworm`) has no system Node/npm either (confirmed via
+`docker run ... which node npm` -> not found), so this pnpm-managed Node was the only source of npm
+in the image - and its absence broke the very next line, `npm config set prefix ...`
+(`npm: command not found`, exit 127).
+
+Fix: added `&& pnpm add --global npm` between `pnpm env use` and `npm config set prefix` in
+`.devcontainer/Dockerfile`, which installs the `npm` npm package as its own pnpm-managed global
+package, producing working `bin/npm`/`bin/npx` shims.
+
+Verified with a full local `docker build -f .devcontainer/Dockerfile .` (all 16 stages, ~real
+CI path minus devcontainer features): `which pnpm npm npx node` all resolve, `npm --version` ->
+12.0.2, `npm config get prefix` -> `$PNPM_HOME`, confirming the exact step that failed in CI now
+succeeds.
+
+Also confirmed in passing (via an isolated test, then cleaned up from this host's own global pnpm
+config after accidentally writing to it): `pnpm config set store-dir <path>` (line below, kebab-case
+CLI arg) still works correctly under pnpm 11 and persists as `storeDir` in the global YAML config -
+the CLI-flag naming didn't change, only file-based config (`.npmrc`) parsing did. No fix needed there.

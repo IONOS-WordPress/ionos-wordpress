@@ -80,7 +80,12 @@ ENV PATH $PNPM_HOME:$PNPM_HOME/bin:$PATH
 # pnpm-managed node only symlinks node/npm/pnpm themselves into $PNPM_HOME, not
 # npm's own bin dir, so global npm installs (e.g. the claude-code devcontainer
 # feature) land outside PATH unless npm's global prefix is pointed at $PNPM_HOME
+#
+# since pnpm 11, `pnpm env use` only installs the `node` package (just the binary, no
+# bundled npm - unlike the official Node.js distribution pnpm 9 used to fetch), so npm
+# is installed explicitly as its own global package
 RUN pnpm env use --global $PNPM_NODEJS_VERSION \
+  && pnpm add --global npm \
   && npm config set prefix "$PNPM_HOME" --location=global \
   && mkdir -p "$HOME/.claude"
 RUN pnpm config set store-dir home/$USERNAME/.pnpm-store
