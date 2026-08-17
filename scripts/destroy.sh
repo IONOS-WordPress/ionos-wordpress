@@ -16,3 +16,7 @@ if docker ps -a --filter "name=${CONTAINER_NAME}" --format '{{.Names}}' | grep -
 fi
 
 rm -rf "${MNT_HOME:?MNT_HOME must be set}/dev"
+
+# clean up composer cache
+COMPOSER_CACHE_DIR="${XDG_CACHE_HOME:-${HOME:?}/.cache}/composer"
+rm -rf -- "$COMPOSER_CACHE_DIR"
