@@ -1,11 +1,11 @@
 ---
 # xjvk
 title: Attack the 250s of real work on the CI critical path (build 120s + test 130s)
-status: in-progress
+status: scrapped
 type: task
 priority: high
 created_at: 2026-08-07T08:56:22Z
-updated_at: 2026-08-17T08:51:37Z
+updated_at: 2026-08-17T08:58:31Z
 parent: 1qc9
 blocked_by:
   - ytd4
@@ -145,3 +145,16 @@ confirm the actual time saved on the ~10s stretch-extra install segment).
 
 Matches the expected payoff - the docker-in-docker round trip for the config parse is gone,
 leaving only the real network time (curl-ing extendify/extendable) and the unzip.
+
+## Reasons for Scrapping
+
+Of the two engineering levers still open after the e2e-job-matrix rejection, neither is wanted:
+
+- Batching rector's 4 invocations into one requires restructuring build.sh's per-plugin loop
+  (separating prebuild/i18n/sync from a single end-of-loop rector pass) - declined.
+- Pricing larger runners - declined, no cost decision wanted right now.
+
+The stretch-extra native-php fix that came out of this bean's investigation already landed and
+is measured (see above: build project 67s -> 59s, commits 27d8a248/05119eaf on
+feat/replace-wpenv) - that win stands independent of this bean's status. Scrapping this bean
+just means no further engineering time goes into the CI critical path under this ticket for now.
