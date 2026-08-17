@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-08-07T08:56:22Z
-updated_at: 2026-08-17T08:40:38Z
+updated_at: 2026-08-17T08:51:37Z
 parent: 1qc9
 blocked_by:
   - ytd4
@@ -135,3 +135,13 @@ changes in this repo don't carry one (see `ytd4`, `e6mc`, `uizd` for precedent).
 
 Not yet measured in CI (would need the native branch, i.e. a run inside the devcontainer, to
 confirm the actual time saved on the ~10s stretch-extra install segment).
+
+## Confirmed in CI: run 32011855968 (2026-08-17, first run with the native-php fix)
+
+| step                            | before (31176419839) | after (32011855968) | delta |
+| ------------------------------- | -------------------- | ------------------- | ----- |
+| `build project`                 | 67s                  | **59s**             | -8s   |
+| stretch-extra `--install` alone | ~10s                 | **~2.8s**           | -7.2s |
+
+Matches the expected payoff - the docker-in-docker round trip for the config parse is gone,
+leaving only the real network time (curl-ing extendify/extendable) and the unzip.
