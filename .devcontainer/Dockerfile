@@ -96,12 +96,15 @@ RUN pnpm config set store-dir home/$USERNAME/.pnpm-store
 # both declare a single 'chromium' project, and scripts/test.sh installs only chromium.
 # this image is pulled once per CI job, twice per run, so its size is the largest fixed cost
 # in the pipeline (see .beans uizd).
-# note this installs the *system dependencies* only, not the browser. baking the browser in
-# too (see .beans xla3) is deliberately NOT done here: it would add ~300MB to an image that
-# is pulled twice per run, and CI would not even use it, because scripts/test.sh points
-# PLAYWRIGHT_BROWSERS_PATH at a workspace-relative directory when CI=true so that the host
-# side actions/cache can carry it between runs - a restore that already costs only ~7s.
-RUN bash -c "pnpx playwright install-deps chromium"
+# the browser binary itself is baked in below too (see .beans xla3): this is purely a
+# developer-onboarding win - a fresh devcontainer needs no ~275MB (compressed) chromium +
+# chromium-headless-shell download before its first e2e run. CI does not benefit and keeps
+# its own path: scripts/test.sh still points PLAYWRIGHT_BROWSERS_PATH at a
+# workspace-relative directory when CI=true, restored from actions/cache (already only
+# ~7s), so a pnpm-lock.yaml playwright bump landing before this image is rebuilt cannot
+# silently strand CI without a cache.
+RUN bash -c "pnpx playwright install-deps chromium" \
+  && bash -c "pnpx playwright install chromium"
 
 # ---------------------------------------------------------------------------------------
 # native CLI tools (ecs-php, rector-php, potrans, dennis-i18n)
