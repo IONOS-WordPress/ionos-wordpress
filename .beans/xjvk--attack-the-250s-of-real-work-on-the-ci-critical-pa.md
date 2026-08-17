@@ -8,7 +8,7 @@ created_at: 2026-08-07T08:56:22Z
 updated_at: 2026-08-17T08:40:38Z
 parent: 1qc9
 blocked_by:
-    - ytd4
+  - ytd4
 ---
 
 Everything else in this epic fights over ~100s of overhead. This is where **65% of the critical
@@ -47,19 +47,19 @@ cost decision.
 
 Numbers in this bean's header are stale (predate other optimizations). Fresh breakdown:
 
-| step | time | notes |
-| --- | --- | --- |
-| `pnpm build` | **67s** (not 120s) | see below |
-| `pnpm test` | **128s** (matches prior ~130s estimate) | ~35s container startup/wait + ~92s e2e wall clock |
+| step         | time                                    | notes                                             |
+| ------------ | --------------------------------------- | ------------------------------------------------- |
+| `pnpm build` | **67s** (not 120s)                      | see below                                         |
+| `pnpm test`  | **128s** (matches prior ~130s estimate) | ~35s container startup/wait + ~92s e2e wall clock |
 
 `pnpm build` breakdown:
 
-| segment | time | share |
-| --- | --- | --- |
-| rector (4 separate CLI invocations, one per plugin) | **~33s** | 49% |
-| i18n (POT/PO/MO/JSON/PHP generation, all plugins) | ~14s | 21% |
-| stretch-extra plugin install (extendify etc.) | ~10s | 15%, possibly network-bound |
-| webpack/wp-scripts bundling | ~3s | 4% |
+| segment                                             | time     | share                       |
+| --------------------------------------------------- | -------- | --------------------------- |
+| rector (4 separate CLI invocations, one per plugin) | **~33s** | 49%                         |
+| i18n (POT/PO/MO/JSON/PHP generation, all plugins)   | ~14s     | 21%                         |
+| stretch-extra plugin install (extendify etc.)       | ~10s     | 15%, possibly network-bound |
+| webpack/wp-scripts bundling                         | ~3s      | 4%                          |
 
 e2e shards are already fairly balanced: shard1 10 tests/1.5m, shard2 7 tests/1.3m, shard3 10
 tests/1.6m (slowest, sets the wall clock).
