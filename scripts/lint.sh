@@ -218,6 +218,7 @@ function ionos.wordpress.dennis() {
         --from="en"
         --to="$TARGET_LANGUAGE"
         --no-cache
+        --translator=packages/docker/potrans/class-xmlsafedeepltranslator.php
         $PO_FILE
         $(dirname $PO_FILE)
       )

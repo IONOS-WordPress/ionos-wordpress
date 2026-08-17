@@ -1,11 +1,11 @@
 ---
 # 5vrh
 title: "pnpm lint-fix:i18n fails: deepl rejects input with 'Tag handling parsing failed'"
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-08-07T10:37:00Z
-updated_at: 2026-08-07T10:37:00Z
+updated_at: 2026-08-17T09:05:41Z
 ---
 
 `pnpm lint-fix:i18n` (deepl auto-translation via potrans) aborts on the first `.po` file it
@@ -60,3 +60,28 @@ The obvious hypotheses do not hold:
   developer-facing tool break, not a pipeline break.
 - 25 `.po` files are in scope; all are tracked, so `git checkout -- $(git ls-files '*/languages/*.po')`
   restores the tree after an aborted run.
+
+## Summary of Changes
+
+Root cause found: potrans's stock `DeepLTranslator::getTranslation()` (`packages/docker/potrans/vendor/om/potrans/src/translator/DeepLTranslator.php:28`)
+escapes text with `htmlentities($text, ENT_SUBSTITUTE, 'UTF-8')` before sending it to DeepL with
+`tag_handling: xml`. `htmlentities()` emits named HTML entities for typographic characters - e.g.
+U+2026 (…) becomes `&hellip;`. `&hellip;` is not one of XML's five predefined entities
+(`&amp; &lt; &gt; &apos; &quot;`), so DeepL's XML parser rejects the request with "Tag handling
+parsing failed ... undefined entity", exactly matching the reported symptom. The failing string was
+`stretch-extra-es_ES.po` line 81: `"Validating against blocked plugins…"`.
+
+`vendor/` is composer-installed and gitignored, so the vendor bug can't be patched directly. Fix:
+added `packages/docker/potrans/xml-safe-deepl-translator.php`, a custom translator (using potrans's
+existing `--translator=<path>` extension point, the same mechanism as the already-present
+`DeepLTranslatorEscaped.php` example) that escapes only the characters actually reserved in XML via
+`htmlspecialchars($text, ENT_XML1 | ENT_SUBSTITUTE, 'UTF-8')` instead of the full HTML entity table.
+Wired it into `scripts/lint.sh`'s `potrans_args` for `lint-fix:i18n`.
+
+Verified via `docker run ionos-wordpress/potrans deepl --translator=packages/docker/potrans/xml-safe-deepl-translator.php ...`
+against the previously-failing file: all 25/25 entries translate successfully (was aborting at 5-8/25),
+and the ellipsis round-trips correctly (`"Validating against blocked plugins…"` -> `"Comprobación de
+los complementos bloqueados…"`).
+
+No changeset: fix is confined to a dev-only tooling script and a new custom-translator file, not a
+package's public behavior.
