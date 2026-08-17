@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-08-17T10:25:11Z
-updated_at: 2026-08-17T11:21:43Z
+updated_at: 2026-08-17T11:36:17Z
 parent: 3pr5
 ---
 
@@ -166,3 +166,14 @@ Also confirmed in passing (via an isolated test, then cleaned up from this host'
 config after accidentally writing to it): `pnpm config set store-dir <path>` (line below, kebab-case
 CLI arg) still works correctly under pnpm 11 and persists as `storeDir` in the global YAML config -
 the CLI-flag naming didn't change, only file-based config (`.npmrc`) parsing did. No fix needed there.
+
+## CI run #2 - green
+
+https://github.com/IONOS-WordPress/ionos-wordpress/actions/runs/32024620159 (commit 1830eca3):
+all three jobs passed - `devcontainer / build` (3m8s), `lint` (2m4s), `build and test` (5m47s,
+covering PHPUnit and the full Playwright e2e suite). The npm fix resolved the only failure; no
+further pnpm-related issues surfaced. Only annotation is an unrelated pre-existing GitHub Actions
+runner deprecation notice (Node 20 -> 24 for `actions/cache@v4`).
+
+This closes out the "real CI run" verification gap noted earlier - the pnpm 9->11 upgrade is now
+confirmed working end-to-end, not just in local sandbox testing.
