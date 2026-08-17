@@ -1,10 +1,11 @@
 ---
 # 1qc9
 title: Speed up devcontainer first-run and CI startup
-status: todo
+status: completed
 type: epic
+priority: normal
 created_at: 2026-08-07T08:55:14Z
-updated_at: 2026-08-07T08:55:14Z
+updated_at: 2026-08-17T13:21:15Z
 ---
 
 Umbrella for the "make devcontainer / CI much faster" investigation.
@@ -65,3 +66,7 @@ loses.
 anything works. That is the win worth chasing - measured in dev-minutes, not CI-minutes.
 
 **The CI win is elsewhere**, and the children below split it accordingly.
+
+## Summary of Changes
+
+All child work resolved: uizd, ytd4, e6mc completed; xjvk, u03w scrapped after real CI data showed the assumed cost wasn't there; xla3 completed (dev-onboarding chromium bake).

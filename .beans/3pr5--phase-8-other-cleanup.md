@@ -1,11 +1,11 @@
 ---
 # 3pr5
 title: Phase 8 — Other cleanup
-status: todo
+status: completed
 type: epic
 priority: normal
 created_at: 2026-08-03T10:59:47Z
-updated_at: 2026-08-17T10:25:02Z
+updated_at: 2026-08-17T13:21:52Z
 parent: dav1
 blocked_by:
   - zr06
@@ -29,3 +29,7 @@ No behavior change — existing pnpm scripts and the changeset workflow continue
 identically from a developer's perspective.
 
 See docs/agent/wp-env-to-alpine-migration-plan.md for full context.
+
+## Summary of Changes
+
+All three child beans resolved: jv38 (jq cleanup - evaluated, no change warranted), hgik (pnpm major-version upgrade - shipped, verified in CI), hnjy (changesets vs pnpm-native evaluation - recommendation: keep @changesets/cli).
