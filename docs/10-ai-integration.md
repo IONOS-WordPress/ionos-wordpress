@@ -146,3 +146,29 @@ The testing skill (docs/skills/testing/SKILL.md) enables AI agents to:
   plugin delete wordpress-mcp
   option delete wordpress_mcp_settingsuser application-password delete 1
   ```
+
+### STE writing skill
+
+The [ste-writing skill](./skills/ste-writing/SKILL.md) rewrites prose (docs, READMEs, PR descriptions, error messages, release notes, comments, tool descriptions) into ASD-STE100 Simplified Technical English to remove "AI slop" - short sentences, active voice, one name per concept, no marketing adjectives. It does not apply to code, identifiers, or command syntax. Vendored from [woosal1337/blog](https://github.com/woosal1337/blog/tree/main/videos/ep01-the-cure-for-ai-slop) (MIT license).
+
+The skill has two modes:
+
+- **strict** - procedures, runbooks, safety text, error messages
+- **STE-flavored** - general prose such as READMEs and PR descriptions
+
+Ask an agent to use it directly:
+
+```
+rewrite this PR description in STE
+```
+
+```
+review docs/agent/php-standards.md for STE violations
+```
+
+A companion linter ships alongside the skill and can be run standalone to score a draft (violations per 100 words - lower is cleaner):
+
+```bash
+python3 docs/skills/ste-writing/ste-lint.py your-draft.md            # flavored: general prose
+python3 docs/skills/ste-writing/ste-lint.py --strict your-draft.md   # strict: procedures/safety text
+```
