@@ -122,32 +122,49 @@ $(tar -ztf $path/dist/*.tgz | sort)
 EOF
 }
 
-declare -gA WP_PATH_BY_NAME
-declare -gA WP_NAME_BY_PATH
-declare -gA WP_DEPENDENCIES_BY_NAME
+declare -gA WP_DEPENDENCY_PATHS_BY_PATH
 
 #
-# indexes all given workspace packages by name/path and their workspace:* dependencies
-# into the global WP_PATH_BY_NAME / WP_NAME_BY_PATH / WP_DEPENDENCIES_BY_NAME associative arrays.
+# indexes all given workspace packages' workspace:* dependencies, pre-resolved from
+# package.json's dependency *names* to their package *paths*, into the global
+# WP_DEPENDENCY_PATHS_BY_PATH associative array (one path -> space-separated list of
+# dependency paths).
 #
-# must be called directly (not via command substitution) so the populated
-# globals survive for later use by ionos.wordpress.is_workspace_package_up_to_date
+# name and path only matter during indexing (resolving a dependency's name to its own
+# path needs every package's name known first, hence the two-pass approach below) - once
+# resolved, ionos.wordpress.is_workspace_package_up_to_date only ever needs a path, so
+# nothing else survives as a global.
+#
+# must be called directly (not via command substitution) so the populated global
+# survives for later use by ionos.wordpress.is_workspace_package_up_to_date
 #
 # @param $@ list of workspace package directories (example : 'wp-plugin/essentials')
 #
 function ionos.wordpress.index_workspace_packages() {
   local PACKAGE_PATH PACKAGE_JSON PACKAGE_NAME
+  local -A path_by_name=()
+  local -A raw_dependency_names_by_path=()
 
   for PACKAGE_PATH in "$@"; do
     PACKAGE_JSON="./packages/$PACKAGE_PATH/package.json"
     PACKAGE_NAME="$(jq -r '.name' "$PACKAGE_JSON")"
-    WP_NAME_BY_PATH["$PACKAGE_PATH"]="$PACKAGE_NAME"
-    WP_PATH_BY_NAME["$PACKAGE_NAME"]="$PACKAGE_PATH"
-    WP_DEPENDENCIES_BY_NAME["$PACKAGE_NAME"]=$(
+    path_by_name["$PACKAGE_NAME"]="$PACKAGE_PATH"
+    raw_dependency_names_by_path["$PACKAGE_PATH"]=$(
       jq -r \
       '[.dependencies // {}, .devDependencies // {} | to_entries[] | select(.value == "workspace:*") | .key]|join(" ")' \
       "$PACKAGE_JSON"
     )
+  done
+
+  local DEPENDENCY_NAME DEPENDENCY_PATH
+  local RESOLVED_DEPENDENCY_PATHS
+  for PACKAGE_PATH in "$@"; do
+    RESOLVED_DEPENDENCY_PATHS=()
+    for DEPENDENCY_NAME in ${raw_dependency_names_by_path["$PACKAGE_PATH"]}; do
+      DEPENDENCY_PATH="${path_by_name[$DEPENDENCY_NAME]:-}"
+      [[ -n "$DEPENDENCY_PATH" ]] && RESOLVED_DEPENDENCY_PATHS+=("$DEPENDENCY_PATH")
+    done
+    WP_DEPENDENCY_PATHS_BY_PATH["$PACKAGE_PATH"]="${RESOLVED_DEPENDENCY_PATHS[*]}"
   done
 }
 
@@ -187,11 +204,8 @@ function ionos.wordpress.is_workspace_package_up_to_date() {
   [[ "./pnpm-lock.yaml" -nt "$build_info" ]] && return 1
 
   # a workspace:* dependency was rebuilt (its build-info is newer than ours)
-  local PACKAGE_NAME="${WP_NAME_BY_PATH[$path]}"
-  local DEPENDENCY_NAME DEPENDENCY_PATH
-  for DEPENDENCY_NAME in ${WP_DEPENDENCIES_BY_NAME[$PACKAGE_NAME]:-}; do
-    DEPENDENCY_PATH="${WP_PATH_BY_NAME[$DEPENDENCY_NAME]:-}"
-    [[ -n "$DEPENDENCY_PATH" ]] || continue
+  local DEPENDENCY_PATH
+  for DEPENDENCY_PATH in ${WP_DEPENDENCY_PATHS_BY_PATH[$path]:-}; do
     [[ "./packages/$DEPENDENCY_PATH/build-info" -nt "$build_info" ]] && return 1
   done
 

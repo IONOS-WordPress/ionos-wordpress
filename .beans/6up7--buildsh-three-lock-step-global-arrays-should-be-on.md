@@ -1,11 +1,11 @@
 ---
 # 6up7
 title: 'build.sh: three lock-step global arrays should be one per-package record'
-status: todo
+status: completed
 type: task
 priority: low
 created_at: 2026-08-17T13:39:29Z
-updated_at: 2026-08-17T13:39:29Z
+updated_at: 2026-08-18T09:49:42Z
 parent: qi52
 ---
 
@@ -22,3 +22,13 @@ Collapse into a single 'WP_PACKAGE_INFO_BY_PATH["$path"]="$name $deps"' (or a jq
 ## Location
 
 scripts/build.sh:128-206 (ionos.wordpress.index_workspace_packages), ionos.wordpress.is_workspace_package_up_to_date
+
+## Summary of Changes
+
+Went further than the bean's suggested shape: since none of the three arrays were used anywhere else in the file besides index_workspace_packages (write) and is_workspace_package_up_to_date (read), collapsed them into ONE global array `WP_DEPENDENCY_PATHS_BY_PATH` (path -> space-separated dependency *paths*, pre-resolved from package.json's dependency *names* at index time). Package name only matters transiently during indexing (a two-pass approach: build a local name->path map, then resolve each package's raw dependency names to paths) - once resolved, the consumer only ever needs a path, so nothing else needs to survive as a global.
+
+## Verification
+
+- `pnpm build` (full): all packages built successfully.
+- `pnpm build` (second run, no changes): every workspace package correctly reported 'already up to date'.
+- Dependency-cascade test: touched `ionos-essentials`'s build-info (a workspace:* dependency of both `ionos-core` and `stretch-extra`) and reran `pnpm build` - both dependents correctly rebuilt, while `ionos-wpdev-caddy` (which doesn't depend on it) correctly stayed skipped.
