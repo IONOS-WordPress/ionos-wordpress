@@ -1,11 +1,11 @@
 ---
 # jfhd
 title: Dedupe embedded --help printing idiom across 7 scripts
-status: todo
+status: completed
 type: task
 priority: low
 created_at: 2026-08-17T13:39:17Z
-updated_at: 2026-08-17T13:39:17Z
+updated_at: 2026-08-18T08:54:38Z
 parent: qi52
 ---
 
@@ -22,3 +22,11 @@ Extract a one-line helper (e.g. 'ionos.wordpress.print_help "$0"') into _bootstr
 ## Location
 
 scripts/build.sh:23, lint.sh:21, purge-registry.sh:36, test.sh:28, stretch-extra.sh:33, update-dependencies.sh:95, watch.sh:25
+
+## Summary of Changes
+
+Added a shared `ionos.wordpress.print_help()` helper to `scripts/includes/_bootstrap.sh` (prints everything after the '###help-message' marker in the given script and exits) and replaced the duplicated 2-3 line idiom in all 7 call sites: build.sh, lint.sh, purge-registry.sh, test.sh, stretch-extra.sh, update-dependencies.sh, watch.sh.
+
+## Verification
+
+Ran `--help` on all 7 scripts directly - each prints its own embedded help text correctly through the shared helper.

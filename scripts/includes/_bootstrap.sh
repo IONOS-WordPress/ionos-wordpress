@@ -125,6 +125,17 @@ function ionos.wordpress.get_plugin_filenames() {
 }
 export -f ionos.wordpress.get_plugin_filenames
 
+# prints a script's embedded --help text (everything in the script file after the
+# '###help-message' marker) and exits.
+#
+# @param $1 path to the script (its own "$0")
+#
+function ionos.wordpress.print_help() {
+  printf "$(sed -e '1,/^###help-message/d' "$1")\n"
+  exit
+}
+export -f ionos.wordpress.print_help
+
 export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)
 
 # docker flags to use if docker containers will be invoked

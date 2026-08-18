@@ -29,8 +29,7 @@ function ionos.wordpress.stretch-extra.run_php() {
 ionos.wordpress.stretch-extra.help() {
   echo "STRETCH_EXTRA_BUNDLE_DIR=$STRETCH_EXTRA_BUNDLE_DIR"
 
-  # print everything in this script file after the '###help-message' marker
-  printf "$(sed -e '1,/^###help-message/d' "$0")\n"
+  ionos.wordpress.print_help "$0"
 }
 
 ionos.wordpress.stretch-extra.clean() {
@@ -60,7 +59,7 @@ ionos.wordpress.stretch-extra.install() {
 
     $output = [
         'plugins' => array_map(fn($item) => [ 'url' => $item['url'] ], $config['plugins'] ?? []),
-        'themes'  => array_map(fn($item) => [ 'url' => $item['url'] ], $config['themes'] ?? [])
+        'themes'  => array_map(fn($item) => [ 'url' => $item['url'] ], $config['themes'] ?? []),
     ];
 
     echo json_encode($output, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
