@@ -1,3 +1,8 @@
+//
+// runs a wp-cli command inside the ephemeral test container from a Playwright spec,
+// replacing the old playwright/wp-env.js
+//
+
 import { execSync } from 'child_process';
 
 // the ephemeral test container started by scripts/test.sh (see

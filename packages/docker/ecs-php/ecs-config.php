@@ -14,9 +14,10 @@ $codeSnifferConfig = new PHP_CodeSniffer\Config(["--standard=./packages/docker/e
 // environment keeps this config identical for both - hardcoding /composer would break the
 // native path. the fallback keeps older image tags that predate the env var working.
 $vendorDir = (getenv('COMPOSER_HOME') ?: '/composer') . '/vendor';
-PHP_CodeSniffer\Autoload::addSearchPath("$vendorDir/wp-coding-standards/wpcs/WordPress", "WordPressCS\WordPress");
-PHP_CodeSniffer\Autoload::addSearchPath("$vendorDir/wp-coding-standards/wpcs/WordPress-Extra", "WordPressCS\WordPress-Extra");
-PHP_CodeSniffer\Autoload::addSearchPath("$vendorDir/wp-coding-standards/wpcs/WordPress-Core", "WordPressCS\WordPress-Core");
+$wpcsDir = "$vendorDir/wp-coding-standards/wpcs";
+PHP_CodeSniffer\Autoload::addSearchPath("$wpcsDir/WordPress", "WordPressCS\WordPress");
+PHP_CodeSniffer\Autoload::addSearchPath("$wpcsDir/WordPress-Extra", "WordPressCS\WordPress-Extra");
+PHP_CodeSniffer\Autoload::addSearchPath("$wpcsDir/WordPress-Core", "WordPressCS\WordPress-Core");
 
 $configure = ECSConfig::configure();
 

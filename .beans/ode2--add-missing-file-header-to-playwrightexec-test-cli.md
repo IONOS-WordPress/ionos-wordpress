@@ -1,11 +1,11 @@
 ---
 # ode2
 title: Add missing file header to playwright/exec-test-cli.js
-status: todo
+status: completed
 type: task
 priority: low
 created_at: 2026-08-17T13:40:19Z
-updated_at: 2026-08-17T13:40:19Z
+updated_at: 2026-08-18T08:50:25Z
 parent: qi52
 ---
 
@@ -20,3 +20,7 @@ Add a short header comment describing what this module does (drives wp-cli comma
 ## Location
 
 playwright/exec-test-cli.js:1
+
+## Summary of Changes
+
+Added a short header comment to playwright/exec-test-cli.js describing its purpose (drives wp-cli commands inside the ephemeral test container from Playwright specs, replacing the old playwright/wp-env.js).

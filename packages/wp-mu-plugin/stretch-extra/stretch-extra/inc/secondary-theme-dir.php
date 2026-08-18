@@ -22,7 +22,7 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
  */
 \add_filter('theme_file_uri', function ($url, $file) {
   // if its not one of our themes just return the original url
-  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in the local dev environment
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required in the local dev environment
   if (! str_contains($url, '/extra/themes/') && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $url;
   }
@@ -33,7 +33,7 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
 
 \add_filter('stylesheet_directory_uri', function ($stylesheet_dir_uri, $stylesheet, $theme_root_uri) {
   // if its not one of our themes just return the original url
-  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in the local dev environment
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required in the local dev environment
   if (! str_ends_with($theme_root_uri, '/extra/themes') && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $stylesheet_dir_uri;
   }
@@ -44,7 +44,7 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
 
 \add_filter('template_directory_uri', function ($template_dir_uri, $template, $theme_root_uri) {
   // if its not one of our themes just return the original url
-  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in the local dev environment
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required in the local dev environment
   if (! str_ends_with($theme_root_uri, '/extra/themes') && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $template_dir_uri;
   }
@@ -54,7 +54,7 @@ const IONOS_CUSTOM_DELETED_THEMES_OPTION = 'IONOS_CUSTOM_DELETED_THEMES_OPTION';
 }, 10, 3);
 
 \add_filter('theme_root_uri', function ($theme_root_uri, $siteurl) {
-  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS  is required to work in the local dev environment
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required in the local dev environment
   if (! str_ends_with($theme_root_uri, '/extra/themes') && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $theme_root_uri;
   }

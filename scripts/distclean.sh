@@ -25,10 +25,10 @@ for PACKAGE_JSON in $(find packages/docker -maxdepth 2 -mindepth 2 -name "packag
 # we need to encase the loop in a subshell to avoid variable pollution
 (
   # inject .env and .secret files from plugin directory
-  ionos.wordpress.load_env "$(dirname $PACKAGE_JSON)"
+  ionos.wordpress.load_env "$(dirname "$PACKAGE_JSON")"
 
-  PACKAGE_NAME=$(jq -r '.name' $PACKAGE_JSON)
-  PACKAGE_VERSION=$(jq -r '.version' $PACKAGE_JSON)
+  PACKAGE_NAME=$(jq -r '.name' "$PACKAGE_JSON")
+  PACKAGE_VERSION=$(jq -r '.version' "$PACKAGE_JSON")
   DOCKER_IMAGE_NAME="$(echo $PACKAGE_NAME | sed -r 's/@//g')"
 
   # if DOCKER_USERNAME is not set take the package scope (example: "@foo/bar" package user is "foo")
