@@ -1,11 +1,11 @@
 ---
 # wj0c
-title: "build.sh: unconditional find tree-walk added to every package's up-to-date check"
-status: todo
+title: 'build.sh: unconditional find tree-walk added to every package''s up-to-date check'
+status: completed
 type: task
 priority: low
 created_at: 2026-08-17T13:39:55Z
-updated_at: 2026-08-17T13:39:55Z
+updated_at: 2026-08-18T09:50:56Z
 parent: qi52
 ---
 
@@ -24,3 +24,15 @@ Consider a cheaper staleness check (e.g. relying on git/mtime metadata already a
 ## Location
 
 scripts/build.sh (ionos.wordpress.is_workspace_package_up_to_date)
+
+## Summary
+
+No code change - confirmed the overhead is empirically negligible at this repo's current scale, and any 'cheaper' alternative (git-diff-based, directory-mtime-based, checksum-cache-based) trades a measured non-problem for a real risk: silently misjudging staleness and serving a stale build is a correctness regression, categorically worse than a few milliseconds of find overhead.
+
+## Verification
+
+Measured the exact find command from ionos.wordpress.is_workspace_package_up_to_date directly against all 4 workspace packages (including stretch-extra, the largest at 97MB after excluding dist/node_modules):
+- Best case (an early-modified file triggers -quit immediately): ~22ms combined across all 4 packages.
+- True worst case (build-info newer than every file, forcing a full traversal with no early exit - the scenario the bean specifically worried about): ~23ms and ~51ms for the two largest packages individually, still negligible in aggregate.
+
+Discussed with the user: closed as no-fix-needed rather than adding speculative complexity for a problem that doesn't empirically exist yet, following the same evidence-based-close pattern used for zb17/x5qc earlier in this epic.
