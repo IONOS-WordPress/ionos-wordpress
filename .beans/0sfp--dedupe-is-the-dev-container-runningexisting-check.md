@@ -30,6 +30,7 @@ scripts/start.sh, stop.sh, clean.sh, destroy.sh, distclean.sh
 ## Summary of Changes
 
 Added two shared helpers to scripts/includes/_bootstrap.sh:
+
 - `ionos.wordpress.container_running <name>` - true if the container is currently running (docker ps, no -a)
 - `ionos.wordpress.container_exists <name>` - true if the container exists at all, running or stopped (docker ps -a)
 

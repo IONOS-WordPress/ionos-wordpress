@@ -28,6 +28,7 @@ scripts/build.sh:59
 ## Summary of Changes
 
 Added two shared helpers to scripts/includes/_bootstrap.sh:
+
 - `ionos.wordpress.parse_use_flag <value>` - lowercases and appends to the caller's global USE array.
 - `ionos.wordpress.default_use_to_all` - defaults USE to ("all") if nothing was given.
 
