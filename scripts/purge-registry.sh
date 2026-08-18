@@ -79,12 +79,16 @@ REPOSITORY_NAME="${REPOSITORY_SLUG#*/}"
 REPOSITORY_NAME="${REPOSITORY_NAME@L}"
 
 # organization and user accounts have different package endpoints, and only the
-# authenticated user's own packages are reachable for a user account
-if "$GH" api "/orgs/${OWNER}" >/dev/null 2>&1; then
-  LIST_ENDPOINT="/orgs/${OWNER}/packages?package_type=container&per_page=100"
+# authenticated user's own packages are reachable for a user account. try the org
+# packages endpoint directly (a nonexistent/foreign org 404s here too, same as
+# "/orgs/${OWNER}" would) instead of probing org membership as a separate call first -
+# one round trip instead of two. the package listing itself also carries each
+# package's version_count already, so it doubles as the per-package version count
+# fetched further below instead of a second, per-package API call.
+if PACKAGES_TSV="$("$GH" api --paginate "/orgs/${OWNER}/packages?package_type=container&per_page=100" --jq '.[] | [.name, .version_count] | @tsv' 2>/dev/null)"; then
   PACKAGE_ENDPOINT_PREFIX="/orgs/${OWNER}/packages/container"
 else
-  LIST_ENDPOINT="/user/packages?package_type=container&per_page=100"
+  PACKAGES_TSV="$("$GH" api --paginate "/user/packages?package_type=container&per_page=100" --jq '.[] | [.name, .version_count] | @tsv')"
   PACKAGE_ENDPOINT_PREFIX="/user/packages/container"
 fi
 # ENDMARK:
@@ -125,15 +129,17 @@ ionos.wordpress.log_header "container packages owned by '${OWNER}' :"
 
 MATCHED=()
 SKIPPED=()
+declare -A VERSION_COUNTS=()
 
-while read -r PACKAGE_NAME; do
+while IFS=$'\t' read -r PACKAGE_NAME VERSION_COUNT; do
   [[ -n "$PACKAGE_NAME" ]] || continue
+  VERSION_COUNTS["$PACKAGE_NAME"]="$VERSION_COUNT"
   if [[ -n "${EXPECTED_PACKAGES[$PACKAGE_NAME]:-}" ]] || [[ "$PACKAGE_NAME" =~ $LEGACY_DEVCONTAINER_PATTERN ]]; then
     MATCHED+=("$PACKAGE_NAME")
   else
     SKIPPED+=("$PACKAGE_NAME")
   fi
-done < <("$GH" api --paginate "$LIST_ENDPOINT" --jq '.[].name')
+done <<<"$PACKAGES_TSV"
 
 for PACKAGE_NAME in "${SKIPPED[@]}"; do
   echo "  skip   $PACKAGE_NAME (not published by this repository)"
@@ -141,9 +147,9 @@ done
 
 for PACKAGE_NAME in "${MATCHED[@]}"; do
   # surface the blast radius per package - a legacy dev container package holds one
-  # version, wordpress-alpine-dev holds two per publish
-  VERSION_COUNT="$("$GH" api --paginate "${PACKAGE_ENDPOINT_PREFIX}/$(jq -rn --arg v "$PACKAGE_NAME" '$v|@uri')/versions?per_page=100" --jq '.[].id' 2>/dev/null | wc -l)"
-  echo "  DELETE $PACKAGE_NAME ($VERSION_COUNT version(s))"
+  # version, wordpress-alpine-dev holds two per publish. version_count came from the
+  # same package listing fetched above, no extra per-package API call needed.
+  echo "  DELETE $PACKAGE_NAME (${VERSION_COUNTS[$PACKAGE_NAME]} version(s))"
 done
 
 if [[ ${#MATCHED[@]} -eq 0 ]]; then
