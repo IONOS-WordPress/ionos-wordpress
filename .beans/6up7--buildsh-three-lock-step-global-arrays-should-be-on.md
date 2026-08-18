@@ -25,7 +25,7 @@ scripts/build.sh:128-206 (ionos.wordpress.index_workspace_packages), ionos.wordp
 
 ## Summary of Changes
 
-Went further than the bean's suggested shape: since none of the three arrays were used anywhere else in the file besides index_workspace_packages (write) and is_workspace_package_up_to_date (read), collapsed them into ONE global array `WP_DEPENDENCY_PATHS_BY_PATH` (path -> space-separated dependency *paths*, pre-resolved from package.json's dependency *names* at index time). Package name only matters transiently during indexing (a two-pass approach: build a local name->path map, then resolve each package's raw dependency names to paths) - once resolved, the consumer only ever needs a path, so nothing else needs to survive as a global.
+Went further than the bean's suggested shape: since none of the three arrays were used anywhere else in the file besides index_workspace_packages (write) and is_workspace_package_up_to_date (read), collapsed them into ONE global array `WP_DEPENDENCY_PATHS_BY_PATH` (path -> space-separated dependency _paths_, pre-resolved from package.json's dependency _names_ at index time). Package name only matters transiently during indexing (a two-pass approach: build a local name->path map, then resolve each package's raw dependency names to paths) - once resolved, the consumer only ever needs a path, so nothing else needs to survive as a global.
 
 ## Verification
 

@@ -1,6 +1,6 @@
 ---
 # jpk9
-title: 'test.sh: ''shard 1 is unsuffixed'' naming rule duplicated in 3 places'
+title: "test.sh: 'shard 1 is unsuffixed' naming rule duplicated in 3 places"
 status: completed
 type: task
 priority: low

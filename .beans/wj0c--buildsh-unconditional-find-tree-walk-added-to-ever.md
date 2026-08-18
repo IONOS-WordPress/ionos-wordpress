@@ -1,6 +1,6 @@
 ---
 # wj0c
-title: 'build.sh: unconditional find tree-walk added to every package''s up-to-date check'
+title: "build.sh: unconditional find tree-walk added to every package's up-to-date check"
 status: completed
 type: task
 priority: low
@@ -32,6 +32,7 @@ No code change - confirmed the overhead is empirically negligible at this repo's
 ## Verification
 
 Measured the exact find command from ionos.wordpress.is_workspace_package_up_to_date directly against all 4 workspace packages (including stretch-extra, the largest at 97MB after excluding dist/node_modules):
+
 - Best case (an early-modified file triggers -quit immediately): ~22ms combined across all 4 packages.
 - True worst case (build-info newer than every file, forcing a full traversal with no early exit - the scenario the bean specifically worried about): ~23ms and ~51ms for the two largest packages individually, still negligible in aggregate.
 
