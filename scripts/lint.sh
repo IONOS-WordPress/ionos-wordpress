@@ -384,16 +384,23 @@ function ionos.wordpress.wordpress_plugin() {
 # a tool that is available natively (dev container, CI) needs no image at all, so it is
 # left out of the filters entirely - that is what removes the "first lint builds docker
 # images" wait from a fresh dev container. see scripts/includes/_native-tools.sh
+# "tool:use-pattern:requires-fix" rows driving the guard below - add a new
+# linter/tool by adding one row here instead of a hand-copied if block.
+DOCKER_BUILD_FILTER_TOOLS=(
+  'ecs-php:all|php:'
+  'dennis-i18n:all|i18n:'
+  'potrans:i18n:yes'
+)
+
 DOCKER_BUILD_FILTERS=()
-if [[ "${USE[@]}" =~ all|php ]] && ionos.wordpress.needs_docker_tools ecs-php; then
-  DOCKER_BUILD_FILTERS+=(--filter ecs-php)
-fi
-if [[ "${USE[@]}" =~ all|i18n ]] && ionos.wordpress.needs_docker_tools dennis-i18n; then
-  DOCKER_BUILD_FILTERS+=(--filter dennis-i18n)
-fi
-if [[ "$FIX" == 'yes' ]] && [[ "${USE[@]}" =~ i18n ]] && ionos.wordpress.needs_docker_tools potrans; then
-  DOCKER_BUILD_FILTERS+=(--filter potrans)
-fi
+for entry in "${DOCKER_BUILD_FILTER_TOOLS[@]}"; do
+  IFS=':' read -r tool use_pattern requires_fix <<<"$entry"
+  if [[ -z "$requires_fix" || "$FIX" == 'yes' ]] &&
+    [[ "${USE[@]}" =~ $use_pattern ]] &&
+    ionos.wordpress.needs_docker_tools "$tool"; then
+    DOCKER_BUILD_FILTERS+=(--filter "$tool")
+  fi
+done
 if [[ ${#DOCKER_BUILD_FILTERS[@]} -gt 0 ]]; then
   pnpm build "${DOCKER_BUILD_FILTERS[@]}" > /dev/null
 fi
