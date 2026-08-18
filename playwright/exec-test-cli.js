@@ -10,7 +10,7 @@ import { execSync } from 'child_process';
 const CONTAINER_NAME = process.env.TEST_CONTAINER_NAME || 'ionos-wordpress-test';
 
 export function execTestCLI(command) {
-  return execSync(`cat <<EOF | docker exec --interactive --user php ${CONTAINER_NAME} sh -
+  return execSync(`cat <<'EOF' | docker exec --interactive --user php ${CONTAINER_NAME} sh -
     set -x
     ${command}
 EOF`)
