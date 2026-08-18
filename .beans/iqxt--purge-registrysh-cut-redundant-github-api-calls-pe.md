@@ -37,6 +37,7 @@ Net result: '1 (org+list combined) + N (delete, only with --yes)' API calls inst
 ## Verification
 
 This script is destructive (deletes GitHub container registry packages, needs a delete:packages-scoped token) - did NOT run it against the real registry. Instead:
+
 - Verified `bash -n` syntax.
 - Verified the `--jq '.[] | [.name, .version_count] | @tsv'` filter against a crafted JSON fixture matching GitHub's documented package-list schema.
 - Extracted the full matching/counting loop logic and ran it against a mocked `gh` CLI returning that fixture - confirmed matched/skipped classification, legacy-devcontainer-pattern matching, and per-package version counts all come out identical to the original logic, with zero per-package API calls.
