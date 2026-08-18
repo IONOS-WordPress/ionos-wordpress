@@ -36,6 +36,35 @@ function ionos.wordpress.mount_phpunit_dirs() {
 export -f ionos.wordpress.mount_phpunit_dirs
 
 #
+# finds the single build zip archive under a package's dir tree (see
+# scripts/build.sh). errors out if none or more than one is found - a stale
+# zip left over from a previous version bump (not cleaned before rebuilding)
+# must not silently produce a multi-line result that corrupts the caller's
+# --volume mount path.
+#
+# @param $1 path to the package's dir (e.g. "packages/wp-plugin/foo")
+# @stdout the zip archive's filename (without path)
+#
+function ionos.wordpress.find_single_zip_archive() {
+  local package_dir="$1"
+  local zip_archives
+  readarray -t zip_archives < <(find "$package_dir" -regex '.*\.zip' -printf '%f\n' 2>/dev/null | sort)
+
+  if [[ ${#zip_archives[@]} -eq 0 ]]; then
+    ionos.wordpress.log_error "no build zip archive found under '${package_dir}' - run 'pnpm build' first"
+    exit 1
+  fi
+
+  if [[ ${#zip_archives[@]} -gt 1 ]]; then
+    ionos.wordpress.log_error "multiple build zip archives found under '${package_dir}' (${zip_archives[*]}) - remove the stale one(s) and rebuild"
+    exit 1
+  fi
+
+  echo "${zip_archives[0]}"
+}
+export -f ionos.wordpress.find_single_zip_archive
+
+#
 # prepares a stack's per-container overlay dirs/files (wp-content/{plugins,themes,
 # mu-plugins,uploads}, wp-config.php, .htaccess) and appends `docker run` --volume
 # args for it plus every discovered wp-plugin/wp-theme/wp-mu-plugin package -
@@ -82,7 +111,7 @@ function ionos.wordpress.build_wp_volume_args() {
   if [[ "${TEST_PRODUCTION:-}" == 'true' ]]; then
     # mount the transpiled dist/ output instead of source
     for PLUGIN in $(find packages/wp-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-      zip_archive=$(find packages/wp-plugin/${PLUGIN} -regex ".*\.zip" -printf '%f\n' 2>/dev/null || echo '')
+      zip_archive=$(ionos.wordpress.find_single_zip_archive "packages/wp-plugin/${PLUGIN}")
       # dist/<zip>/<plugin> mirrors the package root (loader .php + nested
       # <plugin>/ code dir), same as source - mounted as a whole (unlike
       # mu-plugins, WordPress only needs the loader's own path to resolve),
@@ -94,13 +123,13 @@ function ionos.wordpress.build_wp_volume_args() {
     done
 
     for THEME in $(find packages/wp-theme -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
-      zip_archive=$(find packages/wp-theme/${THEME} -regex ".*\.zip" -printf '%f\n' 2>/dev/null || echo '')
+      zip_archive=$(ionos.wordpress.find_single_zip_archive "packages/wp-theme/${THEME}")
       VOLUME_ARGS+=(--volume "$(pwd)/packages/wp-theme/${THEME}/dist/${zip_archive%.zip}/${THEME}:/htdocs/wp-content/themes/${THEME}")
     done
 
     for PLUGIN in $(find packages/wp-mu-plugin -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null || echo ''); do
       if [[ -d "./packages/wp-mu-plugin/${PLUGIN}/${PLUGIN}" ]]; then
-        zip_archive=$(find packages/wp-mu-plugin/${PLUGIN} -regex ".*\.zip" -printf '%f\n' 2>/dev/null || echo '')
+        zip_archive=$(ionos.wordpress.find_single_zip_archive "packages/wp-mu-plugin/${PLUGIN}")
         # dist/<zip>/<plugin> mirrors the package root (loader .php + nested
         # <plugin>/ code dir), same as source - mount the nested dir, not the
         # root, or the loader's require_once __DIR__ . '/<plugin>/...' breaks

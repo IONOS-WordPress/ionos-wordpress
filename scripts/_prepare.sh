@@ -15,7 +15,7 @@ if [[ "${CI:-}" == "true" ]]; then
   exit 0
 fi
 
-# recreate .vscode/settings.json with a valid WPENV_INSTALLPATH
+# recreate .vscode/settings.json with a valid intelephense WordPress-core include path
 source "$(realpath $0 | xargs dirname)/includes/_vscode.sh"
 ionos.wordpress.vscode.create_settings.json
 
