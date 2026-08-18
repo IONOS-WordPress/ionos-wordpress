@@ -1,11 +1,11 @@
 ---
 # 3ihn
 title: Dedupe docker image-name derivation logic (build.sh vs distclean.sh)
-status: todo
+status: completed
 type: task
 priority: low
 created_at: 2026-08-17T13:39:05Z
-updated_at: 2026-08-17T13:39:05Z
+updated_at: 2026-08-18T09:18:00Z
 parent: qi52
 ---
 
@@ -23,3 +23,13 @@ Extract a shared 'ionos.wordpress.docker_image_name_for_package <package.json pa
 
 scripts/build.sh:219
 scripts/distclean.sh:32
+
+## Summary of Changes
+
+Added `ionos.wordpress.docker_image_name_for_package <package_name>` to scripts/includes/_bootstrap.sh (derives e.g. `ionos-wordpress/ecs-php` from `@ionos-wordpress/ecs-php`, honoring DOCKER_USERNAME/DOCKER_REPOSITORY overrides). Used it in both build.sh and distclean.sh, replacing the identical 4-line derivation block in each. Confirmed DOCKER_USERNAME/DOCKER_REPOSITORY weren't referenced anywhere else after that block in either script before collapsing them into the function's local scope.
+
+## Verification
+
+- Directly compared old vs new logic for both the plain and DOCKER_USERNAME/DOCKER_REPOSITORY-override cases - identical output.
+- `pnpm build --filter ecs-php`: built `ionos-wordpress/ecs-php` correctly.
+- `pnpm distclean`: removed the `ionos-wordpress/ecs-php:0.1.18` tag (matching build.sh's derivation exactly - proof both scripts now agree on the same image name).

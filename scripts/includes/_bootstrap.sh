@@ -176,6 +176,18 @@ function ionos.wordpress.default_use_to_all() {
 }
 export -f ionos.wordpress.default_use_to_all
 
+# derives a docker image name (e.g. "ionos-wordpress/ecs-php") from a package.json's
+# scoped npm package name (e.g. "@ionos-wordpress/ecs-php"), honoring
+# DOCKER_USERNAME/DOCKER_REPOSITORY environment overrides.
+#
+# @param $1 the package's npm "name" (e.g. "@foo/bar")
+#
+function ionos.wordpress.docker_image_name_for_package() {
+  local stripped="${1//@/}"
+  echo "${DOCKER_USERNAME:-${stripped%/*}}/${DOCKER_REPOSITORY:-${stripped#*/}}"
+}
+export -f ionos.wordpress.docker_image_name_for_package
+
 export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)
 
 # docker flags to use if docker containers will be invoked

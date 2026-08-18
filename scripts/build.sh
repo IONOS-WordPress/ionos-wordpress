@@ -213,12 +213,7 @@ function ionos.wordpress.build_workspace_package_docker() {
   DOCKER_BUILDKIT="${DOCKER_BUILDKIT:-1}"
   DOCKER_REGISTRY="${DOCKER_REGISTRY:-registry.hub.docker.com}"
   DOCKER_IMAGE_AUTHOR="$(ionos.wordpress.author_name $PACKAGE_JSON) <$(ionos.wordpress.author_email $PACKAGE_JSON)>"
-  DOCKER_IMAGE_NAME="$(echo $PACKAGE_NAME | sed -r 's/@//g')"
-  # if DOCKER_USERNAME is not set take the package scope (example: "@foo/bar" package user is "foo")
-  DOCKER_USERNAME="${DOCKER_USERNAME:-${DOCKER_IMAGE_NAME%/*}}"
-  # if DOCKER_REPOSITORY is not set take the package repository (example: "@foo/bar" package repository is "bar")
-  DOCKER_REPOSITORY="${DOCKER_REPOSITORY:-${DOCKER_IMAGE_NAME#*/}}"
-  DOCKER_IMAGE_NAME="$DOCKER_USERNAME/$DOCKER_REPOSITORY"
+  DOCKER_IMAGE_NAME="$(ionos.wordpress.docker_image_name_for_package "$PACKAGE_NAME")"
 
   # abort building image if
   # - the workspace package is up to date (--force not set, build-info file exists and no
