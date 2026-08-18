@@ -1,8 +1,8 @@
 #
 # builds and publishes the ionos-wordpress Alpine dev/test image
 # (packages/docker/wordpress-alpine) as one PHP variant per entry in that package's
-# image-matrix.json (8.4 default, 8.3 - the project's stated minimum supported
-# version, see AGENTS.md) to a container registry, tagged with the repository-wide
+# image-matrix.json (currently just 8.4, the project's stated version, see
+# AGENTS.md) to a container registry, tagged with the repository-wide
 # '<image>:<tag>' scheme (see .github/shared/scripts/_docker-subproject-image-tag.sh)
 # plus a '-php<version>' suffix per variant.
 #

@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- **PHP 8.3+** - Use modern features freely
+- **PHP 8.4** - Use modern features freely
 - **Prefer functions over classes** when possible
 
 ## Naming

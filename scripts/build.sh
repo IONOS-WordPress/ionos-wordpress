@@ -336,8 +336,8 @@ function ionos.wordpress.get_plugin_textdomains() {
 # unlike ecs-php/rector-php/potrans/dennis-i18n (see _native-tools.sh), wp-cli isn't
 # installed natively in the devcontainer/CI image (yet) - this stays docker-only until
 # that's deliberately added. the php version tag below must match AGENTS.md's stated
-# minimum supported PHP version (currently 8.3) - nothing else catches a missed update if
-# that minimum ever changes.
+# PHP version (currently 8.4) - nothing else catches a missed update if
+# that version ever changes.
 #
 # all params will be delegated to the dockerized wp-cli command
 #
@@ -348,7 +348,7 @@ function ionos.wordpress.build_workspace_package_wp_plugin.wp_cli() {
     --user $DOCKER_USER \
     --rm \
     -v $(pwd):/var/www/html \
-    wordpress:cli-php8.3 \
+    wordpress:cli-php8.4 \
     wp \
     $@
 }

@@ -29,7 +29,7 @@ All coding standards are organized in `/docs/agent/`:
 
 ### Core Standards
 
-- **[PHP Standards](docs/agent/php-standards.md)** - PHP 8.3+, modern syntax, templating, formatting
+- **[PHP Standards](docs/agent/php-standards.md)** - PHP 8.4, modern syntax, templating, formatting
 - **[JavaScript Standards](docs/agent/javascript-standards.md)** - ES6+, WordPress packages, async/await
 - **[CSS Architecture](docs/agent/css-architecture.md)** - Native CSS, BEM, modern features
 - **[Security Standards](docs/agent/security.md)** - Input sanitization, output escaping, nonces
@@ -103,7 +103,7 @@ All coding standards are organized in `/docs/agent/`:
 
 ## Requirements
 
-- **PHP**: 8.3+
+- **PHP**: 8.4
 - **WordPress**: 6.6+
 - **Node**: Latest LTS
 - **Package Manager**: pnpm

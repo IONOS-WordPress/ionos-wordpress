@@ -155,16 +155,17 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # being tested.
   readonly TESTS_DIR="${MNT_HOME}/wordpress-tests/trunk"
 
-  # PHP_VERSION_OVERRIDE runs the test stack against a non-default PHP version -
-  # 8.3, the project's stated minimum (see AGENTS.md), is what this exists for. It
-  # prefers the prebuilt image from the registry to avoid a local build on every PR
-  # update, falling back to building it locally if the registry doesn't have it
-  # (not published yet, or offline dev use). Both the accepted versions and the
-  # Alpine branch each is paired with come from packages/docker/wordpress-alpine/
-  # image-matrix.json, the same file .github/workflows/build-wordpress-alpine-image.yaml
-  # builds its matrix from - so anything accepted here is something that actually
-  # gets published. Source is written against PHP 8.3+ syntax (see AGENTS.md), so
-  # this works in source mode as-is - no TEST_PRODUCTION=true requirement.
+  # PHP_VERSION_OVERRIDE runs the test stack against a non-default PHP version
+  # published in packages/docker/wordpress-alpine/image-matrix.json (currently just
+  # 8.4, the project's stated version - see AGENTS.md) - add a variant there to test
+  # against it. It prefers the prebuilt image from the registry to avoid a local
+  # build on every PR update, falling back to building it locally if the registry
+  # doesn't have it (not published yet, or offline dev use). Both the accepted
+  # versions and the Alpine branch each is paired with come from that same file,
+  # the one .github/workflows/build-wordpress-alpine-image.yaml builds its matrix
+  # from - so anything accepted here is something that actually gets published.
+  # Source is written against PHP 8.4 syntax (see AGENTS.md), so this works in
+  # source mode as-is - no TEST_PRODUCTION=true requirement.
   if [[ -n "${PHP_VERSION_OVERRIDE:-}" ]]; then
     readonly WORDPRESS_ALPINE_IMAGE_MATRIX='packages/docker/wordpress-alpine/image-matrix.json'
     readonly WORDPRESS_ALPINE_ALPINE_VERSION="$(

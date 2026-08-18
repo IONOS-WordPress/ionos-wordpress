@@ -10,9 +10,8 @@
 # Alpine's PHP packages are also a rolling window, so ARG_ALPINE_VERSION must
 # be picked to match a branch that actually carries the requested PHP
 # version. The pairs that are actually published live in ./image-matrix.json
-# (currently 8.4/3.24 as the default and 8.3/3.20, the project's stated
-# minimum supported PHP version, see AGENTS.md) - that file is the single
-# source of truth for .github/workflows/build-wordpress-alpine-image.yaml's build
+# (currently just 8.4/3.24 as the default - see AGENTS.md) - that file is the
+# single source of truth for .github/workflows/build-wordpress-alpine-image.yaml's build
 # matrix and for scripts/test.sh's PHP_VERSION_OVERRIDE, so add a variant
 # there rather than hardcoding a pair anywhere else. The ARG defaults below
 # and ./.env (which scripts/build.sh feeds to 'docker build' verbatim, so it
