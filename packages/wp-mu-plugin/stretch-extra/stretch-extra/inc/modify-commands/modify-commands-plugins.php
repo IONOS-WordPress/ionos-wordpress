@@ -25,6 +25,10 @@ if (! defined('WP_CLI') || ! WP_CLI) {
 }, 1, 2);
 
 \add_filter('all_plugins', function ($plugins) {
+  if (\apply_filters('ionos_stretch_extra_suppress_custom_plugins', false)) {
+    return $plugins;
+  }
+
   $mounted = get_all_custom_plugins();
   foreach ($mounted as $entry) {
     if (is_custom_plugin_deleted($entry['key'])) {
@@ -81,13 +85,85 @@ $intercept_subcommands = [
   'verify-checksums',
 ];
 
+// bulk ("--all") variants only make sense for these; the rest always name a slug.
+$bulk_capable_subcommands = ['activate', 'deactivate', 'toggle'];
+
+// `before_invoke:plugin <subcommand>` only ever passes the command name string
+// (see WP_CLI\Dispatcher\Subcommand::invoke()'s `do_hook("before_invoke:{$cmd}", $cmd)`)
+// - not the actual $args/$assoc_args - so the real slugs/flags have to be read
+// back out of the raw CLI invocation, same as plugin-block-list.php does.
+$extract_plugin_args_from_argv = function ($subcommand) {
+  $argv          = $_SERVER['argv'] ?? [];
+  $plugins       = [];
+  $found_command = false;
+  $all           = false;
+
+  foreach ($argv as $arg) {
+    if ($found_command) {
+      if ($arg === '--all') {
+        $all = true;
+      } elseif (! str_starts_with($arg, '--')) {
+        $plugins[] = $arg;
+      }
+    }
+    if ($arg === $subcommand) {
+      $found_command = true;
+    }
+  }
+
+  return [$plugins, $all];
+};
+
 foreach ($intercept_subcommands as $subcommand) {
-  \WP_CLI::add_hook("before_invoke:plugin:{$subcommand}", function ($args, $assoc_args) use ($subcommand) {
-    $custom_plugins   = get_all_custom_plugins();
+  \WP_CLI::add_hook("before_invoke:plugin {$subcommand}", function () use (
+    $subcommand,
+    $bulk_capable_subcommands,
+    $extract_plugin_args_from_argv
+  ) {
+    $custom_plugins             = get_all_custom_plugins();
+    [$user_slugs, $bulk_all]    = $extract_plugin_args_from_argv($subcommand);
+
+    if ($bulk_all) {
+      if (! in_array($subcommand, $bulk_capable_subcommands, true)) {
+        return;
+      }
+
+      // apply the bulk action to every mounted plugin ourselves, then let the
+      // real "--all" continue for genuine filesystem plugins - suppressing our
+      // own all_plugins injection (via the ionos_stretch_extra_suppress_custom_plugins
+      // filter below) so wp-cli's own "--all" doesn't also try (and fail) to
+      // activate/deactivate them by file path.
+      foreach ($custom_plugins as $entry) {
+        if (is_custom_plugin_deleted($entry['key'])) {
+          continue;
+        }
+
+        $is_active = in_array($entry['key'], get_active_custom_plugins(), true);
+
+        if ($subcommand === 'activate' && ! $is_active) {
+          activate_custom_plugin($entry['key']);
+        } elseif ($subcommand === 'deactivate' && $is_active) {
+          deactivate_custom_plugin($entry['key']);
+        } elseif ($subcommand === 'toggle') {
+          $is_active ? deactivate_custom_plugin($entry['key']) : activate_custom_plugin($entry['key']);
+        }
+      }
+
+      \add_filter('ionos_stretch_extra_suppress_custom_plugins', '__return_true');
+
+      wp_cache_delete('alloptions', 'options');
+      delete_site_transient('update_plugins');
+      if (function_exists('wp_cache_flush_runtime')) {
+        wp_cache_flush_runtime();
+      }
+
+      return;
+    }
+
     $processed_custom = false;
     $unprocessed_args = [];
 
-    foreach ($args as $user_slug) {
+    foreach ($user_slugs as $user_slug) {
       $matched = false;
 
       foreach ($custom_plugins as $entry) {
@@ -148,9 +224,9 @@ foreach ($intercept_subcommands as $subcommand) {
               break;
             }
 
-            if (isset($assoc_args['activate'])) {
-              activate_custom_plugin($full_key);
-            }
+            break;
+
+          default:
             break;
         }
 
