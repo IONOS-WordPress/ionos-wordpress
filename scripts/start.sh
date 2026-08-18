@@ -43,7 +43,7 @@ if [[ -n "${AFTER_START:-}" ]]; then
   VOLUME_ARGS+=(--volume "$(realpath "$AFTER_START"):/after-start.sh")
 fi
 
-if docker ps -a --filter "name=${CONTAINER_NAME}" --format '{{.Names}}' | grep -qx "$CONTAINER_NAME"; then
+if ionos.wordpress.container_exists "$CONTAINER_NAME"; then
   # container already exists (running or stopped) - (re)start it as-is, matching
   # today's idempotent `pnpm start` behavior. Volume/env changes only take effect
   # after `pnpm destroy` recreates the container.

@@ -134,6 +134,24 @@ function ionos.wordpress.print_help() {
   printf "$(sed -e '1,/^###help-message/d' "$1")\n"
   exit
 }
+
+# true if a container with the given name is currently running.
+#
+# @param $1 container name
+#
+function ionos.wordpress.container_running() {
+  docker ps --filter "name=$1" --format '{{.Names}}' | grep -qx "$1"
+}
+export -f ionos.wordpress.container_running
+
+# true if a container with the given name exists, running or stopped.
+#
+# @param $1 container name
+#
+function ionos.wordpress.container_exists() {
+  docker ps -a --filter "name=$1" --format '{{.Names}}' | grep -qx "$1"
+}
+export -f ionos.wordpress.container_exists
 export -f ionos.wordpress.print_help
 
 export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)

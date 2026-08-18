@@ -13,7 +13,7 @@ source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 # MARK: test dev container not running
 # ensure the dev container is not running before cleaning up
-if docker ps --filter "name=${CONTAINER_NAME}" --format '{{.Names}}' | grep -qx "$CONTAINER_NAME"; then
+if ionos.wordpress.container_running "$CONTAINER_NAME"; then
   ionos.wordpress.log_warn "dev container '$CONTAINER_NAME' is already running. Excecute 'pnpm stop' or 'pnpm destroy' to stop it before cleaning up."
   exit 1
 fi

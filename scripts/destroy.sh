@@ -11,7 +11,7 @@
 # bootstrap the environment
 source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
-if docker ps -a --filter "name=${CONTAINER_NAME}" --format '{{.Names}}' | grep -qx "$CONTAINER_NAME"; then
+if ionos.wordpress.container_exists "$CONTAINER_NAME"; then
   docker rm -f "$CONTAINER_NAME" >/dev/null
 fi
 
