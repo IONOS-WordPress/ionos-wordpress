@@ -339,18 +339,22 @@ if [[ "${USE[@]}" =~ all|php ]]; then
   # by testing its syntax againts the transpiler target language
   if [[ ${#POSITIONAL_ARGS[@]} -eq 0 ]]; then
     # for each wp-plugin and wp-mu-plugin in the packages directory
-    for transpiled_plugin_dir in $(find packages -path '*/wp-plugin/*/dist/*-?.?.?-php?.?' -o -path '*/wp-mu-plugin/*/dist/*-?.?.?-php?.?' -type d -name '*-?.?.?-php?.?'); do
+    for transpiled_plugin_dir in $(find packages \( -path '*/wp-plugin/*/dist/*-?.?.?-php?.?' -o -path '*/wp-mu-plugin/*/dist/*-?.?.?-php?.?' \) -type d -name '*-?.?.?-php?.?'); do
       # get the target php version from the directory name
       TARGET_PHP_VERSION=$(echo "${transpiled_plugin_dir#*php}" | grep -oE '^[0-9.]+')
 
       ionos.wordpress.log_header "checking compatibility for target php version $TARGET_PHP_VERSION in plugin $transpiled_plugin_dir"
       # check if the transpiled plugin code (except for phpunit test files ) is valid for the desired php version
-      ! cat <<EOL | docker run -i --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:${TARGET_PHP_VERSION}-cli /bin/bash - | grep -v '^No syntax errors'
+      SYNTAX_CHECK_OUTPUT=$(cat <<EOL | docker run -i --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:${TARGET_PHP_VERSION}-cli /bin/bash -
 find "$transpiled_plugin_dir" -name "*.php" -not -name "*Test.php" -not -path "*/stretch-extra/stretch-extra/*" -print0 | xargs -0L1 php -l
 exit $?
 EOL
+      )
+      SYNTAX_CHECK_STATUS=$?
 
-      if [[ $? -ne 0 ]]; then
+      echo "$SYNTAX_CHECK_OUTPUT"
+
+      if [[ $SYNTAX_CHECK_STATUS -ne 0 ]] || [[ -z "$SYNTAX_CHECK_OUTPUT" ]] || echo "$SYNTAX_CHECK_OUTPUT" | grep -qv '^No syntax errors'; then
         exit 1
       fi
     done
