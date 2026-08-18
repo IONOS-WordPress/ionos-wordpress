@@ -33,6 +33,7 @@ scripts/test.sh:348-355
 ## Summary of Changes
 
 Replaced the `! cat <<EOL | docker run ... | grep -v '^No syntax errors'` / `$? -ne 0` pattern (which inverted the pipeline's exit status and could never detect docker itself failing) with:
+
 1. Capture the pipeline's output via command substitution and `docker run`'s own exit status via `$?` immediately after.
 2. Explicitly fail if that status is non-zero, OR the output is empty (docker/php produced nothing), OR any output line doesn't start with 'No syntax errors' (a real php -l error).
 

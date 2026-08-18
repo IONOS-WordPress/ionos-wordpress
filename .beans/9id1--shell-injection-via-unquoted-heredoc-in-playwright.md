@@ -31,8 +31,8 @@ Quoted the heredoc delimiter (`<<'EOF'` instead of `<<EOF`) in `playwright/exec-
 
 ## Follow-up fix
 
-The 9id1 fix (quoting the heredoc delimiter) initially broke `security.spec.js` (`pnpm test:e2e security.spec.js`): `wp --quiet user update admin --user_pass='\${WP_PASSWORD}'` relied on the *old bug* — the unquoted heredoc let the host shell expand `${WP_PASSWORD}` textually even inside single quotes, before the text reached the container. With the delimiter quoted, nothing expands it anymore, so the password got set literally to the string `${WP_PASSWORD}`.
+The 9id1 fix (quoting the heredoc delimiter) initially broke `security.spec.js` (`pnpm test:e2e security.spec.js`): `wp --quiet user update admin --user_pass='\${WP_PASSWORD}'` relied on the _old bug_ — the unquoted heredoc let the host shell expand `${WP_PASSWORD}` textually even inside single quotes, before the text reached the container. With the delimiter quoted, nothing expands it anymore, so the password got set literally to the string `${WP_PASSWORD}`.
 
-Fixed by switching that line's quoting to double quotes (`user_pass=\"${WP_PASSWORD}\"`), so the *container's* shell expands `$WP_PASSWORD` from its own environment (set via `--env WP_PASSWORD="$WP_PASSWORD"` in scripts/test.sh:258) instead of relying on host-side leakage. Checked every other `execTestCLI` call site in the repo — this was the only one depending on shell-escaped (`\$`) variables, so no other specs are affected. Verified: `pnpm test:e2e security.spec.js` — 3/3 passed.
+Fixed by switching that line's quoting to double quotes (`user_pass=\"${WP_PASSWORD}\"`), so the _container's_ shell expands `$WP_PASSWORD` from its own environment (set via `--env WP_PASSWORD="$WP_PASSWORD"` in scripts/test.sh:258) instead of relying on host-side leakage. Checked every other `execTestCLI` call site in the repo — this was the only one depending on shell-escaped (`\$`) variables, so no other specs are affected. Verified: `pnpm test:e2e security.spec.js` — 3/3 passed.
 
 File: packages/wp-plugin/ionos-essentials/ionos-essentials/inc/security/tests/e2e/security.spec.js:12

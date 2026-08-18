@@ -12,6 +12,7 @@ parent: qi52
 scripts/build.sh's composer invocation ('docker run ... composer:latest install ...', ~line 250) and wp-cli invocation ('docker run ... wordpress:cli-php8.3 wp $@', ~line 327) always shell out to docker, unlike ecs-php/rector-php/potrans/dennis-i18n which use the native-tool dispatch in _native-tools.sh established elsewhere in this PR.
 
 Both also hardcode version/tag literals disconnected from the project's actual PHP-version matrix (packages/docker/wordpress-alpine/image-matrix.json, used by scripts/test.sh):
+
 - 'composer:latest' is a floating tag
 - 'wordpress:cli-php8.3' hardcodes PHP 8.3
 

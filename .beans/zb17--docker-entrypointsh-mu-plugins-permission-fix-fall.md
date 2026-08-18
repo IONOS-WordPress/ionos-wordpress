@@ -39,7 +39,7 @@ The bean's premise was that docker-entrypoint.sh's only permission fix-up is `ch
     chown -R php:php /htdocs
     chmod -R a+rwX /htdocs
 
-This runs on *every* container start regardless of uid remapping or whether the image was locally built or pulled, and since bind mounts (including the per-container `wp-content/mu-plugins` overlay - see `_docker-mounts.sh`) are already attached by the time the entrypoint runs, this recursive chown+chmod reaches into mu-plugins too. It's strictly broader than the old wp-env-era guard (which only did a conditional `chmod a+w -R` on mu-plugins specifically).
+This runs on _every_ container start regardless of uid remapping or whether the image was locally built or pulled, and since bind mounts (including the per-container `wp-content/mu-plugins` overlay - see `_docker-mounts.sh`) are already attached by the time the entrypoint runs, this recursive chown+chmod reaches into mu-plugins too. It's strictly broader than the old wp-env-era guard (which only did a conditional `chmod a+w -R` on mu-plugins specifically).
 
 ## Verification
 

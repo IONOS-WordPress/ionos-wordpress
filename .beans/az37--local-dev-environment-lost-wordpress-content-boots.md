@@ -16,7 +16,7 @@ The deleted scripts/wp-env-after-start.sh ran unconditionally on every 'wp-env s
 - set the front page to a static page (`wp option update page_on_front 2` / `show_on_front page`)
 - propagated an optional WPSCAN_TOKEN secret into the options table
 
-This logic was moved into packages/docker/wordpress-alpine/examples/after-start-ionos-wordpress.sh, an *example* script explicitly commented "Not wired into .env/docker-compose yet." Nothing in .env, .env.local.example, scripts/start.sh, or scripts/test.sh sets AFTER_START by default. On top of that, the static-front-page and WPSCAN_TOKEN behaviors were dropped entirely - they aren't even present in the example script.
+This logic was moved into packages/docker/wordpress-alpine/examples/after-start-ionos-wordpress.sh, an _example_ script explicitly commented "Not wired into .env/docker-compose yet." Nothing in .env, .env.local.example, scripts/start.sh, or scripts/test.sh sets AFTER_START by default. On top of that, the static-front-page and WPSCAN_TOKEN behaviors were dropped entirely - they aren't even present in the example script.
 
 ## Impact
 
