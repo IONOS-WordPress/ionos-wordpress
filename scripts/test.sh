@@ -114,16 +114,30 @@ if [[ ${#POSITIONAL_ARGS[@]} -gt 0 ]] || [[ ! "${USE[@]}" =~ all|e2e ]]; then
   E2E_SHARDS=1
 fi
 
+# the suffix for shard-scoped resource names: empty for shard 1 (keeping its historical
+# unsuffixed name), "-<shard>" for every other shard.
+#
+# NOT the same rule as the e2e loop's SHARD_SUFFIX further below, which suffixes every
+# shard - including 1 - whenever E2E_SHARDS > 1 (to keep concurrently running shards'
+# artifacts/storage-state paths apart even for shard 1). that's a deliberate, different
+# condition (total shard count vs. this shard's own number), not something to unify here.
+#
+# @param $1 shard number
+#
+function ionos.wordpress.shard_name_suffix() {
+  [[ "$1" == '1' ]] && echo '' || echo "-$1"
+}
+
 # shard 1 keeps the historical name/port/mnt dir: PHPUnit runs against it, and it is the
 # default playwright/exec-test-cli.js talks to when TEST_CONTAINER_NAME is unset.
 function ionos.wordpress.test_container_name() {
-  [[ "$1" == '1' ]] && echo 'ionos-wordpress-test' || echo "ionos-wordpress-test-$1"
+  echo "ionos-wordpress-test$(ionos.wordpress.shard_name_suffix "$1")"
 }
 function ionos.wordpress.test_container_port() {
   echo "$((TEST_HTTP_PORT + $1 - 1))"
 }
 function ionos.wordpress.test_stack_dir() {
-  [[ "$1" == '1' ]] && echo "${MNT_HOME}/test" || echo "${MNT_HOME}/test-$1"
+  echo "${MNT_HOME}/test$(ionos.wordpress.shard_name_suffix "$1")"
 }
 
 if [[ "${USE[@]}" =~ all|php|e2e ]]; then
