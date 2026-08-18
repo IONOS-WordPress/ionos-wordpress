@@ -134,8 +134,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # not readonly: the e2e block below re-exports TEST_CONTAINER_NAME per shard (in a
   # subshell) so playwright/exec-test-cli.js targets that shard's container
   TEST_CONTAINER_NAME="$(ionos.wordpress.test_container_name 1)"
-  readonly VERSION_DIR="$(ionos.wordpress.wordpress_version_dir "$WORDPRESS_VERSION")"
-  readonly CORE_DIR="${MNT_HOME}/wordpress-core/${VERSION_DIR}"
+  readonly CORE_DIR="$(ionos.wordpress.core_dir "$WORDPRESS_VERSION")"
   # WordPress/WordPress (the release-build mirror used for WORDPRESS_VERSION) has no
   # tests/ directory at all - the test suite (WP_UnitTestCase and friends) only lives
   # in WordPress/wordpress-develop, always on `trunk` regardless of the core version

@@ -168,3 +168,15 @@ function ionos.wordpress.wordpress_version_dir() {
   echo "${1//[\/#]/-}"
 }
 export -f ionos.wordpress.wordpress_version_dir
+
+#
+# the shared, version-keyed WordPress core dir under ${MNT_HOME} - bind-mounted
+# read-write across every container running the given WORDPRESS_VERSION (see
+# ionos.wordpress.build_wp_volume_args, docker-entrypoint.sh).
+#
+# @param $1 WORDPRESS_VERSION
+#
+function ionos.wordpress.core_dir() {
+  echo "${MNT_HOME}/wordpress-core/$(ionos.wordpress.wordpress_version_dir "$1")"
+}
+export -f ionos.wordpress.core_dir

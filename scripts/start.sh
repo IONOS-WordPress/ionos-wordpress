@@ -19,8 +19,7 @@ else
   pnpm build
 fi
 
-readonly VERSION_DIR="$(ionos.wordpress.wordpress_version_dir "$WORDPRESS_VERSION")"
-readonly CORE_DIR="${MNT_HOME}/wordpress-core/${VERSION_DIR}"
+readonly CORE_DIR="$(ionos.wordpress.core_dir "$WORDPRESS_VERSION")"
 readonly STACK_DIR="${MNT_HOME}/dev"
 
 # env vars and bind mounts are baked into a container at `docker run` time and this

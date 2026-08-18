@@ -1,11 +1,11 @@
 ---
 # 9p16
 title: Dedupe CORE_DIR path construction between start.sh and test.sh
-status: todo
+status: completed
 type: task
 priority: low
 created_at: 2026-08-17T13:39:17Z
-updated_at: 2026-08-17T13:39:17Z
+updated_at: 2026-08-18T09:15:23Z
 parent: qi52
 ---
 
@@ -27,3 +27,11 @@ Add 'ionos.wordpress.core_dir <wordpress_version>' to _docker-mounts.sh and have
 
 scripts/start.sh:22-23
 scripts/test.sh:140
+
+## Summary of Changes
+
+Added `ionos.wordpress.core_dir <wordpress_version>` to scripts/includes/_docker-mounts.sh (which already owns `ionos.wordpress.wordpress_version_dir`), and used it in both scripts/start.sh and scripts/test.sh, collapsing each script's separate `VERSION_DIR`+`CORE_DIR` readonly pair into one `CORE_DIR` line. Confirmed `VERSION_DIR` wasn't used anywhere else in either script before removing it.
+
+## Verification
+
+`pnpm destroy \&\& pnpm start`: recreated and started the dev container correctly. `pnpm test --use php`: 15/15 PHPUnit tests pass.
