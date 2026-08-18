@@ -14,12 +14,15 @@ readonly STRETCH_EXTRA_BUNDLE_DIR='./packages/wp-mu-plugin/stretch-extra/stretch
 #
 # runs php against the stretch-extra config file - either the host's native php (the dev
 # container already ships one, see .devcontainer/Dockerfile) or, on a bare host without one,
-# php:8.3-cli via docker. the config file is a plain array literal with no version-sensitive
-# syntax, so any php works - this only exists to avoid a docker-in-docker round trip when a
-# native php is already available.
+# a docker fallback. the config file is a plain array literal with no version-sensitive
+# syntax, so any php works - unlike ecs-php/rector-php/potrans/dennis-i18n (see
+# _native-tools.sh), this isn't a per-tool COMPOSER_HOME-isolated install, just whatever
+# php happens to be on PATH; the docker fallback's version tag is likewise arbitrary,
+# only pinned for a reproducible fallback rather than any actual compatibility need.
 #
 function ionos.wordpress.stretch-extra.run_php() {
-  if command -v php >/dev/null 2>&1; then
+  # explicit escape hatch - see the caveat at the top of _native-tools.sh
+  if [[ "${IONOS_WP_FORCE_DOCKER:-}" != '1' ]] && command -v php >/dev/null 2>&1; then
     php "$@"
   else
     docker run --rm -i --quiet -v "$(pwd):/app" -w /app php:8.3-cli php "$@"
