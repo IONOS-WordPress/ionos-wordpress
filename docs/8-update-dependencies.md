@@ -1,34 +1,34 @@
 # update-dependencies
 
-`pnpm update-dependencies` will scan all monorepo dependencies for updates.
+`pnpm update-dependencies` scans all monorepo dependencies for updates.
 
-It does much more than dependabot. Dependabot will only scan for npm and composer updates.
+It does much more than Dependabot. Dependabot only scans for npm and Composer updates.
 
-`pnpm update-dependencies` will additionally scan for updates of :
+`pnpm update-dependencies` also scans for updates of:
 
 - NodeJS
 - pnpm
 - Docker
-- PHP versionn
+- PHP version
 
-Running `pnpm update-dependencies` will update npm dependencies automatically.
+Running `pnpm update-dependencies` updates npm dependencies automatically.
 
-All other dependency updates will be spit out to console and must be applied manually.
-Follow the console output to do all manually steps.
+The command prints all other dependency updates to the console. You must apply these manually.
+Follow the console output to complete all manual steps.
 
-> If `pnpm update-dependencies` lists updates of `pnpm` or PHP versions you should really be careful test if everything runs fine afterwards.
-> If you are unsure wwhat to do - leave the current `pnpm` and PHP versions as is.
+> If `pnpm update-dependencies` lists updates of `pnpm` or PHP versions, be careful. Test that everything still runs fine afterward.
+> If you are unsure what to do, leave the current `pnpm` and PHP versions as they are.
 
-> To update the node dependencies including minor and major changes you can start the update-dependencies script with an additional switch : `pnpm update-dependencies --pnpm-opts "--latest"`
+> To update the node dependencies, including minor and major changes, start the update-dependencies script with an extra switch: `pnpm update-dependencies --pnpm-opts "--latest"`
 
-After finishing all update steps you need to
+After you finish all update steps, do the following:
 
-- increment manually the version property of the `package.json` files of each workspace package containing composer.json dependencies or python dependencies.
+- Manually increment the version property in the `package.json` file of each workspace package that contains composer.json dependencies or Python dependencies.
 
-- call `pnpm build` to get the `composer.lock` files updated
+- Run `pnpm build` to update the `composer.lock` files.
 
-- call `pnpm test` to check if the updates did not broke something
+- Run `pnpm test` to check that the updates did not break anything.
 
-- in case of tool updates (like `prettier` or `eslint`) you should also try if the tool already works.
+- For tool updates (such as `prettier` or `eslint`), also test that the tool still works.
 
-After all you can create a PR of all changes.
+After you complete these steps, create a PR of all changes.

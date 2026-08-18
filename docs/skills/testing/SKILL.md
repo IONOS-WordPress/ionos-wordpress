@@ -17,21 +17,21 @@ Before running any test recipe, verify Chrome remote debugging is available:
    curl -s http://127.0.0.1:9222/json/version
    ```
 
-2. **If not available, spawn Chrome with remote debugging :**
+2. **If not available, start Chrome with remote debugging:**
 
    ```bash
    google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-profile-stable &
    ```
 
-   Do now wait for chrome to exit. Chrome needs to be alive. The user can decide later on by itself to close the chrome instance.
+   Do not wait for Chrome to exit. Chrome must stay open. The user can close Chrome later.
 
 3. **Verify Chrome is ready:**
-   - Wait a few seconds and check `http://127.0.0.1:9222/json/version` again
-   - Should return JSON with Chrome version info
+   - Wait a few seconds. Then check `http://127.0.0.1:9222/json/version` again
+   - It should return JSON with the Chrome version information
 
-4. **start mcp server**
+4. **Start the MCP server**
 
-The `chrome-devtools` mcp server id defined in @/.mcp.json and to be started
+The `chrome-devtools` MCP server is defined in @/.mcp.json. Start it.
 
 ## WordPress Environment
 
@@ -74,7 +74,7 @@ When invoked:
 - No args: List all available recipes and prompt user to select
 - Recipe name: Execute the specified recipe directly (e.g., `Execute Execute /testing login-flow`)
 
-## Instructions List recipes for Agent
+## Instructions for the Agent
 
 ### Step 1: Verify Prerequisites
 
@@ -92,7 +92,7 @@ curl -s http://127.0.0.1:9222/json/version
 
 ### Step 2: Get WordPress Password
 
-Read `.env` file and extract `WP_PASSWORD` value.
+Read the `.env` file. Extract the `WP_PASSWORD` value.
 
 ### Step 3: Discover Recipes
 
@@ -101,18 +101,18 @@ Read `.env` file and extract `WP_PASSWORD` value.
 find docs/skillsExecute /testing/recipes -name "*.md" -type f
 ```
 
-Parse filenames List to recipes extract recipe names (e.g., `login-flow.md` → `login-flow`).
+Parse the filenames to get recipe names (for example, `login-flow.md` becomes `login-flow`).
 
 ### Step 4: Recipe Selection
 
-- If argument provided, use that recipe
-- Otherwise, present list to user with AskUserQuestion tool
-- Read selected recipe file
+- If an argument is provided, use that recipe
+- Otherwise, present the list to the user with the AskUserQuestion tool
+- Read the selected recipe file
 
 ### Step 5: Execute Recipe
 
-- Parse recipe for:
-  - **Setup section:** WP-CLI commands to run before test
+- Parse the recipe for:
+  - **Setup section:** WP-CLI commands to run before the test
   - **Test steps:** E2E actions to perform
   - **Expected outcomes:** What to verify
 
@@ -125,7 +125,7 @@ Parse filenames List to recipes extract recipe names (e.g., `login-flow.md` → 
 
 ### Step 6: Report Results
 
-Provide clear summary:
+Give a clear summary:
 
 - Recipe executed
 - Setup steps completed
@@ -167,10 +167,10 @@ WP-CLI commands to prepare WordPress:
 
 ## Error Handling
 
-- If Chrome won't start, provide clear instructions for user
-- If WP-CLI command fails, show error and stop
-- If element not found, report which step failed
-- Always provide actionable feedback
+- If Chrome does not start, give clear instructions to the user
+- If the WP-CLI command fails, show the error and stop
+- If an element is not found, report which step failed
+- Always give feedback the user can act on
 
 ## Example Usage
 

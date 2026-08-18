@@ -151,7 +151,7 @@ EOF
 **Why heredoc:**
 
 - Context preservation
-- Forces data preparation before output
+- Prepares data before output
 - Better static analysis
 - Cleaner code
 
@@ -192,7 +192,7 @@ function handle_save(int $post_id): void {
 
 ## Asset Bundling & Enqueuing
 
-**All JavaScript and CSS files are bundled using `@wordpress/scripts`** which generates:
+**`@wordpress/scripts` bundles all JavaScript and CSS files** and generates:
 
 - `build/index.js` - Bundled JavaScript
 - `build/index.css` - Bundled CSS (if exists)

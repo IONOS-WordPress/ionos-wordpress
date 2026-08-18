@@ -2,11 +2,11 @@
 
 ## Overview
 
-This document serves as the entry point for AI agents working on the IONOS WordPress monorepo. It provides high-level project context and references to detailed coding standards.
+This document is the entry point for AI agents that work on the IONOS WordPress monorepo. It gives high-level project context and links to detailed coding standards.
 
 ## Project Structure
 
-This is a WordPress monorepo using pnpm workspaces containing plugins, must-use plugins, themes, and development tools.
+This is a WordPress monorepo. It uses pnpm workspaces and contains plugins, must-use plugins, themes, and development tools.
 
 ```
 /
@@ -50,7 +50,7 @@ All coding standards are organized in `/docs/agent/`:
 
 ## Quick Reference
 
-**Important**: Every PHP / JS / CSS file should contain a header describing its contents.
+**Important**: Every PHP / JS / CSS file should contain a header that describes its contents.
 
 ### Critical Rules
 
@@ -123,13 +123,13 @@ All coding standards are organized in `/docs/agent/`:
 
 ### Task Tracking (Beans)
 
-**IMPORTANT**: before you do anything else, run `pnpm beans prime` and heed its output.
+**IMPORTANT**: before you do anything else, run `pnpm beans prime` and follow its output.
 
-This project tracks tasks, bugs, and features using [Beans](https://github.com/hmans/beans), a flat-file issue tracker stored in `.beans/`. Beans is installed locally per-project (not globally) — always invoke it via `pnpm beans <command>`, never a bare `beans` command.
+This project uses [Beans](https://github.com/hmans/beans) to track tasks, bugs, and features. Beans is a flat-file issue tracker stored in `.beans/`. Beans is installed locally in this project, not globally. Always run it with `pnpm beans <command>`. Never run a bare `beans` command.
 
 ### Changeset (required for features and fixes)
 
-When implementing a new feature, bug fix, or breaking change, **always create a changeset file**:
+When you implement a new feature, bug fix, or breaking change, **always create a changeset file**:
 
 1. Infer the affected package, bump type, and description from the user's request
 2. Ask interactively only for information you cannot determine from context
@@ -232,7 +232,7 @@ domReady(() => {
 
 1. **Nonce Functions**: NO backslash for `check_admin_referer()` and `check_ajax_referer()`
 2. **Tag Switching**: Avoid `<?php ?>` tag switching - use heredoc pattern
-3. **Early Escaping**: Don't escape before storage - escape at output
+3. **Early Escaping**: Do not escape before storage - escape at output
 4. **Option Values**: Use string values (e.g., `'enabled'`/`'disabled'`) not booleans for WordPress options to avoid type coercion issues
 5. **DOM Ready**: Use `@wordpress/dom-ready` not native `DOMContentLoaded`
 6. **API Fetch**: Use `@wordpress/api-fetch` not raw `fetch()` for WordPress REST
@@ -254,7 +254,7 @@ domReady(() => {
 - **Commit Format**: [Commitizen](https://github.com/commitizen/cz-cli) standard (Conventional Commits)
 - **Commit Scope**: Include plugin/feature name for plugin changes (e.g., `feat(essentials): description`)
 - **Bean IDs**: Include the relevant bean ID(s) in the commit message when the work is tracked in Beans
-- **Pull Requests**: Reference related issues, provide clear description
+- **Pull Requests**: Reference related issues, give a clear description
 
 See [Git Conventions](docs/agent/git-conventions.md) for detailed commit message format and examples.
 
@@ -262,11 +262,11 @@ See [Git Conventions](docs/agent/git-conventions.md) for detailed commit message
 
 ## Next Steps
 
-When starting work on this repository:
+When you start work on this repository:
 
 1. **Read relevant standards** in `/docs/agent/`
-2. **Review existing code** in the feature area you'll modify
-3. **Run tests** to ensure environment is working
+2. **Review existing code** in the feature area you will modify
+3. **Run tests** to make sure the environment works
 4. **Follow patterns** established in the codebase
 
 For detailed information on any topic, refer to the specific documentation files in `/docs/agent/`.

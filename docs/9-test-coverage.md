@@ -1,6 +1,6 @@
 # Test-Coverage for Essentials
 
-The following features (user faced and internal) are implemented:
+The following features (user-facing and internal) are implemented:
 
 - **[#loop]** Test loop functionality
 
@@ -24,17 +24,17 @@ The following features (user faced and internal) are implemented:
 
 - **[#dashboard]** Default dashboard
 
-  on login, our dashboard comes, change toggle, logout and login, standard dashboard comes
+  On login, our dashboard appears. Change the toggle, then log out and log in. The standard dashboard appears.
   - implemented in
     - **❌ tests missing !**
 
 - **[#dashboard]** Toggle Buttons
 
-  user clicks on toogle, toggle should be there after page reload, no js-error in console
+  The user clicks the toggle. The toggle state must persist after a page reload. No JavaScript error appears in the console.
 
 - **[#dashboard]** Banner
 
-  the banner shows up, has the correct tenant title
+  The banner appears and shows the correct tenant title.
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/e2e/welcome.spec.js
 
@@ -46,13 +46,13 @@ The following features (user faced and internal) are implemented:
 
 - **[#dashboard]** My-account
 
-  test, if there are two specific links for two different tenants
+  Test whether two specific links exist for two different tenants.
   - implemented in
     - **❌ tests missing !**
 
 - **[#dashboard]** NBA
 
-  dismiss an item, should be dismissed, there should be at least three nba for example
+  Dismiss a Next Best Action (NBA) item. It must stay dismissed. There must be at least three NBAs, for example.
   - implemented in
     - `packages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/phpunit/ClassNBATest.php`
 
@@ -60,7 +60,7 @@ The following features (user faced and internal) are implemented:
 
 - **[#dashboard]** Quick-links
 
-  test, if there are three links with href and anchor
+  Test whether there are three links, each with an href and an anchor.
   - implemented in
     - **❌ tests missing !**
 
@@ -70,87 +70,87 @@ The following features (user faced and internal) are implemented:
 
 - **[#dashboard #welcome]** Welcome screen
 
-  Welcome screen is shown and clickable, welcomemessage remains dismissed
+  The welcome screen appears and is clickable. The welcome message stays dismissed.
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/e2e/welcome.spec.js
 
 - **[#dashboard]** What's new
 
-  The whats new section is rendered, text is not tested
+  The What's New section renders. The text is not tested.
   - implemented in
 
 - **[#descriptify]** Adds text to the options-screen
 
-  check, if text is there or for other tenants not there
+  Check whether the text appears, or does not appear for other tenants.
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/descriptify/tests/e2e/descriptify.spec.js
 
 - **[#jetpack]** Injection of the jetpack coupon from the hosting environment
 
-  click through process with dummy coupon, assert URL parameter at end
+  Click through the process with a dummy coupon. Assert the URL parameter at the end.
   - implemented in
     - **❌ tests missing !**
 
 - **[#login]** Add a logo to the login-screen
 
-  logout and check logo at login screen, by src-link or sceenshot
+  Log out and check the logo on the login screen, by src link or screenshot.
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/login/tests/e2e/login.spec.js
 
-- **[#maintentance]** Hides contents for non logged-in users and shows contents to admin always
-  - Test Idea: switch on maintenance mode, check for logged in and not logged in users
+- **[#maintentance]** Hides content from users who are not logged in, and always shows content to the admin
+  - Test idea: turn on maintenance mode, then check both logged-in and logged-out users.
 
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/maintenance_mode/tests/e2e/maintenance.spec.js
 
 - **[#migration]** Performs tasks while updating to a specific version
 
-  set options to old version and assert changes
+  Set the options to an old version, then assert the changes.
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/migration/tests/phpunit/MigrationTest.php
 
 - **[#security]** Credentials Checking (check password against haveibeenpwned.com)
 
-  set password to "admin" and assert to be detected
+  Set the password to "admin" and assert that it is detected.
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/security/tests/phpunit/ClassSecurityTest.php
 
-- **[#security]** ensure user enables/disables security option and will be persisted
+- **[#security]** Make sure the user can enable or disable the security option, and that the setting persists
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/e2e/security-options.spec.js
 
 - **[#security]** Prevent login with e-mail-address instead of username
 
-  try to login with e-mail-adress
+  Try to log in with an e-mail address.
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/security/tests/e2e/security.spec.js
 
 - **[#security]** Checks if SSL is enabled
 
-  assert ssl-message to be on a random adminpage
+  Assert that the SSL message appears on a random admin page.
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/security/tests/e2e/security.spec.js
 
 - **[#security]** Disable access via xmlrpc
 
-  try to access xmlrpc-endpoint
+  Try to access the xmlrpc endpoint.
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/security/tests/e2e/security.spec.js
 
-- **[#switchpage]** Provides a page wherepackages/wp-plugin/ionos-essentials/ionos-essentials/inc/dashboard/tests/e2e/dashboard-no-errors.spec.js the user can decide whether to use AI for setup or not
+- **[#switchpage]** Provides a page where the user can decide whether to use AI for setup or not
 
-  assert switch page to be the same as screenshot
+  Assert that the switch page matches the screenshot.
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/switch-page/tests/e2e/switch-page.spec.js
 
 - **[#update]** Autoupdates the plugin
 
-  reset version and assert to have update message
+  Reset the version and assert that the update message appears.
   - implemented in
     - **❌ tests missing !**
 
 - **[#wpscan]** Scans for vulnerabilities of plugins and themes
 
-  assert in overview to have an issue, assert adminnotice, assert to delete a plugin
+  Assert that the overview shows an issue, assert the admin notice, and assert that you can delete a plugin.
   - implemented in
     - packages/wp-plugin/ionos-essentials/ionos-essentials/inc/wpscan/tests/phpunit/ClassWPScanTest.php

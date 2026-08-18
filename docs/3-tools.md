@@ -2,9 +2,9 @@
 
 ## build
 
-By default packages/{npm,wp-plugin} package workspace packages will be build.
+By default, the build process builds packages/{npm,wp-plugin} workspace packages.
 
-packages/{docker} workspace packages will only be build if no matching (name,version) docker image exists locally
+The build process only builds packages/{docker} workspace packages if no matching (name,version) docker image exists locally.
 
 ### Options:
 
@@ -28,43 +28,43 @@ packages/{docker} workspace packages will only be build if no matching (name,ver
 - `--use` Specify which operations to use (default: all)
 
   Currently supported operations:
-  - `all` (default) apply all operations
-  - `wp-plugin:wp-scripts` do wp-scripts bundling on wordpress plugins
-  - `wp-plugin:i18n` do localization operations on wordpress plugins
-  - `wp-plugin:rector` execute rector on wordpress plugins
-  - `wp-plugin:bundle` bundle wordpress plugins to zip archives
+  - `all` (default) applies all operations
+  - `wp-plugin:wp-scripts` bundles wordpress plugins with wp-scripts
+  - `wp-plugin:i18n` localizes wordpress plugins
+  - `wp-plugin:rector` runs rector on wordpress plugins
+  - `wp-plugin:bundle` bundles wordpress plugins into zip archives
 
-  Example usage :
+  Example usage:
 
-  do only wp-scripts transpilation and localization on wordpress plugins:
+  Run only wp-scripts transpilation and localization on wordpress plugins:
   `pnpm build --use wp-plugin:wp-scripts --use wp-plugin:i18n`
 
-  do only wp-scripts transpilation and localization on wordpress plugin essentials
+  Run only wp-scripts transpilation and localization on the wordpress plugin essentials:
   `pnpm build --use wp-plugin:wp-scripts --use wp-plugin:i18n --filter '@wordpress-ionos/essentials'`
 
-> Localization can be configured using environment variable `WP_CLI_I18N_LOCALES` (see `.env`).
+> You can configure localization using the environment variable `WP_CLI_I18N_LOCALES` (see `.env`).
 
 ## changeset
 
 see https://github.com/changesets/changesets
 
-will create a changeset file.
+`pnpm changeset` creates a changeset file.
 
-changesets are used to version packages and for maintaining CHANGELOG files.
+We use changesets to version packages and maintain CHANGELOG files.
 
 ### create a new changeset
 
-create a new changeset file : `pnpm changeset add`
+Create a new changeset file: `pnpm changeset add`
 
-create a new empty changeset file : `pnpm changeset add --empty`
+Create a new empty changeset file: `pnpm changeset add --empty`
 
 ### create a new version
 
-update package versions and apply changestes to CHANGELOG files: `pnpm changeset version`
+Update package versions and apply changes to CHANGELOG files: `pnpm changeset version`
 
 # clean
 
-Will cleanup any build artifacts (`dist`/`build` folder for example) and temporary files.
+`pnpm clean` cleans up any build artifacts (for example, the `dist`/`build` folder) and temporary files.
 
 `pnpm clean`
 
@@ -72,9 +72,9 @@ Will cleanup any build artifacts (`dist`/`build` folder for example) and tempora
 
 # distclean
 
-Will cleanup any build artifacts (`dist`/`build` folder for example) and temporary files.
+`pnpm distclean` cleans up any build artifacts (for example, the `dist`/`build` folder) and temporary files.
 
-`pnpm distclean` will also remove all `node_modules` folders, docker containers and images created.
+`pnpm distclean` also removes all `node_modules` folders, and all docker containers and images it created.
 
 > You can control the cleanup process by configuring the `GIT_CLEAN_OPTS` environment variable (see `.env`).
 
@@ -82,16 +82,16 @@ Will cleanup any build artifacts (`dist`/`build` folder for example) and tempora
 
 Deletes the container packages this repository publishes to `ghcr.io` — the dev container image plus one image per `packages/docker/*` workspace package — including every version they hold : `pnpm purge-registry`
 
-Whole packages are deleted rather than individual versions, because that is the only way to clear the legacy dev container packages that carried their timestamp in the package _name_ instead of the tag (one package per change). Packages published by other repositories in the organization are never touched; they are listed as `skip`.
+The tool deletes whole packages rather than individual versions. This is the only way to clear the legacy dev container packages that carried their timestamp in the package _name_ instead of the tag (one package per change). It never touches packages published by other repositories in the organization. It lists these as `skip`.
 
 > [!CAUTION]
-> This is irreversible — GitHub cannot restore a deleted package version. `pnpm purge-registry` therefore only _reports_ what it would delete; add `--yes` to actually delete. The next CI run rebuilds and republishes whatever it needs, so the cost is build time — but never run it while a release is in flight.
+> This is irreversible — GitHub cannot restore a deleted package version. `pnpm purge-registry` therefore only _reports_ what it would delete. Add `--yes` to actually delete. The next CI run rebuilds and republishes whatever it needs, so the cost is build time — but never run it while a release is in flight.
 
-Requires `GH_TOKEN` in `.secrets` (see `.secrets.example`) — a classic personal access token carrying the `read:packages` and `delete:packages` scopes. Fine-grained tokens cannot delete container packages.
+`pnpm purge-registry` requires `GH_TOKEN` in `.secrets` (see `.secrets.example`) — a classic personal access token carrying the `read:packages` and `delete:packages` scopes. Fine-grained tokens cannot delete container packages.
 
 # destroy
 
-Will remove the persistent `wordpress-alpine` dev container and its per-stack overlay data (the shared, version-keyed WordPress core cache survives) : `pnpm destroy`
+`pnpm destroy` removes the persistent `wordpress-alpine` dev container and its per-stack overlay data (the shared, version-keyed WordPress core cache survives).
 
 > A container's env vars and bind mounts are fixed when it is created, so changes to them only take effect after a `pnpm destroy`. `WORDPRESS_VERSION` is the exception : `pnpm start` compares it against the existing container and recreates the container itself when they differ.
 
@@ -117,15 +117,15 @@ see https://cli.github.com/manual/
 
 # go-waas
 
-`pnpm go-waas` will execute `go-waas` command.
+`pnpm go-waas` runs the `go-waas` command.
 
-> `go-waas` is not part of the repository. It will be downloaded on demand (=> VPN needs to be enabled in this case)
+> `go-waas` is not part of the repository. It downloads on demand (VPN must be enabled in this case).
 
 # lint
 
 `pnpm lint` will lint all packages.
 
-By default every source file will be linted.
+By default, `pnpm lint` lints every source file.
 
 ## options:
 
@@ -144,30 +144,30 @@ By default every source file will be linted.
   - `pnpm` operate on pnpm lock file
   - `i18n` operate on po/pot files
 
-  Example usage :
+  Example usage:
 
-  lint all files matching prettier and i18n, skip php files etc.
+  Lint all files matching prettier and i18n. Skip php files, etc.:
   `pnpm lint --use prettier -use i18n`
 
 # playground
 
 `pnpm playground` will start a local WordPress playground (https://wordpress.org/playground/).
 
-WordPress playground is a local WordPress environment with a pre-installed WordPress instance and a set of plugins and themes completely running in the browser.
+WordPress playground is a local WordPress environment with a pre-installed WordPress instance. It also includes a set of plugins and themes, and it runs completely in the browser.
 
 # release (advanced)
 
 `pnpm release` will create a new release.
 
-It will run a bunch of commands like `pnpm changeset version`, `pnpm build`, creates GIT tags, pushes to GIT and creates a new release on GitHub.
+It runs a series of commands, such as `pnpm changeset version` and `pnpm build`. It also creates GIT tags, pushes them to GIT, and creates a new release on GitHub.
 
-> this command can be executed locally but is executed by default whenever code gets pushed to the `main` branch.
+> You can run this command locally. By default, it also runs whenever someone pushes code to the `main` branch.
 
 # start
 
-`pnpm start` will start the persistent `wordpress-alpine` dev container, building its Docker image first if needed.
+`pnpm start` starts the persistent `wordpress-alpine` dev container. It builds the Docker image first if needed.
 
-Xdebug is baked into the `wordpress-alpine` image and enabled by default. It attaches on _every_ request (`xdebug.start_with_request=yes`) and connects back to the IDE on `host.docker.internal:9003`, so starting the generated `ionos-wordpress` launch configuration in vscode is all that is needed to hit breakpoints.
+Xdebug is part of the `wordpress-alpine` image and is enabled by default. It attaches on _every_ request (`xdebug.start_with_request=yes`) and connects back to the IDE on `host.docker.internal:9003`. As a result, you only need to start the generated `ionos-wordpress` launch configuration in vscode to hit breakpoints.
 
 # stop
 
@@ -179,15 +179,15 @@ see https://storybook.js.org/
 
 `pnpm storybook` will start storybook.
 
-Storybook can be used to create stories and tests for React components. It is also used to document components.
+You can use Storybook to create stories and tests for React components. You can also use it to document components.
 
-> Storybooks can be easily debugged using `vscode`.
+> You can debug Storybooks easily using `vscode`.
 
 # test
 
-will run tests for all packages.
+`pnpm test` runs tests for all packages.
 
-> This action will spin up its own ephemeral test container, independent of the persistent dev container started by `pnpm start`.
+> This action starts its own ephemeral test container, independent of the persistent dev container started by `pnpm start`.
 
 ## Options
 
@@ -200,11 +200,11 @@ will run tests for all packages.
   - `e2e` execute E2E tests
   - `react` execute Storybook/React tests
 
-  This option can be used multiple times to specify multiple tests.
+  You can use this option multiple times to specify multiple tests.
 
-  Example usage :
+  Example usage:
 
-  Execute only PHPUnit and E2e tests:
+  Execute only PHPUnit and E2E tests:
   `pnpm run test --use e2e --use php`
 
   Execute PHPUnit tests and provide additional args to PHPUnit :
@@ -224,7 +224,7 @@ Check for updates of
 - nodejs version
 - pnpm version
 - docker version
-- updates in workspace packages of the 'docker' flavour
+- updates in workspace packages of the 'docker' flavor
 
 ## Options
 

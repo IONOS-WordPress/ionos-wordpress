@@ -53,7 +53,7 @@ docs: improve README
 ## Subject (Required)
 
 - Imperative, present tense: "add" not "added"
-- Don't capitalize first letter
+- Do not capitalize the first letter
 - No period at end
 - Maximum 72 characters
 

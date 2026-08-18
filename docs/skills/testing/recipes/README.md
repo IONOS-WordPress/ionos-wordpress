@@ -80,10 +80,10 @@ pnpm cli user delete testuser --yes
 ## Tips for Writing Good Recipes
 
 1. **Be specific:** "Click the blue 'Publish' button in top right" not "click publish"
-2. **Include waits:** "Wait for success message to appear" helps agent know when step is complete
+2. **Include waits:** "Wait for success message to appear" helps the agent know when the step is complete
 3. **Use WP-CLI for verification:** More reliable than visual checks alone
-4. **Add cleanup:** Keep test environment clean for next run
-5. **Test prerequisites:** Mention if test requires login, plugins, or specific data
+4. **Add cleanup:** Keep the test environment clean for the next run
+5. **Test prerequisites:** Mention if the test requires login, plugins, or specific data
 6. **Use CSS selectors:** When helpful, include selectors like `button.publish-button` or `#post-title`
 
 ## Running a Recipe
@@ -161,6 +161,6 @@ When adding new recipes:
 
 1. Create a new `.md` file in this directory
 2. Follow the template structure
-3. Test the recipe to ensure it works
+3. Test the recipe to make sure it works
 4. Document any prerequisites or special setup needed
-5. Include cleanup steps if recipe modifies WordPress state
+5. Include cleanup steps if the recipe modifies the WordPress state

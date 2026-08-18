@@ -1,30 +1,30 @@
 # About
 
-This project integrates AI coding assistants (agents) like Claude Code, GitHub Copilot, and Google Gemini to enhance development workflows. Agents are AI-powered tools that understand your codebase context and assist with tasks like code generation, refactoring, testing, and commit message creation. They operate within your development environment, reading project files and executing commands to help you build features faster while maintaining code quality and consistency.
+This project uses AI coding assistants (agents), such as Claude Code, GitHub Copilot, and Google Gemini, to improve development workflows. Agents are AI-powered tools that read your codebase context. They help with tasks such as code generation, refactoring, testing, and commit message creation. They work inside your development environment. They read project files and run commands to help you build features faster, while they keep code quality and consistency.
 
-The project uses a centralized [AGENTS.md](../AGENTS.md) file to customize agent behavior and provide project-specific coding guidelines. This file serves as the entry point for all AI agents working on the codebase, defining architectural patterns, coding standards, security requirements, and best practices across PHP, JavaScript, CSS, and testing. When agents read AGENTS.md, they automatically follow the project's conventions for WordPress plugin development, including namespace organization, template patterns, EXOS framework usage, and commit message formatting.
+The project uses one central [AGENTS.md](../AGENTS.md) file to set agent behavior and give project-specific coding guidelines. This file is the entry point for all AI agents that work on the codebase. It defines architectural patterns, coding standards, security requirements, and best practices for PHP, JavaScript, CSS, and testing. When agents read AGENTS.md, they automatically follow the project's conventions for WordPress plugin development. This includes namespace organization, template patterns, EXOS framework use, and commit message formatting.
 
-You can customize agent behavior by modifying [AGENTS.md](../AGENTS.md) or the specialized documentation files it references in [docs/agent/](../docs/agent/). These documents include detailed standards for PHP syntax (PHP 8.3+ features, heredoc templating, escaping rules), JavaScript patterns (WordPress packages, async/await, EXOS framework integration), CSS architecture (native CSS nesting, BEM naming, EXOS components), security practices (input sanitization, nonce verification, capability checks), and testing approaches (PHPUnit assertions, Playwright selectors). The modular documentation structure allows you to update specific standards without rewriting the entire configuration.
+You can change agent behavior by editing [AGENTS.md](../AGENTS.md), or the specialized documentation files it references in [docs/agent/](../docs/agent/). These documents give detailed standards for PHP syntax (PHP 8.3+ features, heredoc templating, escaping rules), JavaScript patterns (WordPress packages, async/await, EXOS framework integration), CSS architecture (native CSS nesting, BEM naming, EXOS components), security practices (input sanitization, nonce verification, capability checks), and testing approaches (PHPUnit assertions, Playwright selectors). This modular documentation structure lets you update one standard without a rewrite of the entire configuration.
 
-The AGENTS.md approach ensures consistency across different AI assistants and team members by codifying project knowledge into machine-readable guidelines. Instead of repeatedly explaining coding patterns in chat, you document them once in AGENTS.md, and all agents automatically apply them to every code change. This dramatically reduces code review friction, prevents common mistakes like forgetting to escape output or missing nonce verification, and accelerates onboarding for both human developers and AI assistants.
+The AGENTS.md approach keeps AI assistants and team members consistent. It does this by putting project knowledge into machine-readable guidelines. Instead of explaining coding patterns in chat every time, you document them once in AGENTS.md, and all agents then apply them to every code change. This reduces code review friction, prevents common mistakes such as a missing output escape or a missing nonce check, and speeds up onboarding for both human developers and AI assistants.
 
-Beyond coding standards, AGENTS.md also configures agent workflows for complex tasks like commit message generation (using Commitizen format with plugin scopes), feature implementation (following namespace-based organization and WordPress hook patterns), and testing (executing PHPUnit tests and Playwright E2E tests with proper setup). The file includes quick reference sections, common gotchas (like the nonce function backslash exception), and links to WordPress developer resources, making it a comprehensive guide for AI-assisted development in this monorepo.
+Beyond coding standards, AGENTS.md also sets agent workflows for complex tasks. Examples include commit message generation (using Commitizen format with plugin scopes), feature implementation (following namespace-based organization and WordPress hook patterns), and testing (running PHPUnit tests and Playwright E2E tests with proper setup). The file includes quick reference sections, common gotchas (such as the nonce function backslash exception), and links to WordPress developer resources. Together, these make it a full guide for AI-assisted development in this monorepo.
 
 ## Agent integration
 
-The AI agent configuration in this project provides comprehensive context to AI clients about the monorepo structure, development tools, and coding standards. When an AI assistant like Claude Code, GitHub Copilot, or Google Gemini starts working in this workspace, it automatically reads [AGENTS.md](../AGENTS.md) and the referenced documentation files in [docs/agent/](../docs/agent/), gaining instant understanding of the pnpm workspace layout, package organization (plugins, must-use plugins, themes, Docker tools), build scripts, testing frameworks (PHPUnit, Playwright), and local development environment setup.
+The AI agent configuration in this project gives AI clients full context about the monorepo structure, development tools, and coding standards. When an AI assistant such as Claude Code, GitHub Copilot, or Google Gemini starts work in this workspace, it automatically reads [AGENTS.md](../AGENTS.md) and the referenced documentation files in [docs/agent/](../docs/agent/). It then instantly understands the pnpm workspace layout, package organization (plugins, must-use plugins, themes, Docker tools), build scripts, testing frameworks (PHPUnit, Playwright), and local development environment setup.
 
-This configuration eliminates the need to repeatedly explain project conventions in chat. The AI agent already knows to use PHP 8.3+ features, apply WordPress-specific escaping rules, leverage the EXOS framework for dashboard UI, follow BEM naming for CSS, use `@wordpress` packages for JavaScript, and format commit messages with Commitizen conventions. It understands architectural patterns like namespace-based organization, heredoc templating, and hook-based extensibility, ensuring every code change aligns with the project's established practices.
+This configuration removes the need to explain project conventions in chat every time. The AI agent already knows to use PHP 8.3+ features, apply WordPress-specific escaping rules, use the EXOS framework for dashboard UI, follow BEM naming for CSS, use `@wordpress` packages for JavaScript, and format commit messages with Commitizen conventions. It understands architectural patterns such as namespace-based organization, heredoc templating, and hook-based extensibility. This keeps every code change aligned with the project's established practices.
 
-Beyond general coding standards, the agent configuration provides specialized **skills** for complex workflows. Skills are pre-configured automation recipes that agents can execute for tasks like running test suites, generating features with proper file structure, or performing multi-step operations. These skills leverage project-specific tools (wp-cli, pnpm scripts) and encode domain knowledge about the WordPress development workflow, making it possible to accomplish sophisticated tasks with simple natural language prompts.
+Beyond general coding standards, the agent configuration provides specialized **skills** for complex workflows. Skills are pre-configured automation recipes that agents can run for tasks such as running test suites, generating features with the proper file structure, or multi-step operations. These skills use project-specific tools (wp-cli, pnpm scripts) and encode domain knowledge about the WordPress development workflow. This makes it possible to do complex tasks with simple natural-language prompts.
 
-Skills are particularly good for repetitive multi-step workflows that require specific tool invocations and domain knowledge, such as WordPress login sequences with wp-cli, plugin activation with MCP setup, or test suite execution with proper environment teardown. They capture proven procedures that would otherwise need to be rediscovered or explained each time, turning complex operations like "activate plugin X, configure feature Y, verify with Z" into single-command executions. This makes skills ideal for testing recipes, deployment procedures, environment setup tasks, and any workflow that involves coordinating multiple tools in a specific sequence.
+Skills work well for repetitive multi-step workflows that need specific tool calls and domain knowledge, such as WordPress login sequences with wp-cli, plugin activation with MCP setup, or test suite runs with proper environment teardown. They capture proven procedures that would otherwise need rediscovery or explanation each time. They turn complex operations, such as "activate plugin X, configure feature Y, verify with Z", into single-command runs. This makes skills a good fit for testing recipes, deployment procedures, environment setup tasks, and any workflow that coordinates multiple tools in a specific sequence.
 
 ### Example use cases
 
-Whatever AI client you use - they are always in context of the agent customization defined in [AGENTS.md].
+Whatever AI client you use, it always works in the context of the agent customization defined in [AGENTS.md].
 
-That's why answers will always take the agent customization into account :
+So, answers always take the agent customization into account:
 
 (Claude/Gemini/Copilot tested) Try these prompts in the chat:
 
@@ -38,7 +38,7 @@ Are there any coding style guides or architectural constraints I've defined for 
 
 #### commit message generation
 
-Generated commit messages will now also honor commit messages rules in AGENTS.md.
+Generated commit messages now also follow the commit message rules in AGENTS.md.
 
 see docs/agent/git-conventions.md
 
@@ -58,15 +58,15 @@ additionally the counter should be shown in the javascript console using an addi
 
 ## MCP
 
-The Model Context Protocol (MCP) extends AI agents with external capabilities beyond code manipulation. This project configures the `chrome-devtools` MCP server, which gives AI assistants direct control over a Chrome browser instance for automated testing, visual verification, and interactive debugging. When an agent needs to test WordPress features in a real browser, verify UI behavior, or interact with the admin dashboard, it can leverage MCP to programmatically navigate pages, inspect DOM elements, execute JavaScript, capture screenshots, and validate functionality without manual intervention.
+The Model Context Protocol (MCP) gives AI agents external capabilities beyond code changes. This project configures the `chrome-devtools` MCP server, which gives AI assistants direct control over a Chrome browser instance for automated testing, visual verification, and interactive debugging. When an agent needs to test WordPress features in a real browser, check UI behavior, or work with the admin dashboard, it can use MCP to navigate pages, inspect DOM elements, run JavaScript, capture screenshots, and check functionality without manual steps.
 
-The MCP server configuration is defined in [.mcp.json](../.mcp.json) and [.vscode/mcp.json](../.vscode/mcp.json), which specify the `chrome-devtools-mcp` server connecting to a Chrome instance running with remote debugging enabled on port 9222. This browser integration enables sophisticated testing workflows that combine WordPress CLI commands (wp-cli) with browser automation, such as resetting database state via CLI, then verifying the changes visually in the browser. The MCP approach provides a standardized protocol for agents to access external tools, making capabilities like browser control, API testing, or database inspection available across different AI clients (Claude Code, GitHub Copilot, Google Gemini).
+The MCP server configuration lives in [.mcp.json](../.mcp.json) and [.vscode/mcp.json](../.vscode/mcp.json). These files set the `chrome-devtools-mcp` server to connect to a Chrome instance that runs with remote debugging enabled on port 9222. This browser integration enables test workflows that combine WordPress CLI commands (wp-cli) with browser automation. For example, you can reset the database state through the CLI, then check the changes visually in the browser. The MCP approach gives a standard protocol for agents to reach external tools. This makes capabilities such as browser control, API testing, or database inspection available across different AI clients (Claude Code, GitHub Copilot, Google Gemini).
 
 ### Usage in Development
 
-With the MCP server configured, AI agents can execute browser-based workflows through natural language prompts. Instead of manually testing WordPress features, you can ask the agent to perform complex sequences like "login to wp-admin, navigate to the IONOS dashboard, enable MCP support in the tools tab, and verify the WordPress MCP plugin is activated." The agent will coordinate Chrome DevTools Protocol commands via MCP to automate the entire flow, capturing screenshots or console output as needed.
+With the MCP server configured, AI agents can run browser-based workflows through natural-language prompts. Instead of testing WordPress features by hand, you can ask the agent to do complex sequences, such as "log in to wp-admin, go to the IONOS dashboard, enable MCP support in the tools tab, and check that the WordPress MCP plugin is active." The agent then coordinates Chrome DevTools Protocol commands through MCP to automate the whole flow. It captures screenshots or console output as needed.
 
-The MCP integration is particularly valuable for testing skills (see [Testing skill](#testing-skill) section below), which combine WordPress environment setup via wp-cli with browser-based verification. For example, a testing recipe can reset plugin state using wp-cli commands, then use MCP to visually confirm the reset by navigating to the dashboard and inspecting specific UI elements. This bridges the gap between backend WordPress operations and frontend user experience validation.
+The MCP integration is especially useful for testing skills (see [Testing skill](#testing-skill) below), which combine WordPress environment setup through wp-cli with browser-based checks. For example, a testing recipe can reset the plugin state with wp-cli commands, then use MCP to visually confirm the reset. It does this by going to the dashboard and inspecting specific UI elements. This connects backend WordPress operations to frontend user-experience checks.
 
 Example usage:
 
@@ -85,15 +85,15 @@ To use the `chrome-devtools` MCP server, launch Chrome with remote debugging ena
 google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug
 ```
 
-Once Chrome is running with remote debugging, the MCP server can connect and provide browser control to AI agents. Future Chrome versions (145+) will simplify this setup with the `--auto-connect` flag, eliminating manual browser launch requirements.
+Once Chrome runs with remote debugging, the MCP server can connect and give browser control to AI agents. Future Chrome versions (145+) will simplify this setup with the `--auto-connect` flag, and remove the need for a manual browser launch.
 
 ## Skills
 
-Beyond general coding standards, the agent configuration provides specialized [skills](https://agentskills.io/) for complex workflows. Skills are pre-configured automation recipes that agents can execute for tasks like running test suites, generating features with proper file structure, or performing multi-step operations. These skills leverage project-specific tools (wp-cli, pnpm scripts) and encode domain knowledge about the WordPress development workflow, making it possible to accomplish sophisticated tasks with simple natural language prompts.
+Beyond general coding standards, the agent configuration provides specialized [skills](https://agentskills.io/) for complex workflows. Skills are pre-configured automation recipes that agents can run for tasks such as running test suites, generating features with the proper file structure, or multi-step operations. These skills use project-specific tools (wp-cli, pnpm scripts) and encode domain knowledge about the WordPress development workflow. This makes it possible to do complex tasks with simple natural-language prompts.
 
-Skills are particularly good for repetitive multi-step workflows that require specific tool invocations and domain knowledge, such as WordPress login sequences with wp-cli, plugin activation with MCP setup, or test suite execution with proper environment teardown. They capture proven procedures that would otherwise need to be rediscovered or explained each time, turning complex operations like "activate plugin X, configure feature Y, verify with Z" into single-command executions. This makes skills ideal for testing recipes, deployment procedures, environment setup tasks, and any workflow that involves coordinating multiple tools in a specific sequence.
+Skills work well for repetitive multi-step workflows that need specific tool calls and domain knowledge, such as WordPress login sequences with wp-cli, plugin activation with MCP setup, or test suite runs with proper environment teardown. They capture proven procedures that would otherwise need rediscovery or explanation each time. They turn complex operations, such as "activate plugin X, configure feature Y, verify with Z", into single-command runs. This makes skills a good fit for testing recipes, deployment procedures, environment setup tasks, and any workflow that coordinates multiple tools in a specific sequence.
 
-List known skills :
+List known skills:
 
 ```
 What skills do you know ?
@@ -113,24 +113,24 @@ create a new skill "reset essentials configuration" for resetting all wp_options
 
 ### Testing skill
 
-The [testing skill](./skills/testing/SKILL.md) provides reusable test automation recipes for common WordPress workflows. It includes pre-configured procedures and guides for testing scenarios that combine test scenarios in human language and optional wp-cli commands (for resetting the instance). These recipes ensure consistent test execution across the team and eliminate the need to manually coordinate multiple tools for complex test scenariosand guides.
+The [testing skill](./skills/testing/SKILL.md) provides reusable test automation recipes for common WordPress workflows. It includes pre-configured procedures and guides for test scenarios written in plain language, plus optional wp-cli commands to reset the instance. These recipes keep test runs consistent across the team, and remove the need to coordinate multiple tools by hand for complex test scenarios.
 
-The testing skill (docs/skills/testing/SKILL.md) enables AI agents to:
+The testing skill (docs/skills/testing/SKILL.md) lets AI agents do the following:
 
-- Discover recipes - List all available test scenarios
+- Discover recipes: list all available test scenarios.
 
   `list available /testing receipes`
 
-- Execute recipes and run tests declared in human language using Chrome DevTools MCP
+- Run recipes and tests written in plain language, using Chrome DevTools MCP.
 
   `execute /testing skill recipe login`
 
   `execute /testing skill recipe activate mcp`
 
-- Setup environment - Run WP-CLI commands before testing
-- Report results - Provide pass/fail status with details
+- Set up the environment: run WP-CLI commands before testing.
+- Report results: give pass/fail status with details.
 
-- creae a new testing receipe :
+- Create a new testing recipe:
 
   ```
   create a new testing skill recipe `dashboard/mcp-activation.md` which should
@@ -149,12 +149,12 @@ The testing skill (docs/skills/testing/SKILL.md) enables AI agents to:
 
 ### STE writing skill
 
-The [ste-writing skill](./skills/ste-writing/SKILL.md) rewrites prose (docs, READMEs, PR descriptions, error messages, release notes, comments, tool descriptions) into ASD-STE100 Simplified Technical English to remove "AI slop" - short sentences, active voice, one name per concept, no marketing adjectives. It does not apply to code, identifiers, or command syntax. Vendored from [woosal1337/blog](https://github.com/woosal1337/blog/tree/main/videos/ep01-the-cure-for-ai-slop) (MIT license).
+The [ste-writing skill](./skills/ste-writing/SKILL.md) rewrites prose (docs, READMEs, PR descriptions, error messages, release notes, comments, tool descriptions) into ASD-STE100 Simplified Technical English to remove "AI slop": short sentences, active voice, one name per concept, no marketing adjectives. It does not apply to code, identifiers, or command syntax. Vendored from [woosal1337/blog](https://github.com/woosal1337/blog/tree/main/videos/ep01-the-cure-for-ai-slop) (MIT license).
 
 The skill has two modes:
 
-- **strict** - procedures, runbooks, safety text, error messages
-- **STE-flavored** - general prose such as READMEs and PR descriptions
+- **strict**: procedures, runbooks, safety text, error messages
+- **STE-flavored**: general prose such as READMEs and PR descriptions
 
 Ask an agent to use it directly:
 
@@ -166,7 +166,7 @@ rewrite this PR description in STE
 review docs/agent/php-standards.md for STE violations
 ```
 
-A companion linter ships alongside the skill and can be run standalone to score a draft (violations per 100 words - lower is cleaner):
+A companion linter ships alongside the skill. You can run it on its own to score a draft (violations per 100 words, lower is cleaner):
 
 ```bash
 python3 docs/skills/ste-writing/ste-lint.py your-draft.md            # flavored: general prose

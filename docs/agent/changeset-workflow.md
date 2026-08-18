@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project uses [`@changesets/cli`](https://github.com/changesets/changesets) to manage versioning and changelogs across the monorepo. **Whenever you implement a new feature, bug fix, or breaking change, you must create a changeset file** in `.changeset/` before the work is considered complete.
+This project uses [`@changesets/cli`](https://github.com/changesets/changesets) to manage versioning and changelogs across the monorepo. **When you implement a new feature, bug fix, or breaking change, create a changeset file** in `.changeset/`. Do this before you finish the work.
 
 ## When to Create a Changeset
 
@@ -81,7 +81,7 @@ When in doubt, check the `name` field in the relevant `package.json`.
 
 ## Filename Convention
 
-Use a short, descriptive kebab-case filename that summarises the change:
+Use a short, descriptive kebab-case filename that summarizes the change:
 
 ```
 .changeset/add-maintenance-mode-thumbnails.md
@@ -93,11 +93,11 @@ Avoid generic names like `fix.md` or `change.md`. The filename is permanent and 
 
 ## Agent Workflow: Creating a Changeset
 
-Follow these steps every time a feature or fix is implemented:
+Follow these steps every time you implement a feature or fix:
 
 ### Step 1 — Extract information from user input
 
-Before asking the user anything, infer as much as possible from the conversation:
+Before you ask the user anything, infer as much information as possible from the conversation:
 
 - **Affected package**: Which package directory does the changed code live in?
 - **Bump type**: Is this a new feature (`minor`), a bug fix (`patch`), or a breaking change (`major`)?
@@ -118,7 +118,7 @@ Example questions:
 
 ### Step 3 — Present the changeset for review
 
-Before writing the file, show the user the full changeset content and the proposed filename:
+Before you write the file, show the user the full changeset content and the proposed filename:
 
 ```
 Changeset to be created at .changeset/add-apcu-feature.md:
@@ -130,11 +130,11 @@ Changeset to be created at .changeset/add-apcu-feature.md:
 add apcu feature
 ```
 
-Wait for explicit confirmation before writing the file.
+Wait for explicit confirmation before you write the file.
 
 ### Step 4 — Write the file
 
-Once confirmed, create the file in `.changeset/`:
+After the user confirms, create the file in `.changeset/`:
 
 ```bash
 # Example path
