@@ -187,13 +187,19 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
 
     ionos.wordpress.log_info "PHP_VERSION_OVERRIDE=$PHP_VERSION_OVERRIDE set - pulling prebuilt test image $WORDPRESS_ALPINE_IMAGE ..."
     # retry: a push that touches both packages/docker/wordpress-alpine/** and CI can race
-    # the separate build-wordpress-alpine-image.yaml publish job that tags this same commit
+    # the separate build-wordpress-alpine-image.yaml publish job that tags this same commit.
+    # backoff, not a flat wait: the common case is "not published yet" (not a transient
+    # failure), which the local-build fallback below handles anyway - short early retries
+    # reach that fallback fast, longer later ones still give a racing publish job a real
+    # chance to land.
+    PULL_RETRY_DELAYS=(5 10 20 30)
     PULLED=no
     for i in $(seq 1 5); do
       docker pull "$WORDPRESS_ALPINE_IMAGE" && { PULLED=yes; break; }
       [[ $i -eq 5 ]] && break
-      ionos.wordpress.log_warn "pull failed, image may still be publishing - retrying in 30s ($i/5) ..."
-      sleep 30
+      DELAY="${PULL_RETRY_DELAYS[$((i - 1))]}"
+      ionos.wordpress.log_warn "pull failed, image may still be publishing - retrying in ${DELAY}s ($i/5) ..."
+      sleep "$DELAY"
     done
 
     if [[ "$PULLED" != 'yes' ]]; then
