@@ -16,4 +16,4 @@ Rewrote 27 of 30 targeted files into ASD-STE100 STE-flavored prose (active voice
 
 Along the way, fixed pre-existing typos and grammar errors unrelated to STE (e.g. 'WorPress', 'annd', 'toogle', 'the the', British spellings).
 
-One agent stray-edited .gitignore to exclude the very file it changed plus .gitignore itself; reverted that before commit. Also removed a __pycache__ directory left by lint script runs.
+One agent stray-edited .gitignore to exclude the very file it changed plus .gitignore itself; reverted that before commit. Also removed a **pycache** directory left by lint script runs.

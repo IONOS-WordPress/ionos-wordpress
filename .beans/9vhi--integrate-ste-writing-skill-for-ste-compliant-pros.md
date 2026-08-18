@@ -14,6 +14,7 @@ as a first-class skill, following the docs/skills/<name>/SKILL.md convention alr
 the testing and stretch skills.
 
 ## Scope
+
 - Copy `ste-writing-skill.md` -> `docs/skills/ste-writing/SKILL.md`
 - Copy `ste-lint.py` -> `docs/skills/ste-writing/ste-lint.py` (referenced by the skill's Verify section)
 - Copy `ste-recurring-errors.md` -> `docs/skills/ste-writing/ste-recurring-errors.md` (referenced by the skill's strict mode)
@@ -24,12 +25,14 @@ the testing and stretch skills.
   - Confirm .claude/settings.json's \`skillDirs: [\"./docs/skills\"]\` already covers discovery, no config change expected
 
 ## Source
+
 - Skill: https://github.com/woosal1337/blog/blob/main/videos/ep01-the-cure-for-ai-slop/ste-writing-skill.md
 - Lint script: https://github.com/woosal1337/blog/blob/main/videos/ep01-the-cure-for-ai-slop/ste-lint.py
 - Recurring errors reference: https://github.com/woosal1337/blog/blob/main/videos/ep01-the-cure-for-ai-slop/ste-recurring-errors.md
 - License/attribution: source repo has no explicit license file spotted yet - verify before vendoring, and keep attribution to the original author (woosal1337) in the copied files.
 
 ## Todo
+
 - [ ] Verify source repo licensing permits vendoring
 - [ ] Copy the 3 files into docs/skills/ste-writing/
 - [ ] Fix any relative paths/links between the copied files
