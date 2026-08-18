@@ -27,8 +27,7 @@ while [[ $# -gt 0 ]]; do
       ionos.wordpress.print_help "$0"
       ;;
     --use)
-      # convert value to lowercase and append value to USE array
-      USE+=("${2,,}")
+      ionos.wordpress.parse_use_flag "$2"
       shift 2
       ;;
     --react-opts)
@@ -55,7 +54,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # invoke all tests by default
-[[ ${#USE[@]} -eq 0 ]] && USE=("all")
+ionos.wordpress.default_use_to_all
 
 # in CI, keep the downloaded browsers inside the workspace instead of the dev container's
 # ~/.cache/ms-playwright. the dev container is thrown away after every step, so the default

@@ -34,8 +34,7 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     --use)
-      # convert value to lowercase and append value to USE array
-      USE+=("${2,,}")
+      ionos.wordpress.parse_use_flag "$2"
       shift 2
       ;;
     -*|--*)
@@ -54,7 +53,7 @@ done
 FILTER="${FILTER[@]/#/--filter=}"
 
 # invoke all build steps by default
-[[ ${#USE[@]} -eq 0 ]] && USE=("all")
+ionos.wordpress.default_use_to_all
 # ENDMARK:
 
 # quirks : when switch between devcontainer and local development

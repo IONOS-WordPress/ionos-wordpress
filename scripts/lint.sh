@@ -24,8 +24,7 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --use)
-      # convert value to lowercase and append value to USE array
-      USE+=("${2,,}")
+      ionos.wordpress.parse_use_flag "$2"
       shift 2
       ;;
     -*|--*)
@@ -42,7 +41,7 @@ done
 [[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=(".")
 
 # invoke all linters by default
-[[ ${#USE[@]} -eq 0 ]] && USE=("all")
+ionos.wordpress.default_use_to_all
 
 function ionos.wordpress.prettier() {
   ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") html/yml/md/etc. files with prettier ..."

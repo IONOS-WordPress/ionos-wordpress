@@ -154,6 +154,28 @@ function ionos.wordpress.container_exists() {
 export -f ionos.wordpress.container_exists
 export -f ionos.wordpress.print_help
 
+# appends a --use flag's value (lowercased) to the caller's global USE array.
+#
+# @param $1 the --use flag's value
+#
+function ionos.wordpress.parse_use_flag() {
+  USE+=("${1,,}")
+}
+export -f ionos.wordpress.parse_use_flag
+
+# defaults the caller's global USE array to ("all") if --use was never given.
+#
+function ionos.wordpress.default_use_to_all() {
+  # an "if", not a bare "[[ ... ]] && ..." - the latter's overall exit status is 1
+  # when the condition is false, and unlike a bare && list at the top level (which
+  # `set -e` specially exempts), the SAME exit status returned from a function call
+  # is not exempt and would abort the caller.
+  if [[ ${#USE[@]} -eq 0 ]]; then
+    USE=("all")
+  fi
+}
+export -f ionos.wordpress.default_use_to_all
+
 export GIT_ROOT_PATH=$(git rev-parse --show-toplevel)
 
 # docker flags to use if docker containers will be invoked
