@@ -102,19 +102,11 @@ function ionos.wordpress.ecs() {
     ${POSITIONAL_ARGS[@]}
   )
 
-  local ecs
-  if ecs="$(ionos.wordpress.native_tool ecs-php)"; then
-    # ecs-config.php resolves the wpcs standards through $COMPOSER_HOME
-    COMPOSER_HOME="$(ionos.wordpress.native_tool_composer_home ecs-php)" "$ecs" "${args[@]}"
-  else
-    docker run \
-      $DOCKER_FLAGS \
-      --rm \
-      --user "$DOCKER_USER" \
-      -v $(pwd):/project/ \
-      ionos-wordpress/ecs-php \
-      "${args[@]}"
-  fi
+  # ecs-config.php resolves the wpcs standards through $COMPOSER_HOME (native mode only -
+  # harmless no-op in docker mode, the image already has its own COMPOSER_HOME baked in)
+  local ecs_docker_flags=(--user "$DOCKER_USER")
+  COMPOSER_HOME="$(ionos.wordpress.native_tool_composer_home ecs-php)" \
+    ionos.wordpress.run_native_or_docker ecs-php ionos-wordpress/ecs-php ecs_docker_flags "${args[@]}"
 }
 
 # kept for reference - not used anymore
@@ -224,18 +216,9 @@ function ionos.wordpress.dennis() {
       )
 
       # translate missing entries
-      if potrans="$(ionos.wordpress.native_tool potrans)"; then
-        DEEPL_API_KEY="${DEEPL_API_KEY}" "$potrans" "${potrans_args[@]}"
-      else
-        docker run \
-          $DOCKER_FLAGS \
-          --rm \
-          -i \
-          -e DEEPL_API_KEY="${DEEPL_API_KEY}" \
-          -v $(pwd):/project/ \
-          ionos-wordpress/potrans \
-          "${potrans_args[@]}"
-      fi || (
+      potrans_docker_flags=(-i -e DEEPL_API_KEY="${DEEPL_API_KEY}")
+      DEEPL_API_KEY="${DEEPL_API_KEY}" \
+        ionos.wordpress.run_native_or_docker potrans ionos-wordpress/potrans potrans_docker_flags "${potrans_args[@]}" || (
         ionos.wordpress.log_error "auto translation failed - see error above"
         exit 1
       )
@@ -266,18 +249,8 @@ function ionos.wordpress.dennis() {
   dennis_args=(status --showuntranslated ${POSITIONAL_ARGS[@]})
 
   # dennis
-  if dennis="$(ionos.wordpress.native_tool dennis-i18n)"; then
-    OUTPUT=$("$dennis" "${dennis_args[@]}")
-  else
-    OUTPUT=$(docker run \
-      $DOCKER_FLAGS \
-      --rm \
-      -i \
-      -v $(pwd):/project/ \
-      ionos-wordpress/dennis-i18n \
-      "${dennis_args[@]}" \
-    )
-  fi
+  dennis_docker_flags=(-i)
+  OUTPUT=$(ionos.wordpress.run_native_or_docker dennis-i18n ionos-wordpress/dennis-i18n dennis_docker_flags "${dennis_args[@]}")
 
   # map file path references from within docker container to host paths
   # and filter out unwanted lines (everything except untranslated string messages).

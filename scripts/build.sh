@@ -246,8 +246,20 @@ function ionos.wordpress.build_workspace_package_docker() {
   # fi
 
   # generate/update composer.lock file if composer.json exists in docker workspace package
+  #
+  # unlike ecs-php/rector-php/potrans/dennis-i18n (see _native-tools.sh), composer itself
+  # isn't one of the per-tool COMPOSER_HOME-isolated installs under
+  # $IONOS_NATIVE_TOOLS_PREFIX - it's a plain system binary, already present on PATH in the
+  # devcontainer/CI image (ships with the base image) and commonly present on a developer's
+  # host too. fall back to a pinned docker image (not :latest - a floating tag can change
+  # dependency-resolution behavior between CI runs and developer machines with no single
+  # pin point to bump) only when composer truly isn't available.
   if [[ -f "$path/composer.json" ]]; then
-    docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd)/$path":/app -w /app composer:latest install $COMPOSER_FLAGS --no-scripts
+    if [[ "${IONOS_WP_FORCE_DOCKER:-}" != '1' ]] && command -v composer &>/dev/null; then
+      (cd "$path" && composer install $COMPOSER_FLAGS --no-scripts)
+    else
+      docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd)/$path":/app -w /app composer:2.10.2 install $COMPOSER_FLAGS --no-scripts
+    fi
   fi
 
   rm -rf $path/{dist,build,build-info}
@@ -314,6 +326,12 @@ function ionos.wordpress.get_plugin_textdomains() {
 # the used docker image is the docker image wordpress:cli which is independent from the
 # dev/test containers, freeing us from starting either up when building. image will be
 # downloaded on demand.
+#
+# unlike ecs-php/rector-php/potrans/dennis-i18n (see _native-tools.sh), wp-cli isn't
+# installed natively in the devcontainer/CI image (yet) - this stays docker-only until
+# that's deliberately added. the php version tag below must match AGENTS.md's stated
+# minimum supported PHP version (currently 8.3) - nothing else catches a missed update if
+# that minimum ever changes.
 #
 # all params will be delegated to the dockerized wp-cli command
 #

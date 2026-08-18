@@ -39,7 +39,12 @@ declare -A IONOS_NATIVE_TOOL_PATHS=(
   [potrans]='potrans/vendor/bin/potrans'
   [dennis-i18n]='dennis-i18n/bin/dennis-cmd'
 )
-export IONOS_NATIVE_TOOL_PATHS
+# bash cannot export associative arrays into a child process's environment - only
+# plain scalars and functions (via `export -f`) propagate that way. every caller
+# of ionos.wordpress.native_tool() reaches this file via `source` (a fork, not a
+# re-exec), which inherits the array regardless; a re-exec'd process (`bash -c`,
+# a separately invoked #!/usr/bin/env bash script) would just have to source
+# this file itself, same as every other function/variable declared here.
 
 #
 # echoes the absolute path of a natively installed tool and returns 0, or returns 1 if the
@@ -84,6 +89,42 @@ function ionos.wordpress.native_tool_composer_home() {
   echo "$IONOS_NATIVE_TOOLS_PREFIX/$1"
 }
 export -f ionos.wordpress.native_tool_composer_home
+
+#
+# runs a tool natively if available, else falls back to its docker image - for the
+# common case where the argument list is identical between both modes (the docker
+# image bind-mounts the workspace at /project/ with that as its WORKDIR, so paths
+# are already relative to the repository root in both modes, same as natively).
+#
+# not used for tools whose docker/native invocations construct genuinely different
+# arguments (e.g. rector's bind-mounted vs. real host paths) - only for the shared-args
+# shape.
+#
+# @param $1 tool name (= the packages/docker/<tool> directory name)
+# @param $2 docker image name (e.g. "ionos-wordpress/ecs-php")
+# @param $3 (nameref) array of extra `docker run` flags (e.g. --user/-i/-e ...)
+# @param $@ (remaining) the tool's argument list, shared between both modes
+#
+function ionos.wordpress.run_native_or_docker() {
+  local tool="$1"
+  local docker_image="$2"
+  local -n extra_docker_flags="$3"
+  shift 3
+
+  local tool_path
+  if tool_path="$(ionos.wordpress.native_tool "$tool")"; then
+    "$tool_path" "$@"
+  else
+    docker run \
+      $DOCKER_FLAGS \
+      --rm \
+      "${extra_docker_flags[@]}" \
+      -v "$(pwd)":/project/ \
+      "$docker_image" \
+      "$@"
+  fi
+}
+export -f ionos.wordpress.run_native_or_docker
 
 #
 # true if any tool still has to be run from its docker image, i.e. if the docker images
