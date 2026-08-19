@@ -180,8 +180,10 @@ function get_maintenance_reminder_mail_content(): string
   $tenant_label  = Tenant::get_label();
   $settings_url  = \admin_url('admin.php?page=' . $brand . '#tools');
 
+  // translators: %s is the customer's display name
   $mail  = '<p>' . \sprintf(__('Hi %s,', 'ionos-essentials'), \esc_html($customer_name)) . '</p>';
   $mail .= '<p>' . \sprintf(
+    // translators: %s is the site name
     __('Just a check-in regarding your website, %s. It has now been in Maintenance Mode for over a week.', 'ionos-essentials'),
     '<strong>' . \esc_html($site_name) . '</strong>'
   ) . '</p>';
@@ -197,6 +199,7 @@ function get_maintenance_reminder_mail_content(): string
   $mail .= '</p>';
 
   $mail .= '<p>' . __('Best regards,', 'ionos-essentials') . '<br>';
+  // translators: %s is the tenant/brand name
   $mail .= \sprintf(__('%s WordPress Team', 'ionos-essentials'), \esc_html($tenant_label)) . '</p>';
 
   return $mail;
