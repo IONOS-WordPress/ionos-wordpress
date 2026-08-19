@@ -219,7 +219,11 @@ foreach ($intercept_subcommands as $subcommand) {
               unmark_custom_plugin_as_deleted($full_key);
             } else {
               \WP_CLI::warning(
-                sprintf(__('Plugin "%s" is already installed and active.', 'stretch-extra'), $user_slug)
+                sprintf(
+                  /* translators: %s: Plugin slug. */
+                  __('Plugin "%s" is already installed and active.', 'stretch-extra'),
+                  $user_slug
+                )
               );
               break;
             }
@@ -238,7 +242,12 @@ foreach ($intercept_subcommands as $subcommand) {
         }
 
         \WP_CLI::success(
-          sprintf(__('Successfully performed %1$s on %2$s.', 'stretch-extra'), $subcommand, $user_slug)
+          sprintf(
+            /* translators: %1$s: subcommand (e.g. "install", "delete"). %2$s: Plugin slug. */
+            __('Successfully performed %1$s on %2$s.', 'stretch-extra'),
+            $subcommand,
+            $user_slug
+          )
         );
 
         break;

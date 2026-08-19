@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-05T14:36:17+00:00\n"
+"POT-Creation-Date: 2026-08-19T10:31:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stretch-extra\n"
@@ -83,11 +83,13 @@ msgstr ""
 msgid "Update not supported for mounted plugins."
 msgstr ""
 
+#. translators: %s: Plugin slug.
 #: stretch-extra/inc/modify-commands/modify-commands-plugins.php
 #, php-format
 msgid "Plugin \"%s\" is already installed and active."
 msgstr ""
 
+#. translators: %1$s: subcommand (e.g. "install", "delete"). %2$s: Plugin slug.
 #: stretch-extra/inc/modify-commands/modify-commands-plugins.php
 #, php-format
 msgid "Successfully performed %1$s on %2$s."
@@ -101,6 +103,7 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
+#. translators: %s: Plugin name.
 #: stretch-extra/inc/plugin-block-list/plugin-block-list.php
 #, php-format
 msgid "The use of \"%s\" is not allowed and cannot be activated. Uninstall is recommended."
@@ -120,6 +123,7 @@ msgstr ""
 msgid "Full list of blocked plugins"
 msgstr ""
 
+#. translators: %s: Plugin name.
 #: stretch-extra/inc/plugin-block-list/plugin-block-list.php
 #, php-format
 msgid "The use of \"%s\" is not allowed and cannot be activated via install. Uninstall is recommended."
