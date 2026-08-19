@@ -1,5 +1,11 @@
 # @ionos-wordpress/ionos-core
 
+## 0.5.0
+
+### Minor Changes
+
+- 43c4952: Enhance loop data
+
 ## 0.4.2
 
 ### Patch Changes

@@ -106,12 +106,12 @@
           },
           "required": ["id", "version", "auto_update"]
         },
-        "active_plugins": {
+        "plugins": {
           "type": "array",
-          "description": "List of active WordPress plugins",
+          "description": "List of WordPress plugins",
           "items": {
             "type": "object",
-            "required": ["plugin_slug", "version", "auto_update"],
+            "required": ["plugin_slug", "version", "auto_update", "active"],
             "properties": {
               "plugin_slug": {
                 "type": "string",
@@ -124,6 +124,10 @@
               "auto_update": {
                 "type": "boolean",
                 "description": "Whether auto-updates are enabled"
+              },
+              "active": {
+                "type": "boolean",
+                "description": "Whether the plugin is active"
               }
             }
           }
@@ -205,7 +209,7 @@
       "required": [
         "user_data",
         "active_theme",
-        "active_plugins",
+        "plugins",
         "posts",
         "comments",
         "uploads",
@@ -250,5 +254,6 @@
       "additionalProperties": true
     }
   },
+  "additionalProperties": true,
   "required": ["version", "supplier", "hosting", "wordpress", "events", "clicks", "plugin_data"]
 }

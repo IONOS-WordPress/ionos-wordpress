@@ -1,6 +1,6 @@
 {
   "name": "@ionos-wordpress/ionos-core",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "devDependencies": {
     "@ionos-wordpress/essentials": "workspace:*",
     "@ionos-wordpress/rector-php": "workspace:*",
