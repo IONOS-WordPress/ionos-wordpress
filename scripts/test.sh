@@ -369,9 +369,8 @@ EOL
       )
       SYNTAX_CHECK_STATUS=$?
 
-      echo "$SYNTAX_CHECK_OUTPUT"
-
       if [[ $SYNTAX_CHECK_STATUS -ne 0 ]] || [[ -z "$SYNTAX_CHECK_OUTPUT" ]] || echo "$SYNTAX_CHECK_OUTPUT" | grep -qv '^No syntax errors'; then
+        echo "$SYNTAX_CHECK_OUTPUT"
         exit 1
       fi
     done
