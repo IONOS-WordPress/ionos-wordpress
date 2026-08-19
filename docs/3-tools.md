@@ -115,12 +115,6 @@ see https://cli.github.com/manual/
 
 `pnpm gh-cli` allows you to control almost any aspect of the github repository (releases, issues, pull requests, etc.)
 
-# go-waas
-
-`pnpm go-waas` runs the `go-waas` command.
-
-> `go-waas` is not part of the repository. It downloads on demand (VPN must be enabled in this case).
-
 # lint
 
 `pnpm lint` will lint all packages.
