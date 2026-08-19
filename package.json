@@ -44,7 +44,6 @@
     "test:e2e": "./scripts/test.sh --use e2e",
     "gh-cli": "./scripts/gh-cli.sh",
     "beans": "./scripts/beans.sh",
-    "playground": "./scripts/playground.sh",
     "prepare": "./scripts/_prepare.sh",
     "stretch-extra": "./scripts/stretch-extra.sh",
     "stretch": "./scripts/stretch.sh"
@@ -90,7 +89,6 @@
     "@wordpress/components": "catalog:",
     "@wordpress/e2e-test-utils-playwright": "1.53.0",
     "@wordpress/scripts": "^34.1.0",
-    "@wp-now/wp-now": "0.1.75",
     "eslint": "10.8.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-import": "2.32.0",

@@ -26,8 +26,6 @@ packages/*/*/webpack.config.js
 /phpunit/vendor/
 /phpunit/.phpunit.result.cache
 /tmp
-/wp-playground-blueprint.json
-/wp-playground-blueprint.local.json
 .DS_Store
 mcp.log
 .gemini/skills

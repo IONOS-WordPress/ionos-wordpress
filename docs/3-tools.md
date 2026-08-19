@@ -143,12 +143,6 @@ By default, `pnpm lint` lints every source file.
   Lint all files matching prettier and i18n. Skip php files, etc.:
   `pnpm lint --use prettier -use i18n`
 
-# playground
-
-`pnpm playground` will start a local WordPress playground (https://wordpress.org/playground/).
-
-WordPress playground is a local WordPress environment with a pre-installed WordPress instance. It also includes a set of plugins and themes, and it runs completely in the browser.
-
 # release (advanced)
 
 `pnpm release` will create a new release.
