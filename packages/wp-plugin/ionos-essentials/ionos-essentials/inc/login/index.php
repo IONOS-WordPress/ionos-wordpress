@@ -62,7 +62,7 @@ if (defined('IONOS_LOGIN_LOADED')) {
 EOF
         ,
         \esc_attr(
-          \plugins_url('ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_slug() . '.svg', PLUGIN_FILE)
+          \plugins_url('ionos-essentials/ionos-essentials/inc/dashboard/data/tenant-logos/' . Tenant::get_slug() . '.svg', PLUGIN_FILE)
         ),
         \esc_attr(Tenant::get_label())
       );
