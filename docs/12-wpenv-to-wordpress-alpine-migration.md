@@ -21,17 +21,17 @@ but any local wp-env leftovers should be cleaned up (see checklist below).
 
 ### 2. `.env` variables changed
 
-| Old (wp-env)       | New                            | Notes                                                                            |
-| ------------------- | ------------------------------- | --------------------------------------------------------------------------------- |
-| `WP_ENV_HOME`       | `MNT_HOME`                      | default `./mnt`; shared core cache at `./mnt/wordpress-core/<version>`, per-stack overlay at `./mnt/<stack>/` |
-| `WP_ENV_CORE`       | `WORDPRESS_VERSION`             | same format (release version or `owner/repo#ref`), default `WordPress/WordPress#7.0.3` |
-| `WP_ENV_START_OPTS` | _(removed, no replacement)_     | —                                                                                |
-| _(new)_             | `CONTAINER_NAME`                | default `ionos-wordpress-dev`                                                    |
-| _(new)_             | `HTTP_PORT` / `TEST_HTTP_PORT`  | default `8888` / `8889`                                                          |
-| _(new)_             | `SSH_PORT`                      | default `2222` — SSH into the dev container was not possible under wp-env        |
-| _(new)_             | `IMAGE_REGISTRY` / `IMAGE_REPOSITORY` | default `ghcr.io` / `ionos-wordpress/wordpress-alpine-dev`                 |
-| _(new)_             | `AFTER_START`                   | defaults to `packages/docker/wordpress-alpine/after-start-ionos-wordpress.sh`; set empty for stock WordPress |
-| _(new, secrets)_    | `IMAGE_REGISTRY_USERNAME` / `IMAGE_REGISTRY_PASSWORD` | put in `.secrets`, only needed if the registry pull requires auth |
+| Old (wp-env)        | New                                                   | Notes                                                                                                         |
+| ------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `WP_ENV_HOME`       | `MNT_HOME`                                            | default `./mnt`; shared core cache at `./mnt/wordpress-core/<version>`, per-stack overlay at `./mnt/<stack>/` |
+| `WP_ENV_CORE`       | `WORDPRESS_VERSION`                                   | same format (release version or `owner/repo#ref`), default `WordPress/WordPress#7.0.3`                        |
+| `WP_ENV_START_OPTS` | _(removed, no replacement)_                           | —                                                                                                             |
+| _(new)_             | `CONTAINER_NAME`                                      | default `ionos-wordpress-dev`                                                                                 |
+| _(new)_             | `HTTP_PORT` / `TEST_HTTP_PORT`                        | default `8888` / `8889`                                                                                       |
+| _(new)_             | `SSH_PORT`                                            | default `2222` — SSH into the dev container was not possible under wp-env                                     |
+| _(new)_             | `IMAGE_REGISTRY` / `IMAGE_REPOSITORY`                 | default `ghcr.io` / `ionos-wordpress/wordpress-alpine-dev`                                                    |
+| _(new)_             | `AFTER_START`                                         | defaults to `packages/docker/wordpress-alpine/after-start-ionos-wordpress.sh`; set empty for stock WordPress  |
+| _(new, secrets)_    | `IMAGE_REGISTRY_USERNAME` / `IMAGE_REGISTRY_PASSWORD` | put in `.secrets`, only needed if the registry pull requires auth                                             |
 
 ### 3. Default PHP version bumped, new PHP-version override for tests
 
@@ -49,13 +49,13 @@ prebuilt image tag still exists before depending on it.
 
 ### 4. New top-level `pnpm` commands replace `pnpm wp-env`
 
-| Command                     | Script                       | Purpose                                                          |
-| ---------------------------- | ------------------------------ | ------------------------------------------------------------------ |
-| `pnpm cli <wp-cli args>`     | `scripts/cli.sh`               | run wp-cli inside the dev container as the `php` user             |
-| `pnpm enter`                 | `scripts/enter.sh`             | open an interactive shell in the dev container                    |
-| `pnpm logs`                  | `scripts/logs.sh`              | tail the dev container's logs                                     |
-| `pnpm purge-registry [--yes]`| `scripts/purge-registry.sh`    | delete this repo's published GHCR container packages — destructive, dry-run by default, needs `GH_TOKEN` in `.secrets` with `read:packages`+`delete:packages` |
-| `pnpm beans`                 | `scripts/beans.sh`             | wrapper around the Beans issue tracker                            |
+| Command                       | Script                      | Purpose                                                                                                                                                       |
+| ----------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm cli <wp-cli args>`      | `scripts/cli.sh`            | run wp-cli inside the dev container as the `php` user                                                                                                         |
+| `pnpm enter`                  | `scripts/enter.sh`          | open an interactive shell in the dev container                                                                                                                |
+| `pnpm logs`                   | `scripts/logs.sh`           | tail the dev container's logs                                                                                                                                 |
+| `pnpm purge-registry [--yes]` | `scripts/purge-registry.sh` | delete this repo's published GHCR container packages — destructive, dry-run by default, needs `GH_TOKEN` in `.secrets` with `read:packages`+`delete:packages` |
+| `pnpm beans`                  | `scripts/beans.sh`          | wrapper around the Beans issue tracker                                                                                                                        |
 
 ### 5. Dev and test stacks are now separate containers
 
