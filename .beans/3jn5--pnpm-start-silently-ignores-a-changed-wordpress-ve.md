@@ -9,7 +9,7 @@ updated_at: 2026-08-06T14:47:20Z
 
 `scripts/start.sh` only `docker start`s an already existing container, but env vars and
 bind mounts are baked in at `docker run` time. A bumped `WORDPRESS_VERSION` (e.g. 788dc044,
-`WordPress/WordPress#7.0` -> `#7.0.3`) was therefore silently ignored: the dev container kept
+`WordPress/WordPress#7.0` -> `#7.0.4`) was therefore silently ignored: the dev container kept
 serving the core dir it was originally created for, while `pnpm test:php` (ephemeral container)
 already ran the new version.
 
