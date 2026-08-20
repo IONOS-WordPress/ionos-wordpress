@@ -6,11 +6,6 @@ use function ionos\essentials\_is_plugin_active;
 
 defined('ABSPATH') || exit();
 
-// Skip loading if ionos-core's jetpack-flow has already loaded
-if (defined('IONOS_JETPACK_FLOW_LOADED')) {
-  return;
-}
-
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 const HIDDEN_PAGE_SLUG            = 'ionos-assistant-jetpack-backup-flow';

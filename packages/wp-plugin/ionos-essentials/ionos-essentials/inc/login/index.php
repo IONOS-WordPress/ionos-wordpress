@@ -8,11 +8,6 @@ use const ionos\essentials\PLUGIN_FILE;
 
 defined('ABSPATH') || exit();
 
-// Skip loading if ionos-core's login has already loaded
-if (defined('IONOS_LOGIN_LOADED')) {
-  return;
-}
-
 \add_action('init', function () {
   if (false === in_array($GLOBALS['pagenow'], ['wp-login.php', 'wp-register.php'], true)) {
     return;
