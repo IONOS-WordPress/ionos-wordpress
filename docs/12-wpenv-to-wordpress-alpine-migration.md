@@ -24,7 +24,7 @@ but any local wp-env leftovers should be cleaned up (see checklist below).
 | Old (wp-env)        | New                                                   | Notes                                                                                                         |
 | ------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `WP_ENV_HOME`       | `MNT_HOME`                                            | default `./mnt`; shared core cache at `./mnt/wordpress-core/<version>`, per-stack overlay at `./mnt/<stack>/` |
-| `WP_ENV_CORE`       | `WORDPRESS_VERSION`                                   | same format (release version or `owner/repo#ref`), default `WordPress/WordPress#7.0.4`                        |
+| `WP_ENV_CORE`       | `WORDPRESS_VERSION`                                   | same format (release version or `owner/repo#ref`), default `WordPress/WordPress#7.1`                        |
 | `WP_ENV_START_OPTS` | _(removed, no replacement)_                           | —                                                                                                             |
 | _(new)_             | `CONTAINER_NAME`                                      | default `ionos-wordpress-dev`                                                                                 |
 | _(new)_             | `HTTP_PORT` / `TEST_HTTP_PORT`                        | default `8888` / `8889`                                                                                       |
@@ -118,7 +118,7 @@ exposed on the dev container.
 
 - Essentials plugin: `tests/phppunit` → `tests/phpunit` (typo fix).
 - The `wp-alpine` package was renamed `wordpress-alpine`.
-- WordPress core default bumped 7.0 → 7.0.2 → 7.0.4.
+- WordPress core default bumped 7.0 → 7.0.2 → 7.1.
 
 ### Internal refactors (no action needed)
 

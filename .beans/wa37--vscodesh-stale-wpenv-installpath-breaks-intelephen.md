@@ -35,4 +35,4 @@ scripts/_prepare.sh:18 (stale comment referencing WPENV_INSTALLPATH)
 
 ## Verification
 
-Ran `scripts/_prepare.sh` for real: generated `.vscode/settings.json` now contains `"./mnt/wordpress-core/WordPress-WordPress-7.0.4"` - confirmed that directory exists and contains real WordPress core (`wp-includes/version.php` present).
+Ran `scripts/_prepare.sh` for real: generated `.vscode/settings.json` now contains `"./mnt/wordpress-core/WordPress-WordPress-7.1"` - confirmed that directory exists and contains real WordPress core (`wp-includes/version.php` present).
