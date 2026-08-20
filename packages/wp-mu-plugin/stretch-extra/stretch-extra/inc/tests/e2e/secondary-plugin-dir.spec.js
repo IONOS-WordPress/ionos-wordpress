@@ -1,14 +1,6 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { restoreDbOnce, test, expect } from '../../../../../../../playwright/e2e/fixtures';
 import { execTestCLI } from '../../../../../../../playwright/exec-test-cli';
-
-const RESET_IONOS_STRETCH_OPTIONS_CLI_COMMANDS = `
-  # reset stretch-extra theme option
-  wp option delete stretch_extra_extendable_theme_dir_initialized
-  # prevent auto initialization of stretch-extra provisioned plugins
-  wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
-  # reset deleted custom plugins
-  wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '[]' --format=json
-`;
+test.beforeAll(restoreDbOnce);
 
 test.describe(
   'stretch-extra:secondary-plugin-dir functionality',
@@ -16,24 +8,28 @@ test.describe(
     tag: ['@stretch-extra', '@secondary-plugin-dir'],
   },
   () => {
+    // no afterAll: the theme this file activates, the plugin it deactivates and the options it
+    // changes are all database state, which the next spec file's restoreDbOnce brings back.
     test.beforeAll(async () => {
       execTestCLI(`
-        wp plugin deactivate ionos-essentials
-        ${RESET_IONOS_STRETCH_OPTIONS_CLI_COMMANDS}
-        # is needed here to allow re-initialization of the extendable theme dir
-        # since first wp call is made by requestUtils.activateTheme('twentytwentyfive'),
-        # in a real world scenario this would only be needed once
+        # deactivate the *mounted* ionos-essentials. Addressed by plugin file rather than via
+        # 'wp plugin deactivate ionos-essentials': both the mounted plugin and the stretch-extra
+        # provisioned copy answer to that slug, and wp-cli picks the provisioned one - it reports
+        # success while leaving the mounted plugin in active_plugins. Having both active at once
+        # is a hard fatal (Cannot redeclare the essentials namespace's _is_plugin_active()), and
+        # below activates the provisioned one.
+        wp eval 'deactivate_plugins("ionos-essentials/ionos-essentials.php");'
+        # prevent auto initialization of stretch-extra provisioned plugins
+        wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
+        # un-hide the provisioned ionos-essentials plugin: the AFTER_START script lists it (and
+        # beyond-seo) as deleted, exactly so the dev site never runs the provisioned copy next to
+        # the mounted one, but the tests below drive that very plugin's row on plugins.php
+        wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '[]' --format=json
+        # allow re-initialization of the extendable theme dir - the snapshot already has this
+        # set, since the first wp call (requestUtils.activateTheme('twentytwentyfive') in
+        # playwright/e2e/global-setup.js) initializes it. in a real world scenario this would
+        # only be needed once.
         wp option delete stretch_extra_extendable_theme_dir_initialized
-      `);
-    });
-
-    test.afterAll(async () => {
-      execTestCLI(`
-        # reset to default theme
-        wp theme activate twentytwentyfive
-        ${RESET_IONOS_STRETCH_OPTIONS_CLI_COMMANDS}
-        # reactivate ionos-essentials plugin
-        wp plugin activate ionos-essentials
       `);
     });
 

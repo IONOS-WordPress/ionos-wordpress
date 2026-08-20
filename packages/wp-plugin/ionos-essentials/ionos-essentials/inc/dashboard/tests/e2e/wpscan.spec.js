@@ -1,5 +1,6 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { restoreDbOnce, test, expect } from '../../../../../../../../playwright/e2e/fixtures';
 import { execTestCLI } from '../../../../../../../../playwright/exec-test-cli';
+test.beforeAll(restoreDbOnce);
 
 test.describe(
   'essentials:dashboard wpscan',

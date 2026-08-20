@@ -93,61 +93,13 @@ if [[ "${USE[@]}" =~ all|react ]]; then
   )
 fi
 
-# MARK: e2e sharding
-# the e2e suite is written against ONE mutable WordPress: specs set up global state in
-# beforeAll via wp-cli and actively contradict each other (welcome.spec.js deletes the
-# user meta 'ionos_essentials_welcome' that tabs/maintenance/security-options set, and
-# secondary-plugin-dir.spec.js deactivates ionos-essentials for its whole duration). so
-# playwright's own 'workers' knob cannot be raised - instead we give each shard its OWN
-# throwaway container and let playwright split the spec files across them with --shard.
-#
-# defaults to 1 (unchanged, single-container behaviour). CI sets E2E_SHARDS explicitly.
-E2E_SHARDS="${E2E_SHARDS:-1}"
-if [[ ! "$E2E_SHARDS" =~ ^[1-9][0-9]*$ ]]; then
-  ionos.wordpress.log_error "E2E_SHARDS must be a positive integer, got '$E2E_SHARDS'"
-  exit 1
-fi
-# a targeted run ('pnpm test:e2e foo.spec.js') is a single file - sharding it would leave
-# every shard but one with nothing to do, and --shard would make which one lands the file
-# unpredictable. same when e2e isn't being run at all.
-if [[ ${#POSITIONAL_ARGS[@]} -gt 0 ]] || [[ ! "${USE[@]}" =~ all|e2e ]]; then
-  E2E_SHARDS=1
-fi
-
-# the suffix for shard-scoped resource names: empty for shard 1 (keeping its historical
-# unsuffixed name), "-<shard>" for every other shard.
-#
-# NOT the same rule as the e2e loop's SHARD_SUFFIX further below, which suffixes every
-# shard - including 1 - whenever E2E_SHARDS > 1 (to keep concurrently running shards'
-# artifacts/storage-state paths apart even for shard 1). that's a deliberate, different
-# condition (total shard count vs. this shard's own number), not something to unify here.
-#
-# @param $1 shard number
-#
-function ionos.wordpress.shard_name_suffix() {
-  [[ "$1" == '1' ]] && echo '' || echo "-$1"
-}
-
-# shard 1 keeps the historical name/port/mnt dir: PHPUnit runs against it, and it is the
-# default playwright/exec-test-cli.js talks to when TEST_CONTAINER_NAME is unset.
-function ionos.wordpress.test_container_name() {
-  echo "ionos-wordpress-test$(ionos.wordpress.shard_name_suffix "$1")"
-}
-function ionos.wordpress.test_container_port() {
-  echo "$((TEST_HTTP_PORT + $1 - 1))"
-}
-function ionos.wordpress.test_stack_dir() {
-  echo "${MNT_HOME}/test$(ionos.wordpress.shard_name_suffix "$1")"
-}
-
 if [[ "${USE[@]}" =~ all|php|e2e ]]; then
-  # MARK: run throwaway wordpress-alpine containers, always destroyed afterwards. shard 1 is
-  # shared by both PHPUnit and Playwright below (own name/mnt dir so it never collides
-  # with the persistent dev stack from scripts/start.sh - see
-  # scripts/includes/_docker-mounts.sh for the shared mount-discovery logic)
-  # not readonly: the e2e block below re-exports TEST_CONTAINER_NAME per shard (in a
-  # subshell) so playwright/exec-test-cli.js targets that shard's container
-  TEST_CONTAINER_NAME="$(ionos.wordpress.test_container_name 1)"
+  # MARK: run a throwaway wordpress-alpine container, always destroyed afterwards. shared
+  # by both PHPUnit and Playwright below (own name/mnt dir so it never collides with the
+  # persistent dev stack from scripts/start.sh - see scripts/includes/_docker-mounts.sh
+  # for the shared mount-discovery logic)
+  readonly TEST_CONTAINER_NAME='ionos-wordpress-test'
+  readonly TEST_STACK_DIR="${MNT_HOME}/test"
   readonly CORE_DIR="$(ionos.wordpress.core_dir "$WORDPRESS_VERSION")"
   # WordPress/WordPress (the release-build mirror used for WORDPRESS_VERSION) has no
   # tests/ directory at all - the test suite (WP_UnitTestCase and friends) only lives
@@ -240,25 +192,34 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
     git -C "$TESTS_DIR" sparse-checkout set --no-cone tests/phpunit
   fi
 
-  # starts one shard's throwaway container (detached). every shard gets its own
-  # container name, published port and wp-content overlay dir; CORE_DIR is shared and
-  # read-only in practice, exactly as the dev and test stacks already share it.
-  #
-  # @param $1 shard number (1-based)
+  # starts the throwaway test container (detached). CORE_DIR is shared and read-only in
+  # practice, exactly as the dev stack already shares it.
   function ionos.wordpress.start_test_container() {
-    local shard="$1"
-    local name port stack_dir
-    name="$(ionos.wordpress.test_container_name "$shard")"
-    port="$(ionos.wordpress.test_container_port "$shard")"
-    stack_dir="$(ionos.wordpress.test_stack_dir "$shard")"
+    local name="$TEST_CONTAINER_NAME"
+    local port="$TEST_HTTP_PORT"
 
     VOLUME_ARGS=()
-    ionos.wordpress.build_wp_volume_args "$stack_dir" "$CORE_DIR"
+    ionos.wordpress.build_wp_volume_args "$TEST_STACK_DIR" "$CORE_DIR"
     VOLUME_ARGS+=(
       --volume "$(pwd)/${TESTS_DIR}/tests/phpunit:/wordpress-phpunit"
       --volume "$(pwd)/phpunit:/htdocs/phpunit"
       --volume "$(pwd)/phpunit/wp-tests-config.php:/wordpress-phpunit/wp-tests-config.php:ro"
     )
+
+    # the same AFTER_START customization the dev stack gets (see scripts/start.sh): brand
+    # options, static front page, plugin-activation exclusions. Without it the test container
+    # serves a plainer site than the one developers actually look at, and every e2e spec has to
+    # reproduce the difference in its own beforeAll.
+    #
+    # deliberately only mounted, not passed as --env AFTER_START: that would make
+    # docker-entrypoint.sh run it on boot, and phpunit shares the live site's tables (see
+    # phpunit/wp-tests-config.php's wp_ table prefix), so the state it leaves behind reaches the
+    # PHPUnit run. IONOS_CUSTOM_DELETED_PLUGINS_OPTION is enough to stop stretch-extra loading
+    # its provisioned ionos-essentials copy, which is what defines the constants the wpscan tests
+    # need. The e2e step below runs the script itself, after phpunit is done.
+    if [[ -n "${AFTER_START:-}" ]]; then
+      VOLUME_ARGS+=(--volume "$(realpath "$AFTER_START"):/after-start.sh:ro")
+    fi
 
     # guard against a stale leftover container from a previous crashed run
     docker rm -f "$name" &>/dev/null || true
@@ -286,17 +247,13 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
       "$WORDPRESS_ALPINE_IMAGE" >/dev/null
   }
 
-  # blocks until a shard's container is usable, then makes it safe to test against.
+  # blocks until the test container is usable, then makes it safe to test against.
   #
   # readiness: phpunit talks to the DB directly, never over HTTP, so "wp core
   # is-installed" (WP core downloaded + wp-config.php + database ready) is the right
   # check here rather than an HTTP request.
-  #
-  # @param $1 shard number (1-based)
   function ionos.wordpress.await_test_container() {
-    local shard="$1"
-    local name
-    name="$(ionos.wordpress.test_container_name "$shard")"
+    local name="$TEST_CONTAINER_NAME"
 
     ionos.wordpress.log_info "waiting for test container $name to come up ..."
     # generous budget: a cold run (fresh core download/install, no shared cache
@@ -337,26 +294,13 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   }
 
   function ionos.wordpress.cleanup_test_container {
-    local shard
-    for shard in $(seq 1 "$E2E_SHARDS"); do
-      docker rm -f "$(ionos.wordpress.test_container_name "$shard")" &>/dev/null || true
-      rm -rf "$(ionos.wordpress.test_stack_dir "$shard")"
-    done
+    docker rm -f "$TEST_CONTAINER_NAME" &>/dev/null || true
+    rm -rf "$TEST_STACK_DIR"
   }
   trap ionos.wordpress.cleanup_test_container EXIT
 
-  # shard 1 first, and fully: on a cold CORE_DIR it is the container that downloads and
-  # extracts WordPress core into the shared cache. starting the rest concurrently with
-  # that would have them race over the same half-written core tree.
-  ionos.wordpress.start_test_container 1
-  ionos.wordpress.await_test_container 1
-
-  # the remaining shards find a warm CORE_DIR and come up quickly. start them now but
-  # only await them just before the e2e run, so their startup overlaps the php syntax
-  # checks and the PHPUnit run below instead of adding to them.
-  for SHARD in $(seq 2 "$E2E_SHARDS"); do
-    ionos.wordpress.start_test_container "$SHARD"
-  done
+  ionos.wordpress.start_test_container
+  ionos.wordpress.await_test_container
 fi
 
 if [[ "${USE[@]}" =~ all|php ]]; then
@@ -396,66 +340,24 @@ EOL
 fi
 
 if [[ "${USE[@]}" =~ all|e2e ]]; then
-  # the shards started back before the PHPUnit run should be up by now - make sure
-  E2E_SHARD_NAMES=()
-  for SHARD in $(seq 1 "$E2E_SHARDS"); do
-    [[ "$SHARD" == '1' ]] || ionos.wordpress.await_test_container "$SHARD"
-    E2E_SHARD_NAMES+=("$(ionos.wordpress.test_container_name "$SHARD")")
-  done
+  # apply the dev stack's AFTER_START customization now rather than repeating parts of it here
+  # (it already resets the admin password and the compromised-credentials meta, which is what
+  # this step used to do by hand). It has to happen after phpunit, not on container boot: phpunit
+  # reinstalls WordPress into the same tables, dropping everything AFTER_START set up. It runs as
+  # root and drops to `php` via doas itself, matching how docker-entrypoint.sh invokes it.
+  if [[ -n "${AFTER_START:-}" ]]; then
+    ionos.wordpress.log_info "applying AFTER_START ($AFTER_START) to the test container ..."
+    docker exec "$TEST_CONTAINER_NAME" /after-start.sh >/dev/null
+  fi
 
-  for SHARD_NAME in "${E2E_SHARD_NAMES[@]}"; do
-    # next 2 steps are required since a preceding phpunit run resets the database to a
-    # state that is not suitable for e2e tests
-    # set the default admin password to the password defined in .env file
-    docker exec --user php "$SHARD_NAME" wp --quiet user update admin --user_pass="${WP_PASSWORD}" --path=/htdocs
-    # reset the user meta for compromised credentials check
-    docker exec --user php "$SHARD_NAME" wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2 --path=/htdocs &>/dev/null || true
-  done
-
-  # run e2e tests against the ephemeral test containers' published ports. provide part
+  # run e2e tests against the ephemeral test container's published port. provide part
   # specific options and all positional arguments that are php files.
-  #
-  # with E2E_SHARDS=1 this is exactly the previous single invocation. above that, one
-  # playwright process per shard runs concurrently, each pinned to its own container via
-  # WP_BASE_URL (page navigation) and TEST_CONTAINER_NAME (the wp-cli calls the specs
-  # make through playwright/exec-test-cli.js). E2E_SHARD_INDEX keeps their storage
-  # states, output dirs and html reports apart - see playwright.config.js.
-  E2E_PIDS=()
-  for SHARD in $(seq 1 "$E2E_SHARDS"); do
-    (
-      SHARD_SUFFIX=''
-      [[ "$E2E_SHARDS" == '1' ]] || SHARD_SUFFIX="-${SHARD}"
-
-      export WP_BASE_URL="http://localhost:$(ionos.wordpress.test_container_port "$SHARD")"
-      export TEST_CONTAINER_NAME="$(ionos.wordpress.test_container_name "$SHARD")"
-      [[ "$E2E_SHARDS" == '1' ]] || export E2E_SHARD_INDEX="$SHARD"
-
-      # @wordpress/e2e-test-utils-playwright builds its worker-scoped 'requestUtils'
-      # fixture around a module-level STORAGE_STATE_PATH (defaulting to
-      # <cwd>/artifacts/storage-states/admin.json). that is the file the specs' calls to
-      # requestUtils.setupRest() rewrite to restore the login state for the following
-      # test - so concurrent shards MUST NOT share it, or they overwrite each other's
-      # cookies (which are bound to their own container's port) and every test after the
-      # first setupRest() lands back on wp-login.php. pointing it at the very same file
-      # playwright.config.js hands the browser context also keeps the two in sync, so the
-      # refreshed cookies are actually the ones the next test starts from.
-      export WP_ARTIFACTS_PATH="$(pwd)/playwright/e2e/.artifacts${SHARD_SUFFIX}"
-      export STORAGE_STATE_PATH="$(pwd)/playwright/e2e/.storage-states/admin${SHARD_SUFFIX}.json"
-      pnpm exec playwright test --pass-with-no-tests -c ./playwright.config.js \
-        $([[ "$E2E_SHARDS" == '1' ]] || printf -- '--shard=%s/%s' "$SHARD" "$E2E_SHARDS") \
-        ${USE_OPTIONS[e2e]:---quiet} \
-        $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.js ]] && printf "$file "; done)
-    ) &
-    E2E_PIDS+=("$!")
-  done
-
-  # collect every shard before deciding the outcome - never bail on the first failure,
-  # or a red shard would leave the others orphaned and their containers half torn down
-  E2E_EXIT=0
-  for E2E_PID in "${E2E_PIDS[@]}"; do
-    wait "$E2E_PID" || E2E_EXIT=1
-  done
-  [[ "$E2E_EXIT" -eq 0 ]] || exit "$E2E_EXIT"
+  export WP_BASE_URL="http://localhost:${TEST_HTTP_PORT}"
+  export WP_ARTIFACTS_PATH="$(pwd)/playwright/e2e/.artifacts"
+  export STORAGE_STATE_PATH="$(pwd)/playwright/e2e/.storage-states/admin.json"
+  pnpm exec playwright test --pass-with-no-tests -c ./playwright.config.js \
+    ${USE_OPTIONS[e2e]:---quiet} \
+    $(for file in "${POSITIONAL_ARGS[@]}"; do [[ $file == *.js ]] && printf "$file "; done)
 fi
 
 exit
@@ -467,20 +369,6 @@ Executes tests.
 
 If PHPUnit or e2e tests will be run, a throwaway wordpress-alpine test container is started
 and torn down again afterwards (pass or fail).
-
-Environment variables:
-
-  E2E_SHARDS  Number of parallel e2e shards (default: 1).
-
-              The e2e specs set up global WordPress state in beforeAll and contradict
-              each other, so they cannot share one instance. Each shard therefore gets
-              its own throwaway container (own name, own published port, own wp-content
-              overlay) and playwright splits the spec files across them with --shard.
-
-              Ignored (forced to 1) when individual test files are passed as arguments.
-
-              Example - run the e2e suite across 3 containers:
-                'E2E_SHARDS=3 pnpm run test --use e2e'
 
 Options:
 

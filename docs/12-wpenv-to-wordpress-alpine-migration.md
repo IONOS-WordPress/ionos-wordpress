@@ -71,10 +71,9 @@ generated host-side into `./mnt/compose-<stack>/wp-content/mu-plugins/` (see the
 `playwright/wp-env.js` is replaced by `playwright/exec-test-cli.js`, which `docker exec`s directly
 into `TEST_CONTAINER_NAME` (default `ionos-wordpress-test`) instead of discovering the wp-env CLI
 container. `playwright.config.js`'s `webServer.command` is now a no-op since `scripts/test.sh`
-starts the container itself. E2E sharding is now supported via `E2E_SHARD_INDEX` /
-`STORAGE_STATE_PATH`, giving each shard its own container/port/storage-state/report directory. The
-HTML report output path moved from `playwright/storybook/.playwright-report` to
-`playwright/e2e/.playwright-report` to avoid colliding with component-test reports.
+starts the container itself. The HTML report output path moved from
+`playwright/storybook/.playwright-report` to `playwright/e2e/.playwright-report` to avoid
+colliding with component-test reports.
 
 ### 7. Permission workarounds removed
 

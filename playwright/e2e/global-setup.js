@@ -1,16 +1,18 @@
 /* eslint-disable-next-line import/named */
 import { request } from '@playwright/test';
-import { existsSync } from 'fs';
+import { copyFileSync, existsSync } from 'fs';
 
 import { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
 
+import { dumpTestDb } from '../exec-test-cli';
+import { STORAGE_STATE_PATH, STORAGE_STATE_SNAPSHOT_PATH } from './storage-state';
+
 async function globalSetup(config) {
-  const { storageState, baseURL } = config.projects[0].use;
-  const storageStatePath = typeof storageState === 'string' ? storageState : undefined;
+  const { baseURL } = config.projects[0].use;
 
   const requestContext = await request.newContext({ baseURL });
 
-  const requestUtils = new RequestUtils(requestContext, { storageStatePath });
+  const requestUtils = new RequestUtils(requestContext, { storageStatePath: STORAGE_STATE_PATH });
 
   // Authenticate and save the storageState to disk.
   await requestUtils.setupRest();
@@ -33,6 +35,14 @@ async function globalSetup(config) {
   ]);
 
   await requestContext.dispose();
+
+  // snapshot the database (and the login cookies matching it) now that they're in the exact
+  // state every e2e test should start from - playwright/e2e/fixtures.js restores both together
+  // before each test, since a spec calling requestUtils.setupRest() rotates the DB session
+  // token AND rewrites STORAGE_STATE_PATH, and only the DB half of that is undone by a plain
+  // DB restore.
+  dumpTestDb();
+  copyFileSync(STORAGE_STATE_PATH, STORAGE_STATE_SNAPSHOT_PATH);
 }
 
 export default globalSetup;

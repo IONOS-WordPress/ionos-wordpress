@@ -1,5 +1,6 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { restoreDbOnce, test, expect } from '../../../../../../../../playwright/e2e/fixtures';
 import { execTestCLI } from '../../../../../../../../playwright/exec-test-cli';
+test.beforeAll(restoreDbOnce);
 
 test.describe(
   'MCP',
@@ -7,10 +8,13 @@ test.describe(
     tag: ['@mcp'],
   },
   () => {
+    // filesystem state, which the per-file database restore deliberately does not cover: the
+    // test installs wordpress-mcp through the UI, so a retry would otherwise start with the
+    // previous attempt's plugin already installed and active. The database side of that install
+    // (wordpress_mcp_settings, the generated application password) needs no reset - the restored
+    // snapshot has neither.
     test.beforeAll(async () => {
       execTestCLI('wp plugin delete wordpress-mcp');
-      execTestCLI('wp --quiet option delete wordpress_mcp_settings');
-      execTestCLI('wp user application-password delete 1 --all');
     });
 
     test('Get MCP snippet', async ({ admin, page, baseURL }) => {
