@@ -3,6 +3,18 @@
 # Exit on non defined variables and on non zero exit codes
 set -eu
 
+# Touched as the very last thing this script does, so a caller can wait for the
+# container to be *finished* booting rather than guessing. `wp core is-installed`
+# is not a substitute: it goes true the moment `wp core install` below returns,
+# while this script still has the rewrite flush, sshd, httpd and AFTER_START ahead
+# of it - and anything that disturbs the database in that window (scripts/test.sh
+# starts phpunit, whose bootstrap drops and recreates the very same wp_ tables)
+# makes the next wp-cli call here fail, which under `set -e` takes the whole
+# container down and SIGKILLs whatever the caller was running.
+# Removed first so a `docker restart` cannot serve the previous boot's marker.
+readonly ENTRYPOINT_COMPLETE_MARKER=/run/entrypoint-complete
+rm -f "$ENTRYPOINT_COMPLETE_MARKER"
+
 SERVER_ADMIN="${SERVER_ADMIN:-you@example.com}"
 HTTP_SERVER_NAME="${HTTP_SERVER_NAME:-www.example.com}"
 LOG_LEVEL="${LOG_LEVEL:-info}"
@@ -235,5 +247,7 @@ if [ -n "$AFTER_START" ]; then
   echo "Running AFTER_START script: /after-start.sh"
   /after-start.sh
 fi
+
+touch "$ENTRYPOINT_COMPLETE_MARKER"
 
 exec doas -u php /bin/bash -i

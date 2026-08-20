@@ -1,11 +1,11 @@
 ---
 # lo2c
 title: pnpm test:php with a positional test file intermittently dies with SIGKILL at 'Installing...'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-08-20T12:04:22Z
-updated_at: 2026-08-20T12:04:22Z
+updated_at: 2026-08-20T12:32:19Z
 ---
 
 `pnpm run test --use php <path/to/SomeTest.php>` - the usage the script's own help text documents
@@ -59,3 +59,55 @@ behaviour and the readiness check both predate that change.
 pnpm run test --use php packages/wp-mu-plugin/ionos-core/ionos-core/loop/tests/phpunit/LoopTest.php
 
 Repeat a few times - expect a mix of exit 0 and exit 137.
+
+## Root cause (confirmed, not inferred)
+
+`docker events` plus the container's own log pinned it exactly. Timeline of a failing run:
+
+  t+0s  container create/start
+  t+3s  readiness poll `wp core is-installed` returns 0  (2 earlier polls returned 1)
+  t+3s  `wp config set AUTOMATIC_UPDATER_DISABLED` ok
+  t+3s  phpunit exec starts
+  t+4s  phpunit exec_die 137
+  t+4s  container die 1
+
+And the container log's last three lines:
+
+  Success: WordPress installed successfully.
+  Error: The site you have requested is not installed.
+  Run `wp core install` to create database tables.
+
+That error is docker-entrypoint.sh's OWN next command (`wp rewrite structure --hard`): phpunit's
+bootstrap had already dropped the wp_ tables it shares with the live site. The entrypoint runs
+under `set -eu`, so it exited, PID 1 went with it (the `die 1`), and the in-flight `docker exec`
+running phpunit was SIGKILLed - exit 137. The container was alive when phpunit died; the `kill`
+event after it is test.sh's own cleanup trap.
+
+So the readiness gate was the bug: `wp core is-installed` goes true the moment the entrypoint's
+`wp core install` returns, while the rewrite flush, sshd, httpd and AFTER_START are all still
+ahead of it. The hypothesis about the syntax-check step was right about the trigger (it skips a
+step whose runtime masked the window) but the damage is not a mere race for the database - it
+takes the whole container down.
+
+## Fix
+
+- docker-entrypoint.sh: `touch /run/entrypoint-complete` as the very last statement before
+  `exec doas -u php /bin/bash -i`, and `rm -f` the same path up front so a `docker restart`
+  cannot serve the previous boot's marker.
+- scripts/test.sh: await_test_container polls for that marker instead of `wp core is-installed`.
+  Also drops a diagnostic when the marker is unsupported, since only `pnpm start` rebuilds the
+  image implicitly - `pnpm test:*` reuses whatever is tagged locally, and a stale image would
+  otherwise just time out silently after 180s.
+
+Side benefit: the readiness poll no longer bootstraps WordPress at all, so the stray
+"WordPress database error: [Table 'wordpress.wp_options' doesn't exist]" that the old
+`wp core is-installed` printed into test.sh's stdout is gone too.
+
+## Verification
+
+- the repro (`pnpm run test --use php <LoopTest.php>`), which failed ~50% before: 8/8 then 3/3
+  green, 11 consecutive runs
+- marker cleared on `docker restart` and re-created ~3s later (checked explicitly)
+- the unsupported-image diagnostic fires against the previous image build
+- no regressions: `--use php --use e2e` -> phpunit OK (15 tests, 40 assertions) + e2e 28/28;
+  `pnpm test:e2e` 28/28; `pnpm test:php` OK

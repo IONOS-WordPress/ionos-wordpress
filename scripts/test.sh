@@ -249,9 +249,18 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
 
   # blocks until the test container is usable, then makes it safe to test against.
   #
-  # readiness: phpunit talks to the DB directly, never over HTTP, so "wp core
-  # is-installed" (WP core downloaded + wp-config.php + database ready) is the right
-  # check here rather than an HTTP request.
+  # readiness means "docker-entrypoint.sh has finished", not "WordPress is installed".
+  # The weaker check this used to make ('wp core is-installed') goes true the moment the
+  # entrypoint's own `wp core install` returns, while it still has a rewrite flush, sshd,
+  # httpd and AFTER_START ahead of it. Starting phpunit inside that window is actively
+  # destructive: phpunit's bootstrap drops and recreates the wp_ tables it shares with the
+  # live site (see phpunit/wp-tests-config.php's table prefix), the entrypoint's next
+  # wp-cli call then dies with "The site you have requested is not installed", and because
+  # it runs under `set -e` that takes the container down - SIGKILLing the phpunit exec,
+  # which surfaced as an intermittent exit 137 right after "Installing...".
+  #
+  # It only showed up when a test file was passed on the command line, because that skips
+  # the target-php-version syntax checks below, whose runtime had been masking the race.
   function ionos.wordpress.await_test_container() {
     local name="$TEST_CONTAINER_NAME"
 
@@ -259,15 +268,7 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
     # generous budget: a cold run (fresh core download/install, no shared cache
     # yet) is slower in CI's nested docker-in-docker devcontainer than locally
     for _ in $(seq 1 180); do
-      # --skip-plugins/--skip-themes: a plain 'wp core is-installed' bootstraps
-      # WordPress fully, including every mounted mu-plugin - ionos-essentials
-      # schedules a cron event on 'init', which races the entrypoint's own still-
-      # running 'wp core install' and tries to write to wp_options before that
-      # table exists. WordPress prints that fatal DB error straight to stdout
-      # (not stderr, so 2>/dev/null never hid it), even though the loop itself
-      # still works correctly. Skipping plugins/themes avoids the race entirely
-      # since installation status never needed them loaded.
-      if docker exec --user php "$name" wp core is-installed --path=/htdocs --skip-plugins --skip-themes 2>/dev/null; then
+      if docker exec "$name" test -f /run/entrypoint-complete 2>/dev/null; then
         # WordPress' background auto-updater takes the whole site down behind core's
         # .maintenance file while it runs (WP_Automatic_Updater -> WP_Upgrader::
         # maintenance_mode), so any request that races it comes back 503 "Briefly
@@ -275,12 +276,11 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
         # it is the one spec asserting the console error list is empty, so it is the one
         # that notices. nothing in the suite wants core/plugin/theme auto-updates.
         #
-        # setting it here rather than in the image leaves packages/docker/wordpress-alpine
-        # uncommitted-to and therefore its image tag (and the prebuilt-image cache behind
-        # it) untouched. the window is
-        # not raced: readiness above is checked over wp-cli, so the site has served no
-        # HTTP request yet - no request means no wp-cron, which means the updater cannot
-        # have started.
+        # set here rather than baked into the image so it stays a property of the test
+        # container alone - the dev stack deliberately keeps auto-updates. the window is not
+        # raced: readiness above is established over docker exec, never over HTTP, so the
+        # site has served no request yet - no request means no wp-cron, which means the
+        # updater cannot have started.
         docker exec --user php "$name" \
           wp --quiet config set AUTOMATIC_UPDATER_DISABLED true --raw --type=constant --path=/htdocs
         return 0
@@ -289,6 +289,15 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
     done
 
     ionos.wordpress.log_error "test container $name did not become ready within the timeout"
+    # an image built before the readiness marker existed can never satisfy the check above,
+    # and would otherwise just time out with nothing pointing at the cause. Only `pnpm start`
+    # rebuilds the image implicitly (via scripts/build.sh); `pnpm test:*` reuses whatever is
+    # already tagged locally.
+    if ! docker exec "$name" grep -q entrypoint-complete /docker-entrypoint.sh 2>/dev/null; then
+      # single argument on purpose: log_error's second parameter is a stacktrace index and it
+      # aborts if given anything non-numeric
+      ionos.wordpress.log_error "$WORDPRESS_ALPINE_IMAGE predates the readiness marker - rebuild it via 'pnpm build'"
+    fi
     docker logs "$name" || true
     exit 1
   }
