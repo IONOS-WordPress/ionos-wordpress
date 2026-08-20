@@ -1,6 +1,7 @@
 <?php
 
 namespace ionos\ionos_core\login;
+
 require_once __DIR__ . '/../class-tenant.php';
 
 use ionos\ionos_core\Tenant;
