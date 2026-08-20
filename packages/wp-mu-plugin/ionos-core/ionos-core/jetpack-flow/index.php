@@ -149,8 +149,7 @@ function _has_jetpack_backup_flow_params($params): bool
 {
   return is_array($params)
       && isset($params['page'], $params['coupon'])
-      && in_array($params['page'], [HIDDEN_PAGE_SLUG, 'ionos-assistant']);
-}
+      && in_array($params['page'], [HIDDEN_PAGE_SLUG, 'ionos-assistant'], true);
 
 function _get_params_from_url($url): ?array
 {
