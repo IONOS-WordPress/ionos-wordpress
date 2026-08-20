@@ -20,9 +20,9 @@ async function trackSSOClick(event) {
     console.error('Failed to track SSO click:', error);
   }
   // Continue with the original navigation after tracking
-  const target = event.target;
-  if (target.href) {
-    window.location.href = target.href;
+  const href = event.currentTarget?.href;
+  if (href) {
+    window.location.assign(href);
   }
 }
 
