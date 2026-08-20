@@ -22,6 +22,21 @@ fi
 readonly CORE_DIR="$(ionos.wordpress.core_dir "$WORDPRESS_VERSION")"
 readonly STACK_DIR="${MNT_HOME}/dev"
 
+# MariaDB's datadir. Kept in a named docker volume rather than the container's writable
+# layer, so recreating the container (the only way to pick up a rebuilt wordpress-alpine
+# image, since env vars and bind mounts are baked in at `docker run` time) no longer
+# throws away the local database along with it. destroy.sh removes this volume, so
+# `pnpm destroy` keeps its current meaning of a full reset.
+#
+# A named volume rather than a bind mount under ${STACK_DIR}: docker seeds a fresh named
+# volume from the image's own /data, ownership included, so mariadbd keeps writing as the
+# `mysql` uid. A host bind mount would start out owned by the host user, need a chown to
+# `mysql` inside the container, and then be awkward for the host user to clean up again.
+#
+# Derived from CONTAINER_NAME so a second stack (different CONTAINER_NAME) gets its own
+# database instead of silently sharing this one.
+readonly DB_VOLUME_NAME="${CONTAINER_NAME}-data"
+
 # env vars and bind mounts are baked into a container at `docker run` time and this
 # script otherwise just `docker start`s an already existing container - so a changed
 # WORDPRESS_VERSION would be silently ignored, leaving the container serving the core
@@ -29,7 +44,7 @@ readonly STACK_DIR="${MNT_HOME}/dev"
 # overlay dirs below are (re)created, since destroy.sh removes them).
 CONTAINER_WORDPRESS_VERSION="$(docker inspect "$CONTAINER_NAME" --format '{{range .Config.Env}}{{println .}}{{end}}' 2>/dev/null | sed -n 's/^WORDPRESS_VERSION=//p' || true)"
 if [[ -n "$CONTAINER_WORDPRESS_VERSION" ]] && [[ "$CONTAINER_WORDPRESS_VERSION" != "$WORDPRESS_VERSION" ]]; then
-  ionos.wordpress.log_warn "container '${CONTAINER_NAME}' was created for WORDPRESS_VERSION='${CONTAINER_WORDPRESS_VERSION}' but is now configured as '${WORDPRESS_VERSION}' - recreating it (this wipes ${MNT_HOME}/dev : database, uploads and wp-config.php)"
+  ionos.wordpress.log_warn "container '${CONTAINER_NAME}' was created for WORDPRESS_VERSION='${CONTAINER_WORDPRESS_VERSION}' but is now configured as '${WORDPRESS_VERSION}' - recreating it (this wipes the database and ${MNT_HOME}/dev : uploads and wp-config.php)"
   "$(realpath $0 | xargs dirname)/destroy.sh"
 fi
 
@@ -66,6 +81,7 @@ else
     --env AFTER_START="${AFTER_START:-}" \
     --env HOST_UID="$(id -u)" \
     --env HOST_GID="$(id -g)" \
+    --volume "${DB_VOLUME_NAME}:/data" \
     "${VOLUME_ARGS[@]}" \
     ionos-wordpress/wordpress-alpine:latest >/dev/null
 fi
