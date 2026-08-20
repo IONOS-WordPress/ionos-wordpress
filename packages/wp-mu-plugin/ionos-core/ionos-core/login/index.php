@@ -57,7 +57,7 @@ defined('ABSPATH') || exit();
         </section>
 EOF
         ,
-        \esc_attr(
+        \esc_url(
           \plugins_url('ionos-core/login/assets/tenant-logos/' . Tenant::get_slug() . '.svg', PLUGIN_FILE)
         ),
         \esc_attr(Tenant::get_label())
