@@ -1,6 +1,6 @@
 # Folder structure
 
-- Workspace packages are located in folders depending on their _flavor_.
+- Workspace packages are in folders based on their _flavor_.
 
   ```
   ./packages
@@ -9,16 +9,16 @@
   └── wp-plugin     # WordPress plugins
   ```
 
-  > Organizing packages by _flavor_ makes it easy to decide hwo to build the workspace package.
+  > Organizing packages by _flavor_ makes it easy to decide how to build the workspace package.
 
-- a workspace package contains just the code and a `package.json`. The `package.json` is used for
-  - workspace dependencies declaration
+- A workspace package contains just the code and a `package.json`. Use the `package.json` to
+  - declare workspace dependencies
 
   - manage semantic versioning
 
   - (optional) customize individual scripts
 
-- WordPress plugins are located in `./packages/wp-plugin` and have the following structure :
+- WordPress plugins are in `./packages/wp-plugin`. Each plugin has the following structure:
 
   ```
   ./packages/wp-plugin/my-plugin
@@ -44,26 +44,43 @@
 
   See [`packages/wp-plugin/test-plugin`](packages/wp-plugin/test-plugin) for a complete example.
 
-# Forcefully rebuilding the whole monorepo
+# Rebuild the whole monorepo by force
 
-- The build command will build the workspace packages no matter of their flavor.
+- The build command builds the workspace packages no matter what their flavor is.
 
-- Most importantly it will take care of the dependencies between the packages.
+- Most importantly, it takes care of the dependencies between the packages.
 
-  **If a package is dependent on another package, the dependent package will be built first.**
+  **If a package depends on another package, the build process builds the dependent package first.**
 
-- Caveat : `docker` images are only rebuilt if the package version was changed for performance reasons.
+- Builds are incremental. The build process rebuilds a workspace package only if the package is actually outdated.
 
-  **To force rebuilding everything you can use the `--force` flage to rebuild everything**
+  The build process writes a `build-info` file after every successful build (its file modification time marks
+  _"last built at"_). The build process considers a workspace package outdated, and therefore rebuilds it, if any of
+  the following is true:
 
-  > After `git pull` or `git checkout` it is always a good idea to rebuild the whole workspace using `pnpm build --force`.
+  - it has no `build-info` file yet (never built)
+  - any file in the package directory is newer than its `build-info` file (source changed).
 
-> Most monorepo command support the `--help` commandline flag. Use it to get more information about the command.
+    This check excludes generated artifacts: `dist/`, `build-info` itself, `node_modules/`,
+    `.git/`, and generated localization files (`languages/*.po`, `languages/*.pot`).
 
-# Let's build a new plugin
+  - one of its `workspace:*` dependencies has a newer `build-info` file (the build process rebuilt a dependency)
+  - the root `pnpm-lock.yaml` or the package's own `package.json` is newer than its `build-info` file
+    (dependencies changed)
 
-- create a new directory `foo` in `./packages/wp-plugin` :
-  - create a new plugin `foo` :
+  > `docker` packages keep their own, pre-existing skip check. The build process rebuilds them only if the package
+  > version changed and no matching image exists locally already.
+
+  **To force a rebuild of everything regardless of the checks above, use the `--force` flag.**
+
+  > After `git pull` or `git checkout`, it is always a good idea to rebuild the whole workspace using `pnpm build --force`.
+
+> Most monorepo commands support the `--help` command-line flag. Use it to get more information about the command.
+
+# Build a new plugin
+
+- Create a new directory `foo` in `./packages/wp-plugin`:
+  - Create a new plugin `foo`:
 
     ```php
     <?php
@@ -92,7 +109,7 @@
     });
     ```
 
-  - create a `package.json` file :
+  - Create a `package.json` file:
 
     ```json
     {
@@ -101,79 +118,79 @@
     }
     ```
 
-  - That's it !
+  - That is all you need.
 
-    Start the development server by excuting `pnpm start`. This will not only start `wp-env` but also trigger the build process (aka `pnpm build`) for the plugin.
+    Start the development server by running `pnpm start`. This starts the `wordpress-alpine` dev container and also triggers the build process (also called `pnpm build`) for the plugin.
 
 # The build workflow
 
 - syncs the semantic version from `package.json` to the header in the plugin file
 
-- transpiles js/css if a `src` folder was found in the plugin
+- transpiles js/css if the plugin has a `src` folder
 
-  The [`wp-scripts`](https://developer.wordpress.org/block-editor/reference-guidespackages/packages-scripts/) tool will also copy all PHP files from the `src` folder.
+  The [`wp-scripts`](https://developer.wordpress.org/block-editor/reference-guidespackages/packages-scripts/) tool also copies all PHP files from the `src` folder.
 
-  The transpilation will generate production assets for minimum asset size and without any debugging information.
+  The transpilation generates production assets for the smallest asset size, without any debugging information.
 
-  > You can configure the transpilation process to generate debugging friendly assets by setting `NODE_ENV` environment variable to `'development'` in your `.env.local` file.
+  > You can configure the transpilation process to generate assets that are easier to debug. To do this, set the `NODE_ENV` environment variable to `'development'` in your `.env.local` file.
 
-- generates / updates the localization files in `./languages`
+- generates or updates the localization files in `./languages`
 
-- prepackages the plugin ressources in `./dist/`
+- prepackages the plugin resources in `./dist/`
 
-- generates a `build-info` file showing statistics about the build artifact like size and contained files.
+- generates a `build-info` file that shows statistics about the build artifact, such as size and contained files.
 
-  This information is very useful to check if everything is at it's place and to track the size of the plugin.
+  Use this information to check that everything is in its place and to track the size of the plugin.
 
-- creates a php 7.4 compatible plugin zip archive using `rector` PHP transpiler
+- creates a PHP 7.4 compatible plugin zip archive, using the `rector` PHP transpiler
 
-  The generated zip archive is production ready and can be deployed to a WordPress site as is.
+  The generated zip archive is production ready. You can deploy it to a WordPress site as is.
 
 # Localization
 
-The managed languages can be customized using environment variable `WP_CLI_I18N_LOCALES` in the `.env` file.
+You can customize the managed languages with the environment variable `WP_CLI_I18N_LOCALES` in the `.env` file.
 
-> Try customizing the `WP_CLI_I18N_LOCALES` environment by adding `es_ES` (in `.env` or `.env.local` file) and build the monorepo again using `pnpm build` or - **much faster** - rebuild just the wordpress plugin using `pnpm build --filter '*/foo'`
+> Try customizing the `WP_CLI_I18N_LOCALES` environment by adding `es_ES` (in the `.env` or `.env.local` file). Then build the monorepo again using `pnpm build`, or - **much faster** - rebuild just the wordpress plugin using `pnpm build --filter '*/foo'`
 
-If the plugin contains a `src` folder with javascript files the build process will also generate the matching `.json` localization files in the `./languages` folder.
+If the plugin contains a `src` folder with javascript files, the build process also generates the matching `.json` localization files in the `./languages` folder.
 
-> Sneak peek for the `lint/lint-fix` workshop - [get a free DEEPL API key](https://www.deepl.com/en/pro#developer) and add it in your `.env.local` file and execute `pnpm lint-fix`. And voilà, the localization files are all set with the translations from [DEEPL](https://www.deepl.com).
+> Sneak peek for the `lint/lint-fix` workshop: [get a free DEEPL API key](https://www.deepl.com/en/pro#developer) and add it to your `.env.local` file. Then run `pnpm lint-fix`, and the localization files are set with translations from [DEEPL](https://www.deepl.com).
 
 # Plugin features
 
-A plugin feature is a self-contained part of a plugin that can be enabled or disabled.
+A plugin feature is a self-contained part of a plugin. You can enable or disable it.
 
-The feature enablement can be (at it's simplest form) done by
+In its simplest form, you can enable or disable a feature by
 
-- `require_once` the feature entrypoint PHP file to enable the feature
+- adding a `require_once` for the feature entry-point PHP file to enable the feature
 
-- or commenting the `require_once` statement out to disable the feature
+- or commenting out the `require_once` statement to disable the feature
 
-At it's simplest form a plugin feature is a folder in the `src` folder of the plugin (see [./packages/wp-plugin/test-plugin](./packages/wp-plugin/test-plugin) for an example containing multiple features).
+In its simplest form, a plugin feature is a folder in the `src` folder of the plugin (see [./packages/wp-plugin/test-plugin](./packages/wp-plugin/test-plugin) for an example containing multiple features).
 
 # Shared code
 
-Shared code will be a use case if we have multiple plugins that share the same code.
+Shared code is useful when multiple plugins share the same code.
 
-This is not planned (yet), but we are prepared.
+We do not plan this yet, but the setup is ready for it.
 
 ## Javascript
 
-Place shared Javascript/CSS code in the `./shared/` top level folder.
+Place shared Javascript/CSS code in the `./shared/` top-level folder.
 
-By importing the shared code in the plugin js code, the transplier will automatically take care of encapsulation.
+When the plugin js code imports the shared code, the transpiler automatically handles encapsulation.
 
 ## PHP
 
-Place your shared PHP Code in the `./shared/` top level folder.
+Place your shared PHP code in the `./shared/` top-level folder.
 
-- add a `"postbuild"` script to the plugin using the shared PHP code and copy the shared PHP Code to the `build` plugin folder.
+- Add a `"postbuild"` script to the plugin that uses the shared PHP code, and copy the shared PHP code to the `build` plugin folder.
 
-  `"postbuild"` scripts will automatically be called by the `build` command.
+  The `build` command automatically calls `"postbuild"` scripts.
 
-- Shared PHP Code need to be namespaced to avoid conflicts.
+- Shared PHP code must be namespaced to avoid conflicts.
 
-- Shared PHP Code need to ensure that it is not executed multiple times.
+- Shared PHP code must make sure it does not run multiple times.
 
   ```php
   <?PHP
@@ -195,7 +212,7 @@ Place your shared PHP Code in the `./shared/` top level folder.
   }
   ```
 
-  - If the shared code contains multiple declarations, you can even optimize the redeclaration safety guard by wrapping the shared feature within it's own namespace.
+  - If the shared code contains multiple declarations, you can optimize the redeclaration safety guard further. Wrap the shared feature within its own namespace.
 
   ```php
   <?PHP

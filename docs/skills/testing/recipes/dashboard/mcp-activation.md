@@ -7,9 +7,9 @@ Tests enabling the MCP (Model Context Protocol) feature through the IONOS Dashbo
 Clean up any existing MCP configuration and plugin:
 
 ```bash
-pnpm wp-env run cli wp plugin delete wordpress-mcp --deactivate
-pnpm wp-env run cli wp option delete wordpress_mcp_settings
-pnpm wp-env run cli wp user application-password delete 1 --all
+pnpm cli plugin delete wordpress-mcp --deactivate
+pnpm cli option delete wordpress_mcp_settings
+pnpm cli user application-password delete 1 --all
 ```
 
 ## Test Steps
@@ -26,7 +26,7 @@ pnpm wp-env run cli wp user application-password delete 1 --all
 ### 2. Navigate to IONOS Dashboard
 
 1. Navigate to the IONOS Dashboard (likely at http://localhost:8888/wp-admin/admin.php?page=ionos-essentials or similar)
-2. Wait for dashboard to load
+2. Wait for the dashboard to load
 3. Locate the MCP feature section/card
 
 ### 3. Enable MCP Feature
@@ -35,19 +35,19 @@ pnpm wp-env run cli wp user application-password delete 1 --all
 2. Click to enable MCP
 3. Wait for any confirmation dialogs or success messages
 4. Wait for the MCP configuration process to complete
-5. Verify success notification appears
+5. Verify that a success notification appears
 
 ### 4. Visual Verification
 
-1. Check that MCP section shows as "enabled" or "active"
-2. Verify any MCP configuration details are displayed (e.g., server URL, status)
-3. Look for indication that wordpress-mcp plugin was installed
+1. Check that the MCP section shows as "enabled" or "active"
+2. Verify that MCP configuration details, for example the server URL and status, are displayed
+3. Look for an indication that the wordpress-mcp plugin was installed
 
 ## Expected Outcomes
 
-- MCP feature shows as enabled in IONOS Dashboard
-- Success message or notification appears after activation
-- Dashboard displays MCP connection details or configuration
+- The MCP feature shows as enabled in the IONOS Dashboard
+- A success message or notification appears after activation
+- The Dashboard displays MCP connection details or configuration
 - No error messages or warnings appear
 
 ## Verification Steps
@@ -57,7 +57,7 @@ pnpm wp-env run cli wp user application-password delete 1 --all
 Check that the wordpress-mcp plugin was installed and activated:
 
 ```bash
-pnpm wp-env run cli wp plugin list --name=wordpress-mcp --fields=name,status
+pnpm cli plugin list --name=wordpress-mcp --fields=name,status
 ```
 
 Expected output:
@@ -68,7 +68,7 @@ Expected output:
 Alternative verification:
 
 ```bash
-pnpm wp-env run cli wp plugin is-active wordpress-mcp && echo "Plugin is active" || echo "Plugin is NOT active"
+pnpm cli plugin is-active wordpress-mcp && echo "Plugin is active" || echo "Plugin is NOT active"
 ```
 
 ### 2. Verify MCP Settings Saved
@@ -76,7 +76,7 @@ pnpm wp-env run cli wp plugin is-active wordpress-mcp && echo "Plugin is active"
 Check that MCP settings were saved to options table:
 
 ```bash
-pnpm wp-env run cli wp option get wordpress_mcp_settings
+pnpm cli option get wordpress_mcp_settings
 ```
 
 Should return MCP configuration data (not empty).
@@ -86,7 +86,7 @@ Should return MCP configuration data (not empty).
 Check that an application password was generated for user ID 1 (admin):
 
 ```bash
-pnpm wp-env run cli wp user application-password list 1 --format=count
+pnpm cli user application-password list 1 --format=count
 ```
 
 Expected output: At least `1` (one or more application passwords exist)
@@ -94,17 +94,17 @@ Expected output: At least `1` (one or more application passwords exist)
 Get details of the application password:
 
 ```bash
-pnpm wp-env run cli wp user application-password list 1 --fields=name,created
+pnpm cli user application-password list 1 --fields=name,created
 ```
 
-Should show an application password (likely named related to MCP or wordpress-mcp).
+It should show an application password. Its name is likely related to MCP or wordpress-mcp.
 
 ## Additional Verification (Optional)
 
 ### Check Plugin Files Exist
 
 ```bash
-pnpm wp-env run cli wp plugin path wordpress-mcp --dir
+pnpm cli plugin path wordpress-mcp --dir
 ```
 
 Should return a valid plugin directory path.
@@ -112,7 +112,7 @@ Should return a valid plugin directory path.
 ### Verify Plugin Metadata
 
 ```bash
-pnpm wp-env run cli wp plugin get wordpress-mcp --fields=name,version,status
+pnpm cli plugin get wordpress-mcp --fields=name,version,status
 ```
 
 Should show plugin details with status `active`.
@@ -140,22 +140,22 @@ If verification fails:
 
 3. **Settings not saved:**
    - Check browser console for AJAX errors
-   - Verify nonce and permissions for settings save
+   - Verify the nonce and permissions for saving settings
 
 ## Cleanup (Optional)
 
 To reset MCP configuration for next test run:
 
 ```bash
-pnpm wp-env run cli wp plugin delete wordpress-mcp --deactivate
-pnpm wp-env run cli wp option delete wordpress_mcp_settings
-pnpm wp-env run cli wp user application-password delete 1 --all
+pnpm cli plugin delete wordpress-mcp --deactivate
+pnpm cli option delete wordpress_mcp_settings
+pnpm cli user application-password delete 1 --all
 ```
 
 ## Notes
 
 - This test requires the IONOS Essentials plugin to be installed and active
-- The exact UI elements (buttons, toggles, etc.) may vary - adjust selectors as needed
-- MCP activation may trigger background processes - allow time for completion
-- Application password is generated automatically during MCP activation
+- The exact UI elements, such as buttons and toggles, can vary. Adjust the selectors as needed
+- MCP activation can start background processes. Allow time for them to finish
+- An application password is generated automatically during MCP activation
 - The wordpress-mcp plugin is installed from WordPress.org or a custom repository during activation

@@ -12,7 +12,10 @@ RUN <<EOF
 
   rm -rf /var/cache/apk/*
 
-  pipx install "dennis>=${DENNIS_VERSION}"
+  # pinned exactly, not '>=': the dev container installs the same version natively (see
+  # .devcontainer/Dockerfile) and an open upper bound would let the two paths drift apart
+  # depending on when each was built
+  pipx install "dennis==${DENNIS_VERSION}"
 EOF
 
 ENTRYPOINT ["/root/.local/bin/dennis-cmd"]

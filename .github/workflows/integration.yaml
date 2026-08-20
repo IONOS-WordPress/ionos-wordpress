@@ -26,6 +26,18 @@ permissions:
   attestations: write
   id-token: write
 
+env:
+  # registry/repository the wordpress-alpine image is published to (see
+  # build-wordpress-alpine-image.yaml) - same repo vars/defaults, never hardcoded
+  IMAGE_REGISTRY: ${{ vars.IMAGE_REGISTRY || 'ghcr.io' }}
+  IMAGE_REPOSITORY: ${{ vars.IMAGE_REPOSITORY || 'ionos-wordpress/wordpress-alpine-dev' }}
+  # no IMAGE_REPOSITORY_PREFIX any more: it existed to address the per-sub-project
+  # rector-php/ecs-php/dennis-i18n repositories, and none of those images are pulled or
+  # pushed by this workflow now that the dev container installs those tools natively (see
+  # scripts/includes/_native-tools.sh). wordpress-alpine has its own IMAGE_REPOSITORY above.
+  DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME: ${{ secrets.IMAGE_REGISTRY_USERNAME || github.actor }}
+  DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD: ${{ secrets.IMAGE_REGISTRY_PASSWORD || secrets.GITHUB_TOKEN }}
+
 jobs:
   devcontainer:
     uses: ./.github/workflows/build-devcontainer-image.yaml
@@ -49,21 +61,109 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: install project
+      - uses: './.github/shared/actions/pnpm-store-cache'
+
+      # scripts/test.sh points PLAYWRIGHT_BROWSERS_PATH at this workspace-relative
+      # directory when CI=true, instead of the dev container's ~/.cache/ms-playwright -
+      # which is discarded together with the container after every step, so the default
+      # location meant re-downloading ~300MB of chromium on every run. same reasoning
+      # (and same host-side-cache-of-a-bind-mounted-dir trick) as pnpm-store-cache above.
+      - uses: actions/cache@v4
         with:
+          path: .playwright-browsers
+          # the lockfile pins the playwright version, which is what decides the
+          # browser build that gets downloaded
+          key: ${{ runner.os }}-playwright-browsers-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-browsers-
+
+      - uses: './.github/shared/actions/docker-subproject-image-name'
+        id: wordpress_alpine_image_tag
+        with:
+          path: packages/docker/wordpress-alpine
+
+      # no rector-php pull/push or image tag step anymore: the dev container installs rector
+      # natively and scripts/build.sh dispatches to it (see
+      # scripts/includes/_native-tools.sh). wordpress-alpine stays a pull - it is the
+      # WordPress runtime under test, not a CLI, so it genuinely has to be a container.
+      #
+      # the pull runs inside the devcontainer's docker-in-docker daemon - the same one
+      # scripts/build.sh's docker build step runs in - so the pulled/tagged image is
+      # actually visible to it (a host-side docker pull/tag would land in a different
+      # daemon and be invisible to the build step).
+      - uses: './.github/shared/actions/devcontainer-shell-run'
+        name: install and pull prebuilt images
+        with:
+          env: |
+            IMAGE_REGISTRY=${{ env.IMAGE_REGISTRY }}
+            WORDPRESS_ALPINE_IMAGE_REPOSITORY=${{ env.IMAGE_REPOSITORY }}
+            WORDPRESS_ALPINE_IMAGE_TAG=${{ steps.wordpress_alpine_image_tag.outputs.tag }}
+            IMAGE_REGISTRY_USERNAME=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_USERNAME }}
+            IMAGE_REGISTRY_PASSWORD=${{ env.DOCKER_SUBPROJECT_IMAGE_REGISTRY_PASSWORD }}
+          # the pull tags a local ionos-wordpress/wordpress-alpine:<version> from the
+          # published image, so scripts/build.sh's existing "already exists locally" check
+          # skips rebuilding it below. no hard dependency on
+          # build-wordpress-alpine-image.yaml finishing first: the build step below builds
+          # wordpress-alpine locally if the tag isn't published yet/the pull fails (it
+          # detects that by the absence of ionos-wordpress/wordpress-alpine:latest, which is
+          # only tagged on a successful pull)
           runCmd: |
             pnpm install --frozen-lockfile
+
+            # the default php variant is taken from the same .env that scripts/build.sh
+            # passes to 'docker build' for the local fallback below, so the tag pulled
+            # here and the image built when the pull fails can never disagree
+            DEFAULT_PHP_VERSION="$(grep -E '^ARG_PHP_VERSION=' packages/docker/wordpress-alpine/.env | cut -d= -f2-)"
+
+            .github/shared/scripts/_docker-subproject-image-pull.sh packages/docker/wordpress-alpine "$IMAGE_REGISTRY" "$WORDPRESS_ALPINE_IMAGE_REPOSITORY" "${WORDPRESS_ALPINE_IMAGE_TAG}-php${DEFAULT_PHP_VERSION}"
+
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: build project
         with:
           runCmd: |
-            pnpm run build
+            # the 'php:<target>-cli' images scripts/test.sh shells out to for its
+            # transpilation-target syntax checks are only needed once the test step runs,
+            # but pulling them there puts ~5s on the critical path. fetch them here
+            # instead, concurrently with the build, into the same docker-in-docker daemon
+            # the test step reuses. failures are ignored - test.sh pulls on demand anyway.
+            for RECTOR_CONFIG in packages/docker/rector-php/rector-config-php*.php; do
+              TARGET_PHP_VERSION="$(basename "$RECTOR_CONFIG" .php)"
+              docker pull --quiet "php:${TARGET_PHP_VERSION#*rector-config-php}-cli" >/dev/null 2>&1 || true
+            done &
+            PHP_IMAGE_PULL_PID=$!
+
+            # wordpress-alpine is normally pulled/tagged by the step above and needs no build.
+            # when that pull did not happen (tag not published yet, or a transient
+            # registry failure that outlived the retries there) nothing else would ever
+            # create the image and scripts/test.sh below dies with "pull access denied
+            # for ionos-wordpress/wordpress-alpine" - so build it here instead.
+            WORDPRESS_ALPINE_FILTER=()
+            if ! docker image inspect ionos-wordpress/wordpress-alpine:latest >/dev/null 2>&1; then
+              echo "::warning::no prebuilt ionos-wordpress/wordpress-alpine:latest available - building it locally"
+              WORDPRESS_ALPINE_FILTER=(--filter '@ionos-wordpress/wordpress-alpine')
+            fi
+
+            # only build what the test suite actually consumes: the plugins/mu-plugins
+            # themselves (bundled JS/CSS, i18n). rector-php is no longer in this list -
+            # their build step now shells out to the natively installed rector instead of
+            # its docker image. ecs-php/potrans/dennis-i18n are declared workspace deps too,
+            # but only used by scripts/lint.sh - building them here would be wasted work.
+            pnpm run build --filter './packages/wp-plugin/*' --filter './packages/wp-mu-plugin/*' "${WORDPRESS_ALPINE_FILTER[@]}"
+
+            wait "$PHP_IMAGE_PULL_PID" || true
+
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: test project
         with:
+          # E2E_SHARDS splits the playwright e2e run across N throwaway WordPress
+          # containers running concurrently (see scripts/test.sh). the specs mutate global
+          # WordPress state and contradict each other, so they cannot share one instance -
+          # a container per shard is what makes the parallelism safe.
+          # 3 is a starting point for the 4-vCPU runner: each shard costs a container
+          # (mariadb + php-fpm + caddy) plus a chromium, so pushing this higher trades
+          # parallelism against CPU contention. re-measure before changing it.
           runCmd: |
-            TEST_PRODUCTION=true pnpm run test
+            TEST_PRODUCTION=true E2E_SHARDS=3 pnpm run test
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts
@@ -98,16 +198,21 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: './.github/shared/actions/pnpm-store-cache'
+
+      # no ecs-php/dennis-i18n image pull or push here anymore, and no image tag steps to
+      # feed them: the dev container installs both tools natively, and scripts/lint.sh
+      # dispatches to the native binary whenever it is present (see
+      # scripts/includes/_native-tools.sh). the docker images still exist for developers
+      # working outside the dev container - they are simply not on any CI path, which also
+      # means CI no longer verifies them. IONOS_WP_FORCE_DOCKER=1 reproduces that path by
+      # hand.
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: install
         with:
           runCmd: |
             pnpm install --frozen-lockfile
-      - uses: './.github/shared/actions/devcontainer-shell-run'
-        name: build necessary dockers
-        with:
-          runCmd: |
-            pnpm run build --filter ecs-php --filter dennis-i18n
+
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: lint_project
         with:

@@ -4,9 +4,9 @@ Skills extend AI client capabilities
 
 # Note about `chrome-devtools-mcp`
 
-The `chrome-devtools-mcp` MCP server provides the AI client access to the chrome browser.
+The `chrome-devtools-mcp` MCP server gives the AI client access to the Chrome browser.
 
-The intial connection setup will get a lot easier with the release of the upcoming Chrome 145 (mcp setting `--auto-connect` will do the magic in the future).
+The initial connection setup is complex today. The upcoming Chrome 145 release adds an `--auto-connect` MCP setting that will simplify this setup.
 
 # Cloude Code
 
@@ -52,7 +52,7 @@ The intial connection setup will get a lot easier with the release of the upcomi
 
 - `.mcp.json` : project specific MCP servers, at least the `chrome-devtools` mcp server
 
-Skills will be derived by vscode/copilot from the claude/gemini settings and given project structure.
+vscode/copilot derives skills from the claude/gemini settings and the given project structure.
 
 ## Usage
 

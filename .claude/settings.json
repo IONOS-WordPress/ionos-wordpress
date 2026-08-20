@@ -2,7 +2,11 @@
   "enabledMcpjsonServers": ["chrome-devtools"],
   "enableAllProjectMcpServers": true,
   "permissions": {
-    "allow": ["mcp__chrome-devtools__*", "Bash(pnpm wp-env run cli wp *)", "Bash(curl:*)"]
+    "allow": ["mcp__chrome-devtools__*", "Bash(pnpm cli *)", "Bash(curl:*)"]
   },
-  "skillDirs": ["./docs/skills"]
+  "skillDirs": ["./docs/skills"],
+  "hooks": {
+    "SessionStart": [{ "hooks": [{ "type": "command", "command": "./scripts/beans.sh prime" }] }],
+    "PreCompact": [{ "hooks": [{ "type": "command", "command": "./scripts/beans.sh prime" }] }]
+  }
 }

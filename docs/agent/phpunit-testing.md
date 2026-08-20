@@ -5,6 +5,12 @@
 - **Framework**: PHPUnit with WordPress Test Library
 - **Base Class**: `\WP_UnitTestCase`
 - **Config**: `/phpunit/phpunit.xml`
+- **Location**: `*Test.php` inside a `tests/phpunit/` directory, co-located with the feature it
+  covers (e.g. `ionos-essentials/inc/security/tests/phpunit/ClassSecurityTest.php`).
+
+  The directory name must be `phpunit`. Discovery is suffix-based. Any `*Test.php` file under
+  `wp-content/{plugins,mu-plugins}` runs as a test, even in a misspelled directory. This makes the
+  mistake easy to miss. Keep the name uniform so the tree stays greppable.
 
 ## Running Tests
 
@@ -135,7 +141,7 @@ public function test_action_executes(): void {
 3. Follow AAA pattern (Arrange, Act, Assert)
 4. Test edge cases
 5. Use factories for test data
-6. Clean up in tearDown()
+6. Remove test data in tearDown()
 7. Test behavior, not implementation
 8. Keep tests simple
 9. Make tests independent

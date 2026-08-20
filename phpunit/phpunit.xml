@@ -4,13 +4,32 @@
   bootstrap="bootstrap.php"
   backupGlobals="false"
   colors="true"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd">
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd">
   <php>
     <env name="WORDPRESS_TABLE_PREFIX" value="wp_"/>
   </php>
   <testsuites>
+    <!--
+      paths are resolved relative to this file's directory (/htdocs/phpunit in the test
+      container), so '../' is the wordpress root.
+
+      only wp-content/{plugins,mu-plugins} are scanned - scanning '../' walked all of
+      wordpress core as well, and in source mode _docker-mounts.sh bind-mounts whole
+      workspace package directories into wp-content, so node_modules/vendor got walked
+      too and any *Test.php shipped by a dependency would be collected and run.
+
+      tests live in 'tests/phpunit' directories by convention, but discovery is left
+      suffix-based rather than globbing for that path: a test that lands somewhere else
+      (or in a misspelled directory) then still runs instead of being silently dropped.
+    -->
     <testsuite name="default">
-      <directory suffix="Test.php">./</directory>
+      <directory suffix="Test.php">../wp-content/plugins</directory>
+      <directory suffix="Test.php">../wp-content/mu-plugins</directory>
+      <exclude>../wp-content/mu-plugins/stretch-extra</exclude>
+      <exclude>../wp-content/plugins/*/node_modules</exclude>
+      <exclude>../wp-content/plugins/*/vendor</exclude>
+      <exclude>../wp-content/mu-plugins/*/node_modules</exclude>
+      <exclude>../wp-content/mu-plugins/*/vendor</exclude>
     </testsuite>
   </testsuites>
 </phpunit>

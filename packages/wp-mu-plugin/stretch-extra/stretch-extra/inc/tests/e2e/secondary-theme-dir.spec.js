@@ -1,5 +1,5 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { execTestCLI } from '../../../../../../../playwright/wp-env';
+import { execTestCLI } from '../../../../../../../playwright/exec-test-cli';
 
 const TEST_THEME_SLUG = 'extendable';
 
@@ -40,7 +40,7 @@ test.describe(
       await expect(page.locator(`.theme[data-slug=${TEST_THEME_SLUG}]`)).toBeVisible();
 
       // Verify theme is not installed in the standard theme directory
-      const themeDirs = execTestCLI('find /var/www/html/wp-content/themes -maxdepth 1 -type d -name "*" | sort');
+      const themeDirs = execTestCLI('find /htdocs/wp-content/themes -maxdepth 1 -type d -name "*" | sort');
       expect(themeDirs).not.toContain(TEST_THEME_SLUG);
     });
 

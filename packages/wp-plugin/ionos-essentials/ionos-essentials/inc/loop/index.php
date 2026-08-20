@@ -28,7 +28,7 @@ require_once __DIR__ . '/rest-callback.php';
  */
 function _register_at_datacollector(): bool
 {
-  // skip registration for wp-env/local/dev environments
+  // skip registration for local/dev environments
   if (in_array(\wp_get_environment_type(), ['local', 'development'], true)) {
     return true;
   }

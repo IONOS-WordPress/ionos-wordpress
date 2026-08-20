@@ -7,7 +7,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 # MARK: parse arguments
 FORCE=no
@@ -19,9 +19,7 @@ USE=()
 while [[ $# -gt 0 ]]; do
   case $1 in
     --help)
-       # print everything in this script file after the '###help-message' marker
-      printf "$(sed -e '1,/^###help-message/d' "$0")\n"
-      exit
+       ionos.wordpress.print_help "$0"
       ;;
     --force)
       FORCE=yes
@@ -36,8 +34,7 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     --use)
-      # convert value to lowercase and append value to USE array
-      USE+=("${2,,}")
+      ionos.wordpress.parse_use_flag "$2"
       shift 2
       ;;
     -*|--*)
@@ -56,7 +53,7 @@ done
 FILTER="${FILTER[@]/#/--filter=}"
 
 # invoke all build steps by default
-[[ ${#USE[@]} -eq 0 ]] && USE=("all")
+ionos.wordpress.default_use_to_all
 # ENDMARK:
 
 # quirks : when switch between devcontainer and local development
@@ -125,6 +122,96 @@ $(tar -ztf $path/dist/*.tgz | sort)
 EOF
 }
 
+declare -gA WP_DEPENDENCY_PATHS_BY_PATH
+
+#
+# indexes all given workspace packages' workspace:* dependencies, pre-resolved from
+# package.json's dependency *names* to their package *paths*, into the global
+# WP_DEPENDENCY_PATHS_BY_PATH associative array (one path -> space-separated list of
+# dependency paths).
+#
+# name and path only matter during indexing (resolving a dependency's name to its own
+# path needs every package's name known first, hence the two-pass approach below) - once
+# resolved, ionos.wordpress.is_workspace_package_up_to_date only ever needs a path, so
+# nothing else survives as a global.
+#
+# must be called directly (not via command substitution) so the populated global
+# survives for later use by ionos.wordpress.is_workspace_package_up_to_date
+#
+# @param $@ list of workspace package directories (example : 'wp-plugin/essentials')
+#
+function ionos.wordpress.index_workspace_packages() {
+  local PACKAGE_PATH PACKAGE_JSON PACKAGE_NAME
+  local -A path_by_name=()
+  local -A raw_dependency_names_by_path=()
+
+  for PACKAGE_PATH in "$@"; do
+    PACKAGE_JSON="./packages/$PACKAGE_PATH/package.json"
+    PACKAGE_NAME="$(jq -r '.name' "$PACKAGE_JSON")"
+    path_by_name["$PACKAGE_NAME"]="$PACKAGE_PATH"
+    raw_dependency_names_by_path["$PACKAGE_PATH"]=$(
+      jq -r \
+      '[.dependencies // {}, .devDependencies // {} | to_entries[] | select(.value == "workspace:*") | .key]|join(" ")' \
+      "$PACKAGE_JSON"
+    )
+  done
+
+  local DEPENDENCY_NAME DEPENDENCY_PATH
+  local RESOLVED_DEPENDENCY_PATHS
+  for PACKAGE_PATH in "$@"; do
+    RESOLVED_DEPENDENCY_PATHS=()
+    for DEPENDENCY_NAME in ${raw_dependency_names_by_path["$PACKAGE_PATH"]}; do
+      DEPENDENCY_PATH="${path_by_name[$DEPENDENCY_NAME]:-}"
+      [[ -n "$DEPENDENCY_PATH" ]] && RESOLVED_DEPENDENCY_PATHS+=("$DEPENDENCY_PATH")
+    done
+    WP_DEPENDENCY_PATHS_BY_PATH["$PACKAGE_PATH"]="${RESOLVED_DEPENDENCY_PATHS[*]}"
+  done
+}
+
+#
+# checks whether a workspace package is up to date, i.e. doesn't need to be rebuilt.
+#
+# a workspace package is considered outdated (=> needs rebuild) if any of the following is true :
+#   - cli option --force is set
+#   - no build-info file exists yet (never built)
+#   - a file in the package directory is newer than its build-info file (excluding generated
+#     artifacts : dist/, build-info, node_modules/, .git/, languages/*.po, languages/*.pot)
+#   - the package's own package.json or the root pnpm-lock.yaml is newer than its build-info file
+#   - one of its workspace:* dependencies has a build-info file newer than its own
+#
+# @param $1 path to workspace package directory (example : 'wp-plugin/essentials')
+#
+function ionos.wordpress.is_workspace_package_up_to_date() {
+  local path="$1"
+  local package_path="./packages/$path"
+  local build_info="$package_path/build-info"
+
+  [[ "$FORCE" == 'no' ]] || return 1
+  [[ -f "$build_info" ]] || return 1
+
+  # a source file (excluding generated artifacts) changed since the last build
+  if [[ -n "$(
+    find "$package_path" \
+      \( -path "$package_path/dist" -o -path "$build_info" -o -path "$package_path/node_modules" -o -path "$package_path/.git" \) -prune \
+      -o \( -name '*.po' -o -name '*.pot' \) -prune \
+      -o -type f -newer "$build_info" -print -quit
+  )" ]]; then
+    return 1
+  fi
+
+  # dependencies changed (proxy via package.json / lockfile mtime instead of scanning node_modules)
+  [[ "$package_path/package.json" -nt "$build_info" ]] && return 1
+  [[ "./pnpm-lock.yaml" -nt "$build_info" ]] && return 1
+
+  # a workspace:* dependency was rebuilt (its build-info is newer than ours)
+  local DEPENDENCY_PATH
+  for DEPENDENCY_PATH in ${WP_DEPENDENCY_PATHS_BY_PATH[$path]:-}; do
+    [[ "./packages/$DEPENDENCY_PATH/build-info" -nt "$build_info" ]] && return 1
+  done
+
+  return 0
+}
+
 # build a monorepo workspace package of type npm
 #
 # @param $1 path to workspace package directory
@@ -140,19 +227,18 @@ function ionos.wordpress.build_workspace_package_docker() {
   DOCKER_BUILDKIT="${DOCKER_BUILDKIT:-1}"
   DOCKER_REGISTRY="${DOCKER_REGISTRY:-registry.hub.docker.com}"
   DOCKER_IMAGE_AUTHOR="$(ionos.wordpress.author_name $PACKAGE_JSON) <$(ionos.wordpress.author_email $PACKAGE_JSON)>"
-  DOCKER_IMAGE_NAME="$(echo $PACKAGE_NAME | sed -r 's/@//g')"
-  # if DOCKER_USERNAME is not set take the package scope (example: "@foo/bar" package user is "foo")
-  DOCKER_USERNAME="${DOCKER_USERNAME:-${DOCKER_IMAGE_NAME%/*}}"
-  # if DOCKER_REPOSITORY is not set take the package repository (example: "@foo/bar" package repository is "bar")
-  DOCKER_REPOSITORY="${DOCKER_REPOSITORY:-${DOCKER_IMAGE_NAME#*/}}"
-  DOCKER_IMAGE_NAME="$DOCKER_USERNAME/$DOCKER_REPOSITORY"
+  DOCKER_IMAGE_NAME="$(ionos.wordpress.docker_image_name_for_package "$PACKAGE_NAME")"
 
   # abort building image if
-  # - cli option --force is not set
-  # - workspace package build-info file exists
-  # - image with same name and version already exists locally
-  if [[ "$FORCE" == 'no' ]] && [[ -f "$path/build-info" ]] && docker image inspect $DOCKER_IMAGE_NAME:$PACKAGE_VERSION &>/dev/null; then
-    ionos.wordpress.log_warn "skip building docker image $DOCKER_IMAGE_NAME:$PACKAGE_VERSION : image already exists locally"
+  # - the workspace package is up to date (--force not set, build-info file exists and no
+  #   source file - Dockerfile, entrypoint, scripts/, .env, ... - is newer than it)
+  # - an image with same name and version already exists locally
+  #
+  # the package content check matters : the image version is only bumped on release, so a
+  # (name,version) check alone would keep serving a stale image after every Dockerfile or
+  # entrypoint change.
+  if ionos.wordpress.is_workspace_package_up_to_date "$1" && docker image inspect $DOCKER_IMAGE_NAME:$PACKAGE_VERSION &>/dev/null; then
+    ionos.wordpress.log_warn "skip building docker image $DOCKER_IMAGE_NAME:$PACKAGE_VERSION : image already exists locally and is up to date"
     return
   fi
 
@@ -166,8 +252,20 @@ function ionos.wordpress.build_workspace_package_docker() {
   # fi
 
   # generate/update composer.lock file if composer.json exists in docker workspace package
+  #
+  # unlike ecs-php/rector-php/potrans/dennis-i18n (see _native-tools.sh), composer itself
+  # isn't one of the per-tool COMPOSER_HOME-isolated installs under
+  # $IONOS_NATIVE_TOOLS_PREFIX - it's a plain system binary, already present on PATH in the
+  # devcontainer/CI image (ships with the base image) and commonly present on a developer's
+  # host too. fall back to a pinned docker image (not :latest - a floating tag can change
+  # dependency-resolution behavior between CI runs and developer machines with no single
+  # pin point to bump) only when composer truly isn't available.
   if [[ -f "$path/composer.json" ]]; then
-    docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd)/$path":/app -w /app composer:latest install $COMPOSER_FLAGS --no-scripts
+    if [[ "${IONOS_WP_FORCE_DOCKER:-}" != '1' ]] && command -v composer &>/dev/null; then
+      (cd "$path" && composer install $COMPOSER_FLAGS --no-scripts)
+    else
+      docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd)/$path":/app -w /app composer:2.10.2 install $COMPOSER_FLAGS --no-scripts
+    fi
   fi
 
   rm -rf $path/{dist,build,build-info}
@@ -180,6 +278,8 @@ function ionos.wordpress.build_workspace_package_docker() {
   # image labels : see https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys
   docker build \
     $(test -f $path/.env && cat $path/.env | sed 's/^/--build-arg /' ||:) \
+    --build-arg HOST_UID=$(id -u) \
+    --build-arg HOST_GID=$(id -g) \
     --progress=$DOCKER_BUILD_VERBOSE \
     -t $DOCKER_IMAGE_NAME:latest \
     -t $DOCKER_IMAGE_NAME:$PACKAGE_VERSION \
@@ -229,8 +329,15 @@ function ionos.wordpress.get_plugin_textdomains() {
 }
 
 # invoke dockerized wp-cli with current directory mounted at /var/www/html
-# the used docker image is the docker image wordpress:cli is independant from wp-env free us from starting up wp-env when building.
-# image to will be downloaded on demand.
+# the used docker image is the docker image wordpress:cli which is independent from the
+# dev/test containers, freeing us from starting either up when building. image will be
+# downloaded on demand.
+#
+# unlike ecs-php/rector-php/potrans/dennis-i18n (see _native-tools.sh), wp-cli isn't
+# installed natively in the devcontainer/CI image (yet) - this stays docker-only until
+# that's deliberately added. the php version tag below must match AGENTS.md's stated
+# PHP version (currently 8.4) - nothing else catches a missed update if
+# that version ever changes.
 #
 # all params will be delegated to the dockerized wp-cli command
 #
@@ -241,7 +348,7 @@ function ionos.wordpress.build_workspace_package_wp_plugin.wp_cli() {
     --user $DOCKER_USER \
     --rm \
     -v $(pwd):/var/www/html \
-    wordpress:cli-php8.3 \
+    wordpress:cli-php8.4 \
     wp \
     $@
 }
@@ -470,20 +577,37 @@ EOF
         TARGET_DIR="dist/${plugin_name}-${PACKAGE_VERSION}-php${TARGET_PHP_VERSION}/${plugin_name}"
         mkdir -p $path/$TARGET_DIR
         rsync -a --quiet $path/dist/${plugin_name}-$PACKAGE_VERSION/ $path/$TARGET_DIR
-        # call dockerized rector
-        docker run \
-          $DOCKER_FLAGS \
-          --rm \
-          --user "$DOCKER_USER" \
-          -v $path/$TARGET_DIR:/project/dist \
-          -v $(pwd)/packages/docker/rector-php/${RECTOR_CONFIG}.php:/project/${RECTOR_CONFIG}.php \
-          ionos-wordpress/rector-php \
-          --clear-cache \
-          --config "${RECTOR_CONFIG}.php" \
-          --no-progress-bar \
-          ${RECTOR_VERBOSE} \
-          process \
-          dist
+        # unlike the linters, rector's paths cannot be shared verbatim between both modes:
+        # the image bind-mounts the plugin at /project/dist and the config at
+        # /project/<config>.php, so '/project' is a synthetic root that has no counterpart
+        # on disk. natively the same two inputs are simply addressed by their real paths.
+        # (the configs no longer derive anything from __DIR__ for exactly this reason -
+        # see packages/docker/rector-php/rector-config-php7.4.php)
+        if rector="$(ionos.wordpress.native_tool rector-php)"; then
+          # the configs resolve the wordpress stubs through $COMPOSER_HOME
+          COMPOSER_HOME="$(ionos.wordpress.native_tool_composer_home rector-php)" \
+            "$rector" \
+              --clear-cache \
+              --config "packages/docker/rector-php/${RECTOR_CONFIG}.php" \
+              --no-progress-bar \
+              ${RECTOR_VERBOSE} \
+              process \
+              "$path/$TARGET_DIR"
+        else
+          docker run \
+            $DOCKER_FLAGS \
+            --rm \
+            --user "$DOCKER_USER" \
+            -v $path/$TARGET_DIR:/project/dist \
+            -v $(pwd)/packages/docker/rector-php/${RECTOR_CONFIG}.php:/project/${RECTOR_CONFIG}.php \
+            ionos-wordpress/rector-php \
+            --clear-cache \
+            --config "${RECTOR_CONFIG}.php" \
+            --no-progress-bar \
+            ${RECTOR_VERBOSE} \
+            process \
+            dist
+        fi
 
         # update version information in plugin filenames
         plugin_filenames=$(ionos.wordpress.get_plugin_filenames "$path/$TARGET_DIR")
@@ -535,6 +659,13 @@ function ionos.wordpress.build_workspace_package() {
   local name="${path#*/}"
   # (example : [curent-dir]/packages/wp-plugin/ionos-essentials)
   local package_path="$(pwd)/packages/$path"
+
+  # docker packages run the same check themselves, additionally requiring the image to still
+  # exist locally (see ionos.wordpress.build_workspace_package_docker)
+  if [[ "$type" != "docker" ]] && ionos.wordpress.is_workspace_package_up_to_date "$path"; then
+    ionos.wordpress.log_warn "skip building workspace package ./packages/$path : already up to date"
+    return
+  fi
 
   ionos.wordpress.log_header "building workspace package ./packages/$path"
   echo
@@ -625,6 +756,10 @@ if [[ "$WORKSPACE_PACKAGES" == '' ]]; then
   exit 1
 fi
 
+# populate the WP_* indexes used by ionos.wordpress.is_workspace_package_up_to_date
+# (called directly, not via command substitution, so the populated globals aren't lost in a subshell)
+ionos.wordpress.index_workspace_packages $WORKSPACE_PACKAGES
+
 WORKSPACE_PACKAGES=$(ionos.wordpress.get_workspace_package_dependency_order $WORKSPACE_PACKAGES)
 
 # call build function for each workspace package
@@ -645,8 +780,11 @@ Syntax: 'pnpm run build [options] [additional-args]'
 
 Options:
   --help      Show this help message and exit
-  --force     will also build all packages/{docker} workspace packages
-              even if a matching (name,version) docker image exists locally
+  --force     rebuild every matched workspace package, ignoring the
+              up-to-date checks. by default a workspace package is skipped if
+              nothing changed since its last build (tracked via its build-info
+              file), and packages/{docker} images are skipped if a matching
+              (name,version) docker image exists locally already
   --verbose   Show verbose output
   --filter    Filter packages to build by package name.
               Wildcards allowed

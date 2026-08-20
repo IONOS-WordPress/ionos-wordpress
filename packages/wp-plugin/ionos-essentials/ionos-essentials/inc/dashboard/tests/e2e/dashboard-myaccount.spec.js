@@ -1,5 +1,5 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { execTestCLI } from '../../../../../../../../playwright/wp-env';
+import { execTestCLI } from '../../../../../../../../playwright/exec-test-cli';
 
 test.describe(
   'essentials:dashboard ionos-essentials-dashboard-admin',

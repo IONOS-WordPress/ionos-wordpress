@@ -1,0 +1,34 @@
+name: 'docker subproject image tag'
+description: |
+  compute the registry tag for a docker sub-project directory (e.g.
+  packages/docker/rector-php, or .devcontainer) - a thin workflow-side wrapper around
+  .github/shared/scripts/_docker-subproject-image-tag.sh, which holds the actual scheme
+  and is also called directly from scripts/ (see scripts/test.sh).
+
+  requires the caller to check out with 'fetch-depth: 0' - the tag is derived from the
+  git history of the given path(s).
+
+inputs:
+  path:
+    description: |
+      space-separated path(s) to the docker sub-project directory (e.g.
+      packages/docker/rector-php). when more than one is given the tag is the last commit
+      touching any of them - see the script for why the dev container needs that.
+    required: true
+
+outputs:
+  tag:
+    description: 'the computed date-based tag'
+    value: ${{ steps.compute_tag.outputs.tag }}
+
+runs:
+  using: 'composite'
+  steps:
+    - id: compute_tag
+      shell: bash
+      run: |
+        # unquoted on purpose - 'path' may carry several space-separated paths
+        TAG="$(.github/shared/scripts/_docker-subproject-image-tag.sh ${{ inputs.path }})"
+        echo "image tag for '${{ inputs.path }}': $TAG"
+        git log -1 -- ${{ inputs.path }}
+        echo "tag=$TAG" >> "$GITHUB_OUTPUT"

@@ -14,7 +14,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 #
 # outputs the workflow distributable artifacts of all workspace packages
@@ -30,8 +30,13 @@ function ionos.wordpress.get_workflow_artifacts() {
   # add plawright test results if any
   test -d ./playwright/storybook/.playwright-report/ && ARTIFACTS+=(./playwright/storybook/.playwright-report/)
   test -d ./playwright/storybook/.test-results/ && ARTIFACTS+=(./playwright/storybook/.test-results/)
-  test -d ./playwright/e2e/.playwright-report/ && ARTIFACTS+=(./playwright/e2e/.playwright-report/)
-  test -d ./playwright/e2e/.test-results/ && ARTIFACTS+=(./playwright/e2e/.test-results/)
+  # the '-<n>' suffixed variants are the per-shard dirs a sharded e2e run produces
+  # (E2E_SHARDS > 1, see scripts/test.sh and playwright.config.js)
+  for PLAYWRIGHT_E2E_DIR in ./playwright/e2e/.playwright-report ./playwright/e2e/.test-results; do
+    for PLAYWRIGHT_E2E_SHARD_DIR in "$PLAYWRIGHT_E2E_DIR" "$PLAYWRIGHT_E2E_DIR"-*; do
+      test -d "$PLAYWRIGHT_E2E_SHARD_DIR/" && ARTIFACTS+=("$PLAYWRIGHT_E2E_SHARD_DIR/")
+    done
+  done
 
   # loop over workspace packages and grab flavor specific artifacts
   for PACKAGE_PATH in $(find ./packages -mindepth 2 -maxdepth 2 -type d | sort); do

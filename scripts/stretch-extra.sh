@@ -7,15 +7,32 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 readonly STRETCH_EXTRA_BUNDLE_DIR='./packages/wp-mu-plugin/stretch-extra/stretch-extra'
+
+#
+# runs php against the stretch-extra config file - either the host's native php (the dev
+# container already ships one, see .devcontainer/Dockerfile) or, on a bare host without one,
+# a docker fallback. the config file is a plain array literal with no version-sensitive
+# syntax, so any php works - unlike ecs-php/rector-php/potrans/dennis-i18n (see
+# _native-tools.sh), this isn't a per-tool COMPOSER_HOME-isolated install, just whatever
+# php happens to be on PATH; the docker fallback's version tag is likewise arbitrary,
+# only pinned for a reproducible fallback rather than any actual compatibility need.
+#
+function ionos.wordpress.stretch-extra.run_php() {
+  # explicit escape hatch - see the caveat at the top of _native-tools.sh
+  if [[ "${IONOS_WP_FORCE_DOCKER:-}" != '1' ]] && command -v php >/dev/null 2>&1; then
+    php "$@"
+  else
+    docker run --rm -i --quiet -v "$(pwd):/app" -w /app php:8.3-cli php "$@"
+  fi
+}
 
 ionos.wordpress.stretch-extra.help() {
   echo "STRETCH_EXTRA_BUNDLE_DIR=$STRETCH_EXTRA_BUNDLE_DIR"
 
-  # print everything in this script file after the '###help-message' marker
-  printf "$(sed -e '1,/^###help-message/d' "$0")\n"
+  ionos.wordpress.print_help "$0"
 }
 
 ionos.wordpress.stretch-extra.clean() {
@@ -34,7 +51,7 @@ ionos.wordpress.stretch-extra.install() {
   echo "Installing plugins and themes using configuration '${STRETCH_EXTRA_CONFIG_PATH}' into stretch-extra..."
 
   # Interpret the stretch-extra php configuration file, extract the download URLs and return as JSON
-  readonly STRETCH_EXTRA_CONFIG_JSON=$(docker run --rm -i --quiet -v "$(pwd):/app" -w /app php:8.3-cli php <<'EOF'
+  readonly STRETCH_EXTRA_CONFIG_JSON=$(ionos.wordpress.stretch-extra.run_php <<'EOF'
 <?php
     namespace ionos\stretch_extra;
 
@@ -45,7 +62,7 @@ ionos.wordpress.stretch-extra.install() {
 
     $output = [
         'plugins' => array_map(fn($item) => [ 'url' => $item['url'] ], $config['plugins'] ?? []),
-        'themes'  => array_map(fn($item) => [ 'url' => $item['url'] ], $config['themes'] ?? [])
+        'themes'  => array_map(fn($item) => [ 'url' => $item['url'] ], $config['themes'] ?? []),
     ];
 
     echo json_encode($output, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
@@ -170,7 +187,7 @@ ionos.wordpress.stretch-extra.check() {
 
   # Interpret the stretch-extra php configuration file, extract the download URLs and return as JSON
   export readonly STRETCH_EXTRA_CONFIG_JSON=$(
-    docker run --rm -v "$(pwd):/app" -w /app php:8.3-cli-alpine php \
+    ionos.wordpress.stretch-extra.run_php \
       -r "const IONOS_CUSTOM_DIR=''; echo json_encode(require 'packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/stretch-extra-config.php', JSON_UNESCAPED_SLASHES);"
   )
 

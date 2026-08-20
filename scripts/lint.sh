@@ -7,7 +7,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 FIX=no
 POSITIONAL_ARGS=()
@@ -17,17 +17,14 @@ USE=()
 while [[ $# -gt 0 ]]; do
   case $1 in
     --help)
-      # print everything in this script file after the '###help-message' marker
-      printf "$(sed -e '1,/^###help-message/d' "$0")\n"
-      exit
+      ionos.wordpress.print_help "$0"
       ;;
     --fix)
       FIX=yes
       shift
       ;;
     --use)
-      # convert value to lowercase and append value to USE array
-      USE+=("${2,,}")
+      ionos.wordpress.parse_use_flag "$2"
       shift 2
       ;;
     -*|--*)
@@ -44,7 +41,7 @@ done
 [[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=(".")
 
 # invoke all linters by default
-[[ ${#USE[@]} -eq 0 ]] && USE=("all")
+ionos.wordpress.default_use_to_all
 
 function ionos.wordpress.prettier() {
   ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") html/yml/md/etc. files with prettier ..."
@@ -91,17 +88,22 @@ function ionos.wordpress.ecs() {
   # docker run -q --rm -ti --user 1000:1000 -v $(pwd):/project/ --entrypoint /bin/sh ionos-wordpress/ecs-php
   # command : /composer/vendor/bin/ecs check --no-diffs --clear-cache --config ./packages/docker/ecs-php/ecs-config.php --no-progress-bar .
 
-  # ecs-php
-  docker run \
-    $DOCKER_FLAGS \
-    --rm \
-    --user "$DOCKER_USER" \
-    -v $(pwd):/project/ \
-    ionos-wordpress/ecs-php \
-    check \
-      $([[ "$FIX" == 'yes' ]] && echo -n "--fix" ||:) \
-      --no-diffs --clear-cache --config ./packages/docker/ecs-php/ecs-config.php --no-progress-bar --memory-limit=1G \
-      ${POSITIONAL_ARGS[@]}
+  # the docker image bind-mounts the workspace at /project and its WORKDIR is /project, so
+  # every path below is already relative to the repository root - which is also the working
+  # directory the native ecs runs in. that is why the argument list is shared verbatim
+  # between both modes instead of being translated.
+  local args=(
+    check
+    $([[ "$FIX" == 'yes' ]] && echo -n "--fix" ||:)
+    --no-diffs --clear-cache --config ./packages/docker/ecs-php/ecs-config.php --no-progress-bar --memory-limit=1G
+    ${POSITIONAL_ARGS[@]}
+  )
+
+  # ecs-config.php resolves the wpcs standards through $COMPOSER_HOME (native mode only -
+  # harmless no-op in docker mode, the image already has its own COMPOSER_HOME baked in)
+  local ecs_docker_flags=(--user "$DOCKER_USER")
+  COMPOSER_HOME="$(ionos.wordpress.native_tool_composer_home ecs-php)" \
+    ionos.wordpress.run_native_or_docker ecs-php ionos-wordpress/ecs-php ecs_docker_flags "${args[@]}"
 }
 
 # kept for reference - not used anymore
@@ -199,23 +201,24 @@ function ionos.wordpress.dennis() {
 
       echo "auto translate missing entries in $PO_FILE to language $TARGET_LANGUAGE"
 
+      # paths are relative to the repository root in both modes - see ionos.wordpress.ecs
+      potrans_args=(
+        deepl
+        --from="en"
+        --to="$TARGET_LANGUAGE"
+        --no-cache
+        --translator=packages/docker/potrans/class-xmlsafedeepltranslator.php
+        $PO_FILE
+        $(dirname $PO_FILE)
+      )
+
       # translate missing entries
-      docker run \
-        $DOCKER_FLAGS \
-        --rm \
-        -i \
-        -e DEEPL_API_KEY="${DEEPL_API_KEY}" \
-        -v $(pwd):/project/ \
-        ionos-wordpress/potrans \
-          deepl \
-          --from="en" \
-          --to="$TARGET_LANGUAGE" \
-          --no-cache \
-          $PO_FILE \
-          $(dirname $PO_FILE) || (
-            ionos.wordpress.log_error "auto translation failed - see error above"
-            exit 1
-          )
+      potrans_docker_flags=(-i -e DEEPL_API_KEY="${DEEPL_API_KEY}")
+      DEEPL_API_KEY="${DEEPL_API_KEY}" \
+        ionos.wordpress.run_native_or_docker potrans ionos-wordpress/potrans potrans_docker_flags "${potrans_args[@]}" || (
+        ionos.wordpress.log_error "auto translation failed - see error above"
+        exit 1
+      )
 
       # potrans wil regenerate the po file even if no localization changes are
       # present in source files with a new creation date so that git always
@@ -239,19 +242,17 @@ function ionos.wordpress.dennis() {
   # [[ "${POSITIONAL_ARGS[@]}" == '.' ]] && POSITIONAL_ARGS=($(find packages/wp-plugin -maxdepth 2 -mindepth 2 -type d  -name "languages"))
   POSITIONAL_ARGS=($(find packages/wp-plugin -maxdepth 2 -mindepth 2 -type d  -name "languages"))
 
+  # paths are relative to the repository root in both modes - see ionos.wordpress.ecs
+  dennis_args=(status --showuntranslated ${POSITIONAL_ARGS[@]})
+
   # dennis
-  OUTPUT=$(docker run \
-    $DOCKER_FLAGS \
-    --rm \
-    -i \
-    -v $(pwd):/project/ \
-    ionos-wordpress/dennis-i18n \
-    status --showuntranslated \
-    ${POSITIONAL_ARGS[@]} \
-  )
+  dennis_docker_flags=(-i)
+  OUTPUT=$(ionos.wordpress.run_native_or_docker dennis-i18n ionos-wordpress/dennis-i18n dennis_docker_flags "${dennis_args[@]}")
 
   # map file path references from within docker container to host paths
-  # and filter out unwanted lines (everything except untranslated string messages)
+  # and filter out unwanted lines (everything except untranslated string messages).
+  # the '/project/' rewrite below is a no-op in native mode - dennis then already reports
+  # the relative paths it was given.
   echo "$OUTPUT" | \
     grep -vE '^\s|^Metadata|Statistics|Untranslated\sstrings' | \
     grep -vE '^[0-9]+:#' | \
@@ -375,8 +376,34 @@ function ionos.wordpress.wordpress_plugin() {
   return $exit_code
 }
 
-# ensure required docker images are built
-pnpm build --filter dennis-i18n --filter potrans --filter ecs-php > /dev/null
+# ensure required docker images are built - but only those the selected linters
+# actually use. building all of them unconditionally was wasted work (and in CI
+# forced a pull/push of images that are never invoked).
+# note: potrans is only used by the deepl auto-translation in 'lint-fix --use i18n'
+#
+# a tool that is available natively (dev container, CI) needs no image at all, so it is
+# left out of the filters entirely - that is what removes the "first lint builds docker
+# images" wait from a fresh dev container. see scripts/includes/_native-tools.sh
+# "tool:use-pattern:requires-fix" rows driving the guard below - add a new
+# linter/tool by adding one row here instead of a hand-copied if block.
+DOCKER_BUILD_FILTER_TOOLS=(
+  'ecs-php:all|php:'
+  'dennis-i18n:all|i18n:'
+  'potrans:i18n:yes'
+)
+
+DOCKER_BUILD_FILTERS=()
+for entry in "${DOCKER_BUILD_FILTER_TOOLS[@]}"; do
+  IFS=':' read -r tool use_pattern requires_fix <<<"$entry"
+  if [[ -z "$requires_fix" || "$FIX" == 'yes' ]] &&
+    [[ "${USE[@]}" =~ $use_pattern ]] &&
+    ionos.wordpress.needs_docker_tools "$tool"; then
+    DOCKER_BUILD_FILTERS+=(--filter "$tool")
+  fi
+done
+if [[ ${#DOCKER_BUILD_FILTERS[@]} -gt 0 ]]; then
+  pnpm build "${DOCKER_BUILD_FILTERS[@]}" > /dev/null
+fi
 
 declare -A summaries=()
 

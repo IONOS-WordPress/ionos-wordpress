@@ -1,30 +1,61 @@
 name: 'devcontainer image name'
 description: |
-  set up environment variable IMAGE_NAME containing the computed dev container image.
-  the dev container image name is constructed from the repository owner/name and the branch name all lowercased.
-  example : ghcr.io/IONOS-Wordpress/ionos-wordpress-develop-devcontainer for develop branch
-# inputs:
-#   who-to-greet:  # id of input
-#     description: 'Who to greet'
-#     required: true
-#     default: 'World'
+  compute the dev container image reference. the repository is constructed from the
+  repository owner/name (lowercased, ghcr.io rejects uppercase) and the tag is the
+  shared date-based tag of .devcontainer - the same '<image>:<tag>' scheme every other
+  image published from this repository uses (see
+  .github/shared/scripts/_docker-subproject-image-tag.sh).
+
+  example : ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer:2025-12-24-14-48-33
+
+  repository and tag are exposed separately because devcontainers/ci - still used by
+  build-devcontainer-image.yaml, which is the one place that genuinely has to *build* the
+  image - takes them as two inputs (imageName/imageTag) and appends ':latest' to an
+  imageName that already carries a tag. image_name is the joined reference, used for
+  'docker manifest inspect' and for the image the consuming jobs pull (see
+  ../devcontainer-shell-run).
+
+  requires the caller to check out with 'fetch-depth: 0'.
+
 outputs:
   image_name:
-    description: 'the computed image name'
+    description: 'the full image reference (<repository>:<tag>)'
     value: ${{ steps.compute_image_name.outputs.image_name }}
+  image_repository:
+    description: 'the image repository without tag (devcontainers/ci imageName input)'
+    value: ${{ steps.compute_image_name.outputs.image_repository }}
+  image_tag:
+    description: 'the image tag (devcontainers/ci imageTag input)'
+    value: ${{ steps.compute_image_name.outputs.image_tag }}
 
 runs:
   using: 'composite'
   steps:
+    - uses: './.github/shared/actions/docker-subproject-image-name'
+      id: image_tag
+      with:
+        # the tool directories are part of the tag input because .devcontainer/Dockerfile
+        # installs their CLIs natively from their committed composer.lock files. without
+        # them a tool version bump would leave the dev container tag unchanged and CI would
+        # keep running the previous tool versions - see
+        # .github/shared/scripts/_docker-subproject-image-tag.sh
+        path: >-
+          .devcontainer
+          packages/docker/ecs-php
+          packages/docker/rector-php
+          packages/docker/potrans
+          packages/docker/dennis-i18n
+
     - id: compute_image_name
       shell: bash
       run: |
-        # get last modified date of .devcontainer folder files
-        LAST_MODIFIED=$(git log -1 --format="%cd" --date=format:'%Y-%m-%d-%H-%M-%S' -- .devcontainer)
-        echo "Last modified date of .devcontainer files: $LAST_MODIFIED"
-        git log -1 -- .devcontainer
-        # construct image_name from repo owner/name and branch
-        # example value : "ghcr.io/IONOS-Wordpress/ionos-wordpress-2025-12-24-14-48-33-devcontainer"
-        image_name="ghcr.io/${GITHUB_REPOSITORY}-${LAST_MODIFIED}-devcontainer"
-        # convert image_name to lowercase and provide it as step variable "image_name"
-        echo "image_name=${image_name@L}" >> "$GITHUB_OUTPUT"
+        # ghcr.io repository names must be lowercase, GITHUB_REPOSITORY is not
+        # (example value : "ghcr.io/ionos-wordpress/ionos-wordpress-devcontainer")
+        image_repository="ghcr.io/${GITHUB_REPOSITORY}-devcontainer"
+        image_repository="${image_repository@L}"
+        image_tag='${{ steps.image_tag.outputs.tag }}'
+        {
+          echo "image_repository=${image_repository}"
+          echo "image_tag=${image_tag}"
+          echo "image_name=${image_repository}:${image_tag}"
+        } >> "$GITHUB_OUTPUT"

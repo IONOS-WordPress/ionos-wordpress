@@ -30,9 +30,9 @@ Brief description of what this recipe tests.
 Optional WP-CLI commands to prepare WordPress before testing:
 
 \`\`\`bash
-pnpm wp-env run cli wp plugin activate my-plugin
-pnpm wp-env run cli wp option update some_setting "value"
-pnpm wp-env run cli wp user create testuser test@example.com --role=subscriber
+pnpm cli plugin activate my-plugin
+pnpm cli option update some_setting "value"
+pnpm cli user create testuser test@example.com --role=subscriber
 \`\`\`
 
 ## Test Steps
@@ -59,7 +59,7 @@ Specific checks to verify the test passed:
 2. Verify element with text [text] exists
 3. Confirm [state] using WP-CLI:
    \`\`\`bash
-   pnpm wp-env run cli wp [command to verify]
+   pnpm cli [command to verify]
    \`\`\`
 
 ## Cleanup (Optional)
@@ -67,8 +67,8 @@ Specific checks to verify the test passed:
 WP-CLI commands to reset WordPress to original state:
 
 \`\`\`bash
-pnpm wp-env run cli wp post delete [ID] --force
-pnpm wp-env run cli wp user delete testuser --yes
+pnpm cli post delete [ID] --force
+pnpm cli user delete testuser --yes
 \`\`\`
 ```
 
@@ -80,10 +80,10 @@ pnpm wp-env run cli wp user delete testuser --yes
 ## Tips for Writing Good Recipes
 
 1. **Be specific:** "Click the blue 'Publish' button in top right" not "click publish"
-2. **Include waits:** "Wait for success message to appear" helps agent know when step is complete
+2. **Include waits:** "Wait for success message to appear" helps the agent know when the step is complete
 3. **Use WP-CLI for verification:** More reliable than visual checks alone
-4. **Add cleanup:** Keep test environment clean for next run
-5. **Test prerequisites:** Mention if test requires login, plugins, or specific data
+4. **Add cleanup:** Keep the test environment clean for the next run
+5. **Test prerequisites:** Mention if the test requires login, plugins, or specific data
 6. **Use CSS selectors:** When helpful, include selectors like `button.publish-button` or `#post-title`
 
 ## Running a Recipe
@@ -102,7 +102,7 @@ pnpm wp-env run cli wp user delete testuser --yes
 - **Admin:** http://localhost:8888/wp-admin/
 - **Username:** admin
 - **Password:** From `.env` file `WP_PASSWORD` variable
-- **WP-CLI:** `pnpm wp-env run cli wp [command]`
+- **WP-CLI:** `pnpm cli [command]`
 
 ## Chrome DevTools MCP
 
@@ -127,7 +127,7 @@ Tests activating a plugin through WordPress admin.
 Ensure plugin is present but deactivated:
 
 \`\`\`bash
-pnpm wp-env run cli wp plugin deactivate my-plugin
+pnpm cli plugin deactivate my-plugin
 \`\`\`
 
 ## Test Steps
@@ -150,7 +150,7 @@ pnpm wp-env run cli wp plugin deactivate my-plugin
 2. Verify plugin row has "Deactivate" link (not "Activate")
 3. Confirm with WP-CLI:
    \`\`\`bash
-   pnpm wp-env run cli wp plugin list --name=my-plugin --field=status
+   pnpm cli plugin list --name=my-plugin --field=status
    # Should output: active
    \`\`\`
 ```
@@ -161,6 +161,6 @@ When adding new recipes:
 
 1. Create a new `.md` file in this directory
 2. Follow the template structure
-3. Test the recipe to ensure it works
+3. Test the recipe to make sure it works
 4. Document any prerequisites or special setup needed
-5. Include cleanup steps if recipe modifies WordPress state
+5. Include cleanup steps if the recipe modifies the WordPress state

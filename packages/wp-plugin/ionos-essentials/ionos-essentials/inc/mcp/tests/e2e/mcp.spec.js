@@ -1,5 +1,5 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { execTestCLI } from '../../../../../../../../playwright/wp-env';
+import { execTestCLI } from '../../../../../../../../playwright/exec-test-cli';
 
 test.describe(
   'MCP',
@@ -13,12 +13,24 @@ test.describe(
       execTestCLI('wp user application-password delete 1 --all');
     });
 
-    test('Get MCP snippet', async ({ admin, page }) => {
+    test('Get MCP snippet', async ({ admin, page, baseURL }) => {
       const errors = [];
       page.on('console', (msg) => {
-        if (msg.type() === 'error') {
-          errors.push(msg.text());
+        if (msg.type() !== 'error') {
+          return;
         }
+
+        // only errors coming from the site under test say anything about the snippet.
+        // the dashboard also pulls third party assets (e.g. the inpagelayer css from
+        // frontend-services.ionos.com), and a failure to reach those makes this
+        // assertion depend on outbound network access and on somebody else's uptime
+        // rather than on our own code - it is what made this test flaky.
+        const source = msg.location()?.url ?? '';
+        if (source !== '' && !source.startsWith(baseURL)) {
+          return;
+        }
+
+        errors.push(msg.text());
       });
 
       await admin.visitAdminPage('?page=ionos#tools');

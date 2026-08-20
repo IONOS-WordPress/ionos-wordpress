@@ -1,33 +1,33 @@
 # Forking
 
-Forking is useful for creating a completely separate repository that is based on the original repository.
+Forking creates a separate repository based on the original repository.
 
-A fork can be used to develop a feature or fix a bug without affecting the original repository.
-Especially when working on GitHub pipelines, it is useful to fork the repository to test the changes before creating a pull request.
+Use a fork to develop a feature or fix a bug without changes to the original repository.
+This also helps when you work on GitHub pipelines. Fork the repository to test changes before you create a pull request.
 
-A working fork can be created by following these steps:
+To create a working fork, follow these steps:
 
-- go to https://github.com/IONOS-WordPress/ionos-wordpress/fork and uncheck the "Copy the `develop` branch only"
+- Go to https://github.com/IONOS-WordPress/ionos-wordpress/fork and clear the "Copy the `develop` branch only" checkbox.
 
-- and create a fork in your individual GitHub account
+- Create the fork in your own GitHub account.
 
-There are a few manual steps to be done to have a complete setup copy of the original repository:
+Complete a few manual steps to get a full copy of the original repository setup:
 
-- Workflows are disabled by default in a fork : To enable all actions, go to the "Actions" tab of the forked repository and enable the actions
+- Workflows are disabled by default in a fork. To enable all actions, go to the "Actions" tab of the forked repository and enable the actions.
 
-  In case there is no button to reenable the actions, simply delete the already runned gh_pages action (see https://github.com/orgs/community/discussions/50736#discussioncomment-11510680)
+  If there is no button to enable the actions again, delete the gh_pages action that already ran (see https://github.com/orgs/community/discussions/50736#discussioncomment-11510680).
 
-- configure github pages : go to `{fork_url}/settings/pages` annd configure the pages to be served from the `gh-pages` branch
+- Configure GitHub Pages. Go to `{fork_url}/settings/pages` and set the pages to serve from the `gh-pages` branch.
 
-- (Optional) copy dependabot settings from original repository : go to `{fork_url}/settings/security-analysis` and configure dependabot alerts and security updates
+- (Optional) Copy the Dependabot settings from the original repository. Go to `{fork_url}/settings/security-analysis` and configure Dependabot alerts and security updates.
 
-- (Optional) To get the google chat release notification working (see `./.github/workflows/release.yaml` and `./scripts/release.sh`) you need to setup GitHub secret `GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK`. This secret should point to the webhook for the desired google chat room. You can create a (private) webhook for testing by following the instructions at https://developers.google.com/chat/how-tos/webhooks
+- (Optional) To enable the Google Chat release notification (see `./.github/workflows/release.yaml` and `./scripts/release.sh`), set up the GitHub secret `GCHAT_RELEASE_ANNOUNCEMENTS_WEBHOOK`. This secret must point to the webhook for the wanted Google Chat room. To create a private webhook for testing, follow the instructions at https://developers.google.com/chat/how-tos/webhooks.
 
-- (Optional) To get the google chat pull request notification working (see `./.github/workflows/gchat-notify-pull-request.yaml`) you need to setup GitHub secret `GCHAT_PR_ANNOUNCEMENTS_WEBHOOK`. This secret should point to the webhook for the desired google chat room. You can create a (private) webhook for testing by following the instructions at https://developers.google.com/chat/how-tos/webhooks
+- (Optional) To enable the Google Chat pull request notification (see `./.github/workflows/gchat-notify-pull-request.yaml`), set up the GitHub secret `GCHAT_PR_ANNOUNCEMENTS_WEBHOOK`. This secret must point to the webhook for the wanted Google Chat room. To create a private webhook for testing, follow the instructions at https://developers.google.com/chat/how-tos/webhooks.
 
-- (Optional) to do almost everything `local first` (for example doing releases), you need to [create a fine-grained personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token)
+- (Optional) To do almost everything locally first (for example, releases), [create a fine-grained personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
 
-  **Important** : You need to create a **New personal access token (classic)** (at https://github.com/settings/tokens) with the following scopes:
+  **Important**: Create a **New personal access token (classic)** (at https://github.com/settings/tokens) with these scopes:
   - `repo`
   - `workflow`
   - `write:packages`
@@ -35,7 +35,7 @@ There are a few manual steps to be done to have a complete setup copy of the ori
   - `project`
   - `read:org`
 
-  The generated key needs to be stored in `./secrets` (take `./.secrets.example` as boilerplate template) :
+  Store the generated key in `./secrets`. Use `./.secrets.example` as the template.
 
   ```
   # provide (classic!) github token for local workflow development or releaasing from local machine

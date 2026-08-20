@@ -1,0 +1,112 @@
+#
+# builds and publishes the ionos-wordpress Alpine dev/test image
+# (packages/docker/wordpress-alpine) as one PHP variant per entry in that package's
+# image-matrix.json (currently just 8.4, the project's stated version, see
+# AGENTS.md) to a container registry, tagged with the repository-wide
+# '<image>:<tag>' scheme (see .github/shared/scripts/_docker-subproject-image-tag.sh)
+# plus a '-php<version>' suffix per variant.
+#
+# the variants are NOT listed here: scripts/test.sh (PHP_VERSION_OVERRIDE) has
+# to agree with them, so image-matrix.json is the single source of truth and
+# this workflow just reads it.
+#
+# registry/repository are configurable via repo-level Actions variables
+# (IMAGE_REGISTRY/IMAGE_REPOSITORY), defaulting to GHCR - never hardcoded.
+#
+
+name: Build wordpress-alpine image
+
+on:
+  push:
+    paths:
+      - 'packages/docker/wordpress-alpine/**'
+      - '.github/workflows/build-wordpress-alpine-image.yaml'
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_REGISTRY: ${{ vars.IMAGE_REGISTRY || 'ghcr.io' }}
+  IMAGE_REPOSITORY: ${{ vars.IMAGE_REPOSITORY || 'ionos-wordpress/wordpress-alpine-dev' }}
+
+jobs:
+  # 'strategy.matrix' cannot read a file itself, so resolve it in a preceding job
+  # and hand it over as JSON
+  matrix:
+    name: resolve image matrix
+    runs-on: ubuntu-latest
+    outputs:
+      variants: ${{ steps.resolve.outputs.variants }}
+    steps:
+      - name: checkout branch from git
+        uses: actions/checkout@v6
+
+      - name: resolve image matrix
+        id: resolve
+        run: |
+          MATRIX_FILE='packages/docker/wordpress-alpine/image-matrix.json'
+
+          # packages/docker/wordpress-alpine/.env repeats the default php/alpine pair because
+          # scripts/build.sh feeds it to 'docker build --build-arg' verbatim and cannot
+          # read JSON. guard the duplication here instead of letting it rot: silently
+          # publishing a default tag built from different versions than a local
+          # 'pnpm build' produces would be near-impossible to spot from a test failure.
+          DEFAULT_COUNT="$(jq '[.[] | select(.default)] | length' "$MATRIX_FILE")"
+          if [[ "$DEFAULT_COUNT" -ne 1 ]]; then
+            echo "::error::$MATRIX_FILE must mark exactly one variant as the default, found $DEFAULT_COUNT"
+            exit 1
+          fi
+
+          for ARG in PHP ALPINE; do
+            EXPECTED="$(jq -r --arg key "${ARG,,}" '.[] | select(.default) | .[$key]' "$MATRIX_FILE")"
+            ACTUAL="$(grep -E "^ARG_${ARG}_VERSION=" packages/docker/wordpress-alpine/.env | cut -d= -f2-)"
+            if [[ "$EXPECTED" != "$ACTUAL" ]]; then
+              echo "::error::packages/docker/wordpress-alpine/.env has ARG_${ARG}_VERSION=$ACTUAL but $MATRIX_FILE's default variant says $EXPECTED"
+              exit 1
+            fi
+          done
+
+          # 'default' is metadata for the check above - the build job only needs the pair
+          echo "variants=$(jq -c '{ include: [.[] | { php, alpine }] }' "$MATRIX_FILE")" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: build (php ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    needs: matrix
+    strategy:
+      matrix: ${{ fromJSON(needs.matrix.outputs.variants) }}
+    steps:
+      - name: checkout branch from git
+        uses: actions/checkout@v6
+        with:
+          # the shared image tag is derived from the git history of the sub-project
+          fetch-depth: 0
+
+      - uses: './.github/shared/actions/docker-subproject-image-name'
+        id: image_tag
+        with:
+          path: packages/docker/wordpress-alpine
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to container registry
+        uses: docker/login-action@v4
+        with:
+          registry: ${{ env.IMAGE_REGISTRY }}
+          username: ${{ secrets.IMAGE_REGISTRY_USERNAME || github.actor }}
+          password: ${{ secrets.IMAGE_REGISTRY_PASSWORD || secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: packages/docker/wordpress-alpine/Dockerfile
+          push: true
+          build-args: |
+            ARG_PHP_VERSION=${{ matrix.php }}
+            ARG_ALPINE_VERSION=${{ matrix.alpine }}
+          # the '-php<version>' suffix on top of the shared tag: one commit publishes
+          # several PHP variants of the same sub-project content
+          tags: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:${{ steps.image_tag.outputs.tag }}-php${{ matrix.php }}

@@ -18,7 +18,7 @@ const IONOS_CUSTOM_DELETED_PLUGINS_OPTION = 'IONOS_CUSTOM_DELETED_PLUGINS_OPTION
 
 // @TODO: hack just for beta : on first run activate all custom plugins
 // will be done in "spaceman" via sql: https://github.com/IONOS-Hosting/spaceman
-// dont initialize in wp-cli calls to prevent issues with command line scripts in wp-env
+// dont initialize in wp-cli calls to prevent issues with command line scripts in the local dev environment
 defined('WP_CLI') || \add_action('plugins_loaded', function () {
   $is_initialized = \get_option(IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION);
   if ($is_initialized !== false) {
@@ -182,7 +182,7 @@ defined('WP_CLI') || \add_action('muplugins_loaded', function () {
  */
 \add_filter('plugins_url', function ($url, $path, $plugin) {
   // if its not one of our plugins just return the original url
-  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required to work in local wp-env
+  // array_key_exists('SFS', $_SERVER) or constant IONOS_IS_STRETCH_SFS is required to work in the local dev environment
   if (! str_starts_with($plugin, IONOS_CUSTOM_PLUGINS_DIR) && ! defined('IONOS_IS_STRETCH_SFS')) {
     return $url;
   }
@@ -315,9 +315,18 @@ defined('WP_CLI') || \add_action('muplugins_loaded', function () {
   hook_name: 'pre_update_option_active_plugins',
   callback : function (array $value): array {
     $custom_active_plugins = get_active_custom_plugins();
-    // remove our custom active plugins from the new value
-    $x = array_diff($value, $custom_active_plugins);
-    return $x;
+    // also strip the unprefixed slug form (e.g. "extendify/extendify.php" instead of
+    // "plugins/extendify/extendify.php") - modify-commands-plugins.php's WP_CLI-only
+    // option_active_plugins filter injects that form into reads of this option purely
+    // for `wp plugin list` display, but if anything writes the option back (e.g. `wp
+    // plugin activate --all`), that unprefixed form must not be persisted here - it
+    // doesn't correspond to a real plugin file and causes "Plugin file does not exist"
+    // admin notices on every subsequent request
+    $custom_active_plugins_unprefixed = array_map(
+      fn ($plugin_key) => str_replace(IONOS_CUSTOM_PLUGINS_PATH, '', $plugin_key),
+      $custom_active_plugins
+    );
+    return array_diff($value, $custom_active_plugins, $custom_active_plugins_unprefixed);
   },
 );
 

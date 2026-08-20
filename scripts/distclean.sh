@@ -5,19 +5,16 @@
 #
 # this script cleans up the environment as if it was never started
 #
-# ATTENTION: Please ensure that wp-env is stopped before cleaning up wp-env-home
+# ATTENTION: Please ensure that the dev container is stopped before cleaning up
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
-# MARK: test wp-env not running
-# ensure wp-env is not running
-# - if the install path does not exist
-# - and the wp-env containers are not running
-WPENV_INSTALLPATH="$(realpath --relative-to $(pwd) $(pnpm exec wp-env status --json | jq -r .installPath))"
-if [[ -d "$WPENV_INSTALLPATH/WordPress" ]] && [[ "$(docker ps -q --filter "name=$(basename $WPENV_INSTALLPATH)" | wc -l)" == '6' ]]; then
-  ionos.wordpress.log_warn "wp-env is already running. Excecute 'pnpm stop' or 'pnpm destroy' to stop it before cleaning up."
+# MARK: test dev container not running
+# ensure the dev container is not running before cleaning up
+if ionos.wordpress.container_running "$CONTAINER_NAME"; then
+  ionos.wordpress.log_warn "dev container '$CONTAINER_NAME' is already running. Excecute 'pnpm stop' or 'pnpm destroy' to stop it before cleaning up."
   exit 1
 fi
 # ENDMARK
@@ -28,17 +25,11 @@ for PACKAGE_JSON in $(find packages/docker -maxdepth 2 -mindepth 2 -name "packag
 # we need to encase the loop in a subshell to avoid variable pollution
 (
   # inject .env and .secret files from plugin directory
-  ionos.wordpress.load_env "$(dirname $PACKAGE_JSON)"
+  ionos.wordpress.load_env "$(dirname "$PACKAGE_JSON")"
 
-  PACKAGE_NAME=$(jq -r '.name' $PACKAGE_JSON)
-  PACKAGE_VERSION=$(jq -r '.version' $PACKAGE_JSON)
-  DOCKER_IMAGE_NAME="$(echo $PACKAGE_NAME | sed -r 's/@//g')"
-
-  # if DOCKER_USERNAME is not set take the package scope (example: "@foo/bar" package user is "foo")
-  DOCKER_USERNAME="${DOCKER_USERNAME:-${DOCKER_IMAGE_NAME%/*}}"
-  # if DOCKER_REPOSITORY is not set take the package repository (example: "@foo/bar" package repository is "bar")
-  DOCKER_REPOSITORY="${DOCKER_REPOSITORY:-${DOCKER_IMAGE_NAME#*/}}"
-  DOCKER_IMAGE_NAME="$DOCKER_USERNAME/$DOCKER_REPOSITORY"
+  PACKAGE_NAME=$(jq -r '.name' "$PACKAGE_JSON")
+  PACKAGE_VERSION=$(jq -r '.version' "$PACKAGE_JSON")
+  DOCKER_IMAGE_NAME="$(ionos.wordpress.docker_image_name_for_package "$PACKAGE_NAME")"
 
   ionos.wordpress.log_warn "remove local docker image $DOCKER_IMAGE_NAME:$PACKAGE_VERSION if exists"
 
@@ -56,6 +47,5 @@ git clean $GIT_CLEAN_OPTS \
   -ff \
   -e '!/*.code-workspace' \
   -e '!/*.secrets' \
-  -e '!/*.env.local' \
-  -e '!/.wp-env.override.json'
+  -e '!/*.env.local'
 

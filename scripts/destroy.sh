@@ -3,20 +3,20 @@
 #
 # script is not intended to be executed directly. use `pnpm exec ...` instead or call it as package script.
 #
-# this script is used to build all packages of the monorepo
+# this script removes the persistent wordpress-alpine development container and its
+# per-stack overlay data. the shared, version-keyed wordpress-core cache
+# (${MNT_HOME}/wordpress-core) survives, since other stacks may still be using it.
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
-if [[ -d "$WP_ENV_HOME" ]]; then
-  docker run --rm -v $WP_ENV_HOME:/wp-env-home library/bash chmod -R a+w /wp-env-home
-  docker run --rm -v $WP_ENV_HOME:/wp-env-home library/bash chmod -R a+w /wp-env-home
+if ionos.wordpress.container_exists "$CONTAINER_NAME"; then
+  docker rm -f "$CONTAINER_NAME" >/dev/null
 fi
 
-if docker ps --filter "name=tests-wordpress" --format '{{.Names}}' | grep -q 'tests-wordpress'; then
-  echo 'y' | pnpm exec wp-env destroy
-fi
+rm -rf "${MNT_HOME:?MNT_HOME must be set}/dev"
 
-# ensure wp-env-home is also removed, even in case wp-env was unable to remove it
-rm -rf "$WP_ENV_HOME"
+# clean up composer cache
+COMPOSER_CACHE_DIR="${XDG_CACHE_HOME:-${HOME:?}/.cache}/composer"
+rm -rf -- "$COMPOSER_CACHE_DIR"

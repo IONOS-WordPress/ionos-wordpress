@@ -9,7 +9,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 function ionos.wordpress.update_package_dependencies() {
   # interactive updates of catalogs doesnt work yet with pnpm : https://github.com/pnpm/pnpm/issues/8566
@@ -91,9 +91,7 @@ function ionos.wordpress.check_docker_version() {
 while [[ $# -gt 0 ]]; do
   case $1 in
     --help)
-      # print everything in this script file after the '###help-message' marker
-      printf "$(sed -e '1,/^###help-message/d' "$0")\n"
-      exit
+      ionos.wordpress.print_help "$0"
       ;;
     --pnpm-opts)
       PNPM_OPTS=$2

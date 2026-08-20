@@ -1,8 +1,15 @@
-// playwright config for wp-env based e2e tests
+// playwright config for e2e tests against the ephemeral wordpress-alpine test container
 /* eslint-disable-next-line import/named */
 import { defineConfig, devices } from '@playwright/test';
 
 import baseConfig from '@wordpress/scripts/config/playwright.config';
+
+// when scripts/test.sh shards the e2e run it starts one WordPress container per shard and
+// runs one playwright process per shard concurrently, tagging each with E2E_SHARD_INDEX.
+// those processes must not share on-disk state: the storage state holds cookies for a
+// specific container's port, and concurrent writers would clobber each other's results
+// and reports. unsharded runs keep the historical, unsuffixed paths.
+const shardSuffix = process.env.E2E_SHARD_INDEX ? `-${process.env.E2E_SHARD_INDEX}` : '';
 
 const config = defineConfig({
   ...baseConfig,
@@ -22,12 +29,20 @@ const config = defineConfig({
   workers: 1,
   webServer: {
     ...baseConfig.webServer,
-    // command: 'pnpm start',
+    // scripts/test.sh already starts the ephemeral test container before invoking
+    // playwright and sets WP_BASE_URL to its published port; reuseExistingServer
+    // (inherited from baseConfig) means this command should never actually run - kept
+    // as a harmless no-op rather than the inherited wp-env command.
+    command: 'true',
   },
-  outputDir: './playwright/e2e/.test-results',
+  outputDir: `./playwright/e2e/.test-results${shardSuffix}`,
   use: {
     ...baseConfig.use,
-    storageState: './playwright/e2e/.storage-states/admin.json',
+    // must be the exact file @wordpress/e2e-test-utils-playwright's requestUtils fixture
+    // uses (STORAGE_STATE_PATH, exported per shard by scripts/test.sh), so that the
+    // requestUtils.setupRest() calls specs make to restore their login state write where
+    // the next test's browser context reads from
+    storageState: process.env.STORAGE_STATE_PATH || `./playwright/e2e/.storage-states/admin${shardSuffix}.json`,
     // @TODO: as of now wp-scripts uses a different version of playwright
     // causing not to use the already downloaded chrome browser of storybook
     // thats why we inject it here manually
@@ -38,7 +53,10 @@ const config = defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     process.env.CI ? ['dot'] : ['list', { printSteps: true }],
-    ['html', { outputFolder: './playwright/storybook/.playwright-report', open: 'never' }],
+    // under playwright/e2e, not playwright/storybook: the storybook folder belongs to the
+    // component-test run (playwright-ct.config.js), which would otherwise overwrite this
+    // report - and scripts/_get-workflow-artefacts.sh already collects e2e/.playwright-report.
+    ['html', { outputFolder: `./playwright/e2e/.playwright-report${shardSuffix}`, open: 'never' }],
     ['line'],
   ],
   globalSetup: './playwright/e2e/global-setup.js',

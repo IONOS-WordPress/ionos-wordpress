@@ -1,5 +1,5 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { execTestCLI } from '../../../../../../../../playwright/wp-env';
+import { execTestCLI } from '../../../../../../../../playwright/exec-test-cli';
 
 test.describe(
   'essentials:dashboard maintenance',
@@ -9,7 +9,7 @@ test.describe(
   () => {
     test.beforeAll(async () => {
       execTestCLI(`
-        wp --quiet user update admin --user_pass='\${WP_PASSWORD}'
+        wp --quiet user update admin --user_pass="\${WP_PASSWORD}"
         wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2
         wp --quiet option delete IONOS_SECURITY_FEATURE_OPTION
       `);
