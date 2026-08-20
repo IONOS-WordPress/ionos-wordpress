@@ -38,8 +38,7 @@ function _is_plugin_active(string $plugin): bool
   if (! function_exists('is_plugin_active')) {
     require_once ABSPATH . 'wp-admin/includes/plugin.php';
   }
-  return is_plugin_active($plugin);
-}
+  return \is_plugin_active($plugin);
 
 require_once __DIR__ . '/ionos-core/update/index.php';
 require_once __DIR__ . '/ionos-core/marketplace/index.php';
