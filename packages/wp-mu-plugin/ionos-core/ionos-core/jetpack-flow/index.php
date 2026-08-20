@@ -208,11 +208,14 @@ function _install_jetpack_plugin(): void
         return;
       }
 
-      // Ignore failures on accessing SSL "https://api.wordpress.org/plugins/update-check/1.1/" in `\wp_update_plugins()` which seem to occur intermittently.
-      set_error_handler(null, E_USER_WARNING | E_USER_NOTICE);
-
-      $plugin_upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
-      $plugin_upgrader->install($api->download_link);
+      // Ignore intermittent SSL warnings during plugin installation, but always restore the previous handler.
+      \set_error_handler(static fn () => true, E_USER_WARNING | E_USER_NOTICE);
+      try {
+        $plugin_upgrader = new \Plugin_Upgrader(new \WP_Ajax_Upgrader_Skin());
+        $plugin_upgrader->install($api->download_link);
+      } finally {
+        \restore_error_handler();
+      }
     }
     \activate_plugin(JETPACK_PLUGIN_FILE);
 
