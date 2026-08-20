@@ -90,6 +90,45 @@ fi
 # currently bind-mounted into the container
 ./packages/docker/wordpress-alpine/scripts/_generate-vscode-launch.sh
 
+# An HTTP 200 alone does not mean the container is done with itself: docker-entrypoint.sh
+# starts httpd well before it runs the AFTER_START script, so without this wait `pnpm start`
+# could hand back a site whose brand options, plugin activations, front page and admin
+# password were still being written underneath it. The entrypoint touches this marker as its
+# very last statement (and clears it on boot, so a `docker start` of an existing container
+# cannot serve the previous run's marker).
+#
+# Generous budget: on a cold start everything before the marker includes downloading or
+# cloning WordPress core, installing it, and AFTER_START's plugin activation sweep plus two
+# rewrite flushes - the 60s that used to cover the whole boot is not enough for that.
+ionos.wordpress.log_info "waiting for container ${CONTAINER_NAME} to finish its startup ..."
+ENTRYPOINT_COMPLETE=
+MARKER_UNSUPPORTED=
+for _ in $(seq 1 180); do
+  if docker exec "$CONTAINER_NAME" test -f /run/entrypoint-complete 2>/dev/null; then
+    ENTRYPOINT_COMPLETE=1
+    break
+  fi
+
+  # A container created from an image predating the marker can never satisfy the check. Rather
+  # than time out for three minutes, fall back to the old HTTP-only behaviour - `docker start`
+  # on a long-lived dev container re-runs whatever entrypoint that container was created with,
+  # so this stays reachable even with an up-to-date image. `docker exec true` first: an exec
+  # failing only because the container has not come up yet must not be read as "unsupported".
+  if docker exec "$CONTAINER_NAME" true 2>/dev/null &&
+    ! docker exec "$CONTAINER_NAME" grep -q entrypoint-complete /docker-entrypoint.sh 2>/dev/null; then
+    MARKER_UNSUPPORTED=1
+    ionos.wordpress.log_warn \
+      "container ${CONTAINER_NAME} predates the startup marker - recreate it via 'pnpm destroy'"
+    break
+  fi
+
+  sleep 1
+done
+if [[ -z "$ENTRYPOINT_COMPLETE" ]] && [[ -z "$MARKER_UNSUPPORTED" ]]; then
+  ionos.wordpress.log_error "container ${CONTAINER_NAME} did not finish starting up - see 'pnpm logs'"
+  exit 1
+fi
+
 ionos.wordpress.log_info "waiting for http://localhost:${HTTP_PORT}/ to come up ..."
 HTTP_CODE=000
 for i in $(seq 1 60); do
