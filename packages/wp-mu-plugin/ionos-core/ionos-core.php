@@ -39,6 +39,43 @@ function _is_plugin_active(string $plugin): bool
     require_once ABSPATH . 'wp-admin/includes/plugin.php';
   }
   return \is_plugin_active($plugin);
+}
+
+// Deactivate and delete old plugins that have been moved into ionos-core
+const ASSISTANT_PLUGIN  = 'ionos-assistant/ionos-assistant.php';
+const ESSENTIALS_PLUGIN = 'ionos-essentials/ionos-essentials.php';
+
+\add_action('login_init', function () {
+  if (_is_plugin_active(ASSISTANT_PLUGIN)) {
+    \deactivate_plugins(ASSISTANT_PLUGIN);
+  }
+});
+
+\add_action('admin_init', function () {
+  if (_is_plugin_active(ASSISTANT_PLUGIN)) {
+    \deactivate_plugins(ASSISTANT_PLUGIN);
+    if (! function_exists('delete_plugins')) {
+      require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+    \delete_plugins([ASSISTANT_PLUGIN]);
+  }
+});
+
+\add_action('login_init', function () {
+  if (_is_plugin_active(ESSENTIALS_PLUGIN)) {
+    \deactivate_plugins(ESSENTIALS_PLUGIN);
+  }
+});
+
+\add_action('admin_init', function () {
+  if (_is_plugin_active(ESSENTIALS_PLUGIN)) {
+    \deactivate_plugins(ESSENTIALS_PLUGIN);
+    if (! function_exists('delete_plugins')) {
+      require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+    \delete_plugins([ESSENTIALS_PLUGIN]);
+  }
+});
 
 require_once __DIR__ . '/ionos-core/update/index.php';
 require_once __DIR__ . '/ionos-core/marketplace/index.php';
