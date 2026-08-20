@@ -302,7 +302,15 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
     # generous budget: a cold run (fresh core download/install, no shared cache
     # yet) is slower in CI's nested docker-in-docker devcontainer than locally
     for _ in $(seq 1 180); do
-      if docker exec --user php "$name" wp core is-installed --path=/htdocs 2>/dev/null; then
+      # --skip-plugins/--skip-themes: a plain 'wp core is-installed' bootstraps
+      # WordPress fully, including every mounted mu-plugin - ionos-essentials
+      # schedules a cron event on 'init', which races the entrypoint's own still-
+      # running 'wp core install' and tries to write to wp_options before that
+      # table exists. WordPress prints that fatal DB error straight to stdout
+      # (not stderr, so 2>/dev/null never hid it), even though the loop itself
+      # still works correctly. Skipping plugins/themes avoids the race entirely
+      # since installation status never needed them loaded.
+      if docker exec --user php "$name" wp core is-installed --path=/htdocs --skip-plugins --skip-themes 2>/dev/null; then
         # WordPress' background auto-updater takes the whole site down behind core's
         # .maintenance file while it runs (WP_Automatic_Updater -> WP_Upgrader::
         # maintenance_mode), so any request that races it comes back 503 "Briefly
