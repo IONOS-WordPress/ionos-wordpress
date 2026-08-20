@@ -1,17 +1,13 @@
 <?php
 
 namespace ionos\ionos_core\login;
+require_once __DIR__ . '/../class-tenant.php';
 
-use ionos\essentials\Tenant;
+use ionos\ionos_core\Tenant;
 use const ionos\ionos_core\PLUGIN_DIR;
 use const ionos\ionos_core\PLUGIN_FILE;
 
 defined('ABSPATH') || exit();
-
-// Skip loading if ionos-core's login has already loaded
-if (defined('IONOS_LOGIN_LOADED')) {
-  return;
-}
 
 \add_action('init', function () {
   if (false === in_array($GLOBALS['pagenow'], ['wp-login.php', 'wp-register.php'], true)) {
