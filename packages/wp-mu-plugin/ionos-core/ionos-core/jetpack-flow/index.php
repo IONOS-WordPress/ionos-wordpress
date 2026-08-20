@@ -30,11 +30,11 @@ const JETPACK_PLUGIN_FILE         = 'jetpack/jetpack.php';
 // Redirects the user to the Jetpack page instead of the My Jetpack page.
 \add_filter('wp_redirect', function (string $location): string {
   $query = \wp_parse_url($location, PHP_URL_QUERY) ?? '';
-  parse_str($query, $query_params);
+  \parse_str($query, $query_params);
 
   if ('my-jetpack' === ($query_params['page'] ?? '')) {
     $query_params['page'] = 'jetpack';
-    $location             = \add_query_arg($query_params, \wp_parse_url($location, PHP_URL_PATH));
+    $location             = \add_query_arg($query_params, $location);
   }
 
   return $location;
