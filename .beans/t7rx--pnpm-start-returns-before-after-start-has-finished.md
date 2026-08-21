@@ -8,18 +8,17 @@ created_at: 2026-08-20T12:33:53Z
 updated_at: 2026-08-20T12:40:05Z
 ---
 
-scripts/start.sh considers the dev container up as soon as `http://localhost:$HTTP_PORT/` answers
-200. That happens strictly before the container has finished configuring itself, so `pnpm start`
+scripts/start.sh considers the dev container up as soon as `http://localhost:$HTTP_PORT/` answers 200. That happens strictly before the container has finished configuring itself, so `pnpm start`
 can return - printing "You can access the wordpress site at ..." - while docker-entrypoint.sh is
 still mutating the site underneath it.
 
 Ordering in packages/docker/wordpress-alpine/docker-entrypoint.sh:
 
-  233  httpd &                      <- start.sh's 200 becomes possible here
-  247  echo "Running AFTER_START script: /after-start.sh"
-  248  /after-start.sh              <- still running while start.sh is already done
-  251  touch /run/entrypoint-complete
-  253  exec doas -u php /bin/bash -i
+233 httpd & <- start.sh's 200 becomes possible here
+247 echo "Running AFTER_START script: /after-start.sh"
+248 /after-start.sh <- still running while start.sh is already done
+251 touch /run/entrypoint-complete
+253 exec doas -u php /bin/bash -i
 
 ## Impact
 
@@ -79,9 +78,9 @@ HTTP 200 check, so `pnpm start` no longer returns while AFTER_START is still wri
 Measured the window this closes, on a container with AFTER_START wired exactly as the dev stack
 has it:
 
-  HTTP 200 first answered at : 14s   <- what pnpm start used to wait for
-  entrypoint actually done at: 18s   <- what it waits for now
-  unguarded window           : 4s
+HTTP 200 first answered at : 14s <- what pnpm start used to wait for
+entrypoint actually done at: 18s <- what it waits for now
+unguarded window : 4s
 
 - supported path: ran start.sh's new loop verbatim against a booting container built from the
   current image - waited 13s, ended with complete=1, unsupported empty

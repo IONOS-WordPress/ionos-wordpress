@@ -64,18 +64,18 @@ Repeat a few times - expect a mix of exit 0 and exit 137.
 
 `docker events` plus the container's own log pinned it exactly. Timeline of a failing run:
 
-  t+0s  container create/start
-  t+3s  readiness poll `wp core is-installed` returns 0  (2 earlier polls returned 1)
-  t+3s  `wp config set AUTOMATIC_UPDATER_DISABLED` ok
-  t+3s  phpunit exec starts
-  t+4s  phpunit exec_die 137
-  t+4s  container die 1
+t+0s container create/start
+t+3s readiness poll `wp core is-installed` returns 0 (2 earlier polls returned 1)
+t+3s `wp config set AUTOMATIC_UPDATER_DISABLED` ok
+t+3s phpunit exec starts
+t+4s phpunit exec_die 137
+t+4s container die 1
 
 And the container log's last three lines:
 
-  Success: WordPress installed successfully.
-  Error: The site you have requested is not installed.
-  Run `wp core install` to create database tables.
+Success: WordPress installed successfully.
+Error: The site you have requested is not installed.
+Run `wp core install` to create database tables.
 
 That error is docker-entrypoint.sh's OWN next command (`wp rewrite structure --hard`): phpunit's
 bootstrap had already dropped the wp_ tables it shares with the live site. The entrypoint runs

@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: low
 created_at: 2026-08-20T12:04:42Z
-updated_at: 2026-08-20T12:04:42Z
+updated_at: 2026-08-21T06:35:28Z
 ---
 
 Found while refactoring the e2e hooks (bean z3o3). secondary-theme-dir.spec.js's 'deletable' test
@@ -55,3 +55,53 @@ the listing filter around line 67) behaves differently for `[]` than for a missi
 worth checking: whether the stored value is really an array rather than an empty string or a
 serialized `''`, and whether the autoload flag passed to `\update_option(..., true)` changes what
 `get_option` returns for it. Once understood, either fix the product code or drop the hook line.
+
+## Investigation round 1 - mechanism narrowed, root cause NOT found
+
+Set back to todo: no code change shipped. The hook line in secondary-theme-dir.spec.js stays.
+
+### Established (all reproduced 3/3, no phpunit needed)
+
+Forcing the option to an empty array in a plain `pnpm test:e2e` run reproduces the failure, so the
+combined `--use php --use e2e` path is no longer needed to work on this:
+
+    wp --quiet option update IONOS_CUSTOM_DELETED_THEMES_OPTION '[]' --format=json   -> 2 failed, 3/3 runs
+    wp option delete IONOS_CUSTOM_DELETED_THEMES_OPTION                              -> 3 passed, 3/3 runs
+
+### The failure is latency, not a wrong option value
+
+Instrumenting the real spec showed the actual error is not the `toHaveCount` mismatch originally
+recorded - that is a downstream symptom. It is:
+
+    Error: page.goto: net::ERR_ABORTED at http://localhost:8889/wp-admin/themes.php
+    at await admin.visitAdminPage('/themes.php')   (the line right after the delete click)
+
+and the test takes ~1 minute. So the delete navigation is still in flight when the test navigates
+away, which aborts it; the assertion then polls a page rendered before the theme was gone.
+
+An isolated probe that clicks delete, waits 500ms after opening the theme overlay and 4s after the
+delete click, completes correctly in BOTH variants - card count 0, option written as
+`a:1:{i:0;s:10:"extendable";}`. So the plugin's delete/hide logic works fine with `[]`; what changes
+is how long the request takes.
+
+### Ruled out
+
+- `wp_prepare_themes_for_js`, `wp_get_themes` and the `delete_theme`/`switch_theme` handlers are
+  no-ops for an empty list, and read the option as `get_option(..., [])` - absent and `[]` are
+  indistinguishable to all of them (code read end to end).
+- The rendered page is identical in both variants: same delete-theme link count, visibility, href
+  and nonce; same single confirm dialog; same post-click URL.
+- Blocked/slow outbound HTTP (the api.wordpress.org theme update check theory): the container
+  reaches api.wordpress.org in 0.37s and `wp eval 'wp_update_themes()'` returns in 0.65s.
+- Test flakiness: both variants are deterministic across 3 runs each.
+- A plain `Promise.all([page.waitForEvent('load'), click])` does NOT fix it - the load event never
+  arrives within its 10s default, which is itself further evidence of the latency.
+
+### Next steps for whoever picks this up
+
+1. Find where the time goes in the delete request when the option exists. Xdebug is configured in
+   the image; alternatively bisect by timing `admin-ajax`/`themes.php?action=delete` server-side.
+2. Beware of instrumentation artifacts: adding `page.waitForResponse` around the click made BOTH
+   variants stop navigating at all, so measure server-side rather than from Playwright.
+3. Whatever the cause, the test should also stop racing the delete navigation - the current
+   `visitAdminPage` immediately after the click is what turns a slow delete into a hard failure.
