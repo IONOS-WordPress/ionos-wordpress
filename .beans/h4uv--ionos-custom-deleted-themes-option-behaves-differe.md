@@ -1,11 +1,11 @@
 ---
 # h4uv
 title: IONOS_CUSTOM_DELETED_THEMES_OPTION behaves differently when absent vs an empty array
-status: todo
+status: completed
 type: bug
 priority: low
 created_at: 2026-08-20T12:04:42Z
-updated_at: 2026-08-21T06:35:28Z
+updated_at: 2026-08-21T07:17:49Z
 ---
 
 Found while refactoring the e2e hooks (bean z3o3). secondary-theme-dir.spec.js's 'deletable' test
@@ -105,3 +105,53 @@ is how long the request takes.
    variants stop navigating at all, so measure server-side rather than from Playwright.
 3. Whatever the cause, the test should also stop racing the delete navigation - the current
    `visitAdminPage` immediately after the click is what turns a slow delete into a hard failure.
+
+## Resolved: it was never the option, it was a race on the admin-ajax delete
+
+### What actually happens
+
+Deleting a theme from the secondary directory does not navigate - WP's updates.js intercepts the
+`a.delete-theme` link and does an `admin-ajax.php` POST (`action=delete-theme`). The spec clicked
+the link and immediately called `admin.visitAdminPage('/themes.php')`, so it could render the next
+page before the server had recorded anything. `toHaveCount` then retries only the locator, never
+the navigation, so the assertion could never recover - hence the deterministic-looking failure.
+
+### How the option misled the investigation
+
+Proven not causal:
+
+- rendered `themes.php?search=extendable` is byte-identical between "absent" and `[]`, apart from
+  an unrelated `serverData._modified` timestamp (256838 bytes both, nonces normalized)
+- driving the delete server-side with curl in a throwaway lab container: navigation path 0.575s vs
+  0.599s, admin-ajax path 0.175s vs 0.173s - both write `a:1:{i:0;s:10:"extendable";}`, both arms
+- instrumenting the real spec with the arm chosen by env var (so both arms run byte-identical spec
+  code) showed the same client path in both: one `AJAX-POST action=delete-theme`, `AJAX-RESP 200
+  {"success":true,...}`, same post-click URL. The only difference was the final count, 0 vs 1.
+- adding `waitForTimeout(2000)` before the assertion made the `[]` arm pass, with identical server
+  state in both arms: `option=array(0=>'extendable',) row=[a:1:{...},on] files=yes wpcli_lists=1`
+
+So the option's presence only biased a razor-thin race - plausibly because `update_option` takes an
+UPDATE path on an existing autoloaded row versus an INSERT via `add_option` when absent. A
+sub-millisecond difference is enough to flip a race this tight every time, which is exactly why it
+looked deterministic.
+
+Also ruled out earlier: the plugin's filters/handlers (all no-ops for an empty list), blocked
+outbound HTTP (api.wordpress.org answers in 0.37s, `wp_update_themes()` in 0.65s), and
+`wp option delete` on a missing option failing (it warns and exits 0).
+
+### Fix
+
+- `secondary-theme-dir.spec.js` waits for the `action=delete-theme` admin-ajax response instead of
+  racing it, and does the same for `action=install-theme` in 'installable', which had the same race
+  hidden behind a fixed `waitForTimeout(1000)`.
+- The `IONOS_CUSTOM_DELETED_THEMES_OPTION` hook is gone: the file now has no beforeAll at all, and
+  the misleading comment claiming the line was load-bearing is gone with it.
+- No product-code change - `inc/secondary-theme-dir.php` was correct throughout, so no changeset.
+
+### Verification
+
+- e2e-only: 3/3 runs green (option absent in that snapshot)
+- combined `--use php --use e2e` filtered to this file: 2/2 green (option is `[]` there - the state
+  that used to fail 3/3)
+- full suites: combined -> phpunit OK (15 tests, 40 assertions) + e2e 28/28; e2e-only 28/28
+- eslint clean
