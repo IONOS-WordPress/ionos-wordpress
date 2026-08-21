@@ -38,7 +38,22 @@ AFTER_START="${AFTER_START:-}"
 # wp-config.php and uses them for its own db checks, all from these variables,
 # so a caller passing --env WORDPRESS_DB_USER=... (as scripts/test.sh does for
 # phpunit/wp-tests-config.php) actually gets a container that matches.
+# Socket connections only, so this is not a free-form runtime input: MariaDB here ships with
+# `skip-networking` (/etc/my.cnf.d/mariadb-server.cnf), nothing listens on 3306, and only
+# 'localhost' can reach it. The variable is kept because phpunit/wp-tests-config.php reads it and
+# scripts/test.sh passes it through - but a value that cannot work is rejected here rather than
+# surfacing later as a bare "ERROR 2002 Can't connect to server on '127.0.0.1'" from `wp db create`,
+# which under `set -e` takes the whole container down mid-boot with exit 1.
 WORDPRESS_DB_HOST="${WORDPRESS_DB_HOST:-localhost}"
+case "$WORDPRESS_DB_HOST" in
+  # bare host, or WordPress' host:/path/to/socket form
+  localhost | localhost:/*) ;;
+  *)
+    echo "WORDPRESS_DB_HOST must be 'localhost' (optionally with a socket path): this image's" \
+      "MariaDB is socket-only, got '${WORDPRESS_DB_HOST}'" >&2
+    exit 1
+    ;;
+esac
 WORDPRESS_DB_NAME="${WORDPRESS_DB_NAME:-wordpress}"
 WORDPRESS_DB_USER="${WORDPRESS_DB_USER:-wordpress}"
 WORDPRESS_DB_PASSWORD="${WORDPRESS_DB_PASSWORD:-password}"
