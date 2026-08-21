@@ -126,7 +126,7 @@ Proven not causal:
   0.599s, admin-ajax path 0.175s vs 0.173s - both write `a:1:{i:0;s:10:"extendable";}`, both arms
 - instrumenting the real spec with the arm chosen by env var (so both arms run byte-identical spec
   code) showed the same client path in both: one `AJAX-POST action=delete-theme`, `AJAX-RESP 200
-  {"success":true,...}`, same post-click URL. The only difference was the final count, 0 vs 1.
+{"success":true,...}`, same post-click URL. The only difference was the final count, 0 vs 1.
 - adding `waitForTimeout(2000)` before the assertion made the `[]` arm pass, with identical server
   state in both arms: `option=array(0=>'extendable',) row=[a:1:{...},on] files=yes wpcli_lists=1`
 
