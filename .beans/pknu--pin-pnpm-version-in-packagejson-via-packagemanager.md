@@ -24,7 +24,7 @@ Make package.json the authoritative pnpm version pin so the version is self-enfo
   `version` input so it reads `packageManager` from package.json.
 - `scripts/lint.sh` (`ionos.wordpress.pnpm`, run by `pnpm lint` / `lint:pnpm`): added a drift
   assertion comparing package.json's pin to the Dockerfile's `ENV PNPM_VERSION`. Needed because
-  package.json silently *wins* at runtime, which would otherwise make the Dockerfile ENV
+  package.json silently _wins_ at runtime, which would otherwise make the Dockerfile ENV
   cosmetic on drift. Uses the repo's `filename:line` error notation for vscode task jumps.
 
 ### Side effect worth knowing
