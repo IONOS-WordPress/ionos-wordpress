@@ -269,11 +269,31 @@ function ionos.wordpress.dennis() {
 
 #
 # check if pnpm lock file (`./pnpm-lock.yaml`) is up to date
-# and references all workspace dependencies correctly
+# and references all workspace dependencies correctly.
+# also asserts the pnpm version pin in package.json matches the devcontainer image
 #
 function ionos.wordpress.pnpm() {
   if [[ "$FIX" == 'yes' ]]; then
     pnpm install
+  fi
+
+  ionos.wordpress.log_header "lint pnpm version pin ..."
+
+  # package.json's `packageManager` is authoritative at runtime : pnpm silently switches itself to
+  # that version, which would make the devcontainer's ENV PNPM_VERSION cosmetic if the two drift.
+  # the Dockerfile needs its own literal since it installs pnpm before the repo is copied in.
+  PACKAGE_JSON_PNPM_VERSION=$(pnpm exec node -p "(require('./package.json').packageManager ?? '').replace(/^pnpm@/, '')")
+  DOCKERFILE_PNPM_VERSION=$(grep -oP '^ENV PNPM_VERSION \K.+' ./.devcontainer/Dockerfile)
+
+  if [[ -z "$PACKAGE_JSON_PNPM_VERSION" ]]; then
+    # the filename:line notation is required for vscode tasks to jump to the correct file
+    ionos.wordpress.log_error "package.json:1 : no pnpm version pinned - expected '\"packageManager\": \"pnpm@$DOCKERFILE_PNPM_VERSION\"'"
+    return 1
+  fi
+
+  if [[ "$PACKAGE_JSON_PNPM_VERSION" != "$DOCKERFILE_PNPM_VERSION" ]]; then
+    ionos.wordpress.log_error "package.json:1 : pinned pnpm version 'pnpm@$PACKAGE_JSON_PNPM_VERSION' does not match .devcontainer/Dockerfile 'ENV PNPM_VERSION $DOCKERFILE_PNPM_VERSION'"
+    return 1
   fi
 
   ionos.wordpress.log_header "lint pnpm lock file ..."

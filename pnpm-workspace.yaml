@@ -1,11 +1,11 @@
 # see https://pnpm.io/pnpm-workspace_yaml
-# pnpm 11 only reads auth/registry settings from .npmrc - everything else (formerly kebab-case
+# since pnpm 11, only auth/registry settings are read from .npmrc - everything else (formerly kebab-case
 # .npmrc keys) lives here as camelCase. see https://pnpm.io/migration
 saveExact: true
 # to enable pre/post-[mypackage-script] hooks
 enablePrePostScripts: true
 # >=20.6.0 supports --env option (we prefer > 20.17.0)
-useNodeVersion: 24.18.0
+nodeVersion: 24.18.0
 # disable PNPM update notification
 updateNotifier: false
 preferWorkspacePackages: true
