@@ -167,7 +167,11 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
         .
     fi
   else
-    readonly WORDPRESS_ALPINE_IMAGE='ionos-wordpress/wordpress-alpine:latest'
+    # derived rather than hardcoded: DOCKER_USERNAME/DOCKER_REPOSITORY (see
+    # ionos.wordpress.docker_image_name_for_package) let a developer retag the image
+    # scripts/build.sh produces - a hardcoded name here would silently fall out of sync
+    # with what got built and fail with a confusing Docker Hub "pull access denied"
+    readonly WORDPRESS_ALPINE_IMAGE="$(ionos.wordpress.docker_image_name_for_package '@ionos-wordpress/wordpress-alpine'):latest"
 
     # 'pnpm test' is run standalone in places that never ran a build first (scripts/
     # pre-release.sh, a fresh clone) and this script itself never builds - without this

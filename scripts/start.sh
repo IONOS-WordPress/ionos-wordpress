@@ -22,6 +22,12 @@ fi
 readonly CORE_DIR="$(ionos.wordpress.core_dir "$WORDPRESS_VERSION")"
 readonly STACK_DIR="${MNT_HOME}/dev"
 
+# derived rather than hardcoded: DOCKER_USERNAME/DOCKER_REPOSITORY (see
+# ionos.wordpress.docker_image_name_for_package) let a developer retag the image
+# scripts/build.sh produces - a hardcoded name here would silently fall out of sync
+# and `docker run` would fail with a confusing Docker Hub "pull access denied"
+readonly WORDPRESS_ALPINE_IMAGE="$(ionos.wordpress.docker_image_name_for_package '@ionos-wordpress/wordpress-alpine'):latest"
+
 # MariaDB's datadir. Kept in a named docker volume rather than the container's writable
 # layer, so recreating the container (the only way to pick up a rebuilt wordpress-alpine
 # image, since env vars and bind mounts are baked in at `docker run` time) no longer
@@ -83,7 +89,7 @@ else
     --env HOST_GID="$(id -g)" \
     --volume "${DB_VOLUME_NAME}:/data" \
     "${VOLUME_ARGS[@]}" \
-    ionos-wordpress/wordpress-alpine:latest >/dev/null
+    "$WORDPRESS_ALPINE_IMAGE" >/dev/null
 fi
 
 # (re)generate .vscode/launch.json so the xdebug pathMappings match the packages
