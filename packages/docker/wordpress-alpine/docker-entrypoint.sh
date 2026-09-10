@@ -3,6 +3,18 @@
 # Exit on non defined variables and on non zero exit codes
 set -eu
 
+# Touched as the very last thing this script does, so a caller can wait for the
+# container to be *finished* booting rather than guessing. `wp core is-installed`
+# is not a substitute: it goes true the moment `wp core install` below returns,
+# while this script still has the rewrite flush, sshd, httpd and AFTER_START ahead
+# of it - and anything that disturbs the database in that window (scripts/test.sh
+# starts phpunit, whose bootstrap drops and recreates the very same wp_ tables)
+# makes the next wp-cli call here fail, which under `set -e` takes the whole
+# container down and SIGKILLs whatever the caller was running.
+# Removed first so a `docker restart` cannot serve the previous boot's marker.
+readonly ENTRYPOINT_COMPLETE_MARKER=/run/entrypoint-complete
+rm -f "$ENTRYPOINT_COMPLETE_MARKER"
+
 SERVER_ADMIN="${SERVER_ADMIN:-you@example.com}"
 HTTP_SERVER_NAME="${HTTP_SERVER_NAME:-www.example.com}"
 LOG_LEVEL="${LOG_LEVEL:-info}"
@@ -19,6 +31,32 @@ WP_PASSWORD="${WP_PASSWORD:-password}"
 SSH_PASSWORD="${SSH_PASSWORD:-$WP_PASSWORD}"
 SSH_PUBLIC_KEY="${SSH_PUBLIC_KEY:-}"
 AFTER_START="${AFTER_START:-}"
+# The database lives inside this very container (MariaDB is started below), so
+# these are dev credentials for a server that never listens outside it - the
+# defaults are the whole point, not a secret. This block is the *only* place
+# they are spelled out: the entrypoint grants them to MariaDB, writes them into
+# wp-config.php and uses them for its own db checks, all from these variables,
+# so a caller passing --env WORDPRESS_DB_USER=... (as scripts/test.sh does for
+# phpunit/wp-tests-config.php) actually gets a container that matches.
+# Socket connections only, so this is not a free-form runtime input: MariaDB here ships with
+# `skip-networking` (/etc/my.cnf.d/mariadb-server.cnf), nothing listens on 3306, and only
+# 'localhost' can reach it. The variable is kept because phpunit/wp-tests-config.php reads it and
+# scripts/test.sh passes it through - but a value that cannot work is rejected here rather than
+# surfacing later as a bare "ERROR 2002 Can't connect to server on '127.0.0.1'" from `wp db create`,
+# which under `set -e` takes the whole container down mid-boot with exit 1.
+WORDPRESS_DB_HOST="${WORDPRESS_DB_HOST:-localhost}"
+case "$WORDPRESS_DB_HOST" in
+  # bare host, or WordPress' host:/path/to/socket form
+  localhost | localhost:/*) ;;
+  *)
+    echo "WORDPRESS_DB_HOST must be 'localhost' (optionally with a socket path): this image's" \
+      "MariaDB is socket-only, got '${WORDPRESS_DB_HOST}'" >&2
+    exit 1
+    ;;
+esac
+WORDPRESS_DB_NAME="${WORDPRESS_DB_NAME:-wordpress}"
+WORDPRESS_DB_USER="${WORDPRESS_DB_USER:-wordpress}"
+WORDPRESS_DB_PASSWORD="${WORDPRESS_DB_PASSWORD:-password}"
 
 # Alpine names the 7.x line's config dir /etc/php7 (unversioned, matching
 # its php7-* package prefix), not /etc/php74 like the 8.x line's
@@ -86,6 +124,21 @@ echo 'Running MariaDB'
 # Wait until MariaDB is available
 while ! mariadb-admin ping -h "localhost" --silent; do sleep 1; done
 
+# Create/refresh the database user from the variables above. The image ships
+# with no wordpress user at all (see the Dockerfile's mariadb-install-db),
+# so this is what makes WORDPRESS_DB_USER/PASSWORD/NAME take effect - and it
+# is idempotent, so restarting a container whose /data already holds the user
+# (or one built from an older image that baked it in) is a no-op. Runs as OS
+# root, which mariadb-install-db put on unix_socket auth - no password needed
+# to administer the server itself. GRANT on a not-yet-existing database is
+# legal and includes CREATE, which is what lets `wp db create` below run as
+# the wordpress user rather than as root.
+mariadb -u root <<SQL
+  GRANT ALL PRIVILEGES ON \`${WORDPRESS_DB_NAME}\`.* TO '${WORDPRESS_DB_USER}'@'localhost'
+    IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';
+  FLUSH PRIVILEGES;
+SQL
+
 chown -R php:php /htdocs
 chmod -R a+rwX /htdocs
 
@@ -147,7 +200,8 @@ if [[ ! -d /htdocs/wp-admin ]]; then
   ) 200>/htdocs/.download.lock
 fi
 
-doas -u php wp config create --dbname=wordpress --skip-check --dbuser=wordpress --dbpass=password --path=/htdocs --force --extra-php <<EOF
+doas -u php wp config create --dbname="$WORDPRESS_DB_NAME" --skip-check --dbhost="$WORDPRESS_DB_HOST" \
+  --dbuser="$WORDPRESS_DB_USER" --dbpass="$WORDPRESS_DB_PASSWORD" --path=/htdocs --force --extra-php <<EOF
   define( 'FS_METHOD', 'direct');
   define( 'WP_DEBUG', true );
   define( 'WP_DEBUG_LOG', true );
@@ -156,10 +210,13 @@ doas -u php wp config create --dbname=wordpress --skip-check --dbuser=wordpress 
   define( 'WP_SITEURL', 'http://localhost:${HTTP_PORT}' );
 EOF
 
-if mariadb -u root -p'password' -e "USE wordpress;" 2>/dev/null; then
+# root over the unix socket again - the wordpress user cannot answer "does
+# this database exist" (USE on a nonexistent db fails identically to USE on a
+# db it lacks rights to), and its own password is irrelevant here.
+if mariadb -u root -e "USE \`${WORDPRESS_DB_NAME}\`;" 2>/dev/null; then
   echo "Database already exists, skipping creation."
 else
-  echo "will create database 'wordpress'"
+  echo "will create database '${WORDPRESS_DB_NAME}'"
   doas -u php wp db create --path=/htdocs
   doas -u php wp core install --path=/htdocs --url="http://localhost:${HTTP_PORT}" --title='wordpress dev' --admin_user=admin --admin_password="${WP_PASSWORD}" --admin_email=info@example.com --skip-email
 
@@ -205,5 +262,7 @@ if [ -n "$AFTER_START" ]; then
   echo "Running AFTER_START script: /after-start.sh"
   /after-start.sh
 fi
+
+touch "$ENTRYPOINT_COMPLETE_MARKER"
 
 exec doas -u php /bin/bash -i

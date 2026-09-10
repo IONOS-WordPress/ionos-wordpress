@@ -1,11 +1,11 @@
 # see https://pnpm.io/pnpm-workspace_yaml
-# pnpm 11 only reads auth/registry settings from .npmrc - everything else (formerly kebab-case
+# since pnpm 11, only auth/registry settings are read from .npmrc - everything else (formerly kebab-case
 # .npmrc keys) lives here as camelCase. see https://pnpm.io/migration
 saveExact: true
 # to enable pre/post-[mypackage-script] hooks
 enablePrePostScripts: true
 # >=20.6.0 supports --env option (we prefer > 20.17.0)
-useNodeVersion: 24.18.0
+nodeVersion: 24.18.0
 # disable PNPM update notification
 updateNotifier: false
 preferWorkspacePackages: true
@@ -45,4 +45,13 @@ allowBuilds:
 # catalogs can be used to maintain dependencies for a group of packages at a single place
 # see https://pnpm.io/catalogs
 catalog:
-  '@wordpress/components': ^39.0.0
+  '@wordpress/components': ^40.0.0
+
+# @playwright/experimental-ct-react pins an exact (older) playwright/playwright-core version that
+# lags behind @playwright/test - without this override, two playwright/playwright-core versions
+# get installed side by side, and whichever one hoists to node_modules/.bin/playwright ends up
+# running specs with a different @playwright/test instance than the one they imported, causing
+# "Playwright Test did not expect test.beforeAll() to be called here"
+overrides:
+  playwright: 1.63.0
+  playwright-core: 1.63.0

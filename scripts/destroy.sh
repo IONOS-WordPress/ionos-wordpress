@@ -15,6 +15,11 @@ if ionos.wordpress.container_exists "$CONTAINER_NAME"; then
   docker rm -f "$CONTAINER_NAME" >/dev/null
 fi
 
+# the container's MariaDB datadir (see scripts/start.sh) - a named volume, so it outlives
+# the container itself and has to be removed explicitly for `pnpm destroy` to mean a full
+# reset. `docker volume rm` on a nonexistent volume is an error, hence the || true.
+docker volume rm "${CONTAINER_NAME}-data" >/dev/null 2>&1 || true
+
 rm -rf "${MNT_HOME:?MNT_HOME must be set}/dev"
 
 # clean up composer cache

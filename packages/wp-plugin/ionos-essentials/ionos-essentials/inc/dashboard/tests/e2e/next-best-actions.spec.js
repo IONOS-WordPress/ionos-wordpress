@@ -1,5 +1,6 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { restoreDbOnce, test, expect } from '../../../../../../../../playwright/e2e/fixtures';
 import { execTestCLI } from '../../../../../../../../playwright/exec-test-cli';
+test.beforeAll(restoreDbOnce);
 
 test.describe(
   'essentials:dashboard next-best-actions block',
@@ -7,13 +8,13 @@ test.describe(
     tag: ['@dashboard', '@nba'],
   },
   () => {
+    // the ionos_nba_* options are all absent in the restored snapshot, so only the two
+    // deviations from it are set here.
     test.beforeAll(async () => {
       execTestCLI(`
-        # reset nba options
-        wp --quiet option delete ionos_nba_status ionos_essentials_nba_setup_completed ionos_essentials_loop_nba_actions_shown
         # set essentials welcome overlay already clicked away
         wp --quiet user meta update 1 ionos_essentials_welcome true
-        # simulate extendify onboarding already done
+        # simulate extendify onboarding already done (the snapshot has it at 3)
         wp --quiet option update extendify_attempted_redirect_count 4
       `);
     });

@@ -1,5 +1,6 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { restoreDbOnce, test, expect } from '../../../../../../../playwright/e2e/fixtures';
 import { execTestCLI } from '../../../../../../../playwright/exec-test-cli';
+test.beforeAll(restoreDbOnce);
 
 const TEST_THEME_SLUG = 'extendable';
 
@@ -9,14 +10,10 @@ test.describe(
     tag: ['@stretch-extra', '@secondary-theme-dir'],
   },
   () => {
-    test.beforeAll(async () => {
-      execTestCLI(`
-        wp option delete IONOS_CUSTOM_DELETED_THEMES_OPTION
-        wp option set stretch_extra_extendable_theme_dir_initialized 1
-        wp theme activate twentytwentyfive
-      `);
-    });
-
+    // No setup of its own: the restored snapshot already has twentytwentyfive active and
+    // stretch_extra_extendable_theme_dir_initialized set. This file used to delete
+    // IONOS_CUSTOM_DELETED_THEMES_OPTION here, which looked load-bearing because the tests failed
+    // without it - that was a race, not the option (see the waits below).
     test('deletable', async ({ admin, page }) => {
       await admin.visitAdminPage('/themes.php?search=' + TEST_THEME_SLUG);
 
@@ -25,7 +22,20 @@ test.describe(
       });
 
       await page.locator(`.theme[data-slug=${TEST_THEME_SLUG}]`).click();
-      await page.locator('a.delete-theme').click();
+
+      // Deleting a theme goes over admin-ajax (WP's updates.js intercepts the link), so the click
+      // resolves long before the server has recorded anything. Wait for that response instead of
+      // racing it: navigating to themes.php too early renders a page that still lists the theme,
+      // and toHaveCount below only retries the locator, never the navigation - so the assertion
+      // can never recover from it.
+      await Promise.all([
+        page.waitForResponse(
+          (response) =>
+            response.url().includes('admin-ajax.php') &&
+            (response.request().postData() ?? '').includes('action=delete-theme')
+        ),
+        page.locator('a.delete-theme').click(),
+      ]);
 
       await admin.visitAdminPage('/themes.php');
       await expect(page.locator(`.theme[data-slug=${TEST_THEME_SLUG}]`)).toHaveCount(0);
@@ -33,8 +43,17 @@ test.describe(
 
     test('installable', async ({ admin, page }) => {
       await admin.visitAdminPage(`/theme-install.php?theme=${TEST_THEME_SLUG}`);
-      await page.locator('.wp-full-overlay-header a.theme-install').click();
-      await page.waitForTimeout(1000);
+
+      // installing is admin-ajax too (see inc/secondary-theme-dir.php's wp_ajax_install-theme),
+      // so wait for the response rather than sleeping a fixed second and hoping
+      await Promise.all([
+        page.waitForResponse(
+          (response) =>
+            response.url().includes('admin-ajax.php') &&
+            (response.request().postData() ?? '').includes('action=install-theme')
+        ),
+        page.locator('.wp-full-overlay-header a.theme-install').click(),
+      ]);
 
       await admin.visitAdminPage('/themes.php');
       await expect(page.locator(`.theme[data-slug=${TEST_THEME_SLUG}]`)).toBeVisible();

@@ -112,18 +112,15 @@ RUN case "$ARG_PHP_VERSION" in \
 
 ENV PHP_VERSION=${ARG_PHP_VERSION}
 
-# Configure MySQL
-RUN <<EOF
-  mariadb-install-db --datadir=/data --user=mysql
-
-  /usr/bin/mariadbd-safe --syslog --datadir=/data --socket=/run/mysqld/mysqld.sock &
-
-  # wait until mariadb is up and running
-  while ! mariadb-admin ping -h "localhost" --silent; do sleep 1; done
-
-  mariadb -u root -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' IDENTIFIED BY 'password';" && \
-  mariadb -u root -e "FLUSH PRIVILEGES;"
-EOF
+# Configure MySQL. This only initializes the system tables (root@localhost
+# ends up on unix_socket auth, so the entrypoint can administer the server
+# without a password); the wordpress database user is deliberately *not*
+# created here. Its name/password are runtime inputs
+# (WORDPRESS_DB_NAME/USER/PASSWORD, see docker-entrypoint.sh), so baking a
+# build-time GRANT would hardcode a second copy of credentials that a
+# container can override - the entrypoint creates and grants the user on
+# every start instead, from those variables alone.
+RUN mariadb-install-db --datadir=/data --user=mysql
 
 # Configure OpenSSH. SSH logs in as the `php` user (below), not root, so
 # files touched over an SSH session keep the same uid/gid as everything
