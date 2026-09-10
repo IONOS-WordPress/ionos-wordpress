@@ -253,18 +253,23 @@ function ionos.wordpress.build_workspace_package_docker() {
 
   # generate/update composer.lock file if composer.json exists in docker workspace package
   #
-  # unlike ecs-php/rector-php/potrans/dennis-i18n (see _native-tools.sh), composer itself
-  # isn't one of the per-tool COMPOSER_HOME-isolated installs under
-  # $IONOS_NATIVE_TOOLS_PREFIX - it's a plain system binary, already present on PATH in the
-  # devcontainer/CI image (ships with the base image) and commonly present on a developer's
-  # host too. fall back to a pinned docker image (not :latest - a floating tag can change
-  # dependency-resolution behavior between CI runs and developer machines with no single
-  # pin point to bump) only when composer truly isn't available.
+  # composer is dispatched exactly like ecs-php/rector-php/potrans/dennis-i18n (see
+  # _native-tools.sh): the native path is the copy the dev container image places under
+  # $IONOS_NATIVE_TOOLS_PREFIX, everything else uses the pinned $IONOS_COMPOSER_DOCKER_IMAGE.
+  # note this deliberately does NOT probe PATH: a composer a developer happens to have
+  # installed on their host would then hijack the build with an arbitrary composer version
+  # on an arbitrary php interpreter (see .beans/b5q8--*.md).
+  #
+  # not routed through ionos.wordpress.run_native_or_docker() because the docker invocation
+  # has a different shape than the shared one - it mounts only the package directory as the
+  # workdir and runs as the calling uid:gid so the written composer.lock isn't root-owned.
   if [[ -f "$path/composer.json" ]]; then
-    if [[ "${IONOS_WP_FORCE_DOCKER:-}" != '1' ]] && command -v composer &>/dev/null; then
-      (cd "$path" && composer install $COMPOSER_FLAGS --no-scripts)
+    local composer_path
+    if composer_path="$(ionos.wordpress.native_tool composer)"; then
+      (cd "$path" && "$composer_path" install $COMPOSER_FLAGS --no-scripts)
     else
-      docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd)/$path":/app -w /app composer:2.10.2 install $COMPOSER_FLAGS --no-scripts
+      docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd)/$path":/app -w /app \
+        "$IONOS_COMPOSER_DOCKER_IMAGE" install $COMPOSER_FLAGS --no-scripts
     fi
   fi
 

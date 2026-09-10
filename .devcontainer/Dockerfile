@@ -9,6 +9,10 @@
 # potrans' composer.lock needs >= 8.4.1, and it happens to match
 # packages/docker/wordpress-alpine/.env's default ARG_PHP_VERSION, so the tooling PHP and
 # the WordPress a developer runs against finally agree.
+#
+# this version has to equal PHP_VERSION in packages/docker/{ecs-php,rector-php,potrans}/.env
+# so the three PHP tools run on the same interpreter natively as in their images
+# (.beans/e6mc--*.md, decision 3); scripts/lint.sh's ionos.wordpress.version_pins() asserts it
 FROM mcr.microsoft.com/devcontainers/php:8.4-bookworm
 
 # always use bash as default shell for the docker file
@@ -173,9 +177,30 @@ RUN <<EOF
   rm -rf "$IONOS_NATIVE_TOOLS_PREFIX"/*/cache
 EOF
 
+# composer, registered as a native tool too (see IONOS_NATIVE_TOOL_PATHS in
+# scripts/includes/_native-tools.sh) so scripts/build.sh dispatches it through the same
+# filesystem probe as the four tools above.
+#
+# copied out of the very image the docker path falls back to - NOT symlinked from the
+# base image's own composer on PATH - for the same reason the four tools install from
+# their committed composer.lock: native mode and docker mode must run the identical
+# version, otherwise dependency resolution can differ between a dev container / CI run
+# and a developer working outside it. (the base image ships a different composer patch
+# release than the pin, so this is not theoretical.)
+#
+# the tool installs above deliberately keep using the base image's composer: they install
+# from committed lockfiles, so the composer version has no bearing on what they resolve.
+#
+# the tag has to be kept in sync with $IONOS_COMPOSER_DOCKER_IMAGE in
+# scripts/includes/_native-tools.sh by hand (a Dockerfile cannot read a shell file, and
+# 'COPY --from' is resolved before any build arg this project passes today) -
+# scripts/lint.sh's ionos.wordpress.version_pins() fails the lint if the two drift apart
+COPY --from=composer:2.10.2 /usr/bin/composer $IONOS_NATIVE_TOOLS_PREFIX/composer/bin/composer
+
 # dennis is a python package. pinned exactly, matching
 # packages/docker/dennis-i18n/{.env,Dockerfile} - an open upper bound would let the native
-# and dockerized versions drift apart depending on when each was built.
+# and dockerized versions drift apart depending on when each was built. scripts/lint.sh's
+# ionos.wordpress.version_pins() fails the lint if this literal and that .env disagree.
 ARG DENNIS_VERSION=1.3.0
 RUN PIPX_HOME="$IONOS_NATIVE_TOOLS_PREFIX/dennis-i18n/pipx" \
     PIPX_BIN_DIR="$IONOS_NATIVE_TOOLS_PREFIX/dennis-i18n/bin" \
@@ -199,4 +224,5 @@ RUN <<EOF
   "$IONOS_NATIVE_TOOLS_PREFIX/potrans/vendor/bin/potrans" --version
   # dennis-cmd has no --version flag, so --help is the cheapest "does it start" probe
   "$IONOS_NATIVE_TOOLS_PREFIX/dennis-i18n/bin/dennis-cmd" --help
+  "$IONOS_NATIVE_TOOLS_PREFIX/composer/bin/composer" --version
 EOF
