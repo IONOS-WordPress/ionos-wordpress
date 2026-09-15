@@ -45,7 +45,7 @@ allowBuilds:
 # catalogs can be used to maintain dependencies for a group of packages at a single place
 # see https://pnpm.io/catalogs
 catalog:
-  '@wordpress/components': ^40.0.0
+  '@wordpress/components': ^40.1.0
 
 # @playwright/experimental-ct-react pins an exact (older) playwright/playwright-core version that
 # lags behind @playwright/test - without this override, two playwright/playwright-core versions
