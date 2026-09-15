@@ -1,5 +1,5 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { execTestCLI } from '../../../../../../../../playwright/exec-test-cli';
+import { restoreDbOnce, test, expect } from '../../../../../../../../playwright/e2e/fixtures';
+test.beforeAll(restoreDbOnce);
 
 test.describe(
   'essentials:dashboard ionos-essentials-dashboard-admin',
@@ -7,8 +7,9 @@ test.describe(
     tag: ['@dashboard'],
   },
   () => {
+    // the My Account block only renders for the ionos group brand, which the AFTER_START script
+    // sets before the snapshot is taken.
     test('/dashboard contains My Account block', async ({ admin, page }) => {
-      execTestCLI('wp --quiet option update ionos_group_brand ionos');
       await admin.visitAdminPage('/');
 
       const body = await page.locator('body');

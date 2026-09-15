@@ -269,11 +269,31 @@ function ionos.wordpress.dennis() {
 
 #
 # check if pnpm lock file (`./pnpm-lock.yaml`) is up to date
-# and references all workspace dependencies correctly
+# and references all workspace dependencies correctly.
+# also asserts the pnpm version pin in package.json matches the devcontainer image
 #
 function ionos.wordpress.pnpm() {
   if [[ "$FIX" == 'yes' ]]; then
     pnpm install
+  fi
+
+  ionos.wordpress.log_header "lint pnpm version pin ..."
+
+  # package.json's `packageManager` is authoritative at runtime : pnpm silently switches itself to
+  # that version, which would make the devcontainer's ENV PNPM_VERSION cosmetic if the two drift.
+  # the Dockerfile needs its own literal since it installs pnpm before the repo is copied in.
+  PACKAGE_JSON_PNPM_VERSION=$(pnpm exec node -p "(require('./package.json').packageManager ?? '').replace(/^pnpm@/, '')")
+  DOCKERFILE_PNPM_VERSION=$(grep -oP '^ENV PNPM_VERSION \K.+' ./.devcontainer/Dockerfile)
+
+  if [[ -z "$PACKAGE_JSON_PNPM_VERSION" ]]; then
+    # the filename:line notation is required for vscode tasks to jump to the correct file
+    ionos.wordpress.log_error "package.json:1 : no pnpm version pinned - expected '\"packageManager\": \"pnpm@$DOCKERFILE_PNPM_VERSION\"'"
+    return 1
+  fi
+
+  if [[ "$PACKAGE_JSON_PNPM_VERSION" != "$DOCKERFILE_PNPM_VERSION" ]]; then
+    ionos.wordpress.log_error "package.json:1 : pinned pnpm version 'pnpm@$PACKAGE_JSON_PNPM_VERSION' does not match .devcontainer/Dockerfile 'ENV PNPM_VERSION $DOCKERFILE_PNPM_VERSION'"
+    return 1
   fi
 
   ionos.wordpress.log_header "lint pnpm lock file ..."
@@ -296,6 +316,103 @@ function ionos.wordpress.pnpm() {
 
   # restore lock file
   echo "$PNPM_LOCK_YAML" > ./pnpm-lock.yaml
+}
+
+#
+# path of the file that repeats the version pins - see ionos.wordpress.version_pins()
+IONOS_VERSION_PIN_MIRROR='.devcontainer/Dockerfile'
+
+#
+# asserts that one version pin has the same value in its own file and in
+# $IONOS_VERSION_PIN_MIRROR. echoes what is wrong and returns 1 on mismatch.
+#
+# @param $1 what is pinned (used in the error message, e.g. "composer")
+# @param $2 file holding the authoritative pin
+# @param $3 grep -P pattern capturing the version in $2 via \K
+# @param $4 grep -P pattern capturing the version in $IONOS_VERSION_PIN_MIRROR via \K
+#
+function ionos.wordpress.assert_version_pin() {
+  local what="$1" file="$2" regex="$3" mirror_regex="$4"
+  local mirror="$IONOS_VERSION_PIN_MIRROR"
+  local result=0
+
+  # "<line>:<version>" of the first match, empty if the pattern does not match (any more)
+  local match="$(grep -noP "$regex" "$file" | head -1 ||:)"
+  local mirror_match="$(grep -noP "$mirror_regex" "$mirror" | head -1 ||:)"
+
+  # a pattern that stopped matching must fail loudly - a check that passes because it no
+  # longer finds anything is worse than no check at all
+  local unmatched
+  for unmatched in "$file|$regex|$match" "$mirror|$mirror_regex|$mirror_match"; do
+    IFS='|' read -r pin_file pin_regex pin_match <<<"$unmatched"
+    if [[ -z "$pin_match" ]]; then
+      # single argument on purpose - log_error's $2 is a stacktrace index, not more message.
+      # the filename:line notation is required for vscode tasks to jump to the correct file
+      local message="$pin_file:1 : cannot find the $what version pin ('$pin_regex' matches"
+      message+=" nothing) - update the ionos.wordpress.assert_version_pin call sites below"
+      ionos.wordpress.log_error "$message"
+      result=1
+    fi
+  done
+  [[ $result -eq 0 ]] || return 1
+
+  if [[ "${match#*:}" != "${mirror_match#*:}" ]]; then
+    # single argument on purpose - log_error's $2 is a stacktrace index, not more message.
+    # the filename:line notation is required for vscode tasks to jump to the correct file
+    local message="$mirror:${mirror_match%%:*} : pinned $what version '${mirror_match#*:}'"
+    message+=" does not match $file:${match%%:*} '${match#*:}' - bump both together"
+    ionos.wordpress.log_error "$message"
+    return 1
+  fi
+}
+
+#
+# assert that the version pins which necessarily exist twice still agree.
+#
+# $IONOS_VERSION_PIN_MIRROR has to repeat several pins as literals: it is built by the
+# devcontainer CLI / vscode / devcontainers/ci, none of which source the repo's .env files or
+# scripts/includes/*, and devcontainer.json's build.args can only interpolate ${localEnv:...}
+# (the developer's shell, not a file in the repo). so no shared variable can reach it - the
+# duplication is unavoidable and only the agreement can be enforced. see .beans/47l4--*.md.
+#
+# without this the failure mode is silent: bump one half, forget the other, and both paths
+# keep working - they just stop being the same tool. not hypothetical: the composer pin was
+# already drifting (the dev container base image ships composer 2.10.3, the pinned fallback
+# image 2.10.2) when .beans/b5q8--*.md made composer a native tool.
+#
+# ionos.wordpress.pnpm() checks the pnpm pin, which has the same shape but reads its value
+# from package.json via node rather than by pattern - left where it is on purpose.
+#
+function ionos.wordpress.version_pins() {
+  if [[ "$FIX" == 'yes' ]]; then
+    # nothing to fix automatically - a pin bump changes which tool version everybody runs
+    # and is a decision, not a formatting detail
+    :
+  fi
+
+  ionos.wordpress.log_header "lint duplicated version pins ..."
+
+  local result=0
+
+  # the native composer and the dockerized fallback must be the identical binary
+  ionos.wordpress.assert_version_pin composer \
+    scripts/includes/_native-tools.sh "IONOS_COMPOSER_DOCKER_IMAGE='composer:\K[^']+" \
+    '^COPY --from=composer:\K\S+' || result=1
+
+  ionos.wordpress.assert_version_pin dennis \
+    packages/docker/dennis-i18n/.env '^DENNIS_VERSION=\K.+' \
+    '^ARG DENNIS_VERSION=\K.+' || result=1
+
+  # the three PHP tools must run on the same interpreter version natively as in their images
+  # (.beans/e6mc--*.md, decision 3)
+  local tool
+  for tool in ecs-php rector-php potrans; do
+    ionos.wordpress.assert_version_pin php \
+      "packages/docker/$tool/.env" '^PHP_VERSION=\K.+' \
+      '^FROM mcr\.microsoft\.com/devcontainers/php:\K[^-]+' || result=1
+  done
+
+  return $result
 }
 
 #
@@ -466,6 +583,15 @@ if [[ "${USE[@]}" =~ all|pnpm ]]; then
   fi
 fi
 
+if [[ "${USE[@]}" =~ all|pins ]]; then
+  if ionos.wordpress.version_pins; then
+    summaries["pins"]="Duplicated version pins are consistent."
+  else
+    exit_code=1
+    summaries["pins"]="Duplicated version pins reported errors."
+  fi
+fi
+
 if [[ "${USE[@]}" =~ all|i18n ]]; then
   if ionos.wordpress.dennis; then
     summaries["i18n"]="i18n $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
@@ -521,6 +647,7 @@ Options:
               - css      operate on css/scss files
               - pnpm     operate on pnpm lock file
               - i18n     operate on po/pot files
+              - pins     check the version pins duplicated in .devcontainer/Dockerfile
 
               The i18n allows automatic translation of po files using deepl.com if 'DEEPL_API_KEY' is set in './.secrets'
               See './.secret.example' for an example file.

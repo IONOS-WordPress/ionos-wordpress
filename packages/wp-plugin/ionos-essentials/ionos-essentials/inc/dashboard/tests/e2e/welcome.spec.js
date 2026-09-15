@@ -1,5 +1,6 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { restoreDbOnce, test, expect } from '../../../../../../../../playwright/e2e/fixtures';
 import { execTestCLI } from '../../../../../../../../playwright/exec-test-cli';
+test.beforeAll(restoreDbOnce);
 
 test.describe(
   'essentials:dashboard welcome banner functionality',
@@ -7,10 +8,8 @@ test.describe(
     tag: ['@dashboard', '@welcome'],
   },
   () => {
-    test.beforeAll(async () => {
-      execTestCLI(`wp --quiet user meta delete 1 ionos_essentials_welcome`);
-    });
-
+    // ionos_essentials_welcome is absent in the restored snapshot (nothing dismisses the
+    // overlay before the tests do), so this file needs no setup to see the banner.
     test('test welcome banner has tenant title', async ({ admin, page }) => {
       // test for default tenant (ionos)
       {

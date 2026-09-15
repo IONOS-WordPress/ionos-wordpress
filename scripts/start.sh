@@ -22,6 +22,27 @@ fi
 readonly CORE_DIR="$(ionos.wordpress.core_dir "$WORDPRESS_VERSION")"
 readonly STACK_DIR="${MNT_HOME}/dev"
 
+# derived rather than hardcoded: DOCKER_USERNAME/DOCKER_REPOSITORY (see
+# ionos.wordpress.docker_image_name_for_package) let a developer retag the image
+# scripts/build.sh produces - a hardcoded name here would silently fall out of sync
+# and `docker run` would fail with a confusing Docker Hub "pull access denied"
+readonly WORDPRESS_ALPINE_IMAGE="$(ionos.wordpress.docker_image_name_for_package '@ionos-wordpress/wordpress-alpine'):latest"
+
+# MariaDB's datadir. Kept in a named docker volume rather than the container's writable
+# layer, so recreating the container (the only way to pick up a rebuilt wordpress-alpine
+# image, since env vars and bind mounts are baked in at `docker run` time) no longer
+# throws away the local database along with it. destroy.sh removes this volume, so
+# `pnpm destroy` keeps its current meaning of a full reset.
+#
+# A named volume rather than a bind mount under ${STACK_DIR}: docker seeds a fresh named
+# volume from the image's own /data, ownership included, so mariadbd keeps writing as the
+# `mysql` uid. A host bind mount would start out owned by the host user, need a chown to
+# `mysql` inside the container, and then be awkward for the host user to clean up again.
+#
+# Derived from CONTAINER_NAME so a second stack (different CONTAINER_NAME) gets its own
+# database instead of silently sharing this one.
+readonly DB_VOLUME_NAME="${CONTAINER_NAME}-data"
+
 # env vars and bind mounts are baked into a container at `docker run` time and this
 # script otherwise just `docker start`s an already existing container - so a changed
 # WORDPRESS_VERSION would be silently ignored, leaving the container serving the core
@@ -29,7 +50,7 @@ readonly STACK_DIR="${MNT_HOME}/dev"
 # overlay dirs below are (re)created, since destroy.sh removes them).
 CONTAINER_WORDPRESS_VERSION="$(docker inspect "$CONTAINER_NAME" --format '{{range .Config.Env}}{{println .}}{{end}}' 2>/dev/null | sed -n 's/^WORDPRESS_VERSION=//p' || true)"
 if [[ -n "$CONTAINER_WORDPRESS_VERSION" ]] && [[ "$CONTAINER_WORDPRESS_VERSION" != "$WORDPRESS_VERSION" ]]; then
-  ionos.wordpress.log_warn "container '${CONTAINER_NAME}' was created for WORDPRESS_VERSION='${CONTAINER_WORDPRESS_VERSION}' but is now configured as '${WORDPRESS_VERSION}' - recreating it (this wipes ${MNT_HOME}/dev : database, uploads and wp-config.php)"
+  ionos.wordpress.log_warn "container '${CONTAINER_NAME}' was created for WORDPRESS_VERSION='${CONTAINER_WORDPRESS_VERSION}' but is now configured as '${WORDPRESS_VERSION}' - recreating it (this wipes the database and ${MNT_HOME}/dev : uploads and wp-config.php)"
   "$(realpath $0 | xargs dirname)/destroy.sh"
 fi
 
@@ -66,13 +87,53 @@ else
     --env AFTER_START="${AFTER_START:-}" \
     --env HOST_UID="$(id -u)" \
     --env HOST_GID="$(id -g)" \
+    --volume "${DB_VOLUME_NAME}:/data" \
     "${VOLUME_ARGS[@]}" \
-    ionos-wordpress/wordpress-alpine:latest >/dev/null
+    "$WORDPRESS_ALPINE_IMAGE" >/dev/null
 fi
 
 # (re)generate .vscode/launch.json so the xdebug pathMappings match the packages
 # currently bind-mounted into the container
 ./packages/docker/wordpress-alpine/scripts/_generate-vscode-launch.sh
+
+# An HTTP 200 alone does not mean the container is done with itself: docker-entrypoint.sh
+# starts httpd well before it runs the AFTER_START script, so without this wait `pnpm start`
+# could hand back a site whose brand options, plugin activations, front page and admin
+# password were still being written underneath it. The entrypoint touches this marker as its
+# very last statement (and clears it on boot, so a `docker start` of an existing container
+# cannot serve the previous run's marker).
+#
+# Generous budget: on a cold start everything before the marker includes downloading or
+# cloning WordPress core, installing it, and AFTER_START's plugin activation sweep plus two
+# rewrite flushes - the 60s that used to cover the whole boot is not enough for that.
+ionos.wordpress.log_info "waiting for container ${CONTAINER_NAME} to finish its startup ..."
+ENTRYPOINT_COMPLETE=
+MARKER_UNSUPPORTED=
+for _ in $(seq 1 180); do
+  if docker exec "$CONTAINER_NAME" test -f /run/entrypoint-complete 2>/dev/null; then
+    ENTRYPOINT_COMPLETE=1
+    break
+  fi
+
+  # A container created from an image predating the marker can never satisfy the check. Rather
+  # than time out for three minutes, fall back to the old HTTP-only behaviour - `docker start`
+  # on a long-lived dev container re-runs whatever entrypoint that container was created with,
+  # so this stays reachable even with an up-to-date image. `docker exec true` first: an exec
+  # failing only because the container has not come up yet must not be read as "unsupported".
+  if docker exec "$CONTAINER_NAME" true 2>/dev/null &&
+    ! docker exec "$CONTAINER_NAME" grep -q entrypoint-complete /docker-entrypoint.sh 2>/dev/null; then
+    MARKER_UNSUPPORTED=1
+    ionos.wordpress.log_warn \
+      "container ${CONTAINER_NAME} predates the startup marker - recreate it via 'pnpm destroy'"
+    break
+  fi
+
+  sleep 1
+done
+if [[ -z "$ENTRYPOINT_COMPLETE" ]] && [[ -z "$MARKER_UNSUPPORTED" ]]; then
+  ionos.wordpress.log_error "container ${CONTAINER_NAME} did not finish starting up - see 'pnpm logs'"
+  exit 1
+fi
 
 ionos.wordpress.log_info "waiting for http://localhost:${HTTP_PORT}/ to come up ..."
 HTTP_CODE=000

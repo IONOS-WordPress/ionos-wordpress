@@ -1,5 +1,6 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { restoreDbOnce, test, expect } from '../../../../../../../playwright/e2e/fixtures';
 import { execTestCLI } from '../../../../../../../playwright/exec-test-cli';
+test.beforeAll(restoreDbOnce);
 
 test.describe(
   'stretch-extra:marketplace',
@@ -7,16 +8,15 @@ test.describe(
     tag: ['@stretch-extra', '@marketplace'],
   },
   () => {
+    // both lines deviate from the restored snapshot on purpose - the stretch-extra mu-plugin has
+    // already provisioned itself in it. The group brand this marketplace needs (ionos) is set by
+    // the AFTER_START script, so it no longer has to be set here.
     test.beforeAll(async () => {
       execTestCLI(`
-        # reset stretch-extra theme option
+        # allow re-initialization of the extendable theme dir
         wp option delete stretch_extra_extendable_theme_dir_initialized
         # prevent auto initialization of stretch-extra provisioned plugins
         wp --quiet option update IONOS_CUSTOM_ACTIVE_PLUGINS_OPTION '[]' --format=json
-        # reset deleted custom plugins
-        wp --quiet option update IONOS_CUSTOM_DELETED_PLUGINS_OPTION '[]' --format=json
-        # marketplace is only be active on group brand ionos
-        wp --quiet option set ionos_group_brand 'ionos'
       `);
     });
 

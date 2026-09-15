@@ -1,5 +1,5 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { execTestCLI } from '../../../../../../../../playwright/exec-test-cli';
+import { restoreDbOnce, test, expect } from '../../../../../../../../playwright/e2e/fixtures';
+test.beforeAll(restoreDbOnce);
 
 test.describe(
   'essentials:dashboard maintenance',
@@ -7,15 +7,19 @@ test.describe(
     tag: ['@dashboard', '@maintenance'],
   },
   () => {
-    test.beforeAll(async () => {
-      execTestCLI(`
-        wp --quiet user update admin --user_pass="\${WP_PASSWORD}"
-        wp --quiet user meta delete admin ionos_compromised_credentials_check_leak_detected_v2
-        wp --quiet option delete IONOS_SECURITY_FEATURE_OPTION
-      `);
-    });
-
+    // no setup of our own: restoreDbOnce above already brings back the snapshot, in which
+    // scripts/test.sh has reset the admin password and dropped the compromised-credentials
+    // meta, and IONOS_SECURITY_FEATURE_OPTION already holds every flag enabled (identical to
+    // inc/security/index.php's IONOS_SECURITY_FEATURE_OPTION_DEFAULT).
     test('prevent log in with e-mail', async ({ page, requestUtils }) => {
+      // this test needs the login form, so it has to give up the logged-in state the shared
+      // storage state provides first. It used to get there as a side effect of a
+      // `wp user update admin --user_pass=...` in a beforeAll: changing the password
+      // invalidates the existing auth cookie. Dropping the cookie directly says so out loud -
+      // requestUtils.setupRest() at the end of the test restores the login state for the
+      // tests that follow.
+      await page.context().clearCookies();
+
       // Login with email
       await page.goto('/wp-admin');
       await page.fill('#user_login', 'wordpress@example.com');

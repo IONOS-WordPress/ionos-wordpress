@@ -1,5 +1,5 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import { execTestCLI } from '../../../../../../../../playwright/exec-test-cli';
+import { restoreDbOnce, test, expect } from '../../../../../../../../playwright/e2e/fixtures';
+test.beforeAll(restoreDbOnce);
 
 test.describe(
   'essentials:dashboard ionos-essentials-dashboard-admin will use wp-admin language',
@@ -8,8 +8,6 @@ test.describe(
   },
   () => {
     test('/dashboard uses wp-admin language', async ({ admin, page }) => {
-      execTestCLI(`wp --quiet user meta delete 1 ionos_essentials_welcome || true`);
-
       const targetLanguageName = 'de_DE';
 
       // Select the new language and save changes

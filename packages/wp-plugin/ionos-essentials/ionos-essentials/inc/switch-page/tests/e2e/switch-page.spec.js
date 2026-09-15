@@ -1,4 +1,5 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { restoreDbOnce, test, expect } from '../../../../../../../../playwright/e2e/fixtures';
+test.beforeAll(restoreDbOnce);
 
 test.describe(
   'Switch page',

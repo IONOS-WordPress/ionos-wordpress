@@ -33,6 +33,11 @@ The native form exists because every dockerized invocation costs a Docker-in-Doc
 
 Both forms install from the same committed `composer.lock` (and the same pinned `dennis` version), so **they run identical tool versions** — that is what makes the two paths interchangeable. The dispatch lives in `scripts/includes/_native-tools.sh`; it probes for the native executable rather than trying to detect the environment, because `$REMOTE_CONTAINERS`/`$CODESPACES` are not reliably set by `devcontainers/ci`.
 
+`composer` itself is dispatched by the same mechanism, even though it is not one of the `packages/docker/` tools: inside the Dev Container `scripts/build.sh` uses the copy at `/opt/ionos-wordpress/tools/composer/bin/composer`, outside it the pinned `composer:2.10.2` image. Both are literally the same binary — the Dev Container image `COPY --from`s it out of that image — so the lockfiles resolve identically either way.
+
+> [!NOTE]
+> A `composer` installed on your **host** is deliberately ignored, even if it is on `PATH`. It would be an arbitrary version on an arbitrary PHP interpreter, which is exactly the dependency-resolution drift the pinned image exists to prevent. The version is pinned once, as `$IONOS_COMPOSER_DOCKER_IMAGE` in `scripts/includes/_native-tools.sh`; bumping it means bumping the `COPY --from=composer:<version>` line in `.devcontainer/Dockerfile` too.
+
 > [!IMPORTANT]
 > **CI only ever exercises the native path**, so the Docker image path is not covered by automation. This is a deliberate trade, not an oversight. If one of those images breaks — a base image change, a package that disappears from Alpine — nothing will go red; the first person to notice will be a developer working outside the Dev Container.
 >

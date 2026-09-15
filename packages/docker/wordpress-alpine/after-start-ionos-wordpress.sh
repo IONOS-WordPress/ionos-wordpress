@@ -24,8 +24,16 @@ doas -u php bash -s <<'EOF'
   # activate twentytwentyfive theme by default
   wp --quiet theme activate twentytwentyfive
 
-  # use the default "Sample Page" as a static front page instead of the latest-posts feed
-  wp --quiet option update page_on_front 2
+  # use a static page as the front page instead of the latest-posts feed. The page is looked up
+  # rather than assumed to be id 2 (the default install's "Sample Page"): scripts/test.sh applies
+  # this script to the e2e test container after a phpunit run, and phpunit reinstalls WordPress
+  # into the very same tables (see phpunit/wp-tests-config.php's wp_ table prefix) leaving no
+  # sample page behind. Pointing page_on_front at a missing id makes the whole front page 404.
+  FRONT_PAGE_ID="$(wp post list --post_type=page --post_status=publish --posts_per_page=1 --field=ID | head -n1)"
+  if [[ -z "$FRONT_PAGE_ID" ]]; then
+    FRONT_PAGE_ID="$(wp post create --post_type=page --post_title='Sample Page' --post_status=publish --porcelain)"
+  fi
+  wp --quiet option update page_on_front "$FRONT_PAGE_ID"
   wp --quiet option update show_on_front page
 
   # emulate ionos brand by default

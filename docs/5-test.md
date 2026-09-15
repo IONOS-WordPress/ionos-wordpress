@@ -86,38 +86,47 @@ Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 If you log out within a test, log back in afterward with `await requestUtils.setupRest();`.
 See the _maintenance_ test for a real-life example.
 
-## Running e2e tests in parallel
+## e2e test isolation
 
-The e2e specs are **not** isolated from each other. They set up global WordPress state in
-`beforeAll` using wp-cli. Several specs contradict each other: `welcome.spec.js` deletes
-the `ionos_essentials_welcome` user meta that `tabs`/`maintenance`/`security-options` set,
-and `secondary-plugin-dir.spec.js` deactivates the _ionos-essentials_ plugin for its whole
-duration. For this reason, raising playwright's own `workers` setting would break these tests.
+The e2e specs set up global WordPress state in `beforeAll` using wp-cli, and several specs
+would otherwise contradict each other: `welcome.spec.js` deletes the `ionos_essentials_welcome`
+user meta that `tabs`/`maintenance`/`security-options` set, and `secondary-plugin-dir.spec.js`
+deactivates the _ionos-essentials_ plugin for its whole duration. For this reason, playwright's
+own `workers` setting is pinned to `1` (see `playwright.config.js`) and the whole suite runs
+serially against a single throwaway `ionos-wordpress-test` container (see `scripts/test.sh`).
 
-Instead, set `E2E_SHARDS` to run the suite across several **independent** test containers:
+To keep specs from leaking state into one another, the database is snapshotted once - right
+after `playwright/e2e/global-setup.js` finishes logging in and resetting theme/plugins - and
+restored **once per spec file**, before that file's first test runs. `playwright/exec-test-cli.js`
+exports `dumpTestDb()`/`restoreTestDb()` (plain `mariadb-dump`/`mariadb` calls against the test
+container), and `playwright/e2e/fixtures.js` exports `restoreDbOnce()`, a plain function - not a
+Playwright fixture, since `test.beforeAll` hooks run in a phase that precedes even auto
+fixtures. Every spec file therefore starts with:
 
-```sh
-E2E_SHARDS=3 pnpm run test --use e2e
+```js
+import { restoreDbOnce, test, expect } from '<path-to>/playwright/e2e/fixtures';
+import { execTestCLI } from '<path-to>/playwright/exec-test-cli';
+
+test.beforeAll(restoreDbOnce);
 ```
 
-Each shard gets its own throwaway wordpress-alpine container, with its own name (`ionos-wordpress-test`,
-`ionos-wordpress-test-2`, ...), its own published port (`TEST_HTTP_PORT`, +1, ...), and its own
-`wp-content` overlay. Playwright splits the spec files across these containers with `--shard`. Because
-every shard browses its own WordPress, the existing `beforeAll` setup stays valid without change.
+`test.beforeAll(restoreDbOnce)` must be the file's outermost `beforeAll`, declared before any
+`test.describe(...)` in the file - Playwright runs parent-suite hooks (the file itself) before
+child-suite hooks (a `describe` inside it), so this always restores before that file's own
+setup runs.
 
-The system also keeps per-shard state separate on disk (storage states, `.test-results-<n>`,
-`.playwright-report-<n>`). `scripts/_get-workflow-artefacts.sh` collects all of this state.
+The restore is per **file**, not per **test**: several specs deliberately build up state across
+the tests in one file via their own `beforeAll` - e.g. `secondary-theme-dir.spec.js`'s
+`deletable` test sets up what its `installable` test asserts on, and `welcome.spec.js`'s dismiss
+test sets up what its "still closed" test asserts on. Restoring before every single test would
+wipe that out too and break those specs.
 
-Notes:
-
-- Defaults to `1`, that is, the original single-container behavior.
-- Forced to `1` when you pass individual test files, because there is nothing to spread across shards.
-- Each shard costs a container (mariadb + php-fpm + caddy) plus a chromium, so more shards
-  trade parallelism against CPU contention. CI currently uses 3. See
-  `.github/workflows/integration.yaml`.
-- Specs that call `requestUtils.setupRest()` rely on one condition: the storage state file must be
-  the same file that the browser context reads. `scripts/test.sh` exports `STORAGE_STATE_PATH` per
-  shard to keep this true. Never point the two at different files.
+A spec calling `requestUtils.setupRest()` (e.g. after deliberately logging out, see below)
+rotates the database session token and rewrites the storage-state cookie file - restoring only
+the database would leave the next file's browser context holding a cookie the database no
+longer recognizes. `global-setup.js` also snapshots the storage-state file
+(`playwright/e2e/storage-state.js` holds the shared path constants), and `restoreDbOnce()`
+restores both together.
 
 # Linux bare metal testing (without being in devcontainer)
 

@@ -155,15 +155,8 @@ jobs:
       - uses: './.github/shared/actions/devcontainer-shell-run'
         name: test project
         with:
-          # E2E_SHARDS splits the playwright e2e run across N throwaway WordPress
-          # containers running concurrently (see scripts/test.sh). the specs mutate global
-          # WordPress state and contradict each other, so they cannot share one instance -
-          # a container per shard is what makes the parallelism safe.
-          # 3 is a starting point for the 4-vCPU runner: each shard costs a container
-          # (mariadb + php-fpm + caddy) plus a chromium, so pushing this higher trades
-          # parallelism against CPU contention. re-measure before changing it.
           runCmd: |
-            TEST_PRODUCTION=true E2E_SHARDS=3 pnpm run test
+            TEST_PRODUCTION=true pnpm run test
 
       - uses: './.github/shared/actions/devcontainer-shell-run'
         id: gather_workflow_artifacts

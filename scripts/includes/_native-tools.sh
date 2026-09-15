@@ -1,7 +1,9 @@
 #
 # dual-mode dispatch for the CLI tools that live in packages/docker/*.
 #
-# ecs-php, rector-php, potrans and dennis-i18n each exist twice:
+# ecs-php, rector-php, potrans and dennis-i18n each exist twice (and composer, which is
+# not one of the packages/docker/* tools, is dispatched by the same mechanism - see
+# $IONOS_COMPOSER_DOCKER_IMAGE below):
 #
 #   - as a docker image (packages/docker/<tool>/Dockerfile), which is what developers
 #     working outside the dev container use, and
@@ -30,14 +32,39 @@
 # resolve their vendor paths through $COMPOSER_HOME in both modes.
 export IONOS_NATIVE_TOOLS_PREFIX="${IONOS_NATIVE_TOOLS_PREFIX:-/opt/ionos-wordpress/tools}"
 
+# the pinned composer image. single source of the version for every composer call site:
+# scripts/build.sh's fallback and scripts/update-dependencies.sh. .devcontainer/Dockerfile
+# copies the *native* composer out of this very image (its 'COPY --from=' tag has to be
+# kept in sync by hand - a Dockerfile cannot read this file; scripts/lint.sh's
+# ionos.wordpress.version_pins() asserts the two agree), so the native and the dockerized
+# path cannot drift apart.
+#
+# deliberately not ':latest': a floating tag can change dependency-resolution behavior
+# between CI runs and developer machines, with no single point to bump (see
+# .beans/033f--*.md).
+export IONOS_COMPOSER_DOCKER_IMAGE='composer:2.10.2'
+
 # path of each tool's executable, relative to $IONOS_NATIVE_TOOLS_PREFIX.
 # the composer-installed tools follow "<tool>/vendor/bin/<binary>"; dennis is a python
 # package installed with pipx, which puts its entry point in a plain bin/ directory.
+#
+# composer is the odd one out: it is not a COMPOSER_HOME-isolated install but a single
+# binary, copied into the prefix from the very 'composer:<version>' image the docker path
+# uses (see .devcontainer/Dockerfile), so both modes run the identical composer version.
+# ionos.wordpress.native_tool_composer_home() is therefore meaningless for it - nothing
+# calls it with 'composer'.
+#
+# it lives here rather than being probed with a bare 'command -v composer' (which is what
+# scripts/build.sh did until .beans/b5q8--*.md) precisely because a plain PATH probe lets
+# any composer a developer happens to have installed on their host - arbitrary version,
+# arbitrary php interpreter - hijack the build, which is exactly what the pinned docker
+# image exists to prevent.
 declare -A IONOS_NATIVE_TOOL_PATHS=(
   [ecs-php]='ecs-php/vendor/bin/ecs'
   [rector-php]='rector-php/vendor/bin/rector'
   [potrans]='potrans/vendor/bin/potrans'
   [dennis-i18n]='dennis-i18n/bin/dennis-cmd'
+  [composer]='composer/bin/composer'
 )
 # bash cannot export associative arrays into a child process's environment - only
 # plain scalars and functions (via `export -f`) propagate that way. every caller

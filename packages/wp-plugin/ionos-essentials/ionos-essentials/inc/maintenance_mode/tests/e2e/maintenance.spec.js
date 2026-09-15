@@ -1,5 +1,6 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+import { restoreDbOnce, test, expect } from '../../../../../../../../playwright/e2e/fixtures';
 import { execTestCLI } from '../../../../../../../../playwright/exec-test-cli';
+test.beforeAll(restoreDbOnce);
 
 test.describe(
   'essentials:dashboard maintenance',
@@ -7,20 +8,17 @@ test.describe(
     tag: ['@dashboard', '@maintenance'],
   },
   () => {
+    // only what actually deviates from the restored snapshot - ionos_essentials_maintenance_mode
+    // is already absent there, and no afterAll is needed since the next spec file restores the
+    // snapshot itself.
     test.beforeAll(async () => {
       execTestCLI(`
-        # set popup after timestamp to a far future date to prevent popups during e2e tests
-        wp --quiet user meta update 1 ionos_popup_after_timestamp ${Math.MAX_SAFE_INTEGER}
         # set essentials welcome overlay already clicked away
         wp --quiet user meta update 1 ionos_essentials_welcome true
-        # simulate extendify onboarding already done
+        # simulate extendify onboarding already done (the snapshot has it at 3)
         wp --quiet option update extendify_attempted_redirect_count 4
-        # reset maintenance mode
-        wp --quiet option delete ionos_essentials_maintenance_mode
       `);
     });
-
-    test.afterAll(() => execTestCLI(`wp --quiet option delete ionos_essentials_maintenance_mode`));
 
     test('maintenance mode is enabled', async ({ admin, page, requestUtils }) => {
       await admin.visitAdminPage('/');
