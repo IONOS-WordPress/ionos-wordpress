@@ -104,7 +104,7 @@ expect(data).toHaveProperty('success', true);
 ## WP-CLI Setup
 
 ```javascript
-import { execTestCLI } from '../../../../../../../playwright/wp-env';
+import { execTestCLI } from '../../../../../../../playwright/exec-test-cli';
 
 test.beforeAll(async () => {
   execTestCLI(`

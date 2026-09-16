@@ -12,7 +12,7 @@
 </div>
 ```
 
-Write custom CSS only when EXOS doesn't provide the component or for unique plugin-specific styling.
+Write custom CSS only when EXOS does not have the component, or for unique plugin-specific styling.
 
 ## CSS Methodology
 

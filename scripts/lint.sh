@@ -7,7 +7,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 FIX=no
 POSITIONAL_ARGS=()
@@ -17,17 +17,14 @@ USE=()
 while [[ $# -gt 0 ]]; do
   case $1 in
     --help)
-      # print everything in this script file after the '###help-message' marker
-      printf "$(sed -e '1,/^###help-message/d' "$0")\n"
-      exit
+      ionos.wordpress.print_help "$0"
       ;;
     --fix)
       FIX=yes
       shift
       ;;
     --use)
-      # convert value to lowercase and append value to USE array
-      USE+=("${2,,}")
+      ionos.wordpress.parse_use_flag "$2"
       shift 2
       ;;
     -*|--*)
@@ -44,7 +41,7 @@ done
 [[ ${#POSITIONAL_ARGS[@]} -eq 0 ]] && POSITIONAL_ARGS=(".")
 
 # invoke all linters by default
-[[ ${#USE[@]} -eq 0 ]] && USE=("all")
+ionos.wordpress.default_use_to_all
 
 function ionos.wordpress.prettier() {
   ionos.wordpress.log_header "$([[ "$FIX" == 'yes' ]] && echo -n "lint-fix" || echo -n "lint") html/yml/md/etc. files with prettier ..."
@@ -91,17 +88,22 @@ function ionos.wordpress.ecs() {
   # docker run -q --rm -ti --user 1000:1000 -v $(pwd):/project/ --entrypoint /bin/sh ionos-wordpress/ecs-php
   # command : /composer/vendor/bin/ecs check --no-diffs --clear-cache --config ./packages/docker/ecs-php/ecs-config.php --no-progress-bar .
 
-  # ecs-php
-  docker run \
-    $DOCKER_FLAGS \
-    --rm \
-    --user "$DOCKER_USER" \
-    -v $(pwd):/project/ \
-    ionos-wordpress/ecs-php \
-    check \
-      $([[ "$FIX" == 'yes' ]] && echo -n "--fix" ||:) \
-      --no-diffs --clear-cache --config ./packages/docker/ecs-php/ecs-config.php --no-progress-bar --memory-limit=1G \
-      ${POSITIONAL_ARGS[@]}
+  # the docker image bind-mounts the workspace at /project and its WORKDIR is /project, so
+  # every path below is already relative to the repository root - which is also the working
+  # directory the native ecs runs in. that is why the argument list is shared verbatim
+  # between both modes instead of being translated.
+  local args=(
+    check
+    $([[ "$FIX" == 'yes' ]] && echo -n "--fix" ||:)
+    --no-diffs --clear-cache --config ./packages/docker/ecs-php/ecs-config.php --no-progress-bar --memory-limit=1G
+    ${POSITIONAL_ARGS[@]}
+  )
+
+  # ecs-config.php resolves the wpcs standards through $COMPOSER_HOME (native mode only -
+  # harmless no-op in docker mode, the image already has its own COMPOSER_HOME baked in)
+  local ecs_docker_flags=(--user "$DOCKER_USER")
+  COMPOSER_HOME="$(ionos.wordpress.native_tool_composer_home ecs-php)" \
+    ionos.wordpress.run_native_or_docker ecs-php ionos-wordpress/ecs-php ecs_docker_flags "${args[@]}"
 }
 
 # kept for reference - not used anymore
@@ -199,23 +201,24 @@ function ionos.wordpress.dennis() {
 
       echo "auto translate missing entries in $PO_FILE to language $TARGET_LANGUAGE"
 
+      # paths are relative to the repository root in both modes - see ionos.wordpress.ecs
+      potrans_args=(
+        deepl
+        --from="en"
+        --to="$TARGET_LANGUAGE"
+        --no-cache
+        --translator=packages/docker/potrans/class-xmlsafedeepltranslator.php
+        $PO_FILE
+        $(dirname $PO_FILE)
+      )
+
       # translate missing entries
-      docker run \
-        $DOCKER_FLAGS \
-        --rm \
-        -i \
-        -e DEEPL_API_KEY="${DEEPL_API_KEY}" \
-        -v $(pwd):/project/ \
-        ionos-wordpress/potrans \
-          deepl \
-          --from="en" \
-          --to="$TARGET_LANGUAGE" \
-          --no-cache \
-          $PO_FILE \
-          $(dirname $PO_FILE) || (
-            ionos.wordpress.log_error "auto translation failed - see error above"
-            exit 1
-          )
+      potrans_docker_flags=(-i -e DEEPL_API_KEY="${DEEPL_API_KEY}")
+      DEEPL_API_KEY="${DEEPL_API_KEY}" \
+        ionos.wordpress.run_native_or_docker potrans ionos-wordpress/potrans potrans_docker_flags "${potrans_args[@]}" || (
+        ionos.wordpress.log_error "auto translation failed - see error above"
+        exit 1
+      )
 
       # potrans wil regenerate the po file even if no localization changes are
       # present in source files with a new creation date so that git always
@@ -239,19 +242,17 @@ function ionos.wordpress.dennis() {
   # [[ "${POSITIONAL_ARGS[@]}" == '.' ]] && POSITIONAL_ARGS=($(find packages/wp-plugin -maxdepth 2 -mindepth 2 -type d  -name "languages"))
   POSITIONAL_ARGS=($(find packages/wp-plugin -maxdepth 2 -mindepth 2 -type d  -name "languages"))
 
+  # paths are relative to the repository root in both modes - see ionos.wordpress.ecs
+  dennis_args=(status --showuntranslated ${POSITIONAL_ARGS[@]})
+
   # dennis
-  OUTPUT=$(docker run \
-    $DOCKER_FLAGS \
-    --rm \
-    -i \
-    -v $(pwd):/project/ \
-    ionos-wordpress/dennis-i18n \
-    status --showuntranslated \
-    ${POSITIONAL_ARGS[@]} \
-  )
+  dennis_docker_flags=(-i)
+  OUTPUT=$(ionos.wordpress.run_native_or_docker dennis-i18n ionos-wordpress/dennis-i18n dennis_docker_flags "${dennis_args[@]}")
 
   # map file path references from within docker container to host paths
-  # and filter out unwanted lines (everything except untranslated string messages)
+  # and filter out unwanted lines (everything except untranslated string messages).
+  # the '/project/' rewrite below is a no-op in native mode - dennis then already reports
+  # the relative paths it was given.
   echo "$OUTPUT" | \
     grep -vE '^\s|^Metadata|Statistics|Untranslated\sstrings' | \
     grep -vE '^[0-9]+:#' | \
@@ -268,11 +269,31 @@ function ionos.wordpress.dennis() {
 
 #
 # check if pnpm lock file (`./pnpm-lock.yaml`) is up to date
-# and references all workspace dependencies correctly
+# and references all workspace dependencies correctly.
+# also asserts the pnpm version pin in package.json matches the devcontainer image
 #
 function ionos.wordpress.pnpm() {
   if [[ "$FIX" == 'yes' ]]; then
     pnpm install
+  fi
+
+  ionos.wordpress.log_header "lint pnpm version pin ..."
+
+  # package.json's `packageManager` is authoritative at runtime : pnpm silently switches itself to
+  # that version, which would make the devcontainer's ENV PNPM_VERSION cosmetic if the two drift.
+  # the Dockerfile needs its own literal since it installs pnpm before the repo is copied in.
+  PACKAGE_JSON_PNPM_VERSION=$(pnpm exec node -p "(require('./package.json').packageManager ?? '').replace(/^pnpm@/, '')")
+  DOCKERFILE_PNPM_VERSION=$(grep -oP '^ENV PNPM_VERSION \K.+' ./.devcontainer/Dockerfile)
+
+  if [[ -z "$PACKAGE_JSON_PNPM_VERSION" ]]; then
+    # the filename:line notation is required for vscode tasks to jump to the correct file
+    ionos.wordpress.log_error "package.json:1 : no pnpm version pinned - expected '\"packageManager\": \"pnpm@$DOCKERFILE_PNPM_VERSION\"'"
+    return 1
+  fi
+
+  if [[ "$PACKAGE_JSON_PNPM_VERSION" != "$DOCKERFILE_PNPM_VERSION" ]]; then
+    ionos.wordpress.log_error "package.json:1 : pinned pnpm version 'pnpm@$PACKAGE_JSON_PNPM_VERSION' does not match .devcontainer/Dockerfile 'ENV PNPM_VERSION $DOCKERFILE_PNPM_VERSION'"
+    return 1
   fi
 
   ionos.wordpress.log_header "lint pnpm lock file ..."
@@ -295,6 +316,103 @@ function ionos.wordpress.pnpm() {
 
   # restore lock file
   echo "$PNPM_LOCK_YAML" > ./pnpm-lock.yaml
+}
+
+#
+# path of the file that repeats the version pins - see ionos.wordpress.version_pins()
+IONOS_VERSION_PIN_MIRROR='.devcontainer/Dockerfile'
+
+#
+# asserts that one version pin has the same value in its own file and in
+# $IONOS_VERSION_PIN_MIRROR. echoes what is wrong and returns 1 on mismatch.
+#
+# @param $1 what is pinned (used in the error message, e.g. "composer")
+# @param $2 file holding the authoritative pin
+# @param $3 grep -P pattern capturing the version in $2 via \K
+# @param $4 grep -P pattern capturing the version in $IONOS_VERSION_PIN_MIRROR via \K
+#
+function ionos.wordpress.assert_version_pin() {
+  local what="$1" file="$2" regex="$3" mirror_regex="$4"
+  local mirror="$IONOS_VERSION_PIN_MIRROR"
+  local result=0
+
+  # "<line>:<version>" of the first match, empty if the pattern does not match (any more)
+  local match="$(grep -noP "$regex" "$file" | head -1 ||:)"
+  local mirror_match="$(grep -noP "$mirror_regex" "$mirror" | head -1 ||:)"
+
+  # a pattern that stopped matching must fail loudly - a check that passes because it no
+  # longer finds anything is worse than no check at all
+  local unmatched
+  for unmatched in "$file|$regex|$match" "$mirror|$mirror_regex|$mirror_match"; do
+    IFS='|' read -r pin_file pin_regex pin_match <<<"$unmatched"
+    if [[ -z "$pin_match" ]]; then
+      # single argument on purpose - log_error's $2 is a stacktrace index, not more message.
+      # the filename:line notation is required for vscode tasks to jump to the correct file
+      local message="$pin_file:1 : cannot find the $what version pin ('$pin_regex' matches"
+      message+=" nothing) - update the ionos.wordpress.assert_version_pin call sites below"
+      ionos.wordpress.log_error "$message"
+      result=1
+    fi
+  done
+  [[ $result -eq 0 ]] || return 1
+
+  if [[ "${match#*:}" != "${mirror_match#*:}" ]]; then
+    # single argument on purpose - log_error's $2 is a stacktrace index, not more message.
+    # the filename:line notation is required for vscode tasks to jump to the correct file
+    local message="$mirror:${mirror_match%%:*} : pinned $what version '${mirror_match#*:}'"
+    message+=" does not match $file:${match%%:*} '${match#*:}' - bump both together"
+    ionos.wordpress.log_error "$message"
+    return 1
+  fi
+}
+
+#
+# assert that the version pins which necessarily exist twice still agree.
+#
+# $IONOS_VERSION_PIN_MIRROR has to repeat several pins as literals: it is built by the
+# devcontainer CLI / vscode / devcontainers/ci, none of which source the repo's .env files or
+# scripts/includes/*, and devcontainer.json's build.args can only interpolate ${localEnv:...}
+# (the developer's shell, not a file in the repo). so no shared variable can reach it - the
+# duplication is unavoidable and only the agreement can be enforced. see .beans/47l4--*.md.
+#
+# without this the failure mode is silent: bump one half, forget the other, and both paths
+# keep working - they just stop being the same tool. not hypothetical: the composer pin was
+# already drifting (the dev container base image ships composer 2.10.3, the pinned fallback
+# image 2.10.2) when .beans/b5q8--*.md made composer a native tool.
+#
+# ionos.wordpress.pnpm() checks the pnpm pin, which has the same shape but reads its value
+# from package.json via node rather than by pattern - left where it is on purpose.
+#
+function ionos.wordpress.version_pins() {
+  if [[ "$FIX" == 'yes' ]]; then
+    # nothing to fix automatically - a pin bump changes which tool version everybody runs
+    # and is a decision, not a formatting detail
+    :
+  fi
+
+  ionos.wordpress.log_header "lint duplicated version pins ..."
+
+  local result=0
+
+  # the native composer and the dockerized fallback must be the identical binary
+  ionos.wordpress.assert_version_pin composer \
+    scripts/includes/_native-tools.sh "IONOS_COMPOSER_DOCKER_IMAGE='composer:\K[^']+" \
+    '^COPY --from=composer:\K\S+' || result=1
+
+  ionos.wordpress.assert_version_pin dennis \
+    packages/docker/dennis-i18n/.env '^DENNIS_VERSION=\K.+' \
+    '^ARG DENNIS_VERSION=\K.+' || result=1
+
+  # the three PHP tools must run on the same interpreter version natively as in their images
+  # (.beans/e6mc--*.md, decision 3)
+  local tool
+  for tool in ecs-php rector-php potrans; do
+    ionos.wordpress.assert_version_pin php \
+      "packages/docker/$tool/.env" '^PHP_VERSION=\K.+' \
+      '^FROM mcr\.microsoft\.com/devcontainers/php:\K[^-]+' || result=1
+  done
+
+  return $result
 }
 
 #
@@ -375,8 +493,34 @@ function ionos.wordpress.wordpress_plugin() {
   return $exit_code
 }
 
-# ensure required docker images are built
-pnpm build --filter dennis-i18n --filter potrans --filter ecs-php > /dev/null
+# ensure required docker images are built - but only those the selected linters
+# actually use. building all of them unconditionally was wasted work (and in CI
+# forced a pull/push of images that are never invoked).
+# note: potrans is only used by the deepl auto-translation in 'lint-fix --use i18n'
+#
+# a tool that is available natively (dev container, CI) needs no image at all, so it is
+# left out of the filters entirely - that is what removes the "first lint builds docker
+# images" wait from a fresh dev container. see scripts/includes/_native-tools.sh
+# "tool:use-pattern:requires-fix" rows driving the guard below - add a new
+# linter/tool by adding one row here instead of a hand-copied if block.
+DOCKER_BUILD_FILTER_TOOLS=(
+  'ecs-php:all|php:'
+  'dennis-i18n:all|i18n:'
+  'potrans:i18n:yes'
+)
+
+DOCKER_BUILD_FILTERS=()
+for entry in "${DOCKER_BUILD_FILTER_TOOLS[@]}"; do
+  IFS=':' read -r tool use_pattern requires_fix <<<"$entry"
+  if [[ -z "$requires_fix" || "$FIX" == 'yes' ]] &&
+    [[ "${USE[@]}" =~ $use_pattern ]] &&
+    ionos.wordpress.needs_docker_tools "$tool"; then
+    DOCKER_BUILD_FILTERS+=(--filter "$tool")
+  fi
+done
+if [[ ${#DOCKER_BUILD_FILTERS[@]} -gt 0 ]]; then
+  pnpm build "${DOCKER_BUILD_FILTERS[@]}" > /dev/null
+fi
 
 declare -A summaries=()
 
@@ -439,6 +583,15 @@ if [[ "${USE[@]}" =~ all|pnpm ]]; then
   fi
 fi
 
+if [[ "${USE[@]}" =~ all|pins ]]; then
+  if ionos.wordpress.version_pins; then
+    summaries["pins"]="Duplicated version pins are consistent."
+  else
+    exit_code=1
+    summaries["pins"]="Duplicated version pins reported errors."
+  fi
+fi
+
 if [[ "${USE[@]}" =~ all|i18n ]]; then
   if ionos.wordpress.dennis; then
     summaries["i18n"]="i18n $( [[ "$FIX" == 'yes' ]] && echo 'lint fixing' ||  echo 'linting') was successful."
@@ -494,6 +647,7 @@ Options:
               - css      operate on css/scss files
               - pnpm     operate on pnpm lock file
               - i18n     operate on po/pot files
+              - pins     check the version pins duplicated in .devcontainer/Dockerfile
 
               The i18n allows automatic translation of po files using deepl.com if 'DEEPL_API_KEY' is set in './.secrets'
               See './.secret.example' for an example file.

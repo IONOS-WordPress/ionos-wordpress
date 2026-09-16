@@ -5,7 +5,7 @@
 1. **Never trust user input** - Always validate and sanitize
 2. **Escape on output** - Use appropriate escaping functions
 3. **Use nonces** - Verify intent for state-changing operations
-4. **Check capabilities** - Ensure users have required permissions
+4. **Check capabilities** - Make sure the user holds the required capability
 5. **Prepared statements** - Always use `$wpdb->prepare()` for SQL
 
 ## Input Sanitization
@@ -170,15 +170,15 @@ delete_post(absint($_POST['id'] ?? 0));
 
 Before deployment:
 
-- [ ] All user input is sanitized
-- [ ] All output is escaped appropriately
-- [ ] Nonces are used for state-changing operations
-- [ ] Capability checks are in place
-- [ ] Database queries use prepared statements
-- [ ] File uploads are validated
-- [ ] API endpoints have permission callbacks
-- [ ] HTTPS is enforced
-- [ ] Debug mode is disabled in production
+- [ ] Sanitize all user input
+- [ ] Escape all output appropriately
+- [ ] Use nonces for state-changing operations
+- [ ] Put capability checks in place
+- [ ] Use prepared statements for database queries
+- [ ] Validate file uploads
+- [ ] Add permission callbacks to API endpoints
+- [ ] Enforce HTTPS
+- [ ] Disable debug mode in production
 
 ## Code Review Questions
 

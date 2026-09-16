@@ -36,16 +36,11 @@ jobs:
           fetch-depth: 0
           ref: '${{ github.ref_name }}'
 
-      # release.sh uses `pnpm ls` to resolve a package name to its workspace folder - read the
-      # pnpm version from .devcontainer/Dockerfile so both stay in sync automatically
-      - name: Read pnpm version
-        id: pnpm-version
-        run: echo "value=$(grep -oP '^ENV PNPM_VERSION \K.+' .devcontainer/Dockerfile)" >> "$GITHUB_OUTPUT"
-
+      # release.sh uses `pnpm ls` to resolve a package name to its workspace folder. no `version`
+      # input on purpose - action-setup reads the pinned version from package.json's
+      # `packageManager` field, which `pnpm lint --use pnpm` keeps in sync with the devcontainer
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: ${{ steps.pnpm-version.outputs.value }}
 
       - name: release
         run: |

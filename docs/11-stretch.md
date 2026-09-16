@@ -1,11 +1,11 @@
 # Stretch
 
-The monorepo package target `stretch` provides access to stretch hosting platform specific functions.
+The monorepo package target `stretch` gives access to functions specific to the stretch hosting platform.
 
-Since this script (and its documentation) contain internals it is kept in a separate repository https://github.com/IONOS-WordPress/ionos-wordpress-private.
+This script, and its documentation, contain internal details. So the project keeps them in a separate repository, https://github.com/IONOS-WordPress/ionos-wordpress-private.
 
-The real stretch script implementation will be downloaded on demand (=> first execution of `pnpm stretch ...`) from the private repo.
+The real stretch script implementation downloads on demand, at the first run of `pnpm stretch ...`, from the private repo.
 
-You can update/re-download the stretch script implementation at any time using `pnpm stretch --update`
+You can update or re-download the stretch script implementation at any time with `pnpm stretch --update`.
 
-Please refer to https://github.com/IONOS-WordPress/ionos-wordpress-private/blob/main/scripts/README.md for detailed documentation and workflows.
+See https://github.com/IONOS-WordPress/ionos-wordpress-private/blob/main/scripts/README.md for detailed documentation and workflows.

@@ -1,0 +1,26 @@
+name: 'pnpm store cache'
+description: |
+  restore/save the pnpm content-addressable store across workflow runs so
+  'pnpm install --frozen-lockfile' does not re-download every package.
+
+  pnpm-workspace.yaml sets 'storeDir: .pnpm-store', so the store lives inside the
+  workspace - which devcontainers/ci bind-mounts into the dev container.
+  that means this plain host-side cache step is enough, no dev container
+  changes needed: whatever the container writes to the store shows up here
+  for the post-job save.
+
+  must run BEFORE the step that invokes 'pnpm install'.
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/cache@v4
+      with:
+        path: .pnpm-store
+        # the lockfile pins every resolved version, so it exactly identifies
+        # the set of packages the store needs to hold
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+        # a store from an older lockfile is still useful - most packages are
+        # unchanged, so pnpm only fetches the delta
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-

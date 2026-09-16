@@ -17,7 +17,6 @@ use function ionos\essentials\dashboard\install_plugin_from_url;
 defined('ABSPATH') || exit();
 
 define('IS_LOCAL', wp_get_environment_type() === 'local');
-
 use const ionos\essentials\PLUGIN_FILE;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION;
 use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_CREDENTIALS_CHECKING;

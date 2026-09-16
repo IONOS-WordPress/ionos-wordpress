@@ -1,62 +1,62 @@
 # lint
 
-the project supports 2 linting modes : `lint` and `lint-fix`.
+The project supports two linting modes: `lint` and `lint-fix`.
 
-- `pnpm lint` will check for linting errors
+- `pnpm lint` checks for linting errors
 
-- `pnpm lint-fix` will fix them as far as possible.
+- `pnpm lint-fix` fixes linting errors as far as possible.
 
-Both linting commands are implemented in `./scripts/lint.sh`.
+`./scripts/lint.sh` implements both linting commands.
 
-# linting tools ?
+# Which linting tools do we use?
 
 - PHP is linted with a combination of [WordPress Coding Standard rules](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/) and [easy-coding-standard](https://github.com/easy-coding-standard/easy-coding-standard)
 
-  [easy-coding-standard](https://github.com/easy-coding-standard/easy-coding-standard) is a linter capable if reusing `PHPCS` and `PHPCF` rules making it easier to configure and use. Most importantly, it allows to fix _almost any formatting errors_ automatically saving us a lot of time.
-  - WordPress specific [WordPress Coding Standard rules](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/) rules are not yet integrated in the `easy-coding-standard` configuration but it's planned for the future. That's why the `./scripts/lint.sh` script also runs `phpcs` directly.
+  [easy-coding-standard](https://github.com/easy-coding-standard/easy-coding-standard) is a linter that can reuse `PHPCS` and `PHPCF` rules. This makes it easier to configure and use. Most importantly, it can fix _almost any formatting error_ automatically, which saves us a lot of time.
+  - The `easy-coding-standard` configuration does not yet integrate WordPress specific [WordPress Coding Standard rules](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/). We plan to add this in the future.
 
-  - Plugin entry files (like `./packages/wp-plugin/ionos-essentials/ionos-essentials.php`) are also linted to contain the required WordPress plugin metadata using `./scripts/lint.sh`.
+  - `./scripts/lint.sh` also lints plugin entry files (like `./packages/wp-plugin/ionos-essentials/ionos-essentials.php`) to check for the required WordPress plugin metadata.
 
-- Javascript and JSX is linted using [eslint](https://eslint.org/). It's configuration is tailored to fit especially the needs of the WordPress React libraries (`@wordpress\*` aka Gutenberg).
+- We lint Javascript and JSX using [eslint](https://eslint.org/). Its configuration is tailored to fit the needs of the WordPress React libraries (`@wordpress\*`, also called Gutenberg).
 
-- CSS and SCSS is linted using [stylelint](https://stylelint.io/).
+- We lint CSS and SCSS using [stylelint](https://stylelint.io/).
 
-- PO/POT files are linted using [dennis](https://github.com/mozilla/dennis)
+- We lint PO/POT files using [dennis](https://github.com/mozilla/dennis)
 
-- pnpm files are linted using [pnpm](https://pnpm.io/) itself
+- [pnpm](https://pnpm.io/) lints its own lock files
 
-- all other files (JSON, Markdown, HTML, etc.) are linted using [prettier](https://prettier.io/)
+- We lint all other files (JSON, Markdown, HTML, etc.) using [prettier](https://prettier.io/)
 
 # configuration
 
-- `./.lintignore` can be used to disable linting. It will be consumed by `stylelint`, `eslint` and `prettier`.
+- You can use `./.lintignore` to disable linting. `stylelint`, `eslint`, and `prettier` all read this file.
 
-  Disabling linting for certain files makes especially sense for files that are under GIT control but machine generated (like `packages/wp-plugin/ionos-essentials/inc/dashboard/data/ionos/rendered-skeleton.html`)
+  Disabling linting makes the most sense for files that are under GIT control but are machine generated (like `packages/wp-plugin/ionos-essentials/inc/dashboard/data/ionos/rendered-skeleton.html`)
 
-  > Files matched by `.gitignore` will be automatically ignored by the linters. They don't need to be additionally added to `./.lintignore`
+  > The linters automatically ignore files matched by `.gitignore`. You do not need to add them to `./.lintignore` as well.
 
-- `./ecs-config.php` contains the configuration for PHP linting using `easy-coding-standard`.
-  - Right now it's configured to use the `PSR12` (this is the latest official PHP Coding standard), `symplify` (https://github.com/easy-coding-standard/easy-coding-standard/blob/main/config/set/symplify.php) and a few further settings for dead code detection etc.
+- `./packages/docker/ecs-php/ecs-config.php` contains the configuration for PHP linting using `easy-coding-standard`.
+  - Right now it is configured to use `PSR12` (the latest official PHP Coding standard), `symplify` (https://github.com/easy-coding-standard/easy-coding-standard/blob/main/config/set/symplify.php), and a few further settings for dead code detection, etc.
 
-  - `PHPCS` is - as of now - also used for executing WordPress specific `PHPCS` rules detecting misuse of WordPress functions and paradigms. The configuration is done in `./packages/docker/ecs-php/ruleset.xml`.
+  - As of now, we also use `PHPCS` to run WordPress specific `PHPCS` rules. These rules detect misuse of WordPress functions and paradigms. `./packages/docker/ecs-php/ruleset.xml` holds this configuration.
 
-  > The [WordPress Coding Standard rules](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/) for detecting obsolete WordPRess functions are not yet integrated in the `easy-coding-standard` configuration but it's planned for the future.
+  > The `easy-coding-standard` configuration does not yet integrate the [WordPress Coding Standard rules](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/) for detecting obsolete WordPress functions. We plan to add this in the future.
 
 - `./eslint.config.mjs` configures `eslint` for Javascript and JSX linting.
 
 - `./.stylelintrc.yml` configures `stylelint` for CSS and SCSS linting.
 
-- `prettier` is configured using `./.prettierrc.js`
+- `./.prettierrc.js` configures `prettier`
 
 # commands
 
-- start linting : `pnpm lint`
+- Start linting: `pnpm lint`
 
-  The various linting tools can also be called separately (for example `pnpm lint:css` or `pnpm lint-fix:css`). To see the whole list of lint targets call `pnpm run | grep lint`
+  You can also call the various linting tools separately (for example `pnpm lint:css` or `pnpm lint-fix:css`). To see the whole list of lint targets, call `pnpm run | grep lint`
 
-- start linting + fixing : `pnpm lint-fix`
+- Start linting and fixing: `pnpm lint-fix`
 
-  > `pnpm lint-fix` will not fix missing translations in i18n files. To do so you have to explicitly execute `pnpm lint-fix:i18n`
+  > `pnpm lint-fix` does not fix missing translations in i18n files. To fix these, run `pnpm lint-fix:i18n` directly.
 
 - `./scripts/lint.sh`
 
@@ -75,6 +75,7 @@ Options:
               - all      operate on all files
               - php      operate on php files
               - prettier operate html/yml/md/etc. files
+              - wp       operate on wordpress plugin/theme entry files
               - js       operate on js/jsx files
               - css      operate on css/scss files
               - pnpm     operate on pnpm lock file
@@ -84,3 +85,20 @@ Options:
 
     pnpm lint --use prettier -use i18n
 ```
+
+Run `pnpm lint --help` for the authoritative, always up to date option list.
+
+# docker images
+
+Some linters run inside docker images built from `./packages/docker/*`:
+
+| image                         | needed by                                              |
+| ----------------------------- | ------------------------------------------------------ |
+| `ionos-wordpress/ecs-php`     | `--use php` (and therefore `--use all`)                |
+| `ionos-wordpress/dennis-i18n` | `--use i18n` (and therefore `--use all`)               |
+| `ionos-wordpress/potrans`     | **only** `pnpm lint-fix:i18n` (deepl auto-translation) |
+
+`./scripts/lint.sh` builds exactly the images that the selected linters need, before
+it runs them. As a result, `pnpm lint` never builds `potrans`. In CI, these images are not
+built from scratch. Instead, CI pulls them from the registry. See the `lint` job in
+`./.github/workflows/integration.yaml`.

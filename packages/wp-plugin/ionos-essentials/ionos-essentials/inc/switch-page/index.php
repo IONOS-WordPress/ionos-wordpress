@@ -12,15 +12,27 @@ defined('ABSPATH') || exit();
 \add_action(
   'admin_menu',
   function () {
-    // submenu_page parent dashboard.
+    // submenu_page parent dashboard. Registered under the dashboard's real top-level slug (instead
+    // of `false`) so core's get_admin_page_title() can resolve a title from $menu/$submenu; a
+    // dangling parent left get_admin_page_title() returning null, and admin-header.php's
+    // strip_tags($title) emitted a deprecation notice.
+    $onboarding_slug = Tenant::get_slug() . '-onboarding';
     \add_submenu_page(
-      false, // for test 'ionos-essentials-dashboard',
+      Tenant::get_slug(),
       'Assistant',
       'Assistant',
       'manage_options',
-      Tenant::get_slug() . '-onboarding',
+      $onboarding_slug,
       fn () => \load_template(__DIR__ . '/view.php')
     );
+
+    // The page itself hides #adminmenumain entirely (see style.css), so it doesn't need to be
+    // removed from the nav there; but on every other admin page, hide it from the dashboard's
+    // submenu since it's not meant to be a regular navigation entry.
+    if (! isset($_GET['page']) || $onboarding_slug !== $_GET['page']) {
+      \remove_submenu_page(Tenant::get_slug(), $onboarding_slug);
+    }
+
     \remove_menu_page('extendify-assist');
   },
   100,
@@ -79,6 +91,6 @@ defined('ABSPATH') || exit();
       filemtime(\plugin_dir_path(__FILE__) . 'style.css')
     );
 
-    wp_deregister_style('buttons');
+    \wp_dequeue_style('buttons');
   }
 );

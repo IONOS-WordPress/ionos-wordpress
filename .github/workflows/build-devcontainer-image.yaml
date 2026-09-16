@@ -64,7 +64,10 @@ jobs:
         if: steps.check_image.outputs.exists == 'false'
         uses: devcontainers/ci@v0.3
         with:
-          imageName: ${{ steps.image_name.outputs.image_name }}
+          # imageName must not carry a tag - devcontainers/ci joins the two itself and
+          # would produce '<repository>:<tag>:latest' from a tagged imageName
+          imageName: ${{ steps.image_name.outputs.image_repository }}
+          imageTag: ${{ steps.image_name.outputs.image_tag }}
           runCmd: |
             php --version
             git --version

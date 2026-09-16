@@ -38,7 +38,7 @@ const IONOS_LOOP_DATACOLLECTOR_PUBLIC_KEY_URL      = 'https://s3-de-central.prof
 
 function _rest_permissions_check(WP_REST_Request $request): bool|WP_Error
 {
-  // skip permission check for wp-env/local/dev environments
+  // skip permission check for local/dev environments
   if (in_array(\wp_get_environment_type(), ['local', 'development'], true)) {
     return true;
   }

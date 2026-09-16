@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name:       stretch-extra
- * Description:       stretch-extra acts as a wp-env shim to include the php code targeting /opt/WordPress/extra/index.php
+ * Description:       stretch-extra acts as a shim to include the php code targeting /opt/WordPress/extra/index.php
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3

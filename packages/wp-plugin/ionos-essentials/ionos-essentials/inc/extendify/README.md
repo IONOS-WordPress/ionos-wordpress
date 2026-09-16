@@ -14,8 +14,8 @@ to have extendify working, the open source plugin from the marketplace, one "Sit
 ### install everything
 
 ```
-pnpm wp-env run cli wp plugin install extendify https://web-hosting.s3-eu-central-1.ionoscloud.com/extendify/01-ext-ion2hs971.zip --activate
-pnpm wp-env run cli wp theme install extendable --activate
+pnpm cli plugin install extendify https://web-hosting.s3-eu-central-1.ionoscloud.com/extendify/01-ext-ion2hs971.zip --activate
+pnpm cli theme install extendable --activate
 ```
 
 ## license plugin

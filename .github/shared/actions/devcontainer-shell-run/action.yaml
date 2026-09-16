@@ -1,14 +1,45 @@
 name: 'devcontainer shell run'
 description: |
-  set up computed dev container image and run a command within the dev container.
+  run a command inside the prebuilt dev container image.
+
+  this drives the devcontainer CLI directly instead of going through devcontainers/ci,
+  because that action always runs 'devcontainer build --cache-from <ref>' - which is a
+  buildx build, not a pull. even on a full cache hit that cost ~55s per job: both features
+  were resolved from their registries (twice - 'devcontainer build' followed by
+  'devcontainer up' each did it), the cache manifest was imported, and the image layers
+  were then fetched through buildx's cache resolution rather than by a plain parallel pull.
+
+  instead a throwaway devcontainer.json is generated that references the published image
+  directly. the features are already baked into it, and the CLI records what they need
+  (privileged, the docker-in-docker entrypoint and volume, remoteUser, the dev config's own
+  mounts) in the image's 'devcontainer.metadata' label - which 'devcontainer up' reads back
+  and applies. so the generated config only has to name the image; everything else comes
+  along with it. that is the canonical devcontainer prebuild flow.
+
+  the generated config deliberately does NOT carry the dev config's appPort, containerEnv or
+  vscode customizations: nothing connects to the container from the runner (the tests talk
+  to the wordpress-alpine containers inside docker-in-docker), so publishing ports is
+  pointless, and resolving '${localEnv:ANTHROPIC_API_KEY}' into a file on the runner would
+  write a secret to disk for no reason. keeping it to just the image name is also what keeps
+  it from drifting out of sync with .devcontainer/devcontainer.json.
+
+  requires the image to be published already. that is guaranteed by 'needs: devcontainer' in
+  the calling workflow - that job builds and pushes it when the tag is missing - so a failure
+  to pull is a real error worth stopping on rather than something to paper over with a local
+  build.
+
 inputs:
   runCmd:
     description: 'the command(s) to execute using the image'
     required: true
     default: 'echo "WP_ENV_HOME=${WP_ENV_HOME} !"'
+  env:
+    description: 'newline-separated KEY=VALUE pairs to forward into the dev container (e.g. registry credentials)'
+    required: false
+    default: ''
 outputs:
   runCmdOutput:
-    description: 'the output of the command'
+    description: 'the standard output of the command'
     value: ${{ steps.devcontainer_shell_run.outputs.runCmdOutput }}
 
 runs:
@@ -17,13 +48,91 @@ runs:
     - uses: './.github/shared/actions/devcontainer-image-name'
       id: image_name
 
-    - uses: devcontainers/ci@v0.3
-      id: devcontainer_shell_run
-      with:
-        push: never
-        cacheFrom: ${{ steps.image_name.outputs.image_name }}
-        runCmd: |
-          # for some reason these default env vars are not available in the dev container by default
-          export GITHUB_ACTIONS=true
-          export CI=true
-          ${{ inputs.runCmd }}
+    - id: devcontainer_shell_run
+      shell: bash
+      env:
+        # passed through the environment rather than interpolated into the script body:
+        # these carry arbitrary user text (and, for 'env', registry credentials), so
+        # substituting them into the shell source would be both a quoting and an injection
+        # hazard
+        INPUT_RUNCMD: ${{ inputs.runCmd }}
+        INPUT_ENV: ${{ inputs.env }}
+        IMAGE_NAME: ${{ steps.image_name.outputs.image_name }}
+      run: |
+        set -euo pipefail
+
+        WORKSPACE_FOLDER="$(pwd)"
+        # stable across every step of a job, so 'up' and each 'exec' agree on one container
+        CONFIG_DIR="${RUNNER_TEMP}/devcontainer-ci"
+        CONFIG_FILE="${CONFIG_DIR}/devcontainer.json"
+
+        # the CLI is not on the runner: 'pnpm install' only ever runs *inside* the container,
+        # so there is no host node_modules to 'pnpm exec' from. the version comes from
+        # package.json so the host CLI and the workspace's own dependency cannot drift.
+        # the two setup costs below are timed separately on purpose. they used to sit in one
+        # opaque block, which is how an earlier round of tuning ended up optimising the wrong
+        # one - know which is which before touching either.
+        if ! command -v devcontainer >/dev/null 2>&1; then
+          DEVCONTAINER_CLI_VERSION="$(jq -r '.devDependencies["@devcontainers/cli"]' package.json)"
+          echo "::group::install @devcontainers/cli@${DEVCONTAINER_CLI_VERSION}"
+          SECONDS=0
+          npm install --silent --global "@devcontainers/cli@${DEVCONTAINER_CLI_VERSION}"
+          echo "::endgroup::"
+          echo "timing: devcontainer CLI install took ${SECONDS}s"
+        fi
+
+        # generated once per job; later steps reuse it and the container it started
+        if [[ ! -f "$CONFIG_FILE" ]]; then
+          mkdir -p "$CONFIG_DIR"
+          jq -n --arg image "$IMAGE_NAME" \
+            '{name: "ionos-wordpress-devcontainer-ci", image: $image}' > "$CONFIG_FILE"
+
+          echo "::group::pull $IMAGE_NAME"
+          # pulled explicitly rather than letting 'docker run' do it implicitly, so that a
+          # missing image fails here with an obvious message instead of surfacing as a
+          # confusing container start error
+          SECONDS=0
+          if ! docker pull --quiet "$IMAGE_NAME"; then
+            echo "::error::could not pull '$IMAGE_NAME'. the 'devcontainer' job publishes it and this job declares 'needs: devcontainer', so this usually means that job failed or was skipped."
+            exit 1
+          fi
+          echo "::endgroup::"
+          # the dominant fixed cost of a job, and proportional to the image size - which is
+          # why shrinking the image is tracked separately (.beans uizd)
+          echo "timing: image pull took ${SECONDS}s ($(docker image inspect "$IMAGE_NAME" --format '{{.Size}}' | numfmt --to=iec) on disk)"
+        fi
+
+        # newline-separated KEY=VALUE -> repeated --remote-env. blank lines are skipped so a
+        # trailing newline in the caller's block scalar is harmless
+        REMOTE_ENV=()
+        while IFS= read -r LINE; do
+          [[ -n "${LINE// /}" ]] || continue
+          REMOTE_ENV+=(--remote-env "$LINE")
+        done <<< "$INPUT_ENV"
+
+        # idempotent: reuses the already running container on every step after the first
+        echo "::group::devcontainer up"
+        devcontainer up \
+          --workspace-folder "$WORKSPACE_FOLDER" \
+          --config "$CONFIG_FILE"
+        echo "::endgroup::"
+
+        # GITHUB_ACTIONS/CI are not inherited into the container, and some scripts branch on
+        # them (see scripts/test.sh)
+        OUTPUT_FILE="${RUNNER_TEMP}/devcontainer-runcmd-output.txt"
+        devcontainer exec \
+          --workspace-folder "$WORKSPACE_FOLDER" \
+          --config "$CONFIG_FILE" \
+          --remote-env GITHUB_ACTIONS=true \
+          --remote-env CI=true \
+          "${REMOTE_ENV[@]}" \
+          bash -c "$INPUT_RUNCMD" | tee "$OUTPUT_FILE"
+
+        # only stdout is captured - the scripts log to stderr, and callers consume this as
+        # data (see the 'gather_workflow_artifacts' step, which reads a list of paths from it)
+        DELIMITER="runCmdOutput-$(openssl rand -hex 16)"
+        {
+          echo "runCmdOutput<<${DELIMITER}"
+          cat "$OUTPUT_FILE"
+          echo "${DELIMITER}"
+        } >> "$GITHUB_OUTPUT"

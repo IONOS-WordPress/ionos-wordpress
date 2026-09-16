@@ -14,7 +14,7 @@ if [[ "$CI" == "true" ]]; then
 fi
 
 # bootstrap the environment
-source "./scripts/includes/bootstrap.sh"
+source "./scripts/includes/_bootstrap.sh"
 
 
 [[ "$CHECK_LEAKED_SECRETS" =~ true|yes ]] || exit 0

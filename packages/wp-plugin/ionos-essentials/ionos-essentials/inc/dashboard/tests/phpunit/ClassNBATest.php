@@ -39,7 +39,7 @@ class ClassNBATest extends \WP_UnitTestCase {
       description: 'Test description',
       link: 'https://example.com',
       anchor: 'Test CTA',
-      completed : false,
+      completed: false,
     );
 
     $new_nba_count = count(NBA::get_actions());
@@ -61,7 +61,7 @@ class ClassNBATest extends \WP_UnitTestCase {
       description: 'Test description 2',
       link: 'https://example.com',
       anchor: 'Test CTA 2',
-      completed : false,
+      completed: false,
     );
 
     $nba = NBA::get_nba($ID);
@@ -79,7 +79,7 @@ class ClassNBATest extends \WP_UnitTestCase {
       description: 'Test description 3',
       link: 'https://example.com',
       anchor: 'Test CTA 3',
-      completed : true,
+      completed: true,
     );
 
     $nba = NBA::get_nba($ID);

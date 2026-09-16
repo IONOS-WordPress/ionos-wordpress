@@ -23,7 +23,7 @@ The APCu object cache replaces WordPress's default transient object cache with a
 To enable the APCu object cache, set the option to `1`:
 
 ```bash
-pnpm wp-env run cli wp --quiet option update IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION '1'
+pnpm cli --quiet option update IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION '1'
 ```
 
 This command:
@@ -32,14 +32,14 @@ This command:
 2. Copies `object-cache.php` to `WP_CONTENT_DIR/object-cache.php`
 3. Activates persistent caching for all WordPress cache operations
 
-_On `wp-env` the cache will be activated on next request due to `wp-env` architecture._
+_The cache will be activated on the next request._
 
 ### Disable APCu Object Cache
 
 To disable the APCu object cache, delete the option:
 
 ```bash
-pnpm wp-env run cli wp --quiet option delete IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION
+pnpm cli --quiet option delete IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION
 ```
 
 This command:
@@ -49,20 +49,20 @@ This command:
 3. Flushes the APCu cache
 4. WordPress reverts to its default non-persistent object cache
 
-_On `wp-env` the cache will be activated on next request due to `wp-env` architecture._
+_The cache will be activated on the next request._
 
 ### Check Status
 
 To check if APCu object cache is enabled:
 
 ```bash
-pnpm wp-env run cli wp --quiet option get IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION
+pnpm cli --quiet option get IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION
 ```
 
 To verify the drop-in file is active:
 
 ```bash
-pnpm wp-env run wordpress ls -la wp-content/object-cache.php
+docker exec --user php ionos-wordpress-dev ls -la /htdocs/wp-content/object-cache.php
 ```
 
 ## Testing and Performance Benchmarking
@@ -92,10 +92,10 @@ Here's a simple approach to compare performance with and without APCu:
 
    ```bash
    # Disable APCu
-   pnpm wp-env run cli wp --quiet option delete IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION
+   pnpm cli --quiet option delete IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION
 
    # Clear all caches
-   pnpm wp-env run wordpress php -r 'apcu_clear_cache();'
+   docker exec --user php ionos-wordpress-dev php -r 'apcu_clear_cache();'
 
    # Load your site and measure response times
    ```
@@ -104,10 +104,10 @@ Here's a simple approach to compare performance with and without APCu:
 
    ```bash
    # Enable APCu
-   pnpm wp-env run cli wp --quiet option update IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION '1'
+   pnpm cli --quiet option update IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION '1'
 
    # Clear APCu cache for fresh start
-   pnpm wp-env run wordpress php -r 'apcu_clear_cache();'
+   docker exec --user php ionos-wordpress-dev php -r 'apcu_clear_cache();'
 
    # Load your site and measure response times
    ```
@@ -177,9 +177,9 @@ If cache persists after clearing:
 
 ```bash
 # Force clear and disable
-pnpm wp-env run cli wp --quiet eval "apcu_clear_cache();"
-pnpm wp-env run cli wp option delete IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION
-pnpm wp-env run cli wp cache flush
+pnpm cli --quiet eval "apcu_clear_cache();"
+pnpm cli option delete IONOS_APCU_OBJECT_CACHE_ENABLED_OPTION
+pnpm cli cache flush
 ```
 
 ## See Also
