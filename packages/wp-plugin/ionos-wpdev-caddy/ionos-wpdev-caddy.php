@@ -7,8 +7,8 @@
  * Requires Plugins:
  * Requires PHP:      8.3
  * Version:           1.0.0
- * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-support-info.json
- * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-support
+ * Update URI:        https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-wpdev-caddy-info.json
+ * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-wpdev-caddy
  * License:           GPL-2.0-or-later
  * Author:            IONOS Group
  * Author URI:        https://www.ionos-group.com/brands.html

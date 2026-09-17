@@ -1,11 +1,11 @@
 ---
 # s6gy
 title: Fix stale ionos-support references in the wpdev-caddy plugin header
-status: todo
+status: completed
 type: task
 priority: low
 created_at: 2026-09-16T12:49:59Z
-updated_at: 2026-09-16T12:49:59Z
+updated_at: 2026-09-17T13:29:06Z
 ---
 
 `packages/wp-plugin/ionos-wpdev-caddy/ionos-wpdev-caddy.php` still carries header values from a previous plugin name (`ionos-support`):
@@ -17,6 +17,10 @@ Both are dead references. The package is `"private": true`, so it is never relea
 
 ## Todos
 
-- [ ] Point `Update URI` at `ionos-wpdev-caddy-info.json`, matching the name `scripts/release.sh` would derive from the workspace folder
-- [ ] Point `Plugin URI` at `packages/wp-plugin/ionos-wpdev-caddy`
-- [ ] Leave `"private": true` and add no update checker - making the plugin publicly released is a separate decision
+- [x] Point `Update URI` at `ionos-wpdev-caddy-info.json`, matching the name `scripts/release.sh` would derive from the workspace folder
+- [x] Point `Plugin URI` at `packages/wp-plugin/ionos-wpdev-caddy`
+- [x] Leave `"private": true` and add no update checker - making the plugin publicly released is a separate decision
+
+## Summary of Changes
+
+Fixed the stale plugin-name references in `packages/wp-plugin/ionos-wpdev-caddy/ionos-wpdev-caddy.php`: `Update URI` now points at `ionos-wpdev-caddy-info.json` and `Plugin URI` at `packages/wp-plugin/ionos-wpdev-caddy`, replacing the dead `ionos-support` references. No changeset - the package is `private` and never released.
