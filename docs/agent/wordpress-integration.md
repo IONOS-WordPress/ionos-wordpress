@@ -431,6 +431,18 @@ register_cache_groups();
 - Data is environment-specific (not shareable across servers)
 - Prevents stale data issues in load-balanced environments
 
+## Environment Type
+
+`WP_ENVIRONMENT_TYPE` is set via the `WP_ENVIRONMENT_TYPE` env var (see `.env`) and consumed by WordPress core to
+vary behavior per environment. Read it with `wp_get_environment_type()`, never the constant directly:
+
+```php
+// Valid values: 'local', 'development', 'staging', 'production'
+if (\wp_get_environment_type() === 'production') {
+  // Production-only behavior
+}
+```
+
 ## Common Functions
 
 ```php
