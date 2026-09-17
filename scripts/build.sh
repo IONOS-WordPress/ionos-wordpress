@@ -566,6 +566,13 @@ EOF
       $(test -f $path/.distignore && echo "--exclude-from=$path/.distignore") \
       $path/ \
       $path/dist/$plugin_name-$PACKAGE_VERSION
+
+    # bake the s3 folder the release publishes to into the staged sources. plugin headers and
+    # update checkers carry a '__S3_FOLDER__' placeholder, so a fork building against a test folder
+    # ships plugins looking there for updates instead of at the production folder (see .env)
+    while IFS= read -r -d '' FILE; do
+      sed -i "s|__S3_FOLDER__|${S3_FOLDER}|g" "$FILE"
+    done < <(grep -rlZ --binary-files=without-match '__S3_FOLDER__' "$path/dist/$plugin_name-$PACKAGE_VERSION" || true)
   fi
 
   if [[ "${USE[@]}" =~ all|wp-plugin:rector ]]; then

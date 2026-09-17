@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T12:40:05Z
-updated_at: 2026-09-16T12:40:05Z
+updated_at: 2026-09-17T10:31:59Z
 parent: ig4m
 ---
 
@@ -13,7 +13,7 @@ parent: ig4m
 
 ## Todos
 
-- [ ] Replace the single `INFO_JSON_URL` constant with an S3 constant (carrying the `__S3_FOLDER__` placeholder) plus the existing GitHub constant as fallback
+- [ ] Replace the single `INFO_JSON_URL` constant with an S3 constant (carrying the `__S3_FOLDER__` placeholder, substituted by `scripts/build.sh`) plus the existing GitHub constant as fallback
 - [ ] Apply the same S3-first / fallback-on-error resolution used by ionos-essentials
 - [ ] Make sure the resulting `package` download URL is handed to `MU_Plugin_Upgrader` unchanged, so an S3 info.json leads to an S3 download
 - [ ] Extend the `error_log()` messages so it is visible which source answered
