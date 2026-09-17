@@ -30,13 +30,14 @@ This validates the S3 half of the pipeline end to end without touching the produ
 
 ### One-time setup in the fork
 
-1. **Enable Actions.** Forks ship with workflows disabled - open the *Actions* tab and confirm.
-2. **Add the AWS credentials** under *Settings > Secrets and variables > Actions > Secrets*:
+1. **Enable Actions.** Forks ship with workflows disabled - open the _Actions_ tab and confirm.
+2. **Add the AWS credentials** under _Settings > Secrets and variables > Actions > Secrets_:
    - `AWS_ACCESS_KEY_ID`
    - `AWS_SECRET_ACCESS_KEY`
 
    Without them the release still runs, but every S3 upload is skipped with an error - the guard does not catch this, because it only checks repository and folder.
-3. **Add the target folder** under *Settings > Secrets and variables > Actions > Variables*:
+
+3. **Add the target folder** under _Settings > Secrets and variables > Actions > Variables_:
    - `S3_FOLDER` = `test`
 
    Both `pre-release.yml` and `release.yaml` export this variable. Leaving it unset makes the release abort, because the fork would fall through to the production folder.
@@ -45,7 +46,7 @@ This validates the S3 half of the pipeline end to end without touching the produ
 
 4. Merge the work into `develop` and push it.
 5. `git push origin develop:main` - triggers the `pre-release` workflow: version bump, build, `pnpm test`, then one GitHub pre-release per changed package with its zip assets attached.
-6. Trigger *release (manual workflow)* manually on `main` - promotes every pre-release and mirrors the assets to `s3://web-hosting/test/`.
+6. Trigger _release (manual workflow)_ manually on `main` - promotes every pre-release and mirrors the assets to `s3://web-hosting/test/`.
 
 ### Verifying the result
 
