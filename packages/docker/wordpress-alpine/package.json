@@ -1,0 +1,17 @@
+{
+  "name": "@ionos-wordpress/wordpress-alpine",
+  "version": "0.1.0",
+  "description": "Alpine-based WordPress dev/test image (Apache + mod_php + MariaDB + wp-cli + sshd + Xdebug + APCu) replacing @wordpress/env.",
+  "private": true,
+  "keywords": [
+    "wordpress",
+    "docker",
+    "alpine",
+    "wp-cli",
+    "dev-environment"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "update-dependencies": "./scripts/update-dependencies.sh"
+  }
+}

@@ -14,7 +14,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 #
 # outputs the workflow distributable artifacts of all workspace packages
@@ -30,8 +30,9 @@ function ionos.wordpress.get_workflow_artifacts() {
   # add plawright test results if any
   test -d ./playwright/storybook/.playwright-report/ && ARTIFACTS+=(./playwright/storybook/.playwright-report/)
   test -d ./playwright/storybook/.test-results/ && ARTIFACTS+=(./playwright/storybook/.test-results/)
-  test -d ./playwright/e2e/.playwright-report/ && ARTIFACTS+=(./playwright/e2e/.playwright-report/)
-  test -d ./playwright/e2e/.test-results/ && ARTIFACTS+=(./playwright/e2e/.test-results/)
+  for PLAYWRIGHT_E2E_DIR in ./playwright/e2e/.playwright-report ./playwright/e2e/.test-results; do
+    test -d "$PLAYWRIGHT_E2E_DIR/" && ARTIFACTS+=("$PLAYWRIGHT_E2E_DIR/")
+  done
 
   # loop over workspace packages and grab flavor specific artifacts
   for PACKAGE_PATH in $(find ./packages -mindepth 2 -maxdepth 2 -type d | sort); do

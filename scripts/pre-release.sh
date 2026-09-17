@@ -35,7 +35,7 @@
 
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 # abort if we are not on the "main" branch
 if [[ "$(git rev-parse --abbrev-ref HEAD)" != 'main' ]]; then

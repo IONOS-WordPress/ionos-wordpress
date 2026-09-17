@@ -1,125 +1,161 @@
 # test
 
-run all tests (e2e, react/storybook, phpunit) : `pnpm test`
+Run all tests (e2e, react/storybook, phpunit): `pnpm test`
 
-- in case `wp-env` is not running, it will be started automatically.
+- `pnpm test` starts its own ephemeral test container (independent of the persistent dev container started by `pnpm start`) and rebuilds the project first.
 
-  `pnpm test` will rebuild the project and start wp-env if it is not already running.
+  You can skip rebuilding by setting the environment variable `BUILD_UP_TO_DATE=1`: `BUILD_UP_TO_DATE=1 pnpm test`
 
-  You can skip rebuilding by setting the environment variable `BUILD_UP_TO_DATE=1` : `BUILD_UP_TO_DATE=1 pnpm test`
-
-`pnpm test` has various configuration options to run only specific tests. Execute `pnpm run test --help` to see all options.
+`pnpm test` has various configuration options to run only specific tests. Run `pnpm run test --help` to see all options.
 
 ## react/storybook
 
-react/storybook test are identified by file name convention (`*.spec.jsx`).
+The file name convention (`*.spec.jsx`) identifies react/storybook tests.
 
 Example: packages/wp-plugin/test-plugin/src/feature-1/blocks/block-1/components/tests/MyButton.spec.jsx
 
-- Develop using Storybook : `pnpm storybook:start`
+- Develop using Storybook: `pnpm storybook:start`
 
-  Featuring hot-reloading, you can develop your components in isolation.
+  With hot-reloading, you can develop your components in isolation.
 
-- Generate static storybook artifact which can be uploaded to a web server like GitHub pages : `pnpm storybook:build`
+- Generate a static storybook artifact that you can upload to a web server like GitHub pages: `pnpm storybook:build`
 
-  This will generate a static storybook that can be deployed to a static site hosting service.
+  This command generates a static storybook that you can deploy to a static site hosting service.
 
-- run react tests written in Playwright : `pnpm test:react`
+- Run react tests written in Playwright: `pnpm test:react`
 
-  react/storybook tests utilize playwright to test the components in storybook.
+  react/storybook tests use Playwright to test the components in storybook.
 
-  **For frontend testing we can use the same framework - playwright 🙌**
-  - Run tests continuously when files change : `pnpm watch -- pnpm test:react`
+  **For frontend testing, we can use the same framework: Playwright.**
+  - Run tests continuously when files change: `pnpm watch -- pnpm test:react`
 
-  - vscode supports running tests by clicking on the play button in the test file.
-    - same same for debugging tests.
+  - You can run tests in vscode by clicking the play button in the test file.
+    - The same is true for debugging tests.
 
     > [!TIP]
-    > vscode requires a single manual step to enable running/debugging single tests from within the ide:
-    > Go to the Testing View, click on the gear icon in the Playwright panel and enable all Plawright configurations.
-    > See Video for this steps : https://www.youtube.com/watch?v=cYHyOF5j5K8
+    > vscode requires a single manual step to enable running and debugging single tests from within the ide:
+    > Go to the Testing View. Click the gear icon in the Playwright panel. Then enable all Playwright configurations.
+    > See this video for these steps: https://www.youtube.com/watch?v=cYHyOF5j5K8
     >
-    > There is a GitHub feature request to make this step unnecessary: https://github.com/microsoft/playwright/issues/34572 - but until then, we have to do this step manually.
+    > There is a GitHub feature request to make this step unnecessary: https://github.com/microsoft/playwright/issues/34572. Until this request is fixed, you must do this step manually.
 
 ## phpunit
 
-> phpunit test are identified by file name convention (`*Test.php`)
+> The file name convention (`*Test.php`) identifies phpunit tests.
 
 Example: `packages/wp-plugin/ionos-essentials/inc/dashboard/tests/phpunit/AcceptanceTest.php`
 
-- run phpunit tests : `pnpm test:php`
+- Run phpunit tests: `pnpm test:php`
 
-- run when ever you changed a file : `pnpm watch -- pnpm test:php`
+- Run this whenever you change a file: `pnpm watch -- pnpm test:php`
 
-- debug phpunit tests :
-  - start `wp-env` launch configuration in vscode
+- Debug phpunit tests:
+  - Start `pnpm start` to bring up the dev container (Xdebug is enabled by default)
 
-  - start phpunit tests `pnpm test:php`
+  - Start phpunit tests: `pnpm test:php`
 
 # e2e tests
 
-> e2e tests are identified by file name convention (`**/tests/e2e/*.spec.js`)
+> The file name convention (`**/tests/e2e/*.spec.js`) identifies e2e tests.
 
 Example: `./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
-> wp-dev containers will have a custom admin password set (in `.env` variable `WP_PASSWORD`) since the ionos-essentials security feature password checking requires a "safe" password to be set.
+> wp-dev containers have a custom admin password (set in the `.env` variable `WP_PASSWORD`), because the ionos-essentials security feature checks passwords and requires a "safe" password.
 
-- run e2e tests : `pnpm test:e2e`
+- Run e2e tests: `pnpm test:e2e`
 
-- (fastest) run a single e2e test : `pnpm run test:e2e ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
+- (fastest) Run a single e2e test: `pnpm run test:e2e ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js`
 
-  or even simpler `pnpm run test:e2e example.spec.js` (paths can be skipped ion Playwright)
+  or even simpler: `pnpm run test:e2e example.spec.js` (Playwright lets you skip paths)
 
-- run whenever you changed a file : `pnpm watch -- pnpm test:e2e`
-  - run a single e2e test without rebuilding and checking wp-env is alive in playwright debug mode : `pnpm run test:e2e --e2e-opts '--debug' ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js` (see `pnpm run test --help` for more)
+- Run this whenever you change a file: `pnpm watch -- pnpm test:e2e`
+  - Run a single e2e test without rebuilding, in Playwright debug mode: `pnpm run test:e2e --e2e-opts '--debug' ./packages/wp-plugin/test-plugin/tests/e2e/example.spec.js` (see `pnpm run test --help` for more)
 
-- vscode supports running e2e tests by clicking on the play button in the test file.
-  - same same for debugging tests.
+- You can run e2e tests in vscode by clicking the play button in the test file.
+  - The same is true for debugging tests.
 
   > [!TIP]
-  > vscode requires a single manual step to enable running/debugging single tests from within the ide:
-  > Go to the Testing View, click on the gear icon in the Playwright panel and enable all Plawright configurations.
-  > See Video for this steps : https://www.youtube.com/watch?v=cYHyOF5j5K8
+  > vscode requires a single manual step to enable running and debugging single tests from within the ide:
+  > Go to the Testing View. Click the gear icon in the Playwright panel. Then enable all Playwright configurations.
+  > See this video for these steps: https://www.youtube.com/watch?v=cYHyOF5j5K8
   >
-  > There is a GitHub feature request to make this step unnecessary: https://github.com/microsoft/playwright/issues/34572 - but until then, we have to do this step manually.
+  > There is a GitHub feature request to make this step unnecessary: https://github.com/microsoft/playwright/issues/34572. Until this request is fixed, you must do this step manually.
 
-## Loggin out in e2e-tests
+## Logging out in e2e tests
 
-If you logout within a test, please re-login afterwards with `await requestUtils.setupRest();`.
-See the the _maintenance_-test for real life example.
+If you log out within a test, log back in afterward with `await requestUtils.setupRest();`.
+See the _maintenance_ test for a real-life example.
+
+## e2e test isolation
+
+The e2e specs set up global WordPress state in `beforeAll` using wp-cli, and several specs
+would otherwise contradict each other: `welcome.spec.js` deletes the `ionos_essentials_welcome`
+user meta that `tabs`/`maintenance`/`security-options` set, and `secondary-plugin-dir.spec.js`
+deactivates the _ionos-essentials_ plugin for its whole duration. For this reason, playwright's
+own `workers` setting is pinned to `1` (see `playwright.config.js`) and the whole suite runs
+serially against a single throwaway `ionos-wordpress-test` container (see `scripts/test.sh`).
+
+To keep specs from leaking state into one another, the database is snapshotted once - right
+after `playwright/e2e/global-setup.js` finishes logging in and resetting theme/plugins - and
+restored **once per spec file**, before that file's first test runs. `playwright/exec-test-cli.js`
+exports `dumpTestDb()`/`restoreTestDb()` (plain `mariadb-dump`/`mariadb` calls against the test
+container), and `playwright/e2e/fixtures.js` exports `restoreDbOnce()`, a plain function - not a
+Playwright fixture, since `test.beforeAll` hooks run in a phase that precedes even auto
+fixtures. Every spec file therefore starts with:
+
+```js
+import { restoreDbOnce, test, expect } from '<path-to>/playwright/e2e/fixtures';
+import { execTestCLI } from '<path-to>/playwright/exec-test-cli';
+
+test.beforeAll(restoreDbOnce);
+```
+
+`test.beforeAll(restoreDbOnce)` must be the file's outermost `beforeAll`, declared before any
+`test.describe(...)` in the file - Playwright runs parent-suite hooks (the file itself) before
+child-suite hooks (a `describe` inside it), so this always restores before that file's own
+setup runs.
+
+The restore is per **file**, not per **test**: several specs deliberately build up state across
+the tests in one file via their own `beforeAll` - e.g. `secondary-theme-dir.spec.js`'s
+`deletable` test sets up what its `installable` test asserts on, and `welcome.spec.js`'s dismiss
+test sets up what its "still closed" test asserts on. Restoring before every single test would
+wipe that out too and break those specs.
+
+A spec calling `requestUtils.setupRest()` (e.g. after deliberately logging out, see below)
+rotates the database session token and rewrites the storage-state cookie file - restoring only
+the database would leave the next file's browser context holding a cookie the database no
+longer recognizes. `global-setup.js` also snapshots the storage-state file
+(`playwright/e2e/storage-state.js` holds the shared path constants), and `restoreDbOnce()`
+restores both together.
 
 # Linux bare metal testing (without being in devcontainer)
 
-Everything works exactly as in DevContainer, but you need to have the requirements installed globall :
+Everything works exactly as in DevContainer, but you must install the requirements globally:
 
-- matching pnpm version (grep for `PNPM_VERSION` to get current version used in project) installed globally
+- matching pnpm version (grep for `PNPM_VERSION` to get the current version used in the project) installed globally
 
-- playwright dependencies installed globally (see `.devcontainer/Dockerfile`) : `sudo pnpx playwright install-deps`
+- playwright dependencies installed globally (see `.devcontainer/Dockerfile`): `sudo pnpx playwright install-deps`
 
 # testing production
 
-to test the production build :
+To test the production build:
 
-- configure environment `TEST_PRODUCTION=true` before starting `wp-env`.
+- Configure the environment variable `TEST_PRODUCTION=true` before running `pnpm test`.
 
-  This can be done locally by adding the environment to your `.env.local` file.
+  You can do this locally by adding the environment variable to your `.env.local` file, or inline: `TEST_PRODUCTION=true pnpm run test`.
 
-  > `wp-env` must be restarted to be properly configured. You can ensure this by executing `pnpm destroy` before.
+  `scripts/test.sh` bind-mounts each package's transpiled `dist/` output (instead of its source) into the ephemeral test container for the run. There is no persistent state to clean up afterward.
 
-- run the test command (excluding editor tests which are not available in the production build) : `pnpm run test`
-
-Alternatively you can destroy wp-env and start the everything at once by doing `TEST_PRODUCTION=true pnpm run test`.
-
-> When starting wp-env with `TEST_PRODUCTION=true` a `.wp-env.json.override` will be created to mount the transpiled php files into `wp-env`. **This file will not automatically be removed on `pnpm destroy` by intention - you have to do it manually.**
+- Run the test command (this excludes editor tests, which are not available in the production build): `pnpm run test`
 
 # links
 
-- dozens of useful playwright/wordpress testcases to borrow from :
+- dozens of useful playwright/wordpress testcases to borrow from:
 
   https://github.com/WordPress/gutenberg/tree/trunk/test/e2e/specs
 
   https://github.com/WordPress/wordpress-develop/tree/trunk/tests/e2e/specs
 
-- hundreds of wordpress phpunit tests to borrow from :
+- hundreds of wordpress phpunit tests to borrow from:
 
   https://github.com/WordPress/wordpress-develop/tree/trunk/tests/phpunit/tests

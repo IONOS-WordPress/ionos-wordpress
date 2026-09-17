@@ -49,7 +49,7 @@ if (file_exists($theme_file)) {
   );
   \wp_print_styles(['exos-theme']);
 
-  wp_deregister_style('buttons');
+  \wp_dequeue_style('buttons');
 
 }
 

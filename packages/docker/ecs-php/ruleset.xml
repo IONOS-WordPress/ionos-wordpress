@@ -13,7 +13,6 @@
   <exclude-pattern>*/build/*</exclude-pattern>
   <exclude-pattern>./tmp/*</exclude-pattern>
   <exclude-pattern>./phpunit/*</exclude-pattern>
-  <exclude-pattern>./wp-env-home/*</exclude-pattern>
   <exclude-pattern>*/languages/*</exclude-pattern>
   <exclude-pattern>*/node_modules/*</exclude-pattern>
   <exclude-pattern>*/vendor/*</exclude-pattern>

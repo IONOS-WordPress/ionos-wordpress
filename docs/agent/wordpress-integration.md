@@ -28,7 +28,7 @@ function handle_save(int $post_id, \WP_Post $post): void {
 
 ### Dynamic Hooks
 
-WordPress provides dynamic hooks that include variable parts. These are powerful for reacting to specific option changes, metadata updates, or post type operations.
+WordPress has dynamic hooks that include variable parts. Use these hooks to react to specific option changes, metadata updates, or post type operations.
 
 **Common dynamic hook patterns:**
 
@@ -72,7 +72,7 @@ function handle_option_change(mixed $old_value, mixed $new_value, string $option
 
 ### Options
 
-**Prefer string values over booleans** for WordPress options to avoid type ambiguity:
+**Use string values, not booleans, for WordPress options.** This avoids type ambiguity:
 
 ```php
 // ✅ GOOD - String values are explicit and unambiguous
@@ -178,10 +178,10 @@ function handle_request(\WP_REST_Request $request): \WP_REST_Response {
 
 ### wp-scripts Bundled Assets
 
-**JavaScript and CSS entry point files (`*index.js`, `*index.css`) are bundled using `@wordpress/scripts`:**
+**`@wordpress/scripts` bundles JavaScript and CSS entry point files (`*index.js`, `*index.css`):**
 
-- Entry files in `src/` are bundled to `build/` with the same relative path
-- An `index.asset.php` file is auto-generated containing dependencies and version hash
+- It bundles entry files in `src/` to `build/` at the same relative path
+- It also generates an `index.asset.php` file with dependencies and a version hash
 - **Always `require` the `.asset.php` file before enqueuing**
 - Use the asset file's `dependencies` and `version` in enqueue functions
 
@@ -397,7 +397,7 @@ if (defined('WP_CLI') && WP_CLI) {
 
 - WP-CLI operations may bypass normal WordPress hooks
 - File-based features need immediate filesystem sync
-- Ensures `wp option update` commands work as expected
+- Makes sure `wp option update` commands work as expected
 
 ### Non-Persistent Cache Groups
 

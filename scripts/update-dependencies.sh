@@ -9,7 +9,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 function ionos.wordpress.update_package_dependencies() {
   # interactive updates of catalogs doesnt work yet with pnpm : https://github.com/pnpm/pnpm/issues/8566
@@ -91,9 +91,7 @@ function ionos.wordpress.check_docker_version() {
 while [[ $# -gt 0 ]]; do
   case $1 in
     --help)
-      # print everything in this script file after the '###help-message' marker
-      printf "$(sed -e '1,/^###help-message/d' "$0")\n"
-      exit
+      ionos.wordpress.print_help "$0"
       ;;
     --pnpm-opts)
       PNPM_OPTS=$2
@@ -112,8 +110,12 @@ function ionos.wordpress.update_composer_dependencies() {
     ionos.wordpress.log_header "checking '$composer_json' for updates ..."
     (
       cd "$(dirname $composer_json)"
-      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest update --no-install --no-scripts
-      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app composer:latest outdated --locked --direct
+      # pinned (not ':latest') via $IONOS_COMPOSER_DOCKER_IMAGE, so the composer that
+      # resolves the lockfiles here is the same one scripts/build.sh installs them with
+      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app \
+        "$IONOS_COMPOSER_DOCKER_IMAGE" update --no-install --no-scripts
+      docker run --rm -u "$(id -u):$(id -g)" -v "$PWD":/app -w /app \
+        "$IONOS_COMPOSER_DOCKER_IMAGE" outdated --locked --direct
     )
   done
 }

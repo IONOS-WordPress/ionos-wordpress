@@ -27,7 +27,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 set -x
 # ensure we have a GITHUB_TOKEN
 if [[ -z "${GITHUB_TOKEN}" ]]; then

@@ -7,7 +7,7 @@
 #
 
 # bootstrap the environment
-source "$(realpath $0 | xargs dirname)/includes/bootstrap.sh"
+source "$(realpath $0 | xargs dirname)/includes/_bootstrap.sh"
 
 # execute only when NOT in CI environment
 if [[ "${CI:-}" == "true" ]]; then
@@ -15,7 +15,7 @@ if [[ "${CI:-}" == "true" ]]; then
   exit 0
 fi
 
-# recreate .vscode/settings.json with a valid WPENV_INSTALLPATH
+# recreate .vscode/settings.json with a valid intelephense WordPress-core include path
 source "$(realpath $0 | xargs dirname)/includes/_vscode.sh"
 ionos.wordpress.vscode.create_settings.json
 
@@ -26,3 +26,7 @@ git config core.hookspath "./.githooks"
 
 # link skills to gemini cli
 rm -rf ./.gemini/skills && ln -s $(pwd)/docs/skills $(pwd)/.gemini/skills
+
+# pre-download the beans issue tracker CLI so it's ready before it's first invoked
+ionos.wordpress.log_info "Ensuring beans issue tracker CLI is installed"
+./scripts/beans.sh version > /dev/null

@@ -1,6 +1,7 @@
 node_modules
 /.pnpm-store
-/wp-env-home
+# CI-only playwright browser download location (see scripts/test.sh)
+/.playwright-browsers
 /packages/*/*/*/build
 /packages/*/*/dist
 /packages/*/*/*/languages/*.json
@@ -12,11 +13,9 @@ node_modules
 /.claude/settings.local.json
 .env.local
 /bin/act
-/.wp-env.json
-/.wp-env.override.json
 /bin/
 build-info
-build-info
+# marker written by .github/shared/scripts/_docker-subproject-image-pull.sh
 packages/*/*/webpack.config.js
 /build
 /build
@@ -25,13 +24,12 @@ packages/*/*/webpack.config.js
 /playwright/storybook/.*
 /playwright/e2e/.*
 /phpunit/vendor/
+/phpunit/.phpunit.result.cache
 /tmp
-/wp-playground-blueprint.json
-/wp-playground-blueprint.local.json
 .DS_Store
-.go-waas.env
 mcp.log
 .gemini/skills
 packages/docker/*/vendor
 scripts/_stretch.sh
 .devcontainer/devcontainer-lock.json
+/mnt

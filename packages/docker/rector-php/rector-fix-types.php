@@ -5,7 +5,9 @@ declare(strict_types=1);
 use Rector\Config\RectorConfig;
 use Rector\ValueObject\PhpVersion;
 
-return RectorConfig::configure()->withSkip([__DIR__ . '/dist/vendor', __DIR__ . '/dist/languages'])->withParallel()
+// fnmatch patterns rather than __DIR__-relative paths - see rector-config-php7.4.php for
+// why __DIR__ cannot be used once rector also runs natively
+return RectorConfig::configure()->withSkip(['*/vendor/*', '*/languages/*'])->withParallel()
   ->withPhpVersion(PhpVersion::PHP_83)->withPreparedSets(
     // deadCode : true,
     // codeQuality : true,
