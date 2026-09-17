@@ -24,6 +24,7 @@ HTTP_PORT="${HTTP_PORT:-80}"
 WORDPRESS_VERSION="${WORDPRESS_VERSION:?WORDPRESS_VERSION must be set}"
 LOCALE="${LOCALE:-en_US}"
 WP_PASSWORD="${WP_PASSWORD:-password}"
+WP_ENVIRONMENT_TYPE="${WP_ENVIRONMENT_TYPE:-development}"
 # Falls back to WP_PASSWORD (itself defaulting to 'password') rather than
 # staying unset, so SSH login (as the `php` user, see below) works out of
 # the box with the same credential as the WordPress admin login, without
@@ -208,6 +209,7 @@ doas -u php wp config create --dbname="$WORDPRESS_DB_NAME" --skip-check --dbhost
   define( 'WP_DEBUG_DISPLAY', true );
   define( 'WP_HOME', 'http://localhost:${HTTP_PORT}' );
   define( 'WP_SITEURL', 'http://localhost:${HTTP_PORT}' );
+  define( 'WP_ENVIRONMENT_TYPE', '${WP_ENVIRONMENT_TYPE}' );
 EOF
 
 # root over the unix socket again - the wordpress user cannot answer "does

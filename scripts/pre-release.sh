@@ -81,6 +81,7 @@ pnpm install
 
 # build & test repository
 # (build will automatically sync the updated version numbers into the plugin / theme entry files)
+pnpm build
 TEST_PRODUCTION=true pnpm run test
 
 # generate sbom file
