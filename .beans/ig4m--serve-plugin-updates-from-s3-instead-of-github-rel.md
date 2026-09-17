@@ -1,11 +1,11 @@
 ---
 # ig4m
 title: Serve plugin updates from S3 instead of GitHub releases
-status: draft
+status: in-progress
 type: epic
 priority: high
 created_at: 2026-09-16T12:39:15Z
-updated_at: 2026-09-16T12:52:55Z
+updated_at: 2026-09-17T08:16:12Z
 ---
 
 Move the plugin self-update mechanism away from GitHub releases towards the IONOS S3 object storage, keeping GitHub as a fallback during a transition period.
@@ -44,6 +44,10 @@ Build time and release time must agree on `S3_FOLDER`, because the folder is bak
 - `pre-release.yml` is triggered by `push` to `main` and has no `workflow_dispatch`, so there is no per-run input to switch the folder.
 - The zips uploaded to S3 are the same artifacts attached to the GitHub release `@ionos-wordpress/latest`. A test-phase release in the main repository would therefore ship plugins to real users whose `Update URI` points at the `test` folder.
 
-**Decision: the test phase runs in a fork.** `docs/7-release.md` already recommends forking for work on the release scripts. In the fork, `.env.local` sets `S3_FOLDER=test`; pre-release and release are driven there, so build and upload see the same value by construction and the production `@ionos-wordpress/latest` release stays untouched. `.env` in the main repository keeps the `ionos-group` default and the workflows need no change.
+**Decision: the test phase runs in a fork, enforced by a repository identity guard.** `docs/7-release.md` already recommends forking for work on the release scripts.
+
+`.env.local` alone is not enough: it is gitignored, so a fork's CI checkout never sees it and would build with the production folder baked into the header. The fork therefore commits `S3_FOLDER` into its own `.env`, which is what makes its CI see the value.
+
+To turn that from a convention into a guarantee, `scripts/release.sh` (and `scripts/build.sh` for the header injection) abort unless repository and folder match: the upstream repository may only publish to `ionos-group`, and a fork may publish to anything except `ionos-group`. A mismatch fails loudly instead of either shipping test artifacts to real users or letting a fork overwrite production assets.
 
 Note that the `.env` entry must follow the repo's established override pattern (`S3_FOLDER="${S3_FOLDER:-ionos-group}"`, as used for `IMAGE_REGISTRY`), so an exported value wins and an empty one falls back to the production default.

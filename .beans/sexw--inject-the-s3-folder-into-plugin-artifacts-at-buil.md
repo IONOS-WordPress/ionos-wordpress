@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: high
 created_at: 2026-09-16T12:39:48Z
-updated_at: 2026-09-16T12:39:48Z
+updated_at: 2026-09-17T09:22:18Z
 parent: ig4m
 ---
 
@@ -24,3 +24,11 @@ The `Update URI` header and the S3 base URL inside each plugin have to know whic
 `scripts/build.sh` already rewrites the `Requires PHP` header per PHP target variant; the same `sed` step is the natural place for this.
 
 Caveat to keep in mind: the header is baked during the pre-release workflow while the S3 upload happens in the release workflow. Both runs must see the same `S3_FOLDER` value, otherwise the shipped plugins point at a folder the release did not write to.
+
+## Note : carry the repository identity guard over
+
+`scripts/release.sh` aborts unless repository and S3 folder match (upstream may only publish to `ionos-group`, a fork may publish to anything else). `scripts/build.sh` bakes the folder into the plugin header and needs the same guard, otherwise a fork's CI could still produce artifacts pointing at the production folder even though the upload would later be refused.
+
+Extract the check so both scripts share it rather than duplicating the constants - `scripts/includes/_bootstrap.sh` is the natural place, since it already holds the shared helpers.
+
+`S3_FOLDER` reaches CI through the `S3_FOLDER` repository variable, exported by both `pre-release.yml` and `release.yaml`, so the build and the upload read the same value by construction.
