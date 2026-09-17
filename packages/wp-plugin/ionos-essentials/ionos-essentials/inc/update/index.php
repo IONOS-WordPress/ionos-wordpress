@@ -17,43 +17,88 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
 }
 */
 
-\add_filter(
-  hook_name: 'update_plugins_github.com',
-  accepted_args: 3,
-  callback: function (array|false $update, array $plugin_data, string $plugin_slug): array|false {
+/*
+ * update descriptors are queried in this order, the first one answering wins.
+ *
+ * '__S3_FOLDER__' is substituted at build time with the s3 folder the release publishes to
+ * (see scripts/build.sh). the github url is the fallback for the transition period and goes away
+ * once no installation predating the s3 switch is left in the field.
+ */
+const UPDATE_INFO_JSON_URLS = [
+  'https://s3-de-central.profitbricks.com/web-hosting/__S3_FOLDER__/ionos-essentials-info.json',
+  'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json',
+];
 
-    if (\plugin_basename(PLUGIN_FILE) !== $plugin_slug) {
-      return $update;
-    }
+/*
+ * the changelog is not part of the update descriptor, it is read straight from the repository.
+ * this used to be derived from the 'Update URI' header, which no longer points at github.
+ */
+const CHANGELOG_URL = 'https://raw.githubusercontent.com/IONOS-WordPress/ionos-wordpress/refs/heads/main/packages/wp-plugin/ionos-essentials/CHANGELOG.md';
 
-    // get the redirect URL from the UpdateURI
-    $res = \wp_remote_get($plugin_data['UpdateURI'], [
+/*
+ * returns the first update descriptor that answers with usable json, or null if none does.
+ * a source is skipped on transport error, on a non-200 status and on a body that is not json.
+ */
+function fetch_update_info(): array|null
+{
+  foreach (UPDATE_INFO_JSON_URLS as $url) {
+    $res = \wp_remote_get($url, [
       'headers' => [
         'Accept' => 'application/json',
       ],
     ]);
 
-    // if the request was successful
-    if ((200 === \wp_remote_retrieve_response_code($res)) || ('' !== \wp_remote_retrieve_body($res))) {
-      $info_json = json_decode($res['body'], true);
-
-      return $info_json;
+    if (\is_wp_error($res)) {
+      error_log(sprintf('ionos-essentials: failed to request "%s" : %s', $url, $res->get_error_message()));
+      continue;
     }
 
-    if ((200 !== \wp_remote_retrieve_response_code($res))) {
+    $status = \wp_remote_retrieve_response_code($res);
+    $body   = \wp_remote_retrieve_body($res);
+
+    if (200 !== $status || '' === $body) {
       error_log(
         sprintf(
-          'Failed to fetch latest update information from "%s"(http-status=%s) : %s',
-          $plugin_data['UpdateURI'],
-          \wp_remote_retrieve_response_code($res),
-          '' !== \wp_remote_retrieve_body($res) ? \wp_remote_retrieve_body($res) : 'response body was empty',
+          'ionos-essentials: failed to fetch update information from "%s"(http-status=%s) : %s',
+          $url,
+          $status,
+          '' !== $body ? $body : 'response body was empty',
         )
       );
+      continue;
     }
 
-    return $update;
+    $info = json_decode($body, true);
+
+    if (! is_array($info)) {
+      error_log(sprintf('ionos-essentials: update information from "%s" is not valid json', $url));
+      continue;
+    }
+
+    return $info;
   }
-);
+
+  return null;
+}
+
+/*
+ * wordpress dispatches an update check to 'update_plugins_<host of the Update URI header>'. both
+ * hosts are registered during the transition period: an installation that has not been updated
+ * since the switch still carries the github header and would stop receiving updates otherwise.
+ */
+foreach (['s3-de-central.profitbricks.com', 'github.com'] as $update_uri_host) {
+  \add_filter(
+    hook_name: "update_plugins_{$update_uri_host}",
+    accepted_args: 3,
+    callback: function (array|false $update, array $plugin_data, string $plugin_slug): array|false {
+      if (\plugin_basename(PLUGIN_FILE) !== $plugin_slug) {
+        return $update;
+      }
+
+      return fetch_update_info() ?? $update;
+    }
+  );
+}
 
 /*
 * This filter is used to modify the plugin information that is displayed in the WordPress admin panel as plugin details.
@@ -70,14 +115,7 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
 
     $plugin_data = \get_plugin_data(ABSPATH . 'wp-content/plugins/' . $args->slug, false, false);
 
-    // fetch changelog from github
-    [, , , $github_user, $github_repo]     = explode('/', $plugin_data['UpdateURI']);
-    $changelog_url                         = sprintf(
-      'https://raw.githubusercontent.com/%s/%s/refs/heads/main/packages/wp-plugin/ionos-essentials/CHANGELOG.md',
-      $github_user,
-      $github_repo
-    );
-    $res = \wp_remote_get($changelog_url, [
+    $res = \wp_remote_get(CHANGELOG_URL, [
       'headers' => [
         'Accept' => 'application/json',
       ],
@@ -95,12 +133,12 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
     // abort if the request failed or the response code is not 200 or the response body is empty
     if ((200 !== \wp_remote_retrieve_response_code($res)) || ('' === \wp_remote_retrieve_body($res))) {
       // abort gracefully
-      // show error message including link in the changelog section
+      // show error message in the changelog section
       $result->sections['changelog'] = \esc_html(
         sprintf(
           // translators: first placeholder for the url, second for the plugin name, last one for the response code
           \__('Failed to download <a href=\"%1$s\">%2$s-info.json</a>(response status=%3$s)', 'ionos-essentials'),
-          $plugin_data['UpdateURI'],
+          CHANGELOG_URL,
           $plugin_data['Name'],
           print_r(\wp_remote_retrieve_response_code($res), true),
         )
