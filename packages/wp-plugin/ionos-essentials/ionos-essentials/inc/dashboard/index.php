@@ -18,6 +18,51 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 
 const REQUIRED_USER_CAPABILITIES = 'read';
 
+/**
+ * top level options writable through the `ionos/essentials/option/set` endpoint,
+ * mapped to the value type they accept (see sanitize_option_value()).
+ */
+const ALLOWED_TOP_LEVEL_OPTIONS = [
+  'ionos_essentials_maintenance_mode' => 'bool',
+  'ionos_essentials_dashboard_mode'   => 'bool',
+];
+
+/**
+ * value type accepted for $key, or null if $key is not writable through the endpoint.
+ *
+ * an empty $option addresses a top level option named $key, otherwise $key addresses
+ * an entry inside the IONOS_SECURITY_FEATURE_OPTION array option - those are flags.
+ */
+function get_allowed_option_type(string $option, string $key): ?string
+{
+  if (empty($option)) {
+    return ALLOWED_TOP_LEVEL_OPTIONS[$key] ?? null;
+  }
+
+  return IONOS_SECURITY_FEATURE_OPTION === $option && array_key_exists($key, IONOS_SECURITY_FEATURE_OPTION_DEFAULT)
+    ? 'bool'
+    : null;
+}
+
+/**
+ * casts $value to $type, or returns null if $value does not fit the type.
+ */
+function sanitize_option_value(mixed $value, string $type): null|int|string|float
+{
+  if (is_array($value) || is_object($value)) {
+    return null;
+  }
+
+  return match ($type) {
+    // stored as 1/0 because a false value ends up as NULL in the database
+    'bool'   => $value ? 1 : 0,
+    'int'    => is_numeric($value) ? (int) $value : null,
+    'float'  => is_numeric($value) ? (float) $value : null,
+    'string' => is_string($value) ? \sanitize_text_field($value) : null,
+    default  => null,
+  };
+}
+
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', Tenant::get_label());
   define('ADMIN_PAGE_SLUG', Tenant::get_slug());
@@ -285,12 +330,30 @@ function install_plugin_from_url($plugin_url)
     '/set',
     [
       'methods'             => 'POST',
-      'permission_callback' => fn () => 0 !== \get_current_user_id(),
+      'permission_callback' => fn () => \current_user_can('manage_options'),
       'callback'            => function ($request) {
         $params = $request->get_json_params();
         $option = $params['option'] ?? '';
         $key    = $params['key']    ?? '';
-        $value  = $params['value']  ?? '';
+        $value  = $params['value']  ?? null;
+
+        $type = is_string($option) && is_string($key) ? get_allowed_option_type($option, $key) : null;
+
+        if (null === $type) {
+          return new \WP_REST_Response([
+            'status' => false,
+            'error'  => \__('option not allowed', 'ionos-essentials'),
+          ], 400);
+        }
+
+        $value = sanitize_option_value($value, $type);
+
+        if (null === $value) {
+          return new \WP_REST_Response([
+            'status' => false,
+            'error'  => \__('invalid option value', 'ionos-essentials'),
+          ], 400);
+        }
 
         if (empty($option)) {
           \update_option($key, $value);
@@ -302,7 +365,12 @@ function install_plugin_from_url($plugin_url)
           }
 
         } else {
-          $options       = \get_option($option, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
+          $options = \get_option($option, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
+
+          if (! is_array($options)) {
+            $options = IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
+          }
+
           $options[$key] = $value;
           \update_option($option, $options);
         }

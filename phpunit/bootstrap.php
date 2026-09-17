@@ -14,14 +14,29 @@ require_once '/opt/wp-tests/vendor/autoload.php';
 // Give access to tests_add_filter() function.
 require_once $WP_TESTS_DIR . '/includes/functions.php';
 
-// /**
-//  * Manually load the plugin being tested.
-//  */
-// function _manually_load_plugin() {
-// 	require dirname( dirname( __FILE__ ) ) . '/starter-plugin.php';
-// }
+/**
+ * load the workspace plugins before the first test runs.
+ *
+ * tests activate the plugin they cover in their own setUp(), but activate_plugin() is the point
+ * where the plugin file is first required - and that happens after WP_UnitTestCase has snapshotted
+ * the hooks. The restore in tearDown() then drops every hook the plugin registered, and require_once
+ * will not run the file again, so from the second test on the plugin is effectively inert: routes
+ * registered on 'rest_api_init' are no longer dispatchable.
+ *
+ * loading the plugins here puts their hooks in place before any snapshot is taken.
+ */
+function _ionos_load_workspace_plugins()
+{
+  foreach (glob(WP_PLUGIN_DIR . '/*', GLOB_ONLYDIR) as $plugin_dir) {
+    $plugin_file = $plugin_dir . '/' . basename($plugin_dir) . '.php';
 
-// tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+    if (is_readable($plugin_file)) {
+      require_once $plugin_file;
+    }
+  }
+}
+
+tests_add_filter('muplugins_loaded', '_ionos_load_workspace_plugins');
 
 // Start up the WP testing environment.
 require $WP_TESTS_DIR . '/includes/bootstrap.php';
