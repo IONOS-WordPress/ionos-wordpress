@@ -157,18 +157,103 @@ To onboard a new package:
 - [ ] A changeset that targets the package is required to trigger a version bump or release. This
       uses the same changeset workflow as any other package. No changes are needed.
 - [ ] Build, zip, and S3 upload happen automatically. No per-plugin script changes are needed.
-- [ ] **`wp-mu-plugin` packages are download-only by default.** WordPress core has no
-      update-checker mechanism for must-use plugins. So mu-plugin releases are published only as
-      downloadable and installable artifacts. They never get an `Update URI`-driven update inside
-      the dashboard. (`packages/wp-mu-plugin/test-mu-plugin` is a deliberate, scoped pilot
-      exception to this rule. See its ticket or plan for details. This does not change the default
-      policy for other mu-plugins.)
+- [ ] **`wp-mu-plugin` packages get no `Update URI`-driven update, because WordPress core has no
+      update-checker mechanism for must-use plugins at all** - there is no `Update URI` header, no
+      `update_plugins_<host>` filter, and no entry in the updates screen for them. That does not
+      mean mu-plugins can't self-update: `ionos-core` implements its own, entirely independent
+      mechanism (`packages/wp-mu-plugin/ionos-core/ionos-core/update/index.php`) that hooks the
+      `wp_update_plugins` cron event, fetches its own update descriptor, compares the result
+      against its own `Version` header (read via `get_file_data()`), and installs through a custom
+      `MU_Plugin_Upgrader` (a `WP_Upgrader` subclass) if a newer version is found. To add the same
+      mechanism to a new mu-plugin, copy that file, adjust the two `INFO_JSON_URL`/
+      `LEGACY_INFO_JSON_URL` constants (S3 first, GitHub fallback - see below) and the path passed
+      to `get_file_data()`. This is a recognized copy-paste pattern, not a shared package.
 - [ ] For `wp-plugin` packages that want an in-dashboard self-update, copy
       `packages/wp-plugin/ionos-essentials/ionos-essentials/inc/update/index.php` into the new
       plugin. Adjust the hardcoded plugin folder name and changelog raw-URL path for the new
       plugin. Then set the plugin's `Update URI` header to
-      `https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/<plugin>-info.json`.
-      This is a recognized copy-paste pattern, not a shared or parameterized package.
+      `https://s3-de-central.profitbricks.com/web-hosting/__S3_FOLDER__/<plugin>-info.json` -
+      `scripts/build.sh` substitutes the `__S3_FOLDER__` placeholder at build time (see
+      [build](./2-build.md)). Keep the plugin's `LEGACY_INFO_JSON_URL` constant pointing at
+      `https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/<plugin>-info.json`
+      as the GitHub fallback (see "S3-first, GitHub-fallback resolution" above). This is a
+      recognized copy-paste pattern, not a shared or parameterized package.
+
+# the S3 release target
+
+Every release also mirrors its assets to IONOS S3 object storage, so plugins can resolve their
+updates from S3 instead of from GitHub releases.
+
+- **Bucket**: `web-hosting` (endpoint `https://s3-de-central.profitbricks.com`), publicly readable
+  over HTTPS.
+- **Folder**: configurable via the `S3_FOLDER` environment variable (see `.env`). Production
+  releases publish to `ionos-group`. A fork can publish to a throwaway folder instead (`test` is
+  the convention) by setting the `S3_FOLDER` repository variable in its own GitHub Actions
+  settings - see "test-phase releases in a fork" below.
+
+  `scripts/release.sh` refuses any other combination of repository and folder: the upstream
+  repository may only publish to `ionos-group`, and a fork may publish to anything except
+  `ionos-group`. This guards against either shipping test artifacts to real users or a fork
+  overwriting production assets.
+
+- **File listing**: for every released zip, S3 ends up holding the same three names GitHub does,
+  plus one info.json:
+  - the versioned name (example: `ionos-essentials-0.1.1-php7.4.zip`)
+  - the `latest` name (example: `ionos-essentials-latest-php7.4.zip`)
+  - the legacy alias (example: `ionos-essentials.latest.zip`)
+  - `<plugin>-info.json`
+
+- **Two `info.json` flavours**: the GitHub release `@ionos-wordpress/latest` and the S3 folder each
+  get their own `<plugin>-info.json`. Both share the same `version`, `slug`, `last_updated` and
+  changelog - they differ only in their `package` field: the GitHub flavour points at the GitHub
+  release download URL, the S3 flavour at the S3 copy of the same zip. This is what lets an
+  installation that resolved its update descriptor from S3 also download the zip from S3, and one
+  that resolved from GitHub stay entirely on GitHub.
+
+## S3-first, GitHub-fallback resolution (transition period)
+
+Released plugins query S3 first and fall back to GitHub only when S3 is unreachable, answers with a
+non-200 status, or returns a body that is not valid JSON. A valid S3 `info.json` always wins - there
+is no version comparison between the two sources.
+
+The GitHub URL is not going away yet: an installation that has not received an update since the
+switch to S3 still carries the pre-migration state (the old `Update URI` header value for
+`wp-plugin` packages, or the pre-S3 hardcoded GitHub-only URL for `ionos-core`) and would stop
+receiving updates if GitHub disappeared before that installation catches up. The GitHub fallback
+constant can be removed once no installation in the field is still in that pre-migration state.
+
+## Test-phase releases in a fork
+
+Build time and release time must agree on `S3_FOLDER`, because the folder is baked into the plugin
+artifact (`Update URI` header / update-checker URL) during the pre-release workflow, while the S3
+upload happens in the release workflow.
+
+This cannot be exercised in the main repository:
+
+- `pre-release.yml` triggers on `push` to `main` and has no `workflow_dispatch`, so there is no
+  per-run switch for the folder.
+- The zips uploaded to S3 are the exact same artifacts attached to the GitHub release
+  `@ionos-wordpress/latest`. A test-phase release in the main repository would ship plugins
+  pointing at the `test` folder to real users.
+
+Instead, run it in a fork (see [Forking](./5%20-%20forking.md)):
+
+1. Set the `S3_FOLDER` repository variable to `test` in the fork's GitHub Actions settings
+   (_Settings > Secrets and variables > Actions > Variables_) - both `pre-release.yml` and
+   `release.yaml` export it, and CI never sees an uncommitted `.env.local`.
+2. Add the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` repository secrets, otherwise every S3
+   upload is skipped with an error.
+3. Push `develop` to `main` in the fork to create the pre-release(s), then trigger the `release`
+   workflow manually to promote them and mirror the assets to `s3://web-hosting/test/`.
+4. Verify the result without credentials, since the bucket is publicly readable, e.g.:
+
+   ```
+   curl -sI https://s3-de-central.profitbricks.com/web-hosting/test/ionos-essentials-latest-php7.4.zip
+   curl -s  https://s3-de-central.profitbricks.com/web-hosting/test/ionos-essentials-info.json | jq .
+   ```
+
+For local, single-machine runs, setting `S3_FOLDER=test` in the (gitignored) `.env.local` is
+enough, since it only affects your own `pnpm release`/`pnpm pre-release` runs, never CI.
 
 # changeset configuration
 
