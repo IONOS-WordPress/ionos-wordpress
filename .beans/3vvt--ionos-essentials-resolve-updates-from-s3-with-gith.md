@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-09-16T12:39:48Z
-updated_at: 2026-09-17T10:35:30Z
+updated_at: 2026-09-17T11:47:43Z
 parent: ig4m
 ---
 
@@ -30,12 +30,13 @@ A valid S3 info.json always wins - no version comparison against GitHub.
 
 `inc/update/index.php` now drives the update check from two constants instead of from the `Update URI` header:
 
-- `UPDATE_INFO_JSON_URLS` lists the S3 descriptor first and the GitHub one second. `fetch_update_info()` walks the list and returns the first source that answers with usable JSON, skipping a source on transport error, on a non-200 status and on a body that does not decode to an array. Every skip is logged with the URL that failed, so the two sources are distinguishable in the log.
+- The plugin's own `Update URI` header is the authoritative source and is queried first. `fetch_update_info($update_uri)` returns the first source that answers with usable JSON, skipping a source on transport error, on a non-200 status and on a body that does not decode to an array. Every skip is logged with the URL that failed, so the sources are distinguishable in the log.
+- `LEGACY_INFO_JSON_URL` holds the GitHub descriptor and is only queried when the header's URL fails. `array_unique` collapses the list for an installation whose header still *is* the GitHub URL, so that case makes one request rather than two identical ones.
 - `CHANGELOG_URL` replaces the previous derivation of the GitHub user and repository by exploding the `Update URI` header, which would have produced garbage once that header points at S3.
 
 The filter is registered for both `update_plugins_s3-de-central.profitbricks.com` and `update_plugins_github.com` in a loop over the two hosts, so an installation that still carries the old header keeps updating.
 
-The `Update URI` header in `ionos-essentials.php` now points at the S3 descriptor and carries the `__S3_FOLDER__` placeholder.
+The `Update URI` header in `ionos-essentials.php` now points at the S3 descriptor and carries the `__S3_FOLDER__` placeholder. Because the resolver reads the header instead of a parallel constant, that header is the single place the S3 URL is written - the placeholder occurs exactly once in the whole plugin.
 
 ## Deliberately left alone
 

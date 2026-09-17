@@ -18,16 +18,13 @@ if (false !== array_search(\wp_get_development_mode(), ['all', 'plugin'], true))
 */
 
 /*
- * update descriptors are queried in this order, the first one answering wins.
+ * the github hosted update descriptor, kept as a fallback for the transition period only.
  *
- * '__S3_FOLDER__' is substituted at build time with the s3 folder the release publishes to
- * (see scripts/build.sh). the github url is the fallback for the transition period and goes away
- * once no installation predating the s3 switch is left in the field.
+ * the authoritative source is the plugin's own 'Update URI' header, which points at s3. this url
+ * is queried when that fails, so an installation still carrying the pre-s3 header keeps updating.
+ * it goes away once no such installation is left in the field.
  */
-const UPDATE_INFO_JSON_URLS = [
-  'https://s3-de-central.profitbricks.com/web-hosting/__S3_FOLDER__/ionos-essentials-info.json',
-  'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json',
-];
+const LEGACY_INFO_JSON_URL = 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-essentials-info.json';
 
 /*
  * the changelog is not part of the update descriptor, it is read straight from the repository.
@@ -39,9 +36,9 @@ const CHANGELOG_URL = 'https://raw.githubusercontent.com/IONOS-WordPress/ionos-w
  * returns the first update descriptor that answers with usable json, or null if none does.
  * a source is skipped on transport error, on a non-200 status and on a body that is not json.
  */
-function fetch_update_info(): array|null
+function fetch_update_info(string $update_uri): array|null
 {
-  foreach (UPDATE_INFO_JSON_URLS as $url) {
+  foreach (array_unique([$update_uri, LEGACY_INFO_JSON_URL]) as $url) {
     $res = \wp_remote_get($url, [
       'headers' => [
         'Accept' => 'application/json',
@@ -95,7 +92,7 @@ foreach (['s3-de-central.profitbricks.com', 'github.com'] as $update_uri_host) {
         return $update;
       }
 
-      return fetch_update_info() ?? $update;
+      return fetch_update_info($plugin_data['UpdateURI']) ?? $update;
     }
   );
 }
