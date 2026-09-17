@@ -1,11 +1,11 @@
 ---
 # rybb
 title: 'Security: /ionos/essentials/option/set lets any logged-in user write arbitrary WordPress options'
-status: in-progress
+status: completed
 type: bug
 priority: critical
 created_at: 2026-09-17T06:55:20Z
-updated_at: 2026-09-17T07:32:00Z
+updated_at: 2026-09-17T07:36:07Z
 blocked_by:
   - rzu8
 ---
@@ -30,7 +30,7 @@ Secondary: in the `else` branch the value from `\get_option($option, ...)` is us
 - [x] Allowlist the option/key names the dashboard actually sends (see the `.input-switch` handler in `src/dashboard/index.js:254`); reject anything else
 - [x] Validate `value` (UI only ever sends 0/1)
 - [x] Guard the `else` branch against a non-array stored option
-- [ ] PHPUnit test: subscriber gets 403 (written, but held back from the fix commit - blocked on rzu8)
+- [x] PHPUnit test: subscriber gets 403 (landed separately, after rzu8 unblocked it)
 - [x] Changeset (patch, `@ionos-wordpress/essentials`)
 
 ## Allowlist: complete set of options reachable via the UI
@@ -82,7 +82,7 @@ Always integer `1` or `0` (the comment at `index.js:250` notes `false` would sto
 - Route registration extracted into `register_option_set_route()` so tests can register it
   (the plugin's `rest_api_init` hooks are stripped when the whole PHPUnit suite runs).
 
-`inc/dashboard/tests/phpunit/OptionSetEndpointTest.php` (new, 12 tests - NOT part of the fix commit, see rzu8)
+`inc/dashboard/tests/phpunit/OptionSetEndpointTest.php` (new, 12 tests - landed in a follow-up commit, see rzu8)
 
 Subscriber 403, anonymous 401, non-allowlisted option 400, unknown security key 400, security key
 redirected into another option 400, structured value 400, both allowlisted toggles write, non-array

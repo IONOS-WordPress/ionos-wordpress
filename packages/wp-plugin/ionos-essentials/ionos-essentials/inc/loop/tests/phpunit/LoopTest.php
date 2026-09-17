@@ -38,19 +38,6 @@ class LoopTest extends \WP_UnitTestCase  {
 
     \activate_plugin('ionos-essentials/ionos-essentials.php');
 
-    // @TODO: for some reason the once required rest_api_init hooks are cleaned up at this point when all phpunit tests are runned.
-    \add_action('rest_api_init', function () {
-      \register_rest_route(
-        IONOS_LOOP_REST_NAMESPACE,
-        IONOS_LOOP_REST_ENDPOINT,
-        [
-          'methods'             => WP_REST_Server::READABLE,
-          'permission_callback' => __NAMESPACE__ . '\_rest_permissions_check',
-          'callback'            => __NAMESPACE__ . '\_rest_loop_callback',
-        ]
-      );
-    });
-
     \do_action( 'rest_api_init' );
   }
 

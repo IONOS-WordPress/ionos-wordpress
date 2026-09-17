@@ -1,11 +1,11 @@
 ---
 # rzu8
 title: 'PHPUnit: plugin hooks are stripped after the first test, so REST routes are not dispatchable'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-17T07:28:27Z
-updated_at: 2026-09-17T07:28:27Z
+updated_at: 2026-09-17T07:36:07Z
 ---
 
 ## Problem
@@ -33,6 +33,24 @@ dispatchable in the first test of a run.
 
 ## Todo
 
-- [ ] Pick an approach and implement it
-- [ ] Drop the skip guard in OptionSetEndpointTest so all its dispatch tests run
-- [ ] Drop the duplicated route registration + @TODO in LoopTest
+- [x] Pick an approach and implement it
+- [x] Drop the skip guard in OptionSetEndpointTest so all its dispatch tests run
+- [x] Drop the duplicated route registration + @TODO in LoopTest
+
+## Summary of Changes
+
+`phpunit/bootstrap.php` now requires every workspace plugin main file
+(`wp-content/plugins/<dir>/<dir>.php`) on `muplugins_loaded`, replacing the commented-out
+`_manually_load_plugin()` scaffold. Plugin hooks are therefore in place before
+`WP_UnitTestCase` takes its hook snapshot, so they survive the restore in `tearDown()` and
+REST routes stay dispatchable for the whole run.
+
+Follow-ups this unblocked:
+
+- `inc/dashboard/tests/phpunit/OptionSetEndpointTest.php` no longer skips its dispatch tests.
+- `inc/loop/tests/phpunit/LoopTest.php` no longer re-registers its route in `setUp()`; the
+  `@TODO` and the duplicated `register_rest_route()` call are gone, so the test now exercises
+  the route the plugin actually registers.
+
+Verification: `pnpm test:php` 36/36, no skips (was 10 skipped); each class also passes in
+isolation; `pnpm lint` passes.
