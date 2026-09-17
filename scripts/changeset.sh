@@ -21,7 +21,15 @@ if [[ "$1" == 'version' ]]; then
   # 'changeset version' doesnt abort with error code if no changesets are found
   # thats why we abort
   #   if 'changeset version' spits out 'No unreleased changesets found' on stderr
-  pnpm exec changeset version 2>&1 | tee /dev/stderr | grep -q -v 'No unreleased changesets found'
+  #
+  # note: the output is buffered into a variable (instead of piping into `grep -q`)
+  # because `grep -q` quits on its first match and closes its stdin, which would send
+  # SIGPIPE upstream and abort this script early (exit 141) due to `set -o pipefail`
+  output="$(pnpm exec changeset version 2>&1)"
+  echo "$output"
+  if grep -q 'No unreleased changesets found' <<< "$output"; then
+    exit 1
+  fi
 else
   pnpm exec changeset $@
 fi
