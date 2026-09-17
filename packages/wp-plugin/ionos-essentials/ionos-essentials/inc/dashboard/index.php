@@ -18,6 +18,12 @@ use const ionos\essentials\security\IONOS_SECURITY_FEATURE_OPTION_DEFAULT;
 
 const REQUIRED_USER_CAPABILITIES = 'read';
 
+/* standalone options writable via the option/set REST endpoint */
+const SETTABLE_OPTIONS = [
+  'ionos_essentials_maintenance_mode',
+  'ionos_essentials_dashboard_mode',
+];
+
 \add_action('init', function () {
   define('IONOS_ESSENTIALS_DASHBOARD_ADMIN_PAGE_TITLE', Tenant::get_label());
   define('ADMIN_PAGE_SLUG', Tenant::get_slug());
@@ -293,6 +299,12 @@ function install_plugin_from_url($plugin_url)
         $value  = $params['value']  ?? '';
 
         if (empty($option)) {
+          if (! in_array($key, SETTABLE_OPTIONS, true)) {
+            return new \WP_Error('ionos_invalid_option', \__('Unknown option', 'ionos-essentials'), [
+              'status' => 400,
+            ]);
+          }
+
           \update_option($key, $value);
 
           if ($key === 'ionos_essentials_maintenance_mode' and class_exists(
@@ -302,6 +314,13 @@ function install_plugin_from_url($plugin_url)
           }
 
         } else {
+          if ($option !== IONOS_SECURITY_FEATURE_OPTION
+            || ! array_key_exists($key, IONOS_SECURITY_FEATURE_OPTION_DEFAULT)) {
+            return new \WP_Error('ionos_invalid_option', \__('Unknown option', 'ionos-essentials'), [
+              'status' => 400,
+            ]);
+          }
+
           $options       = \get_option($option, IONOS_SECURITY_FEATURE_OPTION_DEFAULT);
           $options[$key] = $value;
           \update_option($option, $options);
