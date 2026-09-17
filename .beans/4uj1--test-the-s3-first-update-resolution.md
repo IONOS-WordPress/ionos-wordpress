@@ -1,11 +1,11 @@
 ---
 # 4uj1
 title: Test the S3-first update resolution
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-16T12:40:17Z
-updated_at: 2026-09-17T09:31:20Z
+updated_at: 2026-09-17T12:22:23Z
 parent: ig4m
 ---
 
@@ -13,9 +13,9 @@ Verify the new resolution order without waiting for a real release.
 
 ## Todos
 
-- [ ] Add PHPUnit tests for the ionos-essentials resolver, stubbing HTTP through the `pre_http_request` filter
-- [ ] Cover: S3 answers with valid JSON (GitHub must not be queried), S3 returns a non-200 status (GitHub answers), S3 returns malformed JSON (GitHub answers), both fail (the original `$update` value is returned untouched)
-- [ ] Add an equivalent test for the ionos-core resolver
+- [x] Add PHPUnit tests for the ionos-essentials resolver, stubbing HTTP through the `pre_http_request` filter
+- [x] Cover: S3 answers with valid JSON (GitHub must not be queried), S3 returns a non-200 status (GitHub answers), S3 returns malformed JSON (GitHub answers), both fail (the original `$update` value is returned untouched)
+- [x] Add an equivalent test for the ionos-core resolver
 - [ ] Perform one end-to-end run **in a fork**, with `S3_FOLDER=test` in the fork's uncommitted `.env.local`, driving both pre-release and release there; verify the resulting S3 object listing matches the fork's GitHub release assets
 
 ## Notes
@@ -68,3 +68,13 @@ curl -s  https://s3-de-central.profitbricks.com/web-hosting/test/ionos-essential
 - `scripts/pre-release.sh:84` runs the full test suite - this is the most likely reason for a long or failing run.
 - `scripts/pre-release.sh:77` consumes the pending changesets and pushes version bumps and tags into the fork, so the fork's `develop` diverges from upstream afterwards.
 - The production AWS credentials are used, only with `test/` as the target inside the same `web-hosting` bucket. Use separate credentials if that is not acceptable.
+
+## Progress
+
+Added PHPUnit coverage for both resolvers:
+- `packages/wp-plugin/ionos-essentials/ionos-essentials/inc/update/tests/phpunit/UpdateTest.php`
+- `packages/wp-mu-plugin/ionos-core/ionos-core/update/tests/phpunit/UpdateTest.php`
+
+Both stub `pre_http_request` per-URL and cover: S3 valid JSON (GitHub not queried), S3 non-200, S3 malformed JSON, both sources failing (returns `null`); the ionos-core suite additionally covers a JSON body missing `version`/`package`. All 9 tests pass via `pnpm test:php --php-opts "--filter UpdateTest"`, lint is clean.
+
+Remaining: the fork end-to-end run needs a human with push access to a fork and AWS credentials for `web-hosting` (per the runbook in this bean) - that step was not executed. Leaving the bean in-progress until that run happens.
