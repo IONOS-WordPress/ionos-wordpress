@@ -285,7 +285,7 @@ function install_plugin_from_url($plugin_url)
     '/set',
     [
       'methods'             => 'POST',
-      'permission_callback' => fn () => 0 !== \get_current_user_id(),
+      'permission_callback' => fn () => \current_user_can('manage_options'),
       'callback'            => function ($request) {
         $params = $request->get_json_params();
         $option = $params['option'] ?? '';
