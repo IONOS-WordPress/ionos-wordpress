@@ -89,6 +89,7 @@ Also found and fixed: the fork's `S3_FOLDER` GitHub Actions repository variable 
 **Result**: `pre-release` created `@ionos-wordpress/essentials@1.7.1` and `@ionos-wordpress/ionos-core@0.5.1` pre-releases; `release (manual workflow)` promoted both into `@ionos-wordpress/latest` and mirrored to S3.
 
 Verified directly (no assumptions):
+
 - All 8 expected S3 objects (versioned zip, `-latest-` zip, legacy `.latest.zip` alias, `-info.json`, per package) return `200` anonymously.
 - Zip sizes match byte-for-byte between the GitHub release asset and its S3 twin (essentials: 854771 bytes both; core: 64586 bytes both) - no PHP variant overwrote another.
 - Each `info.json`'s `package` field points at its own source: S3 info.json → S3 zip URL, GitHub release's info.json → GitHub download URL. Sizes differ only by the URL length (essentials: 736 vs 690 bytes; core: 442 vs 396 bytes), confirming the two flavours are otherwise identical.

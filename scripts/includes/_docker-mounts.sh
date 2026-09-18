@@ -6,17 +6,23 @@
 #
 # TEST_PRODUCTION=true mounts a package's transpiled dist/ output instead of its
 # source, but rector's build step doesn't carry phpunit/ test directories into
-# dist/ (see scripts/build.sh's --exclude=tests/) - bind-mount each source
-# phpunit/ dir directly at its equivalent path under the dist mount so
-# `pnpm test:php` still finds and runs them when testing against the
+# dist/ (see scripts/build.sh's --exclude=tests/) - mirror each source phpunit/ dir
+# into a disposable copy and bind-mount that at its equivalent path under the dist
+# mount, so `pnpm test:php` still finds and runs them when testing against the
 # production build (mirrors the pre-wordpress-alpine .wp-env.override.json-era rsync
-# step in start.sh, but as a bind mount rather than a filesystem copy - dist/
-# is also bind-mounted wholesale in source mode, so writing actual test files
-# into it would leak stale copies into non-TEST_PRODUCTION runs. Docker still
-# creates the (empty) mount-point directory tree on the host to hang each
-# nested mount off of, since the dist mount it nests under is itself a host
-# bind mount - harmless clutter under the gitignored dist/ tree, wiped by the
-# next build.
+# step in start.sh).
+#
+# a copy, not a direct bind-mount of the source: the enclosing dist mount is exactly
+# the directory a real plugin-upgrade (WordPress core's Plugin_Upgrader, or our own
+# MU_Plugin_Upgrader) deletes and recreates when installing an update. Bind-mounting
+# the source phpunit/ dir directly here would let that recursive delete propagate
+# straight through the mount and destroy the real, tracked test files on the host -
+# this happened in practice (see bean 0la1). The mirror lives under the package's own
+# gitignored dist/ tree instead, so such a delete only destroys a disposable copy
+# that gets regenerated on the next 'pnpm start'/'pnpm test' - and, being a plain
+# directory rather than a nested mount, docker-entrypoint.sh's 'chown -R php:php
+# /htdocs' can still chown it (an ':ro' bind mount of the source would have avoided
+# the delete too, but breaks that chown under 'set -eu' and aborts container startup).
 #
 # appends to the global array VOLUME_ARGS (must be declared by the caller)
 #
@@ -30,7 +36,13 @@ function ionos.wordpress.mount_phpunit_dirs() {
 
   for phpunit_dir in $(find "$source_dir" -type d -name phpunit 2>/dev/null || echo ''); do
     local relative_dir="${phpunit_dir#"$source_dir"/}"
-    VOLUME_ARGS+=(--volume "$(pwd)/${phpunit_dir}:${container_dir}/${relative_dir}")
+    local mirror_dir
+    mirror_dir="$(dirname "$source_dir")/dist/.phpunit-mirror/${relative_dir}"
+
+    mkdir -p "$mirror_dir"
+    rsync -a --delete "$(pwd)/${phpunit_dir}/" "$(pwd)/${mirror_dir}/"
+
+    VOLUME_ARGS+=(--volume "$(pwd)/${mirror_dir}:${container_dir}/${relative_dir}")
   done
 }
 export -f ionos.wordpress.mount_phpunit_dirs

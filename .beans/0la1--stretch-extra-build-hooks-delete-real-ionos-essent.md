@@ -1,14 +1,16 @@
 ---
 # 0la1
-title: stretch-extra build hooks delete real ionos-essentials test files
-status: todo
+title: TEST_PRODUCTION phpunit-dir bind mounts let a real plugin update delete tracked test files
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-18T10:30:52Z
-updated_at: 2026-09-18T10:31:15Z
+updated_at: 2026-09-18T10:48:33Z
 ---
 
-Toggling the ionos-essentials entry in stretch-extra-config.php and rebuilding deletes tracked test files from the real plugin source tree, not just the bundled copy.
+**Root cause found and fixed — this was misdiagnosed initially, see below.**
+
+The real cause has nothing to do with `stretch-extra.sh`'s build hooks. `scripts/includes/_docker-mounts.sh`'s `ionos.wordpress.mount_phpunit_dirs()` (used by `TEST_PRODUCTION=true pnpm start`/`pnpm test`) bind-mounted each package's real, tracked `tests/phpunit` source directory directly at the equivalent path inside the dist-mounted plugin/mu-plugin directory in the container - exactly the directory tree a real plugin-upgrade (WordPress core's `Plugin_Upgrader`, or our own `MU_Plugin_Upgrader`) recursively deletes when installing an update. That recursive delete propagated straight through the bind mount and deleted the real, tracked test files on the host - not a dist copy.
 
 ## Reproduction
 
@@ -22,27 +24,36 @@ Toggling the ionos-essentials entry in stretch-extra-config.php and rebuilding d
    - `packages/wp-plugin/ionos-essentials/ionos-essentials/inc/update/tests/phpunit/UpdateTest.php`
    - `packages/wp-plugin/ionos-essentials/ionos-essentials/inc/wpscan/tests/phpunit/ClassWPScanTest.php`
 
-Reproduced twice in one session (once removing the entry, once restoring it) with the exact same 6 files both times. A same-config rebuild (no toggle) did NOT reproduce it - the deletion seems tied to the config *changing*, not to `pnpm build` in general.
+Reproduced twice in one session this way, but the config toggle turned out to be a red herring - it was coincidental with, not the cause of, an `ionos-essentials` plugin-update attempt (the config toggle exists specifically to get past `stretch-extra`'s unrelated `upgrader_pre_install` block on `ionos-essentials`, in order to test the update - so every occurrence of the toggle in this session was immediately followed by an actual update attempt).
 
-## What does NOT explain it (ruled out)
+## Actual root cause
 
-- `scripts/stretch-extra.sh`'s two cleanup lines only target the bundle copy by path pattern and don't match the real source path:
-  `find . -path "*/stretch-extra/stretch-extra/plugins/*" -name "*Test.php" -delete`
-  (same for `themes/*`) - neither pattern contains any real-source path segment.
-- `ionos.wordpress.stretch-extra.clean()`'s `rm -rf "$dir"` only removes real (non-symlink, per `find -type d` without `-L`) top-level dirs directly under the stretch-extra bundle path (e.g. `packages/wp-mu-plugin/stretch-extra/stretch-extra/plugins/ionos-essentials`), confirmed via `git ls-files`/`.gitignore` that this bundle dir is untracked/regenerated, not a symlink into the real source.
-- `scripts/build.sh`'s rsync into `dist/` for essentials itself is one-directional (source -> dist, with `--exclude=tests/`) and doesn't run in this scenario anyway - the build log showed essentials' own build step was skipped ('already up to date') both times the deletion occurred, so essentials' own build machinery isn't rebuilding/touching itself.
-- The stretch-extra `--install` step's `unzip` extracts the essentials dist zip (which already excludes `tests/`) into the bundle path, not into the real source path.
+`scripts/includes/_docker-mounts.sh`'s `ionos.wordpress.mount_phpunit_dirs()`. `TEST_PRODUCTION=true` mounts a package's `dist/` build output instead of source, but rector's build excludes `tests/` from `dist/` (see `scripts/build.sh`) - so this function bind-mounted each source `tests/phpunit` directory directly at its equivalent path inside the container, so `pnpm test:php` could still find and run them against the production build.
 
-## Open questions for whoever picks this up
+That equivalent path is exactly the plugin/mu-plugin directory tree a real update recursively deletes and recreates - WordPress core's `Plugin_Upgrader` for a `wp-plugin`, or our own `MU_Plugin_Upgrader` (`packages/wp-mu-plugin/ionos-core/ionos-core/update/class-mu-plugin-upgrader.php`) for a `wp-mu-plugin`. That delete walks straight through the nested bind mount and deletes the real, tracked test files on the host, not a disposable dist copy.
 
-- Is there a hard link (not symlink) between the bundle copy and the real source, created by some earlier/different code path (e.g. a one-time manual dev-container setup step), such that unlinking one path's directory entry could look like this? (Hard-linked directories aren't normally possible on Linux/ext4, but individual hard-linked *files* are - worth checking `stat --format='%h'` / inode numbers on affected files before reproducing again.)
-- Is `packages/docker/wordpress-alpine`'s build or any `pnpm -w run stretch-extra` invocation from a different script (`packages/wp-mu-plugin/stretch-extra/scripts/postpack.sh` also calls `--clean`/`--install` again) doing something extra not visible in `scripts/stretch-extra.sh` itself?
-- Reproduce again with `bash -x` tracing enabled on `scripts/stretch-extra.sh` and `packages/wp-mu-plugin/stretch-extra/scripts/postpack.sh` to catch the exact command that touches the real source path.
+Confirmed reproducible directly, no stretch-extra config toggling needed at all: with `TEST_PRODUCTION=true pnpm start` running, `pnpm cli plugin update ionos-essentials` (after clearing the `update_plugins` transient) got as far as its 'Removing the old version of the plugin...' step, which is exactly where it deleted the bind-mounted `tests/phpunit` files - matching `git status` showing the same 6 files deleted, and matching the WP-CLI output ('Could not remove the old plugin' - the _top-level_ plugin directory is itself the dist bind-mount point, which the container cannot rmdir, so only its _contents_, including the nested phpunit bind mounts, actually got deleted).
+
+(`stretch-extra`'s `upgrader_pre_install` block on `ionos-essentials` is real and unrelated - see the 'how this was found' note below - but had to be worked around locally to reach this repro, since it normally prevents any `ionos-essentials` update attempt entirely.)
+
+## Fix
+
+Changed `ionos.wordpress.mount_phpunit_dirs()` to rsync-mirror each source `tests/phpunit` dir into a disposable copy under the package's own gitignored `dist/.phpunit-mirror/` tree, and bind-mount _that_ copy instead of the source directly. A real update's delete now only destroys a copy that gets regenerated on the next `pnpm start`/`pnpm test` - never the tracked source.
+
+Considered and rejected: mounting the source read-only (`:ro`) instead. That also stops the delete from reaching the host, but `packages/docker/wordpress-alpine/docker-entrypoint.sh` does an unconditional `chown -R php:php /htdocs` under `set -eu` on every container start/recreate - which fails (and aborts the whole entrypoint, so the container never comes up) the moment it hits a read-only-mounted file. The mirror-copy approach avoids this entirely, since the mirror is a plain, freshly-chownable directory.
+
+## Verification
+
+With the fix in place, reran the exact repro above (`TEST_PRODUCTION=true pnpm start`, `pnpm cli plugin update ionos-essentials`, same 'Removing the old version...'/'Could not remove the old plugin' failure as before - that generic Plugin_Upgrader limitation on bind-mounted directories is unrelated and unfixed, see caveat below): `git status`/`stat`/`md5sum` on the real source file were all unchanged afterward, while the mirror copy under `dist/.phpunit-mirror/` was emptied instead.
+
+## Remaining caveat (separate, unfixed, lower severity)
+
+`Plugin_Upgrader`'s real-plugin-update flow (for `wp-plugin` packages like `ionos-essentials`) still fails at its final step in `TEST_PRODUCTION` mode with "Could not remove the old plugin" - it cannot `rmdir`/replace the plugin's own top-level directory, since that directory is itself the dist bind-mount point (a structural Docker limitation, not fixed here). Update _detection_ and _download from the resolved URL_ both work correctly; only the final directory-swap fails. This never affected `ionos-core`'s self-update mechanism, since `MU_Plugin_Upgrader::upgrade()` copies files into the existing mu-plugins directory rather than replacing it wholesale - that path (already covered by the mirror fix above too) completes successfully end-to-end.
 
 ## Impact
 
-Silently deletes real, tracked PHPUnit test files from a developer's working tree with no warning - easy to miss and could get committed as an unintended deletion (a git commit after this would silently drop the test files from what gets committed, unless the developer notices `git status` first). Both occurrences in this session were caught and reverted via `git checkout --` before anything was committed.
+Silently deleted real, tracked PHPUnit test files from a developer's working tree with no warning whenever a real plugin/mu-plugin self-update ran against a `TEST_PRODUCTION=true` stack - easy to miss and could get committed as an unintended deletion. Caught and reverted via `git checkout --` before anything was committed, both times it happened in this session.
 
 ## How this was found
 
-While using an isolated `TEST_PRODUCTION=true` WordPress stack to verify the S3-first plugin update mechanism (see epic ig4m), `ionos-essentials`' update was blocked by `stretch-extra`'s `upgrader_pre_install` filter (unrelated pre-existing feature, hardcodes ionos-essentials as 'already provisioned by your WordPress Hosting'). Toggling it off in `stretch-extra-config.php` to test past the block is what triggered this.
+While using an isolated `TEST_PRODUCTION=true` WordPress stack to verify the S3-first plugin update mechanism (see epic ig4m), `ionos-essentials`'s update was blocked by `stretch-extra`'s `upgrader_pre_install` filter (a separate, unrelated, pre-existing feature that hardcodes `ionos-essentials` as "already provisioned by your WordPress Hosting" and rejects any install/update attempt for it). Toggling that config entry off locally to get past the block, in order to actually test the S3 update flow, is what led to triggering (and then finding) this issue.
