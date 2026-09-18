@@ -1,11 +1,11 @@
 ---
 # ig4m
 title: Serve plugin updates from S3 instead of GitHub releases
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-09-16T12:39:15Z
-updated_at: 2026-09-17T08:16:12Z
+updated_at: 2026-09-18T09:57:30Z
 ---
 
 Move the plugin self-update mechanism away from GitHub releases towards the IONOS S3 object storage, keeping GitHub as a fallback during a transition period.
@@ -51,3 +51,7 @@ Build time and release time must agree on `S3_FOLDER`, because the folder is bak
 To turn that from a convention into a guarantee, `scripts/release.sh` (and `scripts/build.sh` for the header injection) abort unless repository and folder match: the upstream repository may only publish to `ionos-group`, and a fork may publish to anything except `ionos-group`. A mismatch fails loudly instead of either shipping test artifacts to real users or letting a fork overwrite production assets.
 
 Note that the `.env` entry must follow the repo's established override pattern (`S3_FOLDER="${S3_FOLDER:-ionos-group}"`, as used for `IMAGE_REGISTRY`), so an exported value wins and an empty one falls back to the production default.
+
+## Summary of Changes
+
+All child work is done. Confirmed end-to-end via a real fork run (see `4uj1`): S3-first/GitHub-fallback resolution shipped for both released packages (`ionos-essentials`, `ionos-core`), the `__S3_FOLDER__` placeholder injection agrees between `build.sh` and `release.sh`, S3 objects are publicly readable and byte-identical to their GitHub twins, each `info.json` flavour points at its own source, and nothing was written to `ionos-group/` from the fork. `ionos-wpdev-caddy` stayed out of scope (private) per the design decision above; its update-checker child bean (`yvw0`) was scrapped accordingly.
