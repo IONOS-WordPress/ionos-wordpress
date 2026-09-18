@@ -21,6 +21,7 @@ parent: ig4m
 ## Summary of Changes
 
 Extended `docs/7-release.md`:
+
 - New section 'the S3 release target' documenting the bucket/endpoint, the `S3_FOLDER` variable and its production/fork guard, the full per-zip file listing, and the two `info.json` flavours (GitHub vs S3 `package` URL).
 - New subsection 'S3-first, GitHub-fallback resolution (transition period)' documenting the fallback conditions and the removal criterion (no installation left carrying the pre-migration state).
 - New subsection 'Test-phase releases in a fork' consolidating the runbook (repository variable/secrets, push+trigger steps, verification via public HTTPS).

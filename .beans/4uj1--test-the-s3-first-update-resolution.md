@@ -72,6 +72,7 @@ curl -s  https://s3-de-central.profitbricks.com/web-hosting/test/ionos-essential
 ## Progress
 
 Added PHPUnit coverage for both resolvers:
+
 - `packages/wp-plugin/ionos-essentials/ionos-essentials/inc/update/tests/phpunit/UpdateTest.php`
 - `packages/wp-mu-plugin/ionos-core/ionos-core/update/tests/phpunit/UpdateTest.php`
 

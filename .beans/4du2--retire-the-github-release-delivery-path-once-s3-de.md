@@ -7,7 +7,7 @@ priority: normal
 created_at: 2026-09-16T12:56:05Z
 updated_at: 2026-09-17T12:04:09Z
 blocked_by:
-    - ig4m
+  - ig4m
 ---
 
 Follow-up to the epic "Serve plugin updates from S3 instead of GitHub releases". Once S3 delivery has been proven in production, the GitHub half of the dual delivery path becomes dead weight and should be removed, so there is only one way updates reach an installation.
