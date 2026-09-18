@@ -91,6 +91,28 @@ class UpdateTest extends \WP_UnitTestCase {
     $this->assertSame(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip'], $info);
   }
 
+  public function test_s3_missing_fields_falls_back_to_github(): void {
+    $this->respond_by_url([
+      self::S3_URL         => self::json_response(['version' => '9.9.9']),
+      LEGACY_INFO_JSON_URL => self::json_response(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip']),
+    ]);
+
+    $info = fetch_update_info(self::S3_URL);
+
+    $this->assertSame(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip'], $info);
+  }
+
+  public function test_s3_empty_package_falls_back_to_github(): void {
+    $this->respond_by_url([
+      self::S3_URL         => self::json_response(['version' => '9.9.9', 'package' => '']),
+      LEGACY_INFO_JSON_URL => self::json_response(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip']),
+    ]);
+
+    $info = fetch_update_info(self::S3_URL);
+
+    $this->assertSame(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip'], $info);
+  }
+
   public function test_both_sources_failing_returns_null(): void {
     $this->respond_by_url([
       self::S3_URL          => new \WP_Error('http_request_failed', 'Connection timeout'),

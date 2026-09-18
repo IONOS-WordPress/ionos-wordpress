@@ -185,9 +185,20 @@ function ionos.wordpress.is_workspace_package_up_to_date() {
   local path="$1"
   local package_path="./packages/$path"
   local build_info="$package_path/build-info"
+  local type="${path%%/*}"
 
   [[ "$FORCE" == 'no' ]] || return 1
   [[ -f "$build_info" ]] || return 1
+
+  # wp-plugin/wp-mu-plugin builds bake $S3_FOLDER into the staged sources (see the
+  # '__S3_FOLDER__' substitution in ionos.wordpress.build_workspace_package_wp_plugin) - a
+  # changed folder with no other source change would otherwise be missed by the mtime checks
+  # below and silently reuse a build whose header still points at the previous folder
+  if [[ "$type" == 'wp-plugin' || "$type" == 'wp-mu-plugin' ]]; then
+    local s3_folder_marker="$package_path/build-info.s3-folder"
+    [[ -f "$s3_folder_marker" ]] || return 1
+    [[ "$(cat "$s3_folder_marker")" == "$S3_FOLDER" ]] || return 1
+  fi
 
   # a source file (excluding generated artifacts) changed since the last build
   if [[ -n "$(
@@ -368,7 +379,7 @@ function ionos.wordpress.build_workspace_package_wp_plugin() {
 
   local PLUGIN_NAME=$(basename $path)
 
-  rm -rf $path/{dist,build-info,webpack.config.js}
+  rm -rf $path/{dist,build-info,build-info.s3-folder,webpack.config.js}
 
   PACKAGE_JSON="$path/package.json"
   PACKAGE_NAME=$(jq -r '.name' $PACKAGE_JSON)
@@ -573,6 +584,12 @@ EOF
     while IFS= read -r -d '' FILE; do
       sed -i "s|__S3_FOLDER__|${S3_FOLDER}|g" "$FILE"
     done < <(grep -rlZ --binary-files=without-match '__S3_FOLDER__' "$path/dist/$plugin_name-$PACKAGE_VERSION" || true)
+
+    # recorded so a later 'S3_FOLDER' change with no other source change is still noticed by
+    # ionos.wordpress.is_workspace_package_up_to_date() - otherwise the up-to-date check only
+    # looks at file mtimes and would keep reusing a build whose header still points at the
+    # previous folder
+    echo -n "$S3_FOLDER" > "$path/build-info.s3-folder"
   fi
 
   if [[ "${USE[@]}" =~ all|wp-plugin:rector ]]; then

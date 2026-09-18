@@ -54,7 +54,7 @@ function fetch_update_info(): array|null
       continue;
     }
 
-    if (! isset($info['version'], $info['package'])) {
+    if (empty($info['version']) || empty($info['package'])) {
       \error_log(sprintf('ionos-core: update information from "%s" is missing version or package', $url));
       continue;
     }

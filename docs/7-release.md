@@ -2,7 +2,7 @@
 
 You can create releases remotely (the default) or locally.
 
-If you develop the release script, fork the repository first (see [Forking](./5%20-%20forking.md)) and work on the release script there. This is easy.
+If you develop the release script, fork the repository first (see [Forking](./6-forking.md)) and work on the release script there. This is easy.
 
 ## summary
 
@@ -236,7 +236,7 @@ This cannot be exercised in the main repository:
   `@ionos-wordpress/latest`. A test-phase release in the main repository would ship plugins
   pointing at the `test` folder to real users.
 
-Instead, run it in a fork (see [Forking](./5%20-%20forking.md)):
+Instead, run it in a fork (see [Forking](./6-forking.md)):
 
 1. Set the `S3_FOLDER` repository variable to `test` in the fork's GitHub Actions settings
    (_Settings > Secrets and variables > Actions > Variables_) - both `pre-release.yml` and

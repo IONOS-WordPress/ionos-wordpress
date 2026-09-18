@@ -71,12 +71,14 @@ fi
 # artifacts that get attached to the github release, and they carry the s3 folder baked into their
 # 'Update URI' header - so publishing with a mismatched folder either ships test artifacts to real
 # users or lets a fork overwrite production assets. both directions abort instead
-if [[ "$GITHUB_OWNER_REPO" == "$UPSTREAM_OWNER_REPO" && "$S3_FOLDER" != "$S3_PRODUCTION_FOLDER" ]]; then
+# GitHub owner/repo names are case-insensitive - a clone URL cased differently from
+# $UPSTREAM_OWNER_REPO (e.g. an all-lowercase remote) must still be recognized as upstream
+if [[ "${GITHUB_OWNER_REPO,,}" == "${UPSTREAM_OWNER_REPO,,}" && "$S3_FOLDER" != "$S3_PRODUCTION_FOLDER" ]]; then
   ionos.wordpress.log_error "refusing to release from '$UPSTREAM_OWNER_REPO' with S3_FOLDER='$S3_FOLDER' - the production release must publish to '$S3_PRODUCTION_FOLDER'. Unset the override (see .env.local) or run this from a fork."
   exit 1
 fi
 
-if [[ "$GITHUB_OWNER_REPO" != "$UPSTREAM_OWNER_REPO" && "$S3_FOLDER" == "$S3_PRODUCTION_FOLDER" ]]; then
+if [[ "${GITHUB_OWNER_REPO,,}" != "${UPSTREAM_OWNER_REPO,,}" && "$S3_FOLDER" == "$S3_PRODUCTION_FOLDER" ]]; then
   ionos.wordpress.log_error "refusing to release from the fork '$GITHUB_OWNER_REPO' into the production folder '$S3_PRODUCTION_FOLDER'. Set S3_FOLDER to a test folder in the fork's .env so its CI sees it too (see docs/7-release.md)."
   exit 1
 fi
@@ -202,10 +204,14 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
     # same bytes, so the downloaded file is uploaded three times instead of downloaded three times
     S3_LEGACY_FILENAME=$(echo $TARGET_ASSET_FILENAME | sed -E 's/-latest-.+$/.latest.zip/')
 
-    ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$ASSET" ||:
-    ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$TARGET_ASSET_FILENAME" ||:
+    # tracked so the s3-flavoured info.json below is skipped if any package upload failed -
+    # otherwise it would advertise a 'package' url for an object that was never actually
+    # written to s3
+    S3_ASSET_UPLOAD_OK=1
+    ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$ASSET" || S3_ASSET_UPLOAD_OK=0
+    ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$TARGET_ASSET_FILENAME" || S3_ASSET_UPLOAD_OK=0
     if [[ "$S3_LEGACY_FILENAME" != "$TARGET_ASSET_FILENAME" ]]; then
-      ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$S3_LEGACY_FILENAME" ||:
+      ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$S3_LEGACY_FILENAME" || S3_ASSET_UPLOAD_OK=0
     fi
 
     rm -f $TARGET_ASSET_FILENAME
@@ -251,9 +257,15 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
         echo "Error: $error_message"
       fi
 
-      jq -n "${INFO_JSON_ARGS[@]}" --arg package "$S3_PACKAGE_URL" "$INFO_JSON_FILTER" > "$INFO_JSON_FILENAME"
+      if [[ "$S3_ASSET_UPLOAD_OK" == "1" ]]; then
+        jq -n "${INFO_JSON_ARGS[@]}" --arg package "$S3_PACKAGE_URL" "$INFO_JSON_FILTER" > "$INFO_JSON_FILENAME"
 
-      ionos.wordpress.s3_upload "$INFO_JSON_FILENAME" "$INFO_JSON_FILENAME" ||:
+        ionos.wordpress.s3_upload "$INFO_JSON_FILENAME" "$INFO_JSON_FILENAME" ||:
+      else
+        error_message="skip uploading the s3 flavoured $INFO_JSON_FILENAME - one or more of its package uploads to s3 failed, so its 'package' url would point at an object that was never written"
+        [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+        echo "Error: $error_message"
+      fi
 
       rm -f $INFO_JSON_FILENAME
     }

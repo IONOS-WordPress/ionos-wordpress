@@ -72,6 +72,11 @@ function fetch_update_info(string $update_uri): array|null
       continue;
     }
 
+    if (empty($info['version']) || empty($info['package'])) {
+      error_log(sprintf('ionos-essentials: update information from "%s" is missing version or package', $url));
+      continue;
+    }
+
     return $info;
   }
 
