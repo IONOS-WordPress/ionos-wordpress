@@ -81,7 +81,8 @@ pnpm install
 
 # build & test repository
 # (build will automatically sync the updated version numbers into the plugin / theme entry files)
-pnpm test
+pnpm build
+TEST_PRODUCTION=true pnpm run test
 
 # generate sbom file
 docker run --rm -v $(pwd):/project anchore/syft \

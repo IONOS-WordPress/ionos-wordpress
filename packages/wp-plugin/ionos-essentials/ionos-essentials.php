@@ -6,7 +6,7 @@
  * Requires at least: 6.6
  * Requires Plugins:
  * Requires PHP:      8.3
- * Version:           1.7.0
+ * Version:           1.7.1
  * Update URI:        https://s3-de-central.profitbricks.com/web-hosting/__S3_FOLDER__/ionos-essentials-info.json
  * Plugin URI:        https://github.com/IONOS-WordPress/ionos-wordpress/tree/main/packages/wp-plugin/ionos-essentials
  * License:           GPL-2.0-or-later

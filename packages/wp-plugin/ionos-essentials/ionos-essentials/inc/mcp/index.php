@@ -21,7 +21,8 @@ const APPLICATION_NAME = 'Essentials MCP';
     '/action',
     [
       'methods'             => 'POST',
-      'permission_callback' => fn () => 0 !== \get_current_user_id(),
+      // the callback installs and activates a plugin, so gate it on the capability that implies
+      'permission_callback' => fn () => \current_user_can('install_plugins'),
       'callback'            => function ($request) {
 
         if (! wp_verify_nonce($request->get_header('X-WP-Nonce'), 'wp_rest')) {
