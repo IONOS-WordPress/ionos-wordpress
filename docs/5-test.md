@@ -188,6 +188,15 @@ pnpm cli plugin list --update=available
   `Plugin_Upgrader`: `pnpm cli plugin update <slug>`, or click **Update now** in
   `http://localhost:8899/wp-admin` (admin / the `WP_PASSWORD` from `.env`).
 
+  Prerequisite: in the default stack, `stretch-extra` provisions `ionos-essentials` as a custom
+  plugin (see the `plugins` entry in
+  `packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/stretch-extra-config.php`), and its
+  `upgrader_pre_install` filter
+  (`packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/secondary-plugin-dir.php:272-288`)
+  rejects any install/update attempt for a provisioned slug before `Plugin_Upgrader` downloads
+  anything. Remove (or comment out) that `ionos-essentials` entry and rebuild before running this
+  check, otherwise it fails at that filter instead of reaching the limitation below.
+
   Known limitation: `Plugin_Upgrader`'s final step replaces the plugin's own top-level directory,
   which in `TEST_PRODUCTION` mode is itself a bind-mount point - Docker will not let the container
   remove/replace that, so the update always fails at "Removing the old version of the plugin..."

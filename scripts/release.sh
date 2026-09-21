@@ -193,6 +193,20 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
     rm -f $TARGET_ASSET_FILENAME
     echo "upload release '$PRE_RELEASE' asset '$ASSET' as '$TARGET_ASSET_FILENAME' to release '$LATEST_RELEASE_TAG'"
     gh release download $PRE_RELEASE --pattern $ASSET -O $TARGET_ASSET_FILENAME
+
+    # the guard above only compares the current repo/S3_FOLDER pair, it can't see what folder was
+    # actually baked into this asset's 'Update URI' header (see the '__S3_FOLDER__' substitution
+    # in build.sh) when it was built by pre-release.sh, possibly in a different environment/run.
+    # promoting it under a mismatched $S3_FOLDER would publish a zip whose own header points
+    # somewhere else, leaving installations resolving from that s3 folder unable to find updates
+    BAKED_S3_FOLDER=$(unzip -p "$TARGET_ASSET_FILENAME" 2>/dev/null | grep -oE "$S3_BUCKET/[A-Za-z0-9_.-]+/" | head -1 | cut -d/ -f2)
+    if [[ -n "$BAKED_S3_FOLDER" && "$BAKED_S3_FOLDER" != "$S3_FOLDER" ]]; then
+      error_message="refusing to promote asset '$ASSET' of pre-release '$PRE_RELEASE' - it was built with S3_FOLDER='$BAKED_S3_FOLDER' baked into its 'Update URI' header, but this run is promoting to S3_FOLDER='$S3_FOLDER'. Re-run pre-release.sh with S3_FOLDER='$S3_FOLDER' before promoting, or promote from an environment whose S3_FOLDER matches the artifact."
+      [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+      ionos.wordpress.log_error "$error_message"
+      exit 1
+    fi
+
     if ! gh release upload $LATEST_RELEASE_TAG $TARGET_ASSET_FILENAME --clobber; then
       error_message="Failed to upload asset $TARGET_ASSET_FILENAME"
       [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
@@ -260,7 +274,16 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
       if [[ "$S3_ASSET_UPLOAD_OK" == "1" ]]; then
         jq -n "${INFO_JSON_ARGS[@]}" --arg package "$S3_PACKAGE_URL" "$INFO_JSON_FILTER" > "$INFO_JSON_FILENAME"
 
-        ionos.wordpress.s3_upload "$INFO_JSON_FILENAME" "$INFO_JSON_FILENAME" ||:
+        # a failed upload here would leave the previous $INFO_JSON_FILENAME object in s3 intact -
+        # s3-first clients would keep seeing that stale-but-valid descriptor and never learn a new
+        # version exists (they never reach the github fallback since s3 answered), so abort the
+        # whole release instead of promoting with it left in place
+        if ! ionos.wordpress.s3_upload "$INFO_JSON_FILENAME" "$INFO_JSON_FILENAME"; then
+          error_message="Failed to upload the s3 flavoured $INFO_JSON_FILENAME - aborting to avoid leaving the previous, stale descriptor in place"
+          [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+          ionos.wordpress.log_error "$error_message"
+          exit 1
+        fi
       else
         error_message="skip uploading the s3 flavoured $INFO_JSON_FILENAME - one or more of its package uploads to s3 failed, so its 'package' url would point at an object that was never written"
         [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"

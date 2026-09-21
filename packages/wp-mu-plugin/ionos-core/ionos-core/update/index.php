@@ -54,7 +54,7 @@ function fetch_update_info(): array|null
       continue;
     }
 
-    if (empty($info['version']) || empty($info['package'])) {
+    if (! \array_all(['version', 'package'], fn (string $field): bool => is_string($info[$field] ?? null) && '' !== $info[$field])) {
       \error_log(sprintf('ionos-core: update information from "%s" is missing version or package', $url));
       continue;
     }

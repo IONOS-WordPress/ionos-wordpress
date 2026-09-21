@@ -64,7 +64,7 @@ function fetch_update_info(string $update_uri): array|null
 
     $info = json_decode($body, true);
 
-    if (! isset($info['version'], $info['package'])) {
+    if (! \array_all(['version', 'package'], fn (string $field): bool => is_string($info[$field] ?? null) && '' !== $info[$field])) {
       \error_log(sprintf('test-mu-plugin: update information from "%s" is not valid or is missing version/package', $url));
       continue;
     }
