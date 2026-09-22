@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-16T12:40:05Z
-updated_at: 2026-09-17T12:12:52Z
+updated_at: 2026-09-22T09:11:36Z
 parent: ig4m
 ---
 
@@ -48,4 +48,4 @@ Rewrote `packages/wp-mu-plugin/ionos-core/ionos-core/update/index.php`:
 - Logs which URL was tried/failed/answered via `error_log()`, matching the essentials message format plus a new success line naming the source that resolved.
 - `MU_Plugin_Upgrader->upgrade($package)` still receives the `package` URL from the resolved info untouched, so an S3-sourced descriptor downloads from S3.
 - No build.sh change needed: the existing `__S3_FOLDER__` substitution in `ionos.wordpress.build_workspace_package_wp_plugin` already runs generically over any staged package (wp-plugin and wp-mu-plugin alike).
-- No PHPUnit tests added, consistent with ionos-essentials' update mechanism which also has none.
+- Added `update/tests/phpunit/UpdateTest.php` PHPUnit coverage for `fetch_update_info()` (source precedence, malformed/incomplete json handling); ionos-essentials' update mechanism gained equivalent coverage too.

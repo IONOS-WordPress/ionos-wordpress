@@ -64,7 +64,23 @@ function fetch_update_info(string $update_uri): array|null
 
     $info = json_decode($body, true);
 
-    if (! \array_all(['version', 'package'], fn (string $field): bool => is_string($info[$field] ?? null) && '' !== $info[$field])) {
+    if (! is_array($info)) {
+      \error_log(sprintf('test-mu-plugin: update information from "%s" is not a json object', $url));
+      continue;
+    }
+
+    // array_all() is PHP 8.4+ only, but this plugin also runs on PHP 7.4/8.3 (see
+    // packages/docker/rector-php/rector-config-php7.4.php) - a plain loop keeps this
+    // check working on every shipped runtime instead of fataling before it can fall back
+    $has_required_fields = true;
+    foreach (['version', 'package'] as $field) {
+      if (! is_string($info[$field] ?? null) || '' === $info[$field]) {
+        $has_required_fields = false;
+        break;
+      }
+    }
+
+    if (! $has_required_fields) {
       \error_log(sprintf('test-mu-plugin: update information from "%s" is not valid or is missing version/package', $url));
       continue;
     }

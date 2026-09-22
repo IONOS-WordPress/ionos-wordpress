@@ -209,7 +209,12 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
     # in build.sh) when it was built by pre-release.sh, possibly in a different environment/run.
     # promoting it under a mismatched $S3_FOLDER would publish a zip whose own header points
     # somewhere else, leaving installations resolving from that s3 folder unable to find updates
-    BAKED_S3_FOLDER=$(unzip -p "$TARGET_ASSET_FILENAME" 2>/dev/null | grep -oE "$S3_BUCKET/[A-Za-z0-9_.-]+/" | head -1 | cut -d/ -f2)
+    #
+    # match this package's own '<plugin>-info.json' url specifically rather than any
+    # 'web-hosting/<folder>/' url in the archive - a package can bundle unrelated s3 urls (e.g.
+    # ionos-core's marketplace/config.php) that would otherwise be matched first. '|| true' keeps
+    # a zip with no match from aborting the script under 'set -eo pipefail'
+    BAKED_S3_FOLDER=$(unzip -p "$TARGET_ASSET_FILENAME" 2>/dev/null | grep -oE "$S3_BUCKET/[A-Za-z0-9_.-]+/${PLUGIN}-info\.json" | head -1 | cut -d/ -f2 || true)
     if [[ -n "$BAKED_S3_FOLDER" && "$BAKED_S3_FOLDER" != "$S3_FOLDER" ]]; then
       error_message="refusing to promote asset '$ASSET' of pre-release '$PRE_RELEASE' - it was built with S3_FOLDER='$BAKED_S3_FOLDER' baked into its 'Update URI' header, but this run is promoting to S3_FOLDER='$S3_FOLDER'. Re-run pre-release.sh with S3_FOLDER='$S3_FOLDER' before promoting, or promote from an environment whose S3_FOLDER matches the artifact."
       [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
@@ -295,9 +300,15 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
           exit 1
         fi
       else
-        error_message="skip uploading the s3 flavoured $INFO_JSON_FILENAME - one or more of its package uploads to s3 failed, so its 'package' url would point at an object that was never written"
+        # skipping the s3 flavoured descriptor here would leave the previous $INFO_JSON_FILENAME
+        # object in s3 intact and still valid, so s3-first clients would keep seeing it and never
+        # reach the github fallback - and the pre-release flag removal below would then make this
+        # release unretriable. abort instead, matching the upload-failure case above, so the
+        # pre-release flag stays set and a re-run can retry the mirror
+        error_message="aborting - one or more package uploads to s3 for asset '$ASSET' failed, so the s3 flavoured $INFO_JSON_FILENAME would either be skipped (leaving a stale descriptor in place) or point at an object that was never written"
         [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
-        echo "Error: $error_message"
+        ionos.wordpress.log_error "$error_message"
+        exit 1
       fi
 
       rm -f $INFO_JSON_FILENAME
