@@ -578,6 +578,15 @@ EOF
       $path/ \
       $path/dist/$plugin_name-$PACKAGE_VERSION
 
+    # $S3_FOLDER is baked verbatim into the sed replacement below and, later, into an S3 upload
+    # path (see scripts/release.sh) - restrict it to the same [A-Za-z0-9_.-]+ alphabet the
+    # release-side baked-folder parser already assumes, so a folder containing '&', whitespace, or
+    # other sed/URL metacharacters can't produce a malformed 'Update URI' or S3 path
+    if [[ ! "$S3_FOLDER" =~ ^[A-Za-z0-9_.-]+$ ]]; then
+      ionos.wordpress.log_error "S3_FOLDER='$S3_FOLDER' contains characters outside the supported [A-Za-z0-9_.-]+ alphabet"
+      exit 1
+    fi
+
     # bake the s3 folder the release publishes to into the staged sources. plugin headers and
     # update checkers carry a '__S3_FOLDER__' placeholder, so a fork building against a test folder
     # ships plugins looking there for updates instead of at the production folder (see .env)

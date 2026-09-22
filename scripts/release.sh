@@ -67,6 +67,16 @@ if [[ -z "${S3_FOLDER}" ]]; then
   exit 1
 fi
 
+# $S3_FOLDER is interpolated into an unquoted sed replacement and an unquoted heredoc passed to
+# the aws-cli docker container (see ionos.wordpress.s3_upload below), and the baked-folder parser
+# above already assumes [A-Za-z0-9_.-]+ - restrict it to that same alphabet so a folder containing
+# '&', shell metacharacters, whitespace, or embedded CR/LF can't produce a mismatched URL or
+# execute unintended commands in the container
+if [[ ! "$S3_FOLDER" =~ ^[A-Za-z0-9_.-]+$ ]]; then
+  ionos.wordpress.log_error "S3_FOLDER='$S3_FOLDER' contains characters outside the supported [A-Za-z0-9_.-]+ alphabet."
+  exit 1
+fi
+
 # tie the s3 folder to the repository the release is cut from. the released zips are the very same
 # artifacts that get attached to the github release, and they carry the s3 folder baked into their
 # 'Update URI' header - so publishing with a mismatched folder either ships test artifacts to real

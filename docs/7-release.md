@@ -213,8 +213,9 @@ updates from S3 instead of from GitHub releases.
 ## S3-first, GitHub-fallback resolution (transition period)
 
 Released plugins query S3 first and fall back to GitHub only when S3 is unreachable, answers with a
-non-200 status, or returns a body that is not valid JSON. A valid S3 `info.json` always wins - there
-is no version comparison between the two sources.
+non-200 status, returns an empty body or a body that is not valid JSON, or returns JSON missing a
+non-empty `version` or `package` field. A valid S3 `info.json` always wins - there is no version
+comparison between the two sources.
 
 The GitHub URL is not going away yet: an installation that has not received an update since the
 switch to S3 still carries the pre-migration state (the old `Update URI` header value for
