@@ -95,16 +95,24 @@ fi
 
 readonly S3_BASE_URL="$S3_ENDPOINT/$S3_BUCKET/$S3_FOLDER"
 
-# copy $1 into the release s3 folder as object $2. a missing aws secret degrades the release
-# (github assets are still promoted) instead of aborting it, matching the previous behavior
+# preflight the s3 credentials once, before any github mutation below. a deliberately unconfigured
+# mirror (no AWS secrets at all) degrades the run to github-only, same as before; a genuine upload
+# failure further down, with credentials present, still aborts - see the S3_MIRRORING_ENABLED checks
+# in the promotion loop. without this preflight, a missing secret and a real upload failure were
+# indistinguishable to that loop, so a fork/local run with no AWS secrets configured would abort
+# midway through promotion instead of degrading gracefully
+if [[ -n "${AWS_ACCESS_KEY_ID}" && -n "${AWS_SECRET_ACCESS_KEY}" ]]; then
+  readonly S3_MIRRORING_ENABLED=1
+else
+  readonly S3_MIRRORING_ENABLED=0
+  ionos.wordpress.log_warn "AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY are not set - skipping s3 mirroring for this run, only github assets will be published."
+fi
+
+# copy $1 into the release s3 folder as object $2. only called when $S3_MIRRORING_ENABLED=1, so a
+# failure here is a genuine upload problem, not a missing/unconfigured secret
 function ionos.wordpress.s3_upload() {
   local FILE="$1"
   local OBJECT_NAME="$2"
-
-  if [[ -z "${AWS_ACCESS_KEY_ID}" ]] || [[ -z "${AWS_SECRET_ACCESS_KEY}" ]]; then
-    ionos.wordpress.log_error "skip s3 upload of '$OBJECT_NAME' - AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are required"
-    return 1
-  fi
 
   echo "upload '$FILE' to s3 as '$S3_FOLDER/$OBJECT_NAME'"
 
@@ -235,12 +243,15 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
 
     # tracked so the s3-flavoured info.json below is skipped if any package upload failed -
     # otherwise it would advertise a 'package' url for an object that was never actually
-    # written to s3
+    # written to s3. left at 1 when mirroring is disabled - that case is distinguished below via
+    # $S3_MIRRORING_ENABLED so it degrades gracefully instead of being treated as a failed upload
     S3_ASSET_UPLOAD_OK=1
-    ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$ASSET" || S3_ASSET_UPLOAD_OK=0
-    ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$TARGET_ASSET_FILENAME" || S3_ASSET_UPLOAD_OK=0
-    if [[ "$S3_LEGACY_FILENAME" != "$TARGET_ASSET_FILENAME" ]]; then
-      ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$S3_LEGACY_FILENAME" || S3_ASSET_UPLOAD_OK=0
+    if [[ "$S3_MIRRORING_ENABLED" == "1" ]]; then
+      ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$ASSET" || S3_ASSET_UPLOAD_OK=0
+      ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$TARGET_ASSET_FILENAME" || S3_ASSET_UPLOAD_OK=0
+      if [[ "$S3_LEGACY_FILENAME" != "$TARGET_ASSET_FILENAME" ]]; then
+        ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$S3_LEGACY_FILENAME" || S3_ASSET_UPLOAD_OK=0
+      fi
     fi
 
     rm -f $TARGET_ASSET_FILENAME
@@ -280,13 +291,23 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
 
       jq -n "${INFO_JSON_ARGS[@]}" --arg package "$GITHUB_PACKAGE_URL" "$INFO_JSON_FILTER" > "$INFO_JSON_FILENAME"
 
+      # a failed upload here would leave installations still on the github 'Update URI' with a
+      # stale or missing descriptor, unable to ever reach the s3-header version needed to
+      # self-heal - since github is the transition-period fallback, abort instead of promoting
+      # (and clearing the pre-release flag) with it left in that state
       if ! gh release upload $LATEST_RELEASE_TAG $INFO_JSON_FILENAME --clobber; then
-        error_message="Failed to upload asset $INFO_JSON_FILENAME"
+        error_message="Failed to upload the github flavoured $INFO_JSON_FILENAME - aborting to avoid leaving github-sourced installations on a stale or missing descriptor"
         [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
-        echo "Error: $error_message"
+        ionos.wordpress.log_error "$error_message"
+        exit 1
       fi
 
-      if [[ "$S3_ASSET_UPLOAD_OK" == "1" ]]; then
+      if [[ "$S3_MIRRORING_ENABLED" == "0" ]]; then
+        # mirroring is deliberately disabled for this run (no AWS secrets configured, see the
+        # preflight above) - skip the s3 flavoured descriptor entirely instead of treating it as
+        # a failure, matching the previous "github assets still promoted" behavior
+        ionos.wordpress.log_info "skipping the s3 flavoured $INFO_JSON_FILENAME - s3 mirroring is disabled for this run"
+      elif [[ "$S3_ASSET_UPLOAD_OK" == "1" ]]; then
         jq -n "${INFO_JSON_ARGS[@]}" --arg package "$S3_PACKAGE_URL" "$INFO_JSON_FILTER" > "$INFO_JSON_FILENAME"
 
         # a failed upload here would leave the previous $INFO_JSON_FILENAME object in s3 intact -
@@ -300,11 +321,12 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
           exit 1
         fi
       else
-        # skipping the s3 flavoured descriptor here would leave the previous $INFO_JSON_FILENAME
-        # object in s3 intact and still valid, so s3-first clients would keep seeing it and never
-        # reach the github fallback - and the pre-release flag removal below would then make this
-        # release unretriable. abort instead, matching the upload-failure case above, so the
-        # pre-release flag stays set and a re-run can retry the mirror
+        # mirroring is enabled (AWS secrets are configured) but one or more package uploads still
+        # failed - skipping the s3 flavoured descriptor here would leave the previous
+        # $INFO_JSON_FILENAME object in s3 intact and still valid, so s3-first clients would keep
+        # seeing it and never reach the github fallback - and the pre-release flag removal below
+        # would then make this release unretriable. abort instead, matching the upload-failure
+        # case above, so the pre-release flag stays set and a re-run can retry the mirror
         error_message="aborting - one or more package uploads to s3 for asset '$ASSET' failed, so the s3 flavoured $INFO_JSON_FILENAME would either be skipped (leaving a stale descriptor in place) or point at an object that was never written"
         [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
         ionos.wordpress.log_error "$error_message"
