@@ -59,6 +59,11 @@
         "hostname": {
           "type": "string",
           "description": "Server hostname"
+        },
+        "duration": {
+          "type": "number",
+          "description": "Duration in seconds for collecting telemetry data",
+          "minimum": 0
         }
       },
       "required": ["locale", "blog_public", "market", "tenant", "core_version", "php_version", "instance_created"]
@@ -204,6 +209,18 @@
         "home": {
           "type": "string",
           "description": "WordPress home URL"
+        },
+        "object_cache": {
+          "type": "string",
+          "description": "Whether external object cache is enabled"
+        },
+        "next_cron_update_plugins": {
+          "type": ["integer", "null"],
+          "description": "UTC Unix timestamp of the next scheduled plugin update"
+        },
+        "plugin_updates": {
+          "type": ["null", "array"],
+          "description": "Site transient data for available plugin updates"
         }
       },
       "required": [
@@ -217,7 +234,10 @@
         "installed_plugins",
         "permalink_structure",
         "siteurl",
-        "home"
+        "home",
+        "object_cache",
+        "next_cron_update_plugins",
+        "plugin_updates"
       ]
     },
     "events": {
