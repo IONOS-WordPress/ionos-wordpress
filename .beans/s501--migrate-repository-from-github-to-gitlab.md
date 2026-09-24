@@ -5,7 +5,7 @@ status: draft
 type: epic
 priority: normal
 created_at: 2026-08-18T10:16:06Z
-updated_at: 2026-08-18T10:16:28Z
+updated_at: 2026-09-18T11:06:12Z
 ---
 
 Move the ionos-wordpress monorepo from GitHub to GitLab (repo, CI/CD, issues/PRs, container registry usage, and related tooling).
@@ -39,6 +39,17 @@ refinement before any child work starts.
 - **Beans**: `.beans/` bean files sometimes reference GitHub PR numbers /
   issues in their history - not itself GitHub-coupled, but worth checking
   for hardcoded GitHub links during migration.
+- **Plugin-side GitHub Releases fallback (field-deployed, not just CI tooling)**:
+  `ionos-essentials` and `ionos-core` ship with a hardcoded `LEGACY_INFO_JSON_URL`
+  pointing at `github.com/IONOS-WordPress/ionos-wordpress/releases/...` as a
+  fallback update source (see epic [[serve-plugin-updates-from-s3-instead-of-github-releases]]).
+  This runs on real, already-installed WordPress sites, not in CI - a `gh`→`glab`
+  tooling port does not touch it. It only goes away once bean 4du2 ("Retire the
+  GitHub release delivery path once S3 delivery is proven") ships and rolls out,
+  which is itself gated on S3 delivery being observed working in production for a
+  while. A full cutover (GitHub repo archived/inaccessible) must not happen before
+  that, or every installation still relying on the fallback loses updates with no
+  way to self-heal.
 
 ## Open questions (need answers before this leaves draft)
 
@@ -68,3 +79,6 @@ refinement before any child work starts.
 - [ ] Update AGENTS.md / docs/agent/git-conventions.md references to
       GitHub-specific conventions if any
 - [ ] Branch protection rules, required checks, CODEOWNERS equivalent
+- [ ] Confirm no plugin still relies on the `LEGACY_INFO_JSON_URL` GitHub Releases
+      fallback (blocked on 4du2) before any full cutover that would make
+      `github.com/IONOS-WordPress/ionos-wordpress` inaccessible
