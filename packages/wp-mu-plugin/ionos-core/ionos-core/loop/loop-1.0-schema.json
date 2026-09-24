@@ -212,7 +212,7 @@
         },
         "object_cache": {
           "type": "string",
-          "description": "Whether external object cache is enabled"
+          "description": "Class name of the configured WordPress object cache implementation"
         },
         "next_cron_update_plugins": {
           "type": ["integer", "null"],
