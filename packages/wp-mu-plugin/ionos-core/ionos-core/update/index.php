@@ -56,11 +56,12 @@ function fetch_update_info(): array|null
     return null;
   }
 
-  foreach (['version', 'package'] as $field) {
-    if (! is_string($info[$field] ?? null) || '' === $info[$field]) {
-      \error_log(sprintf('ionos-core: update information from "%s" is missing version or package', INFO_JSON_URL));
-      return null;
-    }
+  if (
+    ! is_string($info['version'] ?? null) || ''                                          === $info['version']
+                                          || ! is_string($info['package'] ?? null) || '' === $info['package']
+  ) {
+    \error_log(sprintf('ionos-core: update information from "%s" is missing version or package', INFO_JSON_URL));
+    return null;
   }
 
   return $info;
