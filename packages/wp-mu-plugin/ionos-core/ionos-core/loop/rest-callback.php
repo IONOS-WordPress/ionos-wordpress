@@ -10,7 +10,7 @@ const IONOS_LOOP_MAX_EVENTS    = 200;
 
 function _rest_loop_callback(): \WP_REST_Response
 {
-
+  global $wp_object_cache;
   \update_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $essentials_data = [];
@@ -29,17 +29,20 @@ function _rest_loop_callback(): \WP_REST_Response
     'hosting'       => _get_hosting(),
     'supplier'      => 'ionos-core',
     'wordpress'     => [
-      'user_data'           => \count_users('memory'),
-      'active_theme'        => _get_active_theme(),
-      'plugins'             => _get_plugins(),
-      'posts'               => _get_posts_and_pages(),
-      'comments'            => _get_comments(),
-      'uploads'             => _get_uploads(),
-      'installed_themes'    => count(\wp_get_themes()),
-      'installed_plugins'   => count(\get_plugins()),
-      'permalink_structure' => \get_option('permalink_structure', ''),
-      'siteurl'             => \get_option('siteurl', ''),
-      'home'                => \get_option('home', ''),
+      'user_data'                => \count_users('memory'),
+      'active_theme'             => _get_active_theme(),
+      'plugins'                  => _get_plugins(),
+      'posts'                    => _get_posts_and_pages(),
+      'comments'                 => _get_comments(),
+      'uploads'                  => _get_uploads(),
+      'installed_themes'         => count(\wp_get_themes()),
+      'installed_plugins'        => count(\get_plugins()),
+      'permalink_structure'      => \get_option('permalink_structure', ''),
+      'siteurl'                  => \get_option('siteurl', ''),
+      'home'                     => \get_option('home', ''),
+      'object_cache'             => get_class($wp_object_cache),
+      'next_cron_update_plugins' => \wp_next_scheduled('wp_update_plugins') ?: null,
+      'plugin_updates'           => \get_site_transient('update_plugins'),
     ],
     'vulnerabilities' => \get_transient('ionos_wpscan_issues'),
     'events'          => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
@@ -59,6 +62,9 @@ function _rest_loop_callback(): \WP_REST_Response
 
   \delete_option(IONOS_LOOP_EVENTS_OPTION);
   \delete_option(IONOS_LOOP_CLICKS_OPTION);
+
+  // This value is inserted at the very end of all tasks.
+  $core_data['hosting']['duration'] = microtime(true) - IONOS_LOOP_START_TIME;
 
   return \rest_ensure_response($core_data);
 }
