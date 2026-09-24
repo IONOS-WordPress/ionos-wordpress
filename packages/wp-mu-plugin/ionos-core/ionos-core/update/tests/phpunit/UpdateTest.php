@@ -3,7 +3,7 @@
 namespace ionos\ionos_core;
 
 /**
- * covers ionos\ionos_core\fetch_update_info()'s S3-first / GitHub-fallback resolution
+ * covers ionos\ionos_core\fetch_update_info()'s S3 resolution
  *
  * run only this test using 'pnpm test:php --php-opts "--filter UpdateTest"'
  *
@@ -32,24 +32,17 @@ class UpdateTest extends \WP_UnitTestCase {
     ];
   }
 
-  public function test_s3_answering_with_valid_json_is_used_and_github_is_not_queried(): void {
-    $github_requested = false;
-
-    \add_filter('pre_http_request', function ($preempt, $parsed_args, $url) use (&$github_requested) {
-      if (LEGACY_INFO_JSON_URL === $url) {
-        $github_requested = true;
-      }
-
-      return INFO_JSON_URL === $url ? self::json_response(['version' => '9.9.9', 'package' => 'https://s3.example/pkg.zip']) : $preempt;
-    }, 10, 3);
+  public function test_s3_answering_with_valid_json_is_used(): void {
+    $this->respond_by_url([
+      INFO_JSON_URL => self::json_response(['version' => '9.9.9', 'package' => 'https://s3.example/pkg.zip']),
+    ]);
 
     $info = fetch_update_info();
 
     $this->assertSame(['version' => '9.9.9', 'package' => 'https://s3.example/pkg.zip'], $info);
-    $this->assertFalse($github_requested, 'github must not be queried once s3 already answered');
   }
 
-  public function test_s3_non_200_status_falls_back_to_github(): void {
+  public function test_s3_non_200_status_returns_null(): void {
     $this->respond_by_url([
       INFO_JSON_URL => [
         'headers'  => [],
@@ -58,15 +51,12 @@ class UpdateTest extends \WP_UnitTestCase {
         'response' => ['code' => 500, 'message' => 'Internal Server Error'],
         'body'     => '',
       ],
-      LEGACY_INFO_JSON_URL => self::json_response(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip']),
     ]);
 
-    $info = fetch_update_info();
-
-    $this->assertSame(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip'], $info);
+    $this->assertNull(fetch_update_info());
   }
 
-  public function test_s3_malformed_json_falls_back_to_github(): void {
+  public function test_s3_malformed_json_returns_null(): void {
     $this->respond_by_url([
       INFO_JSON_URL => [
         'headers'  => [],
@@ -75,40 +65,30 @@ class UpdateTest extends \WP_UnitTestCase {
         'response' => ['code' => 200, 'message' => 'OK'],
         'body'     => '{not valid json',
       ],
-      LEGACY_INFO_JSON_URL => self::json_response(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip']),
     ]);
 
-    $info = fetch_update_info();
-
-    $this->assertSame(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip'], $info);
+    $this->assertNull(fetch_update_info());
   }
 
-  public function test_s3_missing_fields_falls_back_to_github(): void {
+  public function test_s3_missing_fields_returns_null(): void {
     $this->respond_by_url([
-      INFO_JSON_URL         => self::json_response(['version' => '9.9.9']),
-      LEGACY_INFO_JSON_URL  => self::json_response(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip']),
+      INFO_JSON_URL => self::json_response(['version' => '9.9.9']),
     ]);
 
-    $info = fetch_update_info();
-
-    $this->assertSame(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip'], $info);
+    $this->assertNull(fetch_update_info());
   }
 
-  public function test_s3_empty_package_falls_back_to_github(): void {
+  public function test_s3_empty_package_returns_null(): void {
     $this->respond_by_url([
-      INFO_JSON_URL         => self::json_response(['version' => '9.9.9', 'package' => '']),
-      LEGACY_INFO_JSON_URL  => self::json_response(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip']),
+      INFO_JSON_URL => self::json_response(['version' => '9.9.9', 'package' => '']),
     ]);
 
-    $info = fetch_update_info();
-
-    $this->assertSame(['version' => '1.2.3', 'package' => 'https://github.example/pkg.zip'], $info);
+    $this->assertNull(fetch_update_info());
   }
 
-  public function test_both_sources_failing_returns_null(): void {
+  public function test_s3_request_failure_returns_null(): void {
     $this->respond_by_url([
-      INFO_JSON_URL         => new \WP_Error('http_request_failed', 'Connection timeout'),
-      LEGACY_INFO_JSON_URL  => new \WP_Error('http_request_failed', 'Connection timeout'),
+      INFO_JSON_URL => new \WP_Error('http_request_failed', 'Connection timeout'),
     ]);
 
     $this->assertNull(fetch_update_info());

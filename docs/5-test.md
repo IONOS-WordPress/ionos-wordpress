@@ -150,10 +150,10 @@ To test the production build:
 
 # testing a plugin's self-update mechanism end to end
 
-PHPUnit already covers the S3-first/GitHub-fallback resolver logic in isolation (see
-`inc/update/tests/phpunit/UpdateTest.php` in `ionos-essentials` and `ionos-core`). To verify the
-whole thing against a real, running WordPress instance instead - detection, download, and (for
-`ionos-core`) the actual file swap - use a second, isolated `TEST_PRODUCTION` stack rather than
+PHPUnit already covers the resolver logic in isolation (see `inc/update/tests/phpunit/UpdateTest.php`
+in `ionos-essentials`, which is S3-first/GitHub-fallback, and `ionos-core`, which is S3-only). To
+verify the whole thing against a real, running WordPress instance instead - detection, download, and
+(for `ionos-core`) the actual file swap - use a second, isolated `TEST_PRODUCTION` stack rather than
 your regular dev container, since a real update installs into whatever directory the plugin is
 mounted from.
 

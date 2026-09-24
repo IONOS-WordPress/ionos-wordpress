@@ -6,81 +6,64 @@ defined('ABSPATH') || exit();
 
 /*
  * must-use plugins have no 'Update URI' header for wordpress to dispatch update checks to, so the
- * two sources are hardcoded here instead of one being read from a header and the other kept as a
- * fallback. s3 is authoritative, github is kept as a fallback for the transition period only and
- * goes away once no installation still needs it.
+ * source is hardcoded here instead of being read from a header.
  */
 const INFO_JSON_URL = 'https://s3-de-central.profitbricks.com/web-hosting/__S3_FOLDER__/ionos-core-info.json';
-
-const LEGACY_INFO_JSON_URL = 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/ionos-core-info.json';
 
 require_once __DIR__ . '/class-mu-plugin-upgrader.php';
 
 /*
- * returns the first update descriptor that answers with usable json, or null if none does.
- * a source is skipped on transport error, on a non-200 status and on a body that is not json.
+ * returns the update descriptor from INFO_JSON_URL, or null if it does not answer with usable json.
  */
 function fetch_update_info(): array|null
 {
-  foreach (array_unique([INFO_JSON_URL, LEGACY_INFO_JSON_URL]) as $url) {
-    $response = \wp_remote_get($url, [
-      'timeout' => 5,
-    ]);
+  $response = \wp_remote_get(INFO_JSON_URL, [
+    'timeout' => 5,
+  ]);
 
-    if (\is_wp_error($response)) {
-      \error_log(sprintf('ionos-core: failed to request "%s" : %s', $url, $response->get_error_message()));
-      continue;
-    }
-
-    $status = \wp_remote_retrieve_response_code($response);
-    $body   = \wp_remote_retrieve_body($response);
-
-    if (200 !== $status || '' === $body) {
-      \error_log(
-        sprintf(
-          'ionos-core: failed to fetch update information from "%s"(http-status=%s) : %s',
-          $url,
-          $status,
-          '' !== $body ? $body : 'response body was empty',
-        )
-      );
-      continue;
-    }
-
-    try {
-      $info = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
-    } catch (\JsonException $e) {
-      \error_log(sprintf('ionos-core: update information from "%s" is not valid json : %s', $url, $e->getMessage()));
-      continue;
-    }
-
-    // array_all() is PHP 8.4+ only, but this mu-plugin also runs on PHP 7.4/8.3 (see
-    // packages/docker/rector-php/rector-config-php7.4.php) - a plain loop keeps this
-    // check working on every shipped runtime instead of fataling before it can fall back
-    if (! is_array($info)) {
-      \error_log(sprintf('ionos-core: update information from "%s" is not a json object', $url));
-      continue;
-    }
-
-    $has_required_fields = true;
-    foreach (['version', 'package'] as $field) {
-      if (! is_string($info[$field] ?? null) || '' === $info[$field]) {
-        $has_required_fields = false;
-        break;
-      }
-    }
-
-    if (! $has_required_fields) {
-      \error_log(sprintf('ionos-core: update information from "%s" is missing version or package', $url));
-      continue;
-    }
-
-    \error_log(sprintf('ionos-core: resolved update information from "%s"', $url));
-
-    return $info;
+  if (\is_wp_error($response)) {
+    \error_log(sprintf('ionos-core: failed to request "%s" : %s', INFO_JSON_URL, $response->get_error_message()));
+    return null;
   }
 
-  return null;
+  $status = \wp_remote_retrieve_response_code($response);
+  $body   = \wp_remote_retrieve_body($response);
+
+  if (200 !== $status || '' === $body) {
+    \error_log(
+      sprintf(
+        'ionos-core: failed to fetch update information from "%s"(http-status=%s) : %s',
+        INFO_JSON_URL,
+        $status,
+        '' !== $body ? $body : 'response body was empty',
+      )
+    );
+    return null;
+  }
+
+  try {
+    $info = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+  } catch (\JsonException $e) {
+    \error_log(sprintf('ionos-core: update information from "%s" is not valid json : %s', INFO_JSON_URL, $e->getMessage()));
+    return null;
+  }
+
+  // array_all() is PHP 8.4+ only, but this mu-plugin also runs on PHP 7.4/8.3 (see
+  // packages/docker/rector-php/rector-config-php7.4.php) - a plain loop keeps this
+  // check working on every shipped runtime
+  if (! is_array($info)) {
+    \error_log(sprintf('ionos-core: update information from "%s" is not a json object', INFO_JSON_URL));
+    return null;
+  }
+
+  foreach (['version', 'package'] as $field) {
+    if (! is_string($info[$field] ?? null) || '' === $info[$field]) {
+      \error_log(sprintf('ionos-core: update information from "%s" is missing version or package', INFO_JSON_URL));
+      return null;
+    }
+  }
+
+  return $info;
 }
 
 \add_action('wp_update_plugins', function (): void {

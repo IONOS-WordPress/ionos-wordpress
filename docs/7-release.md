@@ -165,9 +165,9 @@ To onboard a new package:
       `wp_update_plugins` cron event, fetches its own update descriptor, compares the result
       against its own `Version` header (read via `get_file_data()`), and installs through a custom
       `MU_Plugin_Upgrader` (a `WP_Upgrader` subclass) if a newer version is found. To add the same
-      mechanism to a new mu-plugin, copy that file, adjust the two `INFO_JSON_URL`/
-      `LEGACY_INFO_JSON_URL` constants (S3 first, GitHub fallback - see below) and the path passed
-      to `get_file_data()`. This is a recognized copy-paste pattern, not a shared package.
+      mechanism to a new mu-plugin, copy that file and adjust the `INFO_JSON_URL` constant and the
+      path passed to `get_file_data()`. This is a recognized copy-paste pattern, not a shared
+      package.
 - [ ] For `wp-plugin` packages that want an in-dashboard self-update, copy
       `packages/wp-plugin/ionos-essentials/ionos-essentials/inc/update/index.php` into the new
       plugin. Adjust the hardcoded plugin folder name and changelog raw-URL path for the new
@@ -212,16 +212,19 @@ updates from S3 instead of from GitHub releases.
 
 ## S3-first, GitHub-fallback resolution (transition period)
 
-Released plugins query S3 first and fall back to GitHub only when S3 is unreachable, answers with a
-non-200 status, returns an empty body or a body that is not valid JSON, or returns JSON missing a
-non-empty `version` or `package` field. A valid S3 `info.json` always wins - there is no version
-comparison between the two sources.
+Released `wp-plugin` packages query S3 first and fall back to GitHub only when S3 is unreachable,
+answers with a non-200 status, returns an empty body or a body that is not valid JSON, or returns
+JSON missing a non-empty `version` or `package` field. A valid S3 `info.json` always wins - there is
+no version comparison between the two sources.
 
-The GitHub URL is not going away yet: an installation that has not received an update since the
-switch to S3 still carries the pre-migration state (the old `Update URI` header value for
-`wp-plugin` packages, or the pre-S3 hardcoded GitHub-only URL for `ionos-core`) and would stop
-receiving updates if GitHub disappeared before that installation catches up. The GitHub fallback
-constant can be removed once no installation in the field is still in that pre-migration state.
+The GitHub URL is not going away yet for these packages: an installation that has not received an
+update since the switch to S3 still carries the pre-migration `Update URI` header value and would
+stop receiving updates if GitHub disappeared before that installation catches up. The GitHub
+fallback constant can be removed once no installation in the field is still in that pre-migration
+state.
+
+`ionos-core` has no such installations to consider - it was never published, so it resolves updates
+from S3 only, with no GitHub fallback.
 
 ## Test-phase releases in a fork
 
