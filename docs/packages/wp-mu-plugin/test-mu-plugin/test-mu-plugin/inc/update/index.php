@@ -11,8 +11,10 @@
  * level than Plugin_Upgrader (which assumes a wp-content/plugins/<slug>/ layout and fires
  * activate/deactivate hooks that don't apply to mu-plugins).
  *
- * this is a scoped pilot exception for test-mu-plugin - other mu-plugins (e.g. stretch-extra)
- * stay download-only by default, see docs/7-release.md.
+ * ionos-core takes a different, simpler approach for the same problem (a custom MU_Plugin_Upgrader
+ * subclass instead of the lower-level WP_Filesystem swap/rollback below) - see
+ * packages/wp-mu-plugin/ionos-core/ionos-core/update/index.php and docs/7-release.md. This pilot
+ * predates that implementation and is kept as a second, more defensive reference.
  */
 
 namespace ionos\test_mu_plugin\update;
@@ -23,7 +25,73 @@ defined('ABSPATH') || exit();
 
 const LAST_UPDATE_CHECK_OPTION = 'test_mu_plugin_last_update_check';
 
+/*
+ * the github hosted update descriptor, kept as a fallback for the transition period only - the
+ * authoritative source is the plugin's own 'Update URI' header, which points at s3. this url is
+ * queried when that fails, so an installation still carrying the pre-s3 header keeps updating.
+ * mirrors the pattern used by ionos-essentials and ionos-core, see docs/7-release.md.
+ */
+const LEGACY_INFO_JSON_URL = 'https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/test-mu-plugin-info.json';
+
 \add_action(hook_name: 'wp_update_plugins', callback: __NAMESPACE__ . '\check_for_update');
+
+/*
+ * returns the first update descriptor that answers with usable json, or null if none does.
+ * a source is skipped on transport error, on a non-200 status and on a body that is not json
+ * or is missing 'version'/'package'.
+ */
+function fetch_update_info(string $update_uri): array|null
+{
+  foreach (array_unique([$update_uri, LEGACY_INFO_JSON_URL]) as $url) {
+    $response = \wp_remote_get($url, [
+      'headers' => [
+        'Accept' => 'application/json',
+      ],
+    ]);
+
+    if (\is_wp_error($response)) {
+      \error_log(sprintf('test-mu-plugin: failed to request "%s" : %s', $url, $response->get_error_message()));
+      continue;
+    }
+
+    $status = \wp_remote_retrieve_response_code($response);
+    $body   = \wp_remote_retrieve_body($response);
+
+    if (200 !== $status || '' === $body) {
+      \error_log(sprintf('test-mu-plugin: failed to fetch update information from "%s"(http-status=%s)', $url, $status));
+      continue;
+    }
+
+    $info = json_decode($body, true);
+
+    if (! is_array($info)) {
+      \error_log(sprintf('test-mu-plugin: update information from "%s" is not a json object', $url));
+      continue;
+    }
+
+    // array_all() is PHP 8.4+ only, but this plugin also runs on PHP 7.4/8.3 (see
+    // packages/docker/rector-php/rector-config-php7.4.php) - a plain loop keeps this
+    // check working on every shipped runtime instead of fataling before it can fall back
+    $has_required_fields = true;
+    foreach (['version', 'package'] as $field) {
+      if (! is_string($info[$field] ?? null) || '' === $info[$field]) {
+        $has_required_fields = false;
+        break;
+      }
+    }
+
+    if (! $has_required_fields) {
+      \error_log(sprintf('test-mu-plugin: update information from "%s" is not valid or is missing version/package', $url));
+      continue;
+    }
+
+    \error_log(sprintf('test-mu-plugin: resolved update information from "%s"', $url));
+
+    return $info;
+  }
+
+  return null;
+}
 
 function check_for_update(): void
 {
@@ -36,43 +104,13 @@ function check_for_update(): void
     return;
   }
 
-  $response = \wp_remote_get($update_uri, [
-    'headers' => [
-      'Accept' => 'application/json',
-    ],
-  ]);
+  $info = fetch_update_info($update_uri);
 
-  if (\is_wp_error($response)) {
+  if (! $info) {
     record_check_result(
       status: 'failure',
       previous_version: $plugin_data['Version'],
-      message: sprintf('failed to fetch "%s" (%s)', $update_uri, $response->get_error_message())
-    );
-
-    return;
-  }
-
-  if (200 !== \wp_remote_retrieve_response_code($response)) {
-    record_check_result(
-      status: 'failure',
-      previous_version: $plugin_data['Version'],
-      message: sprintf(
-        'failed to fetch "%s" (http-status=%s)',
-        $update_uri,
-        \wp_remote_retrieve_response_code($response)
-      )
-    );
-
-    return;
-  }
-
-  $info = json_decode(\wp_remote_retrieve_body($response), true);
-
-  if (! isset($info['version'], $info['package'])) {
-    record_check_result(
-      status: 'failure',
-      previous_version: $plugin_data['Version'],
-      message: sprintf('malformed info.json response from "%s"', $update_uri)
+      message: sprintf('no update source answered with usable json (tried "%s" and the github fallback)', $update_uri)
     );
 
     return;

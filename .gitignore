@@ -15,6 +15,7 @@ node_modules
 /bin/act
 /bin/
 build-info
+build-info.s3-folder
 # marker written by .github/shared/scripts/_docker-subproject-image-pull.sh
 packages/*/*/webpack.config.js
 /build

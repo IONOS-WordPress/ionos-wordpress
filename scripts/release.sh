@@ -16,6 +16,9 @@
 #   - a info.json file will be created/updated for each plugin asset (ionos-essentials-0.1.1-php7.4.zip => ionos-essentials-info.json)
 #       containing { version, slug, package, sections: { changelog } }, where package points to the download url
 #       of the 'latest' flagged release (example: https://.../ionos-essentials-0.1.1-php7.4.zip)
+#   - every asset and a second, s3 flavoured info.json are mirrored to the s3 folder $S3_FOLDER
+#       (see .env). the s3 info.json points at the s3 copy of the zip instead of the github one,
+#       so plugins resolving their update from s3 also download from s3
 #   - remove the 'pre-release' flag from that release, individually, once its assets are processed
 # - after the loop, update the 'latest' release's notes once with a combined list of every
 #   package promoted this run
@@ -24,6 +27,12 @@
 # except that semantic version numbers in asset filenames are replaced with 'latest'; assets of
 # packages not part of this run are left untouched (the 'latest' release accumulates assets from
 # every package ever published, keyed by filename)
+#
+# the s3 folder accumulates the same way and ends up holding, per released zip:
+# - the versioned name         (example: ionos-essentials-0.1.1-php7.4.zip)
+# - the 'latest' name          (example: ionos-essentials-latest-php7.4.zip)
+# - the legacy name            (example: ionos-essentials.latest.zip)
+# plus one <plugin>-info.json per package (example: ionos-essentials-info.json)
 #
 
 # bootstrap the environment
@@ -40,6 +49,89 @@ fi
 export GH_TOKEN=${GH_TOKEN:-$GITHUB_TOKEN}
 
 readonly LATEST_RELEASE_TAG="@ionos-wordpress/latest"
+
+# example value : IONOS-WordPress/ionos-wordpress
+readonly GITHUB_OWNER_REPO=$(git remote get-url origin | sed -E 's|.*[:/]([^/]+)/([^/.]+)(\.git)?$|\1/\2|')
+
+# s3 mirror of the release assets. bucket and endpoint are fixed, the folder is configurable via
+# `.env`/`.env.local` so a fork can publish a test release without writing into the production
+# folder (see docs/7-release.md)
+readonly S3_ENDPOINT='https://s3-de-central.profitbricks.com'
+readonly S3_BUCKET='web-hosting'
+readonly S3_PRODUCTION_FOLDER='ionos-group'
+readonly UPSTREAM_OWNER_REPO='IONOS-WordPress/ionos-wordpress'
+
+# guard against an empty folder - that would scatter the release assets across the bucket root
+if [[ -z "${S3_FOLDER}" ]]; then
+  ionos.wordpress.log_error "S3_FOLDER environment variable is not set."
+  exit 1
+fi
+
+# $S3_FOLDER is interpolated into an unquoted sed replacement and an unquoted heredoc passed to
+# the aws-cli docker container (see ionos.wordpress.s3_upload below), and the baked-folder parser
+# above already assumes [A-Za-z0-9_.-]+ - restrict it to that same alphabet so a folder containing
+# '&', shell metacharacters, whitespace, or embedded CR/LF can't produce a mismatched URL or
+# execute unintended commands in the container
+if [[ ! "$S3_FOLDER" =~ ^[A-Za-z0-9_.-]+$ ]]; then
+  ionos.wordpress.log_error "S3_FOLDER='$S3_FOLDER' contains characters outside the supported [A-Za-z0-9_.-]+ alphabet."
+  exit 1
+fi
+
+# tie the s3 folder to the repository the release is cut from. the released zips are the very same
+# artifacts that get attached to the github release, and they carry the s3 folder baked into their
+# 'Update URI' header - so publishing with a mismatched folder either ships test artifacts to real
+# users or lets a fork overwrite production assets. both directions abort instead
+# GitHub owner/repo names are case-insensitive - a clone URL cased differently from
+# $UPSTREAM_OWNER_REPO (e.g. an all-lowercase remote) must still be recognized as upstream
+if [[ "${GITHUB_OWNER_REPO,,}" == "${UPSTREAM_OWNER_REPO,,}" && "$S3_FOLDER" != "$S3_PRODUCTION_FOLDER" ]]; then
+  ionos.wordpress.log_error "refusing to release from '$UPSTREAM_OWNER_REPO' with S3_FOLDER='$S3_FOLDER' - the production release must publish to '$S3_PRODUCTION_FOLDER'. Unset the override (see .env.local) or run this from a fork."
+  exit 1
+fi
+
+if [[ "${GITHUB_OWNER_REPO,,}" != "${UPSTREAM_OWNER_REPO,,}" && "$S3_FOLDER" == "$S3_PRODUCTION_FOLDER" ]]; then
+  ionos.wordpress.log_error "refusing to release from the fork '$GITHUB_OWNER_REPO' into the production folder '$S3_PRODUCTION_FOLDER'. Set S3_FOLDER to a test folder in the fork's .env so its CI sees it too (see docs/7-release.md)."
+  exit 1
+fi
+
+readonly S3_BASE_URL="$S3_ENDPOINT/$S3_BUCKET/$S3_FOLDER"
+
+# preflight the s3 credentials once, before any github mutation below. a deliberately unconfigured
+# mirror (no AWS secrets at all) degrades the run to github-only, same as before; a genuine upload
+# failure further down, with credentials present, still aborts - see the S3_MIRRORING_ENABLED checks
+# in the promotion loop. without this preflight, a missing secret and a real upload failure were
+# indistinguishable to that loop, so a fork/local run with no AWS secrets configured would abort
+# midway through promotion instead of degrading gracefully
+if [[ -n "${AWS_ACCESS_KEY_ID}" && -n "${AWS_SECRET_ACCESS_KEY}" ]]; then
+  readonly S3_MIRRORING_ENABLED=1
+else
+  readonly S3_MIRRORING_ENABLED=0
+  ionos.wordpress.log_warn "AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY are not set - skipping s3 mirroring for this run, only github assets will be published."
+fi
+
+# copy $1 into the release s3 folder as object $2. only called when $S3_MIRRORING_ENABLED=1, so a
+# failure here is a genuine upload problem, not a missing/unconfigured secret
+function ionos.wordpress.s3_upload() {
+  local FILE="$1"
+  local OBJECT_NAME="$2"
+
+  echo "upload '$FILE' to s3 as '$S3_FOLDER/$OBJECT_NAME'"
+
+  if ! docker run -i --rm -v "$(realpath "$FILE")":"/tmp/$OBJECT_NAME" --entrypoint bash amazon/aws-cli - <<EOF
+    export AWS_REQUEST_CHECKSUM_CALCULATION=when_required
+    export AWS_RESPONSE_CHECKSUM_VALIDATION=when_required
+
+    aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+    aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+
+    aws --endpoint-url $S3_ENDPOINT s3 cp /tmp/$OBJECT_NAME s3://$S3_BUCKET/$S3_FOLDER/$OBJECT_NAME
+EOF
+  then
+    local error_message="Failed to upload '$OBJECT_NAME' to s3"
+    [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+    echo "Error: $error_message"
+    return 1
+  fi
+}
 
 # do explicitly ONLY when running locally (=> not in CI)
 if [[ "${CI}" == '' ]]; then
@@ -95,9 +187,6 @@ if ! gh release view "$LATEST_RELEASE_TAG"; then
   echo "created release '$LATEST_RELEASE_TAG'"
 fi
 
-# example value : IONOS-WordPress/ionos-wordpress
-readonly GITHUB_OWNER_REPO=$(git remote get-url origin | sed -E 's|.*[:/]([^/]+)/([^/.]+)(\.git)?$|\1/\2|')
-
 # one bullet line per processed package, collected during the loop below and used for the
 # combined 'latest' release notes once all prereleases have been processed
 RELEASE_NOTES_LINES=()
@@ -122,32 +211,46 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
     rm -f $TARGET_ASSET_FILENAME
     echo "upload release '$PRE_RELEASE' asset '$ASSET' as '$TARGET_ASSET_FILENAME' to release '$LATEST_RELEASE_TAG'"
     gh release download $PRE_RELEASE --pattern $ASSET -O $TARGET_ASSET_FILENAME
+
+    # the guard above only compares the current repo/S3_FOLDER pair, it can't see what folder was
+    # actually baked into this asset's 'Update URI' header (see the '__S3_FOLDER__' substitution
+    # in build.sh) when it was built by pre-release.sh, possibly in a different environment/run.
+    # promoting it under a mismatched $S3_FOLDER would publish a zip whose own header points
+    # somewhere else, leaving installations resolving from that s3 folder unable to find updates
+    #
+    # match this package's own '<plugin>-info.json' url specifically rather than any
+    # 'web-hosting/<folder>/' url in the archive - a package can bundle unrelated s3 urls (e.g.
+    # ionos-core's marketplace/config.php) that would otherwise be matched first. '|| true' keeps
+    # a zip with no match from aborting the script under 'set -eo pipefail'
+    BAKED_S3_FOLDER=$(unzip -p "$TARGET_ASSET_FILENAME" 2>/dev/null | grep -oE "$S3_BUCKET/[A-Za-z0-9_.-]+/${PLUGIN}-info\.json" | head -1 | cut -d/ -f2 || true)
+    if [[ -n "$BAKED_S3_FOLDER" && "$BAKED_S3_FOLDER" != "$S3_FOLDER" ]]; then
+      error_message="refusing to promote asset '$ASSET' of pre-release '$PRE_RELEASE' - it was built with S3_FOLDER='$BAKED_S3_FOLDER' baked into its 'Update URI' header, but this run is promoting to S3_FOLDER='$S3_FOLDER'. Re-run pre-release.sh with S3_FOLDER='$S3_FOLDER' before promoting, or promote from an environment whose S3_FOLDER matches the artifact."
+      [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+      ionos.wordpress.log_error "$error_message"
+      exit 1
+    fi
+
     if ! gh release upload $LATEST_RELEASE_TAG $TARGET_ASSET_FILENAME --clobber; then
       error_message="Failed to upload asset $TARGET_ASSET_FILENAME"
       [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
       echo "Error: $error_message"
     fi
-    # upload latest to s3
-    S3_FILENAME=$(echo $TARGET_ASSET_FILENAME | sed -E 's/-latest-.+$/.latest.zip/')
-    echo "upload '$ASSET' to s3 as '$S3_FILENAME'"
-    # ensure we have a AWS_ACCESS_KEY_ID
-    if [[ -z "${AWS_ACCESS_KEY_ID}" ]] || [[ -z "${AWS_SECRET_ACCESS_KEY}" ]]; then
-      ionos.wordpress.log_error "aws secrets are not complete. AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY is necessary"
-    else
-      docker run -i --rm -v "$(pwd)/$TARGET_ASSET_FILENAME":"/tmp/$TARGET_ASSET_FILENAME" --entrypoint bash amazon/aws-cli - <<EOF
-        export AWS_REQUEST_CHECKSUM_CALCULATION=when_required
-        export AWS_RESPONSE_CHECKSUM_VALIDATION=when_required
+    # mirror the asset to s3 under every name it is known by : the versioned name it has in the
+    # pre-release, the 'latest' name it has in $LATEST_RELEASE_TAG, and the legacy
+    # '<plugin>.latest.zip' name kept for consumers that were built against it. all three are the
+    # same bytes, so the downloaded file is uploaded three times instead of downloaded three times
+    S3_LEGACY_FILENAME=$(echo $TARGET_ASSET_FILENAME | sed -E 's/-latest-.+$/.latest.zip/')
 
-        aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
-        aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
-
-        aws --endpoint-url https://s3-de-central.profitbricks.com s3 cp /tmp/$TARGET_ASSET_FILENAME s3://web-hosting/ionos-group/$S3_FILENAME
-EOF
-
-      if [[ $? -ne 0 ]]; then
-        error_message="Failed to upload asset $TARGET_ASSET_FILENAME to S3"
-        [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
-        echo "Error: $error_message"
+    # tracked so the s3-flavoured info.json below is skipped if any package upload failed -
+    # otherwise it would advertise a 'package' url for an object that was never actually
+    # written to s3. left at 1 when mirroring is disabled - that case is distinguished below via
+    # $S3_MIRRORING_ENABLED so it degrades gracefully instead of being treated as a failed upload
+    S3_ASSET_UPLOAD_OK=1
+    if [[ "$S3_MIRRORING_ENABLED" == "1" ]]; then
+      ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$ASSET" || S3_ASSET_UPLOAD_OK=0
+      ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$TARGET_ASSET_FILENAME" || S3_ASSET_UPLOAD_OK=0
+      if [[ "$S3_LEGACY_FILENAME" != "$TARGET_ASSET_FILENAME" ]]; then
+        ionos.wordpress.s3_upload "$TARGET_ASSET_FILENAME" "$S3_LEGACY_FILENAME" || S3_ASSET_UPLOAD_OK=0
       fi
     fi
 
@@ -162,7 +265,9 @@ EOF
       # example : ionos-essentials/ionos-essentials.php
       SLUG="${PLUGIN}/${PLUGIN}.php"
       # example: https://github.com/lgersman/ionos-wordpress/releases/download/%40ionos-wordpress%2Fessentials%400.1.3/ionos-essentials-0.1.3-php7.4.zip
-      PACKAGE="https://github.com/$GITHUB_OWNER_REPO/releases/download/$(printf $PRE_RELEASE | jq -Rrs '@uri')/$ASSET"
+      GITHUB_PACKAGE_URL="https://github.com/$GITHUB_OWNER_REPO/releases/download/$(printf $PRE_RELEASE | jq -Rrs '@uri')/$ASSET"
+      # example: https://s3-de-central.profitbricks.com/web-hosting/ionos-group/ionos-essentials-0.1.3-php7.4.zip
+      S3_PACKAGE_URL="$S3_BASE_URL/$ASSET"
 
       LAST_UPDATED=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
       # CHANGELOG is the release note of the pre-release (aka the changelog markdown of the release)
@@ -173,19 +278,61 @@ EOF
 
       INFO_JSON_FILENAME="${PLUGIN}-info.json"
 
-      jq -n \
-        --arg version "$VERSION" \
-        --arg slug "$SLUG" \
-        --arg package "$PACKAGE" \
-        --arg last_updated "$LAST_UPDATED" \
-        --arg changelog "$CHANGELOG_HTML" \
-        '{version: $version, slug: $slug, package: $package, last_updated: $last_updated, requires_wp: "6.0", sections : { changelog: $changelog }}' > "$INFO_JSON_FILENAME"
+      # the github and the s3 flavour of the info.json differ in their 'package' download url
+      # only - each flavour has to point at the plugin zip hosted next to it, so an installation
+      # that resolved its update descriptor from s3 also downloads the zip from s3
+      INFO_JSON_FILTER='{version: $version, slug: $slug, package: $package, last_updated: $last_updated, requires_wp: "6.0", sections : { changelog: $changelog }}'
+      INFO_JSON_ARGS=(
+        --arg version "$VERSION"
+        --arg slug "$SLUG"
+        --arg last_updated "$LAST_UPDATED"
+        --arg changelog "$CHANGELOG_HTML"
+      )
 
+      jq -n "${INFO_JSON_ARGS[@]}" --arg package "$GITHUB_PACKAGE_URL" "$INFO_JSON_FILTER" > "$INFO_JSON_FILENAME"
+
+      # a failed upload here would leave installations still on the github 'Update URI' with a
+      # stale or missing descriptor, unable to ever reach the s3-header version needed to
+      # self-heal - since github is the transition-period fallback, abort instead of promoting
+      # (and clearing the pre-release flag) with it left in that state
       if ! gh release upload $LATEST_RELEASE_TAG $INFO_JSON_FILENAME --clobber; then
-        error_message="Failed to upload asset $INFO_JSON_FILENAME"
+        error_message="Failed to upload the github flavoured $INFO_JSON_FILENAME - aborting to avoid leaving github-sourced installations on a stale or missing descriptor"
         [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
-        echo "Error: $error_message"
+        ionos.wordpress.log_error "$error_message"
+        exit 1
       fi
+
+      if [[ "$S3_MIRRORING_ENABLED" == "0" ]]; then
+        # mirroring is deliberately disabled for this run (no AWS secrets configured, see the
+        # preflight above) - skip the s3 flavoured descriptor entirely instead of treating it as
+        # a failure, matching the previous "github assets still promoted" behavior
+        ionos.wordpress.log_info "skipping the s3 flavoured $INFO_JSON_FILENAME - s3 mirroring is disabled for this run"
+      elif [[ "$S3_ASSET_UPLOAD_OK" == "1" ]]; then
+        jq -n "${INFO_JSON_ARGS[@]}" --arg package "$S3_PACKAGE_URL" "$INFO_JSON_FILTER" > "$INFO_JSON_FILENAME"
+
+        # a failed upload here would leave the previous $INFO_JSON_FILENAME object in s3 intact -
+        # s3-first clients would keep seeing that stale-but-valid descriptor and never learn a new
+        # version exists (they never reach the github fallback since s3 answered), so abort the
+        # whole release instead of promoting with it left in place
+        if ! ionos.wordpress.s3_upload "$INFO_JSON_FILENAME" "$INFO_JSON_FILENAME"; then
+          error_message="Failed to upload the s3 flavoured $INFO_JSON_FILENAME - aborting to avoid leaving the previous, stale descriptor in place"
+          [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+          ionos.wordpress.log_error "$error_message"
+          exit 1
+        fi
+      else
+        # mirroring is enabled (AWS secrets are configured) but one or more package uploads still
+        # failed - skipping the s3 flavoured descriptor here would leave the previous
+        # $INFO_JSON_FILENAME object in s3 intact and still valid, so s3-first clients would keep
+        # seeing it and never reach the github fallback - and the pre-release flag removal below
+        # would then make this release unretriable. abort instead, matching the upload-failure
+        # case above, so the pre-release flag stays set and a re-run can retry the mirror
+        error_message="aborting - one or more package uploads to s3 for asset '$ASSET' failed, so the s3 flavoured $INFO_JSON_FILENAME would either be skipped (leaving a stale descriptor in place) or point at an object that was never written"
+        [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
+        ionos.wordpress.log_error "$error_message"
+        exit 1
+      fi
+
       rm -f $INFO_JSON_FILENAME
     }
   done
