@@ -211,7 +211,7 @@
           "description": "WordPress home URL"
         },
         "object_cache": {
-          "type": ["null","boolean"],
+          "type": ["null", "boolean"],
           "description": "Whether an external object cache is being used"
         },
         "next_cron_update_plugins": {
