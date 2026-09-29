@@ -29,20 +29,21 @@ function _rest_loop_callback(): \WP_REST_Response
     'hosting'       => _get_hosting(),
     'supplier'      => 'ionos-core',
     'wordpress'     => [
-      'user_data'                => \count_users('memory'),
-      'active_theme'             => _get_active_theme(),
-      'plugins'                  => _get_plugins(),
-      'posts'                    => _get_posts_and_pages(),
-      'comments'                 => _get_comments(),
-      'uploads'                  => _get_uploads(),
-      'installed_themes'         => count(\wp_get_themes()),
-      'installed_plugins'        => count(\get_plugins()),
-      'permalink_structure'      => \get_option('permalink_structure', ''),
-      'siteurl'                  => \get_option('siteurl', ''),
-      'home'                     => \get_option('home', ''),
-      'object_cache'             => get_class($wp_object_cache),
-      'next_cron_update_plugins' => \wp_next_scheduled('wp_update_plugins') ?: null,
-      'plugin_updates'           => \get_site_transient('update_plugins'),
+      'user_data'                      => \count_users('memory'),
+      'active_theme'                   => _get_active_theme(),
+      'plugins'                        => _get_plugins(),
+      'posts'                          => _get_posts_and_pages(),
+      'comments'                       => _get_comments(),
+      'uploads'                        => _get_uploads(),
+      'installed_themes'               => count(\wp_get_themes()),
+      'installed_plugins'              => count(\get_plugins()),
+      'permalink_structure'            => \get_option('permalink_structure', ''),
+      'siteurl'                        => \get_option('siteurl', ''),
+      'home'                           => \get_option('home', ''),
+      'object_cache'                   => \wp_using_ext_object_cache(),
+      'next_cron_update_plugins'       => \wp_next_scheduled('wp_update_plugins') ?: null,
+      'plugin_updates_last_checked'    => \get_site_transient('update_plugins')
+        ->last_checked ?? null,
     ],
     'vulnerabilities' => \get_transient('ionos_wpscan_issues'),
     'events'          => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
@@ -167,15 +168,17 @@ function _get_plugins(): array
   $all_plugins    = \get_plugins();
   $active_plugins = \get_option('active_plugins', []);
   $auto_updates   = \get_site_option('auto_update_plugins', []);
+  $updates        = get_site_transient('update_plugins');
 
   $plugins_data = [];
 
   foreach ($all_plugins as $plugin_slug => $plugin_data) {
     $plugins_data[] = [
-      'plugin_slug' => $plugin_slug,
-      'version'     => $plugin_data['Version'],
-      'auto_update' => in_array($plugin_slug, $auto_updates),
-      'active'      => in_array($plugin_slug, $active_plugins),
+      'plugin_slug'      => $plugin_slug,
+      'version'          => $plugin_data['Version'],
+      'auto_update'      => in_array($plugin_slug, $auto_updates),
+      'active'           => in_array($plugin_slug, $active_plugins),
+      'update_known'     => isset($updates->response[$plugin_slug]),
     ];
   }
 

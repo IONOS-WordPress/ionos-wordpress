@@ -211,16 +211,16 @@
           "description": "WordPress home URL"
         },
         "object_cache": {
-          "type": "string",
-          "description": "Class name of the configured WordPress object cache implementation"
+          "type": ["null","boolean"],
+          "description": "Whether an external object cache is being used"
         },
         "next_cron_update_plugins": {
           "type": ["integer", "null"],
           "description": "UTC Unix timestamp of the next scheduled plugin update"
         },
-        "plugin_updates": {
-          "type": ["null", "array"],
-          "description": "Site transient data for available plugin updates"
+        "plugin_updates_last_checked": {
+          "type": ["null", "string"],
+          "description": "UTC Unix timestamp of when plugin updates were last checked."
         }
       },
       "required": [
@@ -237,7 +237,7 @@
         "home",
         "object_cache",
         "next_cron_update_plugins",
-        "plugin_updates"
+        "plugin_updates_last_checked"
       ]
     },
     "events": {
