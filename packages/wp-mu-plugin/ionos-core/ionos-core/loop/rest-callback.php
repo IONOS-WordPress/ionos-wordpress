@@ -64,7 +64,7 @@ function _rest_loop_callback(): \WP_REST_Response
   \delete_option(IONOS_LOOP_CLICKS_OPTION);
 
   // This value is inserted at the very end of all tasks.
-  $core_data['hosting']['duration'] = microtime(true) - IONOS_LOOP_START_TIME;
+  $core_data['hosting']['duration'] = microtime(true) - IONOS_CORE_LOOP_START_TIME;
 
   return \rest_ensure_response($core_data);
 }
