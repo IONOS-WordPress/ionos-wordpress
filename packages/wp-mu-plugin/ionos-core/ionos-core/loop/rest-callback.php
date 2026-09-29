@@ -10,7 +10,6 @@ const IONOS_LOOP_MAX_EVENTS    = 200;
 
 function _rest_loop_callback(): \WP_REST_Response
 {
-  global $wp_object_cache;
   \update_option(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, time());
 
   $essentials_data = [];

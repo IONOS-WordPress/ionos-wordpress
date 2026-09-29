@@ -37,6 +37,9 @@ function _rest_loop_callback(): \WP_REST_Response
       'permalink_structure' => \get_option('permalink_structure', ''),
       'siteurl'             => \get_option('siteurl', ''),
       'home'                => \get_option('home', ''),
+      'object_cache'             => get_class($wp_object_cache),
+      'next_cron_update_plugins' => \wp_next_scheduled('wp_update_plugins') ?: null,
+      'plugin_updates'           => \get_site_transient('update_plugins'),
     ],
     'vulnerabilities' => \get_transient('ionos_wpscan_issues'),
     'events'          => \get_option(IONOS_LOOP_EVENTS_OPTION, []),
@@ -60,6 +63,9 @@ function _rest_loop_callback(): \WP_REST_Response
 
   \delete_option(IONOS_LOOP_EVENTS_OPTION);
   \delete_option(IONOS_LOOP_CLICKS_OPTION);
+
+  // This value is inserted at the very end of all tasks.
+  $core_data['hosting']['duration'] = microtime(true) - IONOS_LOOP_START_TIME;
 
   return \rest_ensure_response($core_data);
 }
