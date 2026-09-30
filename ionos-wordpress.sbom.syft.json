@@ -3,14 +3,14 @@
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
   "name": "ionos-wordpress",
-  "documentNamespace": "https://anchore.com/syft/dir/ionos-wordpress-3dbaeb16-617a-4103-8ffb-141f78e16c9b",
+  "documentNamespace": "https://anchore.com/syft/dir/ionos-wordpress-98633c8c-0c28-42fa-a512-ba50f6abd707",
   "creationInfo": {
     "licenseListVersion": "3.28",
     "creators": [
       "Organization: Anchore, Inc",
-      "Tool: syft-1.51.1"
+      "Tool: syft-1.52.0"
     ],
-    "created": "2026-09-17T13:18:34Z"
+    "created": "2026-09-30T09:58:06Z"
   },
   "packages": [
     {
@@ -35283,8 +35283,8 @@
     },
     {
       "name": "@ionos-wordpress/essentials",
-      "SPDXID": "SPDXRef-Package-npm--ionos-wordpress-essentials-69e9feb77aa26d46",
-      "versionInfo": "1.7.1",
+      "SPDXID": "SPDXRef-Package-npm--ionos-wordpress-essentials-01b118af996bcc34",
+      "versionInfo": "1.7.2",
       "supplier": "NOASSERTION",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
@@ -35296,44 +35296,44 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/essentials:\\@ionos-wordpress\\/essentials:1.7.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/essentials:\\@ionos-wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/essentials:\\@ionos_wordpress\\/essentials:1.7.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/essentials:\\@ionos_wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/essentials:\\@ionos-wordpress\\/essentials:1.7.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/essentials:\\@ionos-wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/essentials:\\@ionos_wordpress\\/essentials:1.7.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/essentials:\\@ionos_wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos-wordpress\\/essentials:1.7.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos-wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos_wordpress\\/essentials:1.7.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos_wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/%40ionos-wordpress/essentials@1.7.1"
+          "referenceLocator": "pkg:npm/%40ionos-wordpress/essentials@1.7.2"
         }
       ]
     },
     {
       "name": "@ionos-wordpress/ionos-core",
-      "SPDXID": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-6f0c772be754f667",
-      "versionInfo": "0.5.0",
+      "SPDXID": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-16ff52788a96cb89",
+      "versionInfo": "0.5.1",
       "supplier": "NOASSERTION",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
@@ -35345,57 +35345,57 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos-core:\\@ionos-wordpress\\/ionos-core:0.5.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos-core:\\@ionos-wordpress\\/ionos-core:0.5.1:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos-core:\\@ionos_wordpress\\/ionos_core:0.5.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos-core:\\@ionos_wordpress\\/ionos_core:0.5.1:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos_core:\\@ionos-wordpress\\/ionos-core:0.5.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos_core:\\@ionos-wordpress\\/ionos-core:0.5.1:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos_core:\\@ionos_wordpress\\/ionos_core:0.5.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos_core:\\@ionos_wordpress\\/ionos_core:0.5.1:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos:\\@ionos-wordpress\\/ionos-core:0.5.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos:\\@ionos-wordpress\\/ionos-core:0.5.1:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos:\\@ionos_wordpress\\/ionos_core:0.5.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos:\\@ionos_wordpress\\/ionos_core:0.5.1:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos:\\@ionos-wordpress\\/ionos-core:0.5.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos:\\@ionos-wordpress\\/ionos-core:0.5.1:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos:\\@ionos_wordpress\\/ionos_core:0.5.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos:\\@ionos_wordpress\\/ionos_core:0.5.1:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos-wordpress\\/ionos-core:0.5.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos-wordpress\\/ionos-core:0.5.1:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos_wordpress\\/ionos_core:0.5.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos_wordpress\\/ionos_core:0.5.1:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/%40ionos-wordpress/ionos-core@0.5.0"
+          "referenceLocator": "pkg:npm/%40ionos-wordpress/ionos-core@0.5.1"
         }
       ]
     },
@@ -97323,32 +97323,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date-fns:date-fns:4.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date-fns:date_fns:4.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date_fns:date-fns:4.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date_fns:date_fns:4.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date:date-fns:4.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date:date_fns:4.4.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:date-fns:date-fns:4.4.0:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -97372,32 +97347,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date-fns:date-fns:4.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date-fns:date_fns:4.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date_fns:date-fns:4.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date_fns:date_fns:4.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date:date-fns:4.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:date:date_fns:4.4.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:date-fns:date-fns:4.4.0:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -181942,114 +181892,13 @@
       ]
     },
     {
-      "name": "twentynineteen",
-      "SPDXID": "SPDXRef-Package-npm-twentynineteen-d9dcf2731ac05862",
-      "versionInfo": "3.4.0",
-      "supplier": "NOASSERTION",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentynineteen/package-lock.json",
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "copyrightText": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:twentynineteen:twentynineteen:3.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/twentynineteen@3.4.0"
-        }
-      ]
-    },
-    {
-      "name": "twentynineteen",
-      "SPDXID": "SPDXRef-Package-npm-twentynineteen-a5e5e027aa53c416",
-      "versionInfo": "3.4.0",
-      "supplier": "NOASSERTION",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "homepage": "https://wordpress.org/themes/twentynineteen/",
-      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentynineteen/package.json",
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "copyrightText": "NOASSERTION",
-      "description": "Default WP Theme",
-      "externalRefs": [
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:twentynineteen:twentynineteen:3.4.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/twentynineteen@3.4.0"
-        }
-      ]
-    },
-    {
-      "name": "twentytwenty",
-      "SPDXID": "SPDXRef-Package-npm-twentytwenty-23728e4d76e3ab9e",
-      "versionInfo": "3.2.0",
-      "supplier": "NOASSERTION",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwenty/package-lock.json",
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "GPL-2.0-or-later",
-      "copyrightText": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:twentytwenty:twentytwenty:3.2.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/twentytwenty@3.2.0"
-        }
-      ]
-    },
-    {
-      "name": "twentytwenty",
-      "SPDXID": "SPDXRef-Package-npm-twentytwenty-f40c99926f813ce4",
-      "versionInfo": "3.2.0",
-      "supplier": "Person: The WordPress Contributors",
-      "originator": "Person: The WordPress Contributors",
-      "downloadLocation": "https://develop.svn.wordpress.org/trunk",
-      "filesAnalyzed": false,
-      "homepage": "https://wordpress.org/themes/twentytwenty/",
-      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwenty/package.json",
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "GPL-2.0-or-later",
-      "copyrightText": "NOASSERTION",
-      "description": "Default WP Theme",
-      "externalRefs": [
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:twentytwenty:twentytwenty:3.2.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/twentytwenty@3.2.0"
-        }
-      ]
-    },
-    {
       "name": "twentytwentyfive",
-      "SPDXID": "SPDXRef-Package-npm-twentytwentyfive-8f8b817101b6dd6e",
+      "SPDXID": "SPDXRef-Package-npm-twentytwentyfive-746a22896d6844e7",
       "versionInfo": "1.5.0",
       "supplier": "NOASSERTION",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
-      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentyfive/package-lock.json",
+      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/7.1.2/.default-themes-cache/twentytwentyfive/package-lock.json",
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "GPL-2.0-or-later",
       "copyrightText": "NOASSERTION",
@@ -182068,14 +181917,14 @@
     },
     {
       "name": "twentytwentyfive",
-      "SPDXID": "SPDXRef-Package-npm-twentytwentyfive-a278ee0642334848",
+      "SPDXID": "SPDXRef-Package-npm-twentytwentyfive-0e9844bb68ae63b5",
       "versionInfo": "1.5.0",
       "supplier": "Person: The WordPress Contributors",
       "originator": "Person: The WordPress Contributors",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "homepage": "https://wordpress.org/themes/twentytwentyfive/",
-      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentyfive/package.json",
+      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/7.1.2/.default-themes-cache/twentytwentyfive/package.json",
       "licenseConcluded": "NOASSERTION",
       "licenseDeclared": "GPL-2.0-or-later",
       "copyrightText": "NOASSERTION",
@@ -182090,108 +181939,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/twentytwentyfive@1.5.0"
-        }
-      ]
-    },
-    {
-      "name": "twentytwentyone",
-      "SPDXID": "SPDXRef-Package-npm-twentytwentyone-2ee2016e06532e0b",
-      "versionInfo": "2.9.0",
-      "supplier": "NOASSERTION",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentyone/package-lock.json",
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "GPL-2.0-or-later",
-      "copyrightText": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:twentytwentyone:twentytwentyone:2.9.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/twentytwentyone@2.9.0"
-        }
-      ]
-    },
-    {
-      "name": "twentytwentyone",
-      "SPDXID": "SPDXRef-Package-npm-twentytwentyone-361682cf2cd643e6",
-      "versionInfo": "2.9.0",
-      "supplier": "Person: The WordPress Contributors",
-      "originator": "Person: The WordPress Contributors",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "homepage": "https://wordpress.org/themes/twentytwentyone/",
-      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentyone/package.json",
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "GPL-2.0-or-later",
-      "copyrightText": "NOASSERTION",
-      "description": "Default WP Theme",
-      "externalRefs": [
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:twentytwentyone:twentytwentyone:2.9.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/twentytwentyone@2.9.0"
-        }
-      ]
-    },
-    {
-      "name": "twentytwentytwo",
-      "SPDXID": "SPDXRef-Package-npm-twentytwentytwo-dd786b9bdcfcd640",
-      "versionInfo": "2.2.0",
-      "supplier": "NOASSERTION",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentytwo/package-lock.json",
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "GPL-2.0-or-later",
-      "copyrightText": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:twentytwentytwo:twentytwentytwo:2.2.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/twentytwentytwo@2.2.0"
-        }
-      ]
-    },
-    {
-      "name": "twentytwentytwo",
-      "SPDXID": "SPDXRef-Package-npm-twentytwentytwo-a3f1934fc7861b7a",
-      "versionInfo": "2.2.0",
-      "supplier": "Person: The WordPress Contributors",
-      "originator": "Person: The WordPress Contributors",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "homepage": "https://wordpress.org/themes/twentytwentytwo/",
-      "sourceInfo": "acquired package info from installed node module manifest file: /mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentytwo/package.json",
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "GPL-2.0-or-later",
-      "copyrightText": "NOASSERTION",
-      "description": "Default WP Theme",
-      "externalRefs": [
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:twentytwentytwo:twentytwentytwo:2.2.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/twentytwentytwo@2.2.0"
         }
       ]
     },
@@ -182423,32 +182170,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:0.18.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:0.18.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:0.18.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:0.18.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:0.18.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:0.18.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:0.18.1:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -182472,32 +182194,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:0.18.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:0.18.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:0.18.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:0.18.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:0.18.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:0.18.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:0.18.1:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -182523,32 +182220,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:0.21.3:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:0.21.3:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:0.21.3:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:0.21.3:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:0.21.3:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:0.21.3:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:0.21.3:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -182572,32 +182244,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:0.21.3:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:0.21.3:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:0.21.3:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:0.21.3:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:0.21.3:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:0.21.3:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:0.21.3:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -182623,32 +182270,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:0.6.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:0.6.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:0.6.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:0.6.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:0.6.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:0.6.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:0.6.0:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -182672,32 +182294,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:0.6.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:0.6.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:0.6.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:0.6.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:0.6.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:0.6.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:0.6.0:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -182723,32 +182320,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:0.8.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:0.8.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:0.8.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:0.8.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:0.8.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:0.8.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:0.8.1:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -182772,32 +182344,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:0.8.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:0.8.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:0.8.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:0.8.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:0.8.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:0.8.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:0.8.1:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -182823,32 +182370,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:3.13.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:3.13.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:3.13.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:3.13.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:3.13.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:3.13.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:3.13.1:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -182872,32 +182394,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:3.13.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:3.13.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:3.13.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:3.13.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:3.13.1:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:3.13.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:3.13.1:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -182923,32 +182420,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:4.41.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:4.41.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:4.41.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:4.41.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:4.41.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:4.41.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:4.41.0:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -182972,32 +182444,7 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type-fest:4.41.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type-fest:type_fest:4.41.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type-fest:4.41.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type_fest:type_fest:4.41.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type-fest:4.41.0:*:*:*:*:*:*:*"
-        },
-        {
-          "referenceCategory": "SECURITY",
-          "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:type:type_fest:4.41.0:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:sindresorhus:type-fest:4.41.0:*:*:*:*:node.js:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
@@ -193018,11 +192465,11 @@
       "checksums": [
         {
           "algorithm": "SHA1",
-          "checksumValue": "d1c83513d2b0eebe3fafae6c555e561a1e4fc3ec"
+          "checksumValue": "cc1b4d4a4c3a05ec2df847356e2e0642a7ebe130"
         },
         {
           "algorithm": "SHA256",
-          "checksumValue": "4fbc262d011b88a5fc06d9bc35a6bf52296c368d781395c709c97ec9d2f16dd7"
+          "checksumValue": "d7cb616f07e9a72cc6744adfa88b10a05262e6d3de6c5a0d73fbfbc01975b12f"
         }
       ],
       "licenseConcluded": "NOASSERTION",
@@ -193040,11 +192487,11 @@
       "checksums": [
         {
           "algorithm": "SHA1",
-          "checksumValue": "c68e1a4d36e7171a13a24c66ab14695937fb304a"
+          "checksumValue": "d086ce163c076b85e19af936ad9624d7f0fbf95c"
         },
         {
           "algorithm": "SHA256",
-          "checksumValue": "550ac805570eaa4611fe933d3ef92878d551591fc73e5793bbac65e80fa25973"
+          "checksumValue": "ebdb24d162f3ef7382f110780e4b937c8569b2cdce9d2e957e012e00669907dd"
         }
       ],
       "licenseConcluded": "NOASSERTION",
@@ -193495,96 +192942,8 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "fileName": "mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentynineteen/package-lock.json",
-      "SPDXID": "SPDXRef-File-...twentynineteen-package-lock.json-d413e9085589ab14",
-      "fileTypes": [
-        "APPLICATION"
-      ],
-      "checksums": [
-        {
-          "algorithm": "SHA1",
-          "checksumValue": "9e0e0b050b0677ae27042b52a866e0b239b9e60a"
-        },
-        {
-          "algorithm": "SHA256",
-          "checksumValue": "5bd1bc51e235c08006a5a38478e1cbc7324912409d485de59181bff9d8881c6a"
-        }
-      ],
-      "licenseConcluded": "NOASSERTION",
-      "licenseInfoInFiles": [
-        "NOASSERTION"
-      ],
-      "copyrightText": "NOASSERTION"
-    },
-    {
-      "fileName": "mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentynineteen/package.json",
-      "SPDXID": "SPDXRef-File-...twentynineteen-package.json-7084984d1335ff7e",
-      "fileTypes": [
-        "APPLICATION"
-      ],
-      "checksums": [
-        {
-          "algorithm": "SHA1",
-          "checksumValue": "4c86536cadc34876a9be464ddb45e07ae3400ed6"
-        },
-        {
-          "algorithm": "SHA256",
-          "checksumValue": "1e08812fee82af599db18c054d47485fbe86ba99f775514e208bb12db4f0010f"
-        }
-      ],
-      "licenseConcluded": "NOASSERTION",
-      "licenseInfoInFiles": [
-        "NOASSERTION"
-      ],
-      "copyrightText": "NOASSERTION"
-    },
-    {
-      "fileName": "mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwenty/package-lock.json",
-      "SPDXID": "SPDXRef-File-...twentytwenty-package-lock.json-c29cb4064c855beb",
-      "fileTypes": [
-        "APPLICATION"
-      ],
-      "checksums": [
-        {
-          "algorithm": "SHA1",
-          "checksumValue": "d2b41aedb9661e812146f73e86168796f508fa5e"
-        },
-        {
-          "algorithm": "SHA256",
-          "checksumValue": "0ced20ca30ce4a46bdf428757e69eb72db81f768ae68050179637e846052f041"
-        }
-      ],
-      "licenseConcluded": "NOASSERTION",
-      "licenseInfoInFiles": [
-        "NOASSERTION"
-      ],
-      "copyrightText": "NOASSERTION"
-    },
-    {
-      "fileName": "mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwenty/package.json",
-      "SPDXID": "SPDXRef-File-...twentytwenty-package.json-3f1f5db3bdb69f8f",
-      "fileTypes": [
-        "APPLICATION"
-      ],
-      "checksums": [
-        {
-          "algorithm": "SHA1",
-          "checksumValue": "50dc5676993d0b5bd6933b9b2a40d7985ccff30d"
-        },
-        {
-          "algorithm": "SHA256",
-          "checksumValue": "7efe5629d03c4369d8397fd2f66acd09947232a18de2ec5930ad9f17c5b58e2e"
-        }
-      ],
-      "licenseConcluded": "NOASSERTION",
-      "licenseInfoInFiles": [
-        "NOASSERTION"
-      ],
-      "copyrightText": "NOASSERTION"
-    },
-    {
-      "fileName": "mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentyfive/package-lock.json",
-      "SPDXID": "SPDXRef-File-...twentytwentyfive-package-lock.json-fbd3f3b795d99fe9",
+      "fileName": "mnt/wordpress-core/7.1.2/.default-themes-cache/twentytwentyfive/package-lock.json",
+      "SPDXID": "SPDXRef-File-...twentytwentyfive-package-lock.json-f8d543ae1d5e4837",
       "fileTypes": [
         "APPLICATION"
       ],
@@ -193605,8 +192964,8 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "fileName": "mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentyfive/package.json",
-      "SPDXID": "SPDXRef-File-...twentytwentyfive-package.json-3dfb3e50fa40253a",
+      "fileName": "mnt/wordpress-core/7.1.2/.default-themes-cache/twentytwentyfive/package.json",
+      "SPDXID": "SPDXRef-File-...twentytwentyfive-package.json-a72cfdf8f4b72413",
       "fileTypes": [
         "APPLICATION"
       ],
@@ -193618,94 +192977,6 @@
         {
           "algorithm": "SHA256",
           "checksumValue": "dcfcfe70a9ac4da8c894eb48f1806fe6b053363093112331c51217180daf28b8"
-        }
-      ],
-      "licenseConcluded": "NOASSERTION",
-      "licenseInfoInFiles": [
-        "NOASSERTION"
-      ],
-      "copyrightText": "NOASSERTION"
-    },
-    {
-      "fileName": "mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentyone/package-lock.json",
-      "SPDXID": "SPDXRef-File-...twentytwentyone-package-lock.json-5e2b98230d6764db",
-      "fileTypes": [
-        "APPLICATION"
-      ],
-      "checksums": [
-        {
-          "algorithm": "SHA1",
-          "checksumValue": "4d13cf7587100073d71ccc536f08cd4cbccad586"
-        },
-        {
-          "algorithm": "SHA256",
-          "checksumValue": "4d2f14c76ae54127ad00672df12cb79b16a691405a80be0bdcf46157f839e0d3"
-        }
-      ],
-      "licenseConcluded": "NOASSERTION",
-      "licenseInfoInFiles": [
-        "NOASSERTION"
-      ],
-      "copyrightText": "NOASSERTION"
-    },
-    {
-      "fileName": "mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentyone/package.json",
-      "SPDXID": "SPDXRef-File-...twentytwentyone-package.json-9ab21a2d8fdaa06e",
-      "fileTypes": [
-        "APPLICATION"
-      ],
-      "checksums": [
-        {
-          "algorithm": "SHA1",
-          "checksumValue": "1c9b66d9f596421e1abc4816b4a9e23ec72af667"
-        },
-        {
-          "algorithm": "SHA256",
-          "checksumValue": "3207693497d9cc20aa34892a95d3b799a344db12e89e7354da1af42b4ad53613"
-        }
-      ],
-      "licenseConcluded": "NOASSERTION",
-      "licenseInfoInFiles": [
-        "NOASSERTION"
-      ],
-      "copyrightText": "NOASSERTION"
-    },
-    {
-      "fileName": "mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentytwo/package-lock.json",
-      "SPDXID": "SPDXRef-File-...twentytwentytwo-package-lock.json-c983c87cf020b1a9",
-      "fileTypes": [
-        "APPLICATION"
-      ],
-      "checksums": [
-        {
-          "algorithm": "SHA1",
-          "checksumValue": "3971df49c9dd75661e5c316fbf2efde10d0cc981"
-        },
-        {
-          "algorithm": "SHA256",
-          "checksumValue": "f5ba585e7bc3b3d14aaa2af91a0a4aa672e4dd8d11fa81b74847d29591d1a4da"
-        }
-      ],
-      "licenseConcluded": "NOASSERTION",
-      "licenseInfoInFiles": [
-        "NOASSERTION"
-      ],
-      "copyrightText": "NOASSERTION"
-    },
-    {
-      "fileName": "mnt/wordpress-core/WordPress-WordPress-7.1/.default-themes-cache/twentytwentytwo/package.json",
-      "SPDXID": "SPDXRef-File-...twentytwentytwo-package.json-d0276406867f9cb3",
-      "fileTypes": [
-        "APPLICATION"
-      ],
-      "checksums": [
-        {
-          "algorithm": "SHA1",
-          "checksumValue": "b7a54d0f9ad55cd170d177bad5a37186174502e0"
-        },
-        {
-          "algorithm": "SHA256",
-          "checksumValue": "7dcb73923731971210adbdaef9dadbb6aef6b9888aa194e8110cf108be97d18b"
         }
       ],
       "licenseConcluded": "NOASSERTION",
@@ -232765,11 +232036,11 @@
       "checksums": [
         {
           "algorithm": "SHA1",
-          "checksumValue": "27089f4d53befc42a7e11b3a2d33e570f6e97960"
+          "checksumValue": "c57741c7c1ca77c9856aca414779457d5e4ce519"
         },
         {
           "algorithm": "SHA256",
-          "checksumValue": "159668905db8ef22dc6849acc8e808123fe9b13e9e0508fdb22c9092c5769e95"
+          "checksumValue": "55386ff1c0bfb0a4580432b931b752c0c8bd34cfacb7116f4d4fe6bcfa32e2cb"
         }
       ],
       "licenseConcluded": "NOASSERTION",
@@ -232809,11 +232080,11 @@
       "checksums": [
         {
           "algorithm": "SHA1",
-          "checksumValue": "f054e2f8c392b33e6230fe09b66d743c93d004fc"
+          "checksumValue": "8e7ce874d44df62eb7819a087c4780cb63cd8d87"
         },
         {
           "algorithm": "SHA256",
-          "checksumValue": "26c1b4203fb981c2a23203f29cc96c2cf947780b4a0c977501cdd2659a08072a"
+          "checksumValue": "28ab0443a7f599a6dc9a070a8bb4e7dd1ee254b6d18e4703490a6b47a891793f"
         }
       ],
       "licenseConcluded": "NOASSERTION",
@@ -258202,6 +257473,12 @@
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
     {
+      "spdxElementId": "SPDXRef-Package-npm--ionos-wordpress-essentials-01b118af996bcc34",
+      "relatedSpdxElement": "SPDXRef-File-...ionos-essentials-package.json-1da92f1b68d49214",
+      "relationshipType": "OTHER",
+      "comment": "evident-by: indicates the package's existence is evident by the given file"
+    },
+    {
       "spdxElementId": "SPDXRef-Package-github-action-docker-login-action-01cb916bcc06c37f",
       "relatedSpdxElement": "SPDXRef-File-.github-workflows-integration.yaml-bf1b7ebfc2787f23",
       "relationshipType": "OTHER",
@@ -259234,6 +258511,12 @@
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
     {
+      "spdxElementId": "SPDXRef-Package-npm-twentytwentyfive-0e9844bb68ae63b5",
+      "relatedSpdxElement": "SPDXRef-File-...twentytwentyfive-package.json-a72cfdf8f4b72413",
+      "relationshipType": "OTHER",
+      "comment": "evident-by: indicates the package's existence is evident by the given file"
+    },
+    {
       "spdxElementId": "SPDXRef-Package-npm--wordpress-priority-queue-0eaa9960b5a87221",
       "relatedSpdxElement": "SPDXRef-File-pnpm-lock.yaml-c895fb8e872e275f",
       "relationshipType": "OTHER",
@@ -259998,6 +259281,12 @@
     {
       "spdxElementId": "SPDXRef-Package-npm--es-joy-jsdoccomment-16e7c81f93f49d06",
       "relatedSpdxElement": "SPDXRef-File-pnpm-lock.yaml-c895fb8e872e275f",
+      "relationshipType": "OTHER",
+      "comment": "evident-by: indicates the package's existence is evident by the given file"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-16ff52788a96cb89",
+      "relatedSpdxElement": "SPDXRef-File-...wp-mu-plugin-ionos-core-package.json-a744b7967dee2eab",
       "relationshipType": "OTHER",
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
@@ -260994,12 +260283,6 @@
     {
       "spdxElementId": "SPDXRef-Package-npm--jest-environment-jsdom-abstract-236f4fc93d00480d",
       "relatedSpdxElement": "SPDXRef-File-...package.json-34c25f6e7147a01e",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-npm-twentytwenty-23728e4d76e3ab9e",
-      "relatedSpdxElement": "SPDXRef-File-...twentytwenty-package-lock.json-c29cb4064c855beb",
       "relationshipType": "OTHER",
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
@@ -262084,12 +261367,6 @@
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
     {
-      "spdxElementId": "SPDXRef-Package-npm-twentytwentyone-2ee2016e06532e0b",
-      "relatedSpdxElement": "SPDXRef-File-...twentytwentyone-package-lock.json-5e2b98230d6764db",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
       "spdxElementId": "SPDXRef-Package-npm-playwright-core-2ef1b976c66ec5f6",
       "relatedSpdxElement": "SPDXRef-File-...playwright-core-package.json-430afa473d1c4f64",
       "relationshipType": "OTHER",
@@ -262770,12 +262047,6 @@
     {
       "spdxElementId": "SPDXRef-Package-npm-unicode-canonical-property-names-ecmascript-361358fa763b99be",
       "relatedSpdxElement": "SPDXRef-File-...package.json-dd731579efe128cb",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-npm-twentytwentyone-361682cf2cd643e6",
-      "relatedSpdxElement": "SPDXRef-File-...twentytwentyone-package.json-9ab21a2d8fdaa06e",
       "relationshipType": "OTHER",
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
@@ -267130,12 +266401,6 @@
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
     {
-      "spdxElementId": "SPDXRef-Package-npm--ionos-wordpress-essentials-69e9feb77aa26d46",
-      "relatedSpdxElement": "SPDXRef-File-...ionos-essentials-package.json-1da92f1b68d49214",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
       "spdxElementId": "SPDXRef-Package-npm-postcss-normalize-positions-6a0aecb50e459576",
       "relatedSpdxElement": "SPDXRef-File-pnpm-lock.yaml-c895fb8e872e275f",
       "relationshipType": "OTHER",
@@ -267586,12 +266851,6 @@
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
     {
-      "spdxElementId": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-6f0c772be754f667",
-      "relatedSpdxElement": "SPDXRef-File-...wp-mu-plugin-ionos-core-package.json-a744b7967dee2eab",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
       "spdxElementId": "SPDXRef-Package-npm--babel-plugin-transform-react-jsx-6f0f4efee846dfb0",
       "relatedSpdxElement": "SPDXRef-File-pnpm-lock.yaml-c895fb8e872e275f",
       "relationshipType": "OTHER",
@@ -267996,6 +267255,12 @@
     {
       "spdxElementId": "SPDXRef-Package-npm-domutils-7448be34e551804c",
       "relatedSpdxElement": "SPDXRef-File-...node-modules-domutils-package.json-85cccc847b2bbb17",
+      "relationshipType": "OTHER",
+      "comment": "evident-by: indicates the package's existence is evident by the given file"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-npm-twentytwentyfive-746a22896d6844e7",
+      "relatedSpdxElement": "SPDXRef-File-...twentytwentyfive-package-lock.json-f8d543ae1d5e4837",
       "relationshipType": "OTHER",
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
@@ -270328,12 +269593,6 @@
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
     {
-      "spdxElementId": "SPDXRef-Package-npm-twentytwentyfive-8f8b817101b6dd6e",
-      "relatedSpdxElement": "SPDXRef-File-...twentytwentyfive-package-lock.json-fbd3f3b795d99fe9",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
       "spdxElementId": "SPDXRef-Package-npm-statuses-8f9087cba38f95be",
       "relatedSpdxElement": "SPDXRef-File-pnpm-lock.yaml-c895fb8e872e275f",
       "relationshipType": "OTHER",
@@ -271714,12 +270973,6 @@
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
     {
-      "spdxElementId": "SPDXRef-Package-npm-twentytwentyfive-a278ee0642334848",
-      "relatedSpdxElement": "SPDXRef-File-...twentytwentyfive-package.json-3dfb3e50fa40253a",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
       "spdxElementId": "SPDXRef-Package-npm-map-values-a280b11a64653a9a",
       "relatedSpdxElement": "SPDXRef-File-...node-modules-map-values-package.json-f3c8cc9bd26a08fb",
       "relationshipType": "OTHER",
@@ -271848,12 +271101,6 @@
     {
       "spdxElementId": "SPDXRef-Package-npm-deep-is-a3e423697fb2f416",
       "relatedSpdxElement": "SPDXRef-File-pnpm-lock.yaml-c895fb8e872e275f",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-npm-twentytwentytwo-a3f1934fc7861b7a",
-      "relatedSpdxElement": "SPDXRef-File-...twentytwentytwo-package.json-d0276406867f9cb3",
       "relationshipType": "OTHER",
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
@@ -271998,12 +271245,6 @@
     {
       "spdxElementId": "SPDXRef-Package-npm-csstype-a5e389c471927f63",
       "relatedSpdxElement": "SPDXRef-File-...node-modules-csstype-package.json-d64c9444d7197d78",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-npm-twentynineteen-a5e5e027aa53c416",
-      "relatedSpdxElement": "SPDXRef-File-...twentynineteen-package.json-7084984d1335ff7e",
       "relationshipType": "OTHER",
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
@@ -276532,12 +275773,6 @@
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
     {
-      "spdxElementId": "SPDXRef-Package-npm-twentynineteen-d9dcf2731ac05862",
-      "relatedSpdxElement": "SPDXRef-File-...twentynineteen-package-lock.json-d413e9085589ab14",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
       "spdxElementId": "SPDXRef-Package-npm--changesets-changelog-git-d9e9b41123d5a4ed",
       "relatedSpdxElement": "SPDXRef-File-pnpm-lock.yaml-c895fb8e872e275f",
       "relationshipType": "OTHER",
@@ -276846,12 +276081,6 @@
     {
       "spdxElementId": "SPDXRef-Package-npm-rolldown-dd589bb0d3d03ef7",
       "relatedSpdxElement": "SPDXRef-File-pnpm-lock.yaml-c895fb8e872e275f",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-npm-twentytwentytwo-dd786b9bdcfcd640",
-      "relatedSpdxElement": "SPDXRef-File-...twentytwentytwo-package-lock.json-c983c87cf020b1a9",
       "relationshipType": "OTHER",
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
@@ -278796,12 +278025,6 @@
     {
       "spdxElementId": "SPDXRef-Package-npm--babel-plugin-transform-block-scoping-f409bcefdcbdc2bb",
       "relatedSpdxElement": "SPDXRef-File-pnpm-lock.yaml-c895fb8e872e275f",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-npm-twentytwenty-f40c99926f813ce4",
-      "relatedSpdxElement": "SPDXRef-File-...twentytwenty-package.json-3f1f5db3bdb69f8f",
       "relationshipType": "OTHER",
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
@@ -282331,12 +281554,12 @@
     },
     {
       "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm--ionos-wordpress-essentials-69e9feb77aa26d46",
+      "relatedSpdxElement": "SPDXRef-Package-npm--ionos-wordpress-essentials-01b118af996bcc34",
       "relationshipType": "CONTAINS"
     },
     {
       "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-6f0c772be754f667",
+      "relatedSpdxElement": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-16ff52788a96cb89",
       "relationshipType": "CONTAINS"
     },
     {
@@ -296726,52 +295949,12 @@
     },
     {
       "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm-twentynineteen-d9dcf2731ac05862",
+      "relatedSpdxElement": "SPDXRef-Package-npm-twentytwentyfive-746a22896d6844e7",
       "relationshipType": "CONTAINS"
     },
     {
       "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm-twentynineteen-a5e5e027aa53c416",
-      "relationshipType": "CONTAINS"
-    },
-    {
-      "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm-twentytwenty-23728e4d76e3ab9e",
-      "relationshipType": "CONTAINS"
-    },
-    {
-      "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm-twentytwenty-f40c99926f813ce4",
-      "relationshipType": "CONTAINS"
-    },
-    {
-      "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm-twentytwentyfive-8f8b817101b6dd6e",
-      "relationshipType": "CONTAINS"
-    },
-    {
-      "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm-twentytwentyfive-a278ee0642334848",
-      "relationshipType": "CONTAINS"
-    },
-    {
-      "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm-twentytwentyone-2ee2016e06532e0b",
-      "relationshipType": "CONTAINS"
-    },
-    {
-      "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm-twentytwentyone-361682cf2cd643e6",
-      "relationshipType": "CONTAINS"
-    },
-    {
-      "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm-twentytwentytwo-dd786b9bdcfcd640",
-      "relationshipType": "CONTAINS"
-    },
-    {
-      "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm-twentytwentytwo-a3f1934fc7861b7a",
+      "relatedSpdxElement": "SPDXRef-Package-npm-twentytwentyfive-0e9844bb68ae63b5",
       "relationshipType": "CONTAINS"
     },
     {
