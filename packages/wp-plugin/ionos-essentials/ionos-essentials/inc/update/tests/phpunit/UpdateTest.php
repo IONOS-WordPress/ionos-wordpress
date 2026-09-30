@@ -10,7 +10,7 @@ namespace ionos\essentials;
  * @group essentials
  */
 class UpdateTest extends \WP_UnitTestCase {
-  private const S3_URL = 'https://s3-de-central.profitbricks.com/web-hosting/test/ionos-essentials-info.json';
+  private const S3_URL = 'https://s3-de-central.profitbricks.com/web-hosting/test/ionos-essentials.info.json';
 
   public function setUp(): void {
     parent::setUp();
