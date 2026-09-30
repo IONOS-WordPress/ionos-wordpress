@@ -8,7 +8,7 @@ defined('ABSPATH') || exit();
  * must-use plugins have no 'Update URI' header for wordpress to dispatch update checks to, so the
  * source is hardcoded here instead of being read from a header.
  */
-const INFO_JSON_URL = 'https://s3-de-central.profitbricks.com/web-hosting/__S3_FOLDER__/ionos-core-info.json';
+const INFO_JSON_URL = 'https://s3-de-central.profitbricks.com/web-hosting/__S3_FOLDER__/ionos-core.info.json';
 
 require_once __DIR__ . '/class-mu-plugin-upgrader.php';
 

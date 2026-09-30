@@ -13,7 +13,7 @@
 #   'latest' release
 #   - semantic versions in assets will be renamed to 'latest'
 #       (example: ionos-essentials-0.1.1-php7.4.zip => ionos-essentials-latest-php7.4.zip)
-#   - a info.json file will be created/updated for each plugin asset (ionos-essentials-0.1.1-php7.4.zip => ionos-essentials-info.json)
+#   - a info.json file will be created/updated for each plugin asset (ionos-essentials-0.1.1-php7.4.zip => ionos-essentials-info.json, on s3: ionos-essentials.info.json)
 #       containing { version, slug, package, sections: { changelog } }, where package points to the download url
 #       of the 'latest' flagged release (example: https://.../ionos-essentials-0.1.1-php7.4.zip)
 #   - every asset and a second, s3 flavoured info.json are mirrored to the s3 folder $S3_FOLDER
@@ -218,11 +218,11 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
     # promoting it under a mismatched $S3_FOLDER would publish a zip whose own header points
     # somewhere else, leaving installations resolving from that s3 folder unable to find updates
     #
-    # match this package's own '<plugin>-info.json' url specifically rather than any
+    # match this package's own '<plugin>.info.json' s3 url specifically rather than any
     # 'web-hosting/<folder>/' url in the archive - a package can bundle unrelated s3 urls (e.g.
     # ionos-core's marketplace/config.php) that would otherwise be matched first. '|| true' keeps
     # a zip with no match from aborting the script under 'set -eo pipefail'
-    BAKED_S3_FOLDER=$(unzip -p "$TARGET_ASSET_FILENAME" 2>/dev/null | grep -oE "$S3_BUCKET/[A-Za-z0-9_.-]+/${PLUGIN}-info\.json" | head -1 | cut -d/ -f2 || true)
+    BAKED_S3_FOLDER=$(unzip -p "$TARGET_ASSET_FILENAME" 2>/dev/null | grep -oE "$S3_BUCKET/[A-Za-z0-9_.-]+/${PLUGIN}\.info\.json" | head -1 | cut -d/ -f2 || true)
     if [[ -n "$BAKED_S3_FOLDER" && "$BAKED_S3_FOLDER" != "$S3_FOLDER" ]]; then
       error_message="refusing to promote asset '$ASSET' of pre-release '$PRE_RELEASE' - it was built with S3_FOLDER='$BAKED_S3_FOLDER' baked into its 'Update URI' header, but this run is promoting to S3_FOLDER='$S3_FOLDER'. Re-run pre-release.sh with S3_FOLDER='$S3_FOLDER' before promoting, or promote from an environment whose S3_FOLDER matches the artifact."
       [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
@@ -277,6 +277,8 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
       CHANGELOG_HTML=$(echo "$CHANGELOG" | npx marked)
 
       INFO_JSON_FILENAME="${PLUGIN}-info.json"
+      # the s3 flavour is named '<plugin>.info.json' (dot instead of dash) - the github one keeps its established name
+      S3_INFO_JSON_FILENAME="${PLUGIN}.info.json"
 
       # the github and the s3 flavour of the info.json differ in their 'package' download url
       # only - each flavour has to point at the plugin zip hosted next to it, so an installation
@@ -306,16 +308,16 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
         # mirroring is deliberately disabled for this run (no AWS secrets configured, see the
         # preflight above) - skip the s3 flavoured descriptor entirely instead of treating it as
         # a failure, matching the previous "github assets still promoted" behavior
-        ionos.wordpress.log_info "skipping the s3 flavoured $INFO_JSON_FILENAME - s3 mirroring is disabled for this run"
+        ionos.wordpress.log_info "skipping the s3 flavoured $S3_INFO_JSON_FILENAME - s3 mirroring is disabled for this run"
       elif [[ "$S3_ASSET_UPLOAD_OK" == "1" ]]; then
-        jq -n "${INFO_JSON_ARGS[@]}" --arg package "$S3_PACKAGE_URL" "$INFO_JSON_FILTER" > "$INFO_JSON_FILENAME"
+        jq -n "${INFO_JSON_ARGS[@]}" --arg package "$S3_PACKAGE_URL" "$INFO_JSON_FILTER" > "$S3_INFO_JSON_FILENAME"
 
-        # a failed upload here would leave the previous $INFO_JSON_FILENAME object in s3 intact -
+        # a failed upload here would leave the previous $S3_INFO_JSON_FILENAME object in s3 intact -
         # s3-first clients would keep seeing that stale-but-valid descriptor and never learn a new
         # version exists (they never reach the github fallback since s3 answered), so abort the
         # whole release instead of promoting with it left in place
-        if ! ionos.wordpress.s3_upload "$INFO_JSON_FILENAME" "$INFO_JSON_FILENAME"; then
-          error_message="Failed to upload the s3 flavoured $INFO_JSON_FILENAME - aborting to avoid leaving the previous, stale descriptor in place"
+        if ! ionos.wordpress.s3_upload "$S3_INFO_JSON_FILENAME" "$S3_INFO_JSON_FILENAME"; then
+          error_message="Failed to upload the s3 flavoured $S3_INFO_JSON_FILENAME - aborting to avoid leaving the previous, stale descriptor in place"
           [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
           ionos.wordpress.log_error "$error_message"
           exit 1
@@ -323,17 +325,17 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
       else
         # mirroring is enabled (AWS secrets are configured) but one or more package uploads still
         # failed - skipping the s3 flavoured descriptor here would leave the previous
-        # $INFO_JSON_FILENAME object in s3 intact and still valid, so s3-first clients would keep
+        # $S3_INFO_JSON_FILENAME object in s3 intact and still valid, so s3-first clients would keep
         # seeing it and never reach the github fallback - and the pre-release flag removal below
         # would then make this release unretriable. abort instead, matching the upload-failure
         # case above, so the pre-release flag stays set and a re-run can retry the mirror
-        error_message="aborting - one or more package uploads to s3 for asset '$ASSET' failed, so the s3 flavoured $INFO_JSON_FILENAME would either be skipped (leaving a stale descriptor in place) or point at an object that was never written"
+        error_message="aborting - one or more package uploads to s3 for asset '$ASSET' failed, so the s3 flavoured $S3_INFO_JSON_FILENAME would either be skipped (leaving a stale descriptor in place) or point at an object that was never written"
         [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
         ionos.wordpress.log_error "$error_message"
         exit 1
       fi
 
-      rm -f $INFO_JSON_FILENAME
+      rm -f $INFO_JSON_FILENAME $S3_INFO_JSON_FILENAME
     }
   done
 

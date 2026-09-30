@@ -172,7 +172,7 @@ To onboard a new package:
       `packages/wp-plugin/ionos-essentials/ionos-essentials/inc/update/index.php` into the new
       plugin. Adjust the hardcoded plugin folder name and changelog raw-URL path for the new
       plugin. Then set the plugin's `Update URI` header to
-      `https://s3-de-central.profitbricks.com/web-hosting/__S3_FOLDER__/<plugin>-info.json` -
+      `https://s3-de-central.profitbricks.com/web-hosting/__S3_FOLDER__/<plugin>.info.json` -
       `scripts/build.sh` substitutes the `__S3_FOLDER__` placeholder at build time (see
       [build](./2-build.md)). Keep the plugin's `LEGACY_INFO_JSON_URL` constant pointing at
       `https://github.com/IONOS-WordPress/ionos-wordpress/releases/download/%40ionos-wordpress%2Flatest/<plugin>-info.json`
@@ -201,7 +201,7 @@ updates from S3 instead of from GitHub releases.
   - the versioned name (example: `ionos-essentials-0.1.1-php7.4.zip`)
   - the `latest` name (example: `ionos-essentials-latest-php7.4.zip`)
   - the legacy alias (example: `ionos-essentials.latest.zip`)
-  - `<plugin>-info.json`
+  - `<plugin>.info.json` (note the dot - the GitHub flavour is `<plugin>-info.json`)
 
 - **Two `info.json` flavours**: the GitHub release `@ionos-wordpress/latest` and the S3 folder each
   get their own `<plugin>-info.json`. Both share the same `version`, `slug`, `last_updated` and
@@ -253,7 +253,7 @@ Instead, run it in a fork (see [Forking](./6-forking.md)):
 
    ```
    curl -sI https://s3-de-central.profitbricks.com/web-hosting/test/ionos-essentials-latest-php7.4.zip
-   curl -s  https://s3-de-central.profitbricks.com/web-hosting/test/ionos-essentials-info.json | jq .
+   curl -s  https://s3-de-central.profitbricks.com/web-hosting/test/ionos-essentials.info.json | jq .
    ```
 
 For local, single-machine runs, setting `S3_FOLDER=test` in the (gitignored) `.env.local` is
