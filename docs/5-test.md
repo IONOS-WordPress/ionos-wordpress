@@ -148,6 +148,93 @@ To test the production build:
 
 - Run the test command (this excludes editor tests, which are not available in the production build): `pnpm run test`
 
+# testing a plugin's self-update mechanism end to end
+
+PHPUnit already covers the resolver logic in isolation (see `inc/update/tests/phpunit/UpdateTest.php`
+in `ionos-essentials`, which is S3-first/GitHub-fallback, and `ionos-core`, which is S3-only). To
+verify the whole thing against a real, running WordPress instance instead - detection, download, and
+(for `ionos-core`) the actual file swap - use a second, isolated `TEST_PRODUCTION` stack rather than
+your regular dev container, since a real update installs into whatever directory the plugin is
+mounted from.
+
+## set up an isolated stack
+
+Add a throwaway stack config to `.env.local` (gitignored, never touches your regular stack):
+
+```
+CONTAINER_NAME=ionos-wordpress-update-test
+HTTP_PORT=8899
+SSH_PORT=2299
+MNT_HOME=./mnt/update-test
+```
+
+Then build and start against the production build:
+
+```
+pnpm build
+TEST_PRODUCTION=true pnpm start
+```
+
+## force an update check and drive it
+
+WordPress caches the `update_plugins` transient for ~12h, so clear it first:
+
+```
+pnpm cli transient delete update_plugins
+pnpm cli plugin list --update=available
+```
+
+- **`wp-plugin` packages** (e.g. `ionos-essentials`) go through WordPress core's own
+  `Plugin_Upgrader`: `pnpm cli plugin update <slug>`, or click **Update now** in
+  `http://localhost:8899/wp-admin` (admin / the `WP_PASSWORD` from `.env`).
+
+  Prerequisite: in the default stack, `stretch-extra` provisions `ionos-essentials` as a custom
+  plugin (see the `plugins` entry in
+  `packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/stretch-extra-config.php`), and its
+  `upgrader_pre_install` filter
+  (`packages/wp-mu-plugin/stretch-extra/stretch-extra/inc/secondary-plugin-dir.php:272-288`)
+  rejects any install/update attempt for a provisioned slug before `Plugin_Upgrader` downloads
+  anything. Remove (or comment out) that `ionos-essentials` entry and rebuild before running this
+  check, otherwise it fails at that filter instead of reaching the limitation below.
+
+  Known limitation: `Plugin_Upgrader`'s final step replaces the plugin's own top-level directory,
+  which in `TEST_PRODUCTION` mode is itself a bind-mount point - Docker will not let the container
+  remove/replace that, so the update always fails at "Removing the old version of the plugin..."
+  with "Could not remove the old plugin". This only proves detection and download from the
+  resolved URL work; it cannot prove the full install for a `wp-plugin`.
+
+- **`wp-mu-plugin` packages** (e.g. `ionos-core`) have no admin UI and update via a
+  `wp_update_plugins` cron hook instead:
+
+  ```
+  pnpm cli cron event run wp_update_plugins
+  ```
+
+  Our own `MU_Plugin_Upgrader` copies files into the existing mu-plugins directory rather than
+  replacing it wholesale, so this does not hit the same limitation and completes end to end.
+  Confirm with:
+
+  ```
+  pnpm cli eval 'echo get_file_data(WPMU_PLUGIN_DIR . "/ionos-core.php", ["v" => "Version"])["v"];'
+  ```
+
+Check `debug.log` for the resolver's own diagnostics either way (which source answered, and why a
+source was skipped):
+
+```
+docker exec ${CONTAINER_NAME:-ionos-wordpress-update-test} grep -i <plugin-slug> /htdocs/wp-content/debug.log
+```
+
+## cleanup
+
+```
+pnpm destroy
+```
+
+This only removes the isolated stack's own container, volume, and `${MNT_HOME}` overlay - your
+regular dev stack (and its `S3_FOLDER`/`CONTAINER_NAME`/etc.) is untouched throughout, since it
+never shares any of `.env.local`'s overridden values.
+
 # links
 
 - dozens of useful playwright/wordpress testcases to borrow from:

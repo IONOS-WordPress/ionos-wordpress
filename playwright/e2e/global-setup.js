@@ -4,11 +4,20 @@ import { copyFileSync, existsSync } from 'fs';
 
 import { RequestUtils } from '@wordpress/e2e-test-utils-playwright';
 
-import { dumpTestDb } from '../exec-test-cli';
+import { dumpTestDb, execTestCLI } from '../exec-test-cli';
 import { STORAGE_STATE_PATH, STORAGE_STATE_SNAPSHOT_PATH } from './storage-state';
 
 async function globalSetup(config) {
   const { baseURL } = config.projects[0].use;
+
+  // theme/plugin activation below fires WordPress's fire-and-forget wp-cron loopback request,
+  // which keeps writing to wp_options (e.g. via register_uninstall_hook()'s read-modify-write of
+  // the 'uninstall_plugins' option) after the *triggering* REST call has already returned. Left
+  // enabled, that lingering request can still be running when dumpTestDb()/restoreTestDb() below
+  // dump or reload wp_options moments later, corrupting the snapshot with a duplicate-key error
+  // on an unrelated later test (the exact flaky failure this fixes). Tests trigger any cron they
+  // actually need explicitly via `wp cron event run`, so disabling auto-spawn here is safe.
+  execTestCLI(`wp --quiet config set DISABLE_WP_CRON true --raw --type=constant`);
 
   const requestContext = await request.newContext({ baseURL });
 

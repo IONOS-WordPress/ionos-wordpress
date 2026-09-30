@@ -16,7 +16,8 @@ const IONOS_LOOP_REST_CLICK_ENDPOINT            = '/click';
 const IONOS_LOOP_REST_SSO_CLICK_ENDPOINT        = '/sso-click';
 const IONOS_LOOP_DATACOLLECTOR_REGISTRATION_URL = 'https://webapps-loop.hosting.ionos.com/api/register';
 const IONOS_LOOP_SSO_CLICK_OPTION               = 'ionos-loop-sso-click-timestamp';
-const IONOS_LOOP_SSO_CLICK_WINDOW_SECONDS       = 60; // 1 minute
+const IONOS_LOOP_SSO_CLICK_WINDOW_SECONDS       = 60;
+define('IONOS_LOOP_START_TIME', microtime(true));
 
 require_once __DIR__ . '/cron.php';
 require_once __DIR__ . '/rest-permission-callback.php';

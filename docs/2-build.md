@@ -138,6 +138,17 @@
 
 - prepackages the plugin resources in `./dist/`
 
+- replaces the placeholder `__S3_FOLDER__` in the prepackaged sources with the value of the
+  `S3_FOLDER` environment variable (see `.env`)
+
+  Plugins that update themselves use this placeholder in their `Update URI` header and in the URL
+  their update checker queries, so the built artifact points at the S3 folder the release will
+  actually publish it to.
+
+  In this repository that is always the production folder. A fork can build against a throwaway
+  folder by setting `S3_FOLDER` locally in `.env.local`, or, for its CI, through the `S3_FOLDER`
+  repository variable that both release workflows export. See [release](./7-release.md).
+
 - generates a `build-info` file that shows statistics about the build artifact, such as size and contained files.
 
   Use this information to check that everything is in its place and to track the size of the plugin.
