@@ -1,5 +1,11 @@
 # @ionos-wordpress/ionos-core
 
+## 0.5.2
+
+### Patch Changes
+
+- ae3f0de: resolve the S3 update descriptor from `<slug>.info.json`
+
 ## 0.5.1
 
 ### Patch Changes

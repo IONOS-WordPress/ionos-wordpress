@@ -3,14 +3,14 @@
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
   "name": "ionos-wordpress",
-  "documentNamespace": "https://anchore.com/syft/dir/ionos-wordpress-98633c8c-0c28-42fa-a512-ba50f6abd707",
+  "documentNamespace": "https://anchore.com/syft/dir/ionos-wordpress-9fc772e7-54bd-4a0a-9fbf-502b78f4ddd6",
   "creationInfo": {
     "licenseListVersion": "3.28",
     "creators": [
       "Organization: Anchore, Inc",
       "Tool: syft-1.52.0"
     ],
-    "created": "2026-09-30T09:58:06Z"
+    "created": "2026-09-30T14:04:11Z"
   },
   "packages": [
     {
@@ -35283,8 +35283,8 @@
     },
     {
       "name": "@ionos-wordpress/essentials",
-      "SPDXID": "SPDXRef-Package-npm--ionos-wordpress-essentials-01b118af996bcc34",
-      "versionInfo": "1.7.2",
+      "SPDXID": "SPDXRef-Package-npm--ionos-wordpress-essentials-92fe7dd316558932",
+      "versionInfo": "1.7.3",
       "supplier": "NOASSERTION",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
@@ -35296,44 +35296,44 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/essentials:\\@ionos-wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/essentials:\\@ionos-wordpress\\/essentials:1.7.3:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/essentials:\\@ionos_wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/essentials:\\@ionos_wordpress\\/essentials:1.7.3:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/essentials:\\@ionos-wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/essentials:\\@ionos-wordpress\\/essentials:1.7.3:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/essentials:\\@ionos_wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/essentials:\\@ionos_wordpress\\/essentials:1.7.3:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos-wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos-wordpress\\/essentials:1.7.3:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos_wordpress\\/essentials:1.7.2:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos_wordpress\\/essentials:1.7.3:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/%40ionos-wordpress/essentials@1.7.2"
+          "referenceLocator": "pkg:npm/%40ionos-wordpress/essentials@1.7.3"
         }
       ]
     },
     {
       "name": "@ionos-wordpress/ionos-core",
-      "SPDXID": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-16ff52788a96cb89",
-      "versionInfo": "0.5.1",
+      "SPDXID": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-e1e5e341cd29737e",
+      "versionInfo": "0.5.2",
       "supplier": "NOASSERTION",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
@@ -35345,57 +35345,57 @@
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos-core:\\@ionos-wordpress\\/ionos-core:0.5.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos-core:\\@ionos-wordpress\\/ionos-core:0.5.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos-core:\\@ionos_wordpress\\/ionos_core:0.5.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos-core:\\@ionos_wordpress\\/ionos_core:0.5.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos_core:\\@ionos-wordpress\\/ionos-core:0.5.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos_core:\\@ionos-wordpress\\/ionos-core:0.5.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos_core:\\@ionos_wordpress\\/ionos_core:0.5.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos_core:\\@ionos_wordpress\\/ionos_core:0.5.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos:\\@ionos-wordpress\\/ionos-core:0.5.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos:\\@ionos-wordpress\\/ionos-core:0.5.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos:\\@ionos_wordpress\\/ionos_core:0.5.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos-wordpress\\/ionos:\\@ionos_wordpress\\/ionos_core:0.5.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos:\\@ionos-wordpress\\/ionos-core:0.5.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos:\\@ionos-wordpress\\/ionos-core:0.5.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos:\\@ionos_wordpress\\/ionos_core:0.5.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos_wordpress\\/ionos:\\@ionos_wordpress\\/ionos_core:0.5.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos-wordpress\\/ionos-core:0.5.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos-wordpress\\/ionos-core:0.5.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "SECURITY",
           "referenceType": "cpe23Type",
-          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos_wordpress\\/ionos_core:0.5.1:*:*:*:*:*:*:*"
+          "referenceLocator": "cpe:2.3:a:\\@ionos:\\@ionos_wordpress\\/ionos_core:0.5.2:*:*:*:*:*:*:*"
         },
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/%40ionos-wordpress/ionos-core@0.5.1"
+          "referenceLocator": "pkg:npm/%40ionos-wordpress/ionos-core@0.5.2"
         }
       ]
     },
@@ -232036,11 +232036,11 @@
       "checksums": [
         {
           "algorithm": "SHA1",
-          "checksumValue": "c57741c7c1ca77c9856aca414779457d5e4ce519"
+          "checksumValue": "d9cdbf0cfe2df90ef5f651957b879555b41ba59f"
         },
         {
           "algorithm": "SHA256",
-          "checksumValue": "55386ff1c0bfb0a4580432b931b752c0c8bd34cfacb7116f4d4fe6bcfa32e2cb"
+          "checksumValue": "a9f8c90298c41bebd5fd7bfd53296f89c2dfaeb87781399adfd6418b79aefe15"
         }
       ],
       "licenseConcluded": "NOASSERTION",
@@ -232080,11 +232080,11 @@
       "checksums": [
         {
           "algorithm": "SHA1",
-          "checksumValue": "8e7ce874d44df62eb7819a087c4780cb63cd8d87"
+          "checksumValue": "f3d7fca8f091293f95950a77c94bd68b735cb504"
         },
         {
           "algorithm": "SHA256",
-          "checksumValue": "28ab0443a7f599a6dc9a070a8bb4e7dd1ee254b6d18e4703490a6b47a891793f"
+          "checksumValue": "802ac8e641058dd2f44e31c8bbd33f4f12db60fd1c03839825e98ea2dc039247"
         }
       ],
       "licenseConcluded": "NOASSERTION",
@@ -257473,12 +257473,6 @@
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
     {
-      "spdxElementId": "SPDXRef-Package-npm--ionos-wordpress-essentials-01b118af996bcc34",
-      "relatedSpdxElement": "SPDXRef-File-...ionos-essentials-package.json-1da92f1b68d49214",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
       "spdxElementId": "SPDXRef-Package-github-action-docker-login-action-01cb916bcc06c37f",
       "relatedSpdxElement": "SPDXRef-File-.github-workflows-integration.yaml-bf1b7ebfc2787f23",
       "relationshipType": "OTHER",
@@ -259281,12 +259275,6 @@
     {
       "spdxElementId": "SPDXRef-Package-npm--es-joy-jsdoccomment-16e7c81f93f49d06",
       "relatedSpdxElement": "SPDXRef-File-pnpm-lock.yaml-c895fb8e872e275f",
-      "relationshipType": "OTHER",
-      "comment": "evident-by: indicates the package's existence is evident by the given file"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-16ff52788a96cb89",
-      "relatedSpdxElement": "SPDXRef-File-...wp-mu-plugin-ionos-core-package.json-a744b7967dee2eab",
       "relationshipType": "OTHER",
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
@@ -269905,6 +269893,12 @@
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
     {
+      "spdxElementId": "SPDXRef-Package-npm--ionos-wordpress-essentials-92fe7dd316558932",
+      "relatedSpdxElement": "SPDXRef-File-...ionos-essentials-package.json-1da92f1b68d49214",
+      "relationshipType": "OTHER",
+      "comment": "evident-by: indicates the package's existence is evident by the given file"
+    },
+    {
       "spdxElementId": "SPDXRef-Package-npm-postcss-calc-9327fa116d517846",
       "relatedSpdxElement": "SPDXRef-File-...node-modules-postcss-calc-package.json-a56d581340d5b28c",
       "relationshipType": "OTHER",
@@ -276475,6 +276469,12 @@
       "comment": "evident-by: indicates the package's existence is evident by the given file"
     },
     {
+      "spdxElementId": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-e1e5e341cd29737e",
+      "relatedSpdxElement": "SPDXRef-File-...wp-mu-plugin-ionos-core-package.json-a744b7967dee2eab",
+      "relationshipType": "OTHER",
+      "comment": "evident-by: indicates the package's existence is evident by the given file"
+    },
+    {
       "spdxElementId": "SPDXRef-Package-npm--babel-plugin-transform-destructuring-e1f6758ec2cf6e27",
       "relatedSpdxElement": "SPDXRef-File-pnpm-lock.yaml-c895fb8e872e275f",
       "relationshipType": "OTHER",
@@ -281554,12 +281554,12 @@
     },
     {
       "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm--ionos-wordpress-essentials-01b118af996bcc34",
+      "relatedSpdxElement": "SPDXRef-Package-npm--ionos-wordpress-essentials-92fe7dd316558932",
       "relationshipType": "CONTAINS"
     },
     {
       "spdxElementId": "SPDXRef-DocumentRoot-Directory-ionos-wordpress",
-      "relatedSpdxElement": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-16ff52788a96cb89",
+      "relatedSpdxElement": "SPDXRef-Package-npm--ionos-wordpress-ionos-core-e1e5e341cd29737e",
       "relationshipType": "CONTAINS"
     },
     {

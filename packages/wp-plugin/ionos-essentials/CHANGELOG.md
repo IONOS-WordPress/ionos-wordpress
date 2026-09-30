@@ -1,5 +1,11 @@
 # @ionos-wordpress/essentials
 
+## 1.7.3
+
+### Patch Changes
+
+- ae3f0de: resolve the S3 update descriptor from `<slug>.info.json`
+
 ## 1.7.2
 
 ### Patch Changes
