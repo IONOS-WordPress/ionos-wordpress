@@ -19,9 +19,7 @@
 #   - every asset and a second, s3 flavoured info.json are mirrored to the s3 folder $S3_FOLDER
 #       (see .env). the s3 info.json points at the s3 copy of the zip instead of the github one,
 #       so plugins resolving their update from s3 also download from s3.
-#       on s3 the descriptor is named <plugin>.info.json (example: ionos-essentials.info.json); the
-#       previous <plugin>-info.json name is still uploaded with the same content, because
-#       already installed plugins have it baked into their update url
+#       on s3 the descriptor is named <plugin>.info.json (example: ionos-essentials.info.json)
 #   - remove the 'pre-release' flag from that release, individually, once its assets are processed
 # - after the loop, update the 'latest' release's notes once with a combined list of every
 #   package promoted this run
@@ -35,8 +33,7 @@
 # - the versioned name         (example: ionos-essentials-0.1.1-php7.4.zip)
 # - the 'latest' name          (example: ionos-essentials-latest-php7.4.zip)
 # - the legacy name            (example: ionos-essentials.latest.zip)
-# plus, per package, one <plugin>.info.json (example: ionos-essentials.info.json) and its legacy
-# alias <plugin>-info.json (example: ionos-essentials-info.json)
+# plus one <plugin>.info.json per package (example: ionos-essentials.info.json)
 #
 
 # bootstrap the environment
@@ -281,8 +278,7 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
       CHANGELOG_HTML=$(echo "$CHANGELOG" | npx marked)
 
       INFO_JSON_FILENAME="${PLUGIN}-info.json"
-      # s3 uses the '<plugin>.info.json' name. INFO_JSON_FILENAME is still uploaded to s3 as a legacy
-      # alias, since plugin versions installed before the rename request that name
+      # s3 uses the '<plugin>.info.json' name, github keeps '<plugin>-info.json'
       S3_INFO_JSON_FILENAME="${PLUGIN}.info.json"
 
       # the github and the s3 flavour of the info.json differ in their 'package' download url
@@ -321,9 +317,8 @@ for PRE_RELEASE in "${PRE_RELEASES[@]}"; do
         # s3-first clients would keep seeing that stale-but-valid descriptor and never learn a new
         # version exists (they never reach the github fallback since s3 answered), so abort the
         # whole release instead of promoting with it left in place
-        if ! ionos.wordpress.s3_upload "$INFO_JSON_FILENAME" "$S3_INFO_JSON_FILENAME" ||
-           ! ionos.wordpress.s3_upload "$INFO_JSON_FILENAME" "$INFO_JSON_FILENAME"; then
-          error_message="Failed to upload the s3 flavoured $S3_INFO_JSON_FILENAME (or its legacy alias $INFO_JSON_FILENAME) - aborting to avoid leaving the previous, stale descriptor in place"
+        if ! ionos.wordpress.s3_upload "$INFO_JSON_FILENAME" "$S3_INFO_JSON_FILENAME"; then
+          error_message="Failed to upload the s3 flavoured $S3_INFO_JSON_FILENAME - aborting to avoid leaving the previous, stale descriptor in place"
           [[ "${CI:-}" == "true" ]] && echo "::error:: $error_message"
           ionos.wordpress.log_error "$error_message"
           exit 1
