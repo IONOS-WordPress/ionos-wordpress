@@ -44,7 +44,7 @@ $links = $is_sfs ? [
 // Trailing slash
 // The first market is the default market
 $market_domains = $is_sfs ? [
-  'de'      => 'https://' . (get_option('sfs_panel_hostname') ?: 'stretch.ionos.org') . '/websites/' . get_option(
+  'de'      => 'https://' . (get_option('sfs_panel_hostname') ?: 'stretch.ionos.org') . '/websites' . get_option(
     'sfs_website_id'
   ) . '/',
 ] : [
