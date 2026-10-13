@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2eaf32176422ad3800069d76176b6d2f",
+    "content-hash": "19a1dc4c7e476f585288e9b472c1b4c3",
     "packages": [],
     "packages-dev": [
         {
@@ -359,16 +359,16 @@
         },
         {
             "name": "symplify/easy-coding-standard",
-            "version": "13.3.2",
+            "version": "13.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ecsphp/ecs.git",
-                "reference": "91848a91bfe688ee2c597c5d9f03d47c8855c743"
+                "reference": "596a55e076886e5f94346c939ba650b94f3d80a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ecsphp/ecs/zipball/91848a91bfe688ee2c597c5d9f03d47c8855c743",
-                "reference": "91848a91bfe688ee2c597c5d9f03d47c8855c743",
+                "url": "https://api.github.com/repos/ecsphp/ecs/zipball/596a55e076886e5f94346c939ba650b94f3d80a7",
+                "reference": "596a55e076886e5f94346c939ba650b94f3d80a7",
                 "shasum": ""
             },
             "require": {
@@ -400,9 +400,10 @@
                 "static analysis"
             ],
             "support": {
-                "source": "https://github.com/ecsphp/ecs/tree/13.3.2"
+                "issues": "https://github.com/ecsphp/ecs/issues",
+                "source": "https://github.com/ecsphp/ecs/tree/13.3.4"
             },
-            "time": "2026-09-07T09:07:35+00:00"
+            "time": "2026-10-09T09:07:45+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
