@@ -103,9 +103,12 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   readonly CORE_DIR="$(ionos.wordpress.core_dir "$WORDPRESS_VERSION")"
   # WordPress/WordPress (the release-build mirror used for WORDPRESS_VERSION) has no
   # tests/ directory at all - the test suite (WP_UnitTestCase and friends) only lives
-  # in WordPress/wordpress-develop, always on `trunk` regardless of the core version
-  # being tested.
-  readonly TESTS_DIR="${MNT_HOME}/wordpress-tests/trunk"
+  # in WordPress/wordpress-develop. it has to match the core: wordpress-develop is tagged per release
+  # (a release version like "7.1.2" is the tag of the same name), for an "owner/repo#ref" WORDPRESS_VERSION the
+  # ref is used. trunk would contain tests for core code the pinned core does not have yet
+  # (for example WP_Secrets_Store: "Interface not found" in the PHPUnit bootstrap).
+  readonly TESTS_REF="${WORDPRESS_VERSION##*#}"
+  readonly TESTS_DIR="${MNT_HOME}/wordpress-tests/$(ionos.wordpress.wordpress_version_dir "$WORDPRESS_VERSION")"
 
   # PHP_VERSION_OVERRIDE runs the test stack against a non-default PHP version
   # published in packages/docker/wordpress-alpine/image-matrix.json (currently just
@@ -185,13 +188,13 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   fi
 
   if [[ ! -d "$TESTS_DIR/tests/phpunit/includes" ]]; then
-    ionos.wordpress.log_info "cloning WordPress/wordpress-develop#trunk test suite into ${TESTS_DIR} ..."
+    ionos.wordpress.log_info "cloning WordPress/wordpress-develop#${TESTS_REF} test suite into ${TESTS_DIR} ..."
     rm -rf "$TESTS_DIR"
     # sparse/partial clone: a full checkout of wordpress-develop is ~229MB, but the only
     # thing ever consumed is tests/phpunit (~52MB), which is all that gets mounted into the
     # test container as /wordpress-phpunit below. blob:none + sparse-checkout fetches just
     # that subtree, which is markedly quicker than a full clone on every CI run.
-    git clone --quiet --depth 1 --branch trunk --filter=blob:none --sparse \
+    git clone --quiet --depth 1 --branch "$TESTS_REF" --filter=blob:none --sparse \
       https://github.com/WordPress/wordpress-develop.git "$TESTS_DIR"
     git -C "$TESTS_DIR" sparse-checkout set --no-cone tests/phpunit
   fi
