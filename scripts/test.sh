@@ -105,10 +105,19 @@ if [[ "${USE[@]}" =~ all|php|e2e ]]; then
   # tests/ directory at all - the test suite (WP_UnitTestCase and friends) only lives
   # in WordPress/wordpress-develop. it has to match the core: wordpress-develop is tagged per release
   # (a release version like "7.1.2" is the tag of the same name), for an "owner/repo#ref" WORDPRESS_VERSION the
-  # ref is used. trunk would contain tests for core code the pinned core does not have yet
-  # (for example WP_Secrets_Store: "Interface not found" in the PHPUnit bootstrap).
-  readonly TESTS_REF="${WORDPRESS_VERSION##*#}"
-  readonly TESTS_DIR="${MNT_HOME}/wordpress-tests/$(ionos.wordpress.wordpress_version_dir "$WORDPRESS_VERSION")"
+  # ref is used if wordpress-develop has it. trunk would contain tests for core code the pinned core does not have
+  # yet (for example WP_Secrets_Store: "Interface not found" in the PHPUnit bootstrap).
+  # a custom repository/ref (a fork-only branch, a custom core ref) usually does not exist in wordpress-develop: the
+  # tests ref falls back to trunk with a warning then. WORDPRESS_TESTS_REF overrides the ref explicitly
+  # (a tag, a branch or trunk).
+  TESTS_REF="${WORDPRESS_TESTS_REF:-${WORDPRESS_VERSION##*#}}"
+  if [[ -z "${WORDPRESS_TESTS_REF:-}" ]] && ! git ls-remote --exit-code --heads --tags \
+    https://github.com/WordPress/wordpress-develop.git "$TESTS_REF" &>/dev/null; then
+    ionos.wordpress.log_warn "ref '${TESTS_REF}' not found in WordPress/wordpress-develop - falling back to trunk tests (set WORDPRESS_TESTS_REF to override)"
+    TESTS_REF='trunk'
+  fi
+  readonly TESTS_REF
+  readonly TESTS_DIR="${MNT_HOME}/wordpress-tests/$(ionos.wordpress.wordpress_version_dir "$WORDPRESS_VERSION")-${TESTS_REF//[^A-Za-z0-9._-]/_}"
 
   # PHP_VERSION_OVERRIDE runs the test stack against a non-default PHP version
   # published in packages/docker/wordpress-alpine/image-matrix.json (currently just
