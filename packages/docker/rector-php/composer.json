@@ -1,6 +1,6 @@
 {
   "require-dev": {
-    "rector/rector": "2.6.7",
-    "php-stubs/wordpress-stubs": "7.1.0"
+    "rector/rector": "2.7.0",
+    "php-stubs/wordpress-stubs": "7.1.2"
   }
 }
