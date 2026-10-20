@@ -32,11 +32,14 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     }
 
     $result = \copy_dir($working_dir, WPMU_PLUGIN_DIR);
-    $wp_filesystem->delete($working_dir, true);
 
     if (\is_wp_error($result)) {
       return $result;
     }
+
+
+    $wp_filesystem->delete($working_dir, true);
+    
 
     return true;
   }
