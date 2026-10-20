@@ -38,8 +38,27 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     }
 
 
+    $plugin_dir = \trailingslashit(WPMU_PLUGIN_DIR) . 'ionos-core/';
+    $package_dir = \trailingslashit($working_dir) . 'ionos-core/';
+
+    // Guard: never remove files if the package does not contain the ionos-core directory
+    if (\is_dir($plugin_dir) && \is_dir($package_dir)) {
+      $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($plugin_dir, \FilesystemIterator::SKIP_DOTS));
+
+      foreach ($files as $file) {
+        if ($file->isDir()) {
+          continue;
+        }
+
+        $relative_path = substr($file->getPathname(), strlen($plugin_dir));
+        if (!\file_exists($package_dir . $relative_path)) {
+          $wp_filesystem->delete($file->getPathname());
+        }
+      }
+    }
+
     $wp_filesystem->delete($working_dir, true);
-    
+
 
     return true;
   }
