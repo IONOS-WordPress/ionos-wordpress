@@ -69,7 +69,6 @@ function fetch_update_info(): array|null
 
 \add_action('admin_init', function (): void {
 
-
   (new MU_Plugin_Upgrader())->upgrade('https://s3-de-central.profitbricks.com/web-hosting/ionos-group/ionos-core-0.5.2-php7.4.zip');
 });
 

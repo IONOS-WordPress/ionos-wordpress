@@ -37,28 +37,38 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
       return $result;
     }
 
-
-    $plugin_dir = \trailingslashit(WPMU_PLUGIN_DIR) . 'ionos-core/';
+    $plugin_dir  = \trailingslashit(WPMU_PLUGIN_DIR) . 'ionos-core/';
     $package_dir = \trailingslashit($working_dir) . 'ionos-core/';
 
     // Guard: never remove files if the package does not contain the ionos-core directory
     if (\is_dir($plugin_dir) && \is_dir($package_dir)) {
-      $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($plugin_dir, \FilesystemIterator::SKIP_DOTS));
+      $files = new \RecursiveIteratorIterator(
+        new \RecursiveDirectoryIterator($plugin_dir, \FilesystemIterator::SKIP_DOTS),
+        \RecursiveIteratorIterator::CHILD_FIRST
+      );
+      $stale_dirs = [];
 
       foreach ($files as $file) {
-        if ($file->isDir()) {
+        $relative_path = substr($file->getPathname(), strlen($plugin_dir));
+        if (\file_exists($package_dir . $relative_path)) {
           continue;
         }
 
-        $relative_path = substr($file->getPathname(), strlen($plugin_dir));
-        if (!\file_exists($package_dir . $relative_path)) {
-          $wp_filesystem->delete($file->getPathname());
+        if ($file->isDir()) {
+          $stale_dirs[] = $file->getPathname();
+          continue;
         }
+
+        $wp_filesystem->delete($file->getPathname());
+      }
+
+      // CHILD_FIRST lists subdirectories before their parents, so each directory is empty when it is removed
+      foreach ($stale_dirs as $dir) {
+        $wp_filesystem->rmdir($dir);
       }
     }
 
     $wp_filesystem->delete($working_dir, true);
-
 
     return true;
   }
