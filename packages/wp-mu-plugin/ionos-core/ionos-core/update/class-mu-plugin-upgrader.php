@@ -9,6 +9,18 @@ require_once ABSPATH . 'wp-admin/includes/file.php';
 
 class MU_Plugin_Upgrader extends \WP_Upgrader
 {
+  /**
+   * entries of the package that make up the mu-plugin (loader file and plugin directory)
+   */
+  protected const PLUGIN_ENTRIES = ['ionos-core', 'ionos-core.php'];
+
+  /**
+   * state of a running swap (null if no swap is in progress). Used to roll back if the request dies mid-swap.
+   *
+   * @var null|array{target_dir: string, staging_dir: string, backup_dir: string, backed_up: string[], installed: string[]}
+   */
+  private ?array $swap = null;
+
   public function __construct()
   {
     parent::__construct(new \Automatic_Upgrader_Skin());
@@ -39,16 +51,13 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
   }
 
   /**
-   * entries of the package that make up the mu-plugin (loader file and plugin directory)
-   */
-  protected const PLUGIN_ENTRIES = ['ionos-core', 'ionos-core.php'];
-
-  /**
    * replaces the installed plugin entries by the ones from $source_dir.
    *
    * the new version is staged next to the live plugin first, the live entries are then moved
-   * to a backup directory and the staged entries are moved in place (renames only).
-   * if anything fails the previous version is restored.
+   * to a backup directory and the staged entries are moved in place. While swapping the site is
+   * in maintenance mode.
+   * if anything fails - including the request dying in the middle of the swap (see restore_on_shutdown()) -
+   * the previous version is restored.
    *
    * @return true|\WP_Error
    */
@@ -59,10 +68,34 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     $source_dir = \trailingslashit($source_dir);
     $target_dir = \trailingslashit($target_dir);
 
+    // the swap works on local paths, which only match the paths seen by $wp_filesystem if it accesses the disk directly
+    if ('direct' !== $wp_filesystem->method) {
+      return new \WP_Error(
+        'ionos_core_update_unsupported_filesystem',
+        sprintf("Updating requires the 'direct' filesystem method (is '%s')", $wp_filesystem->method)
+      );
+    }
+
     foreach (static::PLUGIN_ENTRIES as $entry) {
       if (! \file_exists($source_dir . $entry)) {
-        return new \WP_Error('ionos_core_update_invalid_package', "Package does not contain '$entry'");
+        return new \WP_Error('ionos_core_update_invalid_package', "Package does not contain '{$entry}'");
       }
+    }
+
+    if ('' === (\get_file_data($source_dir . 'ionos-core.php', [
+      'version' => 'Version',
+    ])['version'] ?? '')) {
+      return new \WP_Error('ionos_core_update_invalid_package', "Package's ionos-core.php has no version header");
+    }
+
+    // staging needs as much space as the package, the factor 2 leaves some headroom
+    $required_space = 2 * $this->directory_size($source_dir);
+    $free_space     = $this->free_space($target_dir);
+    if (null !== $free_space && $free_space < $required_space) {
+      return new \WP_Error(
+        'ionos_core_update_disk_space',
+        sprintf('Not enough disk space to update (required: %d bytes, available: %d bytes)', $required_space, $free_space)
+      );
     }
 
     $suffix      = \uniqid();
@@ -83,14 +116,23 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     foreach (static::PLUGIN_ENTRIES as $entry) {
       if (! \file_exists($staging_dir . $entry)) {
         $wp_filesystem->delete($staging_dir, true);
-        return new \WP_Error('ionos_core_update_stage_failed', "Staging of '$entry' failed");
+        return new \WP_Error('ionos_core_update_stage_failed', "Staging of '{$entry}' failed");
       }
     }
 
-    // swap: live -> backup, staging -> live. $backed_up/$installed track what has to be reverted.
-    $backed_up = [];
-    $installed = [];
-    $error     = null;
+    // swap: live -> backup, staging -> live. $this->swap tracks what has to be reverted.
+    $this->swap = [
+      'target_dir'  => $target_dir,
+      'staging_dir' => $staging_dir,
+      'backup_dir'  => $backup_dir,
+      'backed_up'   => [],
+      'installed'   => [],
+    ];
+    // also roll back if the request is killed (fatal error, timeout, ...) before the swap is finished
+    \add_action('shutdown', [$this, 'restore_on_shutdown'], 10, 0);
+    $this->set_maintenance_mode(true);
+
+    $error = null;
 
     if (! $wp_filesystem->mkdir($backup_dir)) {
       $error = 'Could not create backup directory';
@@ -100,10 +142,10 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
       foreach (static::PLUGIN_ENTRIES as $entry) {
         if (\file_exists($target_dir . $entry)) {
           if (! $this->move($target_dir . $entry, $backup_dir . $entry)) {
-            $error = "Could not back up '$entry'";
+            $error = "Could not back up '{$entry}'";
             break;
           }
-          $backed_up[] = $entry;
+          $this->swap['backed_up'][] = $entry;
         }
       }
     }
@@ -111,16 +153,20 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     if (! $error) {
       foreach (static::PLUGIN_ENTRIES as $entry) {
         if (! $this->move($staging_dir . $entry, $target_dir . $entry)) {
-          $error = "Could not install '$entry'";
+          $error = "Could not install '{$entry}'";
           break;
         }
-        $installed[] = $entry;
+        $this->swap['installed'][] = $entry;
       }
     }
 
     if ($error) {
-      return $this->rollback($error, $target_dir, $staging_dir, $backup_dir, $backed_up, $installed);
+      return $this->rollback($error);
     }
+
+    $this->swap = null;
+    \remove_action('shutdown', [$this, 'restore_on_shutdown'], 10);
+    $this->set_maintenance_mode(false);
 
     $wp_filesystem->delete($staging_dir, true);
     $wp_filesystem->delete($backup_dir, true);
@@ -129,17 +175,36 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
   }
 
   /**
-   * restores the previous plugin version after a failed swap.
+   * shutdown handler: restores the previous version if the request ended while a swap was still in progress
+   * (e.g. fatal error or timeout). Does nothing if no swap is in progress.
    */
-  private function rollback(
-    string $error,
-    string $target_dir,
-    string $staging_dir,
-    string $backup_dir,
-    array $backed_up,
-    array $installed
-  ): \WP_Error {
+  public function restore_on_shutdown(): void
+  {
+    if (null === $this->swap) {
+      return;
+    }
+
+    $result = $this->rollback('Update was interrupted');
+    \error_log('ionos-core: ' . $result->get_error_message());
+  }
+
+  /**
+   * restores the previous plugin version after a failed or interrupted swap.
+   */
+  private function rollback(string $error): \WP_Error
+  {
     global $wp_filesystem;
+
+    [
+      'target_dir'  => $target_dir,
+      'staging_dir' => $staging_dir,
+      'backup_dir'  => $backup_dir,
+      'backed_up'   => $backed_up,
+      'installed'   => $installed,
+    ] = $this->swap;
+
+    $this->swap = null;
+    \remove_action('shutdown', [$this, 'restore_on_shutdown'], 10);
 
     $restore_failures = [];
 
@@ -157,6 +222,7 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
       }
     }
 
+    $this->set_maintenance_mode(false);
     $wp_filesystem->delete($staging_dir, true);
 
     if ($restore_failures) {
@@ -173,10 +239,46 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
   }
 
   /**
-   * renames a file or directory (atomic on the same filesystem). Separate method to be able to simulate failures in tests.
+   * moves a file or directory using WordPress core's mechanics (rename, falls back to copy+delete).
+   * Separate method to be able to simulate failures in tests.
    */
   protected function move(string $from, string $to): bool
   {
-    return @rename($from, $to);
+    global $wp_filesystem;
+
+    if (\is_dir($from)) {
+      return true === \move_dir($from, $to, false);
+    }
+
+    return (bool) $wp_filesystem->move($from, $to, false);
+  }
+
+  /**
+   * free disk space in bytes of the filesystem containing $dir or null if unknown.
+   * Separate method to be able to simulate a full disk in tests.
+   */
+  protected function free_space(string $dir): ?float
+  {
+    $free = @\disk_free_space($dir);
+    return false === $free ? null : $free;
+  }
+
+  /**
+   * enables/disables the maintenance mode (core's .maintenance file).
+   * Separate method to be able to avoid touching the site in tests.
+   */
+  protected function set_maintenance_mode(bool $enable): void
+  {
+    $this->maintenance_mode($enable);
+  }
+
+  private function directory_size(string $dir): int
+  {
+    $size  = 0;
+    $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS));
+    foreach ($files as $file) {
+      $size += $file->getSize();
+    }
+    return $size;
   }
 }

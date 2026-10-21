@@ -3,7 +3,7 @@
 namespace ionos\ionos_core;
 
 /**
- * test double allowing to make selected renames fail
+ * test double allowing to make selected moves fail or throw, to simulate a full disk and to record maintenance mode changes
  */
 class Failing_MU_Plugin_Upgrader extends MU_Plugin_Upgrader {
   /** @var string[] substrings of destination paths for which move() fails */
@@ -12,7 +12,27 @@ class Failing_MU_Plugin_Upgrader extends MU_Plugin_Upgrader {
   /** @var ?callable(string, string): bool if set and returning true, move() fails */
   public $fail_when = null;
 
+  /** @var ?callable(string, string): bool if set and returning true, move() throws (simulates the request dying) */
+  public $throw_when = null;
+
+  public ?float $free_space = null;
+
+  /** @var bool[] recorded maintenance mode changes */
+  public array $maintenance = [];
+
+  protected function free_space(string $dir): ?float {
+    return $this->free_space ?? parent::free_space($dir);
+  }
+
+  protected function set_maintenance_mode(bool $enable): void {
+    $this->maintenance[] = $enable;
+  }
+
   protected function move(string $from, string $to): bool {
+    if ($this->throw_when && ($this->throw_when)($from, $to)) {
+      throw new \RuntimeException('simulated fatal error');
+    }
+
     if ($this->fail_when && ($this->fail_when)($from, $to)) {
       return false;
     }
@@ -49,7 +69,7 @@ class MuPluginUpgraderTest extends \WP_UnitTestCase {
     $this->target = $this->base . '/mu-plugins/';
 
     // new version: contains a new file and lacks the stale one
-    $this->write($this->source . 'ionos-core.php', 'new loader');
+    $this->write($this->source . 'ionos-core.php', "<?php\n/**\n * Version: 9.9.9\n */\n// new loader");
     $this->write($this->source . 'ionos-core/index.php', 'new index');
     $this->write($this->source . 'ionos-core/added.php', 'added');
 
@@ -94,7 +114,7 @@ class MuPluginUpgraderTest extends \WP_UnitTestCase {
     $result = (new MU_Plugin_Upgrader())->install($this->source, $this->target);
 
     $this->assertTrue($result);
-    $this->assertSame('new loader', file_get_contents($this->target . 'ionos-core.php'));
+    $this->assertStringContainsString('// new loader', file_get_contents($this->target . 'ionos-core.php'));
     $this->assertSame('new index', file_get_contents($this->target . 'ionos-core/index.php'));
     $this->assertFileExists($this->target . 'ionos-core/added.php');
     $this->assertFileDoesNotExist($this->target . 'ionos-core/stale');
@@ -109,7 +129,7 @@ class MuPluginUpgraderTest extends \WP_UnitTestCase {
     $wp_filesystem->delete($this->target . 'ionos-core', true);
 
     $this->assertTrue((new MU_Plugin_Upgrader())->install($this->source, $this->target));
-    $this->assertSame('new loader', file_get_contents($this->target . 'ionos-core.php'));
+    $this->assertStringContainsString('// new loader', file_get_contents($this->target . 'ionos-core.php'));
   }
 
   public function test_package_without_plugin_directory_is_rejected_and_nothing_changes(): void {
@@ -159,5 +179,139 @@ class MuPluginUpgraderTest extends \WP_UnitTestCase {
     $this->assertWPError($result);
     $this->assertSame('ionos_core_update_rollback_failed', $result->get_error_code());
     $this->assertNotEmpty(glob($this->target . '.ionos-core-backup-*'), 'backup must be kept for manual recovery');
+  }
+
+  public function test_maintenance_mode_is_enabled_during_swap_and_disabled_afterwards(): void {
+    $upgrader = new Failing_MU_Plugin_Upgrader();
+
+    $this->assertTrue($upgrader->install($this->source, $this->target));
+    $this->assertSame([true, false], $upgrader->maintenance);
+  }
+
+  public function test_maintenance_mode_is_disabled_after_rollback(): void {
+    $upgrader            = new Failing_MU_Plugin_Upgrader();
+    $upgrader->fail_when = fn (string $from, string $to) => str_contains($from, '.ionos-core-staging-');
+
+    $this->assertWPError($upgrader->install($this->source, $this->target));
+    $this->assertSame([true, false], $upgrader->maintenance);
+  }
+
+  public function test_not_enough_disk_space_is_rejected_and_nothing_changes(): void {
+    $upgrader             = new Failing_MU_Plugin_Upgrader();
+    $upgrader->free_space = 0.0;
+
+    $result = $upgrader->install($this->source, $this->target);
+
+    $this->assertWPError($result);
+    $this->assertSame('ionos_core_update_disk_space', $result->get_error_code());
+    $this->assertOldVersionIntact();
+    $this->assertNoLeftovers();
+    $this->assertSame([], $upgrader->maintenance);
+  }
+
+  public function test_interrupted_swap_is_rolled_back_on_shutdown(): void {
+    $upgrader = new Failing_MU_Plugin_Upgrader();
+    // the request dies while the staged loader is moved in place: the new directory is already live, the old loader is in the backup
+    $upgrader->throw_when = fn (string $from, string $to) => str_contains($from, '.ionos-core-staging-') && str_ends_with($to, '/mu-plugins/ionos-core.php');
+
+    try {
+      $upgrader->install($this->source, $this->target);
+      $this->fail('exception expected');
+    } catch (\RuntimeException $e) {
+      // simulated fatal error
+    }
+
+    // half installed: new directory live, loader missing
+    $this->assertSame('new index', file_get_contents($this->target . 'ionos-core/index.php'));
+    $this->assertFileDoesNotExist($this->target . 'ionos-core.php');
+    $this->assertNotFalse(has_action('shutdown', [$upgrader, 'restore_on_shutdown']));
+
+    $upgrader->restore_on_shutdown();
+
+    $this->assertOldVersionIntact();
+    $this->assertNoLeftovers();
+    $this->assertSame([true, false], $upgrader->maintenance);
+    $this->assertFalse(has_action('shutdown', [$upgrader, 'restore_on_shutdown']));
+  }
+
+  public function test_shutdown_handler_does_nothing_after_successful_install(): void {
+    $upgrader = new Failing_MU_Plugin_Upgrader();
+    $this->assertTrue($upgrader->install($this->source, $this->target));
+
+    $upgrader->restore_on_shutdown();
+
+    $this->assertStringContainsString('// new loader', file_get_contents($this->target . 'ionos-core.php'));
+    $this->assertFalse(has_action('shutdown', [$upgrader, 'restore_on_shutdown']));
+  }
+
+  public function test_real_fatal_error_mid_swap_is_rolled_back_on_shutdown(): void {
+    $process = proc_open(
+      [PHP_BINARY, __DIR__ . '/fixtures/fatal-during-swap.php', ABSPATH, $this->source, $this->target],
+      [1 => ['pipe', 'w'], 2 => ['pipe', 'w']],
+      $pipes
+    );
+    $output   = stream_get_contents($pipes[1]) . stream_get_contents($pipes[2]);
+    $exitcode = proc_close($process);
+
+    $this->assertNotSame(0, $exitcode, 'the child process must have died with a fatal error: ' . $output);
+    $this->assertStringContainsString('undefined_function_that_kills_the_request', $output);
+    $this->assertOldVersionIntact();
+    $this->assertNoLeftovers();
+  }
+
+  public function test_package_without_version_header_is_rejected(): void {
+    file_put_contents($this->source . 'ionos-core.php', '<?php // no header');
+
+    $result = (new Failing_MU_Plugin_Upgrader())->install($this->source, $this->target);
+
+    $this->assertWPError($result);
+    $this->assertSame('ionos_core_update_invalid_package', $result->get_error_code());
+    $this->assertOldVersionIntact();
+    $this->assertNoLeftovers();
+  }
+
+  public function test_non_direct_filesystem_is_rejected_and_nothing_changes(): void {
+    global $wp_filesystem;
+    $method                = $wp_filesystem->method;
+    $wp_filesystem->method = 'ftpext';
+
+    try {
+      $result = (new Failing_MU_Plugin_Upgrader())->install($this->source, $this->target);
+    } finally {
+      $wp_filesystem->method = $method;
+    }
+
+    $this->assertWPError($result);
+    $this->assertSame('ionos_core_update_unsupported_filesystem', $result->get_error_code());
+    $this->assertOldVersionIntact();
+    $this->assertNoLeftovers();
+  }
+
+  public function test_move_works_across_filesystems(): void {
+    $other = '/dev/shm/ionos-core-upgrader-' . uniqid() . '/';
+    if (! is_dir('/dev/shm') || ! is_writable('/dev/shm') || stat('/dev/shm')['dev'] === stat($this->base)['dev']) {
+      $this->markTestSkipped('no second filesystem available');
+    }
+
+    mkdir($other);
+    $upgrader = new class () extends MU_Plugin_Upgrader {
+      public function move_public(string $from, string $to): bool {
+        return $this->move($from, $to);
+      }
+    };
+
+    try {
+      $this->assertTrue($upgrader->move_public($this->target . 'ionos-core', $other . 'ionos-core'));
+      $this->assertTrue($upgrader->move_public($this->target . 'ionos-core.php', $other . 'ionos-core.php'));
+
+      $this->assertSame('old index', file_get_contents($other . 'ionos-core/index.php'));
+      $this->assertFileExists($other . 'ionos-core/stale/stale.php');
+      $this->assertSame('old loader', file_get_contents($other . 'ionos-core.php'));
+      $this->assertFileDoesNotExist($this->target . 'ionos-core');
+      $this->assertFileDoesNotExist($this->target . 'ionos-core.php');
+    } finally {
+      global $wp_filesystem;
+      $wp_filesystem->delete($other, true);
+    }
   }
 }
