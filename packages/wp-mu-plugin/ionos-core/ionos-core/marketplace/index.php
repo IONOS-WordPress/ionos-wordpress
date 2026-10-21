@@ -16,6 +16,8 @@ defined('ABSPATH') || exit();
 
 const MAX_ITEMS_PER_PAGE = 12;
 
+require_once __DIR__ . '/extendify.php';
+
 // Uninstall legacy ionos-marketplace plugin when ionos-core marketplace is active
 \add_action('admin_init', function (): void {
   $legacy_plugin = 'ionos-marketplace/marketplace.php';
@@ -35,17 +37,16 @@ const MAX_ITEMS_PER_PAGE = 12;
 
 function get_config()
 {
-  static $config = null;
-
-  if ($config === null) {
+  static $config;
+  if (! isset($config)) {
     $base_config = require_once __DIR__ . '/config.php';
     $tenant      = strtolower(\get_option('ionos_group_brand', 'ionos'));
 
     $tenant_additions = $base_config['tenant_additions'][$tenant] ?? null;
 
     $config = [
-      'ionos_plugins'         => $base_config['ionos_plugins']         ?? [],
-      'wordpress_org_plugins' => $base_config['wordpress_org_plugins'] ?? [],
+      'ionos_plugins'         => $base_config['ionos_plugins']                 ?? [],
+      'wordpress_org_plugins' => $base_config['wordpress_org_plugins']         ?? [],
     ];
 
     if ($tenant_additions) {
@@ -62,7 +63,7 @@ function get_config()
         unset($config['ionos_plugins'][$slug]);
       }
 
-      foreach ($tenant_additions['additional_wordpress_org_plugins'] as $slug) {
+      foreach ($tenant_additions['additional_wordpress_org_plugins'] ?? [] as $slug) {
         if (! \in_array($slug, $config['wordpress_org_plugins'], true)) {
           $config['wordpress_org_plugins'][] = $slug;
         }
@@ -109,7 +110,9 @@ function get_localized_config(string $key): mixed
     $ionos_plugins_list = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
     $wordpress_plugins  = [];
 
-    $slugs = $config['wordpress_org_plugins'] ?? [];
+    $site_assistant       = extendify\get_site_assistant_info();
+    $ionos_plugins_list[] = $site_assistant;
+    $slugs                = $config['wordpress_org_plugins'] ?? [];
     if (! empty($slugs)) {
       $field_query_string = \http_build_query([
         'fields[short_description]' => 'short_description',
@@ -208,7 +211,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
     }
 
     $decoded_data = json_decode($response->body, true);
-    if ($decoded_data===null) {
+    if ($decoded_data === null) {
       continue;
     }
 
@@ -217,17 +220,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
   }
 
   \array_walk($ionos_plugins, function (array &$plugin) use ($remote_data): void {
-    $slug                      = $plugin['slug'] ?? '';
-    $plugin['rating']          = 0;
-    $plugin['ratings']         = [
-      '5' => 0,
-      '4' => 0,
-      '3' => 0,
-      '2' => 0,
-      '1' => 0,
-    ];
-    $plugin['num_ratings']     = 0;
-    $plugin['active_installs'] = 0;
+    $slug = $plugin['slug'] ?? '';
 
     $plugin['last_updated'] = $remote_data[$slug]['last_updated'] ?? \date('Y-m-d', \strtotime('-2 years'));
     $plugin['version']      = $remote_data[$slug]['version']      ?? '';
@@ -269,6 +262,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
         div[class*="plugin-card-ionos-"],
         div.plugin-card-beyond-seo,
         div.plugin-card-01-ext-ion8dhas7-stretch,
+        div[class*="plugin-card-01-ext-"],
         div.plugin-card-woocommerce-german-market-light {
           .column-downloaded,
           .column-rating {
@@ -276,11 +270,18 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
           }
         }
 
-        div.plugin-card-01-ext-ion8dhas7-stretch{
+        div.plugin-card-01-ext-ion8dhas7-stretch,
+        div[class*="plugin-card-01-ext-"]{
           .plugin-action-buttons{
             .open-plugin-details-modal{
               display: none;
             }
+          }
+        }
+
+        div[class*="plugin-card-01-ext-"] {
+          .column-updated {
+            display: none;
           }
         }
       </style>
@@ -303,7 +304,7 @@ function gather_infos_for_ionos_plugins(array $ionos_plugins): array
       return $result;
     }
 
-    // No info_url means that there is no additional info to fetch, so we can return the basic info from config.php. Site Assistant uses this.
+    // No info_url means that there is no additional info to fetch, so we can return the basic info from config.php.
     $plugin_info = $ionos_plugins[$args->slug];
     if (! isset($plugin_info['info_url'])) {
       return (object) $ionos_plugins[$args->slug];
@@ -418,8 +419,14 @@ function render_changelog(array $changelog): string
       return $result;
     }
 
-    $config        = get_config();
-    $ionos_plugins = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
+    static $ionos_plugins_cache = null;
+
+    if ($ionos_plugins_cache === null) {
+      $config                = get_config();
+      $ionos_plugins_cache   = gather_infos_for_ionos_plugins($config['ionos_plugins'] ?? []);
+    }
+
+    $ionos_plugins = $ionos_plugins_cache;
 
     if ($args->search !== 'ionos') {
       $ionos_plugins = array_filter(
