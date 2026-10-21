@@ -91,6 +91,8 @@
 
 .button {
   margin-top: 15px;
+  /* exos switches to a 2px border on hover - keep it constant so hovering never resizes the surrounding card */
+  border-width: var(--button-border-width, 2px);
 }
 
 .info-text {
