@@ -55,6 +55,13 @@ if (file_exists($theme_file)) {
 
 ?>
 
+<?php
+// core styles buttons via `.wp-core-ui .button` (more specific than exos' `.button--*` rules and different per
+// WordPress version). the class is hardcoded in admin-header.php (not filterable), so drop it client side
+// to let the exos buttons render the same on every WordPress version
+echo '<script>document.body.classList.remove("wp-core-ui");</script>';
+?>
+
 <div class="wrapper page-section">
   <div class="header">
     <img class="logo" src="<?php echo \esc_attr(
