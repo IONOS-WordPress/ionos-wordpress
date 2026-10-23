@@ -112,7 +112,8 @@ if (\get_option('ionos_essentials_dashboard_mode', true)) {
 
 add_filter('admin_body_class', function ($classes) {
   if (ADMIN_PAGE_HOOK === \get_current_screen()?->id) {
-    $classes .= ' ionos-dashboard';
+    // lms tutor plugin workaround : trailing space to ensure proper class separation
+    $classes .= ' ionos-dashboard ';
   }
   return $classes;
 });
