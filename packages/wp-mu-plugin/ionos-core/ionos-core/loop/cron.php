@@ -16,12 +16,10 @@ use const ionos\ionos_core\loop\IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS;
     return;
   }
 
-  if (time() - _get_instance_creation_date() < DAY_IN_SECONDS) {
-    _register_at_datacollector();
-    return;
-  }
+  // Delete the random delay after ionos-core is rolled out to everyone.
+  $delay = (time() - _get_instance_creation_date() < DAY_IN_SECONDS) ? 0 : rand(0, WEEK_IN_SECONDS);
 
-  \wp_schedule_event(time() + WEEK_IN_SECONDS, 'weekly', IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS);
+  \wp_schedule_event(time() + $delay, 'weekly', IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS);
 });
 
 \add_action(IONOS_LOOP_DATACOLLECTOR_LAST_ACCESS, function () {
