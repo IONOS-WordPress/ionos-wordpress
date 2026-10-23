@@ -15,7 +15,15 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
   protected const PLUGIN_ENTRIES = ['ionos-core', 'ionos-core.php'];
 
   /**
+   * the entry of PLUGIN_ENTRIES that has to be a directory (all others have to be regular files)
+   */
+  protected const PLUGIN_DIRECTORY = 'ionos-core';
+
+  /**
    * state of a running swap (null if no swap is in progress). Used to roll back if the request dies mid-swap.
+   *
+   * 'backed_up' and 'installed' list the entries whose move was *attempted*. They are recorded before the move,
+   * because the request can die (or the move can fail half way) after the disk changed but before the move returned.
    *
    * @var null|array{target_dir: string, staging_dir: string, backup_dir: string, backed_up: string[], installed: string[]}
    */
@@ -77,7 +85,7 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     }
 
     foreach (static::PLUGIN_ENTRIES as $entry) {
-      if (! \file_exists($source_dir . $entry)) {
+      if (! $this->entry_exists($source_dir, $entry)) {
         return new \WP_Error('ionos_core_update_invalid_package', "Package does not contain '{$entry}'");
       }
     }
@@ -114,7 +122,7 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     }
 
     foreach (static::PLUGIN_ENTRIES as $entry) {
-      if (! \file_exists($staging_dir . $entry)) {
+      if (! $this->entry_exists($staging_dir, $entry)) {
         $wp_filesystem->delete($staging_dir, true);
         return new \WP_Error('ionos_core_update_stage_failed', "Staging of '{$entry}' failed");
       }
@@ -141,22 +149,22 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
     if (! $error) {
       foreach (static::PLUGIN_ENTRIES as $entry) {
         if (\file_exists($target_dir . $entry)) {
+          $this->swap['backed_up'][] = $entry;
           if (! $this->move($target_dir . $entry, $backup_dir . $entry)) {
             $error = "Could not back up '{$entry}'";
             break;
           }
-          $this->swap['backed_up'][] = $entry;
         }
       }
     }
 
     if (! $error) {
       foreach (static::PLUGIN_ENTRIES as $entry) {
+        $this->swap['installed'][] = $entry;
         if (! $this->move($staging_dir . $entry, $target_dir . $entry)) {
           $error = "Could not install '{$entry}'";
           break;
         }
-        $this->swap['installed'][] = $entry;
       }
     }
 
@@ -208,18 +216,31 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
 
     $restore_failures = [];
 
-    // remove what was already installed from the new version
+    // remove what was (or may have been - partially) installed from the new version.
+    // All live entries are backed up before the first install, so anything in the way here belongs to the new version.
     foreach ($installed as $entry) {
-      if (! $wp_filesystem->delete($target_dir . $entry, true)) {
+      if (\file_exists($target_dir . $entry) && ! $wp_filesystem->delete($target_dir . $entry, true)) {
         $restore_failures[] = $entry;
       }
     }
 
-    // put the previous version back
+    // put the previous version back. The disk is inspected instead of trusting the bookkeeping:
+    // - backup present, live entry missing: move it back
+    // - backup missing, live entry present: the backup move never happened, the live entry is the previous version
+    // - anything else cannot be confirmed (e.g. half copied backup) and keeps the backup directory
     foreach ($backed_up as $entry) {
-      if (\file_exists($target_dir . $entry) || ! $this->move($backup_dir . $entry, $target_dir . $entry)) {
-        $restore_failures[] = $entry;
+      $has_backup = \file_exists($backup_dir . $entry);
+      $has_live   = \file_exists($target_dir . $entry);
+
+      if ($has_backup && ! $has_live) {
+        if ($this->move($backup_dir . $entry, $target_dir . $entry)) {
+          continue;
+        }
+      } elseif (! $has_backup && $has_live) {
+        continue;
       }
+
+      $restore_failures[] = $entry;
     }
 
     $this->set_maintenance_mode(false);
@@ -270,6 +291,14 @@ class MU_Plugin_Upgrader extends \WP_Upgrader
   protected function set_maintenance_mode(bool $enable): void
   {
     $this->maintenance_mode($enable);
+  }
+
+  /**
+   * whether the package/staging directory contains $entry with the expected type (directory or regular file)
+   */
+  private function entry_exists(string $dir, string $entry): bool
+  {
+    return static::PLUGIN_DIRECTORY === $entry ? \is_dir($dir . $entry) : \is_file($dir . $entry);
   }
 
   private function directory_size(string $dir): int

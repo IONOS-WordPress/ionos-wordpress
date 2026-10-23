@@ -15,6 +15,12 @@ class Failing_MU_Plugin_Upgrader extends MU_Plugin_Upgrader {
   /** @var ?callable(string, string): bool if set and returning true, move() throws (simulates the request dying) */
   public $throw_when = null;
 
+  /** @var ?callable(string, string): bool if set and returning true, move() is performed and then throws (the request dies after the disk changed) */
+  public $throw_after_when = null;
+
+  /** @var ?callable(string, string): bool if set and returning true, move() leaves a partial destination behind and fails */
+  public $partial_when = null;
+
   public ?float $free_space = null;
 
   /** @var bool[] recorded maintenance mode changes */
@@ -33,6 +39,12 @@ class Failing_MU_Plugin_Upgrader extends MU_Plugin_Upgrader {
       throw new \RuntimeException('simulated fatal error');
     }
 
+    if ($this->partial_when && ($this->partial_when)($from, $to)) {
+      is_dir($to) || mkdir($to, 0777, true);
+      file_put_contents(rtrim($to, '/') . '/partial.php', 'partial');
+      return false;
+    }
+
     if ($this->fail_when && ($this->fail_when)($from, $to)) {
       return false;
     }
@@ -43,7 +55,13 @@ class Failing_MU_Plugin_Upgrader extends MU_Plugin_Upgrader {
       }
     }
 
-    return parent::move($from, $to);
+    $result = parent::move($from, $to);
+
+    if ($this->throw_after_when && ($this->throw_after_when)($from, $to)) {
+      throw new \RuntimeException('simulated fatal error after move');
+    }
+
+    return $result;
   }
 }
 
@@ -140,6 +158,85 @@ class MuPluginUpgraderTest extends \WP_UnitTestCase {
 
     $this->assertWPError($result);
     $this->assertSame('ionos_core_update_invalid_package', $result->get_error_code());
+    $this->assertOldVersionIntact();
+    $this->assertNoLeftovers();
+  }
+
+  public function test_package_with_file_instead_of_plugin_directory_is_rejected_and_nothing_changes(): void {
+    global $wp_filesystem;
+    $wp_filesystem->delete($this->source . 'ionos-core', true);
+    file_put_contents($this->source . 'ionos-core', 'not a directory');
+
+    $result = (new MU_Plugin_Upgrader())->install($this->source, $this->target);
+
+    $this->assertWPError($result);
+    $this->assertSame('ionos_core_update_invalid_package', $result->get_error_code());
+    $this->assertOldVersionIntact();
+    $this->assertNoLeftovers();
+  }
+
+  public function test_package_with_directory_instead_of_loader_file_is_rejected_and_nothing_changes(): void {
+    unlink($this->source . 'ionos-core.php');
+    mkdir($this->source . 'ionos-core.php');
+
+    $result = (new MU_Plugin_Upgrader())->install($this->source, $this->target);
+
+    $this->assertWPError($result);
+    $this->assertSame('ionos_core_update_invalid_package', $result->get_error_code());
+    $this->assertOldVersionIntact();
+    $this->assertNoLeftovers();
+  }
+
+  public function test_interruption_right_after_backup_move_restores_old_version_on_shutdown(): void {
+    $upgrader = new Failing_MU_Plugin_Upgrader();
+    // the request dies after the plugin directory was moved to the backup (disk changed, move() never returned)
+    $upgrader->throw_after_when = fn (string $from, string $to) => str_ends_with($to, '/ionos-core/') && str_contains($to, '.ionos-core-backup-')
+      || str_contains($to, '.ionos-core-backup-') && str_ends_with($to, '/ionos-core');
+
+    try {
+      $upgrader->install($this->source, $this->target);
+      $this->fail('exception expected');
+    } catch (\RuntimeException $e) {
+      // simulated fatal error
+    }
+
+    $this->assertFileDoesNotExist($this->target . 'ionos-core', 'plugin directory must be in the backup');
+
+    $upgrader->restore_on_shutdown();
+
+    $this->assertOldVersionIntact();
+    $this->assertNoLeftovers();
+  }
+
+  public function test_failed_install_with_partial_destination_restores_old_version(): void {
+    $upgrader = new Failing_MU_Plugin_Upgrader();
+    // moving the staged plugin directory fails after it left a partial copy in the live location
+    $upgrader->partial_when = fn (string $from, string $to) => str_contains($from, '.ionos-core-staging-') && str_ends_with(rtrim($to, '/'), '/mu-plugins/ionos-core');
+
+    $result = $upgrader->install($this->source, $this->target);
+
+    $this->assertWPError($result);
+    $this->assertSame('ionos_core_update_failed', $result->get_error_code());
+    $this->assertOldVersionIntact();
+    $this->assertNoLeftovers();
+  }
+
+  public function test_interruption_right_after_install_rename_restores_old_version_on_shutdown(): void {
+    $upgrader = new Failing_MU_Plugin_Upgrader();
+    // the request dies after the staged plugin directory was renamed into place (disk changed, move() never returned)
+    $upgrader->throw_after_when = fn (string $from, string $to) => str_contains($from, '.ionos-core-staging-') && str_ends_with(rtrim($to, '/'), '/mu-plugins/ionos-core');
+
+    try {
+      $upgrader->install($this->source, $this->target);
+      $this->fail('exception expected');
+    } catch (\RuntimeException $e) {
+      // simulated fatal error
+    }
+
+    $this->assertSame('new index', file_get_contents($this->target . 'ionos-core/index.php'));
+
+    $upgrader->restore_on_shutdown();
+
     $this->assertOldVersionIntact();
     $this->assertNoLeftovers();
   }

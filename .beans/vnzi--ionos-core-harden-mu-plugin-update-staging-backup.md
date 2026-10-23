@@ -16,3 +16,9 @@ Verify and harden MU_Plugin_Upgrader: lint, real fatal rollback test, cross-file
 - tests incl. a real fatal error in a child process (fixtures/fatal-during-swap.php)
 - core install_package()/clear_destination rejected: WPMU_PLUGIN_DIR is not a protected directory, it would wipe all mu-plugins
 - not covered: SIGKILL / server crash leaves .ionos-core-backup-* behind (no self-healing)
+
+## Review follow-up (PR #961 Copilot comments)
+
+- package entries are type-checked (`ionos-core` directory, `ionos-core.php` regular file) for package and staging
+- `backed_up`/`installed` are recorded before the move; rollback decides from the actual disk state, deletes attempted install destinations first and keeps the backup whenever restoration is unconfirmed
+- regression tests: wrong entry types, interruption after backup move, partial destination, interruption right after install rename
