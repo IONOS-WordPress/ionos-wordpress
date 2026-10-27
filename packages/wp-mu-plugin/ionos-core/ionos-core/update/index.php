@@ -66,8 +66,10 @@ function fetch_update_info(): array|null
 }
 
 /*
- * removes the leftovers of a failed update from $dir (the mu-plugins directory) and puts the previous version back if
- * the update stopped between the two directory renames.
+ * brings $dir (the mu-plugins directory) back to a clean, not updated state after an interrupted update :
+ * puts the previous version back if the update stopped between the two directory renames and removes all leftovers.
+ * an interrupted update never reached its last step (replacing the loader), so the loader still reports the
+ * previous version and the next update check simply runs the update again.
  */
 function cleanup_update(string $dir, \WP_Filesystem_Base $filesystem): void
 {
@@ -89,7 +91,8 @@ function cleanup_update(string $dir, \WP_Filesystem_Base $filesystem): void
  * installs the unpacked package in $package_dir (ionos-core.php + ionos-core/) into $dir (the mu-plugins directory).
  *
  * everything is prepared next to the live plugin first (names never end with '.php', mu-plugins would load them).
- * then the directory is swapped by two renames and the loader is replaced last.
+ * then the directory is swapped by two renames and the loader is replaced last - that last rename completes the
+ * update. a kill at any point leaves the old loader, and cleanup_update() repairs the state before the next update.
  */
 function install_update(
   string $package_dir,
@@ -142,6 +145,7 @@ function install_update(
 
   // 3. replace the loader : completes the update
   if (! rename($loader . '.new', $loader)) {
+    // the new code is live but the loader still reports the previous version : the next update check repeats the update
     return new \WP_Error('ionos_core_update_swap_failed', sprintf('failed to move "%s.new" in place', $loader));
   }
 
@@ -192,6 +196,8 @@ function update(string $package_url, string $version, string $dir = WPMU_PLUGIN_
   }
 
   try {
+    cleanup_update($dir, $filesystem);
+
     $upgrader = new \WP_Upgrader(new \Automatic_Upgrader_Skin());
     $upgrader->init();
 
