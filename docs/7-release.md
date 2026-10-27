@@ -161,13 +161,13 @@ To onboard a new package:
       update-checker mechanism for must-use plugins at all** - there is no `Update URI` header, no
       `update_plugins_<host>` filter, and no entry in the updates screen for them. That does not
       mean mu-plugins can't self-update: `ionos-core` implements its own, entirely independent
-      mechanism (`packages/wp-mu-plugin/ionos-core/ionos-core/update/index.php`) that hooks the
+      mechanism in its loader (`packages/wp-mu-plugin/ionos-core/ionos-core.php`) that hooks the
       `wp_update_plugins` cron event, fetches its own update descriptor, compares the result
-      against its own `Version` header (read via `get_file_data()`), and, if a newer version is
-      found, stages the package next to the live plugin and swaps it in by renames, the loader
-      last. To add the same mechanism to a new mu-plugin, copy that file and adjust the
-      `INFO_JSON_URL` constant and the path passed to `get_file_data()`. This is a recognized
-      copy-paste pattern, not a shared package.
+      against the loader's `Version` header (read via `get_file_data()`), and, if a newer version
+      is found, stages the package next to the live plugin and swaps it in by renames, the loader
+      last (see the package's `README.md`). To add the same mechanism to a new mu-plugin, copy the
+      update part of that loader and adjust the `INFO_JSON_URL` constant and the `ionos-core`
+      names. This is a recognized copy-paste pattern, not a shared package.
 - [ ] For `wp-plugin` packages that want an in-dashboard self-update, copy
       `packages/wp-plugin/ionos-essentials/ionos-essentials/inc/update/index.php` into the new
       plugin. Adjust the hardcoded plugin folder name and changelog raw-URL path for the new

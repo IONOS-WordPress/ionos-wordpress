@@ -3,8 +3,8 @@
 namespace ionos\ionos_core;
 
 /**
- * covers the package check and the directory swap of install_update() and the repair of interrupted updates by
- * cleanup_update(). each test works on a temporary directory standing in for mu-plugins/.
+ * covers the directory swap of install_update() and the repair of interrupted updates by cleanup_update()
+ * (both defined in the loader ionos-core.php). each test works on a temporary directory standing in for mu-plugins/.
  *
  * run only this test using 'pnpm test:php --php-opts "--filter UpgraderTest"'
  *
@@ -150,7 +150,7 @@ class UpgraderTest extends \WP_UnitTestCase {
   }
 
   public function test_cleanup_restores_a_missing_plugin_directory_from_the_backup(): void {
-    // only the backup is left (e.g. the restore of an earlier run failed)
+    // both directories gone except the backup (e.g. the restore of an earlier run failed) : the loader keeps the update
     file_put_contents($this->dir . '/ionos-core.php', self::loader_source('1.0.0'));
     mkdir($this->dir . '/ionos-core.bak');
     file_put_contents($this->dir . '/ionos-core.bak/index.php', "<?php // 1.0.0\n");

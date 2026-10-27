@@ -13,6 +13,5 @@ defined('ABSPATH') || exit();
 // loaded on 'init' (not while mu-plugins load) so the locale of the current user is known
 \add_action('init', fn () => \load_muplugin_textdomain('ionos-core', basename(__DIR__) . '/languages'));
 
-require_once __DIR__ . '/update/index.php';
 require_once __DIR__ . '/marketplace/index.php';
 require_once __DIR__ . '/loop/index.php';
