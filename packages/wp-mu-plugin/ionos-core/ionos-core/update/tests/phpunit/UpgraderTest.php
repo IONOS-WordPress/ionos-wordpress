@@ -3,7 +3,7 @@
 namespace ionos\ionos_core;
 
 /**
- * covers the directory swap of install_update(). each test works on a temporary directory standing in for mu-plugins/.
+ * covers the package check and the directory swap of install_update(). each test works on a temporary directory standing in for mu-plugins/.
  *
  * run only this test using 'pnpm test:php --php-opts "--filter UpgraderTest"'
  *
@@ -67,12 +67,34 @@ class UpgraderTest extends \WP_UnitTestCase {
     self::write_plugin($this->dir, '1.0.0', ['removed-in-1.0.1.php']);
     self::write_plugin($this->package_dir, '1.0.1', ['added-in-1.0.1.php']);
 
-    $result = install_update($this->package_dir, $this->dir, $this->filesystem);
+    $result = install_update($this->package_dir, $this->dir, '1.0.1', $this->filesystem);
 
     $this->assertTrue($result);
     $this->assert_installed('1.0.1');
     $this->assertFileExists($this->dir . '/ionos-core/added-in-1.0.1.php');
     $this->assertFileDoesNotExist($this->dir . '/ionos-core/removed-in-1.0.1.php');
+    $this->assert_no_leftovers();
+  }
+
+  public function test_package_with_other_version_is_rejected(): void {
+    self::write_plugin($this->dir, '1.0.0');
+    self::write_plugin($this->package_dir, '1.0.2');
+
+    $result = install_update($this->package_dir, $this->dir, '1.0.1', $this->filesystem);
+
+    $this->assertWPError($result);
+    $this->assert_installed('1.0.0');
+    $this->assert_no_leftovers();
+  }
+
+  public function test_package_without_plugin_directory_is_rejected(): void {
+    self::write_plugin($this->dir, '1.0.0');
+    file_put_contents($this->package_dir . '/ionos-core.php', self::loader_source('1.0.1'));
+
+    $result = install_update($this->package_dir, $this->dir, '1.0.1', $this->filesystem);
+
+    $this->assertWPError($result);
+    $this->assert_installed('1.0.0');
     $this->assert_no_leftovers();
   }
 }

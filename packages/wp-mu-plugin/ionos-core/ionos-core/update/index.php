@@ -91,10 +91,25 @@ function cleanup_update(string $dir, \WP_Filesystem_Base $filesystem): void
  * everything is prepared next to the live plugin first (names never end with '.php', mu-plugins would load them).
  * then the directory is swapped by two renames and the loader is replaced last.
  */
-function install_update(string $package_dir, string $dir, \WP_Filesystem_Base $filesystem): bool|\WP_Error
-{
+function install_update(
+  string $package_dir,
+  string $dir,
+  string $version,
+  \WP_Filesystem_Base $filesystem
+): bool|\WP_Error {
   $loader     = $dir . '/ionos-core.php';
   $plugin_dir = $dir . '/ionos-core';
+
+  // a package with another version than announced would be installed again on every update check
+  $package_version = is_file($package_dir . '/ionos-core.php') ? \get_file_data($package_dir . '/ionos-core.php', [
+    'version' => 'Version',
+  ])['version'] : '';
+  if ($package_version !== $version || ! is_file($package_dir . '/ionos-core/index.php')) {
+    return new \WP_Error(
+      'ionos_core_update_invalid_package',
+      sprintf('package is not a complete ionos-core %s (found version "%s")', $version, $package_version)
+    );
+  }
 
   // 1. prepare the new version next to the live one
   if (! $filesystem->mkdir($plugin_dir . '.new')) {
@@ -164,7 +179,7 @@ function _update_filesystem(): \WP_Filesystem_Base|\WP_Error
 /*
  * downloads the package (zip with ionos-core.php + ionos-core/) and installs it into $dir.
  */
-function update(string $package_url, string $dir = WPMU_PLUGIN_DIR): bool|\WP_Error
+function update(string $package_url, string $version, string $dir = WPMU_PLUGIN_DIR): bool|\WP_Error
 {
   $filesystem = _update_filesystem();
   if (\is_wp_error($filesystem)) {
@@ -190,7 +205,7 @@ function update(string $package_url, string $dir = WPMU_PLUGIN_DIR): bool|\WP_Er
       return $working_dir;
     }
 
-    $result = install_update(\untrailingslashit($working_dir), $dir, $filesystem);
+    $result = install_update(\untrailingslashit($working_dir), $dir, $version, $filesystem);
     $filesystem->delete($working_dir, true);
 
     return $result;
@@ -217,7 +232,7 @@ function update(string $package_url, string $dir = WPMU_PLUGIN_DIR): bool|\WP_Er
     return;
   }
 
-  $result = update($package);
+  $result = update($package, $latest);
 
   if (\is_wp_error($result)) {
     \error_log('ionos-core: Update failed: ' . $result->get_error_message());
