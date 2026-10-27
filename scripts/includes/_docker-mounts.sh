@@ -13,8 +13,8 @@
 # step in start.sh).
 #
 # a copy, not a direct bind-mount of the source: the enclosing dist mount is exactly
-# the directory a real plugin-upgrade (WordPress core's Plugin_Upgrader, or our own
-# MU_Plugin_Upgrader) deletes and recreates when installing an update. Bind-mounting
+# the directory a real plugin-upgrade (WordPress core's Plugin_Upgrader, or ionos-core's
+# own update) deletes or replaces when installing an update. Bind-mounting
 # the source phpunit/ dir directly here would let that recursive delete propagate
 # straight through the mount and destroy the real, tracked test files on the host -
 # this happened in practice (see bean 0la1). The mirror lives under the package's own

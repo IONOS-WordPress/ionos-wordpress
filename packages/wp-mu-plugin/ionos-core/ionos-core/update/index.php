@@ -10,8 +10,6 @@ defined('ABSPATH') || exit();
  */
 const INFO_JSON_URL = 'https://s3-de-central.profitbricks.com/web-hosting/__S3_FOLDER__/ionos-core.info.json';
 
-require_once __DIR__ . '/class-mu-plugin-upgrader.php';
-
 /*
  * returns the update descriptor from INFO_JSON_URL, or null if it does not answer with usable json.
  */
@@ -67,6 +65,112 @@ function fetch_update_info(): array|null
   return $info;
 }
 
+/*
+ * removes the leftovers of a failed update from $dir (the mu-plugins directory) and puts the previous version back if
+ * the update stopped between the two directory renames.
+ */
+function cleanup_update(string $dir, \WP_Filesystem_Base $filesystem): void
+{
+  $plugin_dir = $dir . '/ionos-core';
+
+  if (! is_dir($plugin_dir) && is_dir($plugin_dir . '.bak') && ! rename($plugin_dir . '.bak', $plugin_dir)) {
+    \error_log(sprintf('ionos-core: failed to restore "%s" from "%s.bak"', $plugin_dir, $plugin_dir));
+  }
+
+  $leftovers = [$plugin_dir . '.new', $plugin_dir . '.bak', $dir . '/ionos-core.php.new', $dir . '/ionos-core.php.tmp'];
+  foreach ($leftovers as $leftover) {
+    if (file_exists($leftover)) {
+      $filesystem->delete($leftover, true);
+    }
+  }
+}
+
+/*
+ * installs the unpacked package in $package_dir (ionos-core.php + ionos-core/) into $dir (the mu-plugins directory).
+ *
+ * everything is prepared next to the live plugin first (names never end with '.php', mu-plugins would load them).
+ * then the directory is swapped by two renames and the loader is replaced last.
+ */
+function install_update(string $package_dir, string $dir, \WP_Filesystem_Base $filesystem): bool|\WP_Error
+{
+  $loader     = $dir . '/ionos-core.php';
+  $plugin_dir = $dir . '/ionos-core';
+
+  // 1. prepare the new version next to the live one
+  if (! $filesystem->mkdir($plugin_dir . '.new')) {
+    return new \WP_Error('ionos_core_update_stage_failed', sprintf('failed to create "%s.new"', $plugin_dir));
+  }
+  $result = \copy_dir($package_dir . '/ionos-core', $plugin_dir . '.new');
+  if (\is_wp_error($result)) {
+    $filesystem->delete($plugin_dir . '.new', true);
+    return $result;
+  }
+  // via .tmp : a ionos-core.php.new only exists complete
+  if (! copy($package_dir . '/ionos-core.php', $loader . '.tmp') || ! rename($loader . '.tmp', $loader . '.new')) {
+    cleanup_update($dir, $filesystem);
+    return new \WP_Error('ionos_core_update_stage_failed', sprintf('failed to write "%s.new"', $loader));
+  }
+  if (is_file($loader)) {
+    chmod($loader . '.new', fileperms($loader) & 0777);
+  }
+
+  // 2. swap the directory
+  if (is_dir($plugin_dir) && ! rename($plugin_dir, $plugin_dir . '.bak')) {
+    cleanup_update($dir, $filesystem);
+    return new \WP_Error('ionos_core_update_swap_failed', sprintf('failed to move "%s" aside', $plugin_dir));
+  }
+  if (! rename($plugin_dir . '.new', $plugin_dir)) {
+    // puts ionos-core.bak back
+    cleanup_update($dir, $filesystem);
+    return new \WP_Error('ionos_core_update_swap_failed', sprintf('failed to move "%s.new" in place', $plugin_dir));
+  }
+
+  // 3. replace the loader : completes the update
+  if (! rename($loader . '.new', $loader)) {
+    return new \WP_Error('ionos_core_update_swap_failed', sprintf('failed to move "%s.new" in place', $loader));
+  }
+
+  if (function_exists('wp_opcache_invalidate_directory')) {
+    \wp_opcache_invalidate_directory($plugin_dir);
+  }
+  \wp_opcache_invalidate($loader);
+
+  $filesystem->delete($plugin_dir . '.bak', true);
+
+  return true;
+}
+
+/*
+ * downloads the package (zip with ionos-core.php + ionos-core/) and installs it into $dir.
+ */
+function update(string $package_url, string $dir = WPMU_PLUGIN_DIR): bool|\WP_Error
+{
+  global $wp_filesystem;
+
+  require_once ABSPATH . 'wp-admin/includes/file.php';
+  require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+
+  \WP_Filesystem();
+
+  $upgrader = new \WP_Upgrader(new \Automatic_Upgrader_Skin());
+  $upgrader->init();
+
+  $package = $upgrader->download_package($package_url);
+  if (\is_wp_error($package)) {
+    return $package;
+  }
+
+  $working_dir = $upgrader->unpack_package($package, true);
+  if (\is_wp_error($working_dir)) {
+    return $working_dir;
+  }
+
+  $result = install_update(\untrailingslashit($working_dir), $dir, $wp_filesystem);
+  $wp_filesystem->delete($working_dir, true);
+
+  return $result;
+}
+
 \add_action('wp_update_plugins', function (): void {
   $info = fetch_update_info();
 
@@ -85,7 +189,7 @@ function fetch_update_info(): array|null
     return;
   }
 
-  $result = (new MU_Plugin_Upgrader())->upgrade($package);
+  $result = update($package);
 
   if (\is_wp_error($result)) {
     \error_log('ionos-core: Update failed: ' . $result->get_error_message());
