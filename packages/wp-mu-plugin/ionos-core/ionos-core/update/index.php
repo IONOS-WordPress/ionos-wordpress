@@ -141,34 +141,62 @@ function install_update(string $package_dir, string $dir, \WP_Filesystem_Base $f
 }
 
 /*
- * downloads the package (zip with ionos-core.php + ionos-core/) and installs it into $dir.
+ * loads the wordpress admin apis the update needs and returns the filesystem abstraction.
+ * returns a WP_Error unless files are accessed directly : the update relies on rename() of local paths.
  */
-function update(string $package_url, string $dir = WPMU_PLUGIN_DIR): bool|\WP_Error
+function _update_filesystem(): \WP_Filesystem_Base|\WP_Error
 {
   global $wp_filesystem;
 
   require_once ABSPATH . 'wp-admin/includes/file.php';
   require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 
-  \WP_Filesystem();
-
-  $upgrader = new \WP_Upgrader(new \Automatic_Upgrader_Skin());
-  $upgrader->init();
-
-  $package = $upgrader->download_package($package_url);
-  if (\is_wp_error($package)) {
-    return $package;
+  if (! \WP_Filesystem() || 'direct' !== $wp_filesystem->method) {
+    return new \WP_Error(
+      'ionos_core_update_filesystem',
+      sprintf("update requires the 'direct' filesystem method (is '%s')", $wp_filesystem->method ?? 'unavailable')
+    );
   }
 
-  $working_dir = $upgrader->unpack_package($package, true);
-  if (\is_wp_error($working_dir)) {
-    return $working_dir;
+  return $wp_filesystem;
+}
+
+/*
+ * downloads the package (zip with ionos-core.php + ionos-core/) and installs it into $dir.
+ */
+function update(string $package_url, string $dir = WPMU_PLUGIN_DIR): bool|\WP_Error
+{
+  $filesystem = _update_filesystem();
+  if (\is_wp_error($filesystem)) {
+    return $filesystem;
   }
 
-  $result = install_update(\untrailingslashit($working_dir), $dir, $wp_filesystem);
-  $wp_filesystem->delete($working_dir, true);
+  // the update check runs from wp-cron : two overlapping runs must not swap the directories at the same time
+  if (! \WP_Upgrader::create_lock('ionos_core_update')) {
+    return new \WP_Error('ionos_core_update_locked', 'another update is in progress');
+  }
 
-  return $result;
+  try {
+    $upgrader = new \WP_Upgrader(new \Automatic_Upgrader_Skin());
+    $upgrader->init();
+
+    $package = $upgrader->download_package($package_url);
+    if (\is_wp_error($package)) {
+      return $package;
+    }
+
+    $working_dir = $upgrader->unpack_package($package, true);
+    if (\is_wp_error($working_dir)) {
+      return $working_dir;
+    }
+
+    $result = install_update(\untrailingslashit($working_dir), $dir, $filesystem);
+    $filesystem->delete($working_dir, true);
+
+    return $result;
+  } finally {
+    \WP_Upgrader::release_lock('ionos_core_update');
+  }
 }
 
 \add_action('wp_update_plugins', function (): void {

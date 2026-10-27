@@ -17,9 +17,11 @@ class UpgraderTest extends \WP_UnitTestCase {
   public function setUp(): void {
     parent::setUp();
 
-    require_once ABSPATH . 'wp-admin/includes/file.php';
-    \WP_Filesystem();
-    $this->filesystem = $GLOBALS['wp_filesystem'];
+    $filesystem = _update_filesystem();
+    if (\is_wp_error($filesystem)) {
+      $this->markTestSkipped($filesystem->get_error_message());
+    }
+    $this->filesystem = $filesystem;
 
     $root              = sys_get_temp_dir() . '/ionos-core-upgrader-' . uniqid();
     $this->dir         = $root . '/mu-plugins';
