@@ -210,9 +210,13 @@ pnpm cli plugin list --update=available
   pnpm cli cron event run wp_update_plugins
   ```
 
-  Our own `MU_Plugin_Upgrader` copies files into the existing mu-plugins directory rather than
-  replacing it wholesale, so this does not hit the same limitation and completes end to end.
-  Confirm with:
+  Known limitation: `ionos-core`'s own update (in its loader `ionos-core.php`) swaps the directory
+  `mu-plugins/ionos-core/` by renaming it, and in this stack that directory is a bind-mount point
+  as well - the rename fails, the update restores the previous state and logs
+  "failed to move .../ionos-core aside". This proves detection, download and staging; the full
+  swap needs a stack where `mu-plugins/` is a plain directory (e.g. a `docker run` of the
+  `wordpress-alpine` image without the package mounts, with the release zip extracted into
+  `mu-plugins/`). Confirm with:
 
   ```
   pnpm cli eval 'echo get_file_data(WPMU_PLUGIN_DIR . "/ionos-core.php", ["v" => "Version"])["v"];'
