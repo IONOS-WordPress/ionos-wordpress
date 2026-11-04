@@ -48,7 +48,7 @@
 
       document.addEventListener('DOMContentLoaded', function () {
         const adzone = document.querySelector('.ias-zone');
-        const shadowDom = window.parent.document.querySelector('#wpbody-content').shadowRoot;
+        const shadowDom = window.parent.document.querySelector('#wpbody-content');
         const iframe = shadowDom.querySelector('iframe#adzone');
 
         const observer = new MutationObserver(function (mutations) {

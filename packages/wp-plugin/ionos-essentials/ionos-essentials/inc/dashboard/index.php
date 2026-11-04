@@ -388,6 +388,7 @@ add_filter('show_admin_bar', function ($show) {
           'Content-Type: application/json',
           'Content-Length: ' . strlen(json_encode($data)),
           'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'X-PE-DEBUG: true',
         ]);
 
         $response = curl_exec($ch);
