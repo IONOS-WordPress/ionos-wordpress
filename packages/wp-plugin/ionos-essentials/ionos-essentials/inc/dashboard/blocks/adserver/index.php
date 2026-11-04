@@ -29,10 +29,7 @@ function render(): void
     urlencode(json_encode($params))
   ), PLUGIN_FILE);
 
-  printf(
-    '<iframe src="%s" id="adzone" style="display: none; height: 0px; width: 100%%;margin-bottom: 32px;border-radius:var(--default-border-radius, 16px);" ></iframe>',
-    esc_url($url)
-  );
+ echo '<div class="ias-zone" id="adzone"></div>';
 }
 
 function get_privacy_complete(): bool

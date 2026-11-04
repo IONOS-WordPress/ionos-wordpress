@@ -10,8 +10,7 @@ do_action('admin_init');
 
 defined('ABSPATH') || exit();
 
-require_once __DIR__ . '/blocks/banner/index.php';
-require_once __DIR__ . '/blocks/welcome/index.php';
+
 require_once __DIR__ . '/blocks/vulnerability/index.php';
 require_once __DIR__ . '/blocks/next-best-actions/index.php';
 require_once __DIR__ . '/blocks/my-account/index.php';
@@ -144,10 +143,6 @@ if (file_exists($theme_file)) {
 
 ?>
 
-<?php
-  blocks\welcome\render_callback();
-blocks\popup\render_callback();
-?>
 <div class="static-overlay__blocker"></div>
 <div class="static-overlay__container dialog-closer" id="learn-more-overlay">
   <div class="sheet static-overlay--closable static-overlay__content sheet--micro-effect" data-static-overlay-id="demo-overlay1" style="margin-top: inherit;">
@@ -270,7 +265,6 @@ if ($missing_items) { ?>
 ?>">
 <div class="page-section ionos-dashboard__blocks">
   <div class="page-section">
-    <?php blocks\banner\render_callback(); ?>
   </div>
 
   <?php
@@ -286,6 +280,70 @@ require_once __DIR__ . '/tabs/tools.php';
     document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('.ionos-tab').style.display = 'block';
     });
+
+     <?php
+
+       $params = [
+    'token'       => \get_transient('ionos_adserver_token') ?: 'adserver_default_token',
+    'zoneid'      => \wp_get_environment_type() !== 'local' ? 'wp_admin_overview_card_left' : 'developers_docs_example',
+    'visitorData' => [
+      'beyondseo'            => \is_plugin_active('ionos-essentials/ionos-essentials.php') ? true : false,
+      'market'               => \get_option('ionos_market', 'not set'),
+      'ssl_type'             => \ionos\essentials\get_ssl_type(),
+    ],
+    'c' => [
+      'language'  => \get_bloginfo('language') ? str_replace('-', '_', \get_bloginfo('language')) : 'de_DE',
+    ],
+    'nonce'       => \wp_create_nonce('wp_rest'),
+    'proxyUrl'    => \rest_url('ionos/essentials/adzone/v1/proxy'),
+  ];
+
+    echo 'const params = ' . json_encode($params) . ';'
+  ?>
   </script>
+
+   <script>
+      // Proxy fetch requests to the IONOS AdServer to avoid CORS issues
+      const originalFetch = window.fetch;
+
+      window.fetch = async (url, options) => {
+        //return originalFetch(url, options);
+
+        if (typeof url === 'string' && url.includes('/ias/zones/json')) {
+
+          return originalFetch(params.proxyUrl, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': params.nonce || '' },
+            body: options?.body,
+          });
+        }
+        return originalFetch(url, options);
+      };
+    </script>
+
+    <script type="text/javascript">
+      var OAO = OAO || {}; // OAO refers to the global OAO variable.
+      OAO.q = OAO.q || {};
+      OAO.q.c = OAO.q.c || [];
+      OAO.q.ias = OAO.q.ias || [];
+      document.querySelector('.ias-zone').setAttribute('data-ias-zoneid', params.zoneid || '');
+      OAO.q.c.push(['setFrontendToken', params.token || 'adserver_default_token']);
+      OAO.q.c.push(['setPageName', 'Dashboard']); // please use: [a-zA-Z_]
+
+      OAO.q.ias.push(['addVisitorData', 'beyondseo', params.visitorData.beyondseo || false]);
+      OAO.q.ias.push(['addVisitorData', 'market', params.visitorData.market || 'not set']);
+      OAO.q.ias.push(['addVisitorData', 'ssl_type', params.visitorData.ssl_type || '']);
+
+      OAO.q.c.push(['setLanguage', params.c.language || 'de_DE']);
+
+
+    </script>
+    <script
+      id="oaotag"
+      type="text/javascript"
+      src="https://frontend-services.ionos.com/t/tag/IONOS/wp-admin.js"
+      async="async"
+      defer="defer"></script>
 </body>
 </html>
